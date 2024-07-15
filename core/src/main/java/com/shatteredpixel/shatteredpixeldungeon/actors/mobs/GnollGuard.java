@@ -90,7 +90,7 @@ public class GnollGuard extends Mob {
 	@Override
 	public int attackProc(Char enemy, int damage) {
 		int dmg = super.attackProc(enemy, damage);
-		if (enemy == Dungeon.hero && !Dungeon.level.adjacent(pos, enemy.pos) && dmg > 12){
+		if (enemy instanceof Hero && !Dungeon.level.adjacent(pos, enemy.pos) && dmg > 12){
 			GLog.n(Messages.get(this, "spear_warn"));
 		}
 		return dmg;

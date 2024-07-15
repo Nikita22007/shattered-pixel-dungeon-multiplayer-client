@@ -234,7 +234,7 @@ public class HallsBossLevel extends Level {
 	@Override
 	public void occupyCell( Char ch ) {
 		if (map[entrance()] == Terrain.ENTRANCE && map[exit()] != Terrain.EXIT
-				&& ch == Dungeon.hero && Dungeon.level.distance(ch.pos, entrance()) >= 2) {
+				&& ch instanceof Hero && Dungeon.level.distance(ch.pos, entrance()) >= 2) {
 			seal();
 		}
 

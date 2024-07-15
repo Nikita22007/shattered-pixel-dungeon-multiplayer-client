@@ -28,6 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.PurpleParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Dewdrop;
@@ -192,10 +193,10 @@ public class Eye extends Mob {
 					ch.sprite.flash();
 					CellEmitter.center( pos ).burst( PurpleParticle.BURST, Random.IntRange( 1, 2 ) );
 				}
-
-				if (!ch.isAlive() && ch == Dungeon.hero) {
-					Badges.validateDeathFromEnemyMagic();
-					Dungeon.fail( this );
+				//commit https://github.com/Nikita22007/pixel-dungeon-multiplayer-server/commit/e87ebae26d3ec4a201b2e69ba097a26986748483
+				if (!ch.isAlive() && ch instanceof Hero) {
+					//Badges.validateDeathFromEnemyMagic();
+					//Dungeon.fail( this );
 					GLog.n( Messages.get(this, "deathgaze_kill") );
 				}
 			} else {

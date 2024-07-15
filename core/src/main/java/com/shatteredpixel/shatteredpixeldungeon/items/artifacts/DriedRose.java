@@ -748,7 +748,7 @@ public class DriedRose extends Artifact {
 		@Override
 		public boolean interact(Char c) {
 			updateRose();
-			if (c == Dungeon.hero && rose != null && !rose.talkedTo){
+			if (c instanceof Hero && rose != null && !rose.talkedTo){
 				rose.talkedTo = true;
 				Game.runOnRenderThread(new Callback() {
 					@Override

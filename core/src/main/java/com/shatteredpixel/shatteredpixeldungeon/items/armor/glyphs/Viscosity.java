@@ -153,7 +153,7 @@ public class Viscosity extends Glyph {
 
 				int damageThisTick = Math.max(1, (int)(damage*0.1f));
 				target.damage( damageThisTick, this );
-				if (target == Dungeon.hero && !target.isAlive()) {
+				if (target instanceof Hero && !target.isAlive()) {
 
 					Badges.validateDeathFromFriendlyMagic();
 

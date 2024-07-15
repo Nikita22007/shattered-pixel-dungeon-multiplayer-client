@@ -136,7 +136,7 @@ public class WndTradeItem extends WndInfoItem {
 		};
 		btnBuy.setRect( 0, pos + GAP, width, BTN_HEIGHT );
 		btnBuy.icon(new ItemSprite(ItemSpriteSheet.GOLD));
-		btnBuy.enable( price <= Dungeon.gold );
+		btnBuy.enable( price <= Dungeon.hero.gold );
 		add( btnBuy );
 
 		pos = btnBuy.bottom();
@@ -273,7 +273,7 @@ public class WndTradeItem extends WndInfoItem {
 		if (item == null) return;
 		
 		int price = Shopkeeper.sellPrice( item );
-		Dungeon.gold -= price;
+		Dungeon.hero.gold -= price;
 		
 		if (!item.doPickUp( Dungeon.hero )) {
 			Dungeon.level.drop( item, heap.pos ).sprite.drop();

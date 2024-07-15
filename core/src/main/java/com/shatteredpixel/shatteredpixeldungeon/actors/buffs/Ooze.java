@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
@@ -75,7 +76,7 @@ public class Ooze extends Buff {
 	public void set(float left){
 		this.left = left;
 	}
-
+	//TODO: check changes from https://github.com/Nikita22007/pixel-dungeon-multiplayer-server/commit/e87ebae26d3ec4a201b2e69ba097a26986748483
 	@Override
 	public boolean act() {
 		if (target.isAlive()) {
@@ -86,9 +87,9 @@ public class Ooze extends Buff {
 			} else if (Random.Int(2) == 0) {
 				target.damage(1, this); //0.5 dmg per turn in sewers
 			}
-
-			if (!target.isAlive() && target == Dungeon.hero) {
-				Dungeon.fail( this );
+//
+			if (!target.isAlive() && target instanceof Hero) {
+				//Dungeon.fail( this );
 				GLog.n( Messages.get(this, "ondeath") );
 			}
 			spend( TICK );

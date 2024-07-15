@@ -298,7 +298,7 @@ public class DM300 extends Mob {
 
 	@Override
 	public boolean attack(Char enemy, float dmgMulti, float dmgBonus, float accMulti) {
-		if (enemy == Dungeon.hero && supercharged){
+		if (enemy instanceof Hero && supercharged){
 			Statistics.qualifiedForBossChallengeBadge = false;
 		}
 		return super.attack(enemy, dmgMulti, dmgBonus, accMulti);

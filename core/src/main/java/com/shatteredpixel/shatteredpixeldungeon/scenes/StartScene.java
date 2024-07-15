@@ -42,8 +42,9 @@ import com.watabou.noosa.NinePatch;
 
 import java.util.ArrayList;
 
+//TODO: https://github.com/Nikita22007/pixel-dungeon-multiplayer-server/commit/1ae9ec3f65b6d9b7be98249c066d1b9ee0bcadb7
 public class StartScene extends PixelScene {
-	
+
 	private static final int SLOT_WIDTH = 120;
 	private static final int SLOT_HEIGHT = 30;
 	
@@ -273,7 +274,7 @@ public class StartScene extends PixelScene {
 			if (newGame) {
 				GamesInProgress.selectedClass = null;
 				GamesInProgress.curSlot = slot;
-				ShatteredPixelDungeon.switchScene(HeroSelectScene.class);
+				ShatteredPixelDungeon.switchScene(ConnectScene.class);
 			} else {
 				ShatteredPixelDungeon.scene().add( new WndGameInProgress(slot));
 			}

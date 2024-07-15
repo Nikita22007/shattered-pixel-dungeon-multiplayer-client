@@ -110,7 +110,7 @@ public class Warlock extends Mob implements Callback {
 		Char enemy = this.enemy;
 		if (hit( this, enemy, true )) {
 			//TODO would be nice for this to work on ghost/statues too
-			if (enemy == Dungeon.hero && Random.Int( 2 ) == 0) {
+			if (enemy instanceof Hero && Random.Int( 2 ) == 0) {
 				Buff.prolong( enemy, Degrade.class, Degrade.DURATION );
 				Sample.INSTANCE.play( Assets.Sounds.DEBUFF );
 			}
@@ -119,7 +119,7 @@ public class Warlock extends Mob implements Callback {
 			dmg = Math.round(dmg * AscensionChallenge.statModifier(this));
 			enemy.damage( dmg, new DarkBolt() );
 			
-			if (enemy == Dungeon.hero && !enemy.isAlive()) {
+			if (enemy instanceof Hero && !enemy.isAlive()) {
 				Badges.validateDeathFromEnemyMagic();
 				Dungeon.fail( this );
 				GLog.n( Messages.get(this, "bolt_kill") );

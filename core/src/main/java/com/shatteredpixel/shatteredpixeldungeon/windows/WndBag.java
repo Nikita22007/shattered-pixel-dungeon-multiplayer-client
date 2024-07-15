@@ -176,7 +176,7 @@ public class WndBag extends WndTabbed {
 			PixelScene.align(gold);
 			add(gold);
 
-			BitmapText amt = new BitmapText(Integer.toString(Dungeon.gold), PixelScene.pixelFont);
+			BitmapText amt = new BitmapText(Integer.toString(Dungeon.hero.gold), PixelScene.pixelFont);
 			amt.hardlight(TITLE_COLOR);
 			amt.measure();
 			amt.x = width - gold.width() - amt.width() - 1;
@@ -193,7 +193,7 @@ public class WndBag extends WndTabbed {
 			PixelScene.align(gold);
 			add(gold);
 
-			BitmapText amt = new BitmapText(Integer.toString(Dungeon.gold), PixelScene.pixelFont);
+			BitmapText amt = new BitmapText(Integer.toString(Dungeon.hero.gold), PixelScene.pixelFont);
 			amt.hardlight(TITLE_COLOR);
 			amt.measure();
 			amt.x = width - gold.width() - amt.width() - 2f;

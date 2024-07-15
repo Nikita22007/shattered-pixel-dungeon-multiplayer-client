@@ -196,7 +196,7 @@ public class Bomb extends Item {
 					ch.damage(dmg, this);
 				}
 				
-				if (ch == Dungeon.hero && !ch.isAlive()) {
+				if (ch instanceof Hero && !ch.isAlive()) {
 					if (this instanceof ConjuredBomb){
 						Badges.validateDeathFromFriendlyMagic();
 					}

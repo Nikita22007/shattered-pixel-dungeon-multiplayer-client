@@ -71,7 +71,7 @@ public class ShrapnelBomb extends Bomb {
 			damage = Math.round(damage * (1f - .05f*Dungeon.level.distance(cell, ch.pos)));
 			damage -= ch.drRoll();
 			ch.damage(damage, this);
-			if (ch == Dungeon.hero && !ch.isAlive()) {
+			if (ch instanceof Hero && !ch.isAlive()) {
 				Dungeon.fail(this);
 			}
 		}

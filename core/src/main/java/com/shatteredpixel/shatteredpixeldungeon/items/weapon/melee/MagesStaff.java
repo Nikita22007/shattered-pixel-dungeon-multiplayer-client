@@ -224,7 +224,7 @@ public class MagesStaff extends MeleeWeapon {
 
 		int oldStaffcharges = this.wand != null ? this.wand.curCharges : 0;
 
-		if (owner == Dungeon.hero && Dungeon.hero.hasTalent(Talent.WAND_PRESERVATION)){
+		if (owner instanceof Hero && Dungeon.hero.hasTalent(Talent.WAND_PRESERVATION)){
 			Talent.WandPreservationCounter counter = Buff.affect(Dungeon.hero, Talent.WandPreservationCounter.class);
 			if (counter.count() < 5 && Random.Float() < 0.34f + 0.33f*Dungeon.hero.pointsInTalent(Talent.WAND_PRESERVATION)){
 				counter.countUp(1);

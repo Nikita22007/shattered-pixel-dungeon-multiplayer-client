@@ -171,7 +171,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 
 public class Hero extends Char {
-
+	public int gold;
 	{
 		actPriority = HERO_PRIO;
 		

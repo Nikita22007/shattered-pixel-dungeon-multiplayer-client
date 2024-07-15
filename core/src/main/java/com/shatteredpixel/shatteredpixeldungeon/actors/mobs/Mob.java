@@ -286,7 +286,7 @@ public abstract class Mob extends Char {
 		if ( enemy == null || !enemy.isAlive() || !Actor.chars().contains(enemy) || state == WANDERING) {
 			newEnemy = true;
 		//We are amoked and current enemy is the hero
-		} else if (buff( Amok.class ) != null && enemy == Dungeon.hero) {
+		} else if (buff( Amok.class ) != null && enemy instanceof Hero) {
 			newEnemy = true;
 		//We are charmed and current enemy is what charmed us
 		} else if (buff(Charm.class) != null && buff(Charm.class).object == enemy.id()) {
@@ -385,13 +385,13 @@ public abstract class Mob extends Char {
 					} else if ((canAttack(curr) && !canAttack(closest))
 							|| (PathFinder.distance[curr.pos] < PathFinder.distance[closest.pos])){
 						closest = curr;
-					} else if ( curr == Dungeon.hero &&
+					} else if ( curr instanceof Hero &&
 							(PathFinder.distance[curr.pos] == PathFinder.distance[closest.pos]) || (canAttack(curr) && canAttack(closest))){
 						closest = curr;
 					}
 				}
 				//if we were going to target the hero, but an afterimage exists, target that instead
-				if (closest == Dungeon.hero){
+				if (closest instanceof Hero){
 					for (Char ch : enemies){
 						if (ch instanceof Feint.AfterImage){
 							closest = ch;
@@ -818,7 +818,7 @@ public abstract class Mob extends Char {
 		if (alignment == Alignment.ENEMY){
 			rollToDropLoot();
 
-			if (cause == Dungeon.hero || cause instanceof Weapon || cause instanceof Weapon.Enchantment){
+			if (cause instanceof Hero || cause instanceof Weapon || cause instanceof Weapon.Enchantment){
 				if (Dungeon.hero.hasTalent(Talent.LETHAL_MOMENTUM)
 						&& Random.Float() < 0.34f + 0.33f* Dungeon.hero.pointsInTalent(Talent.LETHAL_MOMENTUM)){
 					Buff.affect(Dungeon.hero, Talent.LethalMomentumTracker.class, 0f);

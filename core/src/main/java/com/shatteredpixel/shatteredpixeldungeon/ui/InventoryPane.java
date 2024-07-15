@@ -336,7 +336,7 @@ public class InventoryPane extends Component {
 		if (selector == null) {
 			promptTxt.visible = false;
 
-			goldTxt.text(Integer.toString(Dungeon.gold));
+			goldTxt.text(Integer.toString(Dungeon.hero.gold));
 			goldTxt.measure();
 			goldTxt.visible = gold.visible = true;
 

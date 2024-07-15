@@ -245,7 +245,7 @@ public abstract class Char extends Actor {
 		}
 
 		//warp instantly with allies in this case
-		if (c == Dungeon.hero && Dungeon.hero.hasTalent(Talent.ALLY_WARP)){
+		if (c instanceof Hero && ((Hero) c).hasTalent(Talent.ALLY_WARP)){
 			PathFinder.buildDistanceMap(c.pos, BArray.or(Dungeon.level.passable, Dungeon.level.avoid, null));
 			if (PathFinder.distance[pos] == Integer.MAX_VALUE){
 				return true;
@@ -343,8 +343,8 @@ public abstract class Char extends Actor {
 	}
 	
 	public boolean attack( Char enemy, float dmgMulti, float dmgBonus, float accMulti ) {
-
-		if (enemy == null) return false;
+		//commit: https://github.com/Nikita22007/pixel-dungeon-multiplayer-server/commit/a3acbc297311278698f21b5a195372117a176904
+		if (enemy == null || enemy instanceof Hero) return false;
 		
 		boolean visibleFight = Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[enemy.pos];
 
@@ -384,7 +384,7 @@ public abstract class Char extends Actor {
 			Preparation prep = buff(Preparation.class);
 			if (prep != null){
 				dmg = prep.damageRoll(this);
-				if (this == Dungeon.hero && Dungeon.hero.hasTalent(Talent.BOUNTY_HUNTER)) {
+				if (this instanceof Hero && Dungeon.hero.hasTalent(Talent.BOUNTY_HUNTER)) {
 					Buff.affect(Dungeon.hero, Talent.BountyHunterTracker.class, 0.0f);
 				}
 			} else {

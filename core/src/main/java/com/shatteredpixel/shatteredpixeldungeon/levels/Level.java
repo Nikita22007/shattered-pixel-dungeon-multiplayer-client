@@ -1112,7 +1112,7 @@ public abstract class Level implements Bundlable {
 		if (!ch.flying){
 
 			if ( (map[ch.pos] == Terrain.GRASS || map[ch.pos] == Terrain.EMBERS)
-					&& ch == Dungeon.hero && Dungeon.hero.hasTalent(Talent.REJUVENATING_STEPS)
+					&& ch instanceof Hero && Dungeon.hero.hasTalent(Talent.REJUVENATING_STEPS)
 					&& ch.buff(Talent.RejuvenatingStepsCooldown.class) == null){
 
 				if (!Regeneration.regenOn()){

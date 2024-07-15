@@ -202,7 +202,6 @@ public class Dungeon {
 	//keeps track of what levels the game should try to load instead of creating fresh
 	public static ArrayList<Integer> generatedLevels = new ArrayList<>();
 
-	public static int gold;
 	public static int energy;
 	
 	public static HashSet<Integer> chapters;
@@ -266,7 +265,7 @@ public class Dungeon {
 		branch = 0;
 		generatedLevels.clear();
 
-		gold = 0;
+		hero.gold = 0;
 		energy = 0;
 
 		droppedItems = new SparseArray<>();
@@ -392,8 +391,8 @@ public class Dungeon {
 		Statistics.qualifiedForBossRemainsBadge = false;
 		
 		level.create();
-		
-		if (branch == 0) Statistics.qualifiedForNoKilling = !bossLevel();
+		//TODO: IDK, Looking at: https://github.com/Nikita22007/pixel-dungeon-multiplayer-server/commit/477e9d41eab6b0217edd4e2594e67543b18da023
+		if (branch == 0) Statistics.qualifiedForNoKilling = !bossLevel(depth);
 		Statistics.qualifiedForBossChallengeBadge = false;
 		
 		return level;
@@ -638,7 +637,7 @@ public class Dungeon {
 			bundle.put( DEPTH, depth );
 			bundle.put( BRANCH, branch );
 
-			bundle.put( GOLD, gold );
+			bundle.put( GOLD, hero.gold );
 			bundle.put( ENERGY, energy );
 
 			for (int d : droppedItems.keyArray()) {
@@ -801,7 +800,7 @@ public class Dungeon {
 		depth = bundle.getInt( DEPTH );
 		branch = bundle.getInt( BRANCH );
 
-		gold = bundle.getInt( GOLD );
+		hero.gold = bundle.getInt( GOLD );
 		energy = bundle.getInt( ENERGY );
 
 		Statistics.restoreFromBundle( bundle );

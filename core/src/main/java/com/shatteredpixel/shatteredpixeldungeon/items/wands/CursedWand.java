@@ -236,7 +236,7 @@ public class CursedWand {
 					if (toDamage == Dungeon.hero){
 						Sample.INSTANCE.play(Assets.Sounds.CURSED);
 						if (!toDamage.isAlive()) {
-							if (user == Dungeon.hero && origin != null) {
+							if (user instanceof Hero && origin != null) {
 								Badges.validateDeathFromFriendlyMagic();
 								Dungeon.fail( origin );
 								GLog.n( Messages.get( CursedWand.class, "ondeath", origin.name() ) );

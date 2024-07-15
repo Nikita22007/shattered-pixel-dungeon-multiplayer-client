@@ -260,7 +260,7 @@ public class CavesBossLevel extends Level {
 	public void occupyCell(Char ch) {
 		//seal the level when the hero moves near to a pylon, the level isn't already sealed, and the gate hasn't been destroyed
 		int gatePos = pointToCell(new Point(gate.left, gate.top));
-		if (ch == Dungeon.hero && !locked && solid[gatePos]){
+		if (ch instanceof Hero && !locked && solid[gatePos]){
 			for (int pos : pylonPositions){
 				if (Dungeon.level.distance(ch.pos, pos) <= 3){
 					seal();
