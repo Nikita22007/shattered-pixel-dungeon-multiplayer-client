@@ -39,11 +39,55 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class Belongings implements Iterable<Item> {
+
+	public List<Integer> pathOfItem(@NotNull Item item) {
+		assert (item != null) : "path of null item";
+		List<Integer> slot = new ArrayList<>(2);
+
+		if (item == weapon) {
+
+			slot.add(-1);
+			return slot;
+		}
+		if (item == armor) {
+
+			slot.add(-2);
+			return slot;
+		}
+		if (item == artifact) {
+
+			slot.add(-3);
+			return slot;
+		}
+		if (item == misc) {
+
+			slot.add(-4);
+			return slot;
+		}
+		if (item == ring) {
+
+			slot.add(-5);
+			return slot;
+		}
+
+		if (specialSlots.get(i).item instanceof Bag) {
+			List<Integer> path = ((Bag) specialSlots.get(i).item).pathOfItem(item);
+			if (path != null) {
+				path.add(0, -i - 1);
+				return path;
+			}
+		}
+
+		return backpack.pathOfItem(item);
+}
+
 
 	private Hero owner;
 
