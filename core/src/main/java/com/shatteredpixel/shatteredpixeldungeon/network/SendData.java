@@ -2,13 +2,17 @@ package com.shatteredpixel.shatteredpixeldungeon.network;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
-import com.watabou.pixeldungeon.items.CustomItem;
+import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 import java.util.List;
 
-import static com.watabou.pixeldungeon.network.Client.flush;
-import static com.watabou.pixeldungeon.network.Client.packet;
+import static com.shatteredpixel.shatteredpixeldungeon.network.Client.flush;
+import static com.shatteredpixel.shatteredpixeldungeon.network.Client.packet;
+
 
 public class SendData {
     //---------------------------Hero

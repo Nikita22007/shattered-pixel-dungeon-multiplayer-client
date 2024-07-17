@@ -1,8 +1,8 @@
 package com.shatteredpixel.shatteredpixeldungeon.items
-import com.watabou.pixeldungeon.actors.hero.Hero
-import com.watabou.pixeldungeon.items.bags.CustomBag
-import com.watabou.pixeldungeon.network.SendData.SendItemAction
-import com.watabou.pixeldungeon.sprites.ItemSprite
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero
+import com.shatteredpixel.shatteredpixeldungeon.items.bags.CustomBag
+import com.shatteredpixel.shatteredpixeldungeon.network.SendData.SendItemAction
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -55,13 +55,14 @@ open class CustomItem() : Item() {
                     quantity = obj.getInt(token)
                 }
                 "durability" -> {
-                    durability = obj.getInt(token)
+                    //TODO: remove
+                    //durability = obj.getInt(token)
                 }
                 "max_durability" -> {
                     maxDurability = obj.getInt(token)
                 }
                 "level" -> {
-                    level = obj.getInt(token)
+                    level(obj.getInt(token));
                 }
                 "level_known" -> {
                     levelKnown = obj.getBoolean(token)
@@ -127,7 +128,9 @@ open class CustomItem() : Item() {
         return identified;
     }
 
-    override fun maxDurability(lvl: Int): Int {
+    //TODO: remove
+    @Deprecated
+    fun maxDurability(lvl: Int): Int {
         return maxDurability;
     }
 
@@ -136,7 +139,7 @@ open class CustomItem() : Item() {
     }
 
     override fun visiblyUpgraded(): Int {
-        return level;
+        return visiblyUpgraded();
     }
 
     override fun glowing(): ItemSprite.Glowing? {

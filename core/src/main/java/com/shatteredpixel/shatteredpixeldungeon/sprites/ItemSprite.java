@@ -44,8 +44,12 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONObject;
 
 import java.nio.Buffer;
+
+import static com.shatteredpixel.shatteredpixeldungeon.ui.Window.WHITE;
 
 public class ItemSprite extends MovieClip {
 
@@ -378,7 +382,8 @@ public class ItemSprite extends MovieClip {
 	}
 	
 	public static class Glowing {
-		
+		public static final Glowing WHITE = new Glowing( 0xFFFFFF, 0.6f );
+
 		public int color;
 		public float red;
 		public float green;
@@ -397,6 +402,19 @@ public class ItemSprite extends MovieClip {
 			green = ((color >> 8) & 0xFF) / 255f;
 			blue = (color & 0xFF) / 255f;
 			
+			this.period = period;
+		}
+		protected void setColor(int color) {
+			this.color = color;
+			red = (color >> 16) / 255f;
+			green = ((color >> 8) & 0xFF) / 255f;
+			blue = (color & 0xFF) / 255f;
+
+		}
+		public Glowing(@NotNull JSONObject jsonObject) {
+			int color = jsonObject.optInt("color", WHITE.color);
+			float period = (float) jsonObject.optDouble("period", WHITE.color);
+			setColor(color);
 			this.period = period;
 		}
 	}

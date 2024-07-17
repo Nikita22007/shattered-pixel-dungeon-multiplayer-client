@@ -26,17 +26,19 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndQuickBag;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Bag extends Item implements Iterable<Item> {
+public class Bag extends CustomItem implements Iterable<Item> {
 	public List<Integer> pathOfItem(Item item) {
 		assert (item != null) : "path of null item";
 		for (int i = 0; i < items.size(); i++) {
@@ -263,5 +265,8 @@ public class Bag extends Item implements Iterable<Item> {
 				items.remove( index );
 			}
 		}
+	}
+	public Bag(JSONObject obj){
+		super(obj);
 	}
 }

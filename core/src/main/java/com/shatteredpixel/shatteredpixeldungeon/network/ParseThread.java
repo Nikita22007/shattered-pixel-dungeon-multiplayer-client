@@ -59,7 +59,7 @@ import com.watabou.pixeldungeon.items.CustomItem;
 import com.watabou.pixeldungeon.items.Heap;
 import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.bags.Bag;
-import com.watabou.pixeldungeon.items.bags.CustomBag;
+import com.shatteredpixel.shatteredpixeldungeon.items.bags.CustomBag;
 import com.watabou.pixeldungeon.items.keys.IronKey;
 import com.watabou.pixeldungeon.levels.SewerLevel;
 import com.watabou.pixeldungeon.plants.CustomPlant;

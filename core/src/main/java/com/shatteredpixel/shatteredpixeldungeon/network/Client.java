@@ -1,10 +1,9 @@
 package com.shatteredpixel.shatteredpixeldungeon.network;
 
-import com.watabou.pixeldungeon.PixelDungeon;
-import com.watabou.pixeldungeon.actors.hero.HeroClass;
-import com.watabou.pixeldungeon.network.scanners.ServerInfo;
-import com.watabou.pixeldungeon.scenes.TitleScene;
-import com.watabou.pixeldungeon.utils.GLog;
+
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.network.NetworkPacket;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
