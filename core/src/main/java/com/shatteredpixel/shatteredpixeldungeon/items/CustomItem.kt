@@ -7,6 +7,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 open class CustomItem() : Item() {
+    lateinit var name : String;
+    lateinit var spriteSheet : String;
     protected var descString: String? = null
 
     protected var actionsList: ArrayList<String> = ArrayList();
@@ -33,8 +35,8 @@ open class CustomItem() : Item() {
         update(obj)
 
     }
-
-    override fun update(obj: JSONObject) {
+    //Hope this can only live in CustomItem
+    fun update(obj: JSONObject) {
         val it = obj.keys()
         while (it.hasNext()) {
             val token = it.next()
@@ -101,7 +103,7 @@ open class CustomItem() : Item() {
                     }
                 }
                 "sprite_sheet" -> {
-                    this.spriteSheet= obj.getString(token);
+                    this.spriteSheet = obj.getString(token);
                 }
             }
         }
@@ -129,7 +131,7 @@ open class CustomItem() : Item() {
     }
 
     //TODO: remove
-    @Deprecated
+    @Deprecated(message = "Durability doesn't exist", replaceWith = ReplaceWith("maxDurability"))
     fun maxDurability(lvl: Int): Int {
         return maxDurability;
     }
@@ -218,5 +220,9 @@ open class CustomItem() : Item() {
                 this.visible = visible;
             }
         }
+    }
+
+    override fun name(): String {
+        return super.name()
     }
 }

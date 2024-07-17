@@ -1,7 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.bags
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor
-import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem.Companion.createItem
+import com.shatteredpixel.shatteredpixeldungeon.actors.Char
 import com.shatteredpixel.shatteredpixeldungeon.items.Item
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet.Icons
@@ -12,8 +12,9 @@ import java.util.*
 
 
 class CustomBag(obj: JSONObject) : Bag(obj) {
+    var size: Int;
     //FIXME
-    public var icon: Icons = Icons.BACKPACK;
+    public var icon: Int = ItemSpriteSheet.BACKPACK;
 
     init {
         cursedKnown = true // todo check it
@@ -27,7 +28,8 @@ class CustomBag(obj: JSONObject) : Bag(obj) {
         if (obj.has("icon")) {
             try {
                 //FIXME
-                icon = Icons.valueOf(obj.getString("icon").uppercase(Locale.ENGLISH))
+                icon = ItemSpriteSheet.BACKPACK;
+                    //Icons.valueOf(obj.getString("icon").uppercase(Locale.ENGLISH))
             } catch (e: RuntimeException) {
                 GLog.n("incorrect icon: " + e.message);
                 e.printStackTrace();
