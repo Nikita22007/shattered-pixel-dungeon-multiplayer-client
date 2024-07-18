@@ -26,7 +26,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.watabou.glwrap.Texture;
 import com.watabou.noosa.Game;
 
-import java.util.HashMap;
+import java.util.*;
 
 public class TextureCache {
 	
@@ -175,5 +175,24 @@ public class TextureCache {
 	public synchronized static boolean contains( Object key ) {
 		return all.containsKey( key );
 	}
-	
+	public static void reloadFromAssets(){
+		Set<Object> keysToReload = new HashSet<>();
+		Iterator<Map.Entry<Object, SmartTexture>> iterator = all.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Map.Entry<Object, SmartTexture> tx = iterator.next();
+			if (tx.getKey() instanceof String)
+			{
+				if (((String) tx.getKey()).startsWith("1x1"))
+				{
+					continue;
+				}
+				tx.getValue().delete();
+				keysToReload.add(tx.getKey());
+				iterator.remove();
+			}
+		}
+		for (Object key: keysToReload) {
+			get(key);
+		}
+	}
 }

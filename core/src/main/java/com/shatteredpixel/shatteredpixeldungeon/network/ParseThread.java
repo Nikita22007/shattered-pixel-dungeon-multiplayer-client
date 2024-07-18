@@ -1,9 +1,41 @@
 package com.shatteredpixel.shatteredpixeldungeon.network;
 
-import android.util.Log;
 
 import com.nikita22007.pixeldungeonmultiplayer.JavaUtils;
 import com.nikita22007.pixeldungeonmultiplayer.TextureManager;
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.effects.*;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.*;
+import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
+import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
+import com.shatteredpixel.shatteredpixeldungeon.items.bags.CustomBag;
+import com.shatteredpixel.shatteredpixeldungeon.levels.SewerLevel;
+import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.TitleScene;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.GooSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
+import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
+import com.shatteredpixel.shatteredpixeldungeon.ui.Banner;
+import com.shatteredpixel.shatteredpixeldungeon.ui.GameLog;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
+import com.shatteredpixel.shatteredpixeldungeon.windows.WndError;
+import com.shatteredpixel.shatteredpixeldungeon.windows.WndMessage;
+import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
@@ -11,77 +43,6 @@ import com.watabou.noosa.Scene;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.tweeners.AlphaTweener;
-import com.watabou.pixeldungeon.Dungeon;
-import com.watabou.pixeldungeon.DungeonTilemap;
-import com.watabou.pixeldungeon.PixelDungeon;
-import com.watabou.pixeldungeon.actors.Actor;
-import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.blobs.Blob;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
-import com.watabou.pixeldungeon.actors.buffs.CustomBuff;
-import com.watabou.pixeldungeon.actors.hero.Belongings;
-import com.watabou.pixeldungeon.actors.hero.Hero;
-import com.watabou.pixeldungeon.actors.hero.HeroClass;
-import com.watabou.pixeldungeon.actors.mobs.CustomMob;
-import com.watabou.pixeldungeon.actors.mobs.Mob;
-import com.watabou.pixeldungeon.effects.BannerSprites;
-import com.watabou.pixeldungeon.effects.CheckedCell;
-import com.watabou.pixeldungeon.effects.DeathRay;
-import com.watabou.pixeldungeon.effects.Degradation;
-import com.watabou.pixeldungeon.effects.Flare;
-import com.watabou.pixeldungeon.effects.FloatingText;
-import com.watabou.pixeldungeon.effects.Lightning;
-import com.watabou.pixeldungeon.effects.MagicMissile;
-import com.watabou.pixeldungeon.effects.Pushing;
-import com.watabou.pixeldungeon.effects.Speck;
-import com.watabou.pixeldungeon.effects.SpellSprite;
-import com.watabou.pixeldungeon.effects.Splash;
-import com.watabou.pixeldungeon.effects.Wound;
-import com.watabou.pixeldungeon.effects.particles.BlastParticle;
-import com.watabou.pixeldungeon.effects.particles.EarthParticle;
-import com.watabou.pixeldungeon.effects.particles.ElmoParticle;
-import com.watabou.pixeldungeon.effects.particles.EnergyParticle;
-import com.watabou.pixeldungeon.effects.particles.FlameParticle;
-import com.watabou.pixeldungeon.effects.particles.FlowParticle;
-import com.watabou.pixeldungeon.effects.particles.LeafParticle;
-import com.watabou.pixeldungeon.effects.particles.PoisonParticle;
-import com.watabou.pixeldungeon.effects.particles.PurpleParticle;
-import com.watabou.pixeldungeon.effects.particles.SacrificialParticle;
-import com.watabou.pixeldungeon.effects.particles.ShadowParticle;
-import com.watabou.pixeldungeon.effects.particles.ShaftParticle;
-import com.watabou.pixeldungeon.effects.particles.SmokeParticle;
-import com.watabou.pixeldungeon.effects.particles.SnowParticle;
-import com.watabou.pixeldungeon.effects.particles.SparkParticle;
-import com.watabou.pixeldungeon.effects.particles.WebParticle;
-import com.watabou.pixeldungeon.effects.particles.WindParticle;
-import com.watabou.pixeldungeon.effects.particles.WoolParticle;
-import com.watabou.pixeldungeon.items.CustomItem;
-import com.watabou.pixeldungeon.items.Heap;
-import com.watabou.pixeldungeon.items.Item;
-import com.watabou.pixeldungeon.items.bags.Bag;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.CustomBag;
-import com.watabou.pixeldungeon.items.keys.IronKey;
-import com.watabou.pixeldungeon.levels.SewerLevel;
-import com.watabou.pixeldungeon.plants.CustomPlant;
-import com.watabou.pixeldungeon.plants.Plant;
-import com.watabou.pixeldungeon.scenes.GameScene;
-import com.watabou.pixeldungeon.scenes.InterlevelScene;
-import com.watabou.pixeldungeon.scenes.TitleScene;
-import com.watabou.pixeldungeon.sprites.CharSprite;
-import com.watabou.pixeldungeon.sprites.CustomCharSprite;
-import com.watabou.pixeldungeon.sprites.GooSprite;
-import com.watabou.pixeldungeon.sprites.HeroSprite;
-import com.watabou.pixeldungeon.sprites.MissileSprite;
-import com.watabou.pixeldungeon.ui.Banner;
-import com.watabou.pixeldungeon.ui.GameLog;
-import com.watabou.pixeldungeon.ui.QuickSlot;
-import com.watabou.pixeldungeon.ui.SpecialSlot;
-import com.watabou.pixeldungeon.utils.GLog;
-import com.watabou.pixeldungeon.utils.Utils;
-import com.watabou.pixeldungeon.windows.WndBag;
-import com.watabou.pixeldungeon.windows.WndError;
-import com.watabou.pixeldungeon.windows.WndMessage;
-import com.watabou.pixeldungeon.windows.WndOptions;
 import com.watabou.utils.PointF;
 
 import org.jetbrains.annotations.NotNull;
@@ -104,17 +65,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
-import static com.watabou.pixeldungeon.Dungeon.hero;
-import static com.watabou.pixeldungeon.Dungeon.level;
-import static com.watabou.pixeldungeon.network.Client.disconnect;
-import static com.watabou.pixeldungeon.scenes.GameScene.add;
-import static com.watabou.pixeldungeon.scenes.GameScene.effect;
-import static com.watabou.pixeldungeon.scenes.GameScene.gameOver;
-import static com.watabou.pixeldungeon.scenes.GameScene.updateCharSprite;
-import static com.watabou.pixeldungeon.scenes.GameScene.updateMap;
-import static com.watabou.pixeldungeon.sprites.CharSprite.spriteClassFromName;
-import static com.watabou.pixeldungeon.sprites.CharSprite.spriteFromClass;
-import static com.watabou.pixeldungeon.utils.Utils.ToPascalCase;
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.level;
+import static com.shatteredpixel.shatteredpixeldungeon.network.Client.disconnect;
 import static java.lang.Thread.sleep;
 
 public class ParseThread implements Callable<String> {
@@ -204,7 +156,7 @@ public class ParseThread implements Callable<String> {
 
     protected static void returnToMainScreen() {
         Log.i("ParseThread", "parsing stopped");
-        PixelDungeon.switchScene(
+        ShatteredPixelDungeon.switchScene(
                 TitleScene.class,
                 new Game.SceneChangeCallback() {
                     @Override
@@ -214,7 +166,7 @@ public class ParseThread implements Callable<String> {
 
                     @Override
                     public void afterCreate() {
-                        PixelDungeon.scene().add(new WndError("Disconnected"));
+                        ShatteredPixelDungeon.scene().add(new WndError("Disconnected"));
                     }
                 }
 
@@ -232,9 +184,9 @@ public class ParseThread implements Callable<String> {
             Log.e("Parsing", "json: " + json);
             return;
         }
-        if (com.watabou.pixeldungeon.BuildConfig.DEBUG) {
-            //Log.i("Parsing", data.toString(4));
-        }
+//        if (com.watabou.pixeldungeon.BuildConfig.DEBUG) {
+//            //Log.i("Parsing", data.toString(4));
+//        }
         //Log.w("data", data.toString(4));
         for (Iterator<String> it = data.keys(); it.hasNext(); ) {
             String token = it.next();
@@ -244,7 +196,7 @@ public class ParseThread implements Callable<String> {
                     try {
                         TextureManager.INSTANCE.loadTexturePack(JavaUtils.InputStreamFromBase64(data.getString(token)));
                     }catch (IOException err){
-                        PixelDungeon.scene().add(new WndError("Malformed texture pack"));
+                        ShatteredPixelDungeon.scene().add(new WndError("Malformed texture pack"));
                         }
                     break;
                 }

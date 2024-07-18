@@ -4,11 +4,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char
 import com.shatteredpixel.shatteredpixeldungeon.items.Item
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet.Icons
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog
 import org.json.JSONArray
 import org.json.JSONObject
-import java.util.*
 
 
 class CustomBag(obj: JSONObject) : Bag(obj) {
