@@ -3,7 +3,9 @@ package com.shatteredpixel.shatteredpixeldungeon.network;
 
 import com.nikita22007.pixeldungeonmultiplayer.JavaUtils;
 import com.nikita22007.pixeldungeonmultiplayer.TextureManager;
+import com.nikita22007.pixeldungeonmultiplayer.Utils;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.QuickSlot;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -65,6 +67,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.level;
 import static com.shatteredpixel.shatteredpixeldungeon.network.Client.disconnect;
 import static java.lang.Thread.sleep;
@@ -842,29 +845,34 @@ public class ParseThread implements Callable<String> {
                 JSONObject itemObj = actionObj.optJSONObject("item");
                 Item item = itemObj != null ? CustomItem.createItem(actionObj.getJSONObject("item")) : null;
                 if ((slot.size() == 1) && (slot.get(0) < 0)) {
-                    hero.belongings.specialSlots.get(-slot.get(0) - 1).item = item;
+                    //TODO: Check this
+                    hero.belongings.backpack.items.set(-slot.get(0) - 1, item);
                 } else {
                     if (item != null) {
-                        item.addTobag(stuff, slot, update_mode.equals("replace"));
+                        item.collect(stuff);
+                        //TODO: Check this
+                        //item.addTobag(stuff, slot, update_mode.equals("replace"));
                     } else {
-                        stuff.remove(slot);
+                        stuff.items.remove(slot);
                     }
                 }
                 break;
             }
             case ("update"): {
-                belongings.get(slot).update(actionObj.getJSONObject("item"));
+                for (int i: slot) {
+                    belongings.backpack.items.get(i).update(actionObj.getJSONObject("item"));
+                }
                 break;
             }
             case ("remove"): {
-                belongings.remove(slot);
+                belongings.backpack.items.remove(slot);
                 break;
             }
             default:
-                Log.w("ParseThread", "Unexpected item update mode: " + update_mode);
+                GLog.w("ParseThread", "Unexpected item update mode: " + update_mode);
                 return;
         }
-        QuickSlot.refresh();
+        Dungeon.quickslot.reset();
     }
 
     private void parseShowStatusAction(JSONObject actionObj) throws JSONException {
@@ -888,6 +896,7 @@ public class ParseThread implements Callable<String> {
         }
     }
 
+    @Deprecated
     private void parseDegradationAction(JSONObject actionObj) {
         try {
             PointF point = new PointF((float) actionObj.getDouble("position_x"), (float) actionObj.getDouble("position_y"));
@@ -896,20 +905,21 @@ public class ParseThread implements Callable<String> {
             for (int i = 0; i < matrix.length; i++) {
                 matrix[i] = array.getInt(i);
             }
-            int color = actionObj.optInt("color", Degradation.Speck.COLOR);
-            GameScene.add(new Degradation(point, matrix, color));
+            //int color = actionObj.optInt("color", Degradation.Speck.COLOR);
+            //GameScene.add(new Degradation(point, matrix, color));
         } catch (JSONException e) {
             GLog.n("Incorrect degradation action " + e.getMessage());
         }
     }
 
+    //FIXME
     private void parseBannerShowAction(JSONObject actionObj) {
         try {
             BannerSprites.Type bannerType = BannerSprites.Type.valueOf(actionObj.getString(actionObj.getString("banner").toUpperCase()));
 
             Banner banner = new Banner(BannerSprites.get(bannerType));
             banner.show(actionObj.getInt("color"), (float) actionObj.getDouble("fade_time"), (float) actionObj.getDouble("fade_time"));
-            GameScene.showBannerStatic(banner);
+            //GameScene.showBannerStatic(banner);
         } catch (JSONException e) {
             GLog.n("Incorrect BannerShowAction action " + e.getMessage());
         }
@@ -1367,7 +1377,8 @@ public class ParseThread implements Callable<String> {
             }
         }
         Blob blob = (Blob) actor;
-        blob.clearBlob();
+        //TODO: check this
+        //blob.clearBlob();
         JSONArray pos_array = actorObj.getJSONArray("positions");
         for (int i = 0; i < pos_array.length(); i += 1) {
             pos_array.get(i);
