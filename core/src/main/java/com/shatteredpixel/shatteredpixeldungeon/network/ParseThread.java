@@ -5,7 +5,6 @@ import com.nikita22007.pixeldungeonmultiplayer.JavaUtils;
 import com.nikita22007.pixeldungeonmultiplayer.TextureManager;
 import com.nikita22007.pixeldungeonmultiplayer.Utils;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.QuickSlot;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
