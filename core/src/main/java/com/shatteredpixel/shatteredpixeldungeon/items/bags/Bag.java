@@ -32,6 +32,9 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndQuickBag;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -39,19 +42,22 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Bag extends CustomItem implements Iterable<Item> {
+	/*
+	* recursive search of Item.
+	* */
 	public List<Integer> pathOfItem(Item item) {
 		assert (item != null) : "path of null item";
-		for (int i = 0; i < items.size(); i++) {
+		for (int i = 0; i < items.size(); i++) { //check all items
 			Item cur_item = items.get(i);
 			if (cur_item == null) {
 				continue;
 			}
-			if (cur_item == item) {
+			if (cur_item == item) { //found, return path
 				List<Integer> path = new ArrayList<>(2);
 				path.add(i);
 				return path;
 			}
-			if (cur_item instanceof Bag) {
+			if (cur_item instanceof Bag) { //check in internal bag
 				List<Integer> path = ((Bag) cur_item).pathOfItem(item);
 				if (path != null) {
 					path.add(0, i);
@@ -59,7 +65,7 @@ public class Bag extends CustomItem implements Iterable<Item> {
 				}
 			}
 		}
-		return null;
+		return null; //not found
 	}
 	public static final String AC_OPEN	= "OPEN";
 	
@@ -227,7 +233,7 @@ public class Bag extends CustomItem implements Iterable<Item> {
 	public Iterator<Item> iterator() {
 		return new ItemIterator();
 	}
-	
+
 	private class ItemIterator implements Iterator<Item> {
 
 		private int index = 0;
@@ -273,4 +279,37 @@ public class Bag extends CustomItem implements Iterable<Item> {
 	public Bag(JSONObject obj){
 		super(obj);
 	}
+
+
+	public void putItemIntoSlot(@NotNull List<Integer> slotPath, @Nullable Item item, boolean replace) {
+		// replace==false: move other items to the next slot
+		if (slotPath.size() > 1) {
+			((Bag) items.get(slotPath.get(0))).putItemIntoSlot(slotPath.subList(1, slotPath.size()), item, replace);
+		} else {
+			int slot = slotPath.get(0);
+			if (items.size() < slot) {
+				items.add(null);
+			}
+			if (items.size() == slot) {
+				items.add(item);
+			} else {
+				items.set(slot, item);
+			}
+		}
+	}
+
+	public Item getItemInSlot(@NotNull List<Integer> slotPath) {
+		if (slotPath.size() > 1) {
+			return ((Bag) items.get(slotPath.get(0))).getItemInSlot(slotPath.subList(1, slotPath.size()));
+		}
+		return items.get(slotPath.get(0));
+	}
+	public void removeItemFromSlot(List<Integer> slotPath) {
+		if (slotPath.size()>1){
+			((Bag) items.get(slotPath.get(0))).removeItemFromSlot(slotPath.subList(1, slotPath.size()));
+		} else {
+			items.remove((int)slotPath.get(0));
+		}
+	}
+
 }

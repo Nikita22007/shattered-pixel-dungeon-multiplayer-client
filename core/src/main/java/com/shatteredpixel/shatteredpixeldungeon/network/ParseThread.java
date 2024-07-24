@@ -20,8 +20,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.*;
 import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.CustomBag;
 import com.shatteredpixel.shatteredpixeldungeon.levels.SewerLevel;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -750,40 +748,34 @@ public class ParseThread implements Callable<String> {
             }
         }
         Belongings belongings = hero.belongings;
-        Bag stuff = hero.belongings.backpack;
         String update_mode = actionObj.optString("update_mode");
+        /*
+        place/add: move other items to the next slot
+        replace: changes item to other. Previous item will be destroyed
+        update: changes item fields. it is same item in the quickslot. Item field has diff
+        remove: removes item. "item" field in action will be ignored
+         */
         switch (update_mode) {
             case ("replace"):
             case ("add"):
             case ("place"): {
-                JSONObject itemObj = actionObj.optJSONObject("item");
+                JSONObject itemObj = actionObj.optJSONObject("item", null);
                 Item item = itemObj != null ? CustomItem.createItem(actionObj.getJSONObject("item")) : null;
-                if ((slot.size() == 1) && (slot.get(0) < 0)) {
-                    //TODO: Check this
-                    hero.belongings.backpack.items.set(-slot.get(0) - 1, item);
-                } else {
-                    if (item != null) {
-                        item.collect(stuff);
-                        //TODO: Check this
-                        //item.addTobag(stuff, slot, update_mode.equals("replace"));
-                    } else {
-                        stuff.items.remove(slot);
-                    }
-                }
+                belongings.putItemIntoSlot(slot, item, update_mode.equals("replace"));
+                break;
+            }
+            case ("remove"):{
+                belongings.removeItemFromSlot(slot);
                 break;
             }
             case ("update"): {
-                for (int i: slot) {
-                    belongings.backpack.items.get(i).update(actionObj.getJSONObject("item"));
+                for (int i : slot) {
+                    ((CustomItem) belongings.getItemInSlot(slot)).update(actionObj.getJSONObject("item"));
                 }
                 break;
             }
-            case ("remove"): {
-                belongings.backpack.items.remove(slot);
-                break;
-            }
             default:
-                GLog.w("ParseThread", "Unexpected item update mode: " + update_mode);
+                Log.w("ParseThread", "Unexpected item update mode: " + update_mode);
                 return;
         }
         Dungeon.quickslot.reset();

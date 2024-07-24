@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
@@ -40,7 +42,9 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
+
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -89,7 +93,7 @@ public class Belongings implements Iterable<Item> {
 		}
 		*/
 		return backpack.pathOfItem(item);
-}
+	}
 
 
 	private Hero owner;
@@ -485,5 +489,58 @@ public class Belongings implements Iterable<Item> {
 				backpackIterator.remove();
 			}
 		}
+	}
+
+	private void putItemIntoSpecialSlot(int slotID, Item item) {
+		if (slotID < 0) {
+			slotID = -slotID - 1; // special slots are indexed from -1 with negative numbers
+		}
+		switch (slotID) {
+			case (0): {
+				weapon = item;
+				break;
+			}
+			//todo add more
+		}
+	}
+
+	public void putItemIntoSlot(@NotNull List<Integer> slotPath, @Nullable Item item, boolean replace) {
+		assert (slotPath != null) : "null item path";
+		assert (slotPath.size() > 0) : "empty item path";
+		if (slotPath.get(0) < 0) {
+			assert (slotPath.size() == 1) : "can't put bag into special slot";
+			putItemIntoSpecialSlot(slotPath.get(0), item);
+			return;
+		}
+		backpack.putItemIntoSlot(slotPath, item, replace);
+	}
+
+	public Item getItemInSlot(@NotNull List<Integer> slotPath) {
+		assert (slotPath != null) : "null item path";
+		assert (slotPath.size() > 0) : "empty item path";
+		if (slotPath.get(0) < 0) {
+			int slotID = slotPath.get(0);
+			if (slotID < 0) {
+				slotID = -slotID - 1; // special slots are indexed from -1 with negative numbers
+			}
+			switch (slotPath.get(0)) {
+				case (0): {
+					return weapon;
+				}
+				default:
+					throw new RuntimeException("Unexpected slot id");
+					//todo add more
+			}
+		}
+		return backpack.getItemInSlot(slotPath);
+	}
+
+	public void removeItemFromSlot(@NotNull List<Integer> slotPath){
+		assert (slotPath != null) : "null item path";
+		assert (slotPath.size() > 0) : "empty item path";
+		if (slotPath.get(0)<0) {
+			putItemIntoSlot(slotPath, null, true);
+		}
+		backpack.removeItemFromSlot(slotPath);
 	}
 }
