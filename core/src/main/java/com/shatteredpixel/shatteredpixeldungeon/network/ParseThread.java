@@ -13,6 +13,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.CustomMob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.*;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.*;
@@ -1165,12 +1166,15 @@ public class ParseThread implements Callable<String> {
         if (JavaUtils.hasNotNull(actorObj,"sprite_name"))
         {
             //deprecated
-            CharSprite old_sprite = chr.sprite;
+         /*   CharSprite old_sprite = chr.sprite;
             Class<? extends CharSprite> new_sprite_class = spriteClassFromName(ToPascalCase(actorObj.getString("sprite_name")), chr != hero);
             if ((old_sprite == null) || (!old_sprite.getClass().equals(new_sprite_class))) {
                 CharSprite sprite = spriteFromClass(new_sprite_class);
                 GameScene.updateCharSprite(chr, sprite);
             }
+
+          */
+            throw new RuntimeException("Deprecated");
         }
 
         if (JavaUtils.hasNotNull(actorObj,"sprite_asset"))

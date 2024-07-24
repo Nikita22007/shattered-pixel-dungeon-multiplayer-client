@@ -19,7 +19,7 @@ public class CustomMob extends Mob {
         defenseSkill = 1;
 
         maxLvl = 1;
-        //FIXME twice
+
         this.setId(id);
     }
 

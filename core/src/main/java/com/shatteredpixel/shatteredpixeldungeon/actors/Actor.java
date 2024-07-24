@@ -134,6 +134,10 @@ public abstract class Actor implements Bundlable {
 		}
 	}
 
+	protected void setId(int ID) {
+		id = ID;
+	}
+
 	// **********************
 	// *** Static members ***
 	// **********************
