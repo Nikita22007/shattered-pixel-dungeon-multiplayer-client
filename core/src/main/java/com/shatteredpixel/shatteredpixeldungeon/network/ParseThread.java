@@ -532,7 +532,6 @@ public class ParseThread implements Callable<String> {
     }
 
     protected void parseSpriteAction(JSONObject actionObj) throws JSONException {
-        String action = actionObj.getString("action");
         int actorID = actionObj.getInt("actor_id");
         Actor actor = Actor.findById(actorID);
         if (actor == null) {
@@ -545,95 +544,7 @@ public class ParseThread implements Callable<String> {
             return;
         }
 
-        switch (action) {
-            case "idle": {
-                sprite.idle();
-                break;
-            }
-            case "place": {
-                int to = actionObj.getInt("to");
-                sprite.place(to);
-                break;
-            }
-            case "run":
-            case "move": {
-                int from = actionObj.getInt("from");
-                int to = actionObj.getInt("to");
-                Char ch = (Char) actor;
-                if (ch.pos != from) {
-                    GLog.h("from != pos. ID:" + actorID);
-                }
-                ch.move(to);
-                if (ch instanceof Mob) {
-                    ((Mob) ch).moveSprite(from, to);
-                } else {
-                    sprite.move(from, to);
-                }
-                break;
-            }
-            case "operate": {
-                sprite.operate(actionObj.getInt("to"));
-                break;
-            }
-            case "attack": {
-                sprite.attack(actionObj.getInt("to"));
-                break;
-            }
-            case "zap": {
-                sprite.zap(actionObj.getInt("to"));
-                break;
-            }
-            case "jump": {
-                sprite.jump(actionObj.getInt("from"), actionObj.getInt("to"), () -> {
-                });
-                break;
-            }
-            case "read": {
-                sprite.read();
-                break;
-            }
-            case "die": {
-                sprite.die();
-                break;
-            }
-            case "flash": {
-                sprite.flash((float) actionObj.optDouble("flash_time", CharSprite.FLASH_INTERVAL));
-                break;
-            }
-            case "turn": {
-                sprite.turnTo(actionObj.getInt("from"), actionObj.getInt("to"));
-                break;
-            }
-            case "alpha_tweener": {
-                sprite.alpha((float) actionObj.getDouble("start_alpha"));
-                sprite.parent.add(new AlphaTweener(
-                        sprite,
-                        (float) actionObj.getDouble("target_alpha"),
-                        (float) actionObj.getDouble("interval")
-                ));
-                break;
-            }
-            case ("pushing"):
-            case ("push"):
-            {
-                effect(new Pushing(sprite,
-                        actionObj.getInt("from"),
-                        actionObj.getInt("to")
-                )
-                );
-                break;
-            }
-            case ("pump"):
-            {
-                if (sprite instanceof GooSprite)
-                {
-                    ((GooSprite) sprite).pumpUp();
-                    break;
-                }
-            }
-            default:
-                GLog.n("Unexpected action: " + action + ". ID: " + actorID);
-        }
+        sprite.parseAction(actionObj);
     }
 
     protected void parseActions(@NotNull JSONArray actions) {

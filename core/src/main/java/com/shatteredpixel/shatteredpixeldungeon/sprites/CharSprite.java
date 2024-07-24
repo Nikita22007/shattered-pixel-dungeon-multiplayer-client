@@ -24,11 +24,13 @@ package com.shatteredpixel.shatteredpixeldungeon.sprites;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.DarkBlock;
 import com.shatteredpixel.shatteredpixeldungeon.effects.EmoIcon;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.IceBlock;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
 import com.shatteredpixel.shatteredpixeldungeon.effects.ShieldHalo;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
@@ -41,6 +43,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.ui.CharHealthIndicator;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.glwrap.Matrix;
 import com.watabou.glwrap.Vertexbuffer;
 import com.watabou.noosa.Camera;
@@ -55,6 +58,9 @@ import com.watabou.noosa.tweeners.Tweener;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.nio.Buffer;
 
@@ -352,10 +358,13 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	}
 	
 	public void flash() {
-		ra = ba = ga = 1f;
-		flashTime = FLASH_INTERVAL;
+		flash(FLASH_INTERVAL);
 	}
-	
+
+	public void flash(float flashInterval) {
+		ra = ba = ga = 1f;
+		this.flashTime = flashInterval;
+	}
 	public void add( State state ) {
 		switch (state) {
 			case BURNING:
@@ -645,7 +654,92 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 			}
 		}
 	}
-	
+
+	public final void parseAction(JSONObject actionObj) throws JSONException {
+		String action = actionObj.getString("action");
+		parseAction(action, actionObj);
+	}
+
+	protected void parseAction(String action, JSONObject params) {
+		CharSprite sprite = this;
+		switch (action) {
+			case "idle": {
+				sprite.idle();
+				break;
+			}
+			case "place": {
+				int to = params.getInt("to");
+				sprite.place(to);
+				break;
+			}
+			case "run":
+			case "move": {
+				int from = params.getInt("from");
+				int to = params.getInt("to");
+				if (ch.pos != from) {
+					GLog.h("from != pos. ID:" + ch.id());
+				}
+				ch.move(to);
+				if (ch instanceof Mob) {
+					((Mob) ch).moveSprite(from, to);
+				} else {
+					sprite.move(from, to);
+				}
+				break;
+			}
+			case "operate": {
+				sprite.operate(params.getInt("to"));
+				break;
+			}
+			case "attack": {
+				sprite.attack(params.getInt("to"));
+				break;
+			}
+			case "zap": {
+				sprite.zap(params.getInt("to"));
+				break;
+			}
+			case "jump": {
+				sprite.jump(params.getInt("from"), params.getInt("to"), () -> {
+				});
+				break;
+			}
+			case "die": {
+				sprite.die();
+				break;
+			}
+			case "flash": {
+				sprite.flash((float) params.optDouble("flash_time", CharSprite.FLASH_INTERVAL));
+				break;
+			}
+			case "turn": {
+				sprite.turnTo(params.getInt("from"), params.getInt("to"));
+				break;
+			}
+			case "alpha_tweener": {
+				sprite.alpha((float) params.getDouble("start_alpha"));
+				sprite.parent.add(new AlphaTweener(
+						sprite,
+						(float) params.getDouble("target_alpha"),
+						(float) params.getDouble("interval")
+				));
+				break;
+			}
+			case ("pushing"):
+			case ("push"):
+			{
+				effect(new Pushing(sprite,
+								params.getInt("from"),
+								params.getInt("to")
+						)
+				);
+				break;
+			}
+			default:
+				GLog.n("Unexpected action: " + action + ". ID: " + ch.id());
+		}
+	}
+
 	@Override
 	public void kill() {
 		super.kill();

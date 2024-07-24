@@ -36,6 +36,8 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
 import com.watabou.utils.RectF;
 
+import org.json.JSONObject;
+
 public class HeroSprite extends CharSprite {
 	
 	private static final int FRAME_WIDTH	= 12;
@@ -136,6 +138,20 @@ public class HeroSprite extends CharSprite {
 		play( read );
 	}
 
+	protected void parseAction(String action, JSONObject params) {
+		switch (action)
+		{
+			case "read": {
+				this.read();
+				break;
+			}
+			default:
+			{
+				super.parseAction(action, params);
+			}
+		}
+
+	}
 	@Override
 	public void bloodBurstA(PointF from, int damage) {
 		//Does nothing.

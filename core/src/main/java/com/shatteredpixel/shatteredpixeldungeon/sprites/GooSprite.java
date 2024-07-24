@@ -35,10 +35,12 @@ import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class GooSprite extends MobSprite {
-	
+
 	private Animation pump;
 	private Animation pumpAttack;
 
@@ -147,6 +149,18 @@ public class GooSprite extends MobSprite {
 		super.update();
 		spray.pos(center());
 		spray.visible = visible;
+	}
+
+	protected void parseAction(String action, JSONObject params) {
+		switch (action) {
+			case ("pump"): {
+				pumpUp(params.optInt("warn_dist", 1));
+				break;
+			}
+			default: {
+				super.parseAction(action, params);
+			}
+		}
 	}
 
 	public static class GooParticle extends PixelParticle.Shrinking {
