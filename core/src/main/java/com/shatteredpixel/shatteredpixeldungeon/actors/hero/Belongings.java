@@ -33,6 +33,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
+import com.shatteredpixel.shatteredpixeldungeon.items.bags.CustomBag;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRemoveCurse;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
@@ -40,6 +41,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -77,6 +79,7 @@ public class Belongings implements Iterable<Item> {
 			return slot;
 		}
 
+		/* maybe delete, because we will use slot variables instead of list of special slots
 		if (specialSlots.get(i).item instanceof Bag) {
 			List<Integer> path = ((Bag) specialSlots.get(i).item).pathOfItem(item);
 			if (path != null) {
@@ -84,16 +87,20 @@ public class Belongings implements Iterable<Item> {
 				return path;
 			}
 		}
-
+		*/
 		return backpack.pathOfItem(item);
 }
 
 
 	private Hero owner;
 
-	public static class Backpack extends Bag {
+	public static class Backpack extends CustomBag {
 		{
 			image = ItemSpriteSheet.BACKPACK;
+		}
+
+		public Backpack(JSONObject obj){
+			super(obj);
 		}
 		public int capacity(){
 			int cap = super.capacity();
@@ -114,9 +121,6 @@ public class Belongings implements Iterable<Item> {
 	
 	public Belongings( Hero owner ) {
 		this.owner = owner;
-		
-		backpack = new Backpack();
-		backpack.owner = owner;
 	}
 
 	public KindOfWeapon weapon = null;

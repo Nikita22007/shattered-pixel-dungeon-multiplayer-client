@@ -70,7 +70,11 @@ public class Bag extends CustomItem implements Iterable<Item> {
 
 		unique = true;
 	}
-	
+
+	public Bag(){
+
+	}
+
 	public Char owner;
 	
 	public ArrayList<Item> items = new ArrayList<>();

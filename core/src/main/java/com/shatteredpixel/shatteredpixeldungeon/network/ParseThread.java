@@ -487,7 +487,7 @@ public class ParseThread implements Callable<String> {
     private void parseInventory(JSONObject inv) {
         if (inv.has("backpack")) {
             try {
-                hero.belongings.backpack = new CustomBag(inv.getJSONObject("backpack"));
+                hero.belongings.backpack = new Belongings.Backpack(inv.getJSONObject("backpack"));
             } catch (JSONException e) {
                 Log.w("ParseThread", "Can't parse backpack");
             }
@@ -501,6 +501,8 @@ public class ParseThread implements Callable<String> {
                 slotsArr = new JSONArray();
             }
             try {
+                throw new RuntimeException("unreleased"); //todo remove it?
+                /*
                 for (int i = 0; i < slotsArr.length(); i++) {
                     JSONObject slotObj = slotsArr.getJSONObject(i);
                     SpecialSlot slot = new SpecialSlot();
@@ -522,6 +524,7 @@ public class ParseThread implements Callable<String> {
                     }
                     hero.belongings.updateSpecialSlot(slot);
                 }
+                 */
             } catch (JSONException e) {
                 Log.w("ParseThread", "Can't parse slot");
             }
