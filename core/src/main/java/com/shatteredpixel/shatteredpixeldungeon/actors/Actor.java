@@ -138,6 +138,16 @@ public abstract class Actor implements Bundlable {
 		id = ID;
 	}
 
+	public void changeID(int ID){
+		if (this.id == 0) {
+			ids.put(ID, this);
+		} else {
+			ids.remove(this.id);
+			id = ID;
+			ids.put(ID, this);
+		}
+	}
+
 	// **********************
 	// *** Static members ***
 	// **********************
