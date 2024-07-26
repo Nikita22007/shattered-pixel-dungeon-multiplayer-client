@@ -1276,7 +1276,7 @@ public class ParseThread implements Callable<String> {
     protected void parseActorBlob(JSONObject actorObj, int id, Actor actor) throws JSONException {
         Class blob_class = null;
         if (actor == null) {
-            String blob_name = Utils.format("com.watabou.pixeldungeon.actors.blobs.%s", ToPascalCase(actorObj.getString("blob_type")));
+            String blob_name = format("com.watabou.pixeldungeon.actors.blobs.%s", ToPascalCase(actorObj.getString("blob_type")));
             try {
                 blob_class = Class.forName(blob_name);
                 actor = (Blob) blob_class.newInstance();
@@ -1305,7 +1305,7 @@ public class ParseThread implements Callable<String> {
     protected void parseActorHero(JSONObject actorObj, int id, Actor actor) throws JSONException {
         if ((actor != null) && !(actor instanceof Hero)) {
             Actor.remove(actor);
-            Log.e("ParseThread", Utils.format("Actor is not hero. Deleted. Id:  %d", id));
+            Log.e("ParseThread", format("Actor is not hero. Deleted. Id:  %d", id));
         }
         if (hero == null) {
             hero = new Hero();
@@ -1445,5 +1445,29 @@ public class ParseThread implements Callable<String> {
             }
         }
 
+    }
+
+    public static String format( String format, Object...args ) {
+        return String.format( Locale.ENGLISH, format, args );
+    }
+
+    public static String ToPascalCase(String str) {
+        str = '_' + str;
+        StringBuilder builder = new StringBuilder();
+        boolean next_up = false;
+        char[] arr = str.toCharArray();
+        for (int i = 0; i < str.length(); i++) {
+            if (arr[i] == '_') {
+                next_up = true;
+            } else {
+                if (next_up) {
+                    builder.append(Character.toUpperCase(arr[i]));
+                    next_up = false;
+                } else {
+                    builder.append(arr[i]);
+                }
+            }
+        }
+        return builder.toString();
     }
 }
