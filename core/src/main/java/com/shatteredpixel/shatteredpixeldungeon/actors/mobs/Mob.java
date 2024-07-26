@@ -963,9 +963,13 @@ public abstract class Mob extends Char {
 		}
 		target = cell;
 	}
-	
+
 	public String description() {
-		return Messages.get(this, "desc");
+		if (desc == null) {
+			return Messages.get(this, "desc");
+		}
+		return desc;
+
 	}
 
 	public String info(){
@@ -1322,6 +1326,10 @@ public abstract class Mob extends Char {
 	
 	public static void clearHeldAllies(){
 		heldAllies.clear();
+	}
+	String desc = null;
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 }
 
