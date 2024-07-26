@@ -636,7 +636,7 @@ public class ParseThread implements Callable<String> {
                             break;
                         }
                         Item item = CustomItem.createItem(actionObj.getJSONObject("item"));
-                        com.watabou.pixeldungeon.effects.Enchanting.show((Char) actor, item);
+                        Enchanting.show((Char) actor, item);
                     }
                     case ("flare_visual"): {
                         PointF position;
