@@ -78,7 +78,7 @@ public class InterlevelScene extends PixelScene {
 
 	public static boolean fallIntoPit;
 	
-	private enum Phase {
+	public enum Phase {
 		FADE_IN, STATIC, FADE_OUT
 	}
 	private Phase phase;
