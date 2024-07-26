@@ -603,7 +603,7 @@ public class ParseThread implements Callable<String> {
                         break;
                     }
                     case ("checked_cell_visual"): {
-                        if (Dungeon.visible[actionObj.getInt("pos")]) {
+                        if (Dungeon.level.heroFOV[actionObj.getInt("pos")]) {
                             GameScene.effect(new CheckedCell(actionObj.getInt("pos")));
                         }
                         break;
@@ -912,7 +912,7 @@ public class ParseThread implements Callable<String> {
             }
 
             if (actionObj.has("pos")) {
-                if (!Dungeon.visible[actionObj.getInt("pos")]) {
+                if (!Dungeon.level.heroFOV[actionObj.getInt("pos")]) {
                     return;
                 }
                 position = DungeonTilemap.tileToWorld(actionObj.getInt("pos"));
@@ -1088,7 +1088,7 @@ public class ParseThread implements Callable<String> {
                         JSONObject cell = cells.getJSONObject(i);
                         parseCell(cell);
                     }
-                    updateMap();
+                    GameScene.updateMap();
                     break;
                 }
                 case "entrance": {
@@ -1102,14 +1102,14 @@ public class ParseThread implements Callable<String> {
                 }
                 case "visible_positions": {
                     JSONArray positions = levelObj.getJSONArray(token);
-                    Arrays.fill(Dungeon.visible, false);
+                    Arrays.fill(Dungeon.level.heroFOV, false);
                     for (int i = 0; i < positions.length(); i++) {
                         int cell = positions.getInt(i);
                         if ((cell < 0) || (cell >= level.length())) {
                             GLog.n("incorrect visible position: \"%s\". Ignored.", cell);
                             continue;
                         }
-                        Dungeon.visible[cell] = true;
+                        Dungeon.level.heroFOV[cell] = true;
                     }
                     Dungeon.observe();
                     GameScene.setFlag(GameScene.UpdateFlags.AFTER_OBSERVE);
