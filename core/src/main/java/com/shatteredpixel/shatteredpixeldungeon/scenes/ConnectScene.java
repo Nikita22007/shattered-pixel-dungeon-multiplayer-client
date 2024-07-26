@@ -1,5 +1,8 @@
 package com.shatteredpixel.shatteredpixeldungeon.scenes;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
+import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.network.NetworkScanner;
 import com.shatteredpixel.shatteredpixeldungeon.network.scanners.ServerInfo;
@@ -56,7 +59,8 @@ public class ConnectScene extends PixelScene implements NetworkScanner.NetworkSc
     private int height;
 
     public void CreateCenterText(int cameraWidth, int cameraHeight,String text){
-        BitmapText title = PixelScene.createText( text, 8 );
+        BitmapText title = new BitmapText( text, PixelScene.pixelFont );
+        title.height = 9;
         title.hardlight( DEFAULT_COLOR );
         title.measure();
         title.x = align( (cameraWidth - title.width()) / 2 );
@@ -78,12 +82,13 @@ public class ConnectScene extends PixelScene implements NetworkScanner.NetworkSc
         serverList=list.toArray(new ServerInfo[0]); //Todo use only List<?>
         if (serverList.length > 0) {
 
-            float rowHeight = PixelDungeon.landscape() ? ROW_HEIGHT_L : ROW_HEIGHT_P;
+            float rowHeight = SPDSettings.landscape() ? ROW_HEIGHT_L : ROW_HEIGHT_P;
 
             float left = (width - Math.min(MAX_ROW_WIDTH, width)) / 2 + GAP;
             float top = align((height - rowHeight * Math.min(serverList.length,TABLE_SIZE)) / 2);
 
-            title = PixelScene.createText(TXT_TITLE, 9);
+            title = new BitmapText(TXT_TITLE, PixelScene.pixelFont);
+            title.height = 9;
             title.hardlight(Window.TITLE_COLOR);
             title.measure();
             title.x = align((width - title.width()) / 2);
@@ -106,7 +111,8 @@ public class ConnectScene extends PixelScene implements NetworkScanner.NetworkSc
 
         } else {
 
-            title = PixelScene.createText(TXT_SEARCHING, 8);
+            title = new BitmapText(TXT_SEARCHING, PixelScene.pixelFont);
+            title.height = 8;
             title.hardlight(DEFAULT_COLOR);
             title.measure();
             title.x = align((width - title.width()) / 2);
@@ -121,7 +127,7 @@ public class ConnectScene extends PixelScene implements NetworkScanner.NetworkSc
 
         super.create();
 
-        Music.INSTANCE.play( Assets.THEME, true );
+        Music.INSTANCE.play(Assets.Music.THEME_1, true );
         Music.INSTANCE.volume( 1f );
 
         uiCamera.visible = false;
@@ -158,7 +164,7 @@ public class ConnectScene extends PixelScene implements NetworkScanner.NetworkSc
     @Override
     protected void onBackPressed() {
         NetworkScanner.stop();
-        PixelDungeon.switchNoFade( TitleScene.class );
+        ShatteredPixelDungeon.switchNoFade( TitleScene.class );
     }
 
     private boolean needRedraw = false;
@@ -232,11 +238,11 @@ public class ConnectScene extends PixelScene implements NetworkScanner.NetworkSc
             desc.measure();
 
             if (rec.haveChallenges) {
-                shield.view(Assets.ITEMS, ItemSpriteSheet.AMULET, null );
+                shield.view(ItemSpriteSheet.AMULET, null );
                 position.hardlight( TEXT_WIN );
                 desc.hardlight( TEXT_WIN );
             } else {
-                shield.view(Assets.ITEMS, ItemSpriteSheet.CHEST, null );
+                shield.view(ItemSpriteSheet.CHEST, null );
                 position.hardlight( TEXT_LOSE );
                 desc.hardlight( TEXT_LOSE );
             }
@@ -247,13 +253,14 @@ public class ConnectScene extends PixelScene implements NetworkScanner.NetworkSc
 
             super.createChildren();
 
-            shield = new ItemSprite(Assets.ITEMS, ItemSpriteSheet.CHEST, null );
+            shield = new ItemSprite(ItemSpriteSheet.CHEST, null );
             add( shield );
 
-            position = new BitmapText( PixelScene.font1x );
+            position = new BitmapText( PixelScene.pixelFont );
             add( position );
 
-            desc = createMultiline( 9 );
+            desc = new BitmapTextMultiline(PixelScene.pixelFont);
+            desc.height = 9;
             add( desc );
 
         }
