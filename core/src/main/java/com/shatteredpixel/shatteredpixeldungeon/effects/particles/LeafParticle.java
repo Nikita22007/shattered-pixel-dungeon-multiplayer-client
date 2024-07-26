@@ -51,6 +51,17 @@ public class LeafParticle extends PixelParticle.Shrinking {
 			p.reset( x, y );
 		}
 	};
+
+	public static Emitter.Factory factory(final int color1, final int color2){
+		return new Factory() {
+			@Override
+			public void emit(Emitter emitter, int index, float x, float y){
+				LeafParticle p = ((LeafParticle) emitter.recycle(LeafParticle.class));
+				p.color(ColorMath.random(color1, color2));
+				p.reset(x, y);
+			}
+		};
+	}
 	
 	public LeafParticle() {
 		super();
