@@ -21,6 +21,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.*;
 import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.keys.IronKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLevitation;
 import com.shatteredpixel.shatteredpixeldungeon.levels.SewerLevel;
 import com.shatteredpixel.shatteredpixeldungeon.plants.CustomPlant;
@@ -355,7 +356,8 @@ public class ParseThread implements Callable<String> {
             IronKey.curDepthQuantity = uiObject.optInt("iron_keys_count", uiObject.optInt("iron_key_count", -20));
         }
         if (uiObject.has("resume_button_visible")) {
-            hero.resume_button_visible = uiObject.optBoolean("resume_button_visible");
+            //TODO: might remove this
+            //hero.resume_button_visible = uiObject.optBoolean("resume_button_visible");
         }
         if (uiObject.has("cell_listener_prompt")) {
             GameScene.defaultCellListener.setCustomPrompt(uiObject.optString("cell_listener_prompt", null));
