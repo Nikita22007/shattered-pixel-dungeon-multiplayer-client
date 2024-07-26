@@ -1,176 +1,243 @@
 package com.shatteredpixel.shatteredpixeldungeon.scenes;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
-import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
-import com.shatteredpixel.shatteredpixeldungeon.network.Scanner;
-import com.shatteredpixel.shatteredpixeldungeon.network.ServerInfo;
+import com.shatteredpixel.shatteredpixeldungeon.network.NetworkScanner;
+import com.shatteredpixel.shatteredpixeldungeon.network.scanners.ServerInfo;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.ui.*;
-import com.watabou.noosa.*;
+import com.shatteredpixel.shatteredpixeldungeon.ui.Archs;
+import com.shatteredpixel.shatteredpixeldungeon.ui.ExitButton;
+import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
+import com.shatteredpixel.shatteredpixeldungeon.windows.WndConnectServer;
+import com.shatteredpixel.shatteredpixeldungeon.windows.WndError;
+import com.watabou.noosa.BitmapText;
+import com.watabou.noosa.BitmapTextMultiline;
+import com.watabou.noosa.Camera;
+import com.watabou.noosa.Gizmo;
+import com.watabou.noosa.Group;
+import com.watabou.noosa.Scene;
 import com.watabou.noosa.audio.Music;
+
+import java.util.ArrayList;
 
 
 /* TODO
-    * Add UpdateButton
-    * Add Next/Previous buttons to navigate on server  menu
-    * TABLE_SIZE should be calculated based on the height of the screen
-*/
+ * Add UpdateButton
+ * Add Next/Previous buttons to navigate on server  menu
+ * TABLE_SIZE should be calculated based on the height of the screen
+ */
 
-public class ConnectScene extends PixelScene {
+public class ConnectScene extends PixelScene implements NetworkScanner.NetworkScannerListener {
 
-    private static final int DEFAULT_COLOR = 0xCCCCCC;
-    private static final int TABLE_SIZE = 6;
+    private static final int DEFAULT_COLOR	= 0xCCCCCC;
+    private static final int TABLE_SIZE=6;
 
-    private static final String TXT_TITLE = "Servers";
-    private static final String TXT_NO_GAMES = "No servers found.";
-    private static final String TXT_ERROR = "Servers search error.";
+    private static final String TXT_TITLE		= "Servers";
+    private static final String TXT_NO_GAMES	= "No servers found.";
+    private static final String TXT_ERROR	    = "Server search is not started properly. Some servers may not be found.";
+    private static final String TXT_SEARCHING	= "Searching...";
+    private static final String TXT_WIFI_DISABLED	= "WI-FI is not connected.";
 
-    private static final float ROW_HEIGHT_L = 22;
-    private static final float ROW_HEIGHT_P = 28;
+    private static final float ROW_HEIGHT_L	= 22;
+    private static final float ROW_HEIGHT_P	= 28;
 
-    private static final float MAX_ROW_WIDTH = 180;
+    private static final float MAX_ROW_WIDTH	= 180;
 
-    private static final float GAP = 4;
+    private static final float GAP	= 4;
 
     private Archs archs;
 
-    private int page;//Page of servers
+    private Group page;
+    private ArrayList<Record> rows  = new ArrayList<>();
+    private BitmapText title;
+    private int width;
+    private int height;
 
+    public void CreateCenterText(int cameraWidth, int cameraHeight,String text){
+        BitmapText title = PixelScene.createText( text, 8 );
+        title.hardlight( DEFAULT_COLOR );
+        title.measure();
+        title.x = align( (cameraWidth - title.width()) / 2 );
+        title.y = align( (cameraHeight - title.height()) / 2 );
+        add( title );
+    }
+
+    protected void drawServers(){
+
+        ServerInfo[] serverList;
+        if (title!=null) {
+            title.kill();
+        }
+        for (Record row:rows) {
+            row.kill();
+        }
+        List<ServerInfo> list;
+        list= NetworkScanner.getServerList();
+        serverList=list.toArray(new ServerInfo[0]); //Todo use only List<?>
+        if (serverList.length > 0) {
+
+            float rowHeight = PixelDungeon.landscape() ? ROW_HEIGHT_L : ROW_HEIGHT_P;
+
+            float left = (width - Math.min(MAX_ROW_WIDTH, width)) / 2 + GAP;
+            float top = align((height - rowHeight * Math.min(serverList.length,TABLE_SIZE)) / 2);
+
+            title = PixelScene.createText(TXT_TITLE, 9);
+            title.hardlight(Window.TITLE_COLOR);
+            title.measure();
+            title.x = align((width - title.width()) / 2);
+            title.y = align(top - title.height() - GAP);
+            add(title);
+
+            int pos = 0;
+
+            for (int i = 0; i < Math.min(serverList.length,TABLE_SIZE); i += 1) {
+                Record row = new Record(pos, false, serverList[i], this);
+                row.setRect(left, top + pos * rowHeight, width - left * 2, rowHeight);
+                add(row);
+                rows.add(row);
+                pos++;
+            }
+
+            if (serverList.length > TABLE_SIZE) {
+                //todo previous/next
+            }
+
+        } else {
+
+            title = PixelScene.createText(TXT_SEARCHING, 8);
+            title.hardlight(DEFAULT_COLOR);
+            title.measure();
+            title.x = align((width - title.width()) / 2);
+            title.y = align((height - title.height()) / 2);
+            add(title);
+
+        }
+
+    }
     @Override
     public void create() {
 
         super.create();
 
-        Music.INSTANCE.play(Assets.Music.THEME_1, true);
-        Music.INSTANCE.volume(1f);
+        Music.INSTANCE.play( Assets.THEME, true );
+        Music.INSTANCE.volume( 1f );
 
         uiCamera.visible = false;
 
-        int w = Camera.main.width;
-        int h = Camera.main.height;
+        width = Camera.main.width;
+        height = Camera.main.height;
 
         archs = new Archs();
-        archs.setSize(w, h);
-        add(archs);
-
-        ServerInfo[] serverList = Scanner.getServerList();
-        if (serverList == null) {
-
-            BitmapText title = new BitmapText();
-            title.height = 8;
-            title.text(TXT_ERROR);
-            title.hardlight(DEFAULT_COLOR);
-            title.measure();
-            title.x = align((w - title.width()) / 2);
-            title.y = align((h - title.height()) / 2);
-            add(title);
-
-        } else {
-            if (serverList.length > 0) {
-
-                float rowHeight = SPDSettings.landscape() ? ROW_HEIGHT_L : ROW_HEIGHT_P;
-
-                float left = (w - Math.min(MAX_ROW_WIDTH, w)) / 2 + GAP;
-                float top = align((h - rowHeight * serverList.length) / 2);
-
-                BitmapText title = new BitmapText();
-                title.height = 9;
-                title.text(TXT_TITLE);
-                title.hardlight(Window.TITLE_COLOR);
-                title.measure();
-                title.x = align((w - title.width()) / 2);
-                title.y = align(top - title.height() - GAP);
-                add(title);
-
-                int pos = 0;
-
-                for (int i = 0; i < TABLE_SIZE; i += 1) {
-                    Record row = new Record(pos, false, serverList[i], this);
-                    row.setRect(left, top + pos * rowHeight, w - left * 2, rowHeight);
-                    add(row);
-
-                    pos++;
-                }
-
-                if (serverList.length > TABLE_SIZE) {
-                    //todo previous/next
-                }
-
+        archs.setSize(width, height);
+        add( archs );
+        //  if (!NSD.isWifiConnected()){
+        //    CreateCenterText(width, height,TXT_WIFI_DISABLED);
+        //} else
+        {
+            if (!NetworkScanner.start(this)) {
+                Window wnd = new WndError(TXT_ERROR);
+                addToFront(wnd);
+                bringToFront(wnd);
+                needRedraw = true;
             } else {
-
-                BitmapText title = new BitmapText();
-                title.height = 8;
-                title.text(TXT_NO_GAMES);
-                title.hardlight(DEFAULT_COLOR);
-                title.measure();
-                title.x = align((w - title.width()) / 2);
-                title.y = align((h - title.height()) / 2);
-                add(title);
-
+                drawServers();
             }
         }
-        ExitButton btnExit = new ExitButton();
-        btnExit.setPos(Camera.main.width - btnExit.width(), 0);
-        add(btnExit);
+        ExitButton btnExit = new ExitButton(){
+            @Override
+            public void onClick(){ onBackPressed(); }
+        };
+        btnExit.setPos( Camera.main.width - btnExit.width(), 0 );
+        add( btnExit );
 
         fadeIn();
     }
 
     @Override
     protected void onBackPressed() {
-        ShatteredPixelDungeon.switchNoFade(TitleScene.class);
+        NetworkScanner.stop();
+        PixelDungeon.switchNoFade( TitleScene.class );
+    }
+
+    private boolean needRedraw = false;
+    public Window showWindow = null;
+
+    @Override
+    public void update() {
+        super.update();
+        if (showWindow!=null){
+            addToFront(showWindow);
+            bringToFront(showWindow);
+            showWindow = null;
+        }
+        else if (needRedraw && !hasWindow()){
+            drawServers();
+            needRedraw = false;
+        }
+    }
+
+    private boolean hasWindow() {
+        for (Gizmo elem: members){
+            if (elem instanceof Window){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void OnServerFound(ServerInfo info) {
+        needRedraw = true;
+    }
+    public void OnServerLost(ServerInfo info) {
+        needRedraw = true;
     }
 
     public static class Record extends Button {
         public Scene ConnectScene;
 
-        private static final float GAP = 4;
+        private static final float GAP	= 4;
 
-        private static final int TEXT_WIN = 0xFFFF88;
-        private static final int TEXT_LOSE = 0xCCCCCC;
-        private static final int FLARE_WIN = 0x888866;
-        private static final int FLARE_LOSE = 0x666666;
+        private static final int TEXT_WIN	= 0xFFFF88;
+        private static final int TEXT_LOSE	= 0xCCCCCC;
+        private static final int FLARE_WIN	= 0x888866;
+        private static final int FLARE_LOSE	= 0x666666;
 
         private ServerInfo rec;
 
         private ItemSprite shield;
         private Flare flare;
         private BitmapText position;
-        private BitmapText desc;
-        private Image classIcon;
+        private BitmapTextMultiline desc;
 
-        public Record(int pos, boolean withFlare, ServerInfo rec, Scene scene) {
+        public Record(int pos, boolean withFlare, ServerInfo rec, Scene scene ) {
             super();
-            this.ConnectScene = scene;
+            this.ConnectScene=scene;
             this.rec = rec;
 
             if (withFlare) {
-                flare = new Flare(6, 24);
+                flare = new Flare( 6, 24 );
                 flare.angularSpeed = 90;
                 //  flare.color( rec.win ? FLARE_WIN : FLARE_LOSE );
-                flare.color(FLARE_WIN);
-                addToBack(flare);
+                flare.color( FLARE_WIN);
+                addToBack( flare );
             }
 
-            position.text(Integer.toString(pos + 1));
+            position.text( Integer.toString( pos+1 ) );
             position.measure();
 
-            desc.text(rec.name);
+            desc.text( rec.name );
             desc.measure();
 
             if (rec.haveChallenges) {
-                shield.view(ItemSpriteSheet.AMULET, null);
-                position.hardlight(TEXT_WIN);
-                desc.hardlight(TEXT_WIN);
+                shield.view(Assets.ITEMS, ItemSpriteSheet.AMULET, null );
+                position.hardlight( TEXT_WIN );
+                desc.hardlight( TEXT_WIN );
             } else {
-                position.hardlight(TEXT_LOSE);
-                desc.hardlight(TEXT_LOSE);
+                shield.view(Assets.ITEMS, ItemSpriteSheet.CHEST, null );
+                position.hardlight( TEXT_LOSE );
+                desc.hardlight( TEXT_LOSE );
             }
-
-            classIcon.copy(Icons.get(Icons.PREFS));
         }
 
         @Override
@@ -178,17 +245,15 @@ public class ConnectScene extends PixelScene {
 
             super.createChildren();
 
-            shield = new ItemSprite(ItemSpriteSheet.CHEST, null);
-            add(shield);
+            shield = new ItemSprite(Assets.ITEMS, ItemSpriteSheet.CHEST, null );
+            add( shield );
 
-            position = new BitmapText(null);
-            add(position);
+            position = new BitmapText( PixelScene.font1x );
+            add( position );
 
-            desc = new BitmapTextMultiline(null);
-            add(desc);
+            desc = createMultiline( 9 );
+            add( desc );
 
-            classIcon = new Image();
-            add(classIcon);
         }
 
         @Override
@@ -199,25 +264,22 @@ public class ConnectScene extends PixelScene {
             shield.x = x;
             shield.y = y + (height - shield.height) / 2;
 
-            position.x = align(shield.x + (shield.width - position.width()) / 2);
-            position.y = align(shield.y + (shield.height - position.height()) / 2 + 1);
+            position.x = align( shield.x + (shield.width - position.width()) / 2 );
+            position.y = align( shield.y + (shield.height - position.height()) / 2 + 1 );
 
             if (flare != null) {
-                flare.point(shield.center());
+                flare.point( shield.center() );
             }
 
-            classIcon.x = align(x + width - classIcon.width);
-            classIcon.y = shield.y;
-
             desc.x = shield.x + shield.width + GAP;
-            desc.width = (int) (classIcon.x - desc.x);
+            //desc.maxWidth = (int)(shield.x - desc.x);
             desc.measure();
             desc.y = position.y + position.baseLine() - desc.baseLine();
         }
 
         @Override
         protected void onClick() {
-            this.ConnectScene.add(new WndConnectServer(rec.name, rec.players, rec.maxPlayers, rec.IP, rec.port));
+            ((ConnectScene)this.ConnectScene).showWindow =  (new WndConnectServer( ConnectScene, rec));
         }
     }
 }
