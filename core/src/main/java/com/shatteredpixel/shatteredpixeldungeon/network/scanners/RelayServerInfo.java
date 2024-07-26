@@ -2,7 +2,6 @@ package com.shatteredpixel.shatteredpixeldungeon.network.scanners;
 
 import com.shatteredpixel.shatteredpixeldungeon.network.NetworkScanner;
 import com.shatteredpixel.shatteredpixeldungeon.network.ServerAddress;
-import com.shatteredpixel.shatteredpixeldungeon.network.ServerInfo;
 
 public class RelayServerInfo extends ServerInfo {
     private int id;

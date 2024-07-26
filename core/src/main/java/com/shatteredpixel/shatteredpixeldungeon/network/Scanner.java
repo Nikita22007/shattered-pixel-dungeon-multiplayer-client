@@ -8,7 +8,7 @@ package com.shatteredpixel.shatteredpixeldungeon.network;
 //TODO ALL ELEMENTS STATIC!!!
 
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
-import com.shatteredpixel.shatteredpixeldungeon.network.ServerInfo;
+import com.shatteredpixel.shatteredpixeldungeon.network.scanners.ServerInfo;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 
 /*TODO LIST

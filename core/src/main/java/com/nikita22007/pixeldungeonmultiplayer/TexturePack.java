@@ -1,6 +1,5 @@
 package com.nikita22007.pixeldungeonmultiplayer;
 
-import android.util.JsonReader;
 
 import com.watabou.utils.Point;
 

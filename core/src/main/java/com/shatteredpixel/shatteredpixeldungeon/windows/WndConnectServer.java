@@ -1,6 +1,5 @@
 package com.shatteredpixel.shatteredpixeldungeon.windows;
 
-import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.network.Client;
 import com.shatteredpixel.shatteredpixeldungeon.network.NetworkScanner;
 import com.shatteredpixel.shatteredpixeldungeon.network.scanners.ServerInfo;
