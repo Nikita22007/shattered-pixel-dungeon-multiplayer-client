@@ -28,10 +28,13 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Reflection;
 
+import java.util.Dictionary;
 import java.util.HashSet;
+import java.util.Hashtable;
 
 public class Buff extends Actor {
-	
+
+	public int buff_id = -1;
 	public Char target;
 
 	{
@@ -65,7 +68,8 @@ public class Buff extends Actor {
 		if (target.isImmune( getClass() )) {
 			return false;
 		}
-		
+
+		all_buffs.put(buff_id, this);
 		this.target = target;
 
 		if (target.add( this )){
@@ -78,6 +82,7 @@ public class Buff extends Actor {
 	}
 	
 	public void detach() {
+		all_buffs.remove(buff_id);
 		if (target.remove( this ) && target.sprite != null) fx( false );
 	}
 	
@@ -184,5 +189,21 @@ public class Buff extends Actor {
 		for ( Buff b : target.buffs( cl )){
 			b.detach();
 		}
+	}
+
+	//network
+	public static Dictionary<Integer, Buff> all_buffs = new Hashtable<>();
+	public static void detach(int id) {
+		detach(all_buffs.get(id));
+	}
+
+	public static void detach( Buff buff ) {
+		if (buff != null) {
+			buff.detach();
+		}
+	}
+
+	public static Buff get(int id) {
+		return all_buffs.get(id);
 	}
 }
