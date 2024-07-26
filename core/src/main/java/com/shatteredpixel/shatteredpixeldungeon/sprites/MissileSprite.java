@@ -37,12 +37,15 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingSp
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingSpike;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Trident;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.watabou.noosa.Visual;
 import com.watabou.noosa.tweeners.PosTweener;
 import com.watabou.noosa.tweeners.Tweener;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -181,5 +184,26 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 		if (callback != null) {
 			callback.call();
 		}
+	}
+	public static void show(JSONObject actionObj) throws JSONException {
+		MissileSprite sprite = (MissileSprite) GameScene.recycleSprite( MissileSprite.class );
+		if (sprite == null){
+			return;
+		}
+
+		Glowing glowing = null;
+		if (!actionObj.isNull("item_glowing")) {
+			glowing = new Glowing(actionObj.getJSONObject("item_glowing"));
+		}
+		sprite.reset(
+				actionObj.getInt("from"),
+				actionObj.getInt("to"),
+				actionObj.getDouble("speed"),
+				actionObj.getDouble("angular_speed"),
+				actionObj.getDouble("angle"),
+				actionObj.optString("item_sprite_sheet", Assets.ITEMS),
+				actionObj.getInt("item_image"),
+				glowing
+		);
 	}
 }
