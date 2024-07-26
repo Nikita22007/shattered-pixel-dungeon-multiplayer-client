@@ -2,7 +2,6 @@ package com.shatteredpixel.shatteredpixeldungeon.network.scanners;
 
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.pixeldungeon.Settings;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,7 +43,7 @@ public class RelaySD extends Thread implements ServiceDiscovery {
         if (!PixelDungeon.useCustomRelay()){
             return Settings.defaultRelayServerAddress;
         }
-        String address = PixelDungeon.customRelayAddress();
+        String address = ShatteredPixelDungeon.customRelayAddress();
         return (!"".equals(address))? address : Settings.defaultRelayServerAddress;
     }
 
