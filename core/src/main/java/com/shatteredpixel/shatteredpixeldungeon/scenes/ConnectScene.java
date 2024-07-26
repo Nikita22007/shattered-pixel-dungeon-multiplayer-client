@@ -6,6 +6,7 @@ import com.shatteredpixel.shatteredpixeldungeon.network.scanners.ServerInfo;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Archs;
+import com.shatteredpixel.shatteredpixeldungeon.ui.Button;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ExitButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndConnectServer;
@@ -19,6 +20,7 @@ import com.watabou.noosa.Scene;
 import com.watabou.noosa.audio.Music;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /* TODO
