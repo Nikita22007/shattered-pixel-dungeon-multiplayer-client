@@ -1123,12 +1123,12 @@ public class ParseThread implements Callable<String> {
             String token = it.next();
             switch (token) {
                 case ("width"): {
-                    if (levelParamsObj.getInt(token) != level.WIDTH)
+                    if (levelParamsObj.getInt(token) != level.width())
                     throw new RuntimeException("unreleased");
                     else break;
                 }
                 case ("height"): {
-                    if (levelParamsObj.getInt(token) != level.HEIGHT)
+                    if (levelParamsObj.getInt(token) != level.height())
                         throw new RuntimeException("unreleased");
                     else break;
                 }
