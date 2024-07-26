@@ -25,6 +25,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Callback;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -193,5 +195,11 @@ public enum Sample {
 	public boolean isEnabled() {
 		return enabled;
 	}
-	
+	public void load( JSONArray assets ) throws JSONException {
+		for (int i = 0; i < assets.length(); i++) {
+			loadingQueue.add( assets.getString(i) );
+		}
+		load();
+	}
+
 }
