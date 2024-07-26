@@ -475,13 +475,15 @@ public abstract class Level implements Bundlable {
 	public int length() {
 		return length;
 	}
-	
+	public String tilesTexture = null;
 	public String tilesTex() {
-		return null;
+		return tilesTexture;
 	}
-	
+	public String waterTexture = null;
+
+
 	public String waterTex() {
-		return null;
+		return waterTexture;
 	}
 	
 	abstract protected boolean build();
