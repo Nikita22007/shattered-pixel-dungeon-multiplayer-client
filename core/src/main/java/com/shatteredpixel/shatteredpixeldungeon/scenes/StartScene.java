@@ -268,19 +268,19 @@ public class StartScene extends PixelScene {
 				ShatteredPixelDungeon.switchScene(HeroSelectScene.class);
 
 		}
-		public static void startNewGame() {
+	}
+	public static void startNewGame() {
 
-			Dungeon.hero = null;
-			SPDSettings.lastClass(curClass.ordinal());
-			InterlevelScene.first_decend = true;
-			InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
-			Game.switchScene( InterlevelScene.class );
-			//if (PixelDungeon.intro()) {
-			//	PixelDungeon.intro( false );
-			//	Game.switchScene( IntroScene.class );
-			//} else {
-			//	Game.switchScene( InterlevelScene.class );
-			//}
-		}
+		Dungeon.hero = null;
+		SPDSettings.lastClass(GamesInProgress.selectedClass.ordinal());
+		InterlevelScene.first_descend = true;
+		InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
+		Game.switchScene( InterlevelScene.class );
+		//if (PixelDungeon.intro()) {
+		//	PixelDungeon.intro( false );
+		//	Game.switchScene( IntroScene.class );
+		//} else {
+		//	Game.switchScene( InterlevelScene.class );
+		//}
 	}
 }

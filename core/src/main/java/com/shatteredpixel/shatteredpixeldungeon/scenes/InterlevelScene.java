@@ -83,7 +83,7 @@ public class InterlevelScene extends PixelScene {
 	}
 	public static volatile Phase phase;
 	private float timeLeft;
-	
+	public static boolean first_descend = false;
 	private RenderedTextBlock message;
 	
 	private static Thread thread;
