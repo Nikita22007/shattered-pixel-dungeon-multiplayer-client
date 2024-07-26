@@ -1045,7 +1045,7 @@ public class ParseThread implements Callable<String> {
 
     protected void parseCell(JSONObject cell) throws JSONException {
         int pos = cell.getInt("position");
-        if ((pos < 0) || (pos >= level.LENGTH)) {
+        if ((pos < 0) || (pos >= level.length())) {
             GLog.n("incorrect cell position: \"%s\". Ignored.", pos);
             return;
         }
@@ -1100,7 +1100,7 @@ public class ParseThread implements Callable<String> {
                     Arrays.fill(Dungeon.visible, false);
                     for (int i = 0; i < positions.length(); i++) {
                         int cell = positions.getInt(i);
-                        if ((cell < 0) || (cell >= level.LENGTH)) {
+                        if ((cell < 0) || (cell >= level.length())) {
                             GLog.n("incorrect visible position: \"%s\". Ignored.", cell);
                             continue;
                         }
