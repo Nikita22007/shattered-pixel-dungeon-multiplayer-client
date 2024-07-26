@@ -1,10 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.network;
 
-import com.watabou.pixeldungeon.PixelDungeon;
-import com.watabou.pixeldungeon.network.scanners.NSD;
-import com.watabou.pixeldungeon.network.scanners.RelaySD;
-import com.watabou.pixeldungeon.network.scanners.ServerInfo;
-import com.watabou.pixeldungeon.network.scanners.ServiceDiscovery.ServiceDiscoveryListener;
+import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
+import com.shatteredpixel.shatteredpixeldungeon.network.scanners.RelaySD;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -14,14 +11,11 @@ import java.util.List;
 public class NetworkScanner {
     protected static NetworkScannerListener scannerListener;
     protected static RelaySD relayServer = null;
-    protected static NSD nsd = null;
 
     public static boolean start(@NotNull NetworkScannerListener scannerListener) {
         initListener();
-        nsd = new NSD();
-        boolean res = nsd.startDiscovery(listener);
         NetworkScanner.scannerListener = scannerListener;
-        if (PixelDungeon.onlineMode()) {
+        if (ShatteredPixelDungeon.onlineMode()) {
             relayServer = new RelaySD();
             relayServer.startDiscovery(listener);
         }
@@ -30,11 +24,7 @@ public class NetworkScanner {
 
     public static boolean stop() {
         boolean res = true;
-        if (nsd != null) {
-            res &= nsd.stopDiscovery();
-        } else {
             res &= true;
-        }
         if (relayServer != null) {
             res &= relayServer.stopDiscovery();
             relayServer = null;
@@ -43,14 +33,10 @@ public class NetworkScanner {
         return res;
     }
 
+    //TODO: remove this?
     public static List<ServerInfo> getServerList() {
-        List<ServerInfo> result = new ArrayList<ServerInfo>(nsd.getServerList());
-        if (relayServer != null) {
-            result.addAll(relayServer.getServerList());
-        }
-        return result;
+        return null;
     }
-
     protected static ServiceDiscoveryListener listener = null;
 
     protected static void initListener() {

@@ -188,4 +188,11 @@ public class ShatteredPixelDungeon extends Game {
 	public static void updateSystemUI() {
 		platform.updateSystemUI();
 	}
+	//TODO: add this to SPDSettings? Might need a toggle for it
+	public static boolean onlineMode(){
+		return true;
+	}
+	public boolean useCustomRelay() {
+		return false;
+	}
 }
