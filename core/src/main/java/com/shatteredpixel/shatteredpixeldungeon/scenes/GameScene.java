@@ -1701,4 +1701,7 @@ public class GameScene extends PixelScene {
 			return null;
 		}
 	};
+	public GameLog getGameLog(){
+		return log;
+	}
 }
