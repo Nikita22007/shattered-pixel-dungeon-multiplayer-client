@@ -73,6 +73,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CustomCharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.DiscardedItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
@@ -907,9 +908,35 @@ public class GameScene extends PixelScene {
 			gases.add( new BlobEmitter( gas ) );
 		}
 	}
-	
+
+	public static void updateCharSprite(Char chr, CharSprite newSprite) {
+		if (scene == null) {
+			newSprite.link(chr);
+			return;
+		}
+		if (chr instanceof Mob) {
+			((Mob) chr).spriteClass = newSprite.getClass();
+			CharSprite oldSprite = chr.sprite;
+			scene.mobs.remove(oldSprite);
+			oldSprite.killAndErase();
+			if (newSprite instanceof CustomCharSprite) {
+				scene.addMobSprite((Mob) chr, newSprite);
+			} else
+			{
+				newSprite.killAndErase();
+				scene.addMobSprite((Mob) chr);
+			}
+		} else {
+			GLog.n("trying on change sprite on char that is not mob");
+		}
+	}
+
 	private synchronized void addMobSprite( Mob mob ) {
 		CharSprite sprite = mob.sprite();
+		addMobSprite(mob, sprite);
+	}
+
+	private synchronized void addMobSprite( Mob mob, CharSprite sprite ) {
 		sprite.visible = Dungeon.level.heroFOV[mob.pos];
 		mobs.add( sprite );
 		sprite.link( mob );

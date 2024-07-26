@@ -28,6 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.TitleScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CustomCharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.GooSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
@@ -1180,7 +1181,7 @@ public class ParseThread implements Callable<String> {
             CharSprite old_sprite = chr.sprite;
             String spriteAsset = actorObj.getString("sprite_asset");
             if ((!(old_sprite instanceof CustomCharSprite)) || (!spriteAsset.equals(((CustomCharSprite) old_sprite).getSpriteAsset()))) {
-                updateCharSprite(chr, new CustomCharSprite(spriteAsset));
+                GameScene.updateCharSprite(chr, new CustomCharSprite(spriteAsset));
             }
         }
         for (Iterator<String> it = actorObj.keys(); it.hasNext(); ) {
