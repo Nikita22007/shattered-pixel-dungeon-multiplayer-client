@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.watabou.noosa.BitmapTextMultiline;
 import com.watabou.noosa.ui.Component;
 import com.watabou.utils.Signal;
 
@@ -173,5 +174,68 @@ public class GameLog extends Component implements Signal.Listener<String> {
 	public static void wipe() {
 		entries.clear();
 		textsToAdd.clear();
+	}
+	public void WriteMessage(String text, int color) {
+
+		if (lastEntry != null && color == lastColor && lastEntry.nLines < MAX_LINES) {
+
+			String lastMessage = lastEntry.text();
+			lastEntry.text( lastMessage.length() == 0 ? text : lastMessage + " " + text );
+			//TODO: check this
+			//lastEntry.measure();
+
+			entries.get( entries.size() - 1 ).text = lastEntry.text();
+
+		} else {
+
+			lastEntry = new RenderedTextBlock( text, 6 );
+			lastEntry.hardlight( color );
+			lastColor = color;
+			add( lastEntry );
+
+			entries.add( new Entry( text, color ) );
+
+		}
+
+		if (length > 0) {
+			int nLines;
+			do {
+				nLines = 0;
+				for (int i = 0; i < length; i++) {
+					nLines += ((BitmapTextMultiline) members.get(i)).nLines;
+				}
+
+				if (nLines > MAX_LINES) {
+					remove(members.get(0));
+
+					entries.remove( 0 );
+				}
+			} while (nLines > MAX_LINES);
+			if (entries.isEmpty()) {
+				lastEntry = null;
+			}
+		}
+
+		layout();
+
+	}
+	public void WriteMessageAutoColor(String text) {
+
+
+		int color = CharSprite.DEFAULT;
+		if (text.startsWith(GLog.POSITIVE)) {
+			text = text.substring(GLog.POSITIVE.length());
+			color = CharSprite.POSITIVE;
+		} else if (text.startsWith(GLog.NEGATIVE)) {
+			text = text.substring(GLog.NEGATIVE.length());
+			color = CharSprite.NEGATIVE;
+		} else if (text.startsWith(GLog.WARNING)) {
+			text = text.substring(GLog.WARNING.length());
+			color = CharSprite.WARNING;
+		} else if (text.startsWith(GLog.HIGHLIGHT)) {
+			text = text.substring(GLog.HIGHLIGHT.length());
+			color = CharSprite.NEUTRAL;
+		}
+		WriteMessage(text,color);
 	}
 }
