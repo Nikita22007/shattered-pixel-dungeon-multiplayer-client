@@ -523,7 +523,7 @@ public class Belongings implements Iterable<Item> {
 			if (slotID < 0) {
 				slotID = -slotID - 1; // special slots are indexed from -1 with negative numbers
 			}
-			switch (slotPath.get(0)) {
+			switch (slotID) {
 				case (0): {
 					return weapon;
 				}
