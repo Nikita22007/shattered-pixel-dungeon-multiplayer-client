@@ -124,7 +124,9 @@ public class HeroCustomSprite extends CharSprite {
         Image avatar = new Image( cl.spritesheet() );
         RectF frame = avatar.texture.uvRect( 1, 0, FRAME_WIDTH, FRAME_HEIGHT );
         //TODO: check this
-        frame.offset( patch.left, patch.top );
+        frame.right += patch.left;
+        frame.bottom += patch.top;
+        //frame.offset( patch.left, patch.top );
         avatar.frame( frame );
 
         return avatar;
