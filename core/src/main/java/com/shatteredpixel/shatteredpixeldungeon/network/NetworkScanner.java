@@ -3,6 +3,7 @@ package com.shatteredpixel.shatteredpixeldungeon.network;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.network.scanners.RelaySD;
 
+import com.shatteredpixel.shatteredpixeldungeon.network.scanners.ServiceDiscovery;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -41,10 +42,20 @@ public class NetworkScanner {
         return result;
     }
 
-    protected static ServiceDiscoveryListener listener = null;
+    protected static ServiceDiscovery.ServiceDiscoveryListener listener = null;
 
     protected static void initListener() {
-        listener = new ServiceDiscoveryListener() {
+        listener = new ServiceDiscovery.ServiceDiscoveryListener() {
+
+            @Override
+            public void onServiceFound(com.shatteredpixel.shatteredpixeldungeon.network.scanners.ServerInfo info) {
+
+            }
+
+            @Override
+            public void onServiceLost(com.shatteredpixel.shatteredpixeldungeon.network.scanners.ServerInfo info) {
+
+            }
 
             public void onServiceFound(ServerInfo info) {
                 if (scannerListener != null)
