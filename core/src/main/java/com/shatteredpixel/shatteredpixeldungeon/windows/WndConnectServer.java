@@ -1,7 +1,10 @@
 package com.shatteredpixel.shatteredpixeldungeon.windows;
 
-import com.shatteredpixel.shatteredpixeldungeon.network.ServerInfo;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.StartScene;
+import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
+import com.shatteredpixel.shatteredpixeldungeon.network.Client;
+import com.shatteredpixel.shatteredpixeldungeon.network.NetworkScanner;
+import com.shatteredpixel.shatteredpixeldungeon.network.scanners.ServerInfo;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.watabou.noosa.BitmapTextMultiline;
@@ -11,28 +14,24 @@ public class WndConnectServer extends Window {
     private static final int WIDTH			= 120;
     private static final int MARGIN 		= 2;
     private static final int BUTTON_HEIGHT	= 20;
-    private String IP;
-    private int port;
+    private ServerInfo serverInfo;
     private Scene scene;
 
-    private String generateMessage(int players, int playersMax,String IP, int port){
+    private String generateMessage(int players, int playersMax){
         String message="Players: ";
         message+=(players>-1)?players:"?";
         message+='/';
         message+=(playersMax>-1)?playersMax:"?";
         message+='\n';
-        message+=IP+':'+port;
+        //message+=IP+':'+port;
         return message;
     }
     public WndConnectServer(Scene scene, ServerInfo server){
         super();
-        this.IP= server.IP;
-        this.port=server.port;
+        this.serverInfo = server;
         this.scene=scene;
 
-        BitmapTextMultiline tfTitle = new BitmapTextMultiline(null);
-        tfTitle.text(server.name);
-        tfTitle.height = 9;
+        BitmapTextMultiline tfTitle = new BitmapTextMultiline(server.name, PixelScene.pixelFont);
         tfTitle.hardlight( TITLE_COLOR );
         tfTitle.x = tfTitle.y = MARGIN;
         tfTitle.maxWidth = WIDTH - MARGIN * 2;
@@ -40,7 +39,7 @@ public class WndConnectServer extends Window {
         tfTitle.x= (tfTitle.maxWidth-tfTitle.width()) / 2 ;
         add( tfTitle );
 
-        BitmapTextMultiline tfMesage = PixelScene.createMultiline( generateMessage(server.players,server.maxPlayers,IP,port), 8 );
+        BitmapTextMultiline tfMesage = new BitmapTextMultiline(server.name, PixelScene.pixelFont);
         tfMesage.maxWidth = WIDTH - MARGIN * 2;
         tfMesage.measure();
         tfMesage.x = MARGIN;
@@ -95,15 +94,14 @@ public class WndConnectServer extends Window {
     }
     //Fixme delete this function
     protected void onSelect( int index ) {
-        if (index==1){ //
-            //TODO connect
-            if (!Client.connect(IP,port)){
+        if (index == 1) {
+            if (!Client.connect(serverInfo)) {
                 scene.add(new WndError("Can't connect"));
-            }else{
+            } else {
                 NetworkScanner.stop();
-                //StartScene.startNewGame();
+                //FIXME
+                StartScene.startNewGame();
             }
         }
-
-    };
+    }
 }

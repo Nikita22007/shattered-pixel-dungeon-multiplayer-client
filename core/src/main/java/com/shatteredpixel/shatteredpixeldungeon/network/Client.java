@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.network;
 
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
+import com.shatteredpixel.shatteredpixeldungeon.network.scanners.ServerInfo;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.pixeldungeon.network.NetworkPacket;
 
