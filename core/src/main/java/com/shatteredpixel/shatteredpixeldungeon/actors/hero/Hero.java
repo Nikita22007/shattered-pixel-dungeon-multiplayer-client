@@ -841,7 +841,7 @@ public class Hero extends Char {
 		ready = false;
 	}
 	
-	private void ready() {
+	public void ready() {
 		if (sprite.looping()) sprite.idle();
 		curAction = null;
 		damageInterrupt = true;
