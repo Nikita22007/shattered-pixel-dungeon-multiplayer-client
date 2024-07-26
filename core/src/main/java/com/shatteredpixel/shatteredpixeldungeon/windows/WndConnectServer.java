@@ -4,6 +4,7 @@ import com.shatteredpixel.shatteredpixeldungeon.network.Client;
 import com.shatteredpixel.shatteredpixeldungeon.network.NetworkScanner;
 import com.shatteredpixel.shatteredpixeldungeon.network.scanners.ServerInfo;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.StartScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.watabou.noosa.BitmapTextMultiline;
