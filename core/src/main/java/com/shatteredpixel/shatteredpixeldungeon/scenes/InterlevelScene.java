@@ -81,7 +81,7 @@ public class InterlevelScene extends PixelScene {
 	public enum Phase {
 		FADE_IN, STATIC, FADE_OUT
 	}
-	public Phase phase;
+	public static volatile Phase phase;
 	private float timeLeft;
 	
 	private RenderedTextBlock message;
