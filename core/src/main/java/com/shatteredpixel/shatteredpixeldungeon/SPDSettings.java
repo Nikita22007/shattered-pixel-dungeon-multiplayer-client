@@ -454,9 +454,9 @@ public class SPDSettings extends GameSettings {
 		return getBoolean( KEY_WINDOW_MAXIMIZED, false );
 	}
 	// Will add buttons for changing these in the future
-	public static int defaultRelayServerPort = 25556;
+	public static final int defaultRelayServerPort = 14545;
 	public static int customRelayPort(){
-		return 25556;
+		return defaultRelayServerPort;
 	}
 	public static String defaultRelayServerAddress = "95.43.142.107";
 	public static String customRelayAddress(){
