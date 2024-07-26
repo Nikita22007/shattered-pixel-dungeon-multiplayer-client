@@ -74,7 +74,7 @@ public class Skeleton extends Mob {
 				//armor is 2x effective against bone explosion
 				damage = Math.max( 0,  damage - (ch.drRoll() + ch.drRoll()) );
 				ch.damage( damage, this );
-				if (ch instanceof Hero && !ch.isAlive()) {
+				if (ch instanceof Hero && !ch.isAlive()) { //todo check it
 					heroKilled = true;
 				}
 			}

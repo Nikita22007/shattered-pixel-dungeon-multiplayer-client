@@ -15,18 +15,18 @@ public class NetworkScanner {
     protected static RelaySD relayServer = null;
 
     public static boolean start(@NotNull NetworkScannerListener scannerListener) {
+        boolean res = true;
         initListener();
         NetworkScanner.scannerListener = scannerListener;
         if (ShatteredPixelDungeon.onlineMode()) {
             relayServer = new RelaySD();
-            relayServer.startDiscovery(listener);
+            res &= relayServer.startDiscovery(listener);
         }
         return res;
     }
 
     public static boolean stop() {
         boolean res = true;
-            res &= true;
         if (relayServer != null) {
             res &= relayServer.stopDiscovery();
             relayServer = null;
@@ -36,7 +36,8 @@ public class NetworkScanner {
     }
 
     public static List<ServerInfo> getServerList() {
-        List<ServerInfo> result = new ArrayList<ServerInfo>(nsd.getServerList());
+        List<ServerInfo> result = new ArrayList<ServerInfo>();
+        //result.addAll(nsd.getServerList());
         if (relayServer != null) {
             result.addAll(relayServer.getServerList());
         }

@@ -111,7 +111,7 @@ public class Warlock extends Mob implements Callback {
 		Char enemy = this.enemy;
 		if (hit( this, enemy, true )) {
 			//TODO would be nice for this to work on ghost/statues too
-			if (enemy instanceof Hero && Random.Int( 2 ) == 0) {
+			if (enemy instanceof Hero && Random.Int( 2 ) == 0) { //todo check it
 				Buff.prolong( enemy, Degrade.class, Degrade.DURATION );
 				Sample.INSTANCE.play( Assets.Sounds.DEBUFF );
 			}
