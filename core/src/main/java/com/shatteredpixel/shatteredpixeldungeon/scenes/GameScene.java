@@ -975,7 +975,12 @@ public class GameScene extends PixelScene {
 
 		addToFront( banner );
 	}
-	
+
+	public static void showBannerStatic(Banner banner) {
+		if (scene != null) {
+			scene.showBanner(banner);
+		}
+	}
 	// -------------------------------------------------------
 
 	public static void add( Plant plant ) {

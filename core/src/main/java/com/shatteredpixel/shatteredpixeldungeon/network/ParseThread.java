@@ -807,6 +807,9 @@ public class ParseThread implements Callable<String> {
 
     @Deprecated
     private void parseDegradationAction(JSONObject actionObj) {
+        if (true) {
+            throw new RuntimeException("Depreacated");
+        }
         try {
             PointF point = new PointF((float) actionObj.getDouble("position_x"), (float) actionObj.getDouble("position_y"));
             JSONArray array = actionObj.getJSONArray("matrix");
@@ -828,7 +831,7 @@ public class ParseThread implements Callable<String> {
 
             Banner banner = new Banner(BannerSprites.get(bannerType));
             banner.show(actionObj.getInt("color"), (float) actionObj.getDouble("fade_time"), (float) actionObj.getDouble("fade_time"));
-            //GameScene.showBannerStatic(banner);
+            GameScene.showBannerStatic(banner);
         } catch (JSONException e) {
             GLog.n("Incorrect BannerShowAction action " + e.getMessage());
         }
