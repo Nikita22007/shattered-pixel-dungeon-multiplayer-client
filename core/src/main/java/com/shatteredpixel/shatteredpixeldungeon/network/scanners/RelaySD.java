@@ -1,5 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.network.scanners;
 
+import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 
@@ -33,18 +34,18 @@ public class RelaySD extends Thread implements ServiceDiscovery {
 
     private int getRelayPort(){
         if (!ShatteredPixelDungeon.useCustomRelay()){
-            return Settings.defaultRelayServerPort;
+            return SPDSettings.defaultRelayServerPort;
         }
-        int port = PixelDungeon.customRelayPort();
-        return (port != 0)? port: Settings.defaultRelayServerPort;
+        int port = SPDSettings.customRelayPort();
+        return (port != 0)? port: SPDSettings.defaultRelayServerPort;
     }
 
     static String getRelayAddress(){
-        if (!PixelDungeon.useCustomRelay()){
-            return Settings.defaultRelayServerAddress;
+        if (!ShatteredPixelDungeon.useCustomRelay()){
+            return SPDSettings.defaultRelayServerAddress;
         }
-        String address = ShatteredPixelDungeon.customRelayAddress();
-        return (!"".equals(address))? address : Settings.defaultRelayServerAddress;
+        String address = SPDSettings.customRelayAddress();
+        return (!"".equals(address))? address : SPDSettings.defaultRelayServerAddress;
     }
 
     public void run() {

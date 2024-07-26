@@ -192,7 +192,7 @@ public class ShatteredPixelDungeon extends Game {
 	public static boolean onlineMode(){
 		return true;
 	}
-	public boolean useCustomRelay() {
+	public static boolean useCustomRelay() {
 		return false;
 	}
 }
