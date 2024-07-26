@@ -881,4 +881,34 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 			visual.shadowOffset = 0.25f - hVal*0.8f;
 		}
 	}
+	public void setEmo(JSONObject emoObj) {
+		if (!emoObj.has("type")) {
+			removeEmo();
+			return;
+		}
+		String emoType = emoObj.optString("type");
+		if (!"default".equals(emoType))
+		{
+			//todo
+			GLog.h("Unknown emo type: " + emoType + ". ID: " + (ch == null? "null": ch.id()));
+			showAlert();
+			return;
+		}
+		String emotion = emoObj.optString("emotion");
+		switch (emotion){
+			case "alert": showAlert(); break;
+			case "sleep": showSleep(); break;
+			default: {
+				GLog.h("Unknown emo: " + emotion + ". ID: " + (ch == null? "null": ch.id()));
+				showAlert();
+			}break; //todo
+		}
+	}
+	protected void removeEmo() {
+		if (emo != null) {
+			emo.killAndErase();
+		}
+		emo = null;
+	}
+
 }
