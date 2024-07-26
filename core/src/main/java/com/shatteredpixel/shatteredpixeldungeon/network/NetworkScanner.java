@@ -33,10 +33,14 @@ public class NetworkScanner {
         return res;
     }
 
-    //TODO: remove this?
     public static List<ServerInfo> getServerList() {
-        return null;
+        List<ServerInfo> result = new ArrayList<ServerInfo>(nsd.getServerList());
+        if (relayServer != null) {
+            result.addAll(relayServer.getServerList());
+        }
+        return result;
     }
+
     protected static ServiceDiscoveryListener listener = null;
 
     protected static void initListener() {
