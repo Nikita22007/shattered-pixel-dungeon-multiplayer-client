@@ -1709,5 +1709,23 @@ public class GameScene extends PixelScene {
 			scene.add(group);
 		}
 	}
+	//TODO: check all of this
+	private static int updateFlags;
 
+	public enum UpdateFlags {
+		AFTER_OBSERVE(1);
+		private int id;
+
+		UpdateFlags(int _id) {
+			id = _id;
+		}
+
+		public int getId() {
+			return id;
+		}
+	}
+
+	public static void setFlag(UpdateFlags flag) {
+		updateFlags = updateFlags | flag.getId();
+	}
 }
