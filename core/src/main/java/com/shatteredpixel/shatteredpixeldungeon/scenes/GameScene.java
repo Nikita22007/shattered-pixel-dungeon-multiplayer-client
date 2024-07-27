@@ -143,6 +143,7 @@ import com.watabou.utils.Point;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 import com.watabou.utils.RectF;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -1727,5 +1728,12 @@ public class GameScene extends PixelScene {
 
 	public static void setFlag(UpdateFlags flag) {
 		updateFlags = updateFlags | flag.getId();
+	}
+	@Nullable
+	public static Gizmo recycleSprite(@Nullable Class<? extends Gizmo> clazz){
+		if (scene != null) {
+			return scene.recycle(clazz);
+		}
+		return null;
 	}
 }
