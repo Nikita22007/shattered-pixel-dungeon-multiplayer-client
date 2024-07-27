@@ -1006,7 +1006,8 @@ public class ParseThread implements Callable<String> {
                 return PurpleParticle.MISSILE;
             case "purple_burst":
                 return PurpleParticle.BURST;
-            case "sartificial":
+                //TODO update server
+            case "sacrificial":
                 return SacrificialParticle.FACTORY;
             case "shadow_missile":
                 return ShadowParticle.MISSILE;
