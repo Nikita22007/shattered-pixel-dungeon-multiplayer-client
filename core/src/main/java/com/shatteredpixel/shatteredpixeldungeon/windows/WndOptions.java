@@ -21,13 +21,25 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.windows;
 
+import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
+import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
+import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CustomCharSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.IconButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
+import com.watabou.noosa.BitmapTextMultiline;
 import com.watabou.noosa.Image;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import static com.shatteredpixel.shatteredpixeldungeon.network.ParseThread.ToPascalCase;
 
 public class WndOptions extends Window {
 
@@ -134,5 +146,83 @@ public class WndOptions extends Window {
 
 	protected Image getIcon( int index ) {
 		return null;
+	}
+	public WndOptions(int id, String title, String message, String... options ) {
+		this(title, message, options);
+		this.id =  id;
+	}
+	public WndOptions(int id, JSONObject args) throws JSONException {
+		this.id = id;
+		Image image = null;
+		JSONArray optionsArr = args.getJSONArray("options");
+		String[] options = new String[optionsArr.length()];
+		for (int i = 0; i < optionsArr.length(); i += 1) {
+			options[i] = optionsArr.getString(i);
+		}
+		String title = args.getString("title");
+		int titleColor = args.optInt("title_color", TITLE_COLOR);
+		String text = args.getString("message");
+		if (args.has("item"))
+		{
+			image = new ItemSprite(CustomItem.createItem(args.getJSONObject("item")));
+		} else if (args.has("sprite_asset")) {
+			image = new CustomCharSprite(args.getString("sprite_asset"));
+		} else if (args.has("sprite_class")) {
+
+			image = CharSprite.spriteFromClass(
+					CharSprite.spriteClassFromName(
+							ToPascalCase(args.getString("sprite_class")
+							), true)
+			);
+		}
+		Create(image, titleColor, title, text, options);
+	}
+	protected void Create(Image image, Integer titleColor, String title, String message, String... options ) {
+		float pos;
+		if (image == null) {
+			BitmapTextMultiline tfTitle = new BitmapTextMultiline(title, PixelScene.pixelFont);
+			tfTitle.height = 9;
+			tfTitle.hardlight(TITLE_COLOR);
+			tfTitle.x = tfTitle.y = MARGIN;
+			tfTitle.maxWidth = width - MARGIN * 2;
+			tfTitle.measure();
+			add(tfTitle);
+			pos = tfTitle.y + tfTitle.height() + MARGIN;
+		}
+		else {
+			IconTitle titlebar = new IconTitle();
+			titlebar.icon( image );
+			titlebar.label( title );
+			titlebar.color( titleColor );
+			titlebar.setRect( 0, 0, width, 0 );
+			add( titlebar );
+			pos = titlebar.bottom() + MARGIN;
+		}
+		BitmapTextMultiline tfMesage = new BitmapTextMultiline(message, PixelScene.pixelFont);
+		tfMesage.height = 8;
+		tfMesage.maxWidth = width - MARGIN * 2;
+		tfMesage.measure();
+		tfMesage.x = MARGIN;
+		tfMesage.y = pos;
+		add( tfMesage );
+
+		pos = tfMesage.y + tfMesage.height() + MARGIN;
+
+		for (int i=0; i < options.length; i++) {
+			final int index = i;
+			RedButton btn = new RedButton( options[i] ) {
+				@Override
+				protected void onClick() {
+					hide();
+					onSelect( index );
+				}
+			};
+			btn.setRect( MARGIN, pos, width - MARGIN * 2, BUTTON_HEIGHT );
+			add( btn );
+
+			pos += BUTTON_HEIGHT + MARGIN;
+		}
+
+		resize( width, (int)pos );
 	}
 }
