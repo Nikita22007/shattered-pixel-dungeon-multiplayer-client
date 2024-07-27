@@ -30,7 +30,10 @@ public class WndMessage extends Window {
 	private static final int WIDTH_P = 120;
 	private static final int WIDTH_L = 144;
 	private static final int MARGIN = 4;
-	
+	public WndMessage(int id, String text ) {
+		this(text);
+		this.id = id;
+	}
 	public WndMessage( String text ) {
 		
 		super();
