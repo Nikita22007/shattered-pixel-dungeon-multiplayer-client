@@ -82,7 +82,7 @@ public class ConnectScene extends PixelScene implements NetworkScanner.NetworkSc
         serverList=list.toArray(new ServerInfo[0]); //Todo use only List<?>
         if (serverList.length > 0) {
 
-            float rowHeight = SPDSettings.landscape() ? ROW_HEIGHT_L : ROW_HEIGHT_P;
+            float rowHeight = PixelScene.landscape() ? ROW_HEIGHT_L : ROW_HEIGHT_P;
 
             float left = (width - Math.min(MAX_ROW_WIDTH, width)) / 2 + GAP;
             float top = align((height - rowHeight * Math.min(serverList.length,TABLE_SIZE)) / 2);
