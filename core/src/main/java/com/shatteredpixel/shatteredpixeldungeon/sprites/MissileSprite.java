@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.sprites;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GnollGeomancer;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -201,9 +202,30 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 				actionObj.getDouble("speed"),
 				actionObj.getDouble("angular_speed"),
 				actionObj.getDouble("angle"),
-				actionObj.optString("item_sprite_sheet", Assets.ITEMS),
+				actionObj.optString("item_sprite_sheet", Assets.Sprites.ITEMS),
 				actionObj.getInt("item_image"),
 				glowing
 		);
 	}
+	private void reset(int from, int to, double SPEED, double angular_speed, double angle, String spriteSheet, int image, Glowing glowing) {
+		revive();
+
+		view(spriteSheet, image, glowing );
+
+		this.callback = null;
+
+		point( DungeonTilemap.tileToWorld( from ) );
+		PointF dest = DungeonTilemap.tileToWorld( to );
+
+		PointF d = PointF.diff( dest, point() );
+		this.speed.set( d ).normalize().scale( (float)SPEED );
+
+		this.angularSpeed = (float)angular_speed;
+		this.angle = (float) angle;
+
+		PosTweener tweener = new PosTweener( this, dest, d.length() / (float)SPEED );
+		tweener.listener = this;
+		parent.add( tweener );
+	}
+
 }
