@@ -52,6 +52,7 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -59,6 +60,42 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 public class Heap implements Bundlable {
+	public boolean showsItem;
+	protected int customImage = -1;
+	@Nullable
+	protected String customSpriteSheet = null;
+
+	public int getCustomImage() {
+		return customImage;
+	}
+
+	public void setCustomImage(int customImage) {
+		if (customImage == this.customImage) {
+			return;
+		}
+		this.customImage = customImage;
+	}
+
+	public String spriteSheet() {
+		if (getCustomSpriteSheet() != null){
+			return getCustomSpriteSheet();
+		}
+		switch (type) {
+			case HEAP:
+			case FOR_SALE:
+				return size() > 0 ? items.peek().spriteSheet() : Assets.Sprites.ITEMS;
+			default:
+				return Assets.Sprites.ITEMS;
+		}
+	}
+
+	private String getCustomSpriteSheet() {
+		return customSpriteSheet;
+	}
+
+	public void setCustomSpriteSheet(String visibleSpriteSheet) {
+		customSpriteSheet = visibleSpriteSheet;
+	}
 	
 	public enum Type {
 		HEAP,

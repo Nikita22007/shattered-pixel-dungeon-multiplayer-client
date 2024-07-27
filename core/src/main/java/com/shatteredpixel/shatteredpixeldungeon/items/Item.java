@@ -56,6 +56,10 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class Item implements Bundlable {
+	protected String spriteSheet = Assets.Sprites.ITEMS;
+	public String spriteSheet() {
+		return this.spriteSheet;
+	}
 
 	protected static final String TXT_TO_STRING_LVL		= "%s %+d";
 	protected static final String TXT_TO_STRING_X		= "%s x%d";
