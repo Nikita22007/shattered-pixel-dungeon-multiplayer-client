@@ -1704,4 +1704,10 @@ public class GameScene extends PixelScene {
 	public GameLog getGameLog(){
 		return log;
 	}
+	public static void addGroup(Group group) {
+		if (scene != null) {
+			scene.add(group);
+		}
+	}
+
 }

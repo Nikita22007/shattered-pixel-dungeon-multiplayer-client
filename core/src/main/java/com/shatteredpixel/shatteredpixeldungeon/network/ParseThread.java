@@ -811,12 +811,13 @@ public class ParseThread implements Callable<String> {
             throw new RuntimeException("Depreacated");
         }
         try {
-            PointF point = new PointF((float) actionObj.getDouble("position_x"), (float) actionObj.getDouble("position_y"));
-            JSONArray array = actionObj.getJSONArray("matrix");
-            int[] matrix = new int[array.length()];
-            for (int i = 0; i < matrix.length; i++) {
-                matrix[i] = array.getInt(i);
-            }
+            //TODO: chceck if any of this is needed
+//            PointF point = new PointF((float) actionObj.getDouble("position_x"), (float) actionObj.getDouble("position_y"));
+//            JSONArray array = actionObj.getJSONArray("matrix");
+//            int[] matrix = new int[array.length()];
+//            for (int i = 0; i < matrix.length; i++) {
+//                matrix[i] = array.getInt(i);
+//            }
             //int color = actionObj.optInt("color", Degradation.Speck.COLOR);
             //GameScene.add(new Degradation(point, matrix, color));
         } catch (JSONException e) {
