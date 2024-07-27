@@ -36,10 +36,7 @@ import com.watabou.gltextures.SmartTexture;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.glwrap.Matrix;
 import com.watabou.glwrap.Vertexbuffer;
-import com.watabou.noosa.Camera;
-import com.watabou.noosa.Game;
-import com.watabou.noosa.MovieClip;
-import com.watabou.noosa.NoosaScript;
+import com.watabou.noosa.*;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.PointF;
@@ -49,6 +46,7 @@ import org.json.JSONObject;
 
 import java.nio.Buffer;
 
+import static com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet.film;
 import static com.shatteredpixel.shatteredpixeldungeon.ui.Window.WHITE;
 
 public class ItemSprite extends MovieClip {
@@ -236,9 +234,9 @@ public class ItemSprite extends MovieClip {
 	}
 
 	public void frame( int image ){
-		frame( ItemSpriteSheet.film.get( image ));
+		frame( film.get( image ));
 
-		float height = ItemSpriteSheet.film.height( image );
+		float height = film.height( image );
 		//adds extra raise to very short items, so they are visible
 		if (height < 8f){
 			perspectiveRaise =  (5 + 8 - height) / 16f;
@@ -417,5 +415,15 @@ public class ItemSprite extends MovieClip {
 			setColor(color);
 			this.period = period;
 		}
+	}
+	public ItemSprite view(String spriteSheet,  int image, Glowing glowing ) {
+		texture( spriteSheet );
+		film = new TextureFilm(texture, SIZE, SIZE);
+
+		frame( film.get( image ) );
+		if ((this.glowing = glowing) == null) {
+			resetColor();
+		}
+		return this;
 	}
 }
