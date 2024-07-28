@@ -265,7 +265,7 @@ public class Dungeon {
 		branch = 0;
 		generatedLevels.clear();
 
-		hero.gold = 0;
+		//hero.gold = 0;
 		energy = 0;
 
 		droppedItems = new SparseArray<>();
@@ -281,10 +281,10 @@ public class Dungeon {
 
 		hero = new Hero();
 		hero.live();
-		
-		Badges.reset();
-		
-		GamesInProgress.selectedClass.initHero( hero );
+//
+//		Badges.reset();
+//
+//		GamesInProgress.selectedClass.initHero( hero );
 	}
 
 	public static boolean isChallenged( int mask ) {

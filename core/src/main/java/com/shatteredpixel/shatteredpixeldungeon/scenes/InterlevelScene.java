@@ -37,6 +37,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.LevelTransition;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.SpecialRoom;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.ui.GameLog;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.watabou.utils.BArray;
@@ -343,6 +344,7 @@ public class InterlevelScene extends PixelScene {
 	private void descend() throws IOException {
 
 		if (Dungeon.hero == null) {
+			SendData.SendHeroClass(GamesInProgress.selectedClass);
 			Mob.clearHeldAllies();
 			Dungeon.init();
 			GameLog.wipe();
