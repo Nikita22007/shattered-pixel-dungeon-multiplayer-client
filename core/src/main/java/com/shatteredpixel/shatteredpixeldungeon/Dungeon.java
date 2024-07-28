@@ -53,20 +53,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.MimicTooth;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfRegrowth;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfWarding;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
-import com.shatteredpixel.shatteredpixeldungeon.levels.CavesBossLevel;
-import com.shatteredpixel.shatteredpixeldungeon.levels.CavesLevel;
-import com.shatteredpixel.shatteredpixeldungeon.levels.CityBossLevel;
-import com.shatteredpixel.shatteredpixeldungeon.levels.CityLevel;
-import com.shatteredpixel.shatteredpixeldungeon.levels.DeadEndLevel;
-import com.shatteredpixel.shatteredpixeldungeon.levels.HallsBossLevel;
-import com.shatteredpixel.shatteredpixeldungeon.levels.HallsLevel;
-import com.shatteredpixel.shatteredpixeldungeon.levels.LastLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
-import com.shatteredpixel.shatteredpixeldungeon.levels.MiningLevel;
-import com.shatteredpixel.shatteredpixeldungeon.levels.PrisonBossLevel;
-import com.shatteredpixel.shatteredpixeldungeon.levels.PrisonLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.RegularLevel;
-import com.shatteredpixel.shatteredpixeldungeon.levels.SewerBossLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.SewerLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.LevelTransition;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.secret.SecretRoom;
@@ -301,76 +289,9 @@ public class Dungeon {
 		Actor.clear();
 		
 		Level level;
-		if (branch == 0) {
-			switch (depth) {
-				case 1:
-				case 2:
-				case 3:
-				case 4:
-					level = new SewerLevel();
-					break;
-				case 5:
-					level = new SewerBossLevel();
-					break;
-				case 6:
-				case 7:
-				case 8:
-				case 9:
-					level = new PrisonLevel();
-					break;
-				case 10:
-					level = new PrisonBossLevel();
-					break;
-				case 11:
-				case 12:
-				case 13:
-				case 14:
-					level = new CavesLevel();
-					break;
-				case 15:
-					level = new CavesBossLevel();
-					break;
-				case 16:
-				case 17:
-				case 18:
-				case 19:
-					level = new CityLevel();
-					break;
-				case 20:
-					level = new CityBossLevel();
-					break;
-				case 21:
-				case 22:
-				case 23:
-				case 24:
-					level = new HallsLevel();
-					break;
-				case 25:
-					level = new HallsBossLevel();
-					break;
-				case 26:
-					level = new LastLevel();
-					break;
-				default:
-					level = new DeadEndLevel();
-			}
-		} else if (branch == 1) {
-			switch (depth) {
-				case 11:
-				case 12:
-				case 13:
-				case 14:
-					level = new MiningLevel();
-					break;
-				default:
-					level = new DeadEndLevel();
-			}
-		} else {
-			level = new DeadEndLevel();
-		}
+		level = new SewerLevel();
 
 		//dead end levels get cleared, don't count as generated
-		if (!(level instanceof DeadEndLevel)){
 			//this assumes that we will never have a depth value outside the range 0 to 999
 			// or -500 to 499, etc.
 			if (!generatedLevels.contains(depth + 1000*branch)) {
@@ -386,7 +307,7 @@ public class Dungeon {
 					Statistics.completedWithNoKilling = false;
 				}
 			}
-		}
+
 
 		Statistics.qualifiedForBossRemainsBadge = false;
 		
@@ -448,9 +369,7 @@ public class Dungeon {
 	}
 
 	public static boolean interfloorTeleportAllowed(){
-		if (Dungeon.level.locked
-				|| Dungeon.level instanceof MiningLevel
-				|| (Dungeon.hero != null && Dungeon.hero.belongings.getItem(Amulet.class) != null)){
+		if (Dungeon.level.locked || (Dungeon.hero != null && Dungeon.hero.belongings.getItem(Amulet.class) != null)){
 			return false;
 		}
 		return true;
@@ -467,7 +386,7 @@ public class Dungeon {
 		//Place hero at the entrance if they are out of the map (often used for pox = -1)
 		// or if they are in solid terrain (except in the mining level, where that happens normally)
 		if (pos < 0 || pos >= level.length()
-				|| (!(level instanceof MiningLevel) && !level.passable[pos] && !level.avoid[pos])){
+				|| (!level.passable[pos] && !level.avoid[pos])){
 			pos = level.getTransition(null).cell();
 		}
 		

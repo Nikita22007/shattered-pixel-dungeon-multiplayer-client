@@ -80,11 +80,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Ch
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.DeathMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Endure;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.CrystalSpire;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DwarfKing;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Elemental;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GnollGeomancer;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Necromancer;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Tengu;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.MirrorImage;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.PrismaticImage;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
@@ -188,9 +186,7 @@ public abstract class Char extends Actor {
 
 	protected void throwItems(){
 		Heap heap = Dungeon.level.heaps.get( pos );
-		if (heap != null && heap.type == Heap.Type.HEAP
-				&& !(heap.peek() instanceof Tengu.BombAbility.BombItem)
-				&& !(heap.peek() instanceof Tengu.ShockerAbility.ShockerItem)) {
+		if (heap != null && heap.type == Heap.Type.HEAP) {
 			ArrayList<Integer> candidates = new ArrayList<>();
 			for (int n : PathFinder.NEIGHBOURS8){
 				if (Dungeon.level.passable[pos+n]){
@@ -871,8 +867,6 @@ public abstract class Char extends Actor {
 		NO_ARMOR_PHYSICAL_SOURCES.add(GnollGeomancer.Boulder.class);
 		NO_ARMOR_PHYSICAL_SOURCES.add(GnollGeomancer.GnollRockFall.class);
 		NO_ARMOR_PHYSICAL_SOURCES.add(GnollRockfallTrap.class);
-		NO_ARMOR_PHYSICAL_SOURCES.add(DwarfKing.KingDamager.class);
-		NO_ARMOR_PHYSICAL_SOURCES.add(DwarfKing.Summoning.class);
 		NO_ARMOR_PHYSICAL_SOURCES.add(LifeLink.class);
 		NO_ARMOR_PHYSICAL_SOURCES.add(Chasm.class);
 		NO_ARMOR_PHYSICAL_SOURCES.add(WandOfBlastWave.Knockback.class);

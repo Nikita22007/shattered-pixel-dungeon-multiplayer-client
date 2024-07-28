@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.levels.traps;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Tengu;
 
 public class TenguDartTrap extends PoisonDartTrap {
 	
@@ -44,6 +43,6 @@ public class TenguDartTrap extends PoisonDartTrap {
 	
 	@Override
 	protected boolean canTarget(Char ch) {
-		return !(ch instanceof Tengu);
+		return true;
 	}
 }

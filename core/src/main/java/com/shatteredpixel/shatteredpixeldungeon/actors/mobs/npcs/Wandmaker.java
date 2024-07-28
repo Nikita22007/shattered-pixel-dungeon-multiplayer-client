@@ -375,18 +375,10 @@ public class Wandmaker extends NPC {
 			//and...
 			if (type == 1){
 				//hero is in the mass grave room
-				if (((RegularLevel) Dungeon.level).room(Dungeon.hero.pos) instanceof MassGraveRoom) {
 					return true;
-				}
 
 				//or if they are corpse dust cursed
-				for (Buff b : Dungeon.hero.buffs()) {
-					if (b instanceof CorpseDust.DustGhostSpawner) {
-						return true;
-					}
-				}
 
-				return false;
 			} else if (type == 2){
 				//hero has summoned the newborn elemental
 				for (Mob m : Dungeon.level.mobs) {
@@ -396,7 +388,6 @@ public class Wandmaker extends NPC {
 				}
 
 				//or hero is in the ritual room and all 4 candles are with them
-				if (((RegularLevel) Dungeon.level).room(Dungeon.hero.pos) instanceof RitualSiteRoom) {
 					int candles = 0;
 					if (Dungeon.hero.belongings.getItem(CeremonialCandle.class) != null){
 						candles += Dungeon.hero.belongings.getItem(CeremonialCandle.class).quantity();
@@ -407,31 +398,28 @@ public class Wandmaker extends NPC {
 					}
 
 					for (Heap h : Dungeon.level.heaps.valueList()){
-						if (((RegularLevel) Dungeon.level).room(h.pos) instanceof RitualSiteRoom){
 							for (Item i : h.items){
 								if (i instanceof CeremonialCandle){
 									candles += i.quantity();
 								}
 							}
-						}
+
 					}
 
 					if (candles >= 4){
 						return true;
 					}
 
-				}
+
 
 				return false;
 			} else {
 				//hero is in the rot garden room and the rot heart is alive
-				if (((RegularLevel) Dungeon.level).room(Dungeon.hero.pos) instanceof RotGardenRoom) {
 					for (Mob m : Dungeon.level.mobs) {
 						if (m instanceof RotHeart) {
 							return true;
 						}
 					}
-				}
 
 				return false;
 			}

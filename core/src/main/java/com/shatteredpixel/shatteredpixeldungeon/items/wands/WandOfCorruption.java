@@ -57,7 +57,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vulnerable;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Weakness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Bee;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DwarfKing;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Piranha;
@@ -135,9 +134,7 @@ public class WandOfCorruption extends Wand {
 
 			Mob enemy = (Mob) ch;
 
-			if (enemy instanceof DwarfKing){
-				Statistics.qualifiedForBossChallengeBadge = false;
-			}
+
 
 			float corruptingPower = 3 + buffedLvl()/3f;
 			

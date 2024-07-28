@@ -135,7 +135,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWea
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
-import com.shatteredpixel.shatteredpixeldungeon.levels.MiningLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.LevelTransition;
@@ -1709,15 +1708,6 @@ public class Hero extends Char {
 			}
 
 		//TODO perhaps only trigger this if hero is already adjacent? reducing mistaps
-		} else if (Dungeon.level instanceof MiningLevel &&
-					belongings.getItem(Pickaxe.class) != null &&
-				(Dungeon.level.map[cell] == Terrain.WALL
-						|| Dungeon.level.map[cell] == Terrain.WALL_DECO
-						|| Dungeon.level.map[cell] == Terrain.MINE_CRYSTAL
-						|| Dungeon.level.map[cell] == Terrain.MINE_BOULDER)){
-
-			curAction = new HeroAction.Mine( cell );
-
 		} else if (heap != null
 				//moving to an item doesn't auto-pickup when enemies are near...
 				&& (visibleEnemies.size() == 0 || cell == pos ||

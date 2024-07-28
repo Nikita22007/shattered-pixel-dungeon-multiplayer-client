@@ -22,8 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.ui.changelist;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DM300;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DwarfKing;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
@@ -507,7 +505,7 @@ public class v0_8_X_Changes {
 
 		Image i = new Image(new DM300Sprite());
 		i.scale.set(PixelScene.align(0.74f));
-		changes.addButton( new ChangeButton(i, Messages.get(DM300.class, "name"),
+		changes.addButton( new ChangeButton(i, Messages.get("com.shatteredpixel.shatteredpixeldungeon.mobs.DM300.name"),
 				"The DM-300 fight has been reworked! DM-300 now has redesigned abilities, a new boss arena, and multiple phases!\n\n" +
 				"As a part of this rework, DM-300's direct stats have been adjusted:\n" +
 				"_-_ Health increased to 300 from 200\n" +
@@ -522,7 +520,7 @@ public class v0_8_X_Changes {
 				"_Warlocks_ now deal ~21% less damage in melee, but have a nasty new debuff. They inflict 'degraded', which temporarily weakens heavily upgraded gear.\n\n" +
 				"_Golems_ have been entirely reworked and are now large enemies like DM-200s. Unlike DM-200s they have no ranged attacks, but instead use dwarven teleportation magic to compensate for their low mobility."));
 
-		changes.addButton( new ChangeButton(new Image(new KingSprite()), Messages.get(DwarfKing.class, "name"),
+		changes.addButton( new ChangeButton(new Image(new KingSprite()), Messages.get("com.shatteredpixel.shatteredpixeldungeon.mobs.DwarfKing.name"),
 				"The Dwarf King fight has received a full rework! His fight still heavily features minion summoning, but now also features new abilities, a new arena, and multiple phases!\n\n" +
 				"As a part of this fight rework DK's stats have been adjusted:\n" +
 				"_-_ Damage reduced by ~40%\n" +

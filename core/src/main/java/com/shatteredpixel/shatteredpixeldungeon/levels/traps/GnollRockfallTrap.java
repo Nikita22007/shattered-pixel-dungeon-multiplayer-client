@@ -32,7 +32,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GnollGuard;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
-import com.shatteredpixel.shatteredpixeldungeon.levels.MiningLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -56,7 +55,6 @@ public class GnollRockfallTrap extends RockfallTrap {
 		PathFinder.buildDistanceMap( pos, BArray.not( Dungeon.level.solid, null ), 2 );
 		for (int i = 0; i < PathFinder.distance.length; i++) {
 			if (PathFinder.distance[i] < Integer.MAX_VALUE) {
-				if (Dungeon.level instanceof MiningLevel){
 					boolean barricade = false;
 					for (int j : PathFinder.NEIGHBOURS9){
 						if (Dungeon.level.map[i+j] == Terrain.BARRICADE){
@@ -66,7 +64,7 @@ public class GnollRockfallTrap extends RockfallTrap {
 					if (barricade) continue;
 				}
 				rockCells.add(i);
-			}
+
 		}
 
 		boolean seen = false;
@@ -92,7 +90,6 @@ public class GnollRockfallTrap extends RockfallTrap {
 					GLog.n( Messages.get(this, "ondeath") );
 				}
 			} else if (ch == null
-					&& Dungeon.level instanceof MiningLevel
 					&& Dungeon.level.traps.get(cell) == null
 					&& Dungeon.level.plants.get(cell) == null
 					&& Random.Int(2) == 0){

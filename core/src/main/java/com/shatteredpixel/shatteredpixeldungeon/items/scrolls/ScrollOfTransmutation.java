@@ -48,7 +48,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWea
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.TippedDart;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
-import com.shatteredpixel.shatteredpixeldungeon.levels.MiningLevel;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -69,7 +68,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 	protected boolean usableOnItem(Item item) {
 		//all melee weapons, except pickaxe when in a mining level
 		if (item instanceof MeleeWeapon){
-			return !(item instanceof Pickaxe && Dungeon.level instanceof MiningLevel);
+			return !(item instanceof Pickaxe);
 
 		//all missile weapons except untipped darts
 		} else if (item instanceof MissileWeapon){

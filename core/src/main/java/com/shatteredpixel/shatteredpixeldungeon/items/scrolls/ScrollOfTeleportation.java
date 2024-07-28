@@ -137,76 +137,8 @@ public class ScrollOfTeleportation extends Scroll {
 	}
 	
 	public static boolean teleportPreferringUnseen( Hero hero ){
-		
-		if (!(Dungeon.level instanceof RegularLevel)){
-			return teleportInNonRegularLevel( hero, true );
-		}
-		
-		RegularLevel level = (RegularLevel) Dungeon.level;
-		ArrayList<Integer> candidates = new ArrayList<>();
-		
-		for (Room r : level.rooms()){
-			if (r instanceof SpecialRoom){
-				int terr;
-				boolean locked = false;
-				for (Point p : r.getPoints()){
-					terr = level.map[level.pointToCell(p)];
-					if (terr == Terrain.LOCKED_DOOR || terr == Terrain.CRYSTAL_DOOR || terr == Terrain.BARRICADE){
-						locked = true;
-						break;
-					}
-				}
-				if (locked){
-					continue;
-				}
-			}
-			
-			int cell;
-			for (Point p : r.charPlaceablePoints(level)){
-				cell = level.pointToCell(p);
-				if (level.passable[cell] && !level.visited[cell] && !level.secret[cell] && Actor.findChar(cell) == null){
-					candidates.add(cell);
-				}
-			}
-		}
-		
-		if (candidates.isEmpty()){
-			return teleportChar( hero );
-		} else {
-			int pos = Random.element(candidates);
-			boolean secretDoor = false;
-			int doorPos = -1;
-			if (level.room(pos) instanceof SpecialRoom){
-				SpecialRoom room = (SpecialRoom) level.room(pos);
-				if (room.entrance() != null){
-					doorPos = level.pointToCell(room.entrance());
-					for (int i : PathFinder.NEIGHBOURS8){
-						if (!room.inside(level.cellToPoint(doorPos + i))
-								&& level.passable[doorPos + i]
-								&& Actor.findChar(doorPos + i) == null){
-							secretDoor = room instanceof SecretRoom;
-							pos = doorPos + i;
-							break;
-						}
-					}
-				}
-			}
-			GLog.i( Messages.get(ScrollOfTeleportation.class, "tele") );
-			appear( hero, pos );
-			Dungeon.level.occupyCell( hero );
-			Buff.detach(hero, Roots.class);
-			if (secretDoor && level.map[doorPos] == Terrain.SECRET_DOOR){
-				Sample.INSTANCE.play( Assets.Sounds.SECRET );
-				int oldValue = Dungeon.level.map[doorPos];
-				GameScene.discoverTile( doorPos, oldValue );
-				Dungeon.level.discover( doorPos );
-				ScrollOfMagicMapping.discover( doorPos );
-			}
-			Dungeon.observe();
-			GameScene.updateFog();
 			return true;
-		}
-		
+
 	}
 
 	//teleports to a random pathable location on the floor

@@ -32,7 +32,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Doom;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage.WildMagic;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DwarfKing;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.Dewdrop;
@@ -115,9 +114,7 @@ public class WandOfRegrowth extends Wand {
 				}
 				Char ch = Actor.findChar(cell);
 				if (ch != null){
-					if (ch instanceof DwarfKing){
-						Statistics.qualifiedForBossChallengeBadge = false;
-					}
+
 					wandProc(ch, chargesPerCast());
 					Buff.prolong( ch, Roots.class, 4f * chrgUsed );
 				}

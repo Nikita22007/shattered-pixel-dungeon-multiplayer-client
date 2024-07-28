@@ -41,7 +41,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.SandalsOfNature;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Berry;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.PetrifiedSeed;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
-import com.shatteredpixel.shatteredpixeldungeon.levels.MiningLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.watabou.utils.Random;
@@ -114,12 +113,7 @@ public class HighGrass {
 				}
 			}
 
-			//grass gives 1/3 the normal amount of loot in fungi level
-			if (Dungeon.level instanceof MiningLevel
-					&& Blacksmith.Quest.Type() == Blacksmith.Quest.FUNGI
-					&& Random.Int(3) != 0){
-				naturalismLevel = -1;
-			}
+
 			
 			if (naturalismLevel >= 0) {
 				// Seed, scales from 1/25 to 1/9
