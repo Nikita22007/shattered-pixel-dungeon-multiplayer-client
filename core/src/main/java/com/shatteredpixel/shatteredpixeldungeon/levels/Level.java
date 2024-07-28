@@ -77,10 +77,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.TrinketCatalyst;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfRegrowth;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfWarding;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.HeavyBoomerang;
-import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
-import com.shatteredpixel.shatteredpixeldungeon.levels.features.Door;
-import com.shatteredpixel.shatteredpixeldungeon.levels.features.HighGrass;
-import com.shatteredpixel.shatteredpixeldungeon.levels.features.LevelTransition;
+import com.shatteredpixel.shatteredpixeldungeon.levels.features.*;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.ShadowCaster;
@@ -94,6 +91,7 @@ import com.shatteredpixel.shatteredpixeldungeon.tiles.CustomTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
+import com.watabou.noosa.Scene;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.BArray;
 import com.watabou.utils.Bundlable;
@@ -104,12 +102,11 @@ import com.watabou.utils.Point;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 import com.watabou.utils.SparseArray;
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public abstract class Level implements Bundlable {
 	
@@ -1604,6 +1601,45 @@ public abstract class Level implements Bundlable {
 				return Messages.get(Level.class, "empty_well_desc");
 			default:
 				return "";
+		}
+	}
+	List<JSONObject> decorEmittersInfo = new LinkedList<>();
+	public void addVisual(JSONObject obj)
+	{
+		decorEmittersInfo.add(obj);
+		if (ShatteredPixelDungeon.scene() instanceof GameScene)
+		{
+			parseEmitterDecorAction(obj);
+		}
+	}
+	protected void parseEmitterDecorAction(@NotNull JSONObject actionObj) {
+		Scene scene = Game.scene();
+		if (!(scene instanceof GameScene))
+		{
+			return;
+		}
+		GameScene gameScene = (GameScene) scene;
+		try {
+			switch (actionObj.getString("type"))
+			{
+				case ("torch"):
+				{
+					gameScene.addDecorEmitter(new DecorEmitters.Torch(actionObj.getInt("pos"), actionObj.optInt("color", 0xFFFFCC)));
+					break;
+				}
+				case ("sink"):
+				{
+					gameScene.addDecorEmitter(new DecorEmitters.Sink(actionObj.getInt("pos")));
+					break;
+				}
+				case ("smoke"):
+				{
+					gameScene.addDecorEmitter(new DecorEmitters.Smoke(actionObj.getInt("pos")));
+					break;
+				}
+			}
+		} catch (JSONException e) {
+			GLog.n("Incorrect EmitterDecorAction action: " + e.getMessage());
 		}
 	}
 }

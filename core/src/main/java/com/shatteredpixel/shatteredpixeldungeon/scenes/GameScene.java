@@ -1736,4 +1736,9 @@ public class GameScene extends PixelScene {
 		}
 		return null;
 	}
+	private Group decorEmitters;
+	public void addDecorEmitter(Emitter emitter) {
+		decorEmitters.add(emitter);
+	}
+
 }
