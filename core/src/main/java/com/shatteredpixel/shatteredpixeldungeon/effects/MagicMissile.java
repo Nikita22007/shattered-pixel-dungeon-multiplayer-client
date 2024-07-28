@@ -33,6 +33,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.RainbowParticl
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SparkParticle;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.Visual;
@@ -42,6 +43,8 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.ColorMath;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
+
+import java.lang.reflect.InvocationTargetException;
 
 public class MagicMissile extends Emitter {
 
@@ -637,6 +640,30 @@ public class MagicMissile extends Emitter {
 			super.update();
 			
 			am = 1 - left / lifespan;
+		}
+	}
+	public static void show(String type, int from, int to, Group group) {
+		if (group == null)
+		{
+			GLog.n("MagicMissile: group is null");
+			return;
+		}
+		if (type.endsWith("light")) {
+			type = type.replace("light", "Light");
+		}
+		try {
+			Class[] catClassParams = {Group.class, int.class, int.class, Callback.class};
+			MagicMissile.class.getMethod(type, catClassParams).invoke(null, group, from, to, null);
+
+		} catch (NoSuchMethodException e) {
+			GLog.n("Can't find MagicMissile with name \"%s\"", type);
+			return;
+		} catch (InvocationTargetException e) {
+			GLog.n("Error during MagicMissile \"%s\": %s", type, e);
+			return;
+		} catch (IllegalAccessException e) {
+			GLog.n("Error during MagicMissile \"%s\": %s", type, e);
+			return;
 		}
 	}
 }
