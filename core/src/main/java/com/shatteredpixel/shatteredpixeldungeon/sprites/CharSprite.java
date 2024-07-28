@@ -65,6 +65,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.Buffer;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip.Listener {
 	
@@ -368,6 +370,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 		this.flashTime = flashInterval;
 	}
 	public void add( State state ) {
+		states.add(state);
 		switch (state) {
 			case BURNING:
 				burning = emitter();
@@ -428,6 +431,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	}
 	
 	public void remove( State state ) {
+		states.remove(state);
 		switch (state) {
 			case BURNING:
 				if (burning != null) {
@@ -941,4 +945,9 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 		}
 		return sprite_class;
 	}
+	public Set<State> states(){
+		return states;
+	}
+	protected final Set<State> states = new CopyOnWriteArraySet<State>();
+
 }
