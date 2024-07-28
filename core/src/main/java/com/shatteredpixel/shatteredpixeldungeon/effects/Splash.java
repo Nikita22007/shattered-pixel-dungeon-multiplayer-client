@@ -132,5 +132,12 @@ public class Splash {
 			p.speed.polar( Random.Float( dir - cone / 2, dir + cone / 2 ), Random.Float( 40, 80 ) );
 			p.acc.set( 0, +100 );
 		}
+		SplashFactory(){};
+
+		public SplashFactory(int color, float dir, float cone) {
+			this.color = color;
+			this.dir = dir;
+			this.cone = cone;
+		}
 	}
 }
