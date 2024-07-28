@@ -118,7 +118,7 @@ public class Splash {
 	//each color has its own factory, let's multiple splash effects occur at once
 	private static final HashMap<Integer, SplashFactory> FACTORIES = new HashMap<>();
 
-	private static class SplashFactory extends Emitter.Factory {
+	public static class SplashFactory extends Emitter.Factory {
 
 		public int color;
 		public float dir;
