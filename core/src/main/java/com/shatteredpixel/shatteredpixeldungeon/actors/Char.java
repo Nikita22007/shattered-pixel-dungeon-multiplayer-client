@@ -141,6 +141,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 
 public abstract class Char extends Actor {
+	public String name = null;
 	
 	public int pos = 0;
 	
@@ -203,7 +204,10 @@ public abstract class Char extends Actor {
 	}
 
 	public String name(){
-		return Messages.get(this, "name");
+		if(name == null) {
+			return Messages.get(this, "name");
+		}
+		return name;
 	}
 
 	public boolean canInteract(Char c){
