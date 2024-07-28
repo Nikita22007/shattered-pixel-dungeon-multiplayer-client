@@ -497,7 +497,7 @@ public class Belongings implements Iterable<Item> {
 		}
 		switch (slotID) {
 			case (0): {
-				weapon = item;
+				//weapon = item;
 				break;
 			}
 			//todo add more

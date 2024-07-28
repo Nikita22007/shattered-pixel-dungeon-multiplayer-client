@@ -159,6 +159,7 @@ public class HeroSelectScene extends PixelScene {
 						w.offset(Camera.main.width / 6, 0);
 					}
 					ShatteredPixelDungeon.scene().addToFront(w);
+					StartScene.startNewGame();
 				}
 			}
 

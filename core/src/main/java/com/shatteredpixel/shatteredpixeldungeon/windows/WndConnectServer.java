@@ -1,8 +1,10 @@
 package com.shatteredpixel.shatteredpixeldungeon.windows;
 
+import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.network.Client;
 import com.shatteredpixel.shatteredpixeldungeon.network.NetworkScanner;
 import com.shatteredpixel.shatteredpixeldungeon.network.scanners.ServerInfo;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.HeroSelectScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.StartScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
@@ -100,7 +102,8 @@ public class WndConnectServer extends Window {
             } else {
                 NetworkScanner.stop();
                 //FIXME
-                StartScene.startNewGame();
+                ShatteredPixelDungeon.switchScene(HeroSelectScene.class);
+                //StartScene.startNewGame();
             }
         }
     }

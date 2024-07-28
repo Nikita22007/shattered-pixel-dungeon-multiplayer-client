@@ -21,11 +21,13 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.effects;
 
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.watabou.glwrap.Blending;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.Image;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
@@ -162,5 +164,46 @@ public class Lightning extends Group {
 			arc2.x = x2 - arc2.origin.x;
 			arc2.y = y2 - arc2.origin.x;
 		}
+	}
+	public Lightning( int[] cells, int length, Callback callback ) {
+
+		super();
+
+		this.callback = callback;
+
+		Image proto = Effects.get( Effects.Type.LIGHTNING );
+		float ox = 0;
+		float oy = proto.height / 2;
+
+		this.length = length;
+		//Too lazy to fix
+//		cx = new float[length];
+//		cy = new float[length];
+//
+//		for (int i=0; i < length; i++) {
+//			int c = cells[i];
+//			cx[i] = (c % Level.WIDTH + 0.5f) * DungeonTilemap.SIZE;
+//			cy[i] = (c / Level.WIDTH + 0.5f) * DungeonTilemap.SIZE;
+//		}
+//
+//		arcsS = new Image[length - 1];
+//		arcsE = new Image[length - 1];
+//		for (int i=0; i < length - 1; i++) {
+//
+//			Image arc = arcsS[i] = new Image( proto );
+//
+//			arc.x = cx[i] - arc.origin.x;
+//			arc.y = cy[i] - arc.origin.y;
+//			arc.origin.set( ox, oy );
+//			add( arc );
+//
+//			arc = arcsE[i] = new Image( proto );
+//			arc.origin.set( ox, oy );
+//			add( arc );
+//		}
+
+		life = DURATION;
+
+		Sample.INSTANCE.play(Assets.Sounds.LIGHTNING );
 	}
 }

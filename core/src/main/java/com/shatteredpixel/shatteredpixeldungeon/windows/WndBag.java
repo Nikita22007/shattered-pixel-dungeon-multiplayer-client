@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.windows;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDAction;
+import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -32,7 +33,9 @@ import com.shatteredpixel.shatteredpixeldungeon.items.bags.PotionBandolier;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.ScrollHolder;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.VelvetPouch;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -50,6 +53,14 @@ import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.utils.PointF;
+import com.watabou.utils.Signal;
+import com.watabou.utils.Utils;
+import org.json.JSONArray;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.nikita22007.pixeldungeonmultiplayer.Utils.parseArrayOfPath;
 
 public class WndBag extends WndTabbed {
 	
@@ -471,5 +482,117 @@ public class WndBag extends WndTabbed {
 		}
 		public abstract boolean itemSelectable( Item item );
 		public abstract void onSelect( Item item );
+	}
+	protected List<Item> allowedItems = null;
+	public String title;
+	public Listener listener;
+	public Mode lastMode;
+
+	protected static final int SLOT_SIZE	= 28;
+
+	protected static final int TAB_WIDTH	= 25;
+
+	public WndBag(Bag bag, Listener listener, Mode mode, String title) {
+		this(bag, listener, mode, title, null);
+	}
+	public interface Listener {
+		void onSelect( Item item );
+	}
+	public WndBag(int id, Bag bag, boolean has_listener, JSONArray allowed_items, String title) {
+		this(
+				bag,
+				!has_listener ? null : new MultiplayerListener(id, Dungeon.hero),
+				Mode.ALLOWED_ITEMS,
+				title,
+				allowed_items
+		);
+		this.id = id;
+	}
+	public static enum Mode {
+		ALL,
+		ALLOWED_ITEMS,
+		UNIDENTIFED,
+		UPGRADEABLE,
+		QUICKSLOT,
+		FOR_SALE,
+		@SuppressWarnings("unused") WEAPON,
+		@SuppressWarnings("unused") ARMOR,
+		@SuppressWarnings("unused") ENCHANTABLE,
+		@SuppressWarnings("unused") WAND,
+		SEED
+	}
+
+	public static WndBag.Mode mode;
+	public static class MultiplayerListener implements Listener {
+		int wndID = -1;
+		Hero owner = null;
+
+		public MultiplayerListener(int wnd_id, Hero owner) {
+			this.wndID = wnd_id;
+			this.owner = owner;
+		}
+
+		@Override
+		public void onSelect(Item item) {
+			if (item == null) {
+				SendData.sendWindowResult(wndID, -1);
+			} else {
+				SendData.sendBagWindowResult(wndID, 0, owner.belongings.pathOfItem(item));
+			}
+		}
+	}
+	public WndBag( Bag bag, Listener listener, Mode mode, String title, JSONArray allowedItems ) {
+
+		super();
+
+		this.allowedItems = (allowedItems == null) ? new ArrayList<Item>() : ParseArrayOfItems(Dungeon.hero, allowedItems);
+
+
+		this.listener = listener;
+		this.mode = mode;
+		this.title = title;
+
+		lastMode = mode;
+		lastBag = bag;
+
+		nCols = PixelScene.landscape() ? COLS_L : COLS_P;
+		nRows = (Dungeon.hero.belongings.backpack.capacity() + 4 + 1) / nCols + ((Dungeon.hero.belongings.backpack.capacity() + 4 + 1) % nCols > 0 ? 1 : 0);
+
+		int slotsWidth = SLOT_SIZE * nCols + SLOT_MARGIN * (nCols - 1);
+		int slotsHeight = SLOT_SIZE * nRows + SLOT_MARGIN * (nRows - 1);
+
+		BitmapText txtTitle = new BitmapText( title != null ? title : Utils.capitalize( bag.name() ), PixelScene.pixelFont );
+		txtTitle.height = 9;
+		txtTitle.hardlight( TITLE_COLOR );
+		txtTitle.measure();
+		txtTitle.x = (int)(slotsWidth - txtTitle.width()) / 2;
+		txtTitle.y = (int)(TITLE_HEIGHT - txtTitle.height()) / 2;
+		add( txtTitle );
+
+		placeItems( bag );
+
+		resize( slotsWidth, slotsHeight + TITLE_HEIGHT );
+
+		Belongings stuff = Dungeon.hero.belongings;
+
+		Object[] bagsObjects = stuff.getBags().toArray();
+		for (Object bagObj : bagsObjects) {
+			if (bagObj != null) {
+				Bag b = (Bag) bagObj;
+				//TODO: check this
+				BagTab tab = new BagTab(b, 0);
+				tab.setSize(tab.width(), tabHeight());
+				add(tab);
+
+				tab.select(b == bag);
+			}
+		}
+	}
+	protected static List<Item> ParseArrayOfItems(Hero hero, JSONArray arr) {
+		List<Item> result = new ArrayList<>(20);
+		for (List<Integer> path : parseArrayOfPath(arr)) {
+			result.add(hero.belongings.backpack.getItemInSlot(path));
+		}
+		return result;
 	}
 }

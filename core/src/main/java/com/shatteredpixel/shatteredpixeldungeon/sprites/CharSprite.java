@@ -735,11 +735,11 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 			case ("push"):
 			{
 				//FIXME
-				GameScene.effect(new Pushing(sprite.ch,
-								params.getInt("from"),
-								params.getInt("to")
-						)
-				);
+//				GameScene.effect(new Pushing(sprite.ch,
+//								params.getInt("from"),
+//								params.getInt("to")
+//						)
+//				);
 				break;
 			}
 			default:
