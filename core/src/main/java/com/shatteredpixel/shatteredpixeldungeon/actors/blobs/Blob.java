@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.blobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.effects.BlobEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
@@ -259,5 +260,27 @@ public class Blob extends Actor {
 		} else {
 			return gas.cur[cell];
 		}
+	}
+	public static<T extends Blob> T seed(int id, int cell, int amount, Class<T> type ) {
+		try {
+
+			T gas = (T)Dungeon.level.blobs.get( type );
+			if (gas == null) {
+				gas = type.newInstance();
+				Dungeon.level.blobs.put( type, gas );
+			}
+			((T) gas).setId(id);
+			gas.seed( cell, amount );
+
+			return gas;
+
+		} catch (Exception e) {
+			ShatteredPixelDungeon.reportException( e );
+			return null;
+		}
+	}
+	public void seed( int cell, int amount ) {
+		cur[cell] += amount;
+		volume += amount;
 	}
 }
