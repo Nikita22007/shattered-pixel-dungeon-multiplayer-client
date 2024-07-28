@@ -1740,5 +1740,9 @@ public class GameScene extends PixelScene {
 	public void addDecorEmitter(Emitter emitter) {
 		decorEmitters.add(emitter);
 	}
-
+	public static void showFlare(Flare flare, PointF position, float duration){
+		if (scene != null) {
+			flare.show(scene.effects, position, duration);
+		}
+	}
 }
