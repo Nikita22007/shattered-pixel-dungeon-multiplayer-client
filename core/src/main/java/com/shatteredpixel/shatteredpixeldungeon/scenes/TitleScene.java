@@ -114,9 +114,9 @@ public class TitleScene extends PixelScene {
 				if (GamesInProgress.checkAll().size() == 0){
 					GamesInProgress.selectedClass = null;
 					GamesInProgress.curSlot = 1;
-					ShatteredPixelDungeon.switchScene(ConnectScene.class);
+					ShatteredPixelDungeon.switchScene(HeroSelectScene.class);
 				} else {
-					ShatteredPixelDungeon.switchNoFade( ConnectScene.class );
+					ShatteredPixelDungeon.switchNoFade( HeroSelectScene.class );
 				}
 			}
 			

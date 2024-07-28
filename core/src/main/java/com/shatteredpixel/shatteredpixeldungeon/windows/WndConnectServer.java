@@ -102,8 +102,7 @@ public class WndConnectServer extends Window {
             } else {
                 NetworkScanner.stop();
                 //FIXME
-                ShatteredPixelDungeon.switchScene(HeroSelectScene.class);
-                //StartScene.startNewGame();
+                StartScene.startNewGame();
             }
         }
     }
