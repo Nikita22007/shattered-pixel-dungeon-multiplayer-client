@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.effects;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.watabou.glwrap.Blending;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
@@ -57,6 +58,16 @@ public class Beam extends Image {
 	public static class DeathRay extends Beam{
 		public DeathRay(PointF s, PointF e){
 			super(s, e, Effects.Type.DEATH_RAY, 0.5f);
+		}
+		public DeathRay(PointF s, PointF e, float duration) {
+			super(s, e, Effects.Type.DEATH_RAY, duration);
+		}
+		public DeathRay(int s, int e, float duration) {
+			this(
+					DungeonTilemap.tileCenterToWorld(s),
+					DungeonTilemap.tileCenterToWorld(e),
+					duration
+			);
 		}
 	}
 
