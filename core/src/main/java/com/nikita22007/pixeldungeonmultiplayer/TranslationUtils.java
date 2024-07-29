@@ -52,6 +52,11 @@ public class TranslationUtils {
             case 18: return Terrain.SECRET_TRAP;
             case 19: return Terrain.TRAP;
             case 20: return Terrain.SECRET_TRAP;
+            //TODO: check this
+            case 48: return Terrain.WATER;
+            case 63: return Terrain.WATER;
+            //TODO: check this. Is this from codes?
+            //case 00x1: return Terrain.PASSABLE;
             default: return id;
         }
     }
