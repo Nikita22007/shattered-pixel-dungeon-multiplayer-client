@@ -121,9 +121,9 @@ public abstract class Level implements Bundlable {
 		SECRETS
 	}
 
-	protected int width;
-	protected int height;
-	protected int length;
+	protected int width = 32;
+	protected int height = 32;
+	protected int length =  height * width;
 	
 	protected static final float TIME_TO_RESPAWN	= 50;
 
