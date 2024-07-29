@@ -67,6 +67,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+import static com.nikita22007.pixeldungeonmultiplayer.JavaUtils.hasNotNull;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.level;
 import static com.shatteredpixel.shatteredpixeldungeon.network.Client.disconnect;
@@ -1164,7 +1165,7 @@ public class ParseThread implements Callable<String> {
         } else {
             chr = (Char) actor;
         }
-        if (JavaUtils.hasNotNull(actorObj,"sprite_name"))
+        if (hasNotNull(actorObj,"sprite_name"))
         {
             //deprecated
          /*   CharSprite old_sprite = chr.sprite;
@@ -1178,7 +1179,7 @@ public class ParseThread implements Callable<String> {
             throw new RuntimeException("Deprecated");
         }
 
-        if (JavaUtils.hasNotNull(actorObj,"sprite_asset"))
+        if (hasNotNull(actorObj,"sprite_asset"))
         {
             CharSprite old_sprite = chr.sprite;
             String spriteAsset = actorObj.getString("sprite_asset");
