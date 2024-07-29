@@ -502,7 +502,7 @@ public class ParseThread implements Callable<String> {
                 slotsArr = new JSONArray();
             }
             try {
-                throw new RuntimeException("unreleased"); //todo remove it?
+                //throw new RuntimeException("unreleased"); //todo remove it?
                 /*
                 for (int i = 0; i < slotsArr.length(); i++) {
                     JSONObject slotObj = slotsArr.getJSONObject(i);
