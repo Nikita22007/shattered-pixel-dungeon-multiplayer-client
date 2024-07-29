@@ -3,6 +3,7 @@ package com.shatteredpixel.shatteredpixeldungeon.network;
 
 import com.nikita22007.pixeldungeonmultiplayer.JavaUtils;
 import com.nikita22007.pixeldungeonmultiplayer.TextureManager;
+import com.nikita22007.pixeldungeonmultiplayer.TranslationUtils;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
@@ -1147,7 +1148,11 @@ public class ParseThread implements Callable<String> {
                     break;
                 }
                 case ("tiles_texture"): {
-                    level.tilesTexture = levelParamsObj.getString(token);
+                    if (isConnectedToOldServer()){
+                        level.tilesTexture = TranslationUtils.translateTilesTexture(levelParamsObj.getString(token));
+                    } else {
+                        level.tilesTexture = levelParamsObj.getString(token);
+                    }
                     break;
                 }
                 case ("water_texture"): {
