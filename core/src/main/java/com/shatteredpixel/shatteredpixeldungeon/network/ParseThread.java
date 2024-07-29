@@ -1131,9 +1131,12 @@ public class ParseThread implements Callable<String> {
     protected void parseLevelParams(JSONObject levelParamsObj) throws JSONException {
         if (hasNotNull(levelParamsObj, "width") || hasNotNull(levelParamsObj, "height")) {
             assert hasNotNull(levelParamsObj, "width") && hasNotNull(levelParamsObj, "height");
-            level.setSize(
-                    levelParamsObj.getInt("width"), levelParamsObj.getInt("height")
-            );
+            int width = levelParamsObj.getInt("width");
+            int height = levelParamsObj.getInt("height");
+            if ((width != level.width()) || (height != level.height())) {
+                assert Game.scene() instanceof InterlevelScene : "Resizing is allowed only dutring interlevel scene";
+                level.setSize(width, height);
+            }
         }
         for (Iterator<String> it = levelParamsObj.keys(); it.hasNext(); ) {
             String token = it.next();
