@@ -144,6 +144,8 @@ import com.watabou.utils.Point;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 import com.watabou.utils.RectF;
+
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
@@ -1594,121 +1596,8 @@ public class GameScene extends PixelScene {
 	}
 
 	
-	public static final CellSelector.Listener defaultCellListener = new CellSelector.Listener() {
-		@Override
-		public void onSelect( Integer cell ) {
-			if (Dungeon.hero.handle( cell )) {
-				Dungeon.hero.next();
-			}
-		}
+	public static final CustomCellListener defaultCellListener = new CustomCellListener();
 
-		@Override
-		public void onRightClick(Integer cell) {
-			if (cell == null
-					|| cell < 0
-					|| cell > Dungeon.level.length()
-					|| (!Dungeon.level.visited[cell] && !Dungeon.level.mapped[cell])) {
-				return;
-			}
-
-			ArrayList<Object> objects = getObjectsAtCell(cell);
-			ArrayList<String> textLines = getObjectNames(objects);
-
-			//determine title and image
-			String title = null;
-			Image image = null;
-			if (objects.isEmpty()) {
-				title = WndInfoCell.cellName(cell);
-				image = WndInfoCell.cellImage(cell);
-			} else if (objects.size() > 1){
-				title = Messages.get(GameScene.class, "multiple");
-				image = Icons.get(Icons.INFO);
-			} else if (objects.get(0) instanceof Hero) {
-				title = textLines.remove(0);
-				image = HeroSprite.avatar(((Hero) objects.get(0)).heroClass, ((Hero) objects.get(0)).tier());
-			} else if (objects.get(0) instanceof Mob) {
-				title = textLines.remove(0);
-				image = ((Mob) objects.get(0)).sprite();
-			} else if (objects.get(0) instanceof Heap) {
-				title = textLines.remove(0);
-				image = new ItemSprite((Heap) objects.get(0));
-			} else if (objects.get(0) instanceof Plant) {
-				title = textLines.remove(0);
-				image = TerrainFeaturesTilemap.tile(cell, Dungeon.level.map[cell]);
-			} else if (objects.get(0) instanceof Trap) {
-				title = textLines.remove(0);
-				image = TerrainFeaturesTilemap.tile(cell, Dungeon.level.map[cell]);
-			}
-
-			//determine first text line
-			if (objects.isEmpty()) {
-				textLines.add(0, Messages.get(GameScene.class, "go_here"));
-			} else if (objects.get(0) instanceof Hero) {
-				textLines.add(0, Messages.get(GameScene.class, "go_here"));
-			} else if (objects.get(0) instanceof Mob) {
-				if (((Mob) objects.get(0)).alignment != Char.Alignment.ENEMY) {
-					textLines.add(0, Messages.get(GameScene.class, "interact"));
-				} else {
-					textLines.add(0, Messages.get(GameScene.class, "attack"));
-				}
-			} else if (objects.get(0) instanceof Heap) {
-				switch (((Heap) objects.get(0)).type) {
-					case HEAP:
-						textLines.add(0, Messages.get(GameScene.class, "pick_up"));
-						break;
-					case FOR_SALE:
-						textLines.add(0, Messages.get(GameScene.class, "purchase"));
-						break;
-					default:
-						textLines.add(0, Messages.get(GameScene.class, "interact"));
-						break;
-				}
-			} else if (objects.get(0) instanceof Plant) {
-				textLines.add(0, Messages.get(GameScene.class, "trample"));
-			} else if (objects.get(0) instanceof Trap) {
-				textLines.add(0, Messages.get(GameScene.class, "interact"));
-			}
-
-			//final text formatting
-			if (objects.size() > 1){
-				textLines.add(0, "_" + textLines.remove(0) + ":_ " + textLines.get(0));
-				for (int i = 1; i < textLines.size(); i++){
-					textLines.add(i, "_" + Messages.get(GameScene.class, "examine") + ":_ " + textLines.remove(i));
-				}
-			} else {
-				textLines.add(0, "_" + textLines.remove(0) + "_");
-				textLines.add(1, "_" + Messages.get(GameScene.class, "examine") + "_");
-			}
-
-			RightClickMenu menu = new RightClickMenu(image,
-					title,
-					textLines.toArray(new String[0])){
-				@Override
-				public void onSelect(int index) {
-					if (index == 0){
-						handleCell(cell);
-					} else {
-						if (objects.size() == 0){
-							GameScene.show(new WndInfoCell(cell));
-						} else {
-							examineObject(objects.get(index-1));
-						}
-					}
-				}
-			};
-			scene.addToFront(menu);
-			menu.camera = PixelScene.uiCamera;
-			PointF mousePos = PointerEvent.currentHoverPos();
-			mousePos = menu.camera.screenToCamera((int)mousePos.x, (int)mousePos.y);
-			menu.setPos(mousePos.x-3, mousePos.y-3);
-
-		}
-
-		@Override
-		public String prompt() {
-			return null;
-		}
-	};
 	public GameLog getGameLog(){
 		return log;
 	}
@@ -1752,4 +1641,31 @@ public class GameScene extends PixelScene {
 			flare.show(scene.effects, position, duration);
 		}
 	}
+
+	public static class CustomCellListener extends CellSelector.Listener {
+
+		@Nullable
+		private String customPrompt = null;
+		@Override
+		public void onSelect( @NotNull Integer cell ) {
+			if (Dungeon.hero.handle( cell )) {
+				Dungeon.hero.next();
+			}
+		}
+		@Override
+		@Nullable
+		public String prompt() {
+			return customPrompt;
+		}
+		public void setCustomPrompt(@Nullable String prompt){
+			if ("".equals(prompt)) {
+				customPrompt = null;
+			} else {
+				customPrompt = prompt;
+			}
+			if (cellSelector.listener == this) {
+				selectCell(this);
+			}
+		}
+	};
 }

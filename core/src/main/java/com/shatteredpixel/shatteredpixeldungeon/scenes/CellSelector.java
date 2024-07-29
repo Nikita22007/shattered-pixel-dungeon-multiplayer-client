@@ -521,9 +521,5 @@ public class CellSelector extends ScrollArea {
 		public void onRightClick( Integer cell ){} //do nothing by default
 
 		public abstract String prompt();
-		//FIXME this is temporary
-		public void setCustomPrompt(String prompt){
-
-		}
 	}
 }

@@ -142,6 +142,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.ShadowCaster;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.AlchemyScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
@@ -1682,78 +1683,7 @@ public class Hero extends Char {
 	}
 	
 	public boolean handle( int cell ) {
-		
-		if (cell == -1) {
-			return false;
-		}
-
-		if (fieldOfView == null || fieldOfView.length != Dungeon.level.length()){
-			fieldOfView = new boolean[Dungeon.level.length()];
-			Dungeon.level.updateFieldOfView( this, fieldOfView );
-		}
-		
-		Char ch = Actor.findChar( cell );
-		Heap heap = Dungeon.level.heaps.get( cell );
-
-		if (Dungeon.level.map[cell] == Terrain.ALCHEMY && cell != pos) {
-			
-			curAction = new HeroAction.Alchemy( cell );
-			
-		} else if (fieldOfView[cell] && ch instanceof Mob) {
-
-			if (((Mob) ch).heroShouldInteract()) {
-				curAction = new HeroAction.Interact( ch );
-			} else {
-				curAction = new HeroAction.Attack( ch );
-			}
-
-		//TODO perhaps only trigger this if hero is already adjacent? reducing mistaps
-		} else if (heap != null
-				//moving to an item doesn't auto-pickup when enemies are near...
-				&& (visibleEnemies.size() == 0 || cell == pos ||
-				//...but only for standard heaps. Chests and similar open as normal.
-				(heap.type != Type.HEAP && heap.type != Type.FOR_SALE))) {
-
-			switch (heap.type) {
-			case HEAP:
-				curAction = new HeroAction.PickUp( cell );
-				break;
-			case FOR_SALE:
-				curAction = heap.size() == 1 && heap.peek().value() > 0 ?
-					new HeroAction.Buy( cell ) :
-					new HeroAction.PickUp( cell );
-				break;
-			default:
-				curAction = new HeroAction.OpenChest( cell );
-			}
-			
-		} else if (Dungeon.level.map[cell] == Terrain.LOCKED_DOOR || Dungeon.level.map[cell] == Terrain.CRYSTAL_DOOR || Dungeon.level.map[cell] == Terrain.LOCKED_EXIT) {
-			
-			curAction = new HeroAction.Unlock( cell );
-			
-		} else if (Dungeon.level.getTransition(cell) != null
-				//moving to a transition doesn't automatically trigger it when enemies are near
-				&& (visibleEnemies.size() == 0 || cell == pos)
-				&& !Dungeon.level.locked
-				&& !Dungeon.level.plants.containsKey(cell)
-				&& (Dungeon.depth < 26 || Dungeon.level.getTransition(cell).type == LevelTransition.Type.REGULAR_ENTRANCE) ) {
-
-			curAction = new HeroAction.LvlTransition( cell );
-			
-		}  else {
-			
-			if (!Dungeon.level.visited[cell] && !Dungeon.level.mapped[cell]
-					&& Dungeon.level.traps.get(cell) != null && Dungeon.level.traps.get(cell).visible) {
-				walkingToVisibleTrapInFog = true;
-			} else {
-				walkingToVisibleTrapInFog = false;
-			}
-			
-			curAction = new HeroAction.Move( cell );
-			lastAction = null;
-			
-		}
-
+		SendData.SendCellListenerCell(cell);
 		return true;
 	}
 	
