@@ -1126,18 +1126,19 @@ public class ParseThread implements Callable<String> {
     }
 
     protected void parseLevelParams(JSONObject levelParamsObj) throws JSONException {
+        if (hasNotNull(levelParamsObj, "width") || hasNotNull(levelParamsObj, "height")) {
+            assert hasNotNull(levelParamsObj, "width") && hasNotNull(levelParamsObj, "height");
+            level.setSize(
+                    levelParamsObj.getInt("width"), levelParamsObj.getInt("height")
+            );
+        }
         for (Iterator<String> it = levelParamsObj.keys(); it.hasNext(); ) {
             String token = it.next();
             switch (token) {
-                case ("width"): {
-                    if (levelParamsObj.getInt(token) != level.width())
-                    throw new RuntimeException("unreleased");
-                    else break;
-                }
+                case ("width"):
                 case ("height"): {
-                    if (levelParamsObj.getInt(token) != level.height())
-                        throw new RuntimeException("unreleased");
-                    else break;
+                    //parsed before
+                    break;
                 }
                 case ("tiles_texture"): {
                     level.tilesTexture = levelParamsObj.getString(token);
