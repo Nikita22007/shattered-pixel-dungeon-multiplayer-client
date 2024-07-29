@@ -3,6 +3,7 @@ package com.shatteredpixel.shatteredpixeldungeon.network;
 
 import com.nikita22007.pixeldungeonmultiplayer.JavaUtils;
 import com.nikita22007.pixeldungeonmultiplayer.TextureManager;
+import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
@@ -45,6 +46,7 @@ import com.watabou.noosa.Scene;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.tweeners.AlphaTweener;
+import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.PointF;
 
 import org.jetbrains.annotations.NotNull;
@@ -188,9 +190,9 @@ public class ParseThread implements Callable<String> {
             Log.e("Parsing", "json: " + json);
             return;
         }
-//        if (com.watabou.pixeldungeon.BuildConfig.DEBUG) {
-//            //Log.i("Parsing", data.toString(4));
-//        }
+        if (DeviceCompat.isDebug()) {
+            //Log.i("Parsing", data.toString(4));
+        }
         //Log.w("data", data.toString(4));
         for (Iterator<String> it = data.keys(); it.hasNext(); ) {
             String token = it.next();
@@ -1146,7 +1148,12 @@ public class ParseThread implements Callable<String> {
                     break;
                 }
                 case ("water_texture"): {
-                    level.waterTexture = levelParamsObj.getString(token);
+                    if (isConnectedToOldServer()){
+                        level.waterTexture = "enviroment/"+ levelParamsObj.getString(token);
+                    }
+                    else {
+                        level.waterTexture = levelParamsObj.getString(token);
+                    }
                     break;
                 }
                 default: {
@@ -1472,5 +1479,8 @@ public class ParseThread implements Callable<String> {
             }
         }
         return builder.toString();
+    }
+    public boolean isConnectedToOldServer(){
+        return DeviceCompat.isDebug();
     }
 }
