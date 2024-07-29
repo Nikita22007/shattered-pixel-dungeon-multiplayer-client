@@ -86,8 +86,8 @@ public class GameLog extends Component implements Signal.Listener<String> {
 					color = CharSprite.NEUTRAL;
 				}
 				else if(text.startsWith(GLog.CUSTOM)) {
-					color = Integer.parseInt(text.substring(2, text.indexOf(' ')-1));
-					text = text.split(" ")[1];
+					text = text.substring(GLog.CUSTOM.length()+2);
+					color = Integer.parseInt(text.substring(0, GLog.CUSTOM.length()+2), 16);
 				}
 				if (lastEntry != null && color == lastColor && lastEntry.nLines < maxLines) {
 
@@ -178,32 +178,10 @@ public class GameLog extends Component implements Signal.Listener<String> {
 		entries.clear();
 		textsToAdd.clear();
 	}
-	public void WriteMessage(String text, int color) {
+	public synchronized void WriteMessage(String text, int color) {
 		textsToAdd.add("&&" + String.format("%08X", color) + " " + text);
-		layout();
-
 	}
-	public void WriteMessageAutoColor(String text) {
-
-
-		int color = CharSprite.DEFAULT;
-		if (text.startsWith(GLog.POSITIVE)) {
-			text = text.substring(GLog.POSITIVE.length());
-			color = CharSprite.POSITIVE;
-		} else if (text.startsWith(GLog.NEGATIVE)) {
-			text = text.substring(GLog.NEGATIVE.length());
-			color = CharSprite.NEGATIVE;
-		} else if (text.startsWith(GLog.WARNING)) {
-			text = text.substring(GLog.WARNING.length());
-			color = CharSprite.WARNING;
-		} else if (text.startsWith(GLog.HIGHLIGHT)) {
-			text = text.substring(GLog.HIGHLIGHT.length());
-			color = CharSprite.NEUTRAL;
-		}
-		else if(text.startsWith(GLog.CUSTOM)) {
-			text = text.substring(GLog.CUSTOM.length()+2);
-			color = Integer.parseInt(text.substring(0, GLog.CUSTOM.length()+2), 16);
-		}
-		WriteMessage(text,color);
+	public synchronized void WriteMessageAutoColor(String text) {
+		textsToAdd.add(text);
 	}
 }
