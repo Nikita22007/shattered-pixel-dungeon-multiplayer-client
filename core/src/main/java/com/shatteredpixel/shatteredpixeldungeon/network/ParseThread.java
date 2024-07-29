@@ -1149,7 +1149,7 @@ public class ParseThread implements Callable<String> {
                 }
                 case ("water_texture"): {
                     if (isConnectedToOldServer()){
-                        level.waterTexture = "enviroment/"+ levelParamsObj.getString(token);
+                        level.waterTexture = "environment/"+ levelParamsObj.getString(token);
                     }
                     else {
                         level.waterTexture = levelParamsObj.getString(token);
