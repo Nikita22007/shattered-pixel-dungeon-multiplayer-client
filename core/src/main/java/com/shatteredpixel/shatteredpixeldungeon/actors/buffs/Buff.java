@@ -68,7 +68,7 @@ public class Buff extends Actor {
 		if (target.isImmune( getClass() )) {
 			return false;
 		}
-
+		if (buff_id < 0) return false;
 		all_buffs.put(buff_id, this);
 		this.target = target;
 
@@ -83,7 +83,7 @@ public class Buff extends Actor {
 	
 	public void detach() {
 		all_buffs.remove(buff_id);
-		if (target.remove( this ) && target.sprite != null) fx( false );
+		if ((target != null) && target.remove( this ) && target.sprite != null) fx( false );
 	}
 	
 	@Override
@@ -205,5 +205,10 @@ public class Buff extends Actor {
 
 	public static Buff get(int id) {
 		return all_buffs.get(id);
+	}
+
+	@Override
+	public int id(){
+		return -1;
 	}
 }

@@ -129,7 +129,7 @@ public class Hunger extends Buff implements Hero.Doom {
 	}
 
 	public void affectHunger(float energy, boolean overrideLimits ) {
-
+		if (target == null) {detach(); return;}
 		if (energy < 0 && target.buff(WellFed.class) != null){
 			target.buff(WellFed.class).left += energy;
 			BuffIndicator.refreshHero();
