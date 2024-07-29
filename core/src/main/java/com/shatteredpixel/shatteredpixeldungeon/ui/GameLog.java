@@ -87,7 +87,7 @@ public class GameLog extends Component implements Signal.Listener<String> {
 				}
 				else if(text.startsWith(GLog.CUSTOM)) {
 					color = Integer.parseInt(text.substring(2, text.indexOf(' ')-1));
-					text = text.split(" ")[0];
+					text = text.split(" ")[1];
 				}
 				if (lastEntry != null && color == lastColor && lastEntry.nLines < maxLines) {
 
@@ -201,8 +201,8 @@ public class GameLog extends Component implements Signal.Listener<String> {
 			color = CharSprite.NEUTRAL;
 		}
 		else if(text.startsWith(GLog.CUSTOM)) {
-			color = Integer.parseInt(text.substring(2, text.indexOf(' ')-1));
-			text = text.split(" ")[0];
+			color = Integer.parseInt(text.substring(2, text.indexOf(' ') - 1));
+			text = text.split(" ")[1];
 		}
 		WriteMessage(text,color);
 	}

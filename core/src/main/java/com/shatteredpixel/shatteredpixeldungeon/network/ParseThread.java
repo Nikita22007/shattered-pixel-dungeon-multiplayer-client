@@ -1069,7 +1069,11 @@ public class ParseThread implements Callable<String> {
                     continue;
                 }
                 case "id": {
-                    level.map[pos] = cell.getInt(token);
+                    if(isConnectedToOldServer()) {
+                        level.map[pos] = TranslationUtils.translateCell(cell.getInt(token));
+                    } else {
+                        level.map[pos] = cell.getInt(token);
+                    }
                     break;
                 }
                 case "state": {
