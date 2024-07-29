@@ -50,6 +50,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import static com.shatteredpixel.shatteredpixeldungeon.network.ParseThread.isConnectedToOldServer;
+
 public class MissileSprite extends ItemSprite implements Tweener.Listener {
 
 	private static final float SPEED	= 240f;
@@ -209,9 +211,11 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 	}
 	private void reset(int from, int to, double SPEED, double angular_speed, double angle, String spriteSheet, int image, Glowing glowing) {
 		revive();
-
-		view(spriteSheet, image, glowing );
-
+		if (isConnectedToOldServer()){
+			view(Assets.Sprites.ITEMS, image, glowing);
+		} else {
+			view(spriteSheet, image, glowing);
+		}
 		this.callback = null;
 
 		point( DungeonTilemap.tileToWorld( from ) );
