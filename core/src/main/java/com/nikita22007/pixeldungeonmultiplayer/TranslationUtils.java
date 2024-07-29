@@ -1,7 +1,11 @@
 package com.nikita22007.pixeldungeonmultiplayer;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
+import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
+
+import static com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap.GREEN;
 
 public class TranslationUtils {
     public static String translateTilesTexture(String texture) {
@@ -14,8 +18,8 @@ public class TranslationUtils {
             default: return "tiles_city";
         }
     }
-
-    public static int translateCell(int id) {
+    //TODO: add trap support
+    public static int translateCell(int id, int cell) {
         switch (id) {
             case 0: return Terrain.CHASM;
             case 1: return Terrain.EMPTY;
@@ -37,7 +41,7 @@ public class TranslationUtils {
             case 25: return Terrain.LOCKED_EXIT;
             case 26: return Terrain.UNLOCKED_EXIT;
             //no sign
-            case 29: return Terrain.EMPTY;
+            case 29: return Terrain.GRASS;
             case 34: return Terrain.WELL;
             case 35: return Terrain.STATUE;
             case 36: return Terrain.STATUE_SP;
@@ -48,7 +52,7 @@ public class TranslationUtils {
             case 45: return Terrain.CHASM;
             case 46: return Terrain.CHASM;
             case 16: return Terrain.SECRET_DOOR;
-            case 17: return Terrain.TRAP;
+            case 17: setTrap(cell, GREEN, Trap.GRILL); return Terrain.TRAP;
             case 18: return Terrain.SECRET_TRAP;
             case 19: return Terrain.TRAP;
             case 20: return Terrain.SECRET_TRAP;
@@ -59,5 +63,18 @@ public class TranslationUtils {
             //case 00x1: return Terrain.PASSABLE;
             default: return id;
         }
+    }
+    private static void setTrap(int cell, int trapColor, int trapShape) {
+        Trap trap = new Trap() {
+            {
+                color = trapColor;
+                shape = trapShape;
+            }
+            @Override
+            public void activate() {
+
+            }
+        };
+        Dungeon.level.setTrap(trap, cell);
     }
 }

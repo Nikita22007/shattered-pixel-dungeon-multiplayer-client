@@ -1070,7 +1070,7 @@ public class ParseThread implements Callable<String> {
                 }
                 case "id": {
                     if(isConnectedToOldServer()) {
-                        level.map[pos] = TranslationUtils.translateCell(cell.getInt(token));
+                        level.map[pos] = TranslationUtils.translateCell(cell.getInt(token), pos);
                     } else {
                         level.map[pos] = cell.getInt(token);
                     }
