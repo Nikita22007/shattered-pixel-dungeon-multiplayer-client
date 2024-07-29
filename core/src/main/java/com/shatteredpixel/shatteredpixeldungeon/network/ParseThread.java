@@ -74,6 +74,8 @@ import static com.nikita22007.pixeldungeonmultiplayer.JavaUtils.hasNotNull;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.level;
 import static com.shatteredpixel.shatteredpixeldungeon.network.Client.disconnect;
+import static com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite.spriteClassFromName;
+import static com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite.spriteFromClass;
 import static java.lang.Thread.sleep;
 
 public class ParseThread implements Callable<String> {
@@ -192,7 +194,7 @@ public class ParseThread implements Callable<String> {
             return;
         }
         if (DeviceCompat.isDebug()) {
-            Log.i("Parsing", data.toString(4));
+            //Log.i("Parsing", data.toString(4));
         }
         //Log.w("data", data.toString(4));
         for (Iterator<String> it = data.keys(); it.hasNext(); ) {
@@ -1171,7 +1173,7 @@ public class ParseThread implements Callable<String> {
             }
         }
     }
-
+    //TODO: check this
     protected Char parseActorChar(JSONObject actorObj, int ID, Actor actor) throws JSONException {
         Char chr;
         if (actor == null) {
@@ -1183,15 +1185,15 @@ public class ParseThread implements Callable<String> {
         if (hasNotNull(actorObj,"sprite_name"))
         {
             //deprecated
-         /*   CharSprite old_sprite = chr.sprite;
+            CharSprite old_sprite = chr.sprite;
             Class<? extends CharSprite> new_sprite_class = spriteClassFromName(ToPascalCase(actorObj.getString("sprite_name")), chr != hero);
             if ((old_sprite == null) || (!old_sprite.getClass().equals(new_sprite_class))) {
                 CharSprite sprite = spriteFromClass(new_sprite_class);
                 GameScene.updateCharSprite(chr, sprite);
             }
 
-          */
-            throw new RuntimeException("Deprecated");
+
+            //throw new RuntimeException("Deprecated");
         }
 
         if (hasNotNull(actorObj,"sprite_asset"))
