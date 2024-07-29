@@ -71,6 +71,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.Room;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.secret.SecretRoom;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CustomCharSprite;
@@ -732,6 +733,11 @@ public class GameScene extends PixelScene {
 					actorThread.notify();
 				}
 			}
+		}
+
+		ParseThread thread = ParseThread.getActiveThread();
+		if (thread != null) {
+			thread.parseIfHasData();
 		}
 
 		if (Dungeon.hero.ready && Dungeon.hero.paralysed == 0) {
