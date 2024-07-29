@@ -192,7 +192,7 @@ public class ParseThread implements Callable<String> {
             return;
         }
         if (DeviceCompat.isDebug()) {
-            //Log.i("Parsing", data.toString(4));
+            Log.i("Parsing", data.toString(4));
         }
         //Log.w("data", data.toString(4));
         for (Iterator<String> it = data.keys(); it.hasNext(); ) {
@@ -1294,7 +1294,7 @@ public class ParseThread implements Callable<String> {
     protected void parseActorBlob(JSONObject actorObj, int id, Actor actor) throws JSONException {
         Class blob_class = null;
         if (actor == null) {
-            String blob_name = format("com.watabou.pixeldungeon.actors.blobs.%s", ToPascalCase(actorObj.getString("blob_type")));
+            String blob_name = format("com.shatteredpixel.shatteredpixeldungeon.actors.blobs.%s", ToPascalCase(actorObj.getString("blob_type")));
             try {
                 blob_class = Class.forName(blob_name);
                 actor = (Blob) blob_class.newInstance();
