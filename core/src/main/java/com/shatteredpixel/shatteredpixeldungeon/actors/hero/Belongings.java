@@ -528,7 +528,7 @@ public class Belongings implements Iterable<Item> {
 					return weapon;
 				}
 				default:
-					throw new RuntimeException("Unexpected slot id");
+					throw new RuntimeException("Unexpected slot id " + slotID);
 					//todo add more
 			}
 		}
