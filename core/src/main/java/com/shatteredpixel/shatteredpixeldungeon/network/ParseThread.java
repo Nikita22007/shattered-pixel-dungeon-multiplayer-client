@@ -23,7 +23,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.IronKey;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLevitation;
 import com.shatteredpixel.shatteredpixeldungeon.levels.SewerLevel;
 import com.shatteredpixel.shatteredpixeldungeon.plants.CustomPlant;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
@@ -1494,7 +1493,7 @@ public class ParseThread implements Callable<String> {
         }
         return builder.toString();
     }
-    public boolean isConnectedToOldServer(){
+    public static boolean isConnectedToOldServer(){
         return DeviceCompat.isDebug();
     }
 }

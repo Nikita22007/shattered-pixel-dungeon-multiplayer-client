@@ -1,6 +1,8 @@
 package com.shatteredpixel.shatteredpixeldungeon.items
+import com.nikita22007.pixeldungeonmultiplayer.TranslationUtils.translateItemImage
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.CustomBag
+import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread.isConnectedToOldServer
 import com.shatteredpixel.shatteredpixeldungeon.network.SendData.SendItemAction
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite
 import org.json.JSONArray
@@ -48,7 +50,12 @@ open class CustomItem() : Item() {
                     descString = obj.getString(token);
                 }
                 "image" -> {
-                    image = obj.getInt(token);
+                    if(isConnectedToOldServer()){
+                        image = translateItemImage(obj.getInt(token))
+                    }
+                    else {
+                        image = obj.getInt(token);
+                    }
                 }
                 "stackable" -> {
                     stackable = obj.getBoolean(token);
