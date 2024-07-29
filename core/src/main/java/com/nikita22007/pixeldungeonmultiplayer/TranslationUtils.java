@@ -2,10 +2,11 @@ package com.nikita22007.pixeldungeonmultiplayer;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ParalyticGas;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 
-import static com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap.GREEN;
+import static com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap.*;
 
 public class TranslationUtils {
     public static String translateTilesTexture(String texture) {
@@ -52,10 +53,25 @@ public class TranslationUtils {
             case 45: return Terrain.CHASM;
             case 46: return Terrain.CHASM;
             case 16: return Terrain.SECRET_DOOR;
-            case 17: setTrap(cell, GREEN, Trap.GRILL); return Terrain.TRAP;
-            case 18: return Terrain.SECRET_TRAP;
-            case 19: return Terrain.TRAP;
-            case 20: return Terrain.SECRET_TRAP;
+            case 17: setTrap(cell, GREEN, GRILL, true); return Terrain.TRAP;
+            case 18: setTrap(cell, GREEN, GRILL, false); return Terrain.SECRET_TRAP;
+            case 19: setTrap(cell, RED, GRILL, true);return Terrain.TRAP;
+            case 20: setTrap(cell, ORANGE, DOTS, false);return Terrain.SECRET_TRAP;
+
+            case 21: setTrap(cell, YELLOW, DOTS, true);return Terrain.TRAP;
+            case 22: setTrap(cell, YELLOW, DOTS, false);return Terrain.SECRET_TRAP;
+            case 23: setTrap(cell, YELLOW, DOTS, true);return Terrain.INACTIVE_TRAP;
+            case 27: setTrap(cell, VIOLET, DOTS, true);return Terrain.TRAP;
+            case 28: setTrap(cell, VIOLET, DOTS, false);return Terrain.SECRET_TRAP;
+            case 30: setTrap(cell, RED, DOTS, true);return Terrain.TRAP;
+            case 31: setTrap(cell, RED, DOTS, false);return Terrain.SECRET_TRAP;
+            case 32: setTrap(cell, TEAL, DOTS, true);return Terrain.TRAP;
+            case 33: setTrap(cell, TEAL, DOTS, false);return Terrain.SECRET_TRAP;
+            case 37: setTrap(cell, GREY, DOTS, true);return Terrain.TRAP;
+            case 38: setTrap(cell, GREY, DOTS, false);return Terrain.SECRET_TRAP;
+            case 39: setTrap(cell, TEAL, WAVES, true);return Terrain.TRAP;
+            case 40: setTrap(cell, TEAL, WAVES, true);return Terrain.SECRET;
+
             //TODO: check this
             case 48: return Terrain.WATER;
             case 63: return Terrain.WATER;
@@ -64,16 +80,18 @@ public class TranslationUtils {
             default: return id;
         }
     }
-    private static void setTrap(int cell, int trapColor, int trapShape) {
+    private static void setTrap(int cell, int trapColor, int trapShape, boolean trapVisible) {
         Trap trap = new Trap() {
             {
                 color = trapColor;
                 shape = trapShape;
+                visible = trapVisible;
             }
             @Override
             public void activate() {
 
             }
+
         };
         Dungeon.level.setTrap(trap, cell);
     }
