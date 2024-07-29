@@ -866,6 +866,11 @@ public class GameScene extends PixelScene {
 			scene.resume.setRect( tagLeft, pos - Tag.SIZE, tagWidth, Tag.SIZE );
 			scene.resume.flip(tagsOnLeft);
 		}
+
+		if ((updateFlags & UpdateFlags.AFTER_OBSERVE.getId()) != 0) {
+			updateFlags = updateFlags & (~UpdateFlags.AFTER_OBSERVE.getId());
+			afterObserve();
+		}
 	}
 	
 	@Override
