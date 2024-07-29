@@ -32,6 +32,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.LostBackpack;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
+import com.shatteredpixel.shatteredpixeldungeon.levels.SewerLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.LevelTransition;
@@ -40,6 +41,7 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.ui.GameLog;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
+import com.shatteredpixel.shatteredpixeldungeon.windows.WndStory;
 import com.watabou.utils.BArray;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndError;
 import com.watabou.gltextures.TextureCache;
@@ -55,6 +57,8 @@ import com.watabou.utils.DeviceCompat;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.resetLevel;
 
 public class InterlevelScene extends PixelScene {
 	
@@ -76,6 +80,8 @@ public class InterlevelScene extends PixelScene {
 	public static int returnDepth;
 	public static int returnBranch;
 	public static int returnPos;
+	public static String customMessage;
+
 
 	public static boolean fallIntoPit;
 	
@@ -86,7 +92,6 @@ public class InterlevelScene extends PixelScene {
 	private float timeLeft;
 	public static boolean first_descend = false;
 	public static boolean reset_level = false;
-	public static String customMessage = "";
 	private RenderedTextBlock message;
 	
 	private static Thread thread;
@@ -341,53 +346,25 @@ public class InterlevelScene extends PixelScene {
 		}
 	}
 
-	private void descend() throws IOException {
+	private void descend() throws Exception {
 
+		Actor.fixTime();
+		GameLog.wipe();
 		if (Dungeon.hero == null) {
+			resetLevel();
 			SendData.SendHeroClass(GamesInProgress.selectedClass);
-			Mob.clearHeldAllies();
-			Dungeon.init();
-			GameLog.wipe();
-
-			//When debugging, we may start a game at a later depth to quickly test something
-			// if this happens, the games quickly generates all prior levels on branch 0 first,
-			// which ensures levelgen consistency with a regular game that was played to that depth.
-			if (DeviceCompat.isDebug()){
-				int trueDepth = Dungeon.depth;
-				int trueBranch = Dungeon.branch;
-				for (int i = 1; i < trueDepth + (trueBranch == 0 ? 0 : 1); i++){
-					if (!Dungeon.levelHasBeenGenerated(i, 0)){
-						Dungeon.depth = i;
-						Dungeon.branch = 0;
-						Dungeon.level = Dungeon.newLevel();
-						Dungeon.saveLevel(GamesInProgress.curSlot);
-					}
-				}
-				Dungeon.depth = trueDepth;
-				Dungeon.branch = trueBranch;
-			}
-
-			Level level = Dungeon.newLevel();
-			Dungeon.switchLevel( level, -1 );
-		} else {
-			Mob.holdAllies( Dungeon.level );
-			Dungeon.saveAll();
-
-			Level level;
-			Dungeon.depth = curTransition.destDepth;
-			Dungeon.branch = curTransition.destBranch;
-
-			if (Dungeon.levelHasBeenGenerated(Dungeon.depth, Dungeon.branch)) {
-				level = Dungeon.loadLevel( GamesInProgress.curSlot );
-			} else {
-				level = Dungeon.newLevel();
-			}
-
-			LevelTransition destTransition = level.getTransition(curTransition.destType);
-			curTransition = null;
-			Dungeon.switchLevel( level, destTransition.cell() );
+//			if (noStory) {
+//				//Dungeon.chapters.add( WndStory.ID_SEWERS );
+//				noStory = false;
+//			}
 		}
 
+	}
+	private void resetLevel(){
+		Actor.fixTime();
+		Dungeon.level = new SewerLevel();
+		Dungeon.level.create();
+		Dungeon.init();
 	}
 
 	//TODO atm falling always just increments depth by 1, do we eventually want to roll it into the transition system?

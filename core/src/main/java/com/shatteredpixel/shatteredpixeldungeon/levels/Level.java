@@ -474,12 +474,18 @@ public abstract class Level implements Bundlable {
 	}
 	public String tilesTexture = null;
 	public String tilesTex() {
+		if(tilesTexture == null){
+			return Assets.Environment.TILES_SEWERS;
+		}
 		return tilesTexture;
 	}
 	public String waterTexture = null;
 
 
 	public String waterTex() {
+		if(waterTexture == null) {
+			return Assets.Environment.WATER_SEWERS;
+		}
 		return waterTexture;
 	}
 	
