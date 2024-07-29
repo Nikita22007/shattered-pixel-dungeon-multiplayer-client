@@ -321,6 +321,8 @@ public abstract class Level implements Bundlable {
 		pit			= new boolean[length];
 
 		openSpace   = new boolean[length];
+
+		discoverable = new boolean[length()];
 		
 		PathFinder.setMapSize(w, h);
 	}
