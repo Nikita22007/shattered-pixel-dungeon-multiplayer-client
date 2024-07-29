@@ -234,6 +234,7 @@ public class TranslationUtils {
     }
     public static int translateBuffIcon(int buffIcon){
         switch (buffIcon) {
+            case -1: return NONE;
             case 29: return VERTIGO;
             case 30: return RAGE;
             case 31: return SACRIFICE;
