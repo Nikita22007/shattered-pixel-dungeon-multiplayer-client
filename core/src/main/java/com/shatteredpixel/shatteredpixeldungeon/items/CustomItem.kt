@@ -141,7 +141,7 @@ open class CustomItem() : Item() {
     }
 
     override fun visiblyUpgraded(): Int {
-        return visiblyUpgraded();
+        return trueLevel();
     }
 
     override fun glowing(): ItemSprite.Glowing? {
