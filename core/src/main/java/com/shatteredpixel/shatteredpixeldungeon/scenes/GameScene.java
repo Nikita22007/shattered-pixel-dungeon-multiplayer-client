@@ -211,15 +211,9 @@ public class GameScene extends PixelScene {
 	@Override
 	public void create() {
 		
-		if (Dungeon.hero == null || Dungeon.level == null){
-			ShatteredPixelDungeon.switchNoFade(TitleScene.class);
-			return;
-		}
+		Sample.INSTANCE.play(Assets.Music.SEWERS_1);
 
-		Dungeon.level.playLevelMusic();
 
-		SPDSettings.lastClass(Dungeon.hero.heroClass.ordinal());
-		
 		super.create();
 		Camera.main.zoom( GameMath.gate(minZoom, defaultZoom + SPDSettings.zoom(), maxZoom));
 		Camera.main.edgeScroll.set(1);
@@ -260,11 +254,15 @@ public class GameScene extends PixelScene {
 		ripples = new Group();
 		terrain.add( ripples );
 
-		DungeonTileSheet.setupVariance(Dungeon.level.map.length, Dungeon.seedCurDepth());
-		
+		//DungeonTileSheet.setupVariance(Dungeon.level.map.length, Dungeon.seedCurDepth());
+		//FIXME
 		tiles = new DungeonTerrainTilemap();
 		terrain.add( tiles );
 
+		decorEmitters = new Group();
+		add(decorEmitters);
+		Dungeon.level.addVisuals(this);
+		//TODO: check this
 		customTiles = new Group();
 		terrain.add(customTiles);
 

@@ -1648,4 +1648,20 @@ public abstract class Level implements Bundlable {
 			GLog.n("Incorrect EmitterDecorAction action: " + e.getMessage());
 		}
 	}
+	public void addVisuals( Scene scene ) {
+		for (int i=0; i < length; i++) {
+			if (pit[i]) {
+				scene.add( new WindParticle.Wind( i ) );
+				if (i >= width && water[i-width]) {
+					scene.add( new FlowParticle.Flow( i - width ) );
+				}
+			}
+		}
+
+		for (JSONObject decorObj : decorEmittersInfo)
+		{
+			parseEmitterDecorAction(decorObj);
+		}
+	}
+
 }
