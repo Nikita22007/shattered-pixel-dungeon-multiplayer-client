@@ -5,6 +5,9 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Constructor;
 
+import static com.nikita22007.pixeldungeonmultiplayer.TranslationUtils.translateBuffIcon;
+import static com.shatteredpixel.shatteredpixeldungeon.network.ParseThread.isConnectedToOldServer;
+
 public class CustomBuff extends Buff {
     private int icon = 0;
 
@@ -27,7 +30,11 @@ public class CustomBuff extends Buff {
     }
 
     public void setIcon(int icon) {
-        this.icon = icon;
+        if (isConnectedToOldServer()){
+         this.icon = translateBuffIcon(icon);
+        } else {
+            this.icon = icon;
+        }
     }
 
     public void setDesc(String desc) {

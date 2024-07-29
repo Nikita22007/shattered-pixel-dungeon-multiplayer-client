@@ -7,6 +7,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 import static com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap.*;
+import static com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator.*;
 
 public class TranslationUtils {
     public static String translateTilesTexture(String texture) {
@@ -230,5 +231,13 @@ public class TranslationUtils {
 
             default: return image;
         }
+    }
+    public static int translateBuffIcon(int buffIcon){
+        switch (buffIcon) {
+            case 29: return VERTIGO;
+            case 30: return RAGE;
+            case 31: return SACRIFICE;
+        }
+        return buffIcon;
     }
 }
