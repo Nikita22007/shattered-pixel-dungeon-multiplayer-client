@@ -208,7 +208,7 @@ public class TranslationUtils {
             case 107: return ItemSpriteSheet.TOMAHAWK;
             case 108: return ItemSpriteSheet.INCENDIARY_DART;
             case 109: return ItemSpriteSheet.PARALYTIC_DART;
-            case 110: return ItemSpriteSheet.HOLY_DART;
+            case 110: return ItemSpriteSheet.JAVELIN;
             case 111: return ItemSpriteSheet.HOLSTER;
             case 112: return ItemSpriteSheet.PASTY;
             case 113: return ItemSpriteSheet.MEAT;
@@ -217,14 +217,15 @@ public class TranslationUtils {
             case 116: return ItemSpriteSheet.CARPACCIO;
             case 117: return ItemSpriteSheet.ARTIFACT_SPELLBOOK;
             case 118: return ItemSpriteSheet.PHANTOM_MEAT;
-            case 119: return ItemSpriteSheet.WATERSKIN;
-            case 120: return ItemSpriteSheet.DUST;
-            case 121: return ItemSpriteSheet.TOKEN;
-            case 122: return ItemSpriteSheet.STONE_AUGMENTATION;
-            case 123: return ItemSpriteSheet.BOMB;
-            case 124: return ItemSpriteSheet.HONEYPOT;
-            case 125: return ItemSpriteSheet.SOMETHING;
+            case 119: return ItemSpriteSheet.SOMETHING;
+            case 120: return ItemSpriteSheet.WATERSKIN;
+            case 121: return ItemSpriteSheet.DUST;
+            case 122: return ItemSpriteSheet.TOKEN;
+            case 123: return ItemSpriteSheet.STONE_AUGMENTATION;
+            case 124: return ItemSpriteSheet.BOMB;
+            case 125: return ItemSpriteSheet.HONEYPOT;
             case 126: return ItemSpriteSheet.SOMETHING;
+            case 127: return ItemSpriteSheet.SOMETHING;
 
 
             default: return image;
