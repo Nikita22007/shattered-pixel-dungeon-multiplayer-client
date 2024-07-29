@@ -25,6 +25,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Callback;
+import com.watabou.utils.DeviceCompat;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -89,8 +90,13 @@ public enum Sample {
 			synchronized (INSTANCE) {
 				String asset = loadingQueue.poll();
 				if (asset != null) {
+					Sound newSound;
 					try {
-						Sound newSound = Gdx.audio.newSound(Gdx.files.internal(asset));
+						if(asset.startsWith("snd")){
+							newSound = Gdx.audio.newSound(Gdx.files.internal(asset.replace("snd","sounds/")));
+						} else {
+							newSound = Gdx.audio.newSound(Gdx.files.internal(asset));
+						}
 						ids.put(asset, newSound);
 					} catch (Exception e){
 						Game.reportException(e);
