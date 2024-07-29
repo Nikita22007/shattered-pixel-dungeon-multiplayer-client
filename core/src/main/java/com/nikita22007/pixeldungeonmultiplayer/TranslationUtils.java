@@ -32,8 +32,26 @@ public class TranslationUtils {
             case 12: return Terrain.WALL_DECO;
             case 13: return Terrain.BARRICADE;
             case 14: return Terrain.EMPTY_SP;
-            case 15: return Terrain.PEDESTAL;
-
+            case 15: return Terrain.HIGH_GRASS;
+            case 24: return Terrain.EMPTY_DECO;
+            case 25: return Terrain.LOCKED_EXIT;
+            case 26: return Terrain.UNLOCKED_EXIT;
+            //no sign
+            case 29: return Terrain.EMPTY;
+            case 34: return Terrain.WELL;
+            case 35: return Terrain.STATUE;
+            case 36: return Terrain.STATUE_SP;
+            case 41: return Terrain.BOOKSHELF;
+            case 42: return Terrain.ALCHEMY;
+            case 43: return Terrain.CHASM;
+            case 44: return Terrain.CHASM;
+            case 45: return Terrain.CHASM;
+            case 46: return Terrain.CHASM;
+            case 16: return Terrain.SECRET_DOOR;
+            case 17: return Terrain.TRAP;
+            case 18: return Terrain.SECRET_TRAP;
+            case 19: return Terrain.TRAP;
+            case 20: return Terrain.SECRET_TRAP;
             default: return id;
         }
     }
