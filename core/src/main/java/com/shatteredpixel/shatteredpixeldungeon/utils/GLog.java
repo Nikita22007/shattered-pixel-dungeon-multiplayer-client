@@ -33,7 +33,7 @@ public class GLog {
 	public static final String NEGATIVE		= "-- ";
 	public static final String WARNING		= "** ";
 	public static final String HIGHLIGHT	= "@@ ";
-
+	public static final String CUSTOM = "&&";
 	public static final String NEW_LINE	    = "\n";
 	
 	public static Signal<String> update = new Signal<>();

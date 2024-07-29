@@ -85,7 +85,10 @@ public class GameLog extends Component implements Signal.Listener<String> {
 					text = text.substring( GLog.HIGHLIGHT.length() );
 					color = CharSprite.NEUTRAL;
 				}
-
+				else if(text.startsWith(GLog.CUSTOM)) {
+					color = Integer.parseInt(text.substring(2, text.indexOf(' ')-1));
+					text = text.split(" ")[0];
+				}
 				if (lastEntry != null && color == lastColor && lastEntry.nLines < maxLines) {
 
 					String lastMessage = lastEntry.text();
@@ -176,46 +179,7 @@ public class GameLog extends Component implements Signal.Listener<String> {
 		textsToAdd.clear();
 	}
 	public void WriteMessage(String text, int color) {
-
-		if (lastEntry != null && color == lastColor && lastEntry.nLines < MAX_LINES) {
-
-			String lastMessage = lastEntry.text();
-			lastEntry.text( lastMessage.length() == 0 ? text : lastMessage + " " + text );
-			//TODO: check this
-			//lastEntry.measure();
-
-			entries.get( entries.size() - 1 ).text = lastEntry.text();
-
-		} else {
-
-			lastEntry = new RenderedTextBlock( text, 6 );
-			lastEntry.hardlight( color );
-			lastColor = color;
-			add( lastEntry );
-
-			entries.add( new Entry( text, color ) );
-
-		}
-
-		if (length > 0) {
-			int nLines;
-			do {
-				nLines = 0;
-				for (int i = 0; i < length; i++) {
-					nLines += ((BitmapTextMultiline) members.get(i)).nLines;
-				}
-
-				if (nLines > MAX_LINES) {
-					remove(members.get(0));
-
-					entries.remove( 0 );
-				}
-			} while (nLines > MAX_LINES);
-			if (entries.isEmpty()) {
-				lastEntry = null;
-			}
-		}
-
+		textsToAdd.add("&&" + color + " " + text);
 		layout();
 
 	}
@@ -235,6 +199,10 @@ public class GameLog extends Component implements Signal.Listener<String> {
 		} else if (text.startsWith(GLog.HIGHLIGHT)) {
 			text = text.substring(GLog.HIGHLIGHT.length());
 			color = CharSprite.NEUTRAL;
+		}
+		else if(text.startsWith(GLog.CUSTOM)) {
+			color = Integer.parseInt(text.substring(2, text.indexOf(' ')-1));
+			text = text.split(" ")[0];
 		}
 		WriteMessage(text,color);
 	}
