@@ -230,6 +230,6 @@ open class CustomItem() : Item() {
     }
 
     override fun name(): String {
-        return super.name()
+        return name;
     }
 }
