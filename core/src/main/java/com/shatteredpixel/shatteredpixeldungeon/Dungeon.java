@@ -841,6 +841,7 @@ public class Dungeon {
 			return;
 		}
 		
+		/*
 		level.updateFieldOfView(hero, level.heroFOV);
 
 		int x = hero.pos % level.width();
@@ -944,7 +945,7 @@ public class Dungeon {
 				GameScene.updateFog(ch.pos, dist);
 			}
 		}
-
+*/
 		GameScene.afterObserve();
 	}
 
