@@ -293,7 +293,11 @@ public class Bag extends CustomItem implements Iterable<Item> {
 			if (items.size() == slot) {
 				items.add(item);
 			} else {
-				items.set(slot, item);
+				if (replace) {
+					items.set(slot, item);
+				} else {
+					items.add(slot, item);
+				}
 			}
 		}
 	}
