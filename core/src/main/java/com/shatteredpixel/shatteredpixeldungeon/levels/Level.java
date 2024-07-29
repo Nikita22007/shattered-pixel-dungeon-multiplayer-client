@@ -1260,7 +1260,7 @@ public abstract class Level implements Bundlable {
 	private static boolean[] modifiableBlocking;
 
 	public void updateFieldOfView( Char c, boolean[] fieldOfView ) {
-
+		if (true) return;
 		int cx = c.pos % width();
 		int cy = c.pos / width();
 		
