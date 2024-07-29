@@ -541,6 +541,7 @@ public class Dungeon {
 	private static final String BADGES		= "badges";
 	
 	public static void saveGame( int save ) {
+		if (true) return;
 		try {
 			Bundle bundle = new Bundle();
 
