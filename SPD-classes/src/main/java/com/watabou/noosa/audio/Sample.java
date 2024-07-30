@@ -28,6 +28,7 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.DeviceCompat;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -206,6 +207,18 @@ public enum Sample {
 			loadingQueue.add( assets.getString(i) );
 		}
 		load();
+	}
+	public long play( JSONObject sampleObj ) throws JSONException {
+		String sample = sampleObj.getString("sample");
+		if (!ids.containsKey(sample)){
+			load(sample);
+		}
+		return play(
+				sample,
+				(float)sampleObj.optDouble("left_volume",sampleObj.optDouble("right_volume", sampleObj.optDouble("volume",1.0f))),
+				(float)sampleObj.optDouble("right_volume",sampleObj.optDouble("left_volume", sampleObj.optDouble("volume",1.0f))),
+				(float)sampleObj.optDouble("rate", 1.0f)
+		);
 	}
 
 }
