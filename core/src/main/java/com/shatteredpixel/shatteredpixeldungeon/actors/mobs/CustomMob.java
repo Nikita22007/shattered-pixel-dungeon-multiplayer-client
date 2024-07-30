@@ -5,7 +5,6 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.RatSprite;
 //FIXME
 public class CustomMob extends Mob {
-    public String name;
     @Override
     public String name() {
         return Messages.get(name);
