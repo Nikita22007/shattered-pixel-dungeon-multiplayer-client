@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.sprites;
 
+import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -935,7 +936,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 		Class<? extends CharSprite> sprite_class = null;
 		CharSprite sprite = null;
 		try {
-			sprite_class = (Class<? extends CharSprite>) Class.forName(sprite_name);
+			sprite_class = (Class<? extends CharSprite>) ClassReflection.forName(sprite_name);
 			if ((sprite_class == HeroSprite.class) && (notHero)) {
 				sprite_class = HeroCustomSprite.class;
 			}

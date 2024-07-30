@@ -43,6 +43,8 @@ import com.watabou.utils.Point;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Signal;
 
+import static com.shatteredpixel.shatteredpixeldungeon.network.SendData.SendCellListenerCell;
+
 public class CellSelector extends ScrollArea {
 
 	public Listener listener = null;
@@ -482,13 +484,13 @@ public class CellSelector extends ScrollArea {
 	public void resetKeyHold(){
 		heldAction1 = heldAction2 = heldAction3 = SPDAction.NONE;
 	}
-	
+
 	public void cancel() {
-		
 		if (listener != null) {
-			listener.onSelect( null );
+			SendCellListenerCell(null);
+			//listener.onSelect( null );
 		}
-		
+
 		GameScene.ready();
 	}
 

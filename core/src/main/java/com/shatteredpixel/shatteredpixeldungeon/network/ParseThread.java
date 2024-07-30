@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.network;
 
 
+import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.nikita22007.pixeldungeonmultiplayer.JavaUtils;
 import com.nikita22007.pixeldungeonmultiplayer.TextureManager;
 import com.nikita22007.pixeldungeonmultiplayer.TranslationUtils;
@@ -541,7 +542,7 @@ public class ParseThread implements Callable<String> {
         int actorID = actionObj.getInt("actor_id");
         Actor actor = Actor.findById(actorID);
         if (actor == null) {
-            GLog.h("can't resolve actor");
+            GLog.h("solve actor");
             return;
         }
         CharSprite sprite = ((Char) actor).sprite;
@@ -1301,8 +1302,8 @@ public class ParseThread implements Callable<String> {
         if (actor == null) {
             String blob_name = format("com.shatteredpixel.shatteredpixeldungeon.actors.blobs.%s", ToPascalCase(actorObj.getString("blob_type")));
             try {
-                blob_class = Class.forName(blob_name);
-                actor = (Blob) blob_class.newInstance();
+                blob_class = ClassReflection.forName(blob_name);
+                actor = (Blob) ClassReflection.newInstance(blob_class);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1317,7 +1318,7 @@ public class ParseThread implements Callable<String> {
         }
         Blob blob = (Blob) actor;
         //TODO: check this
-        //blob.clearBlob();
+        blob.clearBlob();
         JSONArray pos_array = actorObj.getJSONArray("positions");
         for (int i = 0; i < pos_array.length(); i += 1) {
             pos_array.get(i);

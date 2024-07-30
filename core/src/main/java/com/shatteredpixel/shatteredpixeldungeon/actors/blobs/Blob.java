@@ -30,6 +30,8 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Rect;
 import com.watabou.utils.Reflection;
 
+import java.util.Arrays;
+
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.level;
 
 public class Blob extends Actor {
@@ -285,5 +287,16 @@ public class Blob extends Actor {
 	public void seed( int cell, int amount ) {
 		cur[cell] += amount;
 		volume += amount;
+	}
+	public void clearBlob( ) {
+		if(level != null) {
+			if (cur == null) cur = new int[level.length()];
+			if (off == null) off = new int[cur.length];
+		} else {
+			if (cur == null) cur = new int[32*32];
+			if (off == null) off = new int[cur.length];
+		}
+		Arrays.fill( cur, 0 );
+		volume = 0;
 	}
 }
