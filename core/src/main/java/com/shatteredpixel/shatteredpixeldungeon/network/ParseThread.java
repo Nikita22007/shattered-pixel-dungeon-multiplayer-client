@@ -1325,16 +1325,13 @@ public class ParseThread implements Callable<String> {
                 Gdx.app.error("ParseThread",e.getMessage());
             }
         }
-        //FIXME temporary fix
-            Blob blob = (Blob) actor;
-            //TODO: check this
-            blob.clearBlob();
-            JSONArray pos_array = actorObj.getJSONArray("positions");
-            for (int i = 0; i < pos_array.length(); i += 1) {
-                pos_array.get(i);
-                GameScene.add(Blob.seed(id, pos_array.getInt(i), 1, blob_class));
-            }
-
+        Blob blob = (Blob) actor;
+        blob.clearBlob();
+        JSONArray pos_array = actorObj.getJSONArray("positions");
+        for (int i = 0; i < pos_array.length(); i += 1) {
+            pos_array.get(i);
+            GameScene.add(Blob.seed(id, pos_array.getInt(i), 1, blob_class));
+        }
     }
 
     protected void parseActorHero(JSONObject actorObj, int id, Actor actor) throws JSONException {
