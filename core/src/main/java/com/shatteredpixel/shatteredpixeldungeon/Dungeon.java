@@ -282,43 +282,7 @@ public class Dungeon {
 	public static boolean levelHasBeenGenerated(int depth, int branch){
 		return generatedLevels.contains(depth + 1000*branch);
 	}
-	
-	public static Level newLevel() {
-		
-		Dungeon.level = null;
-		Actor.clear();
-		
-		Level level;
-		level = new SewerLevel();
 
-		//dead end levels get cleared, don't count as generated
-			//this assumes that we will never have a depth value outside the range 0 to 999
-			// or -500 to 499, etc.
-			if (!generatedLevels.contains(depth + 1000*branch)) {
-				generatedLevels.add(depth + 1000 * branch);
-			}
-
-			if (depth > Statistics.deepestFloor && branch == 0) {
-				Statistics.deepestFloor = depth;
-
-				if (Statistics.qualifiedForNoKilling) {
-					Statistics.completedWithNoKilling = true;
-				} else {
-					Statistics.completedWithNoKilling = false;
-				}
-			}
-
-
-		Statistics.qualifiedForBossRemainsBadge = false;
-		
-		level.create();
-		//TODO: IDK, Looking at: https://github.com/Nikita22007/pixel-dungeon-multiplayer-server/commit/477e9d41eab6b0217edd4e2594e67543b18da023
-		if (branch == 0) Statistics.qualifiedForNoKilling = !bossLevel(depth);
-		Statistics.qualifiedForBossChallengeBadge = false;
-		
-		return level;
-	}
-	
 	public static void resetLevel() {
 		
 		Actor.clear();
