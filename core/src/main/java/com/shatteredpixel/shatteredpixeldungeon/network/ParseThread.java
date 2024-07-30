@@ -827,14 +827,14 @@ public class ParseThread implements Callable<String> {
         }
         try {
             //TODO: chceck if any of this is needed
-//            PointF point = new PointF((float) actionObj.getDouble("position_x"), (float) actionObj.getDouble("position_y"));
-//            JSONArray array = actionObj.getJSONArray("matrix");
-//            int[] matrix = new int[array.length()];
-//            for (int i = 0; i < matrix.length; i++) {
-//                matrix[i] = array.getInt(i);
-//            }
-            //int color = actionObj.optInt("color", Degradation.Speck.COLOR);
-            //GameScene.add(new Degradation(point, matrix, color));
+            PointF point = new PointF((float) actionObj.getDouble("position_x"), (float) actionObj.getDouble("position_y"));
+            JSONArray array = actionObj.getJSONArray("matrix");
+            int[] matrix = new int[array.length()];
+            for (int i = 0; i < matrix.length; i++) {
+                matrix[i] = array.getInt(i);
+            }
+            int color = actionObj.optInt("color", Degradation.Speck.COLOR);
+            GameScene.addGroup(new Degradation(point, matrix, color));
         } catch (JSONException e) {
             GLog.n("Incorrect degradation action " + e.getMessage());
         }
@@ -1326,7 +1326,6 @@ public class ParseThread implements Callable<String> {
             }
         }
         //FIXME temporary fix
-        if (ClassReflection.isAssignableFrom(Blob.class, blob_class)) {
             Blob blob = (Blob) actor;
             //TODO: check this
             blob.clearBlob();
@@ -1335,7 +1334,7 @@ public class ParseThread implements Callable<String> {
                 pos_array.get(i);
                 GameScene.add(Blob.seed(id, pos_array.getInt(i), 1, blob_class));
             }
-        }
+
     }
 
     protected void parseActorHero(JSONObject actorObj, int id, Actor actor) throws JSONException {

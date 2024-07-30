@@ -77,7 +77,9 @@ public class Degradation extends Group {
 		+1, -2,
 		+2, -1
 	};
-	
+
+
+
 	public static Degradation weapon( PointF p ) {
 		return new Degradation( p, WEAPON );
 	}
@@ -94,11 +96,19 @@ public class Degradation extends Group {
 		return new Degradation( p, WAND );
 	}
 	
-	private Degradation( PointF p, int[] matrix ) {
+	public Degradation(PointF p, int[] matrix) {
 		
 		for (int i=0; i < matrix.length; i += 2) {
 			add( new Speck( p.x, p.y, matrix[i], matrix[i+1] ) );
 			add( new Speck( p.x, p.y, matrix[i], matrix[i+1] ) );
+		}
+	}
+	public Degradation(PointF p, int[] matrix, int color) {
+
+			for (int i=0; i < matrix.length; i += 2) {
+				add( new Speck( p.x, p.y, matrix[i], matrix[i+1], color ) );
+				add( new Speck( p.x, p.y, matrix[i], matrix[i+1],color ) );
+
 		}
 	}
 	
@@ -119,7 +129,7 @@ public class Degradation extends Group {
 	
 	public static class Speck extends PixelParticle {
 		
-		private static final int COLOR = 0xFF4422;
+		public static final int COLOR = 0xFF4422;
 		private static final int SIZE = 3;
 		
 		public Speck( float x0, float y0, int mx, int my ) {
@@ -144,7 +154,28 @@ public class Degradation extends Group {
 			
 			left = lifespan = 2f;
 		}
-		
+		public Speck( float x0, float y0, int mx, int my, int color) {
+
+			super();
+			color( color );
+
+			float x1 = x0 + mx * SIZE;
+			float y1 = y0 + my * SIZE;
+
+			PointF p = new PointF().polar( Random.Float( 2 * PointF.PI ), 8 );
+			x0 += p.x;
+			y0 += p.y;
+
+			float dx = x1 - x0;
+			float dy = y1 - y0;
+
+			x = x0;
+			y = y0;
+			speed.set( dx, dy );
+			acc.set( -dx / 4, -dy / 4 );
+
+			left = lifespan = 2f;
+		}
 		@Override
 		public void update() {
 			super.update();
