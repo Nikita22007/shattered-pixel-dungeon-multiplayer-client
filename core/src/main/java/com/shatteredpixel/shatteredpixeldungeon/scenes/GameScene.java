@@ -213,10 +213,6 @@ public class GameScene extends PixelScene {
 	
 	@Override
 	public void create() {
-		
-		Sample.INSTANCE.play(Assets.Music.SEWERS_1);
-
-
 		super.create();
 		Camera.main.zoom( GameMath.gate(minZoom, defaultZoom + SPDSettings.zoom(), maxZoom));
 		Camera.main.edgeScroll.set(1);
