@@ -937,7 +937,14 @@ public class GameScene extends PixelScene {
 	}
 
 	private synchronized void addMobSprite( Mob mob ) {
-		CharSprite sprite = mob.sprite();
+		CharSprite sprite;
+		if (mob.sprite != null) {
+			//sprite is already created in other place
+			//for example, in ParseThread
+			sprite = mob.sprite;
+		} else {
+			sprite = mob.sprite();
+		}
 		addMobSprite(mob, sprite);
 	}
 
