@@ -156,8 +156,9 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 		
 		this.ch = ch;
 		ch.sprite = this;
-		
-		place( ch.pos );
+		if (Game.scene() instanceof GameScene) {
+			place(ch.pos);
+		}
 		turnTo( ch.pos, Random.Int( Dungeon.level.length() ) );
 		renderShadow = true;
 		
