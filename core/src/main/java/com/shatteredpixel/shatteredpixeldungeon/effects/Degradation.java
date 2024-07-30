@@ -104,7 +104,6 @@ public class Degradation extends Group {
 		}
 	}
 	public Degradation(PointF p, int[] matrix, int color) {
-
 			for (int i=0; i < matrix.length; i += 2) {
 				add( new Speck( p.x, p.y, matrix[i], matrix[i+1], color ) );
 				add( new Speck( p.x, p.y, matrix[i], matrix[i+1],color ) );
@@ -155,26 +154,8 @@ public class Degradation extends Group {
 			left = lifespan = 2f;
 		}
 		public Speck( float x0, float y0, int mx, int my, int color) {
-
-			super();
+			this(x0, y0, mx, my);
 			color( color );
-
-			float x1 = x0 + mx * SIZE;
-			float y1 = y0 + my * SIZE;
-
-			PointF p = new PointF().polar( Random.Float( 2 * PointF.PI ), 8 );
-			x0 += p.x;
-			y0 += p.y;
-
-			float dx = x1 - x0;
-			float dy = y1 - y0;
-
-			x = x0;
-			y = y0;
-			speed.set( dx, dy );
-			acc.set( -dx / 4, -dy / 4 );
-
-			left = lifespan = 2f;
 		}
 		@Override
 		public void update() {
