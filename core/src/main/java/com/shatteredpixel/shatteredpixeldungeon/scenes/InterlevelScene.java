@@ -59,6 +59,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.level;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.resetLevel;
 
 public class InterlevelScene extends PixelScene {
@@ -289,7 +290,12 @@ public class InterlevelScene extends PixelScene {
 		waitingTime += Game.elapsed;
 		
 		float p = timeLeft / fadeTime;
-		
+
+		if (reset_level){
+			resetLevel();
+			reset_level = false;
+		}
+
 		switch (phase) {
 		
 		case FADE_IN:
@@ -357,8 +363,9 @@ public class InterlevelScene extends PixelScene {
 	}
 	private void resetLevel(){
 		Actor.fixTime();
+		Level oldLevel = level;
 		Dungeon.level = new SewerLevel();
-		Dungeon.level.create();
+		Dungeon.level.create(oldLevel);
 		Dungeon.init();
 	}
 

@@ -192,89 +192,20 @@ public abstract class Level implements Bundlable {
 	private static final String BLOBS		= "blobs";
 	private static final String FEELING		= "feeling";
 
-	public void create() {
-
-		Random.pushGenerator( Dungeon.seedCurDepth() );
-
-		//TODO maybe just make this part of RegularLevel?
-		if (!Dungeon.bossLevel() && Dungeon.branch == 0) {
-
-			addItemToSpawn(Generator.random(Generator.Category.FOOD));
-
-			if (Dungeon.posNeeded()) {
-				Dungeon.LimitedDrops.STRENGTH_POTIONS.count++;
-				addItemToSpawn( new PotionOfStrength() );
-			}
-			if (Dungeon.souNeeded()) {
-				Dungeon.LimitedDrops.UPGRADE_SCROLLS.count++;
-				//every 2nd scroll of upgrade is removed with forbidden runes challenge on
-				//TODO while this does significantly reduce this challenge's levelgen impact, it doesn't quite remove it
-				//for 0 levelgen impact, we need to do something like give the player all SOU, but nerf them
-				//or give a random scroll (from a separate RNG) instead of every 2nd SOU
-				if (!Dungeon.isChallenged(Challenges.NO_SCROLLS) || Dungeon.LimitedDrops.UPGRADE_SCROLLS.count%2 != 0){
-					addItemToSpawn(new ScrollOfUpgrade());
-				}
-			}
-			if (Dungeon.asNeeded()) {
-				Dungeon.LimitedDrops.ARCANE_STYLI.count++;
-				addItemToSpawn( new Stylus() );
-			}
-			if ( Dungeon.enchStoneNeeded() ){
-				Dungeon.LimitedDrops.ENCH_STONE.drop();
-				addItemToSpawn( new StoneOfEnchantment() );
-			}
-			if ( Dungeon.intStoneNeeded() ){
-				Dungeon.LimitedDrops.INT_STONE.drop();
-				addItemToSpawn( new StoneOfIntuition() );
-			}
-			if ( Dungeon.trinketCataNeeded() ){
-				Dungeon.LimitedDrops.TRINKET_CATA.drop();
-				addItemToSpawn( new TrinketCatalyst());
-			}
-			
-			if (Dungeon.depth > 1) {
-				//50% chance of getting a level feeling
-				//~7.15% chance for each feeling
-				switch (Random.Int( 14 )) {
-					case 0:
-						feeling = Feeling.CHASM;
-						break;
-					case 1:
-						feeling = Feeling.WATER;
-						break;
-					case 2:
-						feeling = Feeling.GRASS;
-						break;
-					case 3:
-						feeling = Feeling.DARK;
-						addItemToSpawn(new Torch());
-						viewDistance = Math.round(viewDistance/2f);
-						break;
-					case 4:
-						feeling = Feeling.LARGE;
-						addItemToSpawn(Generator.random(Generator.Category.FOOD));
-						break;
-					case 5:
-						feeling = Feeling.TRAPS;
-						break;
-					case 6:
-						feeling = Feeling.SECRETS;
-						break;
-					default:
-						//if-else statements are fine here as only one chance can be above 0 at a time
-						if (Random.Float() < MossyClump.overrideNormalLevelChance()){
-							feeling = MossyClump.getNextFeeling();
-						} else if (Random.Float() < TrapMechanism.overrideNormalLevelChance()) {
-							feeling = TrapMechanism.getNextFeeling();
-						} else {
-							feeling = Feeling.NONE;
-						}
-				}
-			}
+	public void create(Level level) {
+		if (level != null) {
+			create(level.width, level.height);
+		} else {
+			create(0, 0);
 		}
-		
-		do {
-			width = height = length = 0;
+	}
+
+	public void create(int old_width, int old_height) {
+		setSize(old_width, old_height);
+		create();
+	}
+
+	protected void create() {
 
 			transitions = new ArrayList<>();
 
@@ -285,16 +216,6 @@ public abstract class Level implements Bundlable {
 			traps = new SparseArray<>();
 			customTiles = new HashSet<>();
 			customWalls = new HashSet<>();
-			
-		} while (!build());
-		
-		buildFlagMaps();
-		cleanWalls();
-		
-		createMobs();
-		createItems();
-
-		Random.popGenerator();
 	}
 	
 	public void setSize(int w, int h){

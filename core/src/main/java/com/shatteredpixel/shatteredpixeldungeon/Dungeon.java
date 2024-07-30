@@ -267,7 +267,9 @@ public class Dungeon {
 		Blacksmith.Quest.reset();
 		Imp.Quest.reset();
 
-		hero = new Hero();
+		if (hero == null) {
+			hero = new Hero();
+		}
 		hero.live();
 //
 //		Badges.reset();

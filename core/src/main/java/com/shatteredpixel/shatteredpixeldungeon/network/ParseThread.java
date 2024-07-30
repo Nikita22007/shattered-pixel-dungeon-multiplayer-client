@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.IronKey;
+import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.SewerLevel;
 import com.shatteredpixel.shatteredpixeldungeon.plants.CustomPlant;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
@@ -195,8 +196,13 @@ public class ParseThread implements Callable<String> {
             return;
         }
         if (DeviceCompat.isDebug()) {
-            //Log.i("Parsing", data.toString(4));
+            Log.i("Parsing", data.toString(4));
         }
+
+        if (data.has("level_params")){
+            parseLevelParams(data.getJSONObject("level_params"));
+        }
+
         //Log.w("data", data.toString(4));
         for (Iterator<String> it = data.keys(); it.hasNext(); ) {
             String token = it.next();
@@ -226,7 +232,8 @@ public class ParseThread implements Callable<String> {
                 }
                 case "level_params":
                 {
-                    parseLevelParams(data.getJSONObject(token));
+                    //parseLevelParams(data.getJSONObject(token));
+                    //parsed before
                     break;
                 }
                 //UI block
@@ -433,8 +440,9 @@ public class ParseThread implements Callable<String> {
     private void parseServerAction(JSONObject action_object) throws JSONException {
         switch (action_object.getString("type")) {
             case "reset_level": {
+                Level old_level = level;
                 level = new SewerLevel();
-                level.create();
+                level.create(old_level);
                 break;
             }
             default:
