@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.effects;
 
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BloodParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.CorrosionParticle;
@@ -653,17 +655,12 @@ public class MagicMissile extends Emitter {
 		}
 		try {
 			Class[] catClassParams = {Group.class, int.class, int.class, Callback.class};
-			MagicMissile.class.getMethod(type, catClassParams).invoke(null, group, from, to, null);
+			ClassReflection.getMethod(MagicMissile.class, type, catClassParams).invoke(null, group, from, to);
+			//MagicMissile.class.getMethod(type, catClassParams).invoke(null, group, from, to, null);
 
-		} catch (NoSuchMethodException e) {
-			GLog.n("Can't find MagicMissile with name \"%s\"", type);
-			return;
-		} catch (InvocationTargetException e) {
-			GLog.n("Error during MagicMissile \"%s\": %s", type, e);
-			return;
-		} catch (IllegalAccessException e) {
-			GLog.n("Error during MagicMissile \"%s\": %s", type, e);
-			return;
-		}
-	}
+		} catch (ReflectionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
