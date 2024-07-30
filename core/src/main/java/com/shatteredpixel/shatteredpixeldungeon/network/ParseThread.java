@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.network;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.nikita22007.pixeldungeonmultiplayer.JavaUtils;
 import com.nikita22007.pixeldungeonmultiplayer.TextureManager;
@@ -1305,7 +1306,7 @@ public class ParseThread implements Callable<String> {
                 blob_class = ClassReflection.forName(blob_name);
                 actor = (Blob) ClassReflection.newInstance(blob_class);
             } catch (Exception e) {
-                e.printStackTrace();
+                Gdx.app.error("ParseThread",e.getMessage());
             }
         }
         blob_class = actor.getClass();
@@ -1313,16 +1314,19 @@ public class ParseThread implements Callable<String> {
             try {
                 sleep(1000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Gdx.app.error("ParseThread",e.getMessage());
             }
         }
-        Blob blob = (Blob) actor;
-        //TODO: check this
-        blob.clearBlob();
-        JSONArray pos_array = actorObj.getJSONArray("positions");
-        for (int i = 0; i < pos_array.length(); i += 1) {
-            pos_array.get(i);
-            GameScene.add(Blob.seed(id, pos_array.getInt(i), 1, blob_class));
+        //FIXME temporary fix
+        if (ClassReflection.isAssignableFrom(Blob.class, blob_class)) {
+            Blob blob = (Blob) actor;
+            //TODO: check this
+            blob.clearBlob();
+            JSONArray pos_array = actorObj.getJSONArray("positions");
+            for (int i = 0; i < pos_array.length(); i += 1) {
+                pos_array.get(i);
+                GameScene.add(Blob.seed(id, pos_array.getInt(i), 1, blob_class));
+            }
         }
     }
 
