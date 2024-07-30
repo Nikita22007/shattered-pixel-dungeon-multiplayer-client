@@ -17,7 +17,7 @@ public class TranslationUtils {
             case "tiles2.png": return Assets.Environment.TILES_CAVES;
             case "tiles3.png": return Assets.Environment.TILES_CITY;
             case "tiles4.png": return Assets.Environment.TILES_HALLS;
-            default: return "tiles_city";
+            default: return Assets.Environment.TILES_SEWERS;
         }
     }
     //TODO: add trap support
