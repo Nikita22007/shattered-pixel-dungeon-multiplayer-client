@@ -39,7 +39,7 @@ public abstract class Actor implements Bundlable {
 
 	private float time;
 
-	private int id = 0;
+	private int id = -1;
 
 	//default priority values for general actor categories
 	//note that some specific actors pick more specific values
@@ -135,15 +135,16 @@ public abstract class Actor implements Bundlable {
 	}
 
 	protected void setId(int ID) {
-		id = ID;
+		changeID(ID);
 	}
 
 	public void changeID(int ID){
-		if (this.id == 0) {
+		if (this.id < 0) {
 			ids.put(ID, this);
+			this.id = ID;
 		} else {
 			ids.remove(this.id);
-			id = ID;
+			this.id = ID;
 			ids.put(ID, this);
 		}
 	}
