@@ -31,7 +31,7 @@ import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
-
+//FIXME
 public class EyeSprite extends MobSprite {
 
 	private int zapPos;
@@ -69,12 +69,10 @@ public class EyeSprite extends MobSprite {
 	public void link(Char ch) {
 		super.link(ch);
 		
-		chargeParticles = centerEmitter();
-		chargeParticles.autoKill = false;
-		chargeParticles.pour(MagicMissile.MagicParticle.ATTRACTING, 0.05f);
-		chargeParticles.on = false;
-		
-		if (((Eye)ch).beamCharged) play(charging);
+		//chargeParticles = centerEmitter();
+		//chargeParticles.autoKill = false;
+		//chargeParticles.pour(MagicMissile.MagicParticle.ATTRACTING, 0.05f);
+		//chargeParticles.on = false;
 	}
 
 	@Override
