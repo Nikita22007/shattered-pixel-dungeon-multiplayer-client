@@ -32,6 +32,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.watabou.noosa.*;
+import com.watabou.noosa.audio.Sample;
 
 import java.util.ArrayList;
 
@@ -270,7 +271,8 @@ public class StartScene extends PixelScene {
 		}
 	}
 	public static void startNewGame() {
-
+		Sample.INSTANCE.reset();
+		Sample.INSTANCE.play(Assets.Music.SEWERS_1);
 		Dungeon.hero = null;
 		SPDSettings.lastClass(GamesInProgress.selectedClass.ordinal());
 		InterlevelScene.first_descend = true;

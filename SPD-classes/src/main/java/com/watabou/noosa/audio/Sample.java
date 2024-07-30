@@ -93,7 +93,7 @@ public enum Sample {
 					Sound newSound;
 					try {
 						if(asset.startsWith("snd")){
-							newSound = Gdx.audio.newSound(Gdx.files.internal(asset.replace("snd","sounds/")));
+							newSound = Gdx.audio.newSound(Gdx.files.internal(asset.replace("snd_","sounds/")));
 						} else {
 							newSound = Gdx.audio.newSound(Gdx.files.internal(asset));
 						}
