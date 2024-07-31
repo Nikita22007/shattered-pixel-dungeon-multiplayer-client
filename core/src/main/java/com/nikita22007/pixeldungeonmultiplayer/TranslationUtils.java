@@ -55,23 +55,23 @@ public class TranslationUtils {
             case 46: return Terrain.CHASM;
             case 16: return Terrain.SECRET_DOOR;
             case 17: setTrap(cell, GREEN, GRILL, true); return Terrain.TRAP;
-            case 18: return Terrain.SECRET_TRAP;
+            case 18: return Terrain.EMPTY;
             case 19: setTrap(cell, RED, GRILL, true);return Terrain.TRAP;
-            case 20: return Terrain.SECRET_TRAP;
+            case 20: return Terrain.EMPTY;
 
             case 21: setTrap(cell, YELLOW, DOTS, true);return Terrain.TRAP;
-            case 22: return Terrain.SECRET_TRAP;
+            case 22: return Terrain.EMPTY;
             case 23: setTrap(cell, YELLOW, DOTS, true);return Terrain.INACTIVE_TRAP;
             case 27: setTrap(cell, VIOLET, DOTS, true);return Terrain.TRAP;
-            case 28: return Terrain.SECRET_TRAP;
+            case 28: return Terrain.EMPTY;
             case 30: setTrap(cell, RED, DOTS, true);return Terrain.TRAP;
-            case 31: return Terrain.SECRET_TRAP;
+            case 31: return Terrain.EMPTY;
             case 32: setTrap(cell, TEAL, DOTS, true);return Terrain.TRAP;
-            case 33: return Terrain.SECRET_TRAP;
+            case 33: return Terrain.EMPTY;
             case 37: setTrap(cell, GREY, DOTS, true);return Terrain.TRAP;
-            case 38: return Terrain.SECRET_TRAP;
+            case 38: return Terrain.EMPTY;
             case 39: setTrap(cell, TEAL, WAVES, true);return Terrain.TRAP;
-            case 40: return Terrain.SECRET_TRAP;
+            case 40: return Terrain.EMPTY;
 
             //TODO: check this
             case 48: return Terrain.WATER;
