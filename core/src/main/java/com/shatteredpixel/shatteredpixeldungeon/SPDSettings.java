@@ -234,9 +234,9 @@ public class SPDSettings extends GameSettings {
 	public static void intro( boolean value ) {
 		put( KEY_INTRO, value );
 	}
-	
+
 	public static boolean intro() {
-		return getBoolean( KEY_INTRO, true );
+		return false; //getBoolean( KEY_INTRO, true );
 	}
 	
 	public static void lastClass( int value ) {
