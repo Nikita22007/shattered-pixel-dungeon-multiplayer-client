@@ -288,23 +288,10 @@ public enum HeroClass {
 				return Assets.Splashes.DUELIST;
 		}
 	}
-	
-	public boolean isUnlocked(){
-		//always unlock on debug builds
-		if (DeviceCompat.isDebug()) return true;
 
-		switch (this){
-			case WARRIOR: default:
-				return true;
-			case MAGE:
-				return Badges.isUnlocked(Badges.Badge.UNLOCK_MAGE);
-			case ROGUE:
-				return Badges.isUnlocked(Badges.Badge.UNLOCK_ROGUE);
-			case HUNTRESS:
-				return Badges.isUnlocked(Badges.Badge.UNLOCK_HUNTRESS);
-			case DUELIST:
-				return Badges.isUnlocked(Badges.Badge.UNLOCK_DUELIST);
-		}
+	// All hero classes unloked by default
+	public boolean isUnlocked(){
+		return true;
 	}
 	
 	public String unlockMsg() {
