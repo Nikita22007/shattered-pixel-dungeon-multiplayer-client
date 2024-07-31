@@ -232,4 +232,8 @@ open class CustomItem() : Item() {
     override fun name(): String {
         return name;
     }
+
+    override fun actionName(action: String?, hero: Hero?): String {
+        return action.toString();
+    }
 }
