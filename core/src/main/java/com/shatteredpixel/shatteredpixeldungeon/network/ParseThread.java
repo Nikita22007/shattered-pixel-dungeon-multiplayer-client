@@ -1503,6 +1503,6 @@ public class ParseThread implements Callable<String> {
         return builder.toString();
     }
     public static boolean isConnectedToOldServer(){
-        return DeviceCompat.isDebug();
+        return true;
     }
 }

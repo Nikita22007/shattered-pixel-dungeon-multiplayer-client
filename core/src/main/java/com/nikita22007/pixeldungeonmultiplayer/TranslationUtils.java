@@ -55,23 +55,23 @@ public class TranslationUtils {
             case 46: return Terrain.CHASM;
             case 16: return Terrain.SECRET_DOOR;
             case 17: setTrap(cell, GREEN, GRILL, true); return Terrain.TRAP;
-            case 18: setTrap(cell, GREEN, GRILL, false); return Terrain.SECRET_TRAP;
+            case 18: return Terrain.SECRET_TRAP;
             case 19: setTrap(cell, RED, GRILL, true);return Terrain.TRAP;
-            case 20: setTrap(cell, ORANGE, DOTS, false);return Terrain.SECRET_TRAP;
+            case 20: return Terrain.SECRET_TRAP;
 
             case 21: setTrap(cell, YELLOW, DOTS, true);return Terrain.TRAP;
-            case 22: setTrap(cell, YELLOW, DOTS, false);return Terrain.SECRET_TRAP;
+            case 22: return Terrain.SECRET_TRAP;
             case 23: setTrap(cell, YELLOW, DOTS, true);return Terrain.INACTIVE_TRAP;
             case 27: setTrap(cell, VIOLET, DOTS, true);return Terrain.TRAP;
-            case 28: setTrap(cell, VIOLET, DOTS, false);return Terrain.SECRET_TRAP;
+            case 28: return Terrain.SECRET_TRAP;
             case 30: setTrap(cell, RED, DOTS, true);return Terrain.TRAP;
-            case 31: setTrap(cell, RED, DOTS, false);return Terrain.SECRET_TRAP;
+            case 31: return Terrain.SECRET_TRAP;
             case 32: setTrap(cell, TEAL, DOTS, true);return Terrain.TRAP;
-            case 33: setTrap(cell, TEAL, DOTS, false);return Terrain.SECRET_TRAP;
+            case 33: return Terrain.SECRET_TRAP;
             case 37: setTrap(cell, GREY, DOTS, true);return Terrain.TRAP;
-            case 38: setTrap(cell, GREY, DOTS, false);return Terrain.SECRET_TRAP;
+            case 38: return Terrain.SECRET_TRAP;
             case 39: setTrap(cell, TEAL, WAVES, true);return Terrain.TRAP;
-            case 40: setTrap(cell, TEAL, WAVES, true);return Terrain.SECRET;
+            case 40: return Terrain.SECRET_TRAP;
 
             //TODO: check this
             case 48: return Terrain.WATER;
