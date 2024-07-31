@@ -1,5 +1,6 @@
 package com.nikita22007.pixeldungeonmultiplayer;
 
+import com.badlogic.gdx.utils.Base64Coder;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,7 +46,7 @@ public class JavaUtils {
     }
 
     public static InputStream InputStreamFromBase64(String encoded) {
-        byte[] decoded = Base64.getDecoder().decode(encoded);
+        byte[] decoded = Base64Coder.decode(encoded);
         return new ByteArrayInputStream(decoded);
     }
 
