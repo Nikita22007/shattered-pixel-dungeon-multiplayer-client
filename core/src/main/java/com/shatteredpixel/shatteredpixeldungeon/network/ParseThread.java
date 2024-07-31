@@ -777,7 +777,7 @@ public class ParseThread implements Callable<String> {
             case ("replace"):
             case ("add"):
             case ("place"): {
-                JSONObject itemObj = actionObj.optJSONObject("item", null);
+                JSONObject itemObj = actionObj.optJSONObject("item" );
                 Item item = itemObj != null ? CustomItem.createItem(actionObj.getJSONObject("item")) : null;
                 belongings.putItemIntoSlot(slot, item, update_mode.equals("replace"));
                 break;
