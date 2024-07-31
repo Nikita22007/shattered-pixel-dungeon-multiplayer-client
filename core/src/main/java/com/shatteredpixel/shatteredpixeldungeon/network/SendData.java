@@ -60,4 +60,16 @@ public class SendData {
         packet.packAndAddTollbarAction(action);
         flush();
     }
+
+    public static void sendWaitAction() {
+        sendToolbarAction("WAIT");
+    }
+
+    public static void sendRestAction() {
+        sendToolbarAction("SLEEP");
+    }
+
+    public static void sendSearchAction() {
+        sendToolbarAction("SEARCH");
+    }
 }
