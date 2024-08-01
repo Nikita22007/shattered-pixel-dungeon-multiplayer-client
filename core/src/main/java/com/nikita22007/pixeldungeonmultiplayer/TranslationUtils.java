@@ -54,9 +54,9 @@ public class TranslationUtils {
             case 45: return Terrain.CHASM;
             case 46: return Terrain.CHASM;
             case 16: return Terrain.SECRET_DOOR;
-            case 17: setTrap(cell, GREEN, GRILL, true); return Terrain.TRAP;
+            case 17: setTrap(cell, GREEN, DOTS, true); return Terrain.TRAP;
             case 18: return Terrain.EMPTY;
-            case 19: setTrap(cell, RED, GRILL, true);return Terrain.TRAP;
+            case 19: setTrap(cell, RED, DOTS, true);return Terrain.TRAP;
             case 20: return Terrain.EMPTY;
 
             case 21: setTrap(cell, YELLOW, DOTS, true);return Terrain.TRAP;

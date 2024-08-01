@@ -36,7 +36,7 @@ import com.watabou.noosa.audio.Sample;
 
 import java.util.ArrayList;
 
-public abstract class EquipableItem extends Item {
+public abstract class EquipableItem extends CustomItem {
 
 	public static final String AC_EQUIP		= "EQUIP";
 	public static final String AC_UNEQUIP	= "UNEQUIP";

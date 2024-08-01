@@ -155,34 +155,7 @@ public class Ring extends KindofMisc {
 			}
 		}
 	}
-	
-	@Override
-	public String name() {
-		return isKnown() ? super.name() : Messages.get(Ring.class, gem);
-	}
-	
-	@Override
-	public String info(){
-		
-		String desc = isKnown() ? super.desc() : Messages.get(this, "unknown_desc");
-		
-		if (cursed && isEquipped( Dungeon.hero )) {
-			desc += "\n\n" + Messages.get(Ring.class, "cursed_worn");
-			
-		} else if (cursed && cursedKnown) {
-			desc += "\n\n" + Messages.get(Ring.class, "curse_known");
-			
-		} else if (!isIdentified() && cursedKnown){
-			desc += "\n\n" + Messages.get(Ring.class, "not_cursed");
-			
-		}
-		
-		if (isKnown()) {
-			desc += "\n\n" + statsInfo();
-		}
-		
-		return desc;
-	}
+
 	
 	protected String statsInfo(){
 		return "";
@@ -199,11 +172,7 @@ public class Ring extends KindofMisc {
 		return this;
 	}
 	
-	@Override
-	public boolean isIdentified() {
-		return super.isIdentified() && isKnown();
-	}
-	
+
 	@Override
 	public Item identify( boolean byHero ) {
 		setKnown();

@@ -165,41 +165,6 @@ public class Armor extends EquipableItem {
 		seal = null;
 	}
 
-	@Override
-	public ArrayList<String> actions(Hero hero) {
-		ArrayList<String> actions = super.actions(hero);
-		if (seal != null) actions.add(AC_DETACH);
-		return actions;
-	}
-
-	@Override
-	public void execute(Hero hero, String action) {
-
-		super.execute(hero, action);
-
-		if (action.equals(AC_DETACH) && seal != null){
-			BrokenSeal.WarriorShield sealBuff = hero.buff(BrokenSeal.WarriorShield.class);
-			if (sealBuff != null) sealBuff.setArmor(null);
-
-			BrokenSeal detaching = seal;
-			seal = null;
-
-			if (detaching.level() > 0){
-				degrade();
-			}
-			if (detaching.canTransferGlyph()){
-				inscribe(null);
-			} else {
-				detaching.setGlyph(null);
-			}
-			GLog.i( Messages.get(Armor.class, "detach_seal") );
-			hero.sprite.operate(hero.pos);
-			if (!detaching.collect()){
-				Dungeon.level.drop(detaching, hero.pos);
-			}
-			updateQuickslot();
-		}
-	}
 
 	@Override
 	public boolean doEquip( Hero hero ) {
@@ -468,65 +433,7 @@ public class Armor extends EquipableItem {
 			availableUsesToID = Math.min(USES_TO_ID/2f, availableUsesToID + levelPercent * USES_TO_ID);
 		}
 	}
-	
-	@Override
-	public String name() {
-		return glyph != null && (cursedKnown || !glyph.curse()) ? glyph.name( super.name() ) : super.name();
-	}
-	
-	@Override
-	public String info() {
-		String info = desc();
-		
-		if (levelKnown) {
 
-			info += "\n\n" + Messages.get(Armor.class, "curr_absorb", tier, DRMin(), DRMax(), STRReq());
-			
-			if (STRReq() > Dungeon.hero.STR()) {
-				info += " " + Messages.get(Armor.class, "too_heavy");
-			}
-		} else {
-			info += "\n\n" + Messages.get(Armor.class, "avg_absorb", tier, DRMin(0), DRMax(0), STRReq(0));
-
-			if (STRReq(0) > Dungeon.hero.STR()) {
-				info += " " + Messages.get(Armor.class, "probably_too_heavy");
-			}
-		}
-
-		switch (augment) {
-			case EVASION:
-				info += " " + Messages.get(Armor.class, "evasion");
-				break;
-			case DEFENSE:
-				info += " " + Messages.get(Armor.class, "defense");
-				break;
-			case NONE:
-		}
-		
-		if (glyph != null  && (cursedKnown || !glyph.curse())) {
-			info += "\n\n" +  Messages.capitalize(Messages.get(Armor.class, "inscribed", glyph.name()));
-			if (glyphHardened) info += " " + Messages.get(Armor.class, "glyph_hardened");
-			info += " " + glyph.desc();
-		} else if (glyphHardened){
-			info += "\n\n" + Messages.get(Armor.class, "hardened_no_glyph");
-		}
-		
-		if (cursed && isEquipped( Dungeon.hero )) {
-			info += "\n\n" + Messages.get(Armor.class, "cursed_worn");
-		} else if (cursedKnown && cursed) {
-			info += "\n\n" + Messages.get(Armor.class, "cursed");
-		} else if (seal != null) {
-			info += "\n\n" + Messages.get(Armor.class, "seal_attached", seal.maxShield(tier, level()));
-		} else if (!isIdentified() && cursedKnown){
-			if (glyph != null && glyph.curse()) {
-				info += "\n\n" + Messages.get(Armor.class, "weak_cursed");
-			} else {
-				info += "\n\n" + Messages.get(Armor.class, "not_cursed");
-			}
-		}
-		
-		return info;
-	}
 
 	@Override
 	public Emitter emitter() {
@@ -574,7 +481,7 @@ public class Armor extends EquipableItem {
 	}
 
 	public int STRReq(int lvl){
-		return STRReq(tier, lvl);
+		return Integer.parseInt(getUi().getTopRight().getText().replace(":",""));
 	}
 
 	protected static int STRReq(int tier, int lvl){
@@ -639,7 +546,7 @@ public class Armor extends EquipableItem {
 	
 	@Override
 	public ItemSprite.Glowing glowing() {
-		return glyph != null && (cursedKnown || !glyph.curse()) ? glyph.glowing() : null;
+		return getGlowing();
 	}
 	
 	public static abstract class Glyph implements Bundlable {

@@ -29,6 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.ElementalStrike;
+import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfArcana;
@@ -246,7 +247,9 @@ abstract public class Weapon extends KindOfWeapon {
 		return req;
 	}
 
-	public abstract int STRReq(int lvl);
+	public int STRReq(int lvl){
+		return Integer.parseInt(getUi().getTopRight().getText().replace(":",""));
+	}
 
 	protected static int STRReq(int tier, int lvl){
 		lvl = Math.max(0, lvl);
@@ -446,7 +449,9 @@ abstract public class Weapon extends KindOfWeapon {
 		public void storeInBundle( Bundle bundle ) {
 		}
 		
-		public abstract ItemSprite.Glowing glowing();
+		public ItemSprite.Glowing glowing(){
+			return glowing();
+		};
 		
 		@SuppressWarnings("unchecked")
 		public static Enchantment random( Class<? extends Enchantment> ... toIgnore ) {
