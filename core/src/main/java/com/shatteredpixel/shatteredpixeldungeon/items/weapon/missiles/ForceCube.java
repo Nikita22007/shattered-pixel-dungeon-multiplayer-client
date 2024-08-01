@@ -83,4 +83,9 @@ public class ForceCube extends MissileWeapon {
 		WandOfBlastWave.BlastWave.blast(cell);
 		Sample.INSTANCE.play( Assets.Sounds.BLAST );
 	}
+
+	@Override
+	public boolean doEquip(Hero hero) {
+		return false;
+	}
 }

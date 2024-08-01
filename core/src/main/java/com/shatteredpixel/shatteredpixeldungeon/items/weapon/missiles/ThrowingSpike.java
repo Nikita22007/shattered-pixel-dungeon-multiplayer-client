@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public class ThrowingSpike extends MissileWeapon {
@@ -36,4 +37,8 @@ public class ThrowingSpike extends MissileWeapon {
 		tier = 1;
 	}
 
+	@Override
+	public boolean doEquip(Hero hero) {
+		return false;
+	}
 }

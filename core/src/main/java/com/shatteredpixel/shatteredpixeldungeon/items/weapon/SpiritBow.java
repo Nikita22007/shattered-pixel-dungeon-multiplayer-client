@@ -93,6 +93,11 @@ public class SpiritBow extends Weapon {
 		}
 	}
 
+	@Override
+	public boolean doEquip(Hero hero) {
+		return false;
+	}
+
 	private static Class[] harmfulPlants = new Class[]{
 			Blindweed.class, Firebloom.class, Icecap.class, Sorrowmoss.class,  Stormvine.class
 	};
@@ -464,6 +469,11 @@ public class SpiritBow extends Weapon {
 
 				super.cast(user, dst);
 			}
+		}
+
+		@Override
+		public boolean doEquip(Hero hero) {
+			return false;
 		}
 	}
 	

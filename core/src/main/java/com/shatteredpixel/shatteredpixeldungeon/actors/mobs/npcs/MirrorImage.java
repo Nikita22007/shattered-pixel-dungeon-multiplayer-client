@@ -100,25 +100,14 @@ public class MirrorImage extends NPC {
 		Buff.affect(this, MirrorInvis.class, Short.MAX_VALUE);
 	}
 	
-	@Override
-	public int damageRoll() {
-		int damage;
-		if (hero.belongings.weapon() != null){
-			damage = hero.belongings.weapon().damageRoll(this);
-		} else {
-			damage = hero.damageRoll(); //handles ring of force
-		}
-		return (damage+1)/2; //half hero damage, rounded up
-	}
+
 	
 	@Override
 	public int attackSkill( Char target ) {
 		//same base attack skill as hero, benefits from accuracy ring and weapon
 		int attackSkill = 9 + hero.lvl;
 		attackSkill *= RingOfAccuracy.accuracyMultiplier(hero);
-		if (hero.belongings.attackingWeapon() != null){
-			attackSkill *= hero.belongings.attackingWeapon().accuracyFactor(this, target);
-		}
+
 		return attackSkill;
 	}
 	
@@ -140,21 +129,7 @@ public class MirrorImage extends NPC {
 	public float attackDelay() {
 		return hero.attackDelay(); //handles ring of furor
 	}
-	
-	@Override
-	protected boolean canAttack(Char enemy) {
-		return super.canAttack(enemy) || (hero.belongings.weapon() != null && hero.belongings.weapon().canReach(this, enemy.pos));
-	}
-	
-	@Override
-	public int drRoll() {
-		int dr = super.drRoll();
-		if (hero != null && hero.belongings.weapon() != null){
-			return dr + Char.combatRoll(0, hero.belongings.weapon().defenseFactor(this)/2);
-		} else {
-			return dr;
-		}
-	}
+
 	
 	@Override
 	public int attackProc( Char enemy, int damage ) {
@@ -169,7 +144,6 @@ public class MirrorImage extends NPC {
 			((Mob)enemy).aggro( this );
 		}
 		if (hero.belongings.weapon() != null){
-			damage = hero.belongings.weapon().proc( this, enemy, damage );
 			if (!enemy.isAlive() && enemy == Dungeon.hero){
 				Dungeon.fail(this);
 				GLog.n( Messages.capitalize(Messages.get(Char.class, "kill", name())) );

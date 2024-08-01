@@ -165,16 +165,6 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 			if (hero.hasTalent(Talent.UNENCUMBERED_SPIRIT)) {
 				int points = hero.pointsInTalent(Talent.UNENCUMBERED_SPIRIT);
 
-				if (hero.belongings.armor() != null){
-					if (hero.belongings.armor().tier <= 1 && points >= 3){
-						enGainMulti += 1.20f;
-					} else if (hero.belongings.armor().tier <= 2 && points >= 2){
-						enGainMulti += 0.80f;
-					} else if (hero.belongings.armor().tier <= 3 && points >= 1){
-						enGainMulti += 0.40f;
-					}
-				}
-
 				if (hero.belongings.weapon() instanceof MeleeWeapon
 						&& (hero.buff(RingOfForce.BrawlersStance.class) == null
 						|| !hero.buff(RingOfForce.BrawlersStance.class).active)){

@@ -163,11 +163,7 @@ public class ElementalStrike extends ArmorAbility {
 				65 + 10*hero.pointsInTalent(Talent.ELEMENTAL_REACH),
 				Ballistica.STOP_SOLID | Ballistica.STOP_TARGET);
 
-		KindOfWeapon w = hero.belongings.weapon();
 		Weapon.Enchantment enchantment = null;
-		if (w instanceof MeleeWeapon) {
-			enchantment = ((MeleeWeapon) w).enchantment;
-		}
 		Class<?extends Weapon.Enchantment> enchCls = null;
 		if (enchantment != null){
 			enchCls = enchantment.getClass();
@@ -440,14 +436,7 @@ public class ElementalStrike extends ArmorAbility {
 
 		//*** Unstable ***
 		} else if (ench instanceof Unstable){
-			KindOfWeapon w = hero.belongings.weapon();
-			if (w instanceof Weapon) {
-				for (Char ch : affected){
-					if (ch != primaryTarget) {
-						ench.proc((Weapon) w, hero, ch, w.damageRoll(hero));
-					}
-				}
-			}
+
 
 		//*** Corrupting ***
 		} else if (ench instanceof Corrupting){
@@ -553,22 +542,7 @@ public class ElementalStrike extends ArmorAbility {
 
 	}
 
-	@Override
-	public String desc() {
-		String desc = Messages.get(this, "desc");
-		if (Game.scene() instanceof GameScene){
-			KindOfWeapon w = Dungeon.hero.belongings.weapon();
-			if (w instanceof MeleeWeapon && ((MeleeWeapon) w).enchantment != null){
-				desc += "\n\n" + Messages.get(((MeleeWeapon) w).enchantment, "elestrike_desc");
-			} else {
-				desc += "\n\n" + Messages.get(this, "generic_desc");
-			}
-		} else {
-			desc += "\n\n" + Messages.get(this, "generic_desc");
-		}
-		desc += "\n\n" + Messages.get(this, "cost", (int)baseChargeUse);
-		return desc;
-	}
+
 
 	@Override
 	public int icon() {

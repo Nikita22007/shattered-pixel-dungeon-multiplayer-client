@@ -66,5 +66,9 @@ public class Kunai extends MissileWeapon {
 		}
 		return super.damageRoll(owner);
 	}
-	
+
+	@Override
+	public boolean doEquip(Hero hero) {
+		return false;
+	}
 }

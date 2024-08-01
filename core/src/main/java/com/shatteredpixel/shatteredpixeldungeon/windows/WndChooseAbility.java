@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.windows;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
+import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.KingsCrown;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -42,7 +43,7 @@ public class WndChooseAbility extends Window {
 	private static final int WIDTH		= 130;
 	private static final float GAP		= 2;
 
-	public WndChooseAbility(final KingsCrown crown, final Armor armor, final Hero hero){
+	public WndChooseAbility(final KingsCrown crown, final CustomItem armor, final Hero hero){
 
 		super();
 

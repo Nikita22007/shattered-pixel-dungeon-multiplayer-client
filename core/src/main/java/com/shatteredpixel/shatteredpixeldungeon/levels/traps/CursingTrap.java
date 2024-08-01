@@ -69,38 +69,6 @@ public class CursingTrap extends Trap {
 	}
 
 	public static void curse(Hero hero){
-		//items the trap wants to curse because it will create a more negative effect
-		ArrayList<Item> priorityCurse = new ArrayList<>();
-		//items the trap can curse if nothing else is available.
-		ArrayList<Item> canCurse = new ArrayList<>();
-
-		KindOfWeapon weapon = hero.belongings.weapon();
-		if (weapon instanceof Weapon && !(weapon instanceof MagesStaff)){
-			if (((Weapon) weapon).enchantment == null)
-				priorityCurse.add(weapon);
-			else
-				canCurse.add(weapon);
-		}
-
-		Armor armor = hero.belongings.armor();
-		if (armor != null){
-			if (armor.glyph == null)
-				priorityCurse.add(armor);
-			else
-				canCurse.add(armor);
-		}
-
-		Collections.shuffle(priorityCurse);
-		Collections.shuffle(canCurse);
-
-		if (!priorityCurse.isEmpty()){
-			curse(priorityCurse.remove(0));
-		} else if (!canCurse.isEmpty()){
-			curse(canCurse.remove(0));
-		}
-
-		EquipableItem.equipCursed(hero);
-		GLog.n( Messages.get(CursingTrap.class, "curse") );
 	}
 
 	private static void curse(Item item){

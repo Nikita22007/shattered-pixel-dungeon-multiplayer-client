@@ -66,10 +66,6 @@ public abstract class KindofMisc extends EquipableItem {
 		if (equipFull) {
 
 			final KindofMisc[] miscs = new KindofMisc[3];
-			miscs[0] = hero.belongings.artifact;
-			miscs[1] = hero.belongings.misc;
-			miscs[2] = hero.belongings.ring;
-
 			final boolean[] enabled = new boolean[3];
 			enabled[0] = miscs[0] != null;
 			enabled[1] = miscs[1] != null;

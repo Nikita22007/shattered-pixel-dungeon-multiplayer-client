@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public class Javelin extends MissileWeapon {
@@ -33,5 +34,9 @@ public class Javelin extends MissileWeapon {
 		
 		tier = 4;
 	}
-	
+
+	@Override
+	public boolean doEquip(Hero hero) {
+		return false;
+	}
 }

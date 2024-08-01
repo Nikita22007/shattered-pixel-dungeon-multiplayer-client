@@ -31,6 +31,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
+import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -94,7 +95,7 @@ abstract public class ClassArmor extends Armor {
 		return user.armorAbility.targetedPos(user, dst);
 	}
 
-	public static ClassArmor upgrade (Hero owner, Armor armor ) {
+	public static ClassArmor upgrade (Hero owner, CustomItem armor ) {
 		
 		ClassArmor classArmor = null;
 		
@@ -117,16 +118,6 @@ abstract public class ClassArmor extends Armor {
 		}
 		
 		classArmor.level(armor.trueLevel());
-		classArmor.tier = armor.tier;
-		classArmor.augment = armor.augment;
-		classArmor.inscribe(armor.glyph);
-		if (armor.seal != null) {
-			classArmor.seal = armor.seal;
-		}
-		classArmor.glyphHardened = armor.glyphHardened;
-		classArmor.cursed = armor.cursed;
-		classArmor.curseInfusionBonus = armor.curseInfusionBonus;
-		classArmor.masteryPotionBonus = armor.masteryPotionBonus;
 		if (armor.levelKnown && armor.cursedKnown) {
 			classArmor.identify();
 		} else {

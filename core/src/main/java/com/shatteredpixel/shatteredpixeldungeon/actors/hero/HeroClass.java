@@ -163,7 +163,6 @@ public enum HeroClass {
 		Dungeon.quickslot.setSlot(0, stones);
 
 		if (hero.belongings.armor != null){
-			hero.belongings.armor.affixSeal(new BrokenSeal());
 		}
 
 		new PotionOfHealing().identify();
@@ -176,7 +175,6 @@ public enum HeroClass {
 		staff = new MagesStaff(new WandOfMagicMissile());
 
 		(hero.belongings.weapon = staff).identify();
-		hero.belongings.weapon.activate(hero);
 
 		Dungeon.quickslot.setSlot(0, staff);
 
@@ -189,7 +187,6 @@ public enum HeroClass {
 
 		CloakOfShadows cloak = new CloakOfShadows();
 		(hero.belongings.artifact = cloak).identify();
-		hero.belongings.artifact.activate( hero );
 
 		ThrowingKnife knives = new ThrowingKnife();
 		knives.quantity(3).collect();
@@ -216,7 +213,6 @@ public enum HeroClass {
 	private static void initDuelist( Hero hero ) {
 
 		(hero.belongings.weapon = new Rapier()).identify();
-		hero.belongings.weapon.activate(hero);
 
 		ThrowingSpike spikes = new ThrowingSpike();
 		spikes.quantity(2).collect();

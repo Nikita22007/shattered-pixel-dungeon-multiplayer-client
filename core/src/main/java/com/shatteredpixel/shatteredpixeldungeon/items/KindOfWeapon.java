@@ -43,7 +43,7 @@ abstract public class KindOfWeapon extends EquipableItem {
 
 	protected String hitSound = Assets.Sounds.HIT;
 	protected float hitSoundPitch = 1f;
-	
+
 	@Override
 	public void execute(Hero hero, String action) {
 		if (hero.subClass == HeroSubClass.CHAMPION && action.equals(AC_EQUIP)){
@@ -98,53 +98,6 @@ abstract public class KindOfWeapon extends EquipableItem {
 
 	protected float timeToEquip( Hero hero ) {
 		return isSwiftEquipping ? 0f : super.timeToEquip(hero);
-	}
-	
-	@Override
-	public boolean doEquip( Hero hero ) {
-
-		isSwiftEquipping = false;
-		if (hero.belongings.contains(this) && hero.hasTalent(Talent.SWIFT_EQUIP)){
-			if (hero.buff(Talent.SwiftEquipCooldown.class) == null
-					|| hero.buff(Talent.SwiftEquipCooldown.class).hasSecondUse()){
-				isSwiftEquipping = true;
-			}
-		}
-
-		detachAll( hero.belongings.backpack );
-		
-		if (hero.belongings.weapon == null || hero.belongings.weapon.doUnequip( hero, true )) {
-			
-			hero.belongings.weapon = this;
-			activate( hero );
-			Talent.onItemEquipped(hero, this);
-			Badges.validateDuelistUnlock();
-			updateQuickslot();
-
-			cursedKnown = true;
-			if (cursed) {
-				equipCursed( hero );
-				GLog.n( Messages.get(KindOfWeapon.class, "equip_cursed") );
-			}
-
-			hero.spendAndNext( timeToEquip(hero) );
-			if (isSwiftEquipping) {
-				GLog.i(Messages.get(this, "swift_equip"));
-				if (hero.buff(Talent.SwiftEquipCooldown.class) == null){
-					Buff.affect(hero, Talent.SwiftEquipCooldown.class, 19f)
-							.secondUse = hero.pointsInTalent(Talent.SWIFT_EQUIP) == 2;
-				} else if (hero.buff(Talent.SwiftEquipCooldown.class).hasSecondUse()) {
-					hero.buff(Talent.SwiftEquipCooldown.class).secondUse = false;
-				}
-				isSwiftEquipping = false;
-			}
-			return true;
-			
-		} else {
-			isSwiftEquipping = false;
-			collect( hero.belongings.backpack );
-			return false;
-		}
 	}
 
 	public boolean equipSecondary( Hero hero ){

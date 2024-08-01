@@ -48,4 +48,9 @@ public class Shuriken extends MissileWeapon {
 		if (owner instanceof Hero && ((Hero) owner).justMoved)  return 0;
 		else                                                    return super.delayFactor(owner);
 	}
+
+	@Override
+	public boolean doEquip(Hero hero) {
+		return false;
+	}
 }

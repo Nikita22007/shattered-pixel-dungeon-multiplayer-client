@@ -86,7 +86,7 @@ public class KingsCrown extends Item {
 		return true;
 	}
 	
-	public void upgradeArmor(Hero hero, Armor armor, ArmorAbility ability) {
+	public void upgradeArmor(Hero hero, CustomItem armor, ArmorAbility ability) {
 
 		detach(hero.belongings.backpack);
 

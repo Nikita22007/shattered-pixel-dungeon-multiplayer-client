@@ -74,7 +74,12 @@ public class HeavyBoomerang extends MissileWeapon {
 		parent = null;
 		Buff.append(Dungeon.hero, CircleBack.class).setup(this, cell, Dungeon.hero.pos, Dungeon.depth, Dungeon.branch);
 	}
-	
+
+	@Override
+	public boolean doEquip(Hero hero) {
+		return false;
+	}
+
 	public static class CircleBack extends Buff {
 
 		{

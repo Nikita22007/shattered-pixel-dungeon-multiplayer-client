@@ -74,7 +74,12 @@ public class Dart extends MissileWeapon {
 			GameScene.selectItem(itemSelector);
 		}
 	}
-	
+
+	@Override
+	public boolean doEquip(Hero hero) {
+		return false;
+	}
+
 	@Override
 	public int min(int lvl) {
 		if (bow != null){

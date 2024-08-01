@@ -518,29 +518,32 @@ public class ParseThread implements Callable<String> {
             }
             try {
                 //throw new RuntimeException("unreleased"); //todo remove it?
-                /*
+
                 for (int i = 0; i < slotsArr.length(); i++) {
                     JSONObject slotObj = slotsArr.getJSONObject(i);
-                    SpecialSlot slot = new SpecialSlot();
+                    CustomItem item = null;
+                    int id = -1;
                     if (slotObj.has("id")) {
-                        slot.id = slotObj.getInt("id");
+                            id = slotObj.getInt("id");
                     }
                     if (slotObj.has("sprite")) {
-                        slot.sprite = slotObj.getString("sprite");
+                        //ignored, we already know sprite
+                        //slot.sprite = slotObj.getString("sprite");
                     }
                     if (slotObj.has("image_id")) {
-                        slot.image_id = slotObj.getInt("image_id");
+                        //ignored, we already know image
+                        //slot.image_id = slotObj.getInt("image_id");
                     }
                     if (slotObj.has("item")) {
                         if (slotObj.isNull("item")) {
-                            slot.item = null;
+                            item = null;
                         } else {
-                            slot.item = CustomItem.createItem(slotObj.getJSONObject("item"));
+                            item = CustomItem.createItem(slotObj.getJSONObject("item"));
                         }
                     }
-                    hero.belongings.updateSpecialSlot(slot);
+                    hero.belongings.updateSpecialSlot(item, id);
                 }
-                 */
+
             } catch (JSONException e) {
                 Log.w("ParseThread", "Can't parse slot");
             }
@@ -788,7 +791,13 @@ public class ParseThread implements Callable<String> {
             }
             case ("update"): {
                 for (int i : slot) {
-                    ((CustomItem) belongings.getItemInSlot(slot)).update(actionObj.getJSONObject("item"));
+                    CustomItem item = ((CustomItem) belongings.getItemInSlot(slot));
+                    if (item != null) {
+                        item.update(actionObj.getJSONObject("item"));
+                    } else {
+                        //TODO: check this
+                        //hero.belongings.putItemIntoSlot(true, );
+                    }
                 }
                 break;
             }

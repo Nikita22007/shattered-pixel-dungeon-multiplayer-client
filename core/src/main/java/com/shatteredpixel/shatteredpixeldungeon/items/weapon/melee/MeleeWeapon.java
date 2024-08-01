@@ -147,6 +147,12 @@ public class MeleeWeapon extends Weapon {
 		}
 	}
 
+	//TODO: check this
+	@Override
+	public boolean doEquip(Hero hero) {
+		return true;
+	}
+
 	//leave null for no targeting
 	public String targetingPrompt(){
 		return null;
@@ -271,8 +277,6 @@ public class MeleeWeapon extends Weapon {
 	public int buffedLvl() {
 		if (!evaluatingTwinUpgrades && isEquipped(Dungeon.hero) && Dungeon.hero.hasTalent(Talent.TWIN_UPGRADES)){
 			KindOfWeapon other = null;
-			if (Dungeon.hero.belongings.weapon() != this) other = Dungeon.hero.belongings.weapon();
-			if (Dungeon.hero.belongings.secondWep() != this) other = Dungeon.hero.belongings.secondWep();
 
 			if (other instanceof MeleeWeapon) {
 				evaluatingTwinUpgrades = true;
@@ -576,9 +580,7 @@ public class MeleeWeapon extends Weapon {
 				return;
 			}
 
-			KindOfWeapon temp = Dungeon.hero.belongings.weapon;
 			Dungeon.hero.belongings.weapon = Dungeon.hero.belongings.secondWep;
-			Dungeon.hero.belongings.secondWep = temp;
 
 			Dungeon.hero.sprite.operate(Dungeon.hero.pos);
 			Sample.INSTANCE.play(Assets.Sounds.UNLOCK);

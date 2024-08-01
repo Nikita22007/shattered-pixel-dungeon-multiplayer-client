@@ -23,14 +23,12 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
 
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 
+import com.badlogic.gdx.Gdx;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
-import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.KindofMisc;
+import com.shatteredpixel.shatteredpixeldungeon.items.*;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
@@ -113,7 +111,7 @@ public class Belongings implements Iterable<Item> {
 					cap++;
 				}
 			}
-			if (Dungeon.hero != null && Dungeon.hero.belongings.secondWep != null){
+			if (hero != null && hero.belongings.secondWep != null){
 				//secondary weapons still occupy an inv. slot
 				cap--;
 			}
@@ -127,11 +125,11 @@ public class Belongings implements Iterable<Item> {
 		this.owner = owner;
 	}
 
-	public KindOfWeapon weapon = null;
-	public Armor armor = null;
-	public Artifact artifact = null;
-	public KindofMisc misc = null;
-	public Ring ring = null;
+	public CustomItem weapon = null;
+	public CustomItem armor = null;
+	public CustomItem artifact = null;
+	public CustomItem misc = null;
+	public CustomItem ring = null;
 
 	//used when thrown weapons temporary become the current weapon
 	public KindOfWeapon thrownWeapon = null;
@@ -147,7 +145,7 @@ public class Belongings implements Iterable<Item> {
 	// such as when equipping something, showing an interface, or dealing with items from a dead hero
 
 	//normally the primary equipped weapon, but can also be a thrown weapon or an ability's weapon
-	public KindOfWeapon attackingWeapon(){
+	public CustomItem attackingWeapon(){
 		if (thrownWeapon != null) return thrownWeapon;
 		if (abilityWeapon != null) return abilityWeapon;
 		return weapon();
@@ -163,7 +161,7 @@ public class Belongings implements Iterable<Item> {
 		return lostInvent;
 	}
 
-	public KindOfWeapon weapon(){
+	public CustomItem weapon(){
 		if (!lostInventory() || (weapon != null && weapon.keptThroughLostInventory())){
 			return weapon;
 		} else {
@@ -171,7 +169,7 @@ public class Belongings implements Iterable<Item> {
 		}
 	}
 
-	public Armor armor(){
+	public CustomItem armor(){
 		if (!lostInventory() || (armor != null && armor.keptThroughLostInventory())){
 			return armor;
 		} else {
@@ -179,7 +177,7 @@ public class Belongings implements Iterable<Item> {
 		}
 	}
 
-	public Artifact artifact(){
+	public CustomItem artifact(){
 		if (!lostInventory() || (artifact != null && artifact.keptThroughLostInventory())){
 			return artifact;
 		} else {
@@ -187,7 +185,7 @@ public class Belongings implements Iterable<Item> {
 		}
 	}
 
-	public KindofMisc misc(){
+	public CustomItem misc(){
 		if (!lostInventory() || (misc != null && misc.keptThroughLostInventory())){
 			return misc;
 		} else {
@@ -195,7 +193,7 @@ public class Belongings implements Iterable<Item> {
 		}
 	}
 
-	public Ring ring(){
+	public CustomItem ring(){
 		if (!lostInventory() || (ring != null && ring.keptThroughLostInventory())){
 			return ring;
 		} else {
@@ -203,7 +201,7 @@ public class Belongings implements Iterable<Item> {
 		}
 	}
 
-	public KindOfWeapon secondWep(){
+	public CustomItem secondWep(){
 		if (!lostInventory() || (secondWep != null && secondWep.keptThroughLostInventory())){
 			return secondWep;
 		} else {
@@ -233,30 +231,7 @@ public class Belongings implements Iterable<Item> {
 		bundle.put( SECOND_WEP, secondWep );
 	}
 	
-	public void restoreFromBundle( Bundle bundle ) {
-		
-		backpack.clear();
-		backpack.restoreFromBundle( bundle );
-		
-		weapon = (KindOfWeapon) bundle.get(WEAPON);
-		if (weapon() != null)       weapon().activate(owner);
-		
-		armor = (Armor)bundle.get( ARMOR );
-		if (armor() != null)        armor().activate( owner );
 
-		artifact = (Artifact) bundle.get(ARTIFACT);
-		if (artifact() != null)     artifact().activate(owner);
-
-		misc = (KindofMisc) bundle.get(MISC);
-		if (misc() != null)         misc().activate( owner );
-
-		ring = (Ring) bundle.get(RING);
-		if (ring() != null)         ring().activate( owner );
-
-		secondWep = (KindOfWeapon) bundle.get(SECOND_WEP);
-		if (secondWep() != null)    secondWep().activate(owner);
-	}
-	
 	public static void preview( GamesInProgress.Info info, Bundle bundle ) {
 		if (bundle.contains( ARMOR )){
 			Armor armor = ((Armor)bundle.get( ARMOR ));
@@ -527,7 +502,21 @@ public class Belongings implements Iterable<Item> {
 				case (0): {
 					return weapon;
 				}
+				 case (1): {
+					return armor;
+				}
+				 case (2): {
+					return artifact;
+				}
+				 case (3): {
+					return misc;
+				}
+				 case (4): {
+					return ring;
+				}
+
 				default:
+					backpack.getItemInSlot(slotPath);
 					throw new RuntimeException("Unexpected slot id " + slotID);
 					//todo add more
 			}
@@ -542,5 +531,16 @@ public class Belongings implements Iterable<Item> {
 			putItemIntoSlot(slotPath, null, true);
 		}
 		backpack.removeItemFromSlot(slotPath);
+	}
+	public void updateSpecialSlot(CustomItem item, int id){
+		switch (id) {
+			case -1: weapon = item; break;
+			case -2: armor = item; break;
+			case -3: artifact = item; break;
+			case -4: misc = item; break;
+			case -5: ring = item; break;
+            default:
+				Gdx.app.error("updateSpecialSlot", "Invalid slot");
+        }
 	}
 }

@@ -524,5 +524,10 @@ abstract public class MissileWeapon extends Weapon {
 		public String info() {
 			return "";
 		}
+		//TODO: check all of this
+		@Override
+		public boolean doEquip(Hero hero) {
+			return false;
+		}
 	}
 }

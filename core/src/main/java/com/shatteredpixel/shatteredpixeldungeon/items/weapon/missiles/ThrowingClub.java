@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public class ThrowingClub extends MissileWeapon {
@@ -40,5 +41,10 @@ public class ThrowingClub extends MissileWeapon {
 	public int max(int lvl) {
 		return  4 * tier +                  //8 base, down from 10
 				(tier) * lvl;               //scaling unchanged
+	}
+
+	@Override
+	public boolean doEquip(Hero hero) {
+		return false;
 	}
 }
