@@ -213,6 +213,13 @@ public enum Sample {
 		if (!ids.containsKey(sample)){
 			load(sample);
 		}
+		if(sampleObj.has("pitch")){
+			return play(sample,
+					(float)sampleObj.optDouble("left_volume",sampleObj.optDouble("right_volume", sampleObj.optDouble("volume",1.0f))),
+					(float)sampleObj.optDouble("right_volume",sampleObj.optDouble("left_volume", sampleObj.optDouble("volume",1.0f))),
+					(float) sampleObj.optDouble("pitch", 1.0f)
+					);
+		}
 		return play(
 				sample,
 				(float)sampleObj.optDouble("left_volume",sampleObj.optDouble("right_volume", sampleObj.optDouble("volume",1.0f))),
