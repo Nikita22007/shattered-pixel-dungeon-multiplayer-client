@@ -82,6 +82,8 @@ import static java.lang.Thread.sleep;
 
 public class ParseThread implements Callable<String> {
 
+    public static final String CLIENT_TYPE = "SPD";
+
     @NotNull
     private final BufferedReader reader;
     @NotNull
@@ -90,11 +92,14 @@ public class ParseThread implements Callable<String> {
     @NotNull
     private FutureTask<String> jsonCall;
 
+    private static boolean isOldServer = true;
+
     public ParseThread(InputStreamReader readStream, Socket socket) {
         this(new BufferedReader(readStream), socket);
     }
 
     public ParseThread(@NotNull BufferedReader readStream, @NotNull Socket socket) {
+        isOldServer = true;
         this.socket = socket;
         this.reader = readStream;
         activeThread = this;
@@ -202,11 +207,24 @@ public class ParseThread implements Callable<String> {
         if (data.has("level_params")){
             parseLevelParams(data.getJSONObject("level_params"));
         }
+        if (data.has("server_type")){
+            String serverType = data.getString("server_type");
+            if (!CLIENT_TYPE.equals(serverType)) {
+                throw new RuntimeException("Unsupported server");
+                //todo
+            }
+            Log.i("Parsing", "Server mode changed to SPD");
+            isOldServer = false;
+        }
 
         //Log.w("data", data.toString(4));
         for (Iterator<String> it = data.keys(); it.hasNext(); ) {
             String token = it.next();
             switch (token) {
+                case "server_type": {
+                    //already parsed
+                    break;
+                }
                 case "texturepack":
                 {
                     try {
@@ -1512,6 +1530,6 @@ public class ParseThread implements Callable<String> {
         return builder.toString();
     }
     public static boolean isConnectedToOldServer(){
-        return true;
+        return isOldServer;
     }
 }
