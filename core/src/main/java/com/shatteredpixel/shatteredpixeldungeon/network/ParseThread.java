@@ -1368,6 +1368,8 @@ public class ParseThread implements Callable<String> {
         }
         if (hero == null) {
             hero = new Hero();
+        }
+        if (actor == null) { //hero's actor is not found
             hero.changeID(id);
         }
         actor = hero;

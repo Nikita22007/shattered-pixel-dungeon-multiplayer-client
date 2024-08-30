@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.utils.Log;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
@@ -130,7 +131,8 @@ public abstract class Actor implements Bundlable {
 		if (id > 0) {
 			return id;
 		} else {
-			return (id = nextID++);
+			Log.e("[Actor.id()]", String.format("actor has negative id: %s", this));
+			return -1;
 		}
 	}
 
