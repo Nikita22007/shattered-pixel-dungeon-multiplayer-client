@@ -659,7 +659,8 @@ public class MagicMissile extends Emitter {
 			//MagicMissile.class.getMethod(type, catClassParams).invoke(null, group, from, to, null);
 
 		} catch (ReflectionException e) {
-            throw new RuntimeException(e);
+			GLog.n("MagicMissile", e.getMessage());
+            //throw new RuntimeException(e);
         }
     }
 

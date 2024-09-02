@@ -42,7 +42,6 @@ public abstract class Runestone extends Item {
 			super.onThrow( cell );
 		} else {
 			activate(cell);
-			if (Actor.findChar(cell) == null) Dungeon.level.pressCell( cell );
 			Invisibility.dispel();
 		}
 	}

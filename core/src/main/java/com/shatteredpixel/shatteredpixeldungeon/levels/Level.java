@@ -912,11 +912,7 @@ public abstract class Level implements Bundlable {
 		} else {
 			heap.drop(item);
 		}
-		
-		if (Dungeon.level != null && ShatteredPixelDungeon.scene() instanceof GameScene) {
-			pressCell( cell );
-		}
-		
+
 		return heap;
 	}
 	//FIXME
@@ -1080,7 +1076,6 @@ public abstract class Level implements Bundlable {
 			}
 			
 			//characters which are not the hero or a sheep 'soft' press cells
-			pressCell( ch.pos, ch instanceof Hero || ch instanceof Sheep);
 		} else {
 			if (map[ch.pos] == Terrain.DOOR){
 				Door.enter( ch.pos );
@@ -1093,89 +1088,9 @@ public abstract class Level implements Bundlable {
 	}
 	
 	//public method for forcing the hard press of a cell. e.g. when an item lands on it
-	public void pressCell( int cell ){
-		pressCell( cell, true );
-	}
-	
+
 	//a 'soft' press ignores hidden traps
 	//a 'hard' press triggers all things
-	private void pressCell( int cell, boolean hard ) {
-
-		Trap trap = null;
-		
-		switch (map[cell]) {
-		
-		case Terrain.SECRET_TRAP:
-			if (hard) {
-				trap = traps.get( cell );
-				GLog.i(Messages.get(Level.class, "hidden_trap", trap.name()));
-			}
-			break;
-			
-		case Terrain.TRAP:
-			trap = traps.get( cell );
-			break;
-			
-		case Terrain.HIGH_GRASS:
-		case Terrain.FURROWED_GRASS:
-			HighGrass.trample( this, cell);
-			break;
-			
-		case Terrain.WELL:
-			WellWater.affectCell( cell );
-			break;
-			
-		case Terrain.DOOR:
-			Door.enter( cell );
-			break;
-		}
-
-		TimekeepersHourglass.timeFreeze timeFreeze =
-				Dungeon.hero.buff(TimekeepersHourglass.timeFreeze.class);
-
-		Swiftthistle.TimeBubble bubble =
-				Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
-
-		if (trap != null) {
-			if (bubble != null){
-				Sample.INSTANCE.play(Assets.Sounds.TRAP);
-				discover(cell);
-				bubble.setDelayedPress(cell);
-				
-			} else if (timeFreeze != null){
-				Sample.INSTANCE.play(Assets.Sounds.TRAP);
-				discover(cell);
-				timeFreeze.setDelayedPress(cell);
-				
-			} else {
-				if (Dungeon.hero.pos == cell) {
-					Dungeon.hero.interrupt();
-				}
-				trap.trigger();
-
-			}
-		}
-		
-		Plant plant = plants.get( cell );
-		if (plant != null) {
-			if (bubble != null){
-				Sample.INSTANCE.play(Assets.Sounds.TRAMPLE, 1, Random.Float( 0.96f, 1.05f ) );
-				bubble.setDelayedPress(cell);
-
-			} else if (timeFreeze != null){
-				Sample.INSTANCE.play(Assets.Sounds.TRAMPLE, 1, Random.Float( 0.96f, 1.05f ) );
-				timeFreeze.setDelayedPress(cell);
-
-			} else {
-				plant.trigger();
-
-			}
-		}
-
-		if (hard && Blob.volumeAt(cell, Web.class) > 0){
-			blobs.get(Web.class).clear(cell);
-		}
-	}
 
 	private static boolean[] heroMindFov;
 

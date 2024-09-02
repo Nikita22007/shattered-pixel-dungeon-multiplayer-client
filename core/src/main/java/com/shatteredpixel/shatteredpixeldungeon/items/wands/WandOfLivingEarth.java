@@ -179,7 +179,6 @@ public class WandOfLivingEarth extends DamageWand {
 				}
 
 			} else {
-				Dungeon.level.pressCell(bolt.collisionPos);
 			}
 		}
 

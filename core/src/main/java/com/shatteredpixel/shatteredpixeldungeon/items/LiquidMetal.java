@@ -85,7 +85,6 @@ public class LiquidMetal extends Item {
 
 		} else  {
 
-			Dungeon.level.pressCell( cell );
 			if (Dungeon.level.heroFOV[cell]) {
 				GLog.i( Messages.get(Potion.class, "shatter") );
 				Sample.INSTANCE.play( Assets.Sounds.SHATTER );

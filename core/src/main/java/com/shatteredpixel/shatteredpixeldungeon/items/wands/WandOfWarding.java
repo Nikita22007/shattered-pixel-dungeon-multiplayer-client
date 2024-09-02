@@ -115,15 +115,13 @@ public class WandOfWarding extends Wand {
 			ch = Actor.findChar(target);
 			if (ch != null && !(ch instanceof Ward)){
 				GLog.w( Messages.get(this, "bad_location"));
-				Dungeon.level.pressCell(bolt.collisionPos);
 				return;
 			}
 		}
 
 		if (!Dungeon.level.passable[target]){
 			GLog.w( Messages.get(this, "bad_location"));
-			Dungeon.level.pressCell(target);
-			
+
 		} else if (ch != null){
 			if (ch instanceof Ward){
 				if (wardAvailable) {
@@ -134,7 +132,6 @@ public class WandOfWarding extends Wand {
 				ch.sprite.emitter().burst(MagicMissile.WardParticle.UP, ((Ward) ch).tier);
 			} else {
 				GLog.w( Messages.get(this, "bad_location"));
-				Dungeon.level.pressCell(target);
 			}
 			
 		} else {
@@ -144,7 +141,6 @@ public class WandOfWarding extends Wand {
 			GameScene.add(ward, 1f);
 			Dungeon.level.occupyCell(ward);
 			ward.sprite.emitter().burst(MagicMissile.WardParticle.UP, ward.tier);
-			Dungeon.level.pressCell(target);
 
 		}
 	}

@@ -302,9 +302,6 @@ public class Potion extends Item {
 		} else  {
 
 			//aqua brew specifically doesn't press cells, so it can disarm traps
-			if (!(this instanceof AquaBrew)){
-				Dungeon.level.pressCell( cell );
-			}
 			shatter( cell );
 
 			if (!anonymous && Random.Float() < talentChance){

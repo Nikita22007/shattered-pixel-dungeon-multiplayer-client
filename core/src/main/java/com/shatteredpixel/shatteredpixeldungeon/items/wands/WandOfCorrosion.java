@@ -68,9 +68,7 @@ public class WandOfCorrosion extends Wand {
 			}
 		}
 		
-		if (Actor.findChar(bolt.collisionPos) == null){
-			Dungeon.level.pressCell(bolt.collisionPos);
-		}
+
 	}
 
 	@Override

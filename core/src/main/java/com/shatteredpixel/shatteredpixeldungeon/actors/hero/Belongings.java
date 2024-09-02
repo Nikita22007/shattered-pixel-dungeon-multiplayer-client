@@ -540,7 +540,7 @@ public class Belongings implements Iterable<Item> {
 			case -4: misc = item; break;
 			case -5: ring = item; break;
             default:
-				Gdx.app.error("updateSpecialSlot", "Invalid slot");
+				Gdx.app.error("updateSpecialSlot", "Invalid slot: " + id);
         }
 	}
 }

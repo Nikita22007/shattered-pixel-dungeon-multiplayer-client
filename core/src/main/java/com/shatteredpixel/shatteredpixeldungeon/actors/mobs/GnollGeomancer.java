@@ -707,8 +707,6 @@ public class GnollGeomancer extends Mob {
 								WandOfBlastWave.throwChar(ch, trajectory, 1, false, false, source);
 								knockedChars.add(ch);
 							}
-						} else if (ch == null) {
-							Dungeon.level.pressCell(rockPath.collisionPos);
 						}
 
 						rocksInFlight--;

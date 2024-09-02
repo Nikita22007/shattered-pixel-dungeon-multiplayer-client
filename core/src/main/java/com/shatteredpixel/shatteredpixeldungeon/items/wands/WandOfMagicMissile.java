@@ -72,8 +72,6 @@ public class WandOfMagicMissile extends DamageWand {
 				}
 			}
 
-		} else {
-			Dungeon.level.pressCell(bolt.collisionPos);
 		}
 	}
 

@@ -719,21 +719,7 @@ public class Hero extends Char {
 	}
 	
 	private boolean actMove( HeroAction.Move action ) {
-
-		if (getCloser( action.dst )) {
-			canSelfTrample = false;
-			return true;
-
-		//Hero moves in place if there is grass to trample
-		} else if (pos == action.dst && canSelfTrample()){
-			canSelfTrample = false;
-			Dungeon.level.pressCell(pos);
-			spendAndNext( 1 / speed() );
-			return false;
-		} else {
-			ready();
-			return false;
-		}
+		return true;
 	}
 	
 	private boolean actInteract( HeroAction.Interact action ) {
