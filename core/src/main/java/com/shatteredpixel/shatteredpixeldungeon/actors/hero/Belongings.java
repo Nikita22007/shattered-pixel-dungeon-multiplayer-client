@@ -37,7 +37,11 @@ import com.shatteredpixel.shatteredpixeldungeon.items.bags.CustomBag;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRemoveCurse;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.ui.InventoryPane;
+import com.shatteredpixel.shatteredpixeldungeon.ui.ItemSlot;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -466,16 +470,39 @@ public class Belongings implements Iterable<Item> {
 		}
 	}
 
-	private void putItemIntoSpecialSlot(int slotID, Item item) {
+	private void putItemIntoSpecialSlot(final int slotID_network, CustomItem item) {
+		int slotID = slotID_network;
 		if (slotID < 0) {
 			slotID = -slotID - 1; // special slots are indexed from -1 with negative numbers
 		}
 		switch (slotID) {
 			case (0): {
-				//weapon = item;
+				weapon = item;
 				break;
 			}
-			//todo add more
+			case (1): {
+				armor = item;
+				break;
+			}
+			case (2):{
+				artifact = item;
+				break;
+			}
+			case (3): {
+				misc = item;
+				break;
+			}
+			case (4): {
+				ring = item;
+				break;
+			}
+			case (5): {
+				// ?
+			}
+			default: {
+				GLog.n("Unknown special slot id: " + slotID_network);
+				break;
+			}
 		}
 	}
 
@@ -484,10 +511,11 @@ public class Belongings implements Iterable<Item> {
 		assert (slotPath.size() > 0) : "empty item path";
 		if (slotPath.get(0) < 0) {
 			assert (slotPath.size() == 1) : "can't put bag into special slot";
-			putItemIntoSpecialSlot(slotPath.get(0), item);
+			putItemIntoSpecialSlot(slotPath.get(0), (CustomItem) item);
 			return;
 		}
 		backpack.putItemIntoSlot(slotPath, item, replace);
+		Item.updateQuickslot();
 	}
 
 	public Item getItemInSlot(@NotNull List<Integer> slotPath) {
@@ -531,16 +559,18 @@ public class Belongings implements Iterable<Item> {
 			putItemIntoSlot(slotPath, null, true);
 		}
 		backpack.removeItemFromSlot(slotPath);
+		Item.updateQuickslot();
 	}
 	public void updateSpecialSlot(CustomItem item, int id){
 		switch (id) {
-			case -1: weapon = item; break;
-			case -2: armor = item; break;
-			case -3: artifact = item; break;
-			case -4: misc = item; break;
-			case -5: ring = item; break;
+			case 0: weapon = item; break;
+			case 1: armor = item; break;
+			case 2: artifact = item; break;
+			case 3: misc = item; break;
+			case 4: ring = item; break;
             default:
 				Gdx.app.error("updateSpecialSlot", "Invalid slot: " + id);
         }
+		Item.updateQuickslot();
 	}
 }
