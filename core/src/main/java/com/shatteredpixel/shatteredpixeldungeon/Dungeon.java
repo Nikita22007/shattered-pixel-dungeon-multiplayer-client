@@ -60,6 +60,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.features.LevelTransition;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.secret.SecretRoom;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.SpecialRoom;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Toolbar;
@@ -910,7 +911,15 @@ public class Dungeon {
 				GameScene.updateFog(ch.pos, dist);
 			}
 		}
-*/
+	*/
+		if (ParseThread.isConnectedToOldServer()) {
+			for (Heap heap : level.heaps.valueList()) {
+				//if (!heap.seen && hero.fieldOfView[heap.pos]){
+				//	heap.seen = true;
+				//}
+				heap.seen = hero.fieldOfView[heap.pos];
+			}
+		}
 		GameScene.afterObserve();
 	}
 
