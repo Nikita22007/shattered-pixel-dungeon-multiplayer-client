@@ -901,7 +901,7 @@ public class GameScene extends PixelScene {
 	}
 	
 	private void addPlantSprite( Plant plant ) {
-
+		updateMap(plant.pos);
 	}
 
 	private void addTrapSprite( Trap trap ) {

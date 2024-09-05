@@ -363,13 +363,8 @@ public class ParseThread implements Callable<String> {
                     continue;
                 }
                 JSONObject plantInfo = plantObject.optJSONObject("plant_info");
-                Plant plant = new CustomPlant(
-                        plantInfo.optInt("sprite_id"),
-                        plantObject.getInt("pos"),
-                        plantInfo.optString("name", "unknown"),
-                        plantInfo.optString("desc", "unknown")
-                );
-                level.plant(plant, plantObject.getInt("pos"));
+                Plant.Seed seed = new CustomPlant.Seed(plantInfo);
+                level.plant(seed, plantObject.getInt("pos"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

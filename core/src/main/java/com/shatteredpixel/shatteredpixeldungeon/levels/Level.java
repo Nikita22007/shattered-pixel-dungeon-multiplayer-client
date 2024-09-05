@@ -958,21 +958,7 @@ public abstract class Level implements Bundlable {
 		plants.remove(pos);
 		GameScene.updateMap( pos );
 	}
-	public Plant plant( Plant newPlant, int pos ) {
-		if (Dungeon.level.heroFOV[pos]) {
-			Sample.INSTANCE.play( Assets.Sounds.PLANT );
-		}
-		Plant plant = plants.get( pos );
-		if (plant != null) {
-			plant.wither();
-		}
 
-		plants.put( pos, newPlant );
-
-		GameScene.add( newPlant );
-
-		return newPlant;
-	}
 	public Trap setTrap( Trap trap, int pos ){
 		Trap existingTrap = traps.get(pos);
 		if (existingTrap != null){
