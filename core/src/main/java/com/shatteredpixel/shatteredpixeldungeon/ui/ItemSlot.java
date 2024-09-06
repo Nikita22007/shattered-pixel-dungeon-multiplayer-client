@@ -203,47 +203,11 @@ public class ItemSlot extends Button {
 			updateText();
 			
 		} else {
-			if (!(item instanceof CustomItem)) {
-				enable(true);
-				sprite.visible(true);
+			enable(true);
+			sprite.visible(true);
 
-				sprite.view(item);
-				updateText();
-			} else {
-				enable(true);
-				CustomItem customItem = (CustomItem) item;
-				CustomItem.UI ui = customItem.getUi();
-				sprite.visible = true;
-				sprite.view(item.spriteSheet(), item.image(), item.glowing() );
-				extra.visible = ui.getTopLeft().getVisible();
-				extra.visible = ui.getTopRight().getVisible();
-				level.visible = ui.getBottomRight().getVisible();
-
-				if (ui.getTopLeft().getColor() == null) {
-					extra.resetColor();
-				} else {
-					extra.hardlight(ui.getTopLeft().getColor());
-				}
-
-				if (ui.getTopRight().getColor() == null) {
-					extra.resetColor();
-				} else {
-					extra.hardlight(ui.getTopRight().getColor());
-				}
-
-				if (ui.getBottomRight().getColor() == null) {
-					level.resetColor();
-				} else {
-					level.hardlight(ui.getBottomRight().getColor());
-				}
-				extra.text(ui.getTopRight().getText());
-				extra.text(ui.getTopLeft().getText());
-				level.text(ui.getBottomRight().getText());
-				extra.measure();
-				extra.measure();
-				level.measure();
-				updateText();
-			}
+			sprite.view( item );
+			updateText();
 		}
 	}
 
