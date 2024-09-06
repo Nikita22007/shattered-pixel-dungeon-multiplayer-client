@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.ui;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
@@ -202,12 +203,47 @@ public class ItemSlot extends Button {
 			updateText();
 			
 		} else {
-			
-			enable(true);
-			sprite.visible(true);
+			if (!(item instanceof CustomItem)) {
+				enable(true);
+				sprite.visible(true);
 
-			sprite.view( item );
-			updateText();
+				sprite.view(item);
+				updateText();
+			} else {
+				enable(true);
+				CustomItem customItem = (CustomItem) item;
+				CustomItem.UI ui = customItem.getUi();
+				sprite.visible = true;
+				sprite.view(item.spriteSheet(), item.image(), item.glowing() );
+				extra.visible = ui.getTopLeft().getVisible();
+				extra.visible = ui.getTopRight().getVisible();
+				level.visible = ui.getBottomRight().getVisible();
+
+				if (ui.getTopLeft().getColor() == null) {
+					extra.resetColor();
+				} else {
+					extra.hardlight(ui.getTopLeft().getColor());
+				}
+
+				if (ui.getTopRight().getColor() == null) {
+					extra.resetColor();
+				} else {
+					extra.hardlight(ui.getTopRight().getColor());
+				}
+
+				if (ui.getBottomRight().getColor() == null) {
+					level.resetColor();
+				} else {
+					level.hardlight(ui.getBottomRight().getColor());
+				}
+				extra.text(ui.getTopRight().getText());
+				extra.text(ui.getTopLeft().getText());
+				level.text(ui.getBottomRight().getText());
+				extra.measure();
+				extra.measure();
+				level.measure();
+				updateText();
+			}
 		}
 	}
 
@@ -224,77 +260,101 @@ public class ItemSlot extends Button {
 		} else {
 			status.visible = extra.visible = level.visible = true;
 		}
+		if (!(item instanceof CustomItem)) {
+			status.text(item.status());
 
-		status.text( item.status() );
-
-		//thrown weapons on their last use show quantity in orange, unless they are single-use
-		if (item instanceof MissileWeapon
-				&& ((MissileWeapon) item).durabilityLeft() <= 50f
-				&& ((MissileWeapon) item).durabilityLeft() <= ((MissileWeapon) item).durabilityPerUse()){
-			status.hardlight(WARNING);
-		} else {
-			status.resetColor();
-		}
-
-		if (item.icon != -1 && (item.isIdentified() || (item instanceof Ring && ((Ring) item).isKnown()))){
-			extra.text( null );
-
-			itemIcon = new Image(Assets.Sprites.ITEM_ICONS);
-			itemIcon.frame(ItemSpriteSheet.Icons.film.get(item.icon));
-			add(itemIcon);
-
-		} else if (item instanceof Weapon || item instanceof Armor) {
-
-			if (item.levelKnown){
-				int str = item instanceof Weapon ? ((Weapon)item).STRReq() : ((Armor)item).STRReq();
-				extra.text( Messages.format( TXT_STRENGTH, str ) );
-				if (str > Dungeon.hero.STR()) {
-					extra.hardlight( DEGRADED );
-				} else if (item instanceof Weapon && ((Weapon) item).masteryPotionBonus){
-					extra.hardlight( MASTERED );
-				} else if (item instanceof Armor && ((Armor) item).masteryPotionBonus) {
-					extra.hardlight( MASTERED );
-				} else {
-					extra.resetColor();
-				}
+			//thrown weapons on their last use show quantity in orange, unless they are single-use
+			if (item instanceof MissileWeapon
+					&& ((MissileWeapon) item).durabilityLeft() <= 50f
+					&& ((MissileWeapon) item).durabilityLeft() <= ((MissileWeapon) item).durabilityPerUse()) {
+				status.hardlight(WARNING);
 			} else {
-				int str = item instanceof Weapon ? ((Weapon)item).STRReq(0) : ((Armor)item).STRReq(0);
-				extra.text( Messages.format( TXT_TYPICAL_STR, str ) );
-				extra.hardlight( WARNING );
+				status.resetColor();
 			}
-			extra.measure();
 
-		} else {
+			if (item.icon != -1 && (item.isIdentified() || (item instanceof Ring && ((Ring) item).isKnown()))) {
+				extra.text(null);
 
-			extra.text( null );
+				itemIcon = new Image(Assets.Sprites.ITEM_ICONS);
+				itemIcon.frame(ItemSpriteSheet.Icons.film.get(item.icon));
+				add(itemIcon);
 
-		}
+			} else if (item instanceof Weapon || item instanceof Armor) {
 
-		int trueLvl = item.visiblyUpgraded();
-		int buffedLvl = item.buffedVisiblyUpgraded();
-
-		if (trueLvl != 0 || buffedLvl != 0) {
-			level.text( Messages.format( TXT_LEVEL, buffedLvl ) );
-			level.measure();
-			if (trueLvl == buffedLvl || buffedLvl <= 0) {
-				if (buffedLvl > 0){
-					if ((item instanceof Weapon && ((Weapon) item).curseInfusionBonus)
-						|| (item instanceof Armor && ((Armor) item).curseInfusionBonus)
-							|| (item instanceof Wand && ((Wand) item).curseInfusionBonus)){
-						level.hardlight(CURSE_INFUSED);
+				if (item.levelKnown) {
+					int str = item instanceof Weapon ? ((Weapon) item).STRReq() : ((Armor) item).STRReq();
+					extra.text(Messages.format(TXT_STRENGTH, str));
+					if (str > Dungeon.hero.STR()) {
+						extra.hardlight(DEGRADED);
+					} else if (item instanceof Weapon && ((Weapon) item).masteryPotionBonus) {
+						extra.hardlight(MASTERED);
+					} else if (item instanceof Armor && ((Armor) item).masteryPotionBonus) {
+						extra.hardlight(MASTERED);
 					} else {
-						level.hardlight(UPGRADED);
+						extra.resetColor();
 					}
 				} else {
-					level.hardlight( DEGRADED );
+					int str = item instanceof Weapon ? ((Weapon) item).STRReq(0) : ((Armor) item).STRReq(0);
+					extra.text(Messages.format(TXT_TYPICAL_STR, str));
+					extra.hardlight(WARNING);
+				}
+				extra.measure();
+
+			} else {
+
+				extra.text(null);
+
+			}
+
+			int trueLvl = item.visiblyUpgraded();
+			int buffedLvl = item.buffedVisiblyUpgraded();
+
+			if (trueLvl != 0 || buffedLvl != 0) {
+				level.text(Messages.format(TXT_LEVEL, buffedLvl));
+				level.measure();
+				if (trueLvl == buffedLvl || buffedLvl <= 0) {
+					if (buffedLvl > 0) {
+						if ((item instanceof Weapon && ((Weapon) item).curseInfusionBonus)
+								|| (item instanceof Armor && ((Armor) item).curseInfusionBonus)
+								|| (item instanceof Wand && ((Wand) item).curseInfusionBonus)) {
+							level.hardlight(CURSE_INFUSED);
+						} else {
+							level.hardlight(UPGRADED);
+						}
+					} else {
+						level.hardlight(DEGRADED);
+					}
+				} else {
+					level.hardlight(buffedLvl > trueLvl ? ENHANCED : WARNING);
 				}
 			} else {
-				level.hardlight(buffedLvl > trueLvl ? ENHANCED : WARNING);
+				level.text(null);
 			}
 		} else {
-			level.text( null );
+			CustomItem custom = (CustomItem) item;
+			CustomItem.UI ui = custom.getUi();
+			// extra = top right
+			extra.text(ui.getTopRight().getText());
+			if (ui.getTopRight().getColor() != null) {
+				extra.hardlight(ui.getTopRight().getColor());
+			} else {
+				extra.resetColor();
+			}
+			// status = top left
+			status.text(ui.getTopLeft().getText());
+			if (ui.getTopLeft().getColor() != null) {
+				status.hardlight(ui.getTopLeft().getColor());
+			} else {
+				status.resetColor();
+			}
+			// level = bottom right
+			level.text(ui.getBottomRight().getText());
+			if (ui.getBottomRight().getColor() != null) {
+				status.hardlight(ui.getBottomRight().getColor());
+			} else {
+				status.resetColor();
+			}
 		}
-
 		layout();
 	}
 	
