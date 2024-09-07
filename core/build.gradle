@@ -5,7 +5,14 @@ apply plugin: 'kotlin'
 
 dependencies {
     api project(':SPD-classes')
-    implementation 'org.json:json:20240303'
+    //implementation 'org.json:json:20240303'
+    //implementation ('org.json:json:20090211')
+
+    // old JSON Library for Android support
+    // https://github.com/stleary/JSON-java/wiki/JSON-Java-for-Android-developers
+    // use version like in SPD-classes module
+    //noinspection GradleDependency
+    implementation "org.json:json:20170516"
 
     implementation project(':services')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
