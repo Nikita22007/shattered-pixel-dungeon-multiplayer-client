@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.ui;
 import com.shatteredpixel.shatteredpixeldungeon.Chrome;
 import com.shatteredpixel.shatteredpixeldungeon.SPDAction;
 import com.shatteredpixel.shatteredpixeldungeon.effects.ShadowBox;
+import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.watabou.input.KeyBindings;
 import com.watabou.input.KeyEvent;
@@ -205,6 +206,9 @@ public class Window extends Group implements Signal.Listener<KeyEvent> {
 	}
 	
 	public void onBackPressed() {
+		if (id >= 0) {
+			SendData.sendWindowResult(id, -1);
+		}
 		hide();
 	}
 

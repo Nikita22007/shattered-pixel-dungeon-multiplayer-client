@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.windows;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
+import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CustomCharSprite;
@@ -109,7 +110,11 @@ public class WndOptions extends Window {
 		return true;
 	}
 	
-	protected void onSelect( int index ) {}
+	protected void onSelect( int index ) {
+		if (id >= 0){
+			SendData.sendWindowResult(id, index);
+		}
+	}
 
 	protected boolean hasInfo( int index ) {
 		return false;
