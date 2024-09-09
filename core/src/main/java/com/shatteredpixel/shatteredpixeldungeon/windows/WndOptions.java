@@ -35,6 +35,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.watabou.noosa.BitmapTextMultiline;
 import com.watabou.noosa.Image;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,37 +53,13 @@ public class WndOptions extends Window {
 	public WndOptions(Image icon, String title, String message, String... options) {
 		super();
 
-		int width = PixelScene.landscape() ? WIDTH_L : WIDTH_P;
-
-		float pos = 0;
-		if (title != null) {
-			IconTitle tfTitle = new IconTitle(icon, title);
-			tfTitle.setRect(0, pos, width, 0);
-			add(tfTitle);
-
-			pos = tfTitle.bottom() + 2*MARGIN;
-		}
-
-		layoutBody(pos, message, options);
+		layoutAll(icon, TITLE_COLOR, title, message, options);
 	}
 	
 	public WndOptions( String title, String message, String... options ) {
 		super();
 
-		int width = PixelScene.landscape() ? WIDTH_L : WIDTH_P;
-
-		float pos = MARGIN;
-		if (title != null) {
-			RenderedTextBlock tfTitle = PixelScene.renderTextBlock(title, 9);
-			tfTitle.hardlight(TITLE_COLOR);
-			tfTitle.setPos(MARGIN, pos);
-			tfTitle.maxWidth(width - MARGIN * 2);
-			add(tfTitle);
-
-			pos = tfTitle.bottom() + 2*MARGIN;
-		}
-		
-		layoutBody(pos, message, options);
+		layoutAll(null, TITLE_COLOR, title, message, options);
 	}
 
 	protected void layoutBody(float pos, String message, String... options){
@@ -175,54 +152,28 @@ public class WndOptions extends Window {
 							), true)
 			);
 		}
-		Create(image, titleColor, title, text, options);
+		layoutAll(image, titleColor, title, text, options);
 	}
-	protected void Create(Image image, Integer titleColor, String title, String message, String... options ) {
-		float pos;
-		if (image == null) {
-			BitmapTextMultiline tfTitle = new BitmapTextMultiline(title, PixelScene.pixelFont);
-			tfTitle.height = 9;
-			tfTitle.hardlight(TITLE_COLOR);
-			tfTitle.x = tfTitle.y = MARGIN;
-			tfTitle.maxWidth = width - MARGIN * 2;
-			tfTitle.measure();
+
+	protected void layoutAll(Image icon, Integer titleColor, String title, String message, String... options ){
+
+		int width = PixelScene.landscape() ? WIDTH_L : WIDTH_P;
+
+		float pos = 0;
+		if (icon != null) {
+			IconTitle tfTitle = new IconTitle(icon, title);;
+			tfTitle.setRect(0, pos, width, 0);
 			add(tfTitle);
-			pos = tfTitle.y + tfTitle.height() + MARGIN;
-		}
-		else {
-			IconTitle titlebar = new IconTitle();
-			titlebar.icon( image );
-			titlebar.label( title );
-			titlebar.color( titleColor );
-			titlebar.setRect( 0, 0, width, 0 );
-			add( titlebar );
-			pos = titlebar.bottom() + MARGIN;
-		}
-		BitmapTextMultiline tfMesage = new BitmapTextMultiline(message, PixelScene.pixelFont);
-		tfMesage.height = 8;
-		tfMesage.maxWidth = width - MARGIN * 2;
-		tfMesage.measure();
-		tfMesage.x = MARGIN;
-		tfMesage.y = pos;
-		add( tfMesage );
-
-		pos = tfMesage.y + tfMesage.height() + MARGIN;
-
-		for (int i=0; i < options.length; i++) {
-			final int index = i;
-			RedButton btn = new RedButton( options[i] ) {
-				@Override
-				protected void onClick() {
-					hide();
-					onSelect( index );
-				}
-			};
-			btn.setRect( MARGIN, pos, width - MARGIN * 2, BUTTON_HEIGHT );
-			add( btn );
-
-			pos += BUTTON_HEIGHT + MARGIN;
+			pos = tfTitle.bottom() + 2*MARGIN;
+		} else if (title != null) {
+			RenderedTextBlock tfTitle = PixelScene.renderTextBlock(title, 9);
+			tfTitle.hardlight(titleColor);
+			tfTitle.setPos(MARGIN, pos);
+			tfTitle.maxWidth(width - MARGIN * 2);
+			add(tfTitle);
+			pos = tfTitle.bottom() + 2*MARGIN;
 		}
 
-		resize( width, (int)pos );
+		layoutBody(pos, message, options);
 	}
 }
