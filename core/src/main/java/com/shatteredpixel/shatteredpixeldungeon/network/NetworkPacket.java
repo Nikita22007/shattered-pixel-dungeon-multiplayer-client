@@ -2,7 +2,6 @@ package com.shatteredpixel.shatteredpixeldungeon.network;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
-import kotlin.jvm.JvmField;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -24,7 +23,6 @@ class NetworkPacket {
     public static final String MAP = "map";
     public static final String ACTORS = "actors";
 
-    @JvmField
     public AtomicReference<JSONObject> dataRef = new AtomicReference<>(new JSONObject());
 
     public void clearData() {

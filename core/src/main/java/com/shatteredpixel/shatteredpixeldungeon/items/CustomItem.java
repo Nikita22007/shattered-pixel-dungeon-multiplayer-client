@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.CustomBag;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -135,6 +137,19 @@ public class CustomItem extends Item {
     @Override
     public ArrayList<String> actions(Hero hero) {
         return new ArrayList<>(actionsList);
+    }
+    public String actionName(String action, Hero hero){
+        return action;
+    }
+
+    @Override
+    public String name() {
+        return name;
+    }
+
+    @Override
+    public void execute(Hero hero, String action) {
+        SendData.SendItemAction(this, hero, action);
     }
 
     @Override

@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import kotlin.io.ByteStreamsKt;
 
 public class TexturePack {
     private boolean isServerTexturePack = false;
@@ -35,7 +34,11 @@ public class TexturePack {
             File tmpFile = File.createTempFile("texturePack-", ".zip");
             tmpFile.deleteOnExit();
             FileOutputStream filestream = new FileOutputStream(tmpFile);
-            ByteStreamsKt.copyTo(stream, filestream, 4096);
+            byte[] buf = new byte[8192];
+            int length;
+            while ((length = stream.read(buf)) != -1) {
+                filestream.write(buf, 0, length);
+            }
             file = new ZipFile(tmpFile);
         } catch (IOException e) {
             throw new RuntimeException(e);
