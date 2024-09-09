@@ -40,6 +40,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.FlameParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SnowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
@@ -61,6 +62,8 @@ import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
 import com.watabou.utils.Utils;
+
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -932,7 +935,12 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 		return sprite;
 	}
 	@Nullable
-	public static Class<? extends CharSprite> spriteClassFromName(String spriteName, boolean notHero) {
+	public static Class<? extends CharSprite> spriteClassFromName(@NotNull String spriteName, boolean notHero) {
+		if (ParseThread.isConnectedToOldServer()){
+			if (spriteName.equals("CursePersonificationSprite")){
+				return WraithSprite.class;
+			}
+		}
 		String sprite_name = Utils.format("com.shatteredpixel.shatteredpixeldungeon.sprites.%s", spriteName);
 		Class<? extends CharSprite> sprite_class = null;
 		CharSprite sprite = null;
