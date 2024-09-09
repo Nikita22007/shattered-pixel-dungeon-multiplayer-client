@@ -142,12 +142,16 @@ public abstract class Actor implements Bundlable {
 
 	public void changeID(int ID){
 		if (this.id < 0) {
-			ids.put(ID, this);
 			this.id = ID;
+			if ((ID >= 0) && all.contains(this)) {
+				ids.put(ID, this);
+			}
 		} else {
 			ids.remove(this.id);
 			this.id = ID;
-			ids.put(ID, this);
+			if ((ID >= 0) && all.contains(this)) {
+				ids.put(ID, this);
+			}
 		}
 	}
 
@@ -347,9 +351,9 @@ public abstract class Actor implements Bundlable {
 		if (all.contains( actor )) {
 			return;
 		}
-
-		ids.put( actor.id(),  actor );
-
+		if (actor.id() >= 0) {
+			ids.put(actor.id(), actor);
+		}
 		all.add( actor );
 		actor.time += time;
 		actor.onAdd();
@@ -368,11 +372,8 @@ public abstract class Actor implements Bundlable {
 		if (actor != null) {
 			all.remove( actor );
 			chars.remove( actor );
+			ids.remove(actor.id);
 			actor.onRemove();
-
-			if (actor.id > 0) {
-				ids.remove( actor.id );
-			}
 		}
 	}
 

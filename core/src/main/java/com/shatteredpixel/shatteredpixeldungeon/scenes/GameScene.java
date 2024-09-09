@@ -1054,8 +1054,8 @@ public class GameScene extends PixelScene {
 		Dungeon.level.mobs.add( mob );
 		if (scene != null) {
 			scene.addMobSprite(mob);
-			Actor.add(mob);
 		}
+		Actor.add(mob);
 	}
 
 	public static void addSprite( Mob mob ) {
