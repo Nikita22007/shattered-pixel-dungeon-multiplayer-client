@@ -924,13 +924,8 @@ public class GameScene extends PixelScene {
 			CharSprite oldSprite = chr.sprite;
 			scene.mobs.remove(oldSprite);
 			oldSprite.killAndErase();
-			if (newSprite instanceof CustomCharSprite) {
-				scene.addMobSprite((Mob) chr, newSprite);
-			} else
-			{
-				newSprite.killAndErase();
-				scene.addMobSprite((Mob) chr);
-			}
+			chr.sprite = newSprite;
+			scene.addMobSprite((Mob) chr);
 		} else {
 			GLog.n("trying on change sprite on char that is not mob");
 		}
