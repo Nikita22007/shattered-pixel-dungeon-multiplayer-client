@@ -1,0 +1,55 @@
+package com.shatteredpixel.shatteredpixeldungeon.items.bags;
+
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.Locale;
+
+public class CustomBag extends Bag {
+    private int size;
+
+    public Icons icon = Icons.BACKPACK;
+
+    public CustomBag(JSONObject obj) {
+        super(obj);
+        cursedKnown = true; // todo check it
+        size = obj.optInt("size", -1);
+        if (size < 0) {
+            size = obj.getInt("capacity");
+        }
+        if (obj.has("owner")) {
+            owner = (Char) Actor.findById(obj.getInt("owner"));
+        }
+        if (obj.has("items")) {
+            addItemsFromJSONArray(obj.getJSONArray("items"));
+        }
+        if (obj.has("icon")) {
+            try {
+                Icons.valueOf(obj.getString("icon").toUpperCase(Locale.ENGLISH));
+            } catch (RuntimeException e) {
+                GLog.n("incorrect icon: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void addItemsFromJSONArray(JSONArray arr) {
+        for (int i = 0; i < arr.length(); i++) {
+            JSONObject itemObj = arr.getJSONObject(i);
+            Item item = createItem(itemObj);
+            items.add(item);
+        }
+    }
+
+    @Override
+    public int capacity() {
+        return size;
+    }
+}
+
+
