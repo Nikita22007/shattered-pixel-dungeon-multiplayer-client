@@ -845,9 +845,6 @@ public class ParseThread implements Callable<String> {
 
     @Deprecated
     private void parseDegradationAction(JSONObject actionObj) {
-        if (true) {
-            throw new RuntimeException("Depreacated");
-        }
         try {
             //TODO: chceck if any of this is needed
             PointF point = new PointF((float) actionObj.getDouble("position_x"), (float) actionObj.getDouble("position_y"));
@@ -1340,6 +1337,7 @@ public class ParseThread implements Callable<String> {
                 Gdx.app.error("ParseThread",e.getMessage());
             }
         }
+        if (actor == null) return;
         blob_class = actor.getClass();
         if (blob_class == CustomMob.class) {
             try {
