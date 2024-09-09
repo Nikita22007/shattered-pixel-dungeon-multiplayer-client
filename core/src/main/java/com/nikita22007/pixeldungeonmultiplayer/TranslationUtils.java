@@ -61,7 +61,7 @@ public class TranslationUtils {
 
             case 21: setTrap(cell, YELLOW, DOTS, true);return Terrain.TRAP;
             case 22: return Terrain.EMPTY;
-            case 23: setTrap(cell, YELLOW, DOTS, true);return Terrain.INACTIVE_TRAP;
+            case 23: setTrap(cell, YELLOW, DOTS, true, false);return Terrain.INACTIVE_TRAP;
             case 27: setTrap(cell, VIOLET, DOTS, true);return Terrain.TRAP;
             case 28: return Terrain.EMPTY;
             case 30: setTrap(cell, RED, DOTS, true);return Terrain.TRAP;
@@ -87,6 +87,22 @@ public class TranslationUtils {
                 color = trapColor;
                 shape = trapShape;
                 visible = trapVisible;
+            }
+            @Override
+            public void activate() {
+
+            }
+
+        };
+        Dungeon.level.setTrap(trap, cell);
+    }
+    private static void setTrap(int cell, int trapColor, int trapShape, boolean trapVisible, boolean trapActive) {
+        Trap trap = new Trap() {
+            {
+                color = trapColor;
+                shape = trapShape;
+                visible = trapVisible;
+                active =  trapActive;
             }
             @Override
             public void activate() {
