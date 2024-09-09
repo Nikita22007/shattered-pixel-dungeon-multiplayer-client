@@ -61,7 +61,7 @@ public class TranslationUtils {
 
             case 21: setTrap(cell, YELLOW, DOTS, true);return Terrain.TRAP;
             case 22: return Terrain.EMPTY;
-            case 23: setTrap(cell, YELLOW, DOTS, true, false);return Terrain.INACTIVE_TRAP;
+            case 23: setTrap(cell, BLACK, DOTS, true, false);return Terrain.INACTIVE_TRAP;
             case 27: setTrap(cell, VIOLET, DOTS, true);return Terrain.TRAP;
             case 28: return Terrain.EMPTY;
             case 30: setTrap(cell, RED, DOTS, true);return Terrain.TRAP;
