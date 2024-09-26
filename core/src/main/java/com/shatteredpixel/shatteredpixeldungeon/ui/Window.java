@@ -38,7 +38,7 @@ import com.watabou.utils.Point;
 import com.watabou.utils.Signal;
 
 public class Window extends Group implements Signal.Listener<KeyEvent> {
-	public int id;
+	public int id = -1;
 	protected int width;
 	protected int height;
 
