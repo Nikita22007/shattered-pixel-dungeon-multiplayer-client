@@ -140,8 +140,9 @@ public class ItemSlot extends Button {
 			status.y = y + margin.top;
 			PixelScene.align(status);
 		}
-		
+
 		if (extra != null) {
+			extra.measure();
 			extra.x = x + (width - extra.width()) - margin.right;
 			extra.y = y + margin.top;
 			PixelScene.align(extra);
@@ -160,6 +161,7 @@ public class ItemSlot extends Button {
 		}
 		
 		if (level != null) {
+			level.measure();
 			level.x = x + (width - level.width()) - margin.right;
 			level.y = y + (height - level.baseLine() - 1) - margin.bottom;
 			PixelScene.align(level);
