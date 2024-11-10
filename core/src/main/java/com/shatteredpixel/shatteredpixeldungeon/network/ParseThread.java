@@ -6,7 +6,6 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.nikita22007.pixeldungeonmultiplayer.JavaUtils;
 import com.nikita22007.pixeldungeonmultiplayer.TextureManager;
 import com.nikita22007.pixeldungeonmultiplayer.TranslationUtils;
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
@@ -48,7 +47,6 @@ import com.watabou.noosa.Group;
 import com.watabou.noosa.Scene;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
-import com.watabou.noosa.tweeners.AlphaTweener;
 import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.PointF;
 
@@ -61,13 +59,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -484,11 +476,17 @@ public class ParseThread implements Callable<String> {
             if (visibleItemObj == null) {
                 return;
             }
-            level.drop(CustomItem.createItem(visibleItemObj), pos);
-            level.heaps.get(pos).setCustomImage(heapObj.optInt("visible_sprite", -1));
-            level.heaps.get(pos).setCustomSpriteSheet(heapObj.optString("visible_sprite_sheet", null));
-            level.heaps.get(pos).showsItem = heapObj.optBoolean("show_item", false);
-            level.heaps.get(pos).seen = heapObj.optBoolean("seen", false);
+            Heap newHeap = level.drop(CustomItem.createItem(visibleItemObj), pos);
+
+            newHeap.setCustomImage(heapObj.optInt("visible_sprite", -1));
+            newHeap.setCustomSpriteSheet(heapObj.optString("visible_sprite_sheet", null));
+            newHeap.showsItem = heapObj.optBoolean("show_item", false);
+            newHeap.seen = heapObj.optBoolean("seen", false);
+            if (newHeap.sprite != null) {
+                newHeap.sprite.killAndErase();
+            }
+            newHeap.updateSprite();
+            GameScene.add(newHeap);
         } catch (JSONException e) {
             Log.e("parse heap", String.format("bad heap. Exception: %s", e.getMessage()));
         }

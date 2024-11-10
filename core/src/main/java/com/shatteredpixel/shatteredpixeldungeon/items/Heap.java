@@ -21,8 +21,12 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items;
 
+import com.nikita22007.pixeldungeonmultiplayer.TextureManager;
+import com.nikita22007.pixeldungeonmultiplayer.TexturePack;
+import com.nikita22007.pixeldungeonmultiplayer.TranslationUtils;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Wraith;
@@ -47,7 +51,9 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.TippedDart;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundlable;
@@ -96,7 +102,7 @@ public class Heap implements Bundlable {
 	public void setCustomSpriteSheet(String visibleSpriteSheet) {
 		customSpriteSheet = visibleSpriteSheet;
 	}
-	
+
 	public enum Type {
 		HEAP,
 		FOR_SALE,
@@ -489,6 +495,48 @@ public class Heap implements Bundlable {
 		bundle.put( ITEMS, items );
 		bundle.put( HAUNTED, haunted );
 		bundle.put( AUTO_EXPLORED, autoExplored );
+	}
+	public int getSpriteImage(){
+		if (getCustomImage() != -1){
+			if (ParseThread.isConnectedToOldServer()){
+				return TranslationUtils.translateItemImage(getCustomImage());
+			}
+			return getCustomImage();
+		}
+		switch (type) {
+			case HEAP:
+			case FOR_SALE:
+				return size() > 0 ? items.peek().image() : 0;
+			case CHEST:
+			case LOCKED_CHEST:
+				return ItemSpriteSheet.LOCKED_CHEST;
+			case CRYSTAL_CHEST:
+				return ItemSpriteSheet.CRYSTAL_CHEST;
+			case TOMB:
+				return ItemSpriteSheet.TOMB;
+			case SKELETON:
+				return ItemSpriteSheet.BONES;
+
+			default:
+				return 0;
+		}
+	}
+	public void updateSprite(){
+		if (getSpriteImage() == ItemSpriteSheet.CHEST){
+			type = Type.CHEST;
+		} else if (getSpriteImage() == ItemSpriteSheet.TOMB) {
+			type = Type.TOMB;
+		} else if (getSpriteImage() == ItemSpriteSheet.BONES){
+			type = Type.SKELETON;
+		} else if (getSpriteImage() == ItemSpriteSheet.REMAINS) {
+			type = Type.REMAINS;
+
+		} else if (getSpriteImage() == ItemSpriteSheet.LOCKED_CHEST) {
+			type = Type.LOCKED_CHEST;
+		} else {
+			type = Type.HEAP;
+		}
+		sprite = new ItemSprite(getSpriteImage());
 	}
 	
 }

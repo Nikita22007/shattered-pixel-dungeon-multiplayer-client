@@ -72,12 +72,23 @@ public class TranslationUtils {
             case 38: return Terrain.EMPTY;
             case 39: setTrap(cell, TEAL, WAVES, true);return Terrain.TRAP;
             case 40: return Terrain.EMPTY;
-
-            //TODO: check this
+            //PD uses different id for every water type
             case 48: return Terrain.WATER;
+            case 49: return Terrain.WATER;
+            case 50: return Terrain.WATER;
+            case 51: return Terrain.WATER;
+            case 52: return Terrain.WATER;
+            case 53: return Terrain.WATER;
+            case 54: return Terrain.WATER;
+            case 55: return Terrain.WATER;
+            case 56: return Terrain.WATER;
+            case 57: return Terrain.WATER;
+            case 58: return Terrain.WATER;
+            case 59: return Terrain.WATER;
+            case 60: return Terrain.WATER;
+            case 61: return Terrain.WATER;
+            case 62: return Terrain.WATER;
             case 63: return Terrain.WATER;
-            //TODO: check this. Is this from codes?
-            //case 00x1: return Terrain.PASSABLE;
             default: return id;
         }
     }
