@@ -573,11 +573,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 			aura.visible = visible;
 			aura.point(center());
 		}
-		if (sleeping) {
-			showSleep();
-		} else {
-			hideSleep();
-		}
+
 		synchronized (EmoIcon.class) {
 			if (emo != null && emo.alive) {
 				emo.visible = visible;
