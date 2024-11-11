@@ -129,6 +129,7 @@ public class ParseThread implements Callable<String> {
     }
 
     public void parseIfHasData() {
+        String json = "";
         if (InterlevelScene.phase == InterlevelScene.Phase.FADE_OUT) {
             return;
         }
@@ -140,7 +141,7 @@ public class ParseThread implements Callable<String> {
             return;
         }
         try {
-            String json = jsonCall.get();
+            json = jsonCall.get();
             updateTask();
             parse(json);
         } catch (IOException e) {
@@ -156,6 +157,13 @@ public class ParseThread implements Callable<String> {
         } catch (ExecutionException e) {
             {
                 Log.w("parsing", e.getMessage());
+                disconnect();
+                return;
+            }
+        } catch (Exception e) {
+            if (json != null) {
+                Log.w("parsing", json);
+                e.printStackTrace();
                 disconnect();
                 return;
             }
