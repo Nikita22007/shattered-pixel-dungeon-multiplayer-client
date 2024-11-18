@@ -37,10 +37,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.Banner;
 import com.shatteredpixel.shatteredpixeldungeon.ui.GameLog;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.utils.Log;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndError;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndMessage;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
+import com.shatteredpixel.shatteredpixeldungeon.windows.*;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
@@ -1228,6 +1225,14 @@ public class ParseThread implements Callable<String> {
             Class<? extends CharSprite> new_sprite_class = spriteClassFromName(ToPascalCase(actorObj.getString("sprite_name")), chr != hero);
             if ((old_sprite == null) || (!old_sprite.getClass().equals(new_sprite_class))) {
                 CharSprite sprite = spriteFromClass(new_sprite_class);
+                //Do we merge HeroSprite and CustomHeroSprite??
+                if (sprite instanceof HeroCustomSprite){
+                    GLog.p( "Found custom hero sprite");
+                    int tier = actorObj.getInt("tier");
+                    HeroClass heroClass = actorObj.getEnum(HeroClass.class, "class");
+                    ((HeroCustomSprite) sprite).updateHeroClass(heroClass);
+                    ((HeroCustomSprite) sprite).updateTier(tier);
+                }
                 GameScene.updateCharSprite(chr, sprite);
             }
 
@@ -1323,6 +1328,14 @@ public class ParseThread implements Callable<String> {
                     sprite.setEmo(emoObj);
                     break;
                 }
+                case "class" :
+                    break;
+                    //already parsed
+                case "tier":
+                    if (chr.sprite instanceof HeroCustomSprite){
+                        ((HeroCustomSprite) chr.sprite).updateTier(actorObj.getInt("tier"));
+                    }
+                    break;
                 default: {
                     GLog.n("Unexpected token \"%s\" in Actor Char. Ignored.", token);
                     break;

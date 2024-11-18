@@ -18,6 +18,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.sprites;
 
 
+import com.badlogic.gdx.Gdx;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
@@ -29,7 +30,8 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.RectF;
 
 public class HeroCustomSprite extends CharSprite {
-
+    private int tier = 1;
+    private HeroClass heroClass = Dungeon.hero.heroClass;
     private static final int FRAME_WIDTH	= 12;
     private static final int FRAME_HEIGHT	= 15;
 
@@ -43,13 +45,13 @@ public class HeroCustomSprite extends CharSprite {
     public HeroCustomSprite() {
         super();
 
-        texture( Dungeon.hero.heroClass.spritesheet() );
+        texture( heroClass.spritesheet() );
         updateArmor();
     }
 
     public void updateArmor() {
 
-        TextureFilm film = new TextureFilm( tiers(), (Dungeon.hero).tier(), FRAME_WIDTH, FRAME_HEIGHT );
+        TextureFilm film = new TextureFilm( tiers(), tier, FRAME_WIDTH, FRAME_HEIGHT );
 
         idle = new Animation( 1, true );
         idle.frames( film, 0, 0, 0, 1, 0, 0, 1, 1 );
@@ -73,6 +75,14 @@ public class HeroCustomSprite extends CharSprite {
 
         read = new Animation( 20, false );
         read.frames( film, 19, 20, 20, 20, 20, 20, 20, 20, 20, 19 );
+    }
+    public void updateTier( int tier ){
+        this.tier = tier;
+        updateArmor();
+    }
+    public void updateHeroClass(HeroClass heroClass){
+        this.heroClass = heroClass;
+        texture(heroClass.spritesheet());
     }
 
     @Override
