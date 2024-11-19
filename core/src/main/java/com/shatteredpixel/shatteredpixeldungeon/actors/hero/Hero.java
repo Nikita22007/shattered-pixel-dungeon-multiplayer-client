@@ -418,10 +418,10 @@ public class Hero extends Char {
 		Buff.affect( this, Regeneration.class );
 		Buff.affect( this, Hunger.class );
 	}
-	@Deprecated
+	//We need this for status pane
+	public int tier = 1;
 	public int tier() {
-			return 0;
-
+			return tier;
 	}
 
 	public boolean shoot( Char enemy, MissileWeapon wep ) {

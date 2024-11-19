@@ -31,7 +31,7 @@ import com.watabou.utils.RectF;
 
 public class HeroCustomSprite extends CharSprite {
     private int tier = 1;
-    private HeroClass heroClass = Dungeon.hero.heroClass;
+    private HeroClass heroClass = HeroClass.ROGUE;
     private static final int FRAME_WIDTH	= 12;
     private static final int FRAME_HEIGHT	= 15;
 

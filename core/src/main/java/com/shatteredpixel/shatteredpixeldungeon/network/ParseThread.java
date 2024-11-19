@@ -1227,13 +1227,17 @@ public class ParseThread implements Callable<String> {
                 CharSprite sprite = spriteFromClass(new_sprite_class);
                 //Do we merge HeroSprite and CustomHeroSprite??
                 if (sprite instanceof HeroCustomSprite){
-                    GLog.p( "Found custom hero sprite");
                     int tier = actorObj.getInt("tier");
                     HeroClass heroClass = actorObj.getEnum(HeroClass.class, "class");
                     ((HeroCustomSprite) sprite).updateHeroClass(heroClass);
                     ((HeroCustomSprite) sprite).updateTier(tier);
                 }
-                GameScene.updateCharSprite(chr, sprite);
+                if (sprite instanceof HeroSprite) {
+                    int tier = actorObj.getInt("tier");
+                    ((HeroSprite) sprite).updateTier(tier);
+                } else {
+                    GameScene.updateCharSprite(chr, sprite);
+                }
             }
 
 
@@ -1334,6 +1338,9 @@ public class ParseThread implements Callable<String> {
                 case "tier":
                     if (chr.sprite instanceof HeroCustomSprite){
                         ((HeroCustomSprite) chr.sprite).updateTier(actorObj.getInt("tier"));
+                    }
+                    if (chr.sprite instanceof HeroSprite){
+                        ((HeroSprite) chr.sprite).updateTier(actorObj.getInt("tier"));
                     }
                     break;
                 default: {

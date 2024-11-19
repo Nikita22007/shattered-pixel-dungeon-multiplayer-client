@@ -39,6 +39,7 @@ import com.watabou.utils.RectF;
 import org.json.JSONObject;
 
 public class HeroSprite extends CharSprite {
+	public int tier = Dungeon.hero.tier();
 	
 	private static final int FRAME_WIDTH	= 12;
 	private static final int FRAME_HEIGHT	= 15;
@@ -52,7 +53,6 @@ public class HeroSprite extends CharSprite {
 
 	public HeroSprite() {
 		super();
-		
 		texture( Dungeon.hero.heroClass.spritesheet() );
 		updateArmor();
 		
@@ -66,7 +66,7 @@ public class HeroSprite extends CharSprite {
 	
 	public void updateArmor() {
 
-		TextureFilm film = new TextureFilm( tiers(), Dungeon.hero.tier(), FRAME_WIDTH, FRAME_HEIGHT );
+		TextureFilm film = new TextureFilm( tiers(), tier, FRAME_WIDTH, FRAME_HEIGHT );
 		
 		idle = new Animation( 1, true );
 		idle.frames( film, 0, 0, 0, 1, 0, 0, 1, 1 );
@@ -96,7 +96,17 @@ public class HeroSprite extends CharSprite {
 		else
 			die();
 	}
-	
+	public void updateTier(int tier) {
+		if (this.tier != tier) {
+			this.tier = tier;
+			if (ch != null) {
+				((Hero)	ch).tier = tier;
+			}
+			updateArmor();
+
+		}
+	}
+
 	@Override
 	public void place( int p ) {
 		super.place( p );
