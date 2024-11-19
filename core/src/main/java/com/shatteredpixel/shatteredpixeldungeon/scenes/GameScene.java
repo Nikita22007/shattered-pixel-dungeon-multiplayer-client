@@ -947,6 +947,9 @@ public class GameScene extends PixelScene {
 		sprite.visible = Dungeon.level.heroFOV[mob.pos];
 		mobs.add( sprite );
 		sprite.link( mob );
+		if (sprite.emo != null){
+			GameScene.add(sprite.emo);
+		}
 		sortMobSprites();
 	}
 
@@ -1069,9 +1072,12 @@ public class GameScene extends PixelScene {
 	}
 	
 	public static void add( EmoIcon icon ) {
+		if (scene == null) {
+			return;
+		}
 		scene.emoicons.add( icon );
 	}
-	
+
 	public static void add( CharHealthIndicator indicator ){
 		if (scene != null) scene.healthIndicators.add(indicator);
 	}
