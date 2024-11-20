@@ -196,7 +196,7 @@ public abstract class Level implements Bundlable {
 		if (level != null) {
 			create(level.width, level.height);
 		} else {
-			create(0, 0);
+			create(32, 32);
 		}
 	}
 
@@ -265,98 +265,6 @@ public abstract class Level implements Bundlable {
 	
 	@Override
 	public void restoreFromBundle( Bundle bundle ) {
-
-		version = bundle.getInt( VERSION );
-		
-		//saves from before v1.4.3 are not supported
-		if (version < ShatteredPixelDungeon.v1_4_3){
-			throw new RuntimeException("old save");
-		}
-
-		setSize( bundle.getInt(WIDTH), bundle.getInt(HEIGHT));
-		
-		mobs = new HashSet<>();
-		heaps = new SparseArray<>();
-		blobs = new HashMap<>();
-		plants = new SparseArray<>();
-		traps = new SparseArray<>();
-		customTiles = new HashSet<>();
-		customWalls = new HashSet<>();
-		
-		map		= bundle.getIntArray( MAP );
-
-		visited	= bundle.getBooleanArray( VISITED );
-		mapped	= bundle.getBooleanArray( MAPPED );
-
-		transitions = new ArrayList<>();
-		for (Bundlable b : bundle.getCollection( TRANSITIONS )){
-			transitions.add((LevelTransition) b);
-		}
-
-		locked      = bundle.getBoolean( LOCKED );
-		
-		Collection<Bundlable> collection = bundle.getCollection( HEAPS );
-		for (Bundlable h : collection) {
-			Heap heap = (Heap)h;
-			if (!heap.isEmpty())
-				heaps.put( heap.pos, heap );
-		}
-		
-		collection = bundle.getCollection( PLANTS );
-		for (Bundlable p : collection) {
-			Plant plant = (Plant)p;
-			plants.put( plant.pos, plant );
-		}
-
-		collection = bundle.getCollection( TRAPS );
-		for (Bundlable p : collection) {
-			Trap trap = (Trap)p;
-			traps.put( trap.pos, trap );
-		}
-
-		collection = bundle.getCollection( CUSTOM_TILES );
-		for (Bundlable p : collection) {
-			CustomTilemap vis = (CustomTilemap)p;
-			customTiles.add(vis);
-		}
-
-		collection = bundle.getCollection( CUSTOM_WALLS );
-		for (Bundlable p : collection) {
-			CustomTilemap vis = (CustomTilemap)p;
-			customWalls.add(vis);
-		}
-		
-		collection = bundle.getCollection( MOBS );
-		for (Bundlable m : collection) {
-			Mob mob = (Mob)m;
-			if (mob != null) {
-				mobs.add( mob );
-			}
-		}
-		
-		collection = bundle.getCollection( BLOBS );
-		for (Bundlable b : collection) {
-			Blob blob = (Blob)b;
-			blobs.put( blob.getClass(), blob );
-		}
-
-		feeling = bundle.getEnum( FEELING, Feeling.class );
-		if (feeling == Feeling.DARK)
-			viewDistance = Math.round(viewDistance/2f);
-
-		if (bundle.contains( "mobs_to_spawn" )) {
-			for (Class<? extends Mob> mob : bundle.getClassArray("mobs_to_spawn")) {
-				if (mob != null) mobsToSpawn.add(mob);
-			}
-		}
-
-		if (bundle.contains( "respawner" )){
-			respawner = (Respawner) bundle.get("respawner");
-		}
-
-		buildFlagMaps();
-		cleanWalls();
-
 	}
 	
 	@Override
