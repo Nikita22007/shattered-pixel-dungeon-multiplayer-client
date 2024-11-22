@@ -29,6 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
+import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
@@ -103,12 +104,25 @@ public class ItemSprite extends MovieClip {
 	public void link() {
 		link(heap);
 	}
-	
+
+	public void updateVisible() {
+		if (heap == null) {
+			visible = true;
+			return;
+		}
+
+		visible = (heap.seen);
+		if (ParseThread.isConnectedToOldServer()) {
+			if ((Dungeon.hero != null) && (Dungeon.hero.fieldOfView != null) && (heap.pos < Dungeon.hero.fieldOfView.length)) {
+				visible = (Dungeon.hero.fieldOfView[heap.pos]);
+			}
+		}
+	}
 	public void link( Heap heap ) {
 		this.heap = heap;
 		view(heap);
 		renderShadow = true;
-		visible = heap.seen;
+		updateVisible();
 		place(heap.pos);
 	}
 	
@@ -310,7 +324,7 @@ public class ItemSprite extends MovieClip {
 	public synchronized void update() {
 		super.update();
 
-		visible = (heap == null || heap.seen);
+		updateVisible();
 
 		if (emitter != null){
 			emitter.visible = visible;

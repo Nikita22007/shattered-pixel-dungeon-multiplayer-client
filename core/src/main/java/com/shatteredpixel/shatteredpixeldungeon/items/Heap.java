@@ -76,6 +76,9 @@ public class Heap implements Bundlable {
 	}
 
 	public void setCustomImage(int customImage) {
+		if (ParseThread.isConnectedToOldServer()){
+			customImage = TranslationUtils.translateItemImage(customImage);
+		}
 		if (customImage == this.customImage) {
 			return;
 		}
@@ -190,9 +193,31 @@ public class Heap implements Bundlable {
 	}
 	
 	public Item peek() {
-		return items.peek();
+		final Item pseudoItem = getPseudoItem();
+		if ((showsItem) ||  (pseudoItem == null)) {
+			return items.peek();
+		} else {
+			return pseudoItem;
+		}
 	}
-	
+
+	protected Item getPseudoItem(){
+		if (getCustomImage()!=-1) {
+			return new Item() {
+				@Override
+				public int image() {
+					return getCustomImage();
+				}
+				@Override
+				public String spriteSheet(){
+					return getCustomSpriteSheet();
+				}
+				;
+			};
+		}
+		return  null;
+	}
+
 	public void drop( Item item ) {
 		
 		if (item.stackable && type != Type.FOR_SALE) {
@@ -207,12 +232,7 @@ public class Heap implements Bundlable {
 			
 		}
 
-		//lost backpack must always be on top of a heap
-		if ((item.dropsDownHeap && type != Type.FOR_SALE) || peek() instanceof LostBackpack) {
-			items.add( item );
-		} else {
-			items.addFirst( item );
-		}
+		items.addFirst( item );
 		
 		if (sprite != null) {
 			sprite.view(this).place( pos );
@@ -498,9 +518,6 @@ public class Heap implements Bundlable {
 	}
 	public int getSpriteImage(){
 		if (getCustomImage() != -1){
-			if (ParseThread.isConnectedToOldServer()){
-				return TranslationUtils.translateItemImage(getCustomImage());
-			}
 			return getCustomImage();
 		}
 		switch (type) {
@@ -522,20 +539,6 @@ public class Heap implements Bundlable {
 		}
 	}
 	public void updateSprite(){
-		if (getSpriteImage() == ItemSpriteSheet.CHEST){
-			type = Type.CHEST;
-		} else if (getSpriteImage() == ItemSpriteSheet.TOMB) {
-			type = Type.TOMB;
-		} else if (getSpriteImage() == ItemSpriteSheet.BONES){
-			type = Type.SKELETON;
-		} else if (getSpriteImage() == ItemSpriteSheet.REMAINS) {
-			type = Type.REMAINS;
-
-		} else if (getSpriteImage() == ItemSpriteSheet.LOCKED_CHEST) {
-			type = Type.LOCKED_CHEST;
-		} else {
-			type = Type.HEAP;
-		}
 		sprite = new ItemSprite(getSpriteImage());
 	}
 	

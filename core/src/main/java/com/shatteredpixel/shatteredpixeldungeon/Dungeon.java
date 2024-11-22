@@ -917,7 +917,10 @@ public class Dungeon {
 				//if (!heap.seen && hero.fieldOfView[heap.pos]){
 				//	heap.seen = true;
 				//}
-				heap.seen = hero.fieldOfView[heap.pos];
+				/*heap.seen = hero.fieldOfView[heap.pos];
+				if (heap.sprite != null) {
+					heap.sprite.visible(hero.fieldOfView[heap.pos]);
+				}*/
 			}
 		}
 		GameScene.afterObserve();

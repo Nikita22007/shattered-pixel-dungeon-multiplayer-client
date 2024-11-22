@@ -486,12 +486,16 @@ public class ParseThread implements Callable<String> {
             newHeap.setCustomImage(heapObj.optInt("visible_sprite", -1));
             newHeap.setCustomSpriteSheet(heapObj.optString("visible_sprite_sheet", null));
             newHeap.showsItem = heapObj.optBoolean("show_item", false);
-            newHeap.seen = heapObj.optBoolean("seen", false);
-            if (newHeap.sprite != null) {
-                newHeap.sprite.killAndErase();
+            if (ParseThread.isConnectedToOldServer()){
+                if ( hero != null && hero.fieldOfView != null) {
+                   // newHeap.seen = hero.fieldOfView[newHeap.pos];
+                    newHeap.seen = false;
+                }
+            } else {
+                newHeap.seen = heapObj.optBoolean("seen", false);
             }
-            newHeap.updateSprite();
-            GameScene.add(newHeap);
+            if (newHeap.sprite != null) newHeap.sprite.link(newHeap);
+
         } catch (JSONException e) {
             Log.e("parse heap", String.format("bad heap. Exception: %s", e.getMessage()));
         }
