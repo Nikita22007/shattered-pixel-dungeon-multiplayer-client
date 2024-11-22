@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.scenes;
 
+import com.nikita22007.pixeldungeonmultiplayer.TextureManager;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Chrome;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
@@ -59,6 +60,7 @@ public class TitleScene extends PixelScene {
 	public void create() {
 		
 		super.create();
+		TextureManager.INSTANCE.unloadServerTexturePacks();
 
 		Music.INSTANCE.playTracks(
 				new String[]{Assets.Music.THEME_1, Assets.Music.THEME_2},

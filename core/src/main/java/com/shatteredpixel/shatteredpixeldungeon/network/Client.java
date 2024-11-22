@@ -72,7 +72,6 @@ public class Client extends Thread {
         socket = null;
         readStream = null;
         writeStream = null;
-        TextureManager.INSTANCE.unloadServerTexturePacks();
     }
 
     public void run() {

@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.scenes;
 
+import com.nikita22007.pixeldungeonmultiplayer.TextureManager;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Chrome;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
@@ -85,7 +86,8 @@ public class HeroSelectScene extends PixelScene {
 	@Override
 	public void create() {
 		super.create();
-
+		TextureManager.INSTANCE.unloadServerTexturePacks();
+		
 		Dungeon.hero = null;
 
 		Badges.loadGlobal();
