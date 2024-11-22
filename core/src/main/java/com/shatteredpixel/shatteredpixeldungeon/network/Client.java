@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.network;
 
 
+import com.nikita22007.pixeldungeonmultiplayer.TextureManager;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.network.scanners.ServerInfo;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
@@ -71,6 +72,7 @@ public class Client extends Thread {
         socket = null;
         readStream = null;
         writeStream = null;
+        TextureManager.INSTANCE.unloadServerTexturePacks();
     }
 
     public void run() {

@@ -22,14 +22,20 @@
 package com.watabou.gltextures;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.watabou.glwrap.Texture;
 import com.watabou.noosa.Game;
 
+import java.io.InputStream;
+import java.io.File;
 import java.util.*;
 
+import jdk.internal.org.jline.utils.Log;
+
 public class TextureCache {
-	
+
+	public static TextureManagerInterface manager = null;
 	private static HashMap<Object,SmartTexture> all = new HashMap<>();
 
 	public synchronized static SmartTexture createSolid( int color ) {
@@ -143,7 +149,8 @@ public class TextureCache {
 	}
 	
 	public static Pixmap getBitmap( Object src ) {
-		
+
+		Gdx.app.log("TextureCache", (String)src.toString());
 		try {
 			if (src instanceof Integer){
 				
@@ -152,7 +159,14 @@ public class TextureCache {
 				return null;
 				
 			} else if (src instanceof String) {
-				
+				Gdx.app.log("TextureCache", (String)src);
+				if (manager != null) {
+					//InputStream assetStream = manager.getAssetStream((String) src);
+					File assetFile = manager.getAssetFile((String) src);
+					if (assetFile != null) {
+						return new Pixmap(new FileHandle(assetFile));
+					}
+				}
 				return new Pixmap(Gdx.files.internal((String)src));
 				
 			} else if (src instanceof Pixmap) {
@@ -182,8 +196,15 @@ public class TextureCache {
 			Map.Entry<Object, SmartTexture> tx = iterator.next();
 			if (tx.getKey() instanceof String)
 			{
-				if (((String) tx.getKey()).startsWith("1x1"))
+				String keyString = (String) tx.getKey();
+				if (keyString.startsWith("1x1"))
 				{
+					continue;
+				}
+				if (keyString.contains("@")){
+					continue;
+				}
+				if (keyString.contains("[")){
 					continue;
 				}
 				tx.getValue().delete();

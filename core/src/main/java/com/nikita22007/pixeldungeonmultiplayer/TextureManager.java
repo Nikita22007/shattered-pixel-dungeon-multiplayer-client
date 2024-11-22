@@ -1,33 +1,39 @@
 package com.nikita22007.pixeldungeonmultiplayer;
 
+import com.shatteredpixel.shatteredpixeldungeon.utils.Log;
 import com.watabou.gltextures.TextureCache;
+import com.watabou.gltextures.TextureManagerInterface;
 //import com.watabou.gltextures.TextureManagerInterface;
 
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class TextureManager /*implements TextureManagerInterface*/ {
+public class TextureManager implements TextureManagerInterface {
     public static TextureManager INSTANCE = new TextureManager();
-    LinkedHashMap<String,TexturePack> texturePacks = new LinkedHashMap<String, TexturePack>();
+    private final LinkedHashMap<String,TexturePack> texturePacks = new LinkedHashMap<String, TexturePack>();
+    private final LinkedHashMap<String, File> cachedTextureFiles = new LinkedHashMap<>();
 
     TextureManager()
     {
 
     }
 
-    //@Override
+    @Override
     public void loadTexturePack(InputStream stream) throws IOException {
         TexturePack texturePack = new TexturePack(stream, true);
         texturePacks.put(texturePack.name, texturePack);
         updateTextureCache();
     }
 
-    //@Override
+    @Override
     public boolean hasAsset(String src) {
         for (TexturePack texturePack : texturePacks.values())
         {
@@ -37,7 +43,7 @@ public class TextureManager /*implements TextureManagerInterface*/ {
         return false;
     }
 
-    //@Override
+    @Override
     public InputStream getAssetStream(String s) {
         for (TexturePack texturePack : texturePacks.values())
         {
@@ -50,6 +56,38 @@ public class TextureManager /*implements TextureManagerInterface*/ {
         return null;
     }
 
+
+    @Override
+    public File getAssetFile(String s) {
+        if (cachedTextureFiles.containsKey(s)){
+            return cachedTextureFiles.get(s);
+        }
+        try {
+            try (InputStream inputStream = getAssetStream(s)) {
+                if (inputStream == null) {
+                    cachedTextureFiles.put(s, null);
+                    return null;
+                }
+                File file = File.createTempFile("TextureManager-", "-asset");
+                file.deleteOnExit();
+                try (OutputStream outputStream = new FileOutputStream(file)) {
+
+                    byte[] buff = new byte[1024 * 1024 * 2];
+                    int count = inputStream.read(buff);
+                    while (count > 0) {
+                        outputStream.write(buff, 0, count);
+                        count = inputStream.read(buff);
+                    }
+                }
+                cachedTextureFiles.put(s, file);
+                return file;
+            }
+        } catch (IOException e) {
+            Log.e("TextureManager", String.format("Io Exception during loading %s: %s", s, e));
+            return null;
+        }
+    }
+    
     public JSONObject getAnimationsJsonObject(String animationsFile) {
         for (TexturePack texturePack : texturePacks.values())
         {
@@ -85,6 +123,7 @@ public class TextureManager /*implements TextureManagerInterface*/ {
     
     protected void updateTextureCache()
     {
+        cachedTextureFiles.clear();
         TextureCache.reloadFromAssets();
     }
 }
