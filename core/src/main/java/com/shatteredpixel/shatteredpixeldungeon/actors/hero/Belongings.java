@@ -506,6 +506,10 @@ public class Belongings implements Iterable<Item> {
 		}
 	}
 
+	public boolean isEquipped(Item item){
+		return item == weapon || item == armor || item == artifact || item == misc || item == ring || item == secondWep;
+	};
+
 	public void putItemIntoSlot(@NotNull List<Integer> slotPath, @Nullable Item item, boolean replace) {
 		assert (slotPath != null) : "null item path";
 		assert (slotPath.size() > 0) : "empty item path";

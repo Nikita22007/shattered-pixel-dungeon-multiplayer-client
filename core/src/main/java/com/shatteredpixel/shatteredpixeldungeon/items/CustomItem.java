@@ -7,6 +7,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.bags.CustomBag;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
+
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -38,6 +40,11 @@ public class CustomItem extends Item {
 
     protected CustomItem() {
         super();
+    }
+
+    @Override
+    public boolean isEquipped( @NotNull Hero hero ) {
+        return hero.belongings.isEquipped(this);
     }
 
     protected CustomItem(JSONObject obj) {
