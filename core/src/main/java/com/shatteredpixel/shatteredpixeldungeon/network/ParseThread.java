@@ -811,14 +811,12 @@ public class ParseThread implements Callable<String> {
                 break;
             }
             case ("update"): {
-                for (int i : slot) {
-                    CustomItem item = ((CustomItem) belongings.getItemInSlot(slot));
-                    if (item != null) {
-                        item.update(actionObj.getJSONObject("item"));
-                    } else {
-                        //TODO: check this
-                        //hero.belongings.putItemIntoSlot(true, );
-                    }
+                CustomItem item = ((CustomItem) belongings.getItemInSlot(slot));
+                if (item != null) {
+                    item.update(actionObj.getJSONObject("item"));
+                } else {
+                    CustomItem newItem = CustomItem.createItem(actionObj.getJSONObject("item"));
+                    belongings.putItemIntoSlot(slot, newItem, true);
                 }
                 break;
             }
