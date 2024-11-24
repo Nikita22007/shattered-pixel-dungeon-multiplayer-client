@@ -561,8 +561,9 @@ public class Belongings implements Iterable<Item> {
 		assert (slotPath.size() > 0) : "empty item path";
 		if (slotPath.get(0)<0) {
 			putItemIntoSlot(slotPath, null, true);
+		} else {
+			backpack.removeItemFromSlot(slotPath);
 		}
-		backpack.removeItemFromSlot(slotPath);
 		Item.updateQuickslot();
 	}
 	public void updateSpecialSlot(CustomItem item, int id){
