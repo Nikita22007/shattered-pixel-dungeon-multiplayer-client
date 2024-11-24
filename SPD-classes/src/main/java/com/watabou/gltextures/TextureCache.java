@@ -150,7 +150,7 @@ public class TextureCache {
 	
 	public static Pixmap getBitmap( Object src ) {
 
-		Gdx.app.log("TextureCache", (String)src.toString());
+		//Gdx.app.log("TextureCache", (String)src.toString());
 		try {
 			if (src instanceof Integer){
 				
@@ -159,9 +159,8 @@ public class TextureCache {
 				return null;
 				
 			} else if (src instanceof String) {
-				Gdx.app.log("TextureCache", (String)src);
+				//Gdx.app.log("TextureCache", (String)src);
 				if (manager != null) {
-					//InputStream assetStream = manager.getAssetStream((String) src);
 					File assetFile = manager.getAssetFile((String) src);
 					if (assetFile != null) {
 						return new Pixmap(new FileHandle(assetFile));
