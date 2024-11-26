@@ -27,10 +27,16 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.Bundle;
 import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.GameSettings;
 import com.watabou.utils.Point;
+import org.json.JSONObject;
 
+import javax.swing.undo.AbstractUndoableEdit;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class SPDSettings extends GameSettings {
@@ -463,10 +469,23 @@ public class SPDSettings extends GameSettings {
 		return defaultRelayServerAddress;
 	}
 	//TODO: read server UUID and send this or save this
+	static Bundle heroUUIDBundle = new Bundle();
 	public static void heroUUID(String serverUUID, String heroUUID) {
-		put("hero_uuid_"+serverUUID, heroUUID);
+		heroUUIDBundle.put(serverUUID, heroUUID);
+		put("hero_uuids", heroUUIDBundle.toString());
 	}
 	public static String heroUUID(String serverUUID){
-		return getString("hero_uuid_" + serverUUID, null);
+        try {
+			String heroUUIDs = getString("hero_uuids", null);
+			if (heroUUIDs != null && heroUUIDBundle.isNull()) {
+				heroUUIDBundle = Bundle.read(new ByteArrayInputStream(getString("hero_uuids", null).getBytes()));
+			}
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+		return heroUUIDBundle.getString(serverUUID);
+	}
+	public static void clearHeroUUIDs(){
+		put("hero_uuids", null);
 	}
 }
