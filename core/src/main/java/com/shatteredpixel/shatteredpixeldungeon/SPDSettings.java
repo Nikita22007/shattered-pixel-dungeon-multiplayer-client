@@ -462,4 +462,11 @@ public class SPDSettings extends GameSettings {
 	public static String customRelayAddress(){
 		return defaultRelayServerAddress;
 	}
+	//TODO: read server UUID and send this or save this
+	public static void heroUUID(String serverUUID, String heroUUID) {
+		put("hero_uuid_"+serverUUID, heroUUID);
+	}
+	public static String heroUUID(String serverUUID){
+		return getString("hero_uuid_" + serverUUID, null);
+	}
 }
