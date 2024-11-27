@@ -35,6 +35,7 @@ import org.json.JSONObject;
 
 import javax.swing.undo.AbstractUndoableEdit;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -472,7 +473,9 @@ public class SPDSettings extends GameSettings {
 	static Bundle heroUUIDBundle = new Bundle();
 	public static void heroUUID(String serverUUID, String heroUUID) {
 		heroUUIDBundle.put(serverUUID, heroUUID);
-		put("hero_uuids", heroUUIDBundle.toString());
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		Bundle.write(heroUUIDBundle, baos);
+		put("hero_uuids", baos.toString());
 	}
 	public static String heroUUID(String serverUUID){
         try {
