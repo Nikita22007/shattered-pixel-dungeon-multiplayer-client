@@ -489,6 +489,6 @@ public class SPDSettings extends GameSettings {
 		return heroUUIDBundle.getString(serverUUID);
 	}
 	public static void clearHeroUUIDs(){
-		put("hero_uuids", null);
+		clear("hero_uuids");
 	}
 }

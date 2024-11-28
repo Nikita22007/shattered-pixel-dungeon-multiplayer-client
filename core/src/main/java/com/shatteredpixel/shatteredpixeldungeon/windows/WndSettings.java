@@ -832,6 +832,7 @@ public class WndSettings extends WndTabbed {
 		CheckBox chkUpdates;
 		CheckBox chkBetas;
 		CheckBox chkWifi;
+		RedButton btnClearUUIDs;
 
 		@Override
 		protected void createChildren() {
@@ -890,6 +891,22 @@ public class WndSettings extends WndTabbed {
 				chkWifi.checked(SPDSettings.WiFi());
 				add(chkWifi);
 			}
+			btnClearUUIDs = new RedButton(Messages.get(this, "clear_uuids")){
+				@Override
+				protected void onClick() {
+					ShatteredPixelDungeon.scene().addToFront(
+							new WndOptions("Clear hero UUIDs", "Are you sure you want to clear all heroes?","yes", "no"){
+								@Override
+								protected void onSelect(int index) {
+									if (index == 0) {
+										SPDSettings.clearHeroUUIDs();
+									}
+								}
+							}
+					);
+				}
+			};
+			add(btnClearUUIDs);
 		}
 
 		@Override
@@ -921,7 +938,10 @@ public class WndSettings extends WndTabbed {
 				chkWifi.setRect(0, pos + GAP, width, BTN_HEIGHT);
 				pos = chkWifi.bottom();
 			}
-
+			if (btnClearUUIDs != null){
+				btnClearUUIDs.setRect(0, pos + GAP, width, BTN_HEIGHT);
+				pos = btnClearUUIDs.bottom();
+			}
 			height = pos;
 
 		}

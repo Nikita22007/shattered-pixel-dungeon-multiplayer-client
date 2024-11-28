@@ -137,5 +137,9 @@ public class GameSettings {
 		get().putString(key, value);
 		get().flush();
 	}
+	public static void clear(String key){
+		get().remove(key);
+		get().flush();
+	}
 	
 }
