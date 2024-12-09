@@ -472,21 +472,29 @@ public class SPDSettings extends GameSettings {
 	//TODO: read server UUID and send this or save this
 	static Bundle heroUUIDBundle = new Bundle();
 	public static void heroUUID(String serverUUID, String heroUUID) {
-		heroUUIDBundle.put(serverUUID, heroUUID);
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		Bundle.write(heroUUIDBundle, baos);
-		put("hero_uuids", baos.toString());
+		if (serverUUID != null) {
+			heroUUIDBundle.put(serverUUID, heroUUID);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			Bundle.write(heroUUIDBundle, baos);
+			put("hero_uuids", baos.toString());
+		}
 	}
 	public static String heroUUID(String serverUUID){
-        try {
-			String heroUUIDs = getString("hero_uuids", null);
-			if (heroUUIDs != null && heroUUIDBundle.isNull()) {
-				heroUUIDBundle = Bundle.read(new ByteArrayInputStream(getString("hero_uuids", null).getBytes()));
+		if (serverUUID != null) {
+			try {
+				String heroUUIDs = getString("hero_uuids", null);
+				if (heroUUIDs != null && heroUUIDBundle.isNull()) {
+
+					heroUUIDBundle = Bundle.read(new ByteArrayInputStream(getString("hero_uuids", null).getBytes()));
+				}
+			} catch (IOException ignored) {
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				Bundle.write(heroUUIDBundle, baos);
+				put("hero_uuids", baos.toString());
 			}
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-		return heroUUIDBundle.getString(serverUUID);
+			return heroUUIDBundle.getString(serverUUID);
+		}
+		return null;
 	}
 	public static void clearHeroUUIDs(){
 		clear("hero_uuids");

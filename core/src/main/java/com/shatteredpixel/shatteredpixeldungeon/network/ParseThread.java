@@ -7,6 +7,8 @@ import com.nikita22007.pixeldungeonmultiplayer.JavaUtils;
 import com.nikita22007.pixeldungeonmultiplayer.TextureManager;
 import com.nikita22007.pixeldungeonmultiplayer.TranslationUtils;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
+import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -29,6 +31,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.SewerLevel;
 import com.shatteredpixel.shatteredpixeldungeon.plants.CustomPlant;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.HeroSelectScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.TitleScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.*;
@@ -65,6 +68,7 @@ import static com.nikita22007.pixeldungeonmultiplayer.JavaUtils.hasNotNull;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.level;
 import static com.shatteredpixel.shatteredpixeldungeon.network.Client.disconnect;
+import static com.shatteredpixel.shatteredpixeldungeon.network.Client.sendHeroClass;
 import static com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite.spriteClassFromName;
 import static com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite.spriteFromClass;
 import static java.lang.Thread.sleep;
@@ -82,6 +86,7 @@ public class ParseThread implements Callable<String> {
     private FutureTask<String> jsonCall;
 
     private static boolean isOldServer = true;
+    static String serverUUID = null;
 
     public ParseThread(InputStreamReader readStream, Socket socket) {
         this(new BufferedReader(readStream), socket);
@@ -327,6 +332,12 @@ public class ParseThread implements Callable<String> {
                 }
                 case "plants": {
                     parsePlants(data.getJSONArray(token));
+                    break;
+                }
+                case "server_uuid": {
+                    Gdx.app.log("ParseThread", "ServerUUID");
+                    serverUUID = data.getString("server_uuid");
+                    Client.sendHeroClass(GamesInProgress.selectedClass);
                     break;
                 }
                 default: {
@@ -1483,6 +1494,11 @@ public class ParseThread implements Callable<String> {
                 }
                 case "gold": {
                     hero.gold = heroObj.getInt(token);
+                    break;
+                }
+                case "uuid":{
+                        SPDSettings.heroUUID(serverUUID, heroObj.getString("uuid"));
+                        Gdx.app.log("ParseThread", "heroUUID: " + heroObj.getString("uuid"));
                     break;
                 }
                 default: {

@@ -1,5 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.network;
 
+import com.badlogic.gdx.Gdx;
+import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import org.json.JSONArray;
@@ -35,6 +37,8 @@ class NetworkPacket {
         synchronized (dataRef) {
             try {
                 dataRef.get().put("hero_class", heroClass);
+                dataRef.get().put("uuid", SPDSettings.heroUUID(ParseThread.serverUUID));
+                Gdx.app.log("ServerUUID", ParseThread.serverUUID);
             } catch (Exception ignored) {
             }
         }

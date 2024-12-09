@@ -353,7 +353,7 @@ public class InterlevelScene extends PixelScene {
 		GameLog.wipe();
 		if (Dungeon.hero == null) {
 			resetLevel();
-			SendData.SendHeroClass(GamesInProgress.selectedClass);
+			//SendData.SendHeroClass(GamesInProgress.selectedClass);
 //			if (noStory) {
 //				//Dungeon.chapters.add( WndStory.ID_SEWERS );
 //				noStory = false;
