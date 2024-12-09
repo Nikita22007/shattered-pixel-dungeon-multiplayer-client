@@ -2,7 +2,9 @@ package com.shatteredpixel.shatteredpixeldungeon.levels.features;
 
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Ripple;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.FlameParticle;
+import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.watabou.noosa.Game;
@@ -12,6 +14,8 @@ import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.ColorMath;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
+
+import org.jetbrains.annotations.NotNull;
 
 public class DecorEmitters {
     public static class Torch extends Emitter {
@@ -24,17 +28,16 @@ public class DecorEmitters {
             this.pos = pos;
 
             PointF p = DungeonTilemap.tileCenterToWorld( pos );
-            pos( p.x - 1, p.y + 3, 2, 0 );
+            pos( p.x - 1, p.y + 2, 2, 0 );
 
             pour( FlameParticle.FACTORY, 0.15f );
 
-            add( new Halo( 16, color, 0.2f ).point( p.x, p.y ) );
+            add( new Halo( 12, color, 0.4f ).point( p.x, p.y + 1 ) );
         }
 
         @Override
         public void update() {
-            //TODO: check this
-            if (visible = Dungeon.level.heroFOV[pos]) {
+            if (visible = (pos < Dungeon.level.heroFOV.length && Dungeon.level.heroFOV[pos])) {
                 super.update();
             }
         }
@@ -49,7 +52,7 @@ public class DecorEmitters {
 
             @Override
             public void emit( Emitter emitter, int index, float x, float y ) {
-                WaterParticle p = (WaterParticle)emitter.recycle(WaterParticle.class );
+                WaterParticle p = (WaterParticle)emitter.recycle( WaterParticle.class );
                 p.reset( x, y );
             }
         };
@@ -60,9 +63,9 @@ public class DecorEmitters {
             this.pos = pos;
 
             PointF p = DungeonTilemap.tileCenterToWorld( pos );
-            pos( p.x - 2, p.y + 1, 4, 0 );
+            pos( p.x - 2, p.y + 3, 4, 0 );
 
-            pour( factory, 0.05f );
+            pour( factory, 0.1f );
         }
         public static final class WaterParticle extends PixelParticle {
 
@@ -84,19 +87,21 @@ public class DecorEmitters {
 
                 speed.set( Random.Float( -2, +2 ), 0 );
 
-                left = lifespan = 0.5f;
+                left = lifespan = 0.4f;
             }
         }
         @Override
         public void update() {
-            //TODO: check this
-            if (visible = Dungeon.level.heroFOV[pos]) {
+            if (visible = (pos < Dungeon.level.heroFOV.length && Dungeon.level.heroFOV[pos])) {
 
                 super.update();
 
-                if ((rippleDelay -= Game.elapsed) <= 0) {
-                    GameScene.ripple( pos + Dungeon.level.width() ).y -= DungeonTilemap.SIZE / 2;
-                    rippleDelay = Random.Float( 0.2f, 0.3f );
+                if (!isFrozen() && (rippleDelay -= Game.elapsed) <= 0) {
+                    Ripple ripple = GameScene.ripple( pos + Dungeon.level.width() );
+                    if (ripple != null) {
+                        ripple.y -= DungeonTilemap.SIZE / 2;
+                        rippleDelay = Random.Float(0.4f, 0.6f);
+                    }
                 }
             }
         }
@@ -104,15 +109,16 @@ public class DecorEmitters {
 
     public static class Smoke extends Emitter {
 
-        private int pos;
+        private final int pos;
 
-        private static final Emitter.Factory factory = new Factory() {
+        public static final Emitter.Factory factory = new Factory() {
 
             @Override
             public void emit( Emitter emitter, int index, float x, float y ) {
                 SmokeParticle p = (SmokeParticle)emitter.recycle( SmokeParticle.class );
                 p.reset( x, y );
             }
+
         };
 
         public Smoke( int pos ) {
@@ -121,43 +127,18 @@ public class DecorEmitters {
             this.pos = pos;
 
             PointF p = DungeonTilemap.tileCenterToWorld( pos );
-            pos( p.x - 4, p.y - 2, 4, 0 );
+            pos( p.x - 6, p.y - 4, 12, 12 );
 
             pour( factory, 0.2f );
         }
 
         @Override
         public void update() {
-            if (visible = Dungeon.level.heroFOV[pos]) {
+            if (Dungeon.level == null || pos >= Dungeon.level.heroFOV.length) return;
+            visible = Dungeon.level.heroFOV[pos];
+            if (visible) {
                 super.update();
             }
-        }
-    }
-
-    public static final class SmokeParticle extends PixelParticle {
-
-        public SmokeParticle() {
-            super();
-
-            color( 0x000000 );
-            speed.set( Random.Float( 8 ), -Random.Float( 8 ) );
-        }
-
-        public void reset( float x, float y ) {
-            revive();
-
-            this.x = x;
-            this.y = y;
-
-            left = lifespan = 2f;
-        }
-
-        @Override
-        public void update() {
-            super.update();
-            float p = left / lifespan;
-            am = p > 0.8f ? 1 - p : p * 0.25f;
-            size( 8 - p * 4 );
         }
     }
 }
