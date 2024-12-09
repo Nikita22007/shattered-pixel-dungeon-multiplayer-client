@@ -71,6 +71,11 @@ public class CustomItem extends Item {
                         image = obj.getInt(token);
                     }
                     break;
+                case "icon":
+                    if (!isConnectedToOldServer()) {
+                        icon = obj.getInt(token);
+                    }
+                    break;
                 case "stackable":
                     stackable = obj.getBoolean(token);
                     break;

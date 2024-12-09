@@ -29,6 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
+import com.shatteredpixel.shatteredpixeldungeon.items.bags.CustomBag;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.MagicalHolster;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.PotionBandolier;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.ScrollHolder;
@@ -54,6 +55,8 @@ import com.watabou.noosa.PointerArea;
 import com.watabou.noosa.ui.Component;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Signal;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
@@ -88,6 +91,7 @@ public class InventoryPane extends Component {
 
 	private WndBag.ItemSelector selector;
 
+	@Nullable
 	public static Bag lastBag;
 
 	private boolean lastEnabled = true;
@@ -484,7 +488,10 @@ public class InventoryPane extends Component {
 			return Icons.get( Icons.WAND_HOLSTER );
 		} else if (bag instanceof PotionBandolier) {
 			return Icons.get( Icons.POTION_BANDOLIER );
-		} else {
+		} else if (bag instanceof CustomBag){
+			return Icons.get( ((CustomBag) bag).bagIcon);
+		}
+		else{
 			return Icons.get( Icons.BACKPACK );
 		}
 	}

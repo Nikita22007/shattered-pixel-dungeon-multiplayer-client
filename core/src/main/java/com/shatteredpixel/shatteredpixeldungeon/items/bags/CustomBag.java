@@ -13,7 +13,7 @@ import java.util.Locale;
 public class CustomBag extends Bag {
     private int size;
 
-    public Icons icon = Icons.BACKPACK;
+    public Icons bagIcon = Icons.BACKPACK;
 
     public CustomBag(JSONObject obj) {
         super(obj);
@@ -28,9 +28,9 @@ public class CustomBag extends Bag {
         if (obj.has("items")) {
             addItemsFromJSONArray(obj.getJSONArray("items"));
         }
-        if (obj.has("icon")) {
+        if (obj.has("bag_icon")) {
             try {
-                Icons.valueOf(obj.getString("icon").toUpperCase(Locale.ENGLISH));
+                bagIcon = Icons.valueOf(obj.getString("bag_icon").toUpperCase(Locale.ENGLISH));
             } catch (RuntimeException e) {
                 GLog.n("incorrect icon: " + e.getMessage());
                 e.printStackTrace();

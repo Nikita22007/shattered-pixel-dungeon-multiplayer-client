@@ -526,7 +526,7 @@ public class ParseThread implements Callable<String> {
             try {
                 hero.belongings.backpack = new Belongings.Backpack(inv.getJSONObject("backpack"));
             } catch (JSONException e) {
-                Log.w("ParseThread", "Can't parse backpack");
+                Log.e("ParseThread", String.format("Can't parse backpack. Stacktrace: %s", e.toString()));
             }
         }
         if (inv.has("special_slots")) {
