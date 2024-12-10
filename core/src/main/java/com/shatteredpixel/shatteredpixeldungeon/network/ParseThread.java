@@ -1241,7 +1241,12 @@ public class ParseThread implements Callable<String> {
                 //Do we merge HeroSprite and CustomHeroSprite??
                 if (sprite instanceof HeroCustomSprite){
                     int tier = actorObj.getInt("tier");
-                    HeroClass heroClass = HeroClass.valueOf(actorObj.optString("class", hero.heroClass.name()));
+                    //We don't wand to crash
+                    String defaultHeroClassName = HeroClass.ROGUE.name();
+                    if (Dungeon.hero != null) {
+                        defaultHeroClassName = Dungeon.hero.heroClass.name();
+                    }
+                    HeroClass heroClass = HeroClass.valueOf(actorObj.optString("class", defaultHeroClassName));
                     ((HeroCustomSprite) sprite).updateHeroClass(heroClass);
                     ((HeroCustomSprite) sprite).updateTier(tier);
                 }
