@@ -38,11 +38,11 @@ import java.util.List;
 public class Lightning extends Group {
 
 	private static final float DURATION = 0.3f;
-	
+
 	private float life;
 
 	private List<Arc> arcs;
-	
+
 	private Callback callback;
 
 	public Lightning(int from, int to, Callback callback){
@@ -60,9 +60,9 @@ public class Lightning extends Group {
 	public Lightning(PointF from, PointF to, Callback callback){
 		this(Arrays.asList(new Arc(from, to)), callback);
 	}
-	
+
 	public Lightning( List<Arc> arcs, Callback callback ) {
-		
+
 		super();
 
 		this.arcs = arcs;
@@ -70,25 +70,25 @@ public class Lightning extends Group {
 			add(arc);
 
 		this.callback = callback;
-		
+
 		life = DURATION;
 	}
-	
+
 	private static final double A = 180 / Math.PI;
-	
+
 	@Override
 	public void update() {
 		if ((life -= Game.elapsed) < 0) {
-			
+
 			killAndErase();
 			if (callback != null) {
 				callback.call();
 			}
-			
+
 		} else {
-			
+
 			float alpha = life / DURATION;
-			
+
 			for (Arc arc : arcs) {
 				arc.alpha(alpha);
 			}
@@ -96,7 +96,7 @@ public class Lightning extends Group {
 			super.update();
 		}
 	}
-	
+
 	@Override
 	public void draw() {
 		Blending.setLightMode();
@@ -164,46 +164,5 @@ public class Lightning extends Group {
 			arc2.x = x2 - arc2.origin.x;
 			arc2.y = y2 - arc2.origin.x;
 		}
-	}
-	public Lightning( int[] cells, int length, Callback callback ) {
-
-		super();
-
-		this.callback = callback;
-
-		Image proto = Effects.get( Effects.Type.LIGHTNING );
-		float ox = 0;
-		float oy = proto.height / 2;
-
-		this.length = length;
-		//Too lazy to fix
-//		cx = new float[length];
-//		cy = new float[length];
-//
-//		for (int i=0; i < length; i++) {
-//			int c = cells[i];
-//			cx[i] = (c % Level.WIDTH + 0.5f) * DungeonTilemap.SIZE;
-//			cy[i] = (c / Level.WIDTH + 0.5f) * DungeonTilemap.SIZE;
-//		}
-//
-//		arcsS = new Image[length - 1];
-//		arcsE = new Image[length - 1];
-//		for (int i=0; i < length - 1; i++) {
-//
-//			Image arc = arcsS[i] = new Image( proto );
-//
-//			arc.x = cx[i] - arc.origin.x;
-//			arc.y = cy[i] - arc.origin.y;
-//			arc.origin.set( ox, oy );
-//			add( arc );
-//
-//			arc = arcsE[i] = new Image( proto );
-//			arc.origin.set( ox, oy );
-//			add( arc );
-//		}
-
-		life = DURATION;
-
-		Sample.INSTANCE.play(Assets.Sounds.LIGHTNING );
 	}
 }

@@ -897,7 +897,7 @@ public class ParseThread implements Callable<String> {
             for (int i = 0; i < cells.length; i++) {
                 cells[i] = cellsJson.getInt(i);
             }
-            GameScene.addGroup(new Lightning(cells, cells.length, null));
+            GameScene.addGroup(new PDLightning(cells, cells.length, null));
 
         } catch (JSONException e) {
             GLog.n("Incorrect LightningVisualAction action " + e.getMessage());
