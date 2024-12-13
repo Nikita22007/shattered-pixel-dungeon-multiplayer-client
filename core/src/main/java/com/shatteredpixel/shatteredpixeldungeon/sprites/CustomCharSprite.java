@@ -106,6 +106,10 @@ public class CustomCharSprite extends MobSprite {
         }
     }
 
+    public CustomCharSprite() {
+        //This constructor exists because LibGDX reflection would throw an exception
+    }
+
     public String getSpriteAsset() {
         return spriteAsset;
     }
