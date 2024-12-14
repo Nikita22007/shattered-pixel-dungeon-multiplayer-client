@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.sprites;
 
+import com.nikita22007.pixeldungeonmultiplayer.TranslationUtils;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GnollGeomancer;
@@ -212,6 +213,7 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 	private void reset(int from, int to, double SPEED, double angular_speed, double angle, String spriteSheet, int image, Glowing glowing) {
 		revive();
 		if (isConnectedToOldServer()){
+			image = TranslationUtils.translateItemImage(image);
 			view(Assets.Sprites.ITEMS, image, glowing);
 		} else {
 			view(spriteSheet, image, glowing);
