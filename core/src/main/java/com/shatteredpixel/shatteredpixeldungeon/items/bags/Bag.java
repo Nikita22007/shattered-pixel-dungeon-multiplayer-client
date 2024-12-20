@@ -306,7 +306,14 @@ public class Bag extends CustomItem implements Iterable<Item> {
 		if (slotPath.size() > 1) {
 			return ((Bag) items.get(slotPath.get(0))).getItemInSlot(slotPath.subList(1, slotPath.size()));
 		}
-		return items.get(slotPath.get(0));
+		switch (slotPath.get(0)) {
+			case -1: return Dungeon.hero.belongings.weapon();
+			case -2: return Dungeon.hero.belongings.armor();
+			case -3: return Dungeon.hero.belongings.artifact();
+			case -4: return Dungeon.hero.belongings.misc();
+			case -5: return Dungeon.hero.belongings.ring();
+			default:	return items.get(slotPath.get(0));
+		}
 	}
 	public void removeItemFromSlot(List<Integer> slotPath) {
 		if (slotPath.size()>1){
