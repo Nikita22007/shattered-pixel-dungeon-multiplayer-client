@@ -37,20 +37,25 @@ public class Ooze extends Buff {
 		type = buffType.NEGATIVE;
 		announced = true;
 	}
-	
+
 	private float left;
+	private boolean acted = false; //whether the debuff has done any damage at all yet
+
 	private static final String LEFT	= "left";
+	private static final String ACTED   = "acted";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( LEFT, left );
+		bundle.put( ACTED, acted );
 	}
 	
 	@Override
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle(bundle);
 		left = bundle.getFloat(LEFT);
+		acted = bundle.getBoolean(ACTED);
 	}
 	
 	@Override
@@ -75,11 +80,17 @@ public class Ooze extends Buff {
 	
 	public void set(float left){
 		this.left = left;
+		acted = false;
 	}
 	//TODO: check changes from https://github.com/Nikita22007/pixel-dungeon-multiplayer-server/commit/e87ebae26d3ec4a201b2e69ba097a26986748483
 	@Override
 	public boolean act() {
-		if (target.isAlive()) {
+		//washing away happens before debuff effects if debuff has gotten to act
+		if (acted && Dungeon.level.water[target.pos] && !target.flying){
+			detach();
+		} else if (target.isAlive()) {
+
+			acted = true;
 			if (Dungeon.scalingDepth() > 5) {
 				target.damage(1 + Dungeon.scalingDepth() / 5, this);
 			} else if (Dungeon.scalingDepth() == 5){
@@ -100,7 +111,7 @@ public class Ooze extends Buff {
 		} else {
 			detach();
 		}
-		if (Dungeon.level.water[target.pos]) {
+		if (Dungeon.level.water[target.pos] && !target.flying){
 			detach();
 		}
 		return true;

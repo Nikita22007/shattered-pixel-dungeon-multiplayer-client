@@ -57,8 +57,11 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Stone;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Swiftness;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Thorns;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Viscosity;
+import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfArcana;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ParchmentScrap;
+import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
+import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
@@ -190,11 +193,6 @@ public class Armor extends EquipableItem {
 
 	public BrokenSeal checkSeal(){
 		return seal;
-	}
-
-	@Override
-	protected float timeToEquip(Hero hero ) {
-		return 2f / hero.speed();
 	}
 
 	@Override
@@ -388,9 +386,16 @@ public class Armor extends EquipableItem {
 			availableUsesToID -= uses;
 			usesLeftToID -= uses;
 			if (usesLeftToID <= 0) {
-				identify();
-				GLog.p( Messages.get(Armor.class, "identify") );
-				Badges.validateItemLevelAquired( this );
+				if (ShardOfOblivion.passiveIDDisabled()){
+					if (usesLeftToID > -1){
+						GLog.p(Messages.get(ShardOfOblivion.class, "identify_ready"), name());
+					}
+					usesLeftToID = -1;
+				} else {
+					identify();
+					GLog.p(Messages.get(Armor.class, "identify"));
+					Badges.validateItemLevelAquired(this);
+				}
 			}
 		}
 		
@@ -430,22 +435,32 @@ public class Armor extends EquipableItem {
 			}
 		}
 		level(n);
-		
-		//30% chance to be cursed
-		//15% chance to be inscribed
-		float effectRoll = Random.Float();
-		if (effectRoll < 0.3f * ParchmentScrap.curseChanceMultiplier()) {
-			inscribe(Glyph.randomCurse());
-			cursed = true;
-		} else if (effectRoll >= 1f - (0.15f * ParchmentScrap.enchantChanceMultiplier())){
-			inscribe();
-		}
+
+		//we use a separate RNG here so that variance due to things like parchment scrap
+		//does not affect levelgen
+		Random.pushGenerator(Random.Long());
+
+			//30% chance to be cursed
+			//15% chance to be inscribed
+			float effectRoll = Random.Float();
+			if (effectRoll < 0.3f * ParchmentScrap.curseChanceMultiplier()) {
+				inscribe(Glyph.randomCurse());
+				cursed = true;
+			} else if (effectRoll >= 1f - (0.15f * ParchmentScrap.enchantChanceMultiplier())){
+				inscribe();
+			}
+
+		Random.popGenerator();
 
 		return this;
 	}
 
 	public int STRReq(){
-		int req = STRReq(level());
+		return STRReq(level());
+	}
+
+	public int STRReq(int lvl){
+		int req = STRReq(tier, lvl);
 		if (masteryPotionBonus){
 			req -= 2;
 		}
@@ -491,6 +506,10 @@ public class Armor extends EquipableItem {
 		// in case they take that talent in the future
 		if (seal != null){
 			seal.setGlyph(glyph);
+		}
+		if (glyph != null && isIdentified() && Dungeon.hero != null
+				&& Dungeon.hero.isAlive() && Dungeon.hero.belongings.contains(this)){
+			Catalog.setSeen(glyph.getClass());
 		}
 		return this;
 	}
@@ -539,7 +558,7 @@ public class Armor extends EquipableItem {
 				10  //3.33% each
 		};
 
-		private static final Class<?>[] curses = new Class<?>[]{
+		public static final Class<?>[] curses = new Class<?>[]{
 				AntiEntropy.class, Corrosion.class, Displacement.class, Metabolism.class,
 				Multiplicity.class, Stench.class, Overgrowth.class, Bulk.class
 		};

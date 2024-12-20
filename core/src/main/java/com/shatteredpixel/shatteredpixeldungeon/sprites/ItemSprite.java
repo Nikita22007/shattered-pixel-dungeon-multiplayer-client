@@ -141,6 +141,16 @@ public class ItemSprite extends MovieClip {
 		}
 	}
 
+	@Override
+	public void copy(Image other) {
+		super.copy(other);
+
+		if (other instanceof ItemSprite && ((ItemSprite) other).glowing != null){
+			glow(((ItemSprite) other).glowing);
+		}
+
+	}
+
 	public void visible(boolean value){
 		this.visible = value;
 		if (emitter != null && !visible){

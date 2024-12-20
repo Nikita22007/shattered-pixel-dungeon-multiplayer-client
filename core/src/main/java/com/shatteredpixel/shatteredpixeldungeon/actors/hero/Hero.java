@@ -31,9 +31,11 @@ import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.SacrificialFire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AdrenalineSurge;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AnkhInvulnerability;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HeroDisguise;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invulnerability;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Awareness;
@@ -47,6 +49,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Combo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Drowsy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Foresight;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GreaterHaste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HoldFast;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
@@ -60,6 +63,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PhysicalEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.SnipersMark;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.TimeStasis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
@@ -121,10 +125,12 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfTenacity;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfChallenge;
+import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ThirteenLeafClover;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLivingEarth;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Crossbow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Flail;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Quarterstaff;
@@ -132,12 +138,14 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RoundShield;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Sai;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Scimitar;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.LevelTransition;
+import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.WeakFloorRoom;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.ShadowCaster;
@@ -396,7 +404,11 @@ public class Hero extends Char {
 
 	@Override
 	public String name(){
-		return className();
+		if (buff(HeroDisguise.class) != null) {
+			return buff(HeroDisguise.class).getDisguise().title();
+		} else {
+			return className();
+		}
 	}
 
 	@Override
@@ -447,7 +459,7 @@ public class Hero extends Char {
 
 		return hit;
 	}
-	
+
 
 	@Override
 	public String defenseVerb() {
@@ -467,8 +479,8 @@ public class Hero extends Char {
 			return Messages.get(RoundShield.GuardTracker.class, "guarded");
 		}
 
-		if (buff(MonkEnergy.MonkAbility.Focus.FocusActivation.class) != null){
-			buff(MonkEnergy.MonkAbility.Focus.FocusActivation.class).detach();
+		if (buff(MonkEnergy.MonkAbility.Focus.FocusBuff.class) != null){
+			buff(MonkEnergy.MonkAbility.Focus.FocusBuff.class).detach();
 			if (sprite != null && sprite.visible) {
 				Sample.INSTANCE.play(Assets.Sounds.HIT_PARRY, 1, Random.Float(0.96f, 1.05f));
 			}
@@ -1180,8 +1192,10 @@ public class Hero extends Char {
 	
 	@Override
 	public void damage( int dmg, Object src ) {
-		if (buff(TimekeepersHourglass.timeStasis.class) != null)
+		if (buff(TimekeepersHourglass.timeStasis.class) != null
+				|| buff(TimeStasis.class) != null) {
 			return;
+		}
 
 		//regular damage interrupt, triggers on any damage except specific mild DOT effects
 		// unless the player recently hit 'continue moving', in which case this is ignored
@@ -1266,6 +1280,10 @@ public class Hero extends Char {
 
 		Mob target = null;
 		for (Mob m : Dungeon.level.mobs.toArray(new Mob[0])) {
+			if (fieldOfView[ m.pos ] && m.landmark() != null){
+				Notes.add(m.landmark());
+			}
+
 			if (fieldOfView[ m.pos ] && m.alignment == Alignment.ENEMY) {
 				visible.add(m);
 				if (!visibleEnemies.contains( m )) {
@@ -1282,7 +1300,6 @@ public class Hero extends Char {
 					}
 					if (m instanceof Snake && Dungeon.level.distance(m.pos, pos) <= 4
 							&& !Document.ADVENTURERS_GUIDE.isPageRead(Document.GUIDE_EXAMINING)){
-						GLog.p(Messages.get(Guidebook.class, "hint"));
 						GameScene.flashForDocument(Document.ADVENTURERS_GUIDE, Document.GUIDE_EXAMINING);
 						//we set to read here to prevent this message popping up a bunch
 						Document.ADVENTURERS_GUIDE.readPage(Document.GUIDE_EXAMINING);
@@ -1307,6 +1324,32 @@ public class Hero extends Char {
 		}
 
 		visibleEnemies = visible;
+
+		//we also scan for blob landmarks here
+		for (Blob b : Dungeon.level.blobs.values().toArray(new Blob[0])){
+			if (b.volume > 0 && b.landmark() != null && !Notes.contains(b.landmark())){
+				int cell;
+				boolean found = false;
+				//if a single cell within the blob is visible, we add the landmark
+				for (int i=b.area.top; i < b.area.bottom; i++) {
+					for (int j = b.area.left; j < b.area.right; j++) {
+						cell = j + i* Dungeon.level.width();
+						if (fieldOfView[cell] && b.cur[cell] > 0) {
+							Notes.add( b.landmark() );
+							found = true;
+							break;
+						}
+					}
+					if (found) break;
+				}
+
+				//Clear blobs that only exist for landmarks.
+				// Might want to make this a properly if it's used more
+				if (found && b instanceof WeakFloorRoom.WellID){
+					b.fullyClear();
+				}
+			}
+		}
 	}
 	
 	public int visibleEnemies() {
@@ -1349,7 +1392,8 @@ public class Hero extends Char {
 				}
 				if (walkingToVisibleTrapInFog
 						&& Dungeon.level.traps.get(target) != null
-						&& Dungeon.level.traps.get(target).visible){
+						&& Dungeon.level.traps.get(target).visible
+						&& Dungeon.level.traps.get(target).active){
 					return false;
 				}
 			}
@@ -1395,6 +1439,10 @@ public class Hero extends Char {
 
 			float delay = 1 / speed();
 
+			if (buff(GreaterHaste.class) != null){
+				delay = 0;
+			}
+
 			if (Dungeon.level.pit[step] && !Dungeon.level.solid[step]
 					&& (!flying || buff(Levitation.class) != null && buff(Levitation.class).detachesWithinDelay(delay))){
 				if (!Chasm.jumpConfirmed){
@@ -1407,6 +1455,10 @@ public class Hero extends Char {
 				}
 				canSelfTrample = false;
 				return false;
+			}
+
+			if (buff(GreaterHaste.class) != null){
+				buff(GreaterHaste.class).spendMove();
 			}
 
 			if (subClass == HeroSubClass.FREERUNNER){
@@ -1482,6 +1534,12 @@ public class Hero extends Char {
 		boolean levelUp = false;
 		while (this.exp >= maxExp()) {
 			this.exp -= maxExp();
+
+			if (buff(Talent.WandPreservationCounter.class) != null
+				&& pointsInTalent(Talent.WAND_PRESERVATION) == 2){
+				buff(Talent.WandPreservationCounter.class).detach();
+			}
+
 			if (lvl < MAX_LEVEL) {
 				lvl++;
 				levelUp = true;
@@ -1541,7 +1599,8 @@ public class Hero extends Char {
 	@Override
 	public boolean add( Buff buff ) {
 
-		if (buff(TimekeepersHourglass.timeStasis.class) != null) {
+		if (buff(TimekeepersHourglass.timeStasis.class) != null
+			|| buff(TimeStasis.class) != null) {
 			return false;
 		}
 
@@ -1603,13 +1662,14 @@ public class Hero extends Char {
 				this.HP = HT / 4;
 
 				PotionOfHealing.cure(this);
-				Buff.prolong(this, AnkhInvulnerability.class, AnkhInvulnerability.DURATION);
+				Buff.prolong(this, Invulnerability.class, Invulnerability.DURATION);
 
 				SpellSprite.show(this, SpellSprite.ANKH);
 				GameScene.flash(0x80FFFF40);
 				Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
 				GLog.w(Messages.get(this, "revive"));
 				Statistics.ankhsUsed++;
+				Catalog.countUse(Ankh.class);
 
 				ankh.detach(belongings.backpack);
 
@@ -1862,11 +1922,6 @@ public class Hero extends Char {
 	}
 
 
-
-	@Override
-	public boolean isInvulnerable(Class effect) {
-		return super.isInvulnerable(effect) || buff(AnkhInvulnerability.class) != null;
-	}
 
 	public void search( boolean intentional ) {
 		if (intentional){

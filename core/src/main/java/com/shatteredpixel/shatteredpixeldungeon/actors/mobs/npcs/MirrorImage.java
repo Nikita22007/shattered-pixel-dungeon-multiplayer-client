@@ -40,6 +40,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.MirrorSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Random;
 
 public class MirrorImage extends NPC {
 	
@@ -130,7 +131,7 @@ public class MirrorImage extends NPC {
 		return hero.attackDelay(); //handles ring of furor
 	}
 
-	
+
 	@Override
 	public int attackProc( Char enemy, int damage ) {
 		damage = super.attackProc( enemy, damage );
@@ -161,6 +162,8 @@ public class MirrorImage extends NPC {
 		hero = (Hero)Actor.findById(heroID);
 		if (hero != null) {
 			armTier = hero.tier();
+		} else {
+			armTier = 1;
 		}
 		((MirrorSprite)s).updateArmor( armTier );
 		return s;

@@ -33,7 +33,9 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.ItemStatusHandler;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindofMisc;
+import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
+import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
@@ -76,7 +78,11 @@ public class Ring extends KindofMisc {
 	public static void initGems() {
 		handler = new ItemStatusHandler<>( (Class<? extends Ring>[])Generator.Category.RING.classes, gems );
 	}
-	
+
+	public static void clearGems(){
+		handler = null;
+	}
+
 	public static void save( Bundle bundle ) {
 		handler.save( bundle );
 	}
@@ -110,6 +116,9 @@ public class Ring extends KindofMisc {
 		if (handler != null && handler.contains(this)){
 			image = handler.image(this);
 			gem = handler.label(this);
+		} else {
+			image = ItemSpriteSheet.RING_GARNET;
+			gem = "garnet";
 		}
 	}
 	
@@ -156,11 +165,23 @@ public class Ring extends KindofMisc {
 		}
 	}
 
-	
+
 	protected String statsInfo(){
 		return "";
 	}
-	
+
+	public String upgradeStat1(int level){
+		return null;
+	}
+
+	public String upgradeStat2(int level){
+		return null;
+	}
+
+	public String upgradeStat3(int level){
+		return null;
+	}
+
 	@Override
 	public Item upgrade() {
 		super.upgrade();
@@ -179,7 +200,11 @@ public class Ring extends KindofMisc {
 		levelsToID = 0;
 		return super.identify(byHero);
 	}
-	
+
+	public boolean readyToIdentify(){
+		return !isIdentified() && levelsToID <= 0;
+	}
+
 	@Override
 	public Item random() {
 		//+0: 66.67% (2/3)
@@ -211,7 +236,7 @@ public class Ring extends KindofMisc {
 	}
 	
 	public static boolean allKnown() {
-		return handler.known().size() == Generator.Category.RING.classes.length;
+		return handler != null && handler.known().size() == Generator.Category.RING.classes.length;
 	}
 	
 	@Override
@@ -257,9 +282,16 @@ public class Ring extends KindofMisc {
 		//becomes IDed after 1 level
 		levelsToID -= levelPercent;
 		if (levelsToID <= 0){
-			identify();
-			GLog.p( Messages.get(Ring.class, "identify") );
-			Badges.validateItemLevelAquired( this );
+			if (ShardOfOblivion.passiveIDDisabled()){
+				if (levelsToID > -1){
+					GLog.p(Messages.get(ShardOfOblivion.class, "identify_ready"), name());
+				}
+				levelsToID = -1;
+			} else {
+				identify();
+				GLog.p(Messages.get(Ring.class, "identify"));
+				Badges.validateItemLevelAquired(this);
+			}
 		}
 	}
 

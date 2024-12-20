@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Adrenaline;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -45,6 +44,7 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.BArray;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
+import com.watabou.utils.Random;
 
 public class Necromancer extends Mob {
 	
@@ -94,7 +94,7 @@ public class Necromancer extends Mob {
 
 	@Override
 	public int drRoll() {
-		return super.drRoll() + Char.combatRoll(0, 5);
+		return super.drRoll() + Random.NormalIntRange(0, 5);
 	}
 	
 	@Override
@@ -226,7 +226,7 @@ public class Necromancer extends Mob {
 
 				Char blocker = Actor.findChar(summoningPos);
 				if (blocker.alignment != alignment){
-					blocker.damage( Char.combatRoll(2, 10), new SummoningBlockDamage() );
+					blocker.damage( Random.NormalIntRange(2, 10), new SummoningBlockDamage() );
 					if (blocker instanceof Hero && !blocker.isAlive()){
 						Badges.validateDeathFromEnemyMagic();
 						Dungeon.fail(this);
@@ -247,11 +247,10 @@ public class Necromancer extends Mob {
 		Dungeon.level.occupyCell( mySkeleton );
 		((NecromancerSprite)sprite).finishSummoning();
 
-		for (Buff b : buffs(AllyBuff.class)){
-			Buff.affect(mySkeleton, b.getClass());
-		}
-		for (Buff b : buffs(ChampionEnemy.class)){
-			Buff.affect( mySkeleton, b.getClass());
+		for (Buff b : buffs()){
+			if (b.revivePersists) {
+				Buff.affect(mySkeleton, b.getClass());
+			}
 		}
 	}
 
@@ -292,8 +291,10 @@ public class Necromancer extends Mob {
 				
 				summoningPos = -1;
 
-				//we can summon around blocking terrain, but not through it
-				PathFinder.buildDistanceMap(pos, BArray.not(Dungeon.level.solid, null), Dungeon.level.distance(pos, enemy.pos)+3);
+				//we can summon around blocking terrain, but not through it, except unlocked doors
+				boolean[] passable = BArray.not(Dungeon.level.solid, null);
+				BArray.or(Dungeon.level.passable, passable, passable);
+				PathFinder.buildDistanceMap(pos, passable, Dungeon.level.distance(pos, enemy.pos)+3);
 
 				for (int c : PathFinder.NEIGHBOURS8){
 					if (Actor.findChar(enemy.pos+c) == null
@@ -310,7 +311,11 @@ public class Necromancer extends Mob {
 					
 					summoning = true;
 					sprite.zap( summoningPos );
-					
+
+					if (Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[summoningPos]){
+						Dungeon.hero.interrupt();
+					}
+
 					spend( firstSummon ? TICK : 2*TICK );
 				} else {
 					//wait for a turn
