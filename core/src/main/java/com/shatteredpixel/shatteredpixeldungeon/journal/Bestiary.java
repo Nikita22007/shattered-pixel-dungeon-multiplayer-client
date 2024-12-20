@@ -42,9 +42,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.CrystalWisp;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DM100;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DM200;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DM201;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DM300;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DemonSpawner;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DwarfKing;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.EbonyMimic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Elemental;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Eye;
@@ -65,7 +63,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Monk;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Necromancer;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.PhantomPiranha;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Piranha;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Pylon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Rat;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.RipperDemon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.RotHeart;
@@ -81,7 +78,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Spinner;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Statue;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Succubus;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Swarm;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Tengu;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Thief;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.TormentedSpirit;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Warlock;
@@ -212,9 +208,6 @@ public enum Bestiary {
 				RipperDemon.class, DemonSpawner.class, Succubus.class, Eye.class, Scorpio.class);
 
 		BOSSES.addEntities(Goo.class,
-				Tengu.class,
-				Pylon.class, DM300.class,
-				DwarfKing.class,
 				YogDzewa.Larva.class, YogFist.BurningFist.class, YogFist.SoiledFist.class, YogFist.RottingFist.class, YogFist.RustedFist.class,YogFist.BrightFist.class, YogFist.DarkFist.class, YogDzewa.class);
 
 		UNIVERSAL.addEntities(Wraith.class, Piranha.class, Mimic.class, GoldenMimic.class, EbonyMimic.class, Statue.class, GuardianTrap.Guardian.class, SentryRoom.Sentry.class);
@@ -263,10 +256,6 @@ public enum Bestiary {
 		classConversions.put(TenguDartTrap.class,              PoisonDartTrap.class);
 		classConversions.put(GnollRockfallTrap.class,          RockfallTrap.class);
 
-		classConversions.put(DwarfKing.DKGhoul.class,          Ghoul.class);
-		classConversions.put(DwarfKing.DKWarlock.class,        Warlock.class);
-		classConversions.put(DwarfKing.DKMonk.class,           Monk.class);
-		classConversions.put(DwarfKing.DKGolem.class,          Golem.class);
 
 		classConversions.put(YogDzewa.YogRipper.class,         RipperDemon.class);
 		classConversions.put(YogDzewa.YogEye.class,            Eye.class);

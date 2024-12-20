@@ -70,12 +70,15 @@ public class Group extends Gizmo {
 	
 	@Override
 	public synchronized void draw() {
-		for (int i=0; i < length; i++) {
-			Gizmo g = members.get( i );
-			if (g != null && g.exists && g.isVisible()) {
-				g.draw();
-			}
+		// band-aid fix, don't know if I should push this
+		if (length > 0) {
+		for (int i = 0; i < length; i++) {
+		Gizmo g = members.get(i);
+		if (g != null && g.exists && g.isVisible()) {
+		g.draw();
 		}
+		}
+	}
 	}
 	
 	@Override

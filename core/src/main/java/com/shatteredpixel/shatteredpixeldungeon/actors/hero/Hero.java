@@ -240,7 +240,12 @@ public class Hero extends Char {
 		
 		visibleEnemies = new ArrayList<>();
 	}
-	
+
+	@Deprecated
+	public static int heroDamageIntRange(int i, int exStr) {
+		return 0;
+	}
+
 	public void updateHT( boolean boostHP ){
 		int curHT = HT;
 		

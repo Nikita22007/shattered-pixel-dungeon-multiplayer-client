@@ -137,7 +137,6 @@ public class WandOfWarding extends Wand {
 			
 		} else if (!Dungeon.level.passable[target]){
 			GLog.w( Messages.get(this, "bad_location"));
-			Dungeon.level.pressCell(target);
 
 		} else {
 			Ward ward = new Ward();

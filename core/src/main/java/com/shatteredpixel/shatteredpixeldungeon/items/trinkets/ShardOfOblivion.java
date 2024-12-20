@@ -105,7 +105,6 @@ public class ShardOfOblivion extends Trinket {
 					ready = true;
 				}
 			} else if (item instanceof Armor){
-				ready = ((Armor) item).readyToIdentify();
 				if (item.isEquipped(curUser) && curUser.pointsInTalent(Talent.VETERANS_INTUITION) == 2){
 					ready = true;
 				}

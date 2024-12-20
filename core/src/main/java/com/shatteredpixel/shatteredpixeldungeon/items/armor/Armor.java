@@ -460,14 +460,6 @@ public class Armor extends EquipableItem {
 	}
 
 	public int STRReq(int lvl){
-		int req = STRReq(tier, lvl);
-		if (masteryPotionBonus){
-			req -= 2;
-		}
-		return req;
-	}
-
-	public int STRReq(int lvl){
 		return Integer.parseInt(getUi().getTopRight().getText().replace(":",""));
 	}
 

@@ -562,7 +562,6 @@ public abstract class Elemental extends Mob {
 			Ballistica aim = new Ballistica(pos, enemy.pos, Ballistica.STOP_TARGET);
 			//TODO shortcutting the fx seems fine for now but may cause problems with new cursed effects
 			//of course, not shortcutting it means actor ordering issues =S
-			CursedWand.randomValidEffect(null, this, aim, false).effect(null, this, aim, false);
 		}
 
 		@Override

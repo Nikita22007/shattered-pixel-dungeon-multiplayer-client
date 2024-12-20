@@ -83,21 +83,24 @@ public class Texture {
 	}
 	
 	public void bitmap( Pixmap pixmap ) {
-		bind();
-		
-		Gdx.gl.glTexImage2D(
-				Gdx.gl.GL_TEXTURE_2D,
-				0,
-				pixmap.getGLInternalFormat(),
-				pixmap.getWidth(),
-				pixmap.getHeight(),
-				0,
-				pixmap.getGLFormat(),
-				pixmap.getGLType(),
-				pixmap.getPixels()
-		);
-		
-		premultiplied = true;
+		//Band-aid fix
+		if (pixmap != null) {
+			bind();
+
+			Gdx.gl.glTexImage2D(
+					Gdx.gl.GL_TEXTURE_2D,
+					0,
+					pixmap.getGLInternalFormat(),
+					pixmap.getWidth(),
+					pixmap.getHeight(),
+					0,
+					pixmap.getGLFormat(),
+					pixmap.getGLType(),
+					pixmap.getPixels()
+			);
+
+			premultiplied = true;
+		}
 	}
 	
 	public void pixels( int w, int h, int[] pixels ) {

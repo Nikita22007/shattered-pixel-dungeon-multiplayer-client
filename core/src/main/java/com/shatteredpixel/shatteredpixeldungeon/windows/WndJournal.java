@@ -31,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.CrystalSpire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Pylon;
 import com.shatteredpixel.shatteredpixeldungeon.items.EnergyCrystal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -871,7 +870,7 @@ public class WndJournal extends WndTabbed {
 
 				mob = (Mob) Reflection.newInstance(entityCls);
 
-				if (mob instanceof Mimic || mob instanceof Pylon || mob instanceof CrystalSpire) {
+				if (mob instanceof Mimic ||  mob instanceof CrystalSpire) {
 					mob.alignment = Char.Alignment.ENEMY;
 				}
 				if (mob instanceof WandOfWarding.Ward){
