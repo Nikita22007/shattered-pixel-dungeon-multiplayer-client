@@ -737,6 +737,13 @@ public class ParseThread implements Callable<String> {
                         );
                         break;
                     }
+                    case ("surprise_visual"): {
+                        int pos = actionObj.getInt("pos");
+                        int angle = actionObj.getInt("angle");
+                        Surprise.hit(pos, angle);
+                        break;
+                    }
+
                     default:
                         GLog.h("unknown action type " + type + ". Ignored");
                 }
