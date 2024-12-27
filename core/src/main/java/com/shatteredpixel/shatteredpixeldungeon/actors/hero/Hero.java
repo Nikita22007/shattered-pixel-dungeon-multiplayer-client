@@ -367,6 +367,7 @@ public class Hero extends Char {
 				if (f == talent) tier.put(talent, tier.get(talent)+1);
 			}
 		}
+		SendData.sendTalentUpgrade(talent);
 		Talent.onTalentUpgraded(this, talent);
 	}
 

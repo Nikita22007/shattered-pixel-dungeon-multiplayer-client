@@ -15,9 +15,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CustomBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.*;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.CustomMob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.*;
@@ -1504,6 +1502,25 @@ public class ParseThread implements Callable<String> {
                 case "uuid":{
                         SPDSettings.heroUUID(serverUUID, heroObj.getString("uuid"));
                         Gdx.app.log("ParseThread", "heroUUID: " + heroObj.getString("uuid"));
+                    break;
+                }
+                case "talents" : {
+                    if (hero.talents.size() < 4) {
+                        Talent.initClassTalents(hero);
+                    }
+                    JSONArray talentsArray = heroObj.getJSONArray("talents");
+                    for (int i = 0; i < talentsArray.length(); i++) {
+                        JSONArray talentRow = talentsArray.getJSONArray(i);
+                        LinkedHashMap<Talent, Integer> talentIntMap = new LinkedHashMap<>();
+                        for (int index = 0; index < talentRow.length(); index++) {
+                            JSONObject talentObject = talentRow.getJSONObject(index);
+                            int points = talentObject.getInt("points");
+                            int icon = talentObject.getInt("icon");
+                            Talent talent = TalentCache.talentByIcon(icon);
+                            talentIntMap.put(talent, points);
+                        }
+                        hero.talents.set(i, talentIntMap);
+                    }
                     break;
                 }
                 default: {

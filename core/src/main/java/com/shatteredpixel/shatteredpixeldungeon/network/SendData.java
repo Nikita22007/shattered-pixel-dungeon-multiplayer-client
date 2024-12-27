@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.network;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -71,5 +72,10 @@ public class SendData {
 
     public static void sendSearchAction() {
         sendToolbarAction("SEARCH");
+    }
+
+    public static void sendTalentUpgrade(Talent talent) {
+        packet.packAndAddTalentUpgrade(talent);
+        flush();
     }
 }

@@ -3,6 +3,7 @@ package com.shatteredpixel.shatteredpixeldungeon.network;
 import com.badlogic.gdx.Gdx;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -93,5 +94,11 @@ class NetworkPacket {
             dataRef.get().put("toolbar_action", obj);
         }
     }
+    public void packAndAddTalentUpgrade(Talent talent) {
+        synchronized (dataRef) {
+            dataRef.get().put("talent_upgrade", talent.name());
+        }
+    }
+
 }
 
