@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.sprites;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HeroDisguise;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
@@ -40,8 +41,8 @@ import com.watabou.utils.RectF;
 import org.json.JSONObject;
 
 public class HeroSprite extends CharSprite {
-	public int tier = Dungeon.hero.tier();
-	
+	public int tier = Dungeon.hero != null ? Dungeon.hero.tier : 1;
+
 	private static final int FRAME_WIDTH	= 12;
 	private static final int FRAME_HEIGHT	= 15;
 	
@@ -54,15 +55,17 @@ public class HeroSprite extends CharSprite {
 
 	public HeroSprite() {
 		super();
-		texture( Dungeon.hero.heroClass.spritesheet() );
+		HeroClass heroClass = Dungeon.hero != null ?Dungeon.hero.heroClass : GamesInProgress.selectedClass;
+		texture( heroClass.spritesheet() );
 		updateArmor();
-		
-		link( Dungeon.hero );
+		if (Dungeon.hero != null) {
+			link(Dungeon.hero);
 
-		if (ch.isAlive())
-			idle();
-		else
-			die();
+			if (ch.isAlive())
+				idle();
+			else
+				die();
+		}
 	}
 
 	public void disguise(HeroClass cls){
@@ -96,11 +99,12 @@ public class HeroSprite extends CharSprite {
 
 		read = new Animation( 20, false );
 		read.frames( film, 19, 20, 20, 20, 20, 20, 20, 20, 20, 19 );
-		
-		if (Dungeon.hero.isAlive())
-			idle();
-		else
-			die();
+		if (Dungeon.hero != null) {
+			if (Dungeon.hero.isAlive())
+				idle();
+			else
+				die();
+		}
 	}
 	public void updateTier(int tier) {
 		if (this.tier != tier) {
