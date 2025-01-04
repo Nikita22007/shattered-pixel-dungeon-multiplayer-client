@@ -322,9 +322,9 @@ public class ItemSlot extends Button {
 			// level = bottom right
 			level.text(ui.getBottomRight().getText());
 			if (ui.getBottomRight().getColor() != null) {
-				status.hardlight(ui.getBottomRight().getColor());
+				level.hardlight(ui.getBottomRight().getColor());
 			} else {
-				status.resetColor();
+				level.resetColor();
 			}
 		}
 		layout();
