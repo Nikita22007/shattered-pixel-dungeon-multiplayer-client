@@ -295,13 +295,9 @@ public class WndBag extends WndTabbed {
 
 					hide();
 
-				} else if (selector != null) {
-
-					if (selector.hideAfterSelecting()){
-						hide();
-					}
-					selector.onSelect( item );
-
+				} else if (listener != null) {
+					hide();
+					listener.onSelect( item );
 				} else {
 
 					Game.scene().addToFront(new WndUseItem( WndBag.this, item ) );
@@ -315,12 +311,10 @@ public class WndBag extends WndTabbed {
 
 					hide();
 
-				} else if (selector != null) {
+				} else if (listener != null) {
 
-					if (selector.hideAfterSelecting()){
-						hide();
-					}
-					selector.onSelect( item );
+					hide();
+					listener.onSelect( item );
 
 				} else {
 
@@ -558,13 +552,12 @@ public class WndBag extends WndTabbed {
 		this.listener = listener;
 		this.mode = mode;
 		this.title = title;
-
 		lastMode = mode;
 		lastBag = bag;
-
 		nCols = PixelScene.landscape() ? COLS_L : COLS_P;
 		nRows = (Dungeon.hero.belongings.backpack.capacity() + 4 + 1) / nCols + ((Dungeon.hero.belongings.backpack.capacity() + 4 + 1) % nCols > 0 ? 1 : 0);
-
+		slotWidth = PixelScene.landscape() ? SLOT_WIDTH_L : SLOT_WIDTH_P;
+		slotHeight = PixelScene.landscape() ? SLOT_HEIGHT_L : SLOT_HEIGHT_P;
 		int slotsWidth = SLOT_SIZE * nCols + SLOT_MARGIN * (nCols - 1);
 		int slotsHeight = SLOT_SIZE * nRows + SLOT_MARGIN * (nRows - 1);
 
@@ -594,6 +587,7 @@ public class WndBag extends WndTabbed {
 				tab.select(b == bag);
 			}
 		}
+		layoutTabs();
 	}
 	protected static List<Item> ParseArrayOfItems(Hero hero, JSONArray arr) {
 		List<Item> result = new ArrayList<>(20);
