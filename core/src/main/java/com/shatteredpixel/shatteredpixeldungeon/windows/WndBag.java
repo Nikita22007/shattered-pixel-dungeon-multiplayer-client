@@ -350,7 +350,7 @@ public class WndBag extends WndTabbed {
 		slot.setRect( x, y, slotWidth, slotHeight );
 		add(slot);
 
-		if (item == null || (selector != null && !selector.itemSelectable(item))){
+		if (item == null  || !allowedItems.contains(item)){
 			slot.enable(false);
 		}
 		
