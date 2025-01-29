@@ -484,7 +484,7 @@ public class WndBag extends WndTabbed {
 		public abstract boolean itemSelectable( Item item );
 		public abstract void onSelect( Item item );
 	}
-	protected List<Item> allowedItems = null;
+	protected List<Item> allowedItems = new ArrayList<>();
 	public String title;
 	public Listener listener;
 	public Mode lastMode;
