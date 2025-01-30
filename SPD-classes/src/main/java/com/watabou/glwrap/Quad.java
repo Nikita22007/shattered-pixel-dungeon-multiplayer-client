@@ -41,7 +41,8 @@ public class Quad {
 	private static ShortBuffer indices;
 	private static int indexSize = 0;
 	private static int bufferIndex = -1;
-	
+	public static final int INDEXED_QUADS_COUNT = Short.MAX_VALUE;
+
 	public static FloatBuffer create() {
 		return ByteBuffer.
 			allocateDirect( 16 * Float.SIZE / 8 ).
@@ -58,7 +59,7 @@ public class Quad {
 
 	//sets up for drawing up to 32k quads in one command, shouldn't ever need to exceed this
 	public static void setupIndices(){
-		ShortBuffer indices = getIndices( Short.MAX_VALUE );
+		ShortBuffer indices = getIndices( INDEXED_QUADS_COUNT);
 		if (bufferIndex == -1){
 			bufferIndex = Gdx.gl.glGenBuffer();
 		}

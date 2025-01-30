@@ -33,7 +33,9 @@ import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
 public class NoosaScript extends Script {
-	
+
+	private static final int MAXIMUM_QUADS_PER_REQUEST = 64 * 64; //some platforms can't draw big count of triangles with one OpenGL call
+
 	public Uniform uCamera;
 	public Uniform uModel;
 	public Uniform uTex;
@@ -125,6 +127,27 @@ public class NoosaScript extends Script {
 		Gdx.gl20.glDrawElements( Gdx.gl20.GL_TRIANGLES, Quad.SIZE * size, Gdx.gl20.GL_UNSIGNED_SHORT, 0 );
 	}
 
+	public void drawQuadSetParts(Vertexbuffer buffer, int length, int offset) {
+		int pageSize = buffer.MAX_PART_SIZE_QUADS;
+		int startOffset = offset;
+		int realEnd = length + offset;
+		for (int page = offset / pageSize; page <= (realEnd - 1) / pageSize; page++) {
+			offset = Math.max(startOffset, page * pageSize) % pageSize;
+			length = Math.min((page + 1) * pageSize, realEnd) - offset;
+			buffer.bind(page);
+
+			aXY.vertexBuffer(2, 4, 0);
+			aUV.vertexBuffer(2, 4, 2);
+
+			buffer.release();
+			for (int off = offset; off < length; off += 64 * 64) {
+				//draw in parts
+				int len = Math.min(64 * 64, length - off);
+				Gdx.gl20.glDrawElements(Gdx.gl20.GL_TRIANGLES, Quad.SIZE * len, Gdx.gl20.GL_UNSIGNED_SHORT, Quad.SIZE * Short.SIZE / 8 * off);
+			}
+		}
+	}
+
 	public void drawQuadSet( Vertexbuffer buffer, int length, int offset ){
 
 		if (length == 0) {
@@ -133,14 +156,27 @@ public class NoosaScript extends Script {
 
 		buffer.updateGLData();
 
+		if (offset + length > buffer.MAX_PART_SIZE_QUADS) {
+			//special draw for big tilemaps
+			drawQuadSetParts(buffer, length, offset);
+			return;
+		}
 		buffer.bind();
 
 		aXY.vertexBuffer( 2, 4, 0 );
 		aUV.vertexBuffer( 2, 4, 2 );
 
 		buffer.release();
-		
-		Gdx.gl20.glDrawElements( Gdx.gl20.GL_TRIANGLES, Quad.SIZE * length, Gdx.gl20.GL_UNSIGNED_SHORT, Quad.SIZE * Short.SIZE/8 * offset );
+		if (length <= MAXIMUM_QUADS_PER_REQUEST) {
+			//fast draw
+			Gdx.gl20.glDrawElements(Gdx.gl20.GL_TRIANGLES, Quad.SIZE * length, Gdx.gl20.GL_UNSIGNED_SHORT, Quad.SIZE * Short.SIZE / 8 * offset);
+		} else {
+			//split and draw in parts
+			for (int off = offset; off < length; off += MAXIMUM_QUADS_PER_REQUEST) {
+				int len = Math.min(MAXIMUM_QUADS_PER_REQUEST, length - off);
+				Gdx.gl20.glDrawElements(Gdx.gl20.GL_TRIANGLES, Quad.SIZE * len, Gdx.gl20.GL_UNSIGNED_SHORT, Quad.SIZE * Short.SIZE / 8 * off);
+			}
+		}
 	}
 	
 	public void lighting( float rm, float gm, float bm, float am, float ra, float ga, float ba, float aa ) {
