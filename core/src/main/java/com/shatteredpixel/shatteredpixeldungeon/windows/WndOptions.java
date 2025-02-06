@@ -135,7 +135,7 @@ public class WndOptions extends Window {
 	}
 	public WndOptions(int id, JSONObject args) throws JSONException {
 		this.id = id;
-		Image image = null;
+		Image icon = null;
 		JSONArray optionsArr = args.getJSONArray("options");
 		String[] options = new String[optionsArr.length()];
 		for (int i = 0; i < optionsArr.length(); i += 1) {
@@ -146,18 +146,23 @@ public class WndOptions extends Window {
 		String text = args.getString("message");
 		if (args.has("item"))
 		{
-			image = new ItemSprite(CustomItem.createItem(args.getJSONObject("item")));
+			icon = new ItemSprite(CustomItem.createItem(args.getJSONObject("item")));
 		} else if (args.has("sprite_asset")) {
-			image = new CustomCharSprite(args.getString("sprite_asset"));
+			icon = new CustomCharSprite(args.getString("sprite_asset"));
 		} else if (args.has("sprite_class")) {
 
-			image = CharSprite.spriteFromClass(
+			icon = CharSprite.spriteFromClass(
 					CharSprite.spriteClassFromName(
 							ToPascalCase(args.getString("sprite_class")
 							), true)
 			);
 		}
-		layoutAll(image, titleColor, title, text, options);
+		if (args.has("image")) {
+			JSONObject image = args.getJSONObject("image");
+			icon = new Image();
+			icon.fromJson(image);
+		}
+		layoutAll(icon, titleColor, title, text, options);
 	}
 
 	protected void layoutAll(Image icon, Integer titleColor, String title, String message, String... options ){

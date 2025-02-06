@@ -26,6 +26,7 @@ import com.watabou.gltextures.TextureCache;
 import com.watabou.glwrap.Quad;
 import com.watabou.glwrap.Vertexbuffer;
 import com.watabou.utils.RectF;
+import org.json.JSONObject;
 
 import java.nio.Buffer;
 import java.nio.FloatBuffer;
@@ -193,5 +194,11 @@ public class Image extends Visual {
 		super.destroy();
 		if (buffer != null)
 			buffer.delete();
+	}
+	public void fromJson(JSONObject args) {
+		texture(args.getString("asset"));
+		if (args.has("left")) {
+			frame(new RectF((float) args.getDouble("left"), (float) args.getDouble("top"), (float) args.getDouble("right"), (float) args.getDouble("bottom")));
+		}
 	}
 }
