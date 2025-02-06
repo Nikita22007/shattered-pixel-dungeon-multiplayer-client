@@ -21,6 +21,7 @@ package com.shatteredpixel.shatteredpixeldungeon.sprites;
 import com.badlogic.gdx.Gdx;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.watabou.gltextures.SmartTexture;
 import com.watabou.gltextures.TextureCache;
@@ -47,6 +48,7 @@ public class HeroCustomSprite extends CharSprite {
 
         texture( heroClass.spritesheet() );
         updateArmor();
+        idle();
     }
 
     public void updateArmor() {
@@ -140,5 +142,16 @@ public class HeroCustomSprite extends CharSprite {
         avatar.frame( frame );
 
         return avatar;
+    }
+
+    @Override
+    public void link(Char ch) {
+        super.link(ch);
+        if (ch == null) return;
+        if (ch.isAlive()){
+            idle();
+        } else {
+            die();
+        }
     }
 }

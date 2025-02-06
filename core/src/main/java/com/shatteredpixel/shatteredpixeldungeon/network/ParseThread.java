@@ -1232,6 +1232,7 @@ public class ParseThread implements Callable<String> {
         Char chr;
         if (actor == null) {
             chr = new CustomMob(ID);
+            level.mobs.add((Mob) chr);
             GameScene.add((Mob) chr);
         } else {
             chr = (Char) actor;
