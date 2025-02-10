@@ -23,7 +23,7 @@ task updateRoboVMProps(){
     props.setProperty ('appVersionCode', appVersionCode.toString())
     props.setProperty ('appVersionName', appVersionName)
     //parse out just #.#.# from version name, this is an apple requirement
-    props.setProperty ('appShortVersionName', (appVersionName =~ /\d+\.\d+\.\d+/)[0])
+    props.setProperty ('appShortVersionName', appShortVersionName)
 
     props.setProperty ('appMainclass', "com.shatteredpixel.shatteredpixeldungeon.ios.IOSLauncher")
     props.setProperty ('appExecutable', "IOSLauncher")

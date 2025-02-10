@@ -15,13 +15,27 @@ buildscript {
 }
 
 allprojects {
+    // load verson grom file
+    def versionFile = new File(rootProject.rootDir, "version")
+    def versionName = "Local-build"
 
+    if (versionFile.exists()) {
+        try {
+            versionName = versionFile.text.trim()
+        } catch (Exception e) {
+            println("Error reading version file: ${e.message}")
+        }
+    } else {
+        println("Version file not found, using default: '${versionName}'")
+    }
+    def baseVersionName = "2.5.4"
     ext {
         appName = 'Shattered Pixel Dungeon Client'
         appPackageName = 'com.shatteredpixel.shatteredpixeldungeon.multiplayer.client'
 
         appVersionCode = 802
-        appVersionName = '2.5.4'
+        appVersionName = "Client_"+versionName + "_on_v"+baseVersionName
+        appShortVersionName = ((appVersionName) =~ /\d+\.\d+\.\d+/) ? ((appVersionName) =~ /\d+\.\d+\.\d+/)[0] : "0.0.0"
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 
