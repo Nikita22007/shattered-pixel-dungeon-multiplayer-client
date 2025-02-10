@@ -1177,6 +1177,28 @@ public class ParseThread implements Callable<String> {
                     GameScene.setFlag(GameScene.UpdateFlags.AFTER_OBSERVE);
                     break;
                 }
+                case "states": {
+                    JSONArray states = levelObj.getJSONArray("states");
+                    for (int i = 0; i < states.length(); i++) {
+                        int state = states.getInt(i);
+                        level.visited[i] = state == 1;
+                        level.mapped[i] = state == 2;
+                    }
+                    break;
+                }
+                case "cells_map": {
+                    JSONArray map = levelObj.getJSONArray("cells_map");
+                    if (isConnectedToOldServer()) {
+                        for (int i = 0; i < map.length(); i++) {
+                            Dungeon.level.map[i] = TranslationUtils.translateCell(map.getInt(i), i);
+                        }
+                    } else {
+                        for (int i = 0; i < map.length(); i++) {
+                            Dungeon.level.map[i] = map.getInt(i);
+                        }
+                    }
+                    break;
+                }
                 default: {
                     GLog.n("Unexpected token \"%s\" in level. Ignored.", token);
                     break;
