@@ -25,6 +25,7 @@ class NetworkPacket {
     public static final String CELLS = "cells";
     public static final String MAP = "map";
     public static final String ACTORS = "actors";
+    public static final String CHAT = "chat";
 
     public AtomicReference<JSONObject> dataRef = new AtomicReference<>(new JSONObject());
 
@@ -97,6 +98,12 @@ class NetworkPacket {
     public void packAndAddTalentUpgrade(Talent talent) {
         synchronized (dataRef) {
             dataRef.get().put("talent_upgrade", talent.name());
+        }
+    }
+
+    public void packAndAddChatMessage(String text) {
+        synchronized (dataRef) {
+            dataRef.get().put(CHAT, new JSONObject().put("message", text));
         }
     }
 

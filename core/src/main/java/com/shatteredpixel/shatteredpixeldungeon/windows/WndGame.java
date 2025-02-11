@@ -53,6 +53,14 @@ public class WndGame extends Window {
 
 		//settings
 		RedButton curBtn;
+		addButton( curBtn = new RedButton( "Chat" /* Messages.get(this, "chat") */) {
+			@Override
+			protected void onClick() {
+				hide();
+				GameScene.show(new WndChat());
+			}
+		});
+		curBtn.icon(Icons.get(Icons.PREFS));
 		addButton( curBtn = new RedButton( Messages.get(this, "settings") ) {
 			@Override
 			protected void onClick() {

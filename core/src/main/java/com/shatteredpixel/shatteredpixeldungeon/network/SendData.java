@@ -78,4 +78,9 @@ public class SendData {
         packet.packAndAddTalentUpgrade(talent);
         flush();
     }
+
+    public static void sendChatMessage(String text) {
+        packet.packAndAddChatMessage(text);
+        flush();
+    }
 }
