@@ -743,7 +743,9 @@ public class ParseThread implements Callable<String> {
                         Surprise.hit(pos, angle);
                         break;
                     }
-
+                    case ("game_scene_flash"):
+                        GameScene.flash(actionObj.getInt("color"), actionObj.getBoolean("light"));
+                        break;
                     default:
                         GLog.h("unknown action type " + type + ". Ignored");
                 }
