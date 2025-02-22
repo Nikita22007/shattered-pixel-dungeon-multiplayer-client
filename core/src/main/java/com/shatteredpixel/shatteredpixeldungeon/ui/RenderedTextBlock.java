@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.RenderedText;
 import com.watabou.noosa.ui.Component;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -63,6 +64,7 @@ public class RenderedTextBlock extends Component {
 		this.size = size;
 		text(text);
 	}
+
 
 	public void text(String text){
 		this.text = text;
@@ -278,5 +280,11 @@ public class RenderedTextBlock extends Component {
 				}
 			}
 		}
+	}
+	public JSONObject fromJson(JSONObject object){
+		text(object.getString("text"));
+		color = object.getInt("color");
+		setHightlighting(object.getBoolean("highlighting_enabled"), object.getInt("highlight_color"));
+		return object;
 	}
 }

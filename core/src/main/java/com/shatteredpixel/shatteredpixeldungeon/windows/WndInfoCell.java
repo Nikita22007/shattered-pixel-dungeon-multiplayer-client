@@ -32,6 +32,7 @@ import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.watabou.noosa.Image;
+import org.json.JSONObject;
 
 public class WndInfoCell extends Window {
 	
@@ -156,6 +157,18 @@ public class WndInfoCell extends Window {
 		info.maxWidth(WIDTH);
 		info.setPos(titlebar.left(), titlebar.bottom() + 2*GAP);
 		
+		resize( WIDTH, (int)info.bottom()+2 );
+	}
+	public WndInfoCell(JSONObject object) {
+		IconTitle titlebar = new IconTitle();
+		titlebar.fromJson(object.getJSONObject("title_bar"));
+		titlebar.setRect(0, 0, WIDTH, 0);
+		add(titlebar);
+		RenderedTextBlock info = PixelScene.renderTextBlock(6);
+		info.text(object.getString("desc"));
+		add(info);
+		info.maxWidth(WIDTH);
+		info.setPos(titlebar.left(), titlebar.bottom() + 2*GAP);
 		resize( WIDTH, (int)info.bottom()+2 );
 	}
 }

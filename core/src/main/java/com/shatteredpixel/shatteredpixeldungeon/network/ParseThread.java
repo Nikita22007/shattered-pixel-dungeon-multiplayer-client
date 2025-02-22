@@ -421,6 +421,9 @@ public class ParseThread implements Callable<String> {
                     GameScene.show(new WndBag(id, hero.belongings.backpack, has_listener, allowed_items, title));
                     break;
                 }
+                case "info_cell":
+                    GameScene.show(new WndInfoCell(windowObj));
+                    break;
                 default: {
                     Log.e("parse_window", String.format("incorrect window type: %s", type));
                 }
