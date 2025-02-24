@@ -82,8 +82,8 @@ public class WndBag extends WndTabbed {
 	
 	private ItemSelector selector;
 
-	private int nCols;
-	private int nRows;
+	private final int nCols;
+	private final int nRows;
 
 	private int slotWidth;
 	private int slotHeight;
@@ -96,6 +96,49 @@ public class WndBag extends WndTabbed {
 
 	public WndBag( Bag bag ) {
 		this(bag, null);
+	}
+	public WndBag( Bag bag, ArrayList<Item> allowedItems, Listener listener) {
+		this.allowedItems = allowedItems;
+		this.listener = listener;
+		INSTANCE = this;
+		lastBag = bag;
+		slotWidth = PixelScene.landscape() ? SLOT_WIDTH_L : SLOT_WIDTH_P;
+		slotHeight = PixelScene.landscape() ? SLOT_HEIGHT_L : SLOT_HEIGHT_P;
+
+		nCols = PixelScene.landscape() ? COLS_L : COLS_P;
+		nRows = (int)Math.ceil(25/(float)nCols); //we expect to lay out 25 slots in all cases
+
+		int windowWidth = slotWidth * nCols + SLOT_MARGIN * (nCols - 1);
+		int windowHeight = TITLE_HEIGHT + slotHeight * nRows + SLOT_MARGIN * (nRows - 1);
+
+		if (PixelScene.landscape()){
+			while (slotHeight >= 24 && (windowHeight + 20 + chrome.marginTop()) > PixelScene.uiCamera.height){
+				slotHeight--;
+				windowHeight -= nRows;
+			}
+		} else {
+			while (slotWidth >= 26 && (windowWidth + chrome.marginHor()) > PixelScene.uiCamera.width){
+				slotWidth--;
+				windowWidth -= nCols;
+			}
+		}
+
+		placeTitle( bag, windowWidth );
+
+		placeItems( bag );
+
+		resize( windowWidth, windowHeight );
+
+		int i = 1;
+		for (Bag b : Dungeon.hero.belongings.getBags()) {
+			if (b != null) {
+				BagTab tab = new BagTab( b, i++ );
+				add( tab );
+				tab.select( b == bag );
+			}
+		}
+
+		layoutTabs();
 	}
 
 	public WndBag( Bag bag, ItemSelector selector ) {
@@ -298,8 +341,10 @@ public class WndBag extends WndTabbed {
 				} else if (listener != null) {
 					hide();
 					listener.onSelect( item );
-				} else {
-
+				} else if(selector != null){
+					selector.onSelect(item);
+				}
+				else{
 					Game.scene().addToFront(new WndUseItem( WndBag.this, item ) );
 
 				}
@@ -349,21 +394,12 @@ public class WndBag extends WndTabbed {
 		};
 		slot.setRect( x, y, slotWidth, slotHeight );
 		add(slot);
-		if (selector == null && allowedItems.isEmpty() && item != null){
-			slot.enable(true);
-		}
-		if (selector != null) {
-			if (selector.itemSelectable(item)){
-				slot.enable(true);
+		if (selector != null || !allowedItems.isEmpty()) {
+			if (item == null || (selector != null && !selector.itemSelectable(item)) || (selector == null && !allowedItems.contains(item))) {
+				slot.enable(false);
 			}
 		}
-		if (allowedItems.contains(item)){
-			slot.enable(true);
-		}
-        if (item instanceof Placeholder) {
-            slot.enable(false);
-        }
-        if (++col >= nCols) {
+		if (++col >= nCols) {
 			col = 0;
 			row++;
 		}
@@ -391,7 +427,7 @@ public class WndBag extends WndTabbed {
 	@Override
 	protected void onClick( Tab tab ) {
 		hide();
-		Window w = new WndBag(((BagTab) tab).bag, selector);
+		WndBag w = new WndBag(((BagTab) tab).bag, (ArrayList<Item>) allowedItems, listener);
 		if (Game.scene() instanceof GameScene){
 			GameScene.show(w);
 		} else {
@@ -428,8 +464,8 @@ public class WndBag extends WndTabbed {
 	
 	private class BagTab extends IconTab {
 
-		private Bag bag;
-		private int index;
+		private final Bag bag;
+		private final int index;
 		
 		public BagTab( Bag bag, int index ) {
 			super( icon(bag) );
@@ -518,7 +554,7 @@ public class WndBag extends WndTabbed {
 		);
 		this.id = id;
 	}
-	public static enum Mode {
+	public enum Mode {
 		ALL,
 		ALLOWED_ITEMS,
 		UNIDENTIFED,
@@ -559,7 +595,7 @@ public class WndBag extends WndTabbed {
 
 
 		this.listener = listener;
-		this.mode = mode;
+		WndBag.mode = mode;
 		this.title = title;
 		lastMode = mode;
 		lastBag = bag;

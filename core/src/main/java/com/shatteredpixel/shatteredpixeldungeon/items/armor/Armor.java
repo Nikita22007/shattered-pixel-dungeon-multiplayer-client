@@ -526,12 +526,8 @@ public class Armor extends EquipableItem {
 	public boolean hasCurseGlyph(){
 		return glyph != null && glyph.curse();
 	}
-	
-	@Override
-	public ItemSprite.Glowing glowing() {
-		return getGlowing();
-	}
-	
+
+
 	public static abstract class Glyph implements Bundlable {
 		
 		public static final Class<?>[] common = new Class<?>[]{
