@@ -4,14 +4,13 @@ import java.util.ArrayList;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.CustomBag;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import java.util.ArrayList;
+
 import java.util.Iterator;
 
 import static com.nikita22007.pixeldungeonmultiplayer.TranslationUtils.translateItemImage;
@@ -141,8 +140,8 @@ public class CustomItem extends Item {
     public UI getUi() {
         return ui;
     }
-
-    public ItemSprite.Glowing getGlowing() {
+    @Override
+    public ItemSprite.Glowing glowing() {
         return glowing;
     }
 
