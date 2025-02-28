@@ -205,7 +205,12 @@ public class Blob extends Actor {
 	public void seed( Level level, int cell, int amount ) {
 		if (cur == null) cur = new int[level.length()];
 		if (off == null) off = new int[cur.length];
-
+		if(cell > cur.length) {
+			int[] tempCur = new int[cell+1];
+			System.arraycopy(cur, 0, tempCur,0, cur.length);
+			cur = new int[cell+1];
+			System.arraycopy(tempCur, 0, cur,0, tempCur.length);
+		}
 		cur[cell] += amount;
 		volume += amount;
 
