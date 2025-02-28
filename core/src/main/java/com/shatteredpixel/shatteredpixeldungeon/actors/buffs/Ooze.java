@@ -83,6 +83,11 @@ public class Ooze extends Buff {
 		acted = false;
 	}
 	//TODO: check changes from https://github.com/Nikita22007/pixel-dungeon-multiplayer-server/commit/e87ebae26d3ec4a201b2e69ba097a26986748483
+
+	public void extend( float duration ) {
+		left += duration;
+	}
+
 	@Override
 	public boolean act() {
 		//washing away happens before debuff effects if debuff has gotten to act

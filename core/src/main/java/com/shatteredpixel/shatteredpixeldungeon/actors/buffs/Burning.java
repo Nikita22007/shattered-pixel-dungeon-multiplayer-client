@@ -183,10 +183,14 @@ public class Burning extends Buff implements Hero.Doom {
 			//TODO this only works for the hero, not others who can have brimstone+arcana effect
 			// e.g. prismatic image, shadow clone
 		}
-		left = duration;
+		if (left < duration) left = duration;
 		acted = false;
 	}
-	
+
+	public void extend( float duration ) {
+		left += duration;
+	}
+
 	@Override
 	public int icon() {
 		return BuffIndicator.FIRE;

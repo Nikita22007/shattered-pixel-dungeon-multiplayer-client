@@ -110,7 +110,7 @@ public class MasterThievesArmband extends Artifact {
 		}
 	}
 
-	private CellSelector.Listener targeter = new CellSelector.Listener(){
+	public CellSelector.Listener targeter = new CellSelector.Listener(){
 
 		@Override
 		public void onSelect(Integer target) {
@@ -179,6 +179,7 @@ public class MasterThievesArmband extends Artifact {
 
 							Buff.prolong(ch, Blindness.class, debuffDuration);
 							Buff.prolong(ch, Cripple.class, debuffDuration);
+
 
 							charge--;
 							exp += 3;
@@ -262,6 +263,7 @@ public class MasterThievesArmband extends Artifact {
 		public boolean act() {
 			if (cursed && Dungeon.hero.gold > 0 && Random.Int(5) == 0){
 				Dungeon.hero.gold--;
+				updateQuickslot();
 			}
 
 			spend(TICK);

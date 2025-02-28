@@ -28,6 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -92,7 +93,7 @@ abstract public class KindOfWeapon extends EquipableItem {
 
 	@Override
 	public boolean isEquipped( Hero hero ) {
-		return hero.belongings.weapon() == this || hero.belongings.secondWep() == this;
+		return hero != null && (hero.belongings.weapon() == this || hero.belongings.secondWep() == this);
 	}
 
 	private static boolean isSwiftEquipping = false;

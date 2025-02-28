@@ -95,7 +95,7 @@ public class Multiplicity extends Armor.Glyph {
 							m.HP = m.HT;
 
 							//don't duplicate stuck projectiles
-							m.remove(m.buff(PinCushion.class));
+							m.remove(PinCushion.class);
 							//don't duplicate pending damage to dwarf king
 
 							//If a thief has stolen an item, that item is not duplicated.

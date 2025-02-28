@@ -113,7 +113,11 @@ public class EtherealChains extends Artifact {
 		}
 	}
 
-	private CellSelector.Listener caster = new CellSelector.Listener(){
+	public void resetForTrinity(int visibleLevel) {
+		charge = 5+(level()*2); //sets charge to soft cap
+	}
+
+	public CellSelector.Listener caster = new CellSelector.Listener(){
 
 		@Override
 		public void onSelect(Integer target) {
@@ -193,6 +197,7 @@ public class EtherealChains extends Artifact {
 						Dungeon.observe();
 						GameScene.updateFog();
 						hero.spendAndNext(1f);
+
 					}
 				}));
 				hero.next();
