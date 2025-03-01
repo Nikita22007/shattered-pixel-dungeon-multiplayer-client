@@ -23,10 +23,15 @@ package com.shatteredpixel.shatteredpixeldungeon.windows;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
+import org.json.JSONObject;
 
 public class WndQuest extends WndTitledMessage {
 
 	public WndQuest( NPC questgiver, String text ) {
 		super( questgiver.sprite(), Messages.titleCase( questgiver.name() ), text );
+	}
+	public WndQuest(JSONObject object) {
+		super(CharSprite.spriteFromClass(CharSprite.spriteClassFromName(object.getString("sprite_name"), true)), Messages.titleCase(object.getString("char_name")), object.getString("text"));
 	}
 }

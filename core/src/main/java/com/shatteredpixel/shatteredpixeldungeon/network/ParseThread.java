@@ -424,6 +424,12 @@ public class ParseThread implements Callable<String> {
                 case "info_cell":
                     GameScene.show(new WndInfoCell(windowObj));
                     break;
+                case "cleric_spells":
+                    GameScene.show(new WndClericSpells(id, windowObj.getJSONObject("args")));
+                    break;
+                case "quest":
+                    GameScene.show(new WndQuest(windowObj.getJSONObject("args")));
+                    break;
                 default: {
                     Log.e("parse_window", String.format("incorrect window type: %s", type));
                 }
