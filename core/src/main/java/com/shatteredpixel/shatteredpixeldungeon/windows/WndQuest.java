@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.GhostSprite;
+import com.watabou.utils.Reflection;
 import org.json.JSONObject;
 
 public class WndQuest extends WndTitledMessage {
@@ -33,14 +34,7 @@ public class WndQuest extends WndTitledMessage {
 		super( questgiver.sprite(), Messages.titleCase( questgiver.name() ), text );
 	}
 	public WndQuest(JSONObject object) {
-		super(fromName("sprite_name"), Messages.titleCase(object.getString("char_name")), object.getString("text"));
+		super((CharSprite) Reflection.newInstance(Reflection.forName(object.getString("sprite_name"))), Messages.titleCase(object.getString("char_name")), object.getString("text"));
 
-    }
-	private static CharSprite fromName(String name){
-        try {
-            return CharSprite.spriteFromClass((Class<? extends CharSprite>) Class.forName(name));
-        } catch (ClassNotFoundException e) {
-			return null;
-        }
     }
 }

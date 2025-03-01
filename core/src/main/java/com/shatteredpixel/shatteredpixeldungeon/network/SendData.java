@@ -89,4 +89,9 @@ public class SendData {
         packet.packAndAddChatMessage(text);
         flush();
     }
+
+    public static void sendGhostQuestReward(int index) {
+        packet.packAndAddGhostQuestReward(index);
+        flush();
+    }
 }
