@@ -29,9 +29,11 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.ClericSpell;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.IconButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
@@ -46,6 +48,8 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.NinePatch;
 import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.PointF;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -54,10 +58,82 @@ public class WndClericSpells extends Window {
 	protected static final int WIDTH    = 120;
 
 	public static int BTN_SIZE = 20;
+	IconTitle title;
+	ArrayList<IconButton> spellBtns = new ArrayList<>();
+	int id;
+	public WndClericSpells(int id, JSONObject object){
+		this.id = id;
+		boolean info = object.getBoolean("info");
+		if (!info){
+			title = new IconTitle(new ItemSprite(ItemSpriteSheet.ARTIFACT_TOME), Messages.titleCase(Messages.get(this, "cast_title")));
+		} else {
+			title = new IconTitle(Icons.INFO.get(), Messages.titleCase(Messages.get(this, "info_title")));
+		}
+		title.setRect(0, 0, WIDTH, 0);
+		add(title);
+		IconButton btnInfo = new IconButton(info ? new ItemSprite(ItemSpriteSheet.ARTIFACT_TOME) : Icons.INFO.get()){
+			@Override
+			protected void onClick() {
+				object.put("info", !info);
+				GameScene.show(new WndClericSpells(id, object));
+				hide();
+			}
+		};
+		btnInfo.setRect(WIDTH-16, 0, 16, 16);
+		add(btnInfo);
 
+		RenderedTextBlock msg;
+		if (info){
+			msg = PixelScene.renderTextBlock( Messages.get( this, "info_desc"), 6);
+		} else if (DeviceCompat.isDesktop()){
+			msg = PixelScene.renderTextBlock( Messages.get( this, "cast_desc_desktop"), 6);
+		} else {
+			msg = PixelScene.renderTextBlock( Messages.get( this, "cast_desc_mobile"), 6);
+		}
+		msg.maxWidth(WIDTH);
+		msg.setPos(0, title.bottom()+4);
+		add(msg);
+
+		int top = (int)msg.bottom()+4;
+		JSONArray buttons = object.getJSONArray("buttons");
+		for (int i = 1; i <= Talent.MAX_TALENT_TIERS; i++) {
+			ArrayList<Integer> validIndexs = new ArrayList<>();
+			for (int index = 0; index < buttons.length(); index++) {
+				if (buttons.getJSONObject(index).getInt("tier") == i ){
+					validIndexs.add(index);
+				}
+			}
+			if (!validIndexs.isEmpty() && i != 1){
+				top += BTN_SIZE + 2;
+				ColorBlock sep = new ColorBlock(WIDTH, 1, 0xFF000000);
+				sep.y = top;
+				add(sep);
+				top += 3;
+			}
+
+
+			for (int spell : validIndexs) {
+				SpellButton spellBtn = new SpellButton(buttons.getJSONObject(spell));
+				add(spellBtn);
+				spellBtns.add(spellBtn);
+			}
+
+			int left = 2 + (WIDTH - spellBtns.size() * (BTN_SIZE + 4)) / 2;
+			for (IconButton btn : spellBtns) {
+				btn.setRect(left, top, BTN_SIZE, BTN_SIZE);
+				left += btn.width() + 4;
+			}
+
+		}
+
+		resize(WIDTH, top + BTN_SIZE);
+		if (SPDSettings.interfaceSize() != 2){
+			offset(0, (int) (GameScene.uiCamera.height/2 - 30 - height/2));
+		}
+
+	}
 	public WndClericSpells(HolyTome tome, Hero cleric, boolean info){
 
-		IconTitle title;
 		if (!info){
 			title = new IconTitle(new ItemSprite(tome), Messages.titleCase(Messages.get(this, "cast_title")));
 		} else {
@@ -103,7 +179,6 @@ public class WndClericSpells extends Window {
 				top += 3;
 			}
 
-			ArrayList<IconButton> spellBtns = new ArrayList<>();
 
 			for (ClericSpell spell : spells) {
 				IconButton spellBtn = new SpellButton(spell, tome, info);
@@ -135,14 +210,35 @@ public class WndClericSpells extends Window {
 		boolean info;
 
 		NinePatch bg;
+		int spellID = -1;
+		String spellName;
+		String spellShortDesc;
+		public SpellButton(JSONObject object) {
+			super(new HeroIcon(new ClericSpell() {
+				@Override
+				public void onCast(HolyTome tome, Hero hero) {
 
+				}
+
+				@Override
+				public int icon() {
+				return 	object.getInt("icon");
+				}
+			}));
+			info = object.getBoolean("info");
+			icon.alpha((float) object.getDouble("alpha"));
+			spellName = object.getString("spell_name");
+			spellShortDesc = object.getString("spell_short_desc");
+			spellID = object.getInt("spell_id");
+			bg = Chrome.get(Chrome.Type.TOAST);
+			addToBack(bg);
+		}
 		public SpellButton(ClericSpell spell, HolyTome tome, boolean info){
 			super(new HeroIcon(spell));
 
 			this.spell = spell;
 			this.tome = tome;
 			this.info = info;
-
 			if (!tome.canCast(Dungeon.hero, spell)){
 				icon.alpha( 0.3f );
 			}
@@ -154,8 +250,10 @@ public class WndClericSpells extends Window {
 		@Override
 		protected void onPointerUp() {
 			super.onPointerUp();
-			if (!tome.canCast(Dungeon.hero, spell)){
-				icon.alpha( 0.3f );
+			if (tome != null) {
+				if (!tome.canCast(Dungeon.hero, spell)) {
+					icon.alpha(0.3f);
+				}
 			}
 		}
 
@@ -172,80 +270,14 @@ public class WndClericSpells extends Window {
 
 		@Override
 		protected void onClick() {
-			if (info){
-				GameScene.show(new WndTitledMessage(new HeroIcon(spell), Messages.titleCase(spell.name()), spell.desc()));
-			} else {
+			if (!info) {
 				hide();
-
-
-				if(!tome.canCast(Dungeon.hero, spell)){
-					GLog.w(Messages.get(HolyTome.class, "no_spell"));
-				} else {
-					spell.onCast(tome, Dungeon.hero);
-
-					if (spell.targetingFlags() != -1 && Dungeon.quickslot.contains(tome)){
-						tome.targetingSpell = spell;
-						QuickSlotButton.useTargeting(Dungeon.quickslot.getSlot(tome));
-					}
-				}
-
 			}
+			SendData.sendWndClericSpellsResult(WndClericSpells.this.id, info, spellID);
 		}
-
-		@Override
-		protected boolean onLongClick() {
-			hide();
-			tome.setQuickSpell(spell);
-			return true;
-		}
-
-		@Override
-		protected void onRightClick() {
-			super.onRightClick();
-			RightClickMenu r = new RightClickMenu(new Image(icon),
-					Messages.titleCase(spell.name()),
-					Messages.get(WndClericSpells.class, "cast"),
-					Messages.get(WndClericSpells.class, "info"),
-					Messages.get(WndClericSpells.class, "quick_cast")){
-				@Override
-				public void onSelect(int index) {
-					switch (index){
-						default:
-							//do nothing
-							break;
-						case 0:
-							hide();
-							if(!tome.canCast(Dungeon.hero, spell)){
-								GLog.w(Messages.get(HolyTome.class, "no_spell"));
-							} else {
-								spell.onCast(tome, Dungeon.hero);
-
-								if (spell.targetingFlags() != -1 && Dungeon.quickslot.contains(tome)){
-									tome.targetingSpell = spell;
-									QuickSlotButton.useTargeting(Dungeon.quickslot.getSlot(tome));
-								}
-							}
-							break;
-						case 1:
-							GameScene.show(new WndTitledMessage(new HeroIcon(spell), Messages.titleCase(spell.name()), spell.desc()));
-							break;
-						case 2:
-							hide();
-							tome.setQuickSpell(spell);
-							break;
-					}
-				}
-			};
-			parent.addToFront(r);
-			r.camera = camera();
-			PointF mousePos = PointerEvent.currentHoverPos();
-			mousePos = camera.screenToCamera((int)mousePos.x, (int)mousePos.y);
-			r.setPos(mousePos.x-3, mousePos.y-3);
-		}
-
 		@Override
 		protected String hoverText() {
-			return "_" + Messages.titleCase(spell.name()) + "_\n" + spell.shortDesc();
+			return "_" + Messages.titleCase(spellName) + "_\n" + spellShortDesc;
 		}
 	}
 

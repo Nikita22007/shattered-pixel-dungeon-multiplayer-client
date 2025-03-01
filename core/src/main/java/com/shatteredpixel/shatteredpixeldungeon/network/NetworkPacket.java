@@ -13,6 +13,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.Locale;
 
 class NetworkPacket {
+
+
     enum CellState {
         VISITED, UNVISITED, MAPPED;
 
@@ -87,6 +89,13 @@ class NetworkPacket {
             dataRef.get().put("window", obj);
         }
     }
+    public void packAndAddWndClericSpellsResult( boolean info, int spellID) {
+        JSONObject object = new JSONObject();
+        object.put("info", info);
+        object.put("spell_id", spellID);
+        synchronized (dataRef) {
+            dataRef.get().put("cleric_spell", object);
+        }    }
 
     public void packAndAddTollbarAction(String action) {
         JSONObject obj = new JSONObject();
