@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.SewerLevel;
 import com.shatteredpixel.shatteredpixeldungeon.plants.CustomPlant;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.HeroSelectScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.TitleScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.*;
@@ -286,6 +285,11 @@ public class ParseThread implements Callable<String> {
                 }
                 case "actors": {
                     parseActors(data.getJSONArray(token));
+                    break;
+                }
+                case "char_shield": {
+                    JSONObject shieldObject = data.getJSONObject(token);
+                    ((Char)Actor.findById(shieldObject.getInt("id"))).shielding = shieldObject.getInt("shielding");
                     break;
                 }
                 case "buffs": {
@@ -690,6 +694,7 @@ public class ParseThread implements Callable<String> {
                         }
                         Item item = CustomItem.createItem(actionObj.getJSONObject("item"));
                         Enchanting.show((Char) actor, item);
+                        break;
                     }
                     case ("flare_visual"): {
                         PointF position;
@@ -1325,6 +1330,10 @@ public class ParseThread implements Callable<String> {
                 }
                 case "hp": {
                     chr.HP = actorObj.getInt(token);
+                    break;
+                }
+                case "shield" :{
+                    chr.shielding = actorObj.getInt("shield");
                     break;
                 }
                 case "max_hp": {

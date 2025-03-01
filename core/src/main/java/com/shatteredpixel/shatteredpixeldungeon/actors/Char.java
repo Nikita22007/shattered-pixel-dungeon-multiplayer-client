@@ -169,6 +169,7 @@ public abstract class Char extends Actor {
 	public boolean rooted		= false;
 	public boolean flying		= false;
 	public int invisible		= 0;
+	public int shielding;
 
 	//these are relative to the hero
 	public enum Alignment{
@@ -758,21 +759,11 @@ public abstract class Char extends Actor {
 		return true;
 	}
 	
-	//used so that buffs(Shieldbuff.class) isn't called every time unnecessarily
-	private int cachedShield = 0;
+
 	public boolean needsShieldUpdate = true;
 	
 	public int shielding(){
-		if (!needsShieldUpdate){
-			return cachedShield;
-		}
-		
-		cachedShield = 0;
-		for (ShieldBuff s : buffs(ShieldBuff.class)){
-			cachedShield += s.shielding();
-		}
-		needsShieldUpdate = false;
-		return cachedShield;
+		return shielding;
 	}
 	
 	public void damage( int dmg, Object src ) {
