@@ -97,33 +97,28 @@ public class WndClericSpells extends Window {
 		int top = (int)msg.bottom()+4;
 		JSONArray buttons = object.getJSONArray("buttons");
 		for (int i = 1; i <= Talent.MAX_TALENT_TIERS; i++) {
-			ArrayList<Integer> validIndexs = new ArrayList<>();
+			ArrayList<Integer> validIndexes = new ArrayList<>();
 			for (int index = 0; index < buttons.length(); index++) {
 				if (buttons.getJSONObject(index).getInt("tier") == i ){
-					validIndexs.add(index);
+					validIndexes.add(index);
 				}
 			}
-			if (!validIndexs.isEmpty() && i != 1){
+			if (!validIndexes.isEmpty() && i != 1){
 				top += BTN_SIZE + 2;
 				ColorBlock sep = new ColorBlock(WIDTH, 1, 0xFF000000);
 				sep.y = top;
 				add(sep);
 				top += 3;
 			}
-
-
-			for (int spell : validIndexs) {
+			int left = 2 + (WIDTH - validIndexes.size() * (BTN_SIZE + 4)) / 2;
+			for (int spell : validIndexes) {
 				SpellButton spellBtn = new SpellButton(buttons.getJSONObject(spell));
+				spellBtn.setRect(left, top, BTN_SIZE, BTN_SIZE);
+				left += spellBtn.width() + 4;
 				add(spellBtn);
 				spellBtns.add(spellBtn);
-			}
 
-			int left = 2 + (WIDTH - spellBtns.size() * (BTN_SIZE + 4)) / 2;
-			for (IconButton btn : spellBtns) {
-				btn.setRect(left, top, BTN_SIZE, BTN_SIZE);
-				left += btn.width() + 4;
 			}
-
 		}
 
 		resize(WIDTH, top + BTN_SIZE);
