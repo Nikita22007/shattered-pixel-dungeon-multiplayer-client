@@ -1457,7 +1457,16 @@ public class ParseThread implements Callable<String> {
     protected void parseActorBlob(JSONObject actorObj, int id, Actor actor) throws JSONException {
         Class blob_class = null;
         if (actor == null) {
-            String blob_name = format("com.shatteredpixel.shatteredpixeldungeon.actors.blobs.%s", ToPascalCase(actorObj.getString("blob_type")));
+            String blob_name;
+            if(!isConnectedToOldServer()) {
+                blob_name = actorObj.getString("blob_type");
+            } else {
+                blob_name = "com.shatteredpixel.shatteredpixeldungeon.actor.blobs." + actorObj.getBoolean("blob_type");
+            }
+            if(!blob_name.startsWith("com.shatteredpixel.shatteredpixeldungeon.actor.blobs")){
+                GLog.n("invalid blob %s", blob_name);
+                return;
+            }
             try {
                 blob_class = ClassReflection.forName(blob_name);
                 actor = (Blob) ClassReflection.newInstance(blob_class);
