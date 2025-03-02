@@ -97,13 +97,6 @@ class NetworkPacket {
             dataRef.get().put("cleric_spell", object);
         }
     }
-    public void packAndAddGhostQuestReward(int index) {
-        JSONObject object = new JSONObject();
-        object.put("index", index);
-        synchronized (dataRef) {
-            dataRef.get().put("ghost_quest", object);
-        }
-    }
     public void packAndAddTollbarAction(String action) {
         JSONObject obj = new JSONObject();
         obj.put("action_name", action);

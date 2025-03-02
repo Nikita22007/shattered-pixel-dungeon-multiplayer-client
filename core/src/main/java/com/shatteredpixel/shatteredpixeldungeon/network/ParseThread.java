@@ -26,6 +26,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.IronKey;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.SewerLevel;
+import com.shatteredpixel.shatteredpixeldungeon.levels.traps.CustomTrap;
+import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.plants.CustomPlant;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -336,6 +338,9 @@ public class ParseThread implements Callable<String> {
                     parsePlants(data.getJSONArray(token));
                     break;
                 }
+                case "traps":
+                    parseTraps(data.getJSONArray(token));
+                    break;
                 case "server_uuid": {
                     Gdx.app.log("ParseThread", "ServerUUID");
                     serverUUID = data.getString("server_uuid");
@@ -350,6 +355,7 @@ public class ParseThread implements Callable<String> {
         }
 
     }
+
 
     private void parsePlants(JSONArray plantsArray) {
         for (int i = 0; i < plantsArray.length(); i++) {
@@ -375,6 +381,33 @@ public class ParseThread implements Callable<String> {
                 JSONObject plantInfo = plantObject.optJSONObject("plant_info");
                 Plant.Seed seed = new CustomPlant.Seed(plantInfo);
                 level.plant(seed, plantObject.getInt("pos"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    private void parseTraps(JSONArray trapsArray) {
+        for (int i = 0; i < trapsArray.length(); i++) {
+            JSONObject trapObject = trapsArray.optJSONObject(i);
+            if (trapObject == null) {
+                Log.e("Parse Thread", "malformed trap.");
+                continue;
+            }
+            try {
+                if (trapObject.isNull("trap_info")) {
+                    if (level == null) {
+                        continue;
+                    }
+                    if (level.traps == null) {
+                        continue;
+                    }
+                    int pos = trapObject.getInt("pos");
+                    level.traps.remove(pos);
+                    GameScene.updateMap(pos);
+                    continue;
+                }
+                Trap trap = new CustomTrap(trapObject);
+                level.setTrap(trap, trapObject.getInt("pos"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -433,6 +466,9 @@ public class ParseThread implements Callable<String> {
                     break;
                 case "quest":
                     GameScene.show(new WndQuest(windowObj.getJSONObject("args")));
+                    break;
+                case "sad_ghost":
+                    GameScene.show(new WndSadGhost(id, windowObj.getJSONObject("args")));
                     break;
                 default: {
                     Log.e("parse_window", String.format("incorrect window type: %s", type));

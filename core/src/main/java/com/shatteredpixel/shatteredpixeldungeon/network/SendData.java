@@ -90,8 +90,4 @@ public class SendData {
         flush();
     }
 
-    public static void sendGhostQuestReward(int index) {
-        packet.packAndAddGhostQuestReward(index);
-        flush();
-    }
 }

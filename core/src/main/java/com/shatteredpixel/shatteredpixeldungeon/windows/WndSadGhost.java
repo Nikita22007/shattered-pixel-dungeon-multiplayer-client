@@ -51,63 +51,11 @@ public class WndSadGhost extends Window {
 	Ghost ghost;
 	
 	public WndSadGhost( final Ghost ghost, final int type ) {
-		
 		super();
-
 		this.ghost = ghost;
-		
-		IconTitle titlebar = new IconTitle();
-		RenderedTextBlock message;
-		switch (type){
-			case 1:default:
-				titlebar.icon( new FetidRatSprite() );
-				titlebar.label( Messages.get(this, "rat_title") );
-				message = PixelScene.renderTextBlock( Messages.get(this, "rat")+"\n\n"+Messages.get(this, "give_item"), 6 );
-				break;
-			case 2:
-				titlebar.icon( new GnollTricksterSprite() );
-				titlebar.label( Messages.get(this, "gnoll_title") );
-				message = PixelScene.renderTextBlock( Messages.get(this, "gnoll")+"\n\n"+Messages.get(this, "give_item"), 6 );
-				break;
-			case 3:
-				titlebar.icon( new GreatCrabSprite());
-				titlebar.label( Messages.get(this, "crab_title") );
-				message = PixelScene.renderTextBlock( Messages.get(this, "crab")+"\n\n"+Messages.get(this, "give_item"), 6 );
-				break;
-
-		}
-
-		titlebar.setRect( 0, 0, WIDTH, 0 );
-		add( titlebar );
-
-		message.maxWidth(WIDTH);
-		message.setPos(0, titlebar.bottom() + GAP);
-		add( message );
-
-		ItemButton btnWeapon = new ItemButton(){
-			@Override
-			protected void onClick() {
-				GameScene.show(new RewardWindow(item(),0 ));
-			}
-		};
-		btnWeapon.item( Ghost.Quest.weapon );
-		btnWeapon.setRect( (WIDTH - BTN_GAP) / 2 - BTN_SIZE, message.top() + message.height() + BTN_GAP, BTN_SIZE, BTN_SIZE );
-		add( btnWeapon );
-
-		ItemButton btnArmor = new ItemButton(){
-			@Override
-			protected void onClick() {
-				GameScene.show(new RewardWindow(item(), 1));
-			}
-		};
-		btnArmor.item( Ghost.Quest.armor );
-		btnArmor.setRect( btnWeapon.right() + BTN_GAP, btnWeapon.top(), BTN_SIZE, BTN_SIZE );
-		add(btnArmor);
-
-		resize(WIDTH, (int) btnArmor.bottom() + BTN_GAP);
 	}
 
-	public WndSadGhost(JSONObject object) {
+	public WndSadGhost(int id, JSONObject object) {
 		super();
 		int type = object.getInt("type");
 		CustomItem weapon = CustomItem.createItem(object.getJSONObject("weapon"));
@@ -139,11 +87,10 @@ public class WndSadGhost extends Window {
 		message.maxWidth(WIDTH);
 		message.setPos(0, titlebar.bottom() + GAP);
 		add( message );
-
 		ItemButton btnWeapon = new ItemButton(){
 			@Override
 			protected void onClick() {
-				GameScene.show(new RewardWindow(item(), 0));
+				GameScene.show(new RewardWindow(item(), 0, id));
 			}
 		};
 		btnWeapon.item( weapon );
@@ -153,7 +100,7 @@ public class WndSadGhost extends Window {
 		ItemButton btnArmor = new ItemButton(){
 			@Override
 			protected void onClick() {
-				GameScene.show(new RewardWindow(item(), 1));
+				GameScene.show(new RewardWindow(item(), 1, id));
 			}
 		};
 		btnArmor.item( armor );
@@ -165,13 +112,14 @@ public class WndSadGhost extends Window {
 
 	//0 weapon
 	//1 armor
-	private void selectReward(int index) {
-		SendData.sendGhostQuestReward(index);
+	private void selectReward(int index, int id) {
+		SendData.sendWindowResult(id, index);
+		hide();
 	}
 
 	private class RewardWindow extends WndInfoItem {
 
-		public RewardWindow( Item item, int index ) {
+		public RewardWindow( Item item, int index, int id ) {
 			super(item);
 
 			RedButton btnConfirm = new RedButton(Messages.get(WndSadGhost.class, "confirm")){
@@ -179,7 +127,7 @@ public class WndSadGhost extends Window {
 				protected void onClick() {
 					RewardWindow.this.hide();
 
-					WndSadGhost.this.selectReward( index );
+					WndSadGhost.this.selectReward( index, id );
 				}
 			};
 			btnConfirm.setRect(0, height+2, width/2-1, 16);
