@@ -1463,10 +1463,6 @@ public class ParseThread implements Callable<String> {
             } else {
                 blob_name = "com.shatteredpixel.shatteredpixeldungeon.actor.blobs." + actorObj.getBoolean("blob_type");
             }
-            if(!blob_name.startsWith("com.shatteredpixel.shatteredpixeldungeon.actor.blobs")){
-                GLog.n("invalid blob %s", blob_name);
-                return;
-            }
             try {
                 blob_class = ClassReflection.forName(blob_name);
                 actor = (Blob) ClassReflection.newInstance(blob_class);
