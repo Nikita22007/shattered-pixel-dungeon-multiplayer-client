@@ -26,28 +26,41 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.items.TengusMask;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.IconButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
+import org.json.JSONObject;
 
 public class WndChooseSubclass extends Window {
 	
 	private static final int WIDTH		= 130;
 	private static final float GAP		= 2;
-	
+	@Deprecated
 	public WndChooseSubclass(final TengusMask tome, final Hero hero ) {
-		
+
+	}
+
+	public WndChooseSubclass(JSONObject object) {
 		super();
 
+		id = object.getInt("id");
+		JSONObject args = object.getJSONObject("args");
+		HeroSubClass[] options = new HeroSubClass[]{
+				HeroSubClass.valueOf(args.getString("option1")),
+				HeroSubClass.valueOf(args.getString("option2"))
+		};
+
 		IconTitle titlebar = new IconTitle();
-		titlebar.icon( new ItemSprite( tome.image(), null ) );
-		titlebar.label( tome.name() );
+		titlebar.icon( new ItemSprite(ItemSpriteSheet.MASK, null ) );
+		titlebar.label( Messages.get("items.tengusmask.name") );
 		titlebar.setRect( 0, 0, WIDTH, 0 );
 		add( titlebar );
 
@@ -58,7 +71,9 @@ public class WndChooseSubclass extends Window {
 
 		float pos = message.bottom() + 3*GAP;
 
-		for (HeroSubClass subCls : hero.heroClass.subClasses()){
+		for (int index = 0; index < options.length; index++){
+			HeroSubClass subCls = options[index];
+			int finalIndex = index;
 			RedButton btnCls = new RedButton( subCls.shortDesc(), 6 ) {
 				@Override
 				protected void onClick() {
@@ -72,7 +87,7 @@ public class WndChooseSubclass extends Window {
 							hide();
 							if (index == 0 && WndChooseSubclass.this.parent != null){
 								WndChooseSubclass.this.hide();
-								tome.choose( subCls );
+								SendData.sendWindowResult(WndChooseSubclass.this.id, finalIndex);
 							}
 						}
 					});
@@ -104,7 +119,7 @@ public class WndChooseSubclass extends Window {
 		};
 		btnCancel.setRect( 0, pos, WIDTH, 18 );
 		add( btnCancel );
-		
+
 		resize( WIDTH, (int)btnCancel.bottom() );
 	}
 }
