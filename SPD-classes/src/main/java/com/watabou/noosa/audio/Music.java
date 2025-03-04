@@ -26,6 +26,8 @@ import com.watabou.noosa.Game;
 import com.watabou.utils.Callback;
 import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.Random;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -293,5 +295,116 @@ public enum Music {
 	public synchronized boolean isEnabled() {
 		return enabled;
 	}
-	
+	MusicAction[] actions = new MusicAction[]{
+			new Music.PlayAction(),
+			new Music.PlayTracksAction(),
+			new Music.EndAction(),
+			new FadeOutAction()
+	};
+    public MusicAction parseAction(JSONObject actionObj) {
+		String type = actionObj.getString("music_action_type");
+		for (MusicAction action: actions) {
+			if (action.musicActionType().equals(type)) {
+				action.unpack(actionObj);
+				return action;
+			}
+		}
+		return null;
+    }
+	public static abstract class MusicAction {
+
+		//Indicates which action related to music client should parese
+		public abstract String musicActionType();
+
+		public void unpack(JSONObject object){};
+		public abstract void execute();
+	}
+	public static class PlayAction extends MusicAction {
+		String assetName;
+		boolean looping = false;
+		@Override
+		public String musicActionType() {
+			return "play";
+		}
+
+		@Override
+		public void unpack(JSONObject object) {
+			this.assetName = object.getString("asset");
+			this.looping = object.getBoolean("looping");
+		}
+
+		@Override
+		public void execute() {
+			Music.INSTANCE.play(assetName, looping);
+		}
+	}
+	public static class PlayTracksAction extends MusicAction {
+		String[] tracks;
+		float[] chances;
+		boolean shuffle;
+		@Override
+		public String musicActionType() {
+			return "play_tracks";
+		}
+		@Override
+		public void unpack(JSONObject object) {
+			JSONArray tracks = object.getJSONArray("tracks");
+			JSONArray chances = object.getJSONArray("chances");
+			this.tracks = new String[tracks.length()];
+			for (int i = 0; i < tracks.length(); i++) {
+				this.tracks[i] = tracks.getString(i);
+			}
+			this.chances = new float[chances.length()];
+			for (int i = 0; i < chances.length(); i++) {
+				this.chances[i] = (float) chances.getDouble(i);
+			}
+			this.shuffle = object.getBoolean("shuffle");
+		}
+		public void execute(){
+			Music.INSTANCE.playTracks(this.tracks, this.chances, shuffle);
+		}
+	}
+	public static class EndAction extends MusicAction{
+		@Override
+		public String musicActionType() {
+			return "end";
+		}
+
+		@Override
+		public void execute() {
+			Music.INSTANCE.end();
+		}
+	}
+	public static class FadeOutAction extends MusicAction{
+
+		MusicAction callback;
+		float duration;
+		@Override
+		public String musicActionType() {
+			return "fade_out";
+		}
+
+		@Override
+		public void unpack(JSONObject object) {
+			this.duration = (float) object.getDouble("duration");
+			if (object.has("callback")){
+				callback = Music.INSTANCE.parseAction(object.getJSONObject("callback"));
+			};
+
+		}
+
+		@Override
+		public void execute() {
+			if (callback != null) {
+				Music.INSTANCE.fadeOut(duration, new Callback() {
+					@Override
+					public void call() {
+						callback.execute();
+					}
+				});
+			} else {
+				Music.INSTANCE.fadeOut(duration, null);
+			}
+		}
+	}
 }

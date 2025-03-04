@@ -44,6 +44,7 @@ import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.Scene;
+import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.DeviceCompat;
@@ -712,6 +713,9 @@ public class ParseThread implements Callable<String> {
                         Sample.INSTANCE.play(actionObj);
                         break;
                     }
+                    case "music":
+                        Music.INSTANCE.parseAction(actionObj).execute();
+                        break;
                     case ("load_sample"): {
                         Sample.INSTANCE.load(actionObj.getJSONArray("samples"));
                         break;
