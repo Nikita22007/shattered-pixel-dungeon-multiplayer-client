@@ -474,6 +474,9 @@ public class ParseThread implements Callable<String> {
                 case "choose_subclass":
                     GameScene.show(new WndChooseSubclass(windowObj));
                     break;
+                case "wandmaker":
+                    GameScene.show(new WndWandmaker(windowObj));
+                    break;
                 default: {
                     Log.e("parse_window", String.format("incorrect window type: %s", type));
                 }
