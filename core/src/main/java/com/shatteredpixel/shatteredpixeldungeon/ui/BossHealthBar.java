@@ -23,15 +23,21 @@ package com.shatteredpixel.shatteredpixeldungeon.ui;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.CustomMob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BloodParticle;
+import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndInfoMob;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.ui.Component;
+import org.json.JSONObject;
 
 public class BossHealthBar extends Component {
 
@@ -60,6 +66,22 @@ public class BossHealthBar extends Component {
 		visible = active = (boss != null);
 		instance = this;
 	}
+
+	public static void parseAction(JSONObject actionObj) {
+		if (actionObj.has("id")) {
+			int id  = actionObj.getInt("id");
+			Actor actor = Actor.findById(id);
+			if (actor instanceof Mob) {
+				BossHealthBar.assignBoss((Mob) actor);
+			} else {
+				GLog.n("Invalid boss bar assign action ID: " + actionObj.getInt("id"));
+			}
+		}
+		if (actionObj.has("bleeding")) {
+			bleed(actionObj.getBoolean("bleeding"));
+		}
+	}
+
 
 	@Override
 	public synchronized void destroy() {
@@ -211,7 +233,7 @@ public class BossHealthBar extends Component {
 	}
 	
 	public static boolean isAssigned(){
-		return boss != null && boss.isAlive() && Dungeon.level.mobs.contains(boss);
+		return boss != null && boss.isAlive();
 	}
 
 	public static void bleed(boolean value){

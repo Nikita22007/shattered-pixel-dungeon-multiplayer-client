@@ -36,6 +36,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.TitleScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.*;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Banner;
+import com.shatteredpixel.shatteredpixeldungeon.ui.BossHealthBar;
 import com.shatteredpixel.shatteredpixeldungeon.ui.GameLog;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.utils.Log;
@@ -803,6 +804,10 @@ public class ParseThread implements Callable<String> {
                         Surprise.hit(pos, angle);
                         break;
                     }
+                    case "boss_health_bar":{
+                        BossHealthBar.parseAction(actionObj);
+                        break;
+                    }
                     case ("game_scene_flash"):
                         GameScene.flash(actionObj.getInt("color"), actionObj.getBoolean("light"));
                         break;
@@ -811,6 +816,7 @@ public class ParseThread implements Callable<String> {
                 }
             } catch (JSONException e) {
                 GLog.n("Incorrect action ( " + type + "). Ignored");
+                e.printStackTrace();
             }
         }
     }
