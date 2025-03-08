@@ -40,9 +40,9 @@ import com.watabou.utils.RectF;
 
 import org.json.JSONObject;
 
-public class HeroSprite extends CharSprite {
+public class HeroSprite extends CharSprite implements ClassSprite, TieredSprite{
 	public int tier = Dungeon.hero != null ? Dungeon.hero.tier : 1;
-
+	HeroClass heroClass;
 	private static final int FRAME_WIDTH	= 12;
 	private static final int FRAME_HEIGHT	= 15;
 	
@@ -55,7 +55,7 @@ public class HeroSprite extends CharSprite {
 
 	public HeroSprite() {
 		super();
-		HeroClass heroClass = Dungeon.hero != null ?Dungeon.hero.heroClass : GamesInProgress.selectedClass;
+		heroClass = Dungeon.hero != null ?Dungeon.hero.heroClass : GamesInProgress.selectedClass;
 		texture( heroClass.spritesheet() );
 		updateArmor();
 		if (Dungeon.hero != null) {
@@ -70,6 +70,7 @@ public class HeroSprite extends CharSprite {
 
 	public void disguise(HeroClass cls){
 		texture( cls.spritesheet() );
+		heroClass(cls);
 		updateArmor();
 	}
 	
@@ -106,6 +107,22 @@ public class HeroSprite extends CharSprite {
 				die();
 		}
 	}
+
+	@Override
+	public int tier() {
+		return tier;
+	}
+
+	@Override
+	public void tier(int tier) {
+		this.tier = tier;
+	}
+
+	@Override
+	public void updateTier() {
+		updateArmor();
+	}
+
 	public void updateTier(int tier) {
 		if (this.tier != tier) {
 			this.tier = tier;
@@ -221,5 +238,20 @@ public class HeroSprite extends CharSprite {
 		avatar.frame( frame );
 		
 		return avatar;
+	}
+
+	@Override
+	public HeroClass heroClass() {
+		return heroClass;
+	}
+
+	@Override
+	public void heroClass(HeroClass heroClass) {
+		this.heroClass = heroClass;
+	}
+
+	@Override
+	public void updateHeroClass() {
+		updateArmor();
 	}
 }

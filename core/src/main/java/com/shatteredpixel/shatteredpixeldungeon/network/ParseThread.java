@@ -1335,21 +1335,15 @@ public class ParseThread implements Callable<String> {
             if ((old_sprite == null) || (!old_sprite.getClass().equals(new_sprite_class))) {
                 CharSprite sprite = spriteFromClass(new_sprite_class);
                 //Do we merge HeroSprite and CustomHeroSprite??
-                if (sprite instanceof HeroCustomSprite){
-                    int tier = actorObj.getInt("tier");
-                    //We don't wand to crash
-                    String defaultHeroClassName = HeroClass.ROGUE.name();
-                    if (Dungeon.hero != null) {
-                        defaultHeroClassName = Dungeon.hero.heroClass.name();
-                    }
-                    HeroClass heroClass = HeroClass.valueOf(actorObj.optString("class", defaultHeroClassName));
-                    ((HeroCustomSprite) sprite).updateHeroClass(heroClass);
-                    ((HeroCustomSprite) sprite).updateTier(tier);
+
+                if (sprite instanceof TieredSprite && actorObj.has("tier")) {
+                    ((TieredSprite) sprite).updateTier(actorObj.getInt("tier"));
                 }
-                if (sprite instanceof HeroSprite) {
-                    int tier = actorObj.getInt("tier");
-                    ((HeroSprite) sprite).updateTier(tier);
-                } else {
+                if (sprite instanceof ClassSprite && actorObj.has("class")) {
+                    HeroClass heroClass = HeroClass.valueOf(actorObj.getString("class"));
+                    ((ClassSprite) sprite).updateHeroClass(heroClass);
+                }
+                if(!(sprite instanceof HeroSprite)) {
                     GameScene.updateCharSprite(chr, sprite);
                 }
             }

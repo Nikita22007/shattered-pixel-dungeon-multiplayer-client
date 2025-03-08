@@ -30,7 +30,7 @@ import com.watabou.noosa.TextureFilm;
 import com.watabou.utils.Callback;
 import com.watabou.utils.RectF;
 
-public class HeroCustomSprite extends CharSprite {
+public class HeroCustomSprite extends CharSprite implements TieredSprite, ClassSprite{
     private int tier = 1;
     private HeroClass heroClass = HeroClass.ROGUE;
     private static final int FRAME_WIDTH	= 12;
@@ -153,5 +153,35 @@ public class HeroCustomSprite extends CharSprite {
         } else {
             die();
         }
+    }
+
+    @Override
+    public int tier() {
+        return tier;
+    }
+
+    @Override
+    public void tier(int tier) {
+        this.tier = tier;
+    }
+
+    @Override
+    public void updateTier() {
+        updateArmor();
+    }
+
+    @Override
+    public HeroClass heroClass() {
+        return heroClass;
+    }
+
+    @Override
+    public void heroClass(HeroClass heroClass) {
+        this.heroClass = heroClass;
+    }
+
+    @Override
+    public void updateHeroClass() {
+        updateArmor();
     }
 }

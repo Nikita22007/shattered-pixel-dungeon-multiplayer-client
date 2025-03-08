@@ -28,8 +28,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.MirrorImage;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.utils.PointF;
 
-public class MirrorSprite extends MobSprite {
-	
+public class MirrorSprite extends MobSprite implements ClassSprite, TieredSprite {
+	HeroClass heroClass;
+	int tier;
 	private static final int FRAME_WIDTH	= 12;
 	private static final int FRAME_HEIGHT	= 15;
 	
@@ -53,7 +54,7 @@ public class MirrorSprite extends MobSprite {
 	}
 
 	public void updateArmor(){
-		updateArmor( ((MirrorImage)ch).armTier );
+		updateArmor(tier);
 	}
 	
 	public void updateArmor( int tier ) {
@@ -72,5 +73,35 @@ public class MirrorSprite extends MobSprite {
 		attack.frames( film, 13, 14, 15, 0 );
 		
 		idle();
+	}
+
+	@Override
+	public HeroClass heroClass() {
+		return heroClass;
+	}
+
+	@Override
+	public void heroClass(HeroClass heroClass) {
+		this.heroClass = heroClass;
+	}
+
+	@Override
+	public void updateHeroClass() {
+		texture(heroClass.spritesheet());
+	}
+
+	@Override
+	public int tier() {
+		return tier;
+	}
+
+	@Override
+	public void tier(int tier) {
+		this.tier = tier;
+	}
+
+	@Override
+	public void updateTier() {
+		updateArmor(tier);
 	}
 }

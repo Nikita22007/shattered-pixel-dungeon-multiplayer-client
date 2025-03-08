@@ -25,8 +25,8 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.utils.GameMath;
 
-public class StatueSprite extends MobSprite {
-	
+public class StatueSprite extends MobSprite implements TieredSprite {
+	int tier;
 	public StatueSprite() {
 		super();
 		
@@ -68,5 +68,20 @@ public class StatueSprite extends MobSprite {
 	@Override
 	public int blood() {
 		return 0xFFcdcdb7;
+	}
+
+	@Override
+	public int tier() {
+		return tier;
+	}
+
+	@Override
+	public void tier(int tier) {
+		this.tier = tier;
+	}
+
+	@Override
+	public void updateTier() {
+		setArmor(tier);
 	}
 }
