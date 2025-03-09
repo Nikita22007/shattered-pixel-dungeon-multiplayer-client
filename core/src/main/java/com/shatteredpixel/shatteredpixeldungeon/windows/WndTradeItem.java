@@ -27,17 +27,16 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
-import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
-import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
-import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.*;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.MasterThievesArmband;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
+import org.json.JSONObject;
 
 public class WndTradeItem extends WndInfoItem {
 
@@ -202,8 +201,131 @@ public class WndTradeItem extends WndInfoItem {
 
 		resize(width, (int) pos);
 	}
-	
-	@Override
+
+    public WndTradeItem(JSONObject windowObj) {
+		//would love java 23 statements before super
+		super(CustomItem.createItem(windowObj.getJSONObject("args").getJSONObject("item")));
+		id = windowObj.getInt("id");
+		JSONObject args = windowObj.getJSONObject("args");
+		this.selling = args.getBoolean("selling");
+		if (selling) {
+			createSelling(args);
+		} else {
+			createBuying(args);
+		}
+	}
+	public void createSelling(JSONObject args) {
+		int value = args.getInt("price");
+		Item item = CustomItem.createItem(args.getJSONObject("item"));
+		float pos = height;
+		if (item.quantity() == 1) {
+
+			RedButton btnSell = new RedButton( Messages.get(this, "sell", value) ) {
+				@Override
+				protected void onClick() {
+					SendData.sendWindowResult(id, 1);
+					hide();
+				}
+			};
+			btnSell.setRect( 0, pos + GAP, width, BTN_HEIGHT );
+			btnSell.icon(new ItemSprite(ItemSpriteSheet.GOLD));
+			add( btnSell );
+
+			pos = btnSell.bottom();
+
+		} else {
+
+			int priceAll= value;
+			RedButton btnSell1 = new RedButton( Messages.get(this, "sell_1", priceAll / item.quantity()) ) {
+				@Override
+				protected void onClick() {
+					SendData.sendWindowResult(id, 0);
+
+					hide();
+				}
+			};
+			btnSell1.setRect( 0, pos + GAP, width, BTN_HEIGHT );
+			btnSell1.icon(new ItemSprite(ItemSpriteSheet.GOLD));
+			add( btnSell1 );
+			RedButton btnSellAll = new RedButton( Messages.get(this, "sell_all", priceAll ) ) {
+				@Override
+				protected void onClick() {
+					SendData.sendWindowResult(id, 1);
+					hide();
+				}
+			};
+			btnSellAll.setRect( 0, btnSell1.bottom() + 1, width, BTN_HEIGHT );
+			btnSellAll.icon(new ItemSprite(ItemSpriteSheet.GOLD));
+			add( btnSellAll );
+
+			pos = btnSellAll.bottom();
+
+		}
+
+		resize( width, (int)pos );
+
+	}
+	public void createBuying(JSONObject args) {
+		CustomItem item = CustomItem.createItem(args.getJSONObject("item"));
+
+		int price = args.getInt("price");
+		boolean steal = args.optBoolean("steal");
+
+
+
+		float pos = height;
+
+
+		RedButton btnBuy = new RedButton( Messages.get(this, "buy", price) ) {
+			@Override
+			protected void onClick() {
+				hide();
+				SendData.sendWindowResult(id, 0);
+			}
+		};
+		btnBuy.setRect( 0, pos + GAP, width, BTN_HEIGHT );
+		btnBuy.icon(new ItemSprite(ItemSpriteSheet.GOLD));
+		btnBuy.enable( price <= Dungeon.hero.gold );
+		add( btnBuy );
+
+		pos = btnBuy.bottom();
+		if (steal) {
+			final int chargesToUse = args.getInt("charges");
+			int chance = args.getInt("chance");
+			RedButton btnSteal = new RedButton(Messages.get(this, "steal", chance, chargesToUse), 6) {
+				@Override
+				protected void onClick() {
+					if (chance >= 1) {
+						SendData.sendWindowResult(id, 1);
+						hide();
+					} else {
+						GameScene.show(new WndOptions(new ItemSprite(ItemSpriteSheet.ARTIFACT_ARMBAND),
+								Messages.titleCase(Messages.get(MasterThievesArmband.class, "name")),
+								Messages.get(WndTradeItem.class, "steal_warn"),
+								Messages.get(WndTradeItem.class, "steal_warn_yes"),
+								Messages.get(WndTradeItem.class, "steal_warn_no")) {
+							@Override
+							protected void onSelect(int index) {
+								super.onSelect(index);
+								if (index == 0) {
+									SendData.sendWindowResult(id, 1);
+								}
+							}
+						});
+					}
+				}
+			};
+
+			btnSteal.setRect(0, pos + 1, width, BTN_HEIGHT);
+			btnSteal.icon(new ItemSprite(ItemSpriteSheet.ARTIFACT_ARMBAND));
+			add(btnSteal);
+
+			pos = btnSteal.bottom();
+		}
+		resize(width, (int) pos);
+	}
+
+    @Override
 	public void hide() {
 		
 		super.hide();
@@ -211,7 +333,6 @@ public class WndTradeItem extends WndInfoItem {
 		if (owner != null) {
 			owner.hide();
 		}
-		if (selling) Shopkeeper.sell();
 	}
 
 	public static void sell( Item item ) {
