@@ -30,6 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.traps.CustomTrap;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.plants.CustomPlant;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.AlchemyScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.TitleScene;
@@ -457,7 +458,11 @@ public class ParseThread implements Callable<String> {
                     boolean has_listener = args.getBoolean("has_listener");
                     JSONArray allowed_items = args.optJSONArray("allowed_items");
                     JSONArray last_bag_path = args.optJSONArray("last_bag_path"); // todo
-                    GameScene.show(new WndBag(id, hero.belongings.backpack, has_listener, allowed_items, title));
+                    if (Game.scene() instanceof GameScene) {
+                        GameScene.show(new WndBag(id, hero.belongings.backpack, has_listener, allowed_items, title));
+                    } else {
+                        Game.scene().addToFront(new WndBag(id, hero.belongings.backpack, has_listener, allowed_items, title));
+                    }
                     break;
                 }
                 case "info_cell":
@@ -478,8 +483,26 @@ public class ParseThread implements Callable<String> {
                 case "wandmaker":
                     GameScene.show(new WndWandmaker(windowObj));
                     break;
-                case "trade_item" :
+                case "trade_item":
                     GameScene.show(new WndTradeItem(windowObj));
+                    break;
+                case "alchemy":
+                    if (!(Game.scene() instanceof AlchemyScene)) {
+                        Game.switchScene(AlchemyScene.class, new Game.SceneChangeCallback() {
+                            @Override
+                            public void beforeCreate() {
+
+                            }
+
+                            @Override
+                            public void afterCreate() {
+                                ((AlchemyScene)Game.scene()).parseJson(windowObj);
+                            }
+                            });
+                        } else {
+                        ((AlchemyScene)Game.scene()).parseJson(windowObj);
+                    }
+
                     break;
                 default: {
                     Log.e("parse_window", String.format("incorrect window type: %s", type));
@@ -1408,7 +1431,11 @@ public class ParseThread implements Callable<String> {
                     break;
                 }
                 case "description": {
-                    ((Mob) chr).setDesc(actorObj.getString(token));
+                    if (chr instanceof Mob) {
+                        ((Mob) chr).setDesc(actorObj.getString(token));
+                    } else {
+                        Gdx.app.error("parseActorChar", actorObj.toString(4));
+                    }
                     break;
                 }
                 case "states": {
@@ -1592,10 +1619,12 @@ public class ParseThread implements Callable<String> {
                     break;
                 }
                 case "ready": {
-                    if (heroObj.getBoolean(token)) {
-                        hero.ready();
-                    } else {
-                        hero.busy();
+                    if(Game.scene() instanceof GameScene) {
+                        if (heroObj.getBoolean(token)) {
+                            hero.ready();
+                        } else {
+                            hero.busy();
+                        }
                     }
                     break;
                 }

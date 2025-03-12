@@ -811,7 +811,6 @@ public class Hero extends Char {
 				return false;
 			}
 
-			AlchemyScene.clearToolkit();
 			ShatteredPixelDungeon.switchScene(AlchemyScene.class);
 			return false;
 

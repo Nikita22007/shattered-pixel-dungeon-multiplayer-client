@@ -193,7 +193,6 @@ public class SpiritForm extends ClericSpell {
 	public static void applyActiveArtifactEffect(ClassArmor armor, Artifact effect){
 		if (effect instanceof AlchemistsToolkit){
 			Talent.onArtifactUsed(Dungeon.hero);
-			AlchemyScene.assignToolkit((AlchemistsToolkit) effect);
 			Game.switchScene(AlchemyScene.class);
 
 		} else if (effect instanceof DriedRose){

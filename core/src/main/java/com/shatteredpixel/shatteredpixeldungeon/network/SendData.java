@@ -38,10 +38,13 @@ public class SendData {
         flush();
     }
     public static void sendWindowResult(int id, int result) {
+       sendWindowResult(id, result, null);
+    }
+    public static void sendWindowResult(int id, int result, JSONObject args) {
         if (-1 == id) {
             return; //internal window
         }
-        packet.packAndAddWindowsResult(id, result, null);
+        packet.packAndAddWindowsResult(id, result, args);
         flush();
     }
 
