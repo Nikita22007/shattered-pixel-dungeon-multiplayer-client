@@ -541,6 +541,10 @@ public class AlchemyScene extends PixelScene {
 	@Override
 	public void update() {
 		super.update();
+		ParseThread activeThread = ParseThread.getActiveThread();
+		if (activeThread != null) {
+			activeThread.parseIfHasData();
+		}
 		water.offset( 0, -5 * Game.elapsed );
 	}
 	
@@ -792,6 +796,7 @@ public class AlchemyScene extends PixelScene {
 
 	@Override
 	public void destroy() {
+		inputBtnCounter = 0;
 	}
 	
 	public void clearSlots(){
