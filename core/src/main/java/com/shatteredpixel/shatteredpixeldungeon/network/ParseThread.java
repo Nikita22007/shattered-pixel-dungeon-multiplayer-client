@@ -294,7 +294,10 @@ public class ParseThread implements Callable<String> {
                 }
                 case "char_shield": {
                     JSONObject shieldObject = data.getJSONObject(token);
-                    ((Char)Actor.findById(shieldObject.getInt("id"))).shielding = shieldObject.getInt("shielding");
+                    Char ch = ((Char)Actor.findById(shieldObject.getInt("id")));
+                    if (ch != null) {
+                        ch.shielding = shieldObject.getInt("shielding");
+                    }
                     break;
                 }
                 case "buffs": {
