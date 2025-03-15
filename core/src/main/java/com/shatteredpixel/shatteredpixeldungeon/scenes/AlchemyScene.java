@@ -1179,6 +1179,9 @@ public class AlchemyScene extends PixelScene {
 			outputs[i].item(item);
 			combines[i].enable(enabled, cost);
 		}
+		for (int i = output.length(); i < outputs.length; i++) {
+			outputs[i].item(null);
+		}
 		//combines
 		//scene bottom part
 		energyAddBlinking = args.getBoolean("energyAddBlinking");
