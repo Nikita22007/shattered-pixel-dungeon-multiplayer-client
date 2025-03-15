@@ -1155,15 +1155,12 @@ public class AlchemyScene extends PixelScene {
 		updateEnergyText();
 		//input
 		JSONArray input = args.getJSONArray("input");
-		boolean[] hasItems = new boolean[]{false, false, false};
 		for (int i = 0; i < input.length(); i++) {
 			inputs[i].fromJson(input.getJSONObject(i));
-			hasItems[i] = true;
+			inputs[i].update();
 		}
-		for (int i = 0; i < 3; i++) {
-			if(!hasItems[i]) {
-				inputs[i] = new InputButton();
-			}
+		for (int i = input.length(); i < inputs.length; i++) {
+				inputs[i].item(null);
 		}
 		JSONArray output = args.getJSONArray("output");
 		boolean[] hasOutput = new boolean[]{false, false, false};
