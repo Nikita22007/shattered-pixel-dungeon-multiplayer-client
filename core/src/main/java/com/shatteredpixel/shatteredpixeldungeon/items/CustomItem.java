@@ -51,7 +51,7 @@ public class CustomItem extends Item {
         cursedKnown = true; // todo check it
         update(obj);
     }
-
+    int energyVal;
     public void update(JSONObject obj) {
         Iterator<String> it = obj.keys();
         while (it.hasNext()) {
@@ -119,8 +119,16 @@ public class CustomItem extends Item {
                 case "sprite_sheet":
                     this.spriteSheet = obj.getString(token);
                     break;
+                case "energy_value": {
+                    this.energyVal = obj.getInt(token);
+                }
             }
         }
+    }
+
+    @Override
+    public int energyVal() {
+        return energyVal;
     }
 
     private void parseActions(JSONArray actionsArr) {

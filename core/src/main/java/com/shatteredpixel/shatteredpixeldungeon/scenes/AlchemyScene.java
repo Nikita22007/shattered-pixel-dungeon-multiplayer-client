@@ -328,9 +328,7 @@ public class AlchemyScene extends PixelScene {
 		cancel = new IconButton(Icons.CLOSE.get()){
 			@Override
 			protected void onClick() {
-				super.onClick();
-				clearSlots();
-				updateState();
+				sendResult(1, false);
 			}
 
 			@Override
@@ -451,15 +449,11 @@ public class AlchemyScene extends PixelScene {
 					}
 					time = 0;
 				}
-				ParseThread activeThread = ParseThread.getActiveThread();
-				if (activeThread != null) {
-					activeThread.parseIfHasData();
-				}
-
 			}
 
 			@Override
 			protected void onClick() {
+				WndEnergizeItem.counter = windowID;
 				WndEnergizeItem.openItemSelector();
 			}
 
@@ -596,37 +590,50 @@ public class AlchemyScene extends PixelScene {
 		return filtered;
 	}
 	private void updateState(){
+		repeat.enable(false);
 
-		if (outputs[0].active){
+		ArrayList<Item> ingredients = filterInput(Item.class);
+		int recipesSize = 0;
+		for (int i = 0; i < outputs.length; i++) {
+			if(outputs[i].item() != null){
+				recipesSize++;
+			}
+		}
+		//disables / hides unneeded buttons
+		for (int i = recipesSize; i < combines.length; i++){
+			combines[i].enable(false);
+			outputs[i].item(null);
+
+			if (i != 0){
+				combines[i].visible = false;
+				outputs[i].visible = false;
+			}
+		}
+
+		cancel.enable(!ingredients.isEmpty());
+
+		if (recipesSize == 0){
 			combines[0].setPos(combines[0].left(), inputs[1].top()+5);
 			outputs[0].setPos(outputs[0].left(), inputs[1].top());
 			energyAddBlinking = false;
 			return;
 		}
-		int size = 0;
-		for (int i = 0; i < 3; i++) {
-			OutputSlot slot = outputs[i];
-			if (slot != null && slot.active){
-				size++;
-			}
-		}
+
 		//positions active buttons
-		float gap = size == 2 ? 6 : 2;
+		float gap = recipesSize == 2 ? 6 : 2;
 
 		float height = inputs[2].bottom() - inputs[0].top();
-		height -= size*BTN_SIZE + (size-1)*gap;
+		height -= recipesSize*BTN_SIZE + (recipesSize-1)*gap;
 		float top = inputs[0].top() + height/2;
 
 		//positions and enables active buttons
 		boolean promptToAddEnergy = false;
-		for (int i = 0; i < size; i++){
+		for (int i = 0; i < recipesSize; i++){
 
 
-			int cost = combines[i].cost;
+
 			outputs[i].visible = true;
 			outputs[i].setRect(outputs[0].left(), top, BTN_SIZE, BTN_SIZE);
-			//already set
-			//outputs[i].item(recipe.sampleOutput(ingredients));
 			top += BTN_SIZE+gap;
 
 			int availableEnergy = Dungeon.energy;
@@ -636,8 +643,9 @@ public class AlchemyScene extends PixelScene {
 
 			combines[i].visible = true;
 			combines[i].setRect(combines[0].left(), outputs[i].top()+5, 30, 20);
-			combines[i].enable(cost <= availableEnergy, cost);
-			//todo: check this
+			//TODO: check this
+//			combines[i].enable(cost <= availableEnergy, cost);
+//
 //			if (cost > availableEnergy && recipe instanceof TrinketCatalyst.Recipe){
 //				promptToAddEnergy = true;
 //			}
@@ -1013,7 +1021,6 @@ public class AlchemyScene extends PixelScene {
 	}
 
 	private class CombineButton extends Component {
-
 		protected int slot;
 
 		protected RedButton button;
@@ -1034,7 +1041,7 @@ public class AlchemyScene extends PixelScene {
 				@Override
 				protected void onClick() {
 					super.onClick();
-					combine(slot);
+					sendResult(slot + 200, false);
 				}
 
 				@Override
@@ -1102,6 +1109,7 @@ public class AlchemyScene extends PixelScene {
 
 		protected NinePatch bg;
 		protected ItemSlot slot;
+		Item item;
 
 		@Override
 		protected void createChildren() {
@@ -1134,7 +1142,11 @@ public class AlchemyScene extends PixelScene {
 		}
 
 		public void item( Item item ) {
+			this.item = item;
 			slot.item(item);
+		}
+		public Item item(){
+			return item;
 		}
 	}
 
@@ -1168,11 +1180,9 @@ public class AlchemyScene extends PixelScene {
 				inputs[i].item(null);
 		}
 		JSONArray output = args.getJSONArray("output");
-		boolean[] hasOutput = new boolean[]{false, false, false};
 		JSONObject outputObject;
 		for (int i = 0; i < output.length(); i++) {
 			outputObject = output.getJSONObject(i);
-			hasOutput[i] = true;
 			int cost = outputObject.getInt("cost");
 			boolean enabled = outputObject.getBoolean("enabled");
 			Item item = CustomItem.createItem(outputObject.getJSONObject("item"));
@@ -1182,11 +1192,18 @@ public class AlchemyScene extends PixelScene {
 		for (int i = output.length(); i < outputs.length; i++) {
 			outputs[i].item(null);
 		}
-		//combines
 		//scene bottom part
 		energyAddBlinking = args.getBoolean("energyAddBlinking");
 		repeat.enable(args.getBoolean("repeat_enabled"));
+		if (args.has("createEnergy")){
+			createEnergy();
+		}
+		if (args.has("craftedItem")) {
+			bubbleEmitter.start(Speck.factory( Speck.BUBBLE ), 0.01f, 100 );
+			smokeEmitter.burst(Speck.factory( Speck.WOOL ), 10 );
+		}
 
+		updateState();
 	}
 	public void sendResult(int result, boolean longClick) {
 		JSONObject object = new JSONObject();

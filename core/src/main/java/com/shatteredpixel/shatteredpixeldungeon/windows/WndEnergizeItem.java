@@ -28,12 +28,14 @@ import com.shatteredpixel.shatteredpixeldungeon.items.EnergyCrystal;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.AlchemyScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import org.json.JSONObject;
 
 public class WndEnergizeItem extends WndInfoItem {
 
@@ -41,12 +43,14 @@ public class WndEnergizeItem extends WndInfoItem {
 	private static final int BTN_HEIGHT	= 18;
 
 	private WndBag owner;
+	public static int counter;
 
 	public WndEnergizeItem(Item item, WndBag owner) {
 		super(item);
 
 		this.owner = owner;
-
+		JSONObject result = new JSONObject();
+		result.put("path", Dungeon.hero.belongings.pathOfItem(item));
 		float pos = height;
 
 		if (item.quantity() == 1) {
@@ -54,7 +58,8 @@ public class WndEnergizeItem extends WndInfoItem {
 			RedButton btnEnergize = new RedButton( Messages.get(this, "energize", item.energyVal()) ) {
 				@Override
 				protected void onClick() {
-					energizeAll( item );
+					result.put("all", true);
+					sendResult(result);
 					hide();
 				}
 			};
@@ -70,7 +75,8 @@ public class WndEnergizeItem extends WndInfoItem {
 			RedButton btnEnergize1 = new RedButton( Messages.get(this, "energize_1", energyAll / item.quantity()) ) {
 				@Override
 				protected void onClick() {
-					energizeOne( item );
+					result.put("all", false);
+					sendResult(result);
 					hide();
 				}
 			};
@@ -80,7 +86,8 @@ public class WndEnergizeItem extends WndInfoItem {
 			RedButton btnEnergizeAll = new RedButton( Messages.get(this, "energize_all", energyAll ) ) {
 				@Override
 				protected void onClick() {
-					energizeAll( item );
+					result.put("all", true);
+					sendResult(result);
 					hide();
 				}
 			};
@@ -103,7 +110,6 @@ public class WndEnergizeItem extends WndInfoItem {
 
 		if (owner != null) {
 			owner.hide();
-			openItemSelector();
 		}
 	}
 
@@ -180,5 +186,8 @@ public class WndEnergizeItem extends WndInfoItem {
 			}
 		}
 	};
+	public void sendResult(JSONObject object) {
+		SendData.sendWindowResult(counter,3, object);
+	}
 
 }
