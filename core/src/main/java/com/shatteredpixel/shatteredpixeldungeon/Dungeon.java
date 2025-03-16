@@ -590,16 +590,7 @@ public class Dungeon {
 	}
 	
 	public static void saveAll() throws IOException {
-		if (hero != null && (hero.isAlive() || WndResurrect.instance != null)) {
-			
-			Actor.fixTime();
-			updateLevelExplored();
-			saveGame( GamesInProgress.curSlot );
-			saveLevel( GamesInProgress.curSlot );
 
-			GamesInProgress.set( GamesInProgress.curSlot );
-
-		}
 	}
 	
 	public static void loadGame( int save ) throws IOException {
