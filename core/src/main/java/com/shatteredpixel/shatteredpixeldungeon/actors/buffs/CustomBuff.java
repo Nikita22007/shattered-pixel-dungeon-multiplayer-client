@@ -21,18 +21,18 @@ public class CustomBuff extends Buff {
         //TODO: check this
         // Where is buff ID?
         buff_id = obj.getInt("id");
-        if (obj.has("hardlight")){
-            JSONObject hardlight = obj.getJSONObject("hardlight");
-            rm = (float) hardlight.getDouble("rm");
-            gm = (float) hardlight.getDouble("gm");
-            bm = (float) hardlight.getDouble("bm");
-        }
         update(obj);
     }
 
     public void update(JSONObject obj) throws JSONException {
         setIcon(obj.optInt("icon", icon));
         setDesc(obj.optString("desc", desc));
+        if (obj.has("hardlight")){
+            JSONObject hardlight = obj.getJSONObject("hardlight");
+            rm = (float) hardlight.getDouble("rm");
+            gm = (float) hardlight.getDouble("gm");
+            bm = (float) hardlight.getDouble("bm");
+        }
     }
 
     public int icon() {
@@ -49,9 +49,7 @@ public class CustomBuff extends Buff {
 
     @Override
     public void tintIcon(Image icon) {
-        if (rm != 0 && gm != 0 && bm != 0) {
-            icon.hardlight(rm, gm , bm);
-        }
+        icon.hardlight(rm, gm , bm);
     }
 
     public void setDesc(String desc) {
