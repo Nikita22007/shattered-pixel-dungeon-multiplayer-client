@@ -268,7 +268,7 @@ public class WndClericSpells extends Window {
 			if (!info) {
 				hide();
 			}
-			SendData.sendWndClericSpellsResult(WndClericSpells.this.id, info, spellID);
+			SendData.sendWindowResult(WndClericSpells.this.id, spellID, new JSONObject().put("info", info));
 		}
 		@Override
 		protected String hoverText() {

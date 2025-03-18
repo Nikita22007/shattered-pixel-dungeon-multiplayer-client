@@ -30,13 +30,6 @@ public class SendData {
         packet.packAndAddUsedAction(item, action, hero);
         flush();
     }
-    public static void sendWndClericSpellsResult(int id, boolean info, int spellID){
-        if (id == -1){
-            return;
-        }
-        packet.packAndAddWndClericSpellsResult(info, spellID);
-        flush();
-    }
     public static void sendWindowResult(int id, int result) {
        sendWindowResult(id, result, null);
     }
