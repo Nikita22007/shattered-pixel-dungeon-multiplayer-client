@@ -1359,14 +1359,16 @@ public class Hero extends Char {
 				//if a single cell within the blob is visible, we add the landmark
 				for (int i=b.area.top; i < b.area.bottom; i++) {
 					for (int j = b.area.left; j < b.area.right; j++) {
-						cell = j + i* Dungeon.level.width();
-						if (fieldOfView[cell] && b.cur[cell] > 0) {
-							Notes.add( b.landmark() );
-							found = true;
-							break;
+						cell = j + i * Dungeon.level.width();
+						if (fieldOfView.length > cell) {
+							if (fieldOfView[cell] && b.cur[cell] > 0) {
+								Notes.add(b.landmark());
+								found = true;
+								break;
+							}
 						}
+						if (found) break;
 					}
-					if (found) break;
 				}
 
 				//Clear blobs that only exist for landmarks.
