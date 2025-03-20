@@ -28,6 +28,9 @@ import com.watabou.noosa.Visual;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
 public class Emitter extends Group {
 
 	protected boolean lightMode = false;

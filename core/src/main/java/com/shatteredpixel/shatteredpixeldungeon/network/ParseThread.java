@@ -60,6 +60,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Constructor;
 import java.net.Socket;
 import java.util.*;
 import java.util.concurrent.Callable;
@@ -70,7 +71,6 @@ import static com.nikita22007.pixeldungeonmultiplayer.JavaUtils.hasNotNull;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.level;
 import static com.shatteredpixel.shatteredpixeldungeon.network.Client.disconnect;
-import static com.shatteredpixel.shatteredpixeldungeon.network.Client.sendHeroClass;
 import static com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite.spriteClassFromName;
 import static com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite.spriteFromClass;
 import static java.lang.Thread.sleep;
@@ -1124,6 +1124,21 @@ public class ParseThread implements Callable<String> {
     }
 
     protected Emitter.Factory emitterFactoryFromJSONObject(JSONObject factoryObj) throws JSONException {
+        if (!isConnectedToOldServer() && factoryObj.has("path") || factoryObj.has("type")) {
+            if (factoryObj.has("type")) {
+                return Speck.factory(factoryObj.getInt("type"), factoryObj.getBoolean("lightMode"));
+            }
+            Emitter.Factory factory = null;
+            try {
+                 factory = (Emitter.Factory) Class.forName(factoryObj.getString("path")).getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            //factory = Emitter.Factory.fromPath(factoryObj.getString("path"));
+            if (factory != null) {
+                return factory;
+            }
+        }
         boolean lightMode = factoryObj.optBoolean("light_mode", false);
         switch (factoryObj.getString("factory_type").toLowerCase(Locale.ENGLISH)) {
             case "blast":
