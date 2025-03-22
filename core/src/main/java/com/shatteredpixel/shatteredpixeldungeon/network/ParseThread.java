@@ -1130,7 +1130,9 @@ public class ParseThread implements Callable<String> {
             }
             Emitter.Factory factory = null;
             try {
-                 factory = (Emitter.Factory) Class.forName(factoryObj.getString("path")).getDeclaredConstructor().newInstance();
+                 Constructor contructor = Class.forName(factoryObj.getString("path")).getDeclaredConstructor();
+                 contructor.setAccessible(true);
+                factory = (Emitter.Factory) contructor.newInstance();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
