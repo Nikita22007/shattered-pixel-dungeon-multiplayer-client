@@ -28,6 +28,7 @@ import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -133,11 +134,17 @@ public class Splash {
 			p.acc.set( 0, +100 );
 		}
 		SplashFactory(){};
+		public SplashFactory(JSONObject object){
+			this.color = object.getInt("color");
+			this.dir = (float) object.getDouble("dir");
+			this.cone = (float) object.getDouble("cone");
+		};
 
 		public SplashFactory(int color, float dir, float cone) {
 			this.color = color;
 			this.dir = dir;
 			this.cone = cone;
 		}
+
 	}
 }

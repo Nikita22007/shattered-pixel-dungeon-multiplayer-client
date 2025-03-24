@@ -31,6 +31,7 @@ import com.watabou.utils.ColorMath;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 import com.watabou.utils.SparseArray;
+import org.json.JSONObject;
 
 public class Speck extends Image {
 
@@ -519,20 +520,33 @@ public class Speck extends Image {
 		Emitter.Factory factory = factories.get( type );
 
 		if (factory == null) {
-			factory = new Emitter.Factory() {
-				@Override
-				public void emit ( Emitter emitter, int index, float x, float y ) {
-					Speck p = (Speck)emitter.recycle( Speck.class );
-					p.reset( index, x, y, type );
-				}
-				@Override
-				public boolean lightMode() {
-					return lightMode;
-				}
-			};
+			factory = new SpeckFactory(type, lightMode);
 			factories.put( type, factory );
 		}
 
 		return factory;
+	}
+	public static class SpeckFactory extends Emitter.Factory {
+		int type;
+		boolean lightMode;
+		@Override
+		public void emit ( Emitter emitter, int index, float x, float y ) {
+			Speck p = (Speck)emitter.recycle( Speck.class );
+			p.reset( index, x, y, type );
+		}
+		@Override
+		public boolean lightMode() {
+			return lightMode;
+		}
+
+		public SpeckFactory(int type, boolean lightMode) {
+			this.type = type;
+			this.lightMode = lightMode;
+		}
+
+		public SpeckFactory(JSONObject object) {
+			this.type = object.getInt("type");
+			this.lightMode = object.getBoolean("lightMode");
+		}
 	}
 }
