@@ -1124,15 +1124,28 @@ public class ParseThread implements Callable<String> {
     }
 
     protected Emitter.Factory emitterFactoryFromJSONObject(JSONObject factoryObj) throws JSONException {
-        if (!isConnectedToOldServer() && factoryObj.has("path") || factoryObj.has("factory_type")) {
+        if (!isConnectedToOldServer() && factoryObj.has("path")) {
             Emitter.Factory factory = null;
             try {
-                Class<?> factoryClass = Class.forName(factoryObj.getString("path"));
-                 Constructor contructor = factoryClass.getConstructor(JSONObject.class);
-                 contructor.setAccessible(true);
-                 factory = (Emitter.Factory) contructor.newInstance(factoryObj);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+                Class<?> factoryClass = ClassReflection.forName(factoryObj.getString("path"));
+                Constructor<?> contructor;
+                try {
+                    contructor = factoryClass.getDeclaredConstructor(JSONObject.class);
+                } catch (Exception ignored) {
+                    try {
+                        contructor = factoryClass.getDeclaredConstructor();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                contructor.setAccessible(true);
+                if (contructor.getParameterTypes().length > 0) {
+                    factory = (Emitter.Factory) contructor.newInstance(factoryObj);
+                } else {
+                    factory = (Emitter.Factory) contructor.newInstance();
+                }
+            } catch (Exception e){
+                e.printStackTrace();
             }
             //factory = Emitter.Factory.fromPath(factoryObj.getString("path"));
             if (factory != null) {

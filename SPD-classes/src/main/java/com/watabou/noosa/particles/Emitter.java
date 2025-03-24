@@ -187,6 +187,7 @@ public class Emitter extends Group {
 		}
 
 		public Factory(JSONObject object) {
+			this();
 		}
 
 		public Factory() {
