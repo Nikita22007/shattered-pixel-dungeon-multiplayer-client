@@ -1679,6 +1679,8 @@ public class ParseThread implements Callable<String> {
                     }
                     break;
                 }
+                case "subclass_id":
+                    hero.subClass = HeroSubClass.values()[heroObj.getInt(token)];
                 default: {
                     GLog.n("Unexpected token \"%s\" in Hero. Ignored.", token);
                     break;
