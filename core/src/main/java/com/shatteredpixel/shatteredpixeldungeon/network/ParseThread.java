@@ -1031,6 +1031,11 @@ public class ParseThread implements Callable<String> {
 
     private void parseEmitterVisualAction(JSONObject actionObj) {
         try {
+            if(actionObj.has("kill")) {
+                int id = actionObj.getInt("id");
+                Emitter.infiniteEmitters.get(id).killAndErase();
+                return;
+            }
             Char target = null;
 
             boolean fillTarget = true;
@@ -1118,6 +1123,10 @@ public class ParseThread implements Callable<String> {
             emitter.height = height;
             emitter.fillTarget = fillTarget;
             emitter.start(factory, interval, quantity);
+            if(actionObj.has("id")){
+                emitter.id = actionObj.getInt("id");
+                Emitter.infiniteEmitters.put(emitter.id,emitter);
+            }
         } catch (JSONException e) {
             GLog.n("Incorrect EmitterVisualAction action: " + e.getMessage());
         }

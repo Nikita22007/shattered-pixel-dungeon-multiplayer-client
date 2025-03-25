@@ -27,12 +27,15 @@ import com.watabou.noosa.Group;
 import com.watabou.noosa.Visual;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
+import com.watabou.utils.SparseArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class Emitter extends Group {
 
 	protected boolean lightMode = false;
-	
+	public int id = -1;
 	public float x;
 	public float y;
 	public float width;
@@ -53,6 +56,7 @@ public class Emitter extends Group {
 	protected float time;
 	
 	protected Factory factory;
+	public static SparseArray<Emitter> infiniteEmitters = new SparseArray<>();
 	
 	public void pos( float x, float y ) {
 		pos( x, y, 0, 0 );
