@@ -495,7 +495,7 @@ public class SPDSettings extends GameSettings {
 		if (serverUUID != null) {
 			heroUUIDBundle.put(serverUUID, heroUUID);
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			Bundle.write(heroUUIDBundle, baos);
+			Bundle.write(heroUUIDBundle, baos, false);
 			put("hero_uuids", baos.toString());
 		}
 	}
@@ -503,9 +503,9 @@ public class SPDSettings extends GameSettings {
 		if (serverUUID != null) {
 			try {
 				String heroUUIDs = getString("hero_uuids", null);
-				if (heroUUIDs != null && heroUUIDBundle.isNull()) {
+				if (heroUUIDs != null) {
 
-					heroUUIDBundle = Bundle.read(new ByteArrayInputStream(getString("hero_uuids", null).getBytes()));
+					heroUUIDBundle = Bundle.read(new ByteArrayInputStream(getString("hero_uuids", "{}").getBytes()));
 				}
 			} catch (IOException ignored) {
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
