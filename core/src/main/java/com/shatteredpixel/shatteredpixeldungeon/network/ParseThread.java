@@ -36,6 +36,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.TitleScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.*;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
+import com.shatteredpixel.shatteredpixeldungeon.tiles.FadingTraps;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Banner;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BossHealthBar;
 import com.shatteredpixel.shatteredpixeldungeon.ui.GameLog;
@@ -832,6 +833,9 @@ public class ParseThread implements Callable<String> {
                     case ("game_scene_flash"):
                         GameScene.flash(actionObj.getInt("color"), actionObj.getBoolean("light"));
                         break;
+                    case "fading_traps":
+                        FadingTraps.fromJSON(actionObj);
+                        break;
                     default:
                         GLog.h("unknown action type " + type + ". Ignored");
                 }
@@ -1033,7 +1037,13 @@ public class ParseThread implements Callable<String> {
         try {
             if(actionObj.has("kill")) {
                 int id = actionObj.getInt("id");
-                Emitter.infiniteEmitters.get(id).killAndErase();
+                Emitter emitter = Emitter.infiniteEmitters.get(id);
+                if (emitter != null) {
+                    emitter.killAndErase();
+                } else {
+                    GLog.n("Failed to find emitter");
+                }
+
                 return;
             }
             Char target = null;
