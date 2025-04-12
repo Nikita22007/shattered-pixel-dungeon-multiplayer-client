@@ -121,6 +121,7 @@ public class CustomItem extends Item {
                     break;
                 case "energy_value": {
                     this.energyVal = obj.getInt(token);
+                    break;
                 }
             }
         }

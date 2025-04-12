@@ -326,6 +326,11 @@ public class ItemSlot extends Button {
 			} else {
 				level.resetColor();
 			}
+			if(item.icon != -1 && item.isIdentified()) {
+				itemIcon = new Image(Assets.Sprites.ITEM_ICONS);
+				itemIcon.frame(ItemSpriteSheet.Icons.film.get(item.icon));
+				add(itemIcon);
+			}
 		}
 		layout();
 	}
