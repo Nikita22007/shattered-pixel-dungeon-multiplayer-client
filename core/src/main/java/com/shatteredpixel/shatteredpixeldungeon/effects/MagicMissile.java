@@ -712,5 +712,9 @@ public class MagicMissile extends Emitter {
             //throw new RuntimeException(e);
         }
     }
+	public static void show(int type, int from, int to, Group group) {
+		MagicMissile m = (MagicMissile) group.recycle(MagicMissile.class);
+		m.reset(type, from, to, null);
+	}
 
 }

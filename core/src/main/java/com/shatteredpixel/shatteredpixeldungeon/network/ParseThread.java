@@ -858,14 +858,17 @@ public class ParseThread implements Callable<String> {
     private void parseMagicMissileVisual(JSONObject actionObj) throws JSONException{
         int from = actionObj.getInt("from");
         int to = actionObj.getInt("to");
-        String type = actionObj.getString("type");
         Char actor = Actor.findChar(from);
         Group group = null;
         if ((actor != null) && (actor.sprite != null))
         {
             group = actor.sprite.parent;
         }
-        MagicMissile.show(type, from, to, group);
+        if (isConnectedToOldServer()) {
+            MagicMissile.show(actionObj.getString("type"), from, to, group);
+        } else {
+            MagicMissile.show(actionObj.getInt("type"), from, to, group);
+        }
     }
 
     private void parseHeadDropVisualAction(JSONObject actionObj) throws JSONException {
