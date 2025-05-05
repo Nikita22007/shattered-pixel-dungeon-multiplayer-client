@@ -22,6 +22,7 @@
 package com.watabou.noosa.audio;
 
 import com.badlogic.gdx.Gdx;
+import com.watabou.gltextures.TextureManagerInterface;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Callback;
 import com.watabou.utils.DeviceCompat;
@@ -215,8 +216,11 @@ public enum Music {
 	private synchronized void play(String track, com.badlogic.gdx.audio.Music.OnCompletionListener listener){
 		try {
 			fadeTime = fadeTotal = -1;
-
-			player = Gdx.audio.newMusic(Gdx.files.internal(track));
+			if (TextureManagerInterface.INSTANCE.hasMusic(track.replaceFirst("music/",""))){
+				player = TextureManagerInterface.INSTANCE.getMusic(track.replaceFirst("music/", ""));
+			} else {
+				player = Gdx.audio.newMusic(Gdx.files.internal(track));
+			}
 			player.setLooping(looping);
 			player.setVolume(volumeWithFade());
 			if (!paused) player.play();

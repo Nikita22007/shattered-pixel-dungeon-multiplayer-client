@@ -23,6 +23,7 @@ package com.watabou.noosa.audio;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.watabou.gltextures.TextureManagerInterface;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Callback;
 import com.watabou.utils.DeviceCompat;
@@ -93,7 +94,9 @@ public enum Sample {
 				if (asset != null) {
 					Sound newSound;
 					try {
-						if(asset.startsWith("snd")){
+						if (TextureManagerInterface.INSTANCE.hasSound(asset.replaceFirst("sounds/", ""))){
+							newSound = TextureManagerInterface.INSTANCE.getSound(asset.replaceFirst("sounds/",""));
+						} else if(asset.startsWith("snd")){
 							newSound = Gdx.audio.newSound(Gdx.files.internal(asset.replace("snd_","sounds/")));
 						} else {
 							newSound = Gdx.audio.newSound(Gdx.files.internal(asset));

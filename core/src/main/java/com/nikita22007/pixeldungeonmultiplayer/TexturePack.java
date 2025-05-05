@@ -1,20 +1,19 @@
 package com.nikita22007.pixeldungeonmultiplayer;
 
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandleStream;
 import com.watabou.utils.Point;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.channels.FileChannel;
-import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -93,6 +92,28 @@ public class TexturePack {
     public boolean hasAsset(String src) {
         return (file.getEntry("assets/" + src) != null);
     }
+    public boolean hasSound(String src){
+        return (file.getEntry("sounds/" + src) != null);
+    }
+    public Sound getSound(String src){
+        try {
+            return Gdx.audio.newSound(new FileHandleByteStream(src, file.getInputStream(file.getEntry("sounds/" + src))));
+        } catch (IOException e) {
+            Gdx.app.error("TexturePack", "Failed to load sound", e);
+        }
+        return null;
+    }
+    public boolean hasMusic(String src) {
+        return (file.getEntry("music/" + src) != null);
+    }
+    public Music getMusic(String src){
+        try {
+            return Gdx.audio.newMusic(new FileHandleByteStream(src, file.getInputStream(file.getEntry("music/" + src))));
+        } catch (IOException e) {
+            Gdx.app.error("TexturePack", "Failed to load music", e);
+        }
+        return null;
+    }
 
     protected InputStream getStream(String path) {
         ZipEntry entry = file.getEntry(path);
@@ -113,5 +134,25 @@ public class TexturePack {
 
     public InputStream getAnimationStream(String animationsFile) {
         return getStream("animations/" + animationsFile);
+    }
+
+
+    private static class FileHandleByteStream extends FileHandleStream {
+
+        private final InputStream data;
+
+        public FileHandleByteStream(String path, InputStream data) {
+            super(path);
+            this.data = data;
+        }
+
+        @Override
+        public InputStream read() {
+            return data;
+        }
+
+        public void close() throws Exception {
+            data.close();
+        }
     }
 }

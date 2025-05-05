@@ -1,5 +1,7 @@
 package com.nikita22007.pixeldungeonmultiplayer;
 
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.shatteredpixel.shatteredpixeldungeon.utils.Log;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.gltextures.TextureManagerInterface;
@@ -16,14 +18,16 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class TextureManager implements TextureManagerInterface {
+import static com.watabou.gltextures.TextureManagerInterface.INSTANCE;
+
+public class TextureManager extends TextureManagerInterface {
     public static TextureManager INSTANCE = new TextureManager();
     private final LinkedHashMap<String,TexturePack> texturePacks = new LinkedHashMap<String, TexturePack>();
     private final LinkedHashMap<String, File> cachedTextureFiles = new LinkedHashMap<>();
 
     TextureManager()
     {
-
+        TextureManagerInterface.INSTANCE = this;
     }
 
     @Override
@@ -87,7 +91,45 @@ public class TextureManager implements TextureManagerInterface {
             return null;
         }
     }
-    
+
+    @Override
+    public boolean hasSound(String src) {
+        for (TexturePack texturePack : texturePacks.values())
+        {
+            if (texturePack.hasSound(src))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Sound getSound(String src) {
+        for (TexturePack texturePack: texturePacks.values()){
+            if (texturePack.hasSound(src)){
+                return texturePack.getSound(src);
+            }
+        }
+        return null;
+    }
+    @Override
+    public boolean hasMusic(String src) {
+        for (TexturePack texturePack : texturePacks.values())
+        {
+            if (texturePack.hasMusic(src))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Music getMusic(String src) {
+        for (TexturePack texturePack: texturePacks.values()){
+            if (texturePack.hasMusic(src)){
+                return texturePack.getMusic(src);
+            }
+        }
+        return null;
+    }
     public JSONObject getAnimationsJsonObject(String animationsFile) {
         for (TexturePack texturePack : texturePacks.values())
         {
