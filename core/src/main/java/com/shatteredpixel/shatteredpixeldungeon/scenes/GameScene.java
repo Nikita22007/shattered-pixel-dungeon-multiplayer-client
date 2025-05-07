@@ -571,14 +571,6 @@ public class GameScene extends PixelScene {
 			if (Dungeon.hero.buff(AscensionChallenge.class) != null){
 				Dungeon.hero.buff(AscensionChallenge.class).saySwitch();
 			}
-
-			DimensionalSundial.sundialWarned = true;
-			if (DimensionalSundial.spawnMultiplierAtCurrentTime() > 1){
-				GLog.w(Messages.get(DimensionalSundial.class, "warning"));
-			} else {
-				DimensionalSundial.sundialWarned = false;
-			}
-
 			InterlevelScene.mode = InterlevelScene.Mode.NONE;
 
 			
