@@ -4,7 +4,11 @@ package com.nikita22007.pixeldungeonmultiplayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.files.FileHandleStream;
+import com.watabou.noosa.Game;
+import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.Point;
 
 import org.json.JSONException;
@@ -14,6 +18,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -26,7 +33,7 @@ public class TexturePack {
     String version;
 
     Point frameSize;
-
+    public static List<String> extractedFiles = new ArrayList<>();
     public TexturePack(InputStream stream, boolean isServerTexturePack) throws IOException {
         this.isServerTexturePack = isServerTexturePack;
         try {
@@ -85,8 +92,19 @@ public class TexturePack {
     }
 
     private void loadTexturePack() throws IOException {
-
         loadManifest();
+        Enumeration<? extends ZipEntry> entries = file.entries();
+        ZipEntry entry;
+        while (entries.hasMoreElements()){
+            entry = entries.nextElement();
+            if (entry.getName().startsWith("sounds/") && (entry.getName().endsWith(".mp3") || entry.getName().endsWith(".ogg"))){
+                ZipEntry finalEntry = entry;
+                Game.runOnRenderThread( ()-> {
+                            Sample.INSTANCE.unload(finalEntry.getName());
+                            Sample.INSTANCE.load(finalEntry.getName());
+                        });
+            }
+        }
     }
 
     public boolean hasAsset(String src) {
@@ -97,7 +115,11 @@ public class TexturePack {
     }
     public Sound getSound(String src){
         try {
-            return Gdx.audio.newSound(new FileHandleByteStream(src, file.getInputStream(file.getEntry("sounds/" + src))));
+            if (DeviceCompat.isDesktop()) {
+                return Gdx.audio.newSound(new FileHandleByteStream(src, file.getInputStream(file.getEntry("sounds/" + src))));
+            } else {
+                return Gdx.audio.newSound(getExtracted("sounds/" + src));
+            }
         } catch (IOException e) {
             Gdx.app.error("TexturePack", "Failed to load sound", e);
         }
@@ -108,11 +130,31 @@ public class TexturePack {
     }
     public Music getMusic(String src){
         try {
-            return Gdx.audio.newMusic(new FileHandleByteStream(src, file.getInputStream(file.getEntry("music/" + src))));
+            if (DeviceCompat.isDesktop()) {
+                return Gdx.audio.newMusic(new FileHandleByteStream(src, file.getInputStream(file.getEntry("music/" + src))));
+            } else {
+                return Gdx.audio.newMusic(getExtracted("music/" + src));
+            }
         } catch (IOException e) {
             Gdx.app.error("TexturePack", "Failed to load music", e);
         }
         return null;
+    }
+    private boolean isExtracted(String src){
+        return (extractedFiles.contains(name +"-" +  src));
+    }
+    private FileHandle getExtracted(String src){
+        if (!isExtracted(src)){
+            extract(src);
+        }
+        return Gdx.files.local(name + "-" + src);
+    }
+    //on iOS and Android audio files need to be extracted out of zip to be loaded
+    private void extract(String src){
+        extractedFiles.add(src);
+        FileHandle fileHandle = Gdx.files.local(name + "-" + src);
+        fileHandle.write(getStream(src), false);
+        fileHandle.file().deleteOnExit();
     }
 
     protected InputStream getStream(String path) {
@@ -137,6 +179,7 @@ public class TexturePack {
     }
 
 
+    //optimisation for desktop
     private static class FileHandleByteStream extends FileHandleStream {
 
         private final InputStream data;
