@@ -601,12 +601,6 @@ public class GameScene extends PixelScene {
 				!Document.ADVENTURERS_GUIDE.isPageRead(Document.GUIDE_DIEING)){
 			GameScene.flashForDocument(Document.ADVENTURERS_GUIDE, Document.GUIDE_DIEING);
 		}
-
-		TrinketCatalyst cata = Dungeon.hero.belongings.getItem(TrinketCatalyst.class);
-		if (cata != null && cata.hasRolledTrinkets()){
-			addToFront(new TrinketCatalyst.WndTrinket(cata));
-		}
-
 		if (!invVisible) toggleInvPane();
 		fadeIn();
 
