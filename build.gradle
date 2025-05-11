@@ -25,13 +25,15 @@ allprojects {
     } else {
         println("Version file not found, using default: '${versionName}'")
     }
-    def baseVersionName = "3.0.0"
     ext {
         appName = 'Shattered Pixel Dungeon Client'
         appPackageName = 'com.shatteredpixel.shatteredpixeldungeon.multiplayer.client'
 
         appVersionCode = 833
-        appVersionName = '3.0.2'
+        appVersionName = "3.0.2"
+        
+        appVersionName = "Client_"+versionName + "_on_v"+appVersionName
+        appShortVersionName = ((appVersionName) =~ /\d+\.\d+\.\d+/) ? ((appVersionName) =~ /\d+\.\d+\.\d+/)[0] : "0.0.0"
 
         appJavaCompatibility = JavaVersion.VERSION_1_8
 
