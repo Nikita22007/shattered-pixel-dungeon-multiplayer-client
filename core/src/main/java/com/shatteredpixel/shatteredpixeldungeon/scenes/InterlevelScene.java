@@ -595,7 +595,7 @@ public class InterlevelScene extends PixelScene {
 		if (btnContinue != null){
 			btnContinue.visible = true;
 			float alpha = btnContinue.alpha();
-			btnContinue.enable(true);
+			//btnContinue.enable(true); //todo should we wait?
 			btnContinue.alpha(alpha);
 			phase = Phase.STATIC;
 		} else {
