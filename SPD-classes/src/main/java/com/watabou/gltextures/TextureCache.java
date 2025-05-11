@@ -189,7 +189,6 @@ public class TextureCache {
 		return all.containsKey( key );
 	}
 	public static void reloadFromAssets(){
-		Set<Object> keysToReload = new HashSet<>();
 		Iterator<Map.Entry<Object, SmartTexture>> iterator = all.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Map.Entry<Object, SmartTexture> tx = iterator.next();
@@ -206,13 +205,9 @@ public class TextureCache {
 				if (keyString.contains("[")){
 					continue;
 				}
-				tx.getValue().delete();
-				keysToReload.add(tx.getKey());
-				iterator.remove();
+				SmartTexture value = tx.getValue();
+				value.bitmap(getBitmap(tx.getKey()));
 			}
-		}
-		for (Object key: keysToReload) {
-			get(key);
 		}
 	}
 }
