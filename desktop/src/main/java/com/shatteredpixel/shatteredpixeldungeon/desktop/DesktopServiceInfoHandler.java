@@ -26,7 +26,7 @@ public class DesktopServiceInfoHandler extends ServiceInfoHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        dns.addServiceListener(serviceType+".local.", new Listener());
+        dns.addServiceListener(serviceType + "local.", new Listener());
     }
 
     @Override
