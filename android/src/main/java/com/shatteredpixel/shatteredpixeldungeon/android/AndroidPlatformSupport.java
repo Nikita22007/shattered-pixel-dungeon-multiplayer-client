@@ -38,6 +38,8 @@ import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
+import com.watabou.network.ServiceInfoHandler;
+import com.watabou.network.ServiceInfoListener;
 import com.watabou.noosa.Game;
 import com.watabou.utils.PlatformSupport;
 
@@ -320,5 +322,9 @@ public class AndroidPlatformSupport extends PlatformSupport {
 			return regularsplitter.split(text);
 		}
 	}
-	
+
+	@Override
+	public ServiceInfoHandler createServiceInfoHandler(ServiceInfoListener listener) {
+		return new AndroidServiceInfoHandler(listener);
+	}
 }

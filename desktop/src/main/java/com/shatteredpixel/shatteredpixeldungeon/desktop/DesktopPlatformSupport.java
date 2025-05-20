@@ -29,6 +29,8 @@ import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.watabou.input.ControllerHandler;
+import com.watabou.network.ServiceInfoHandler;
+import com.watabou.network.ServiceInfoListener;
 import com.watabou.noosa.Game;
 import com.watabou.utils.PlatformSupport;
 import com.watabou.utils.Point;
@@ -172,5 +174,10 @@ public class DesktopPlatformSupport extends PlatformSupport {
 		} else {
 			return regularsplitter.split(text);
 		}
+	}
+
+	@Override
+	public ServiceInfoHandler createServiceInfoHandler(ServiceInfoListener listener) {
+		return new DesktopServiceInfoHandler(listener);
 	}
 }

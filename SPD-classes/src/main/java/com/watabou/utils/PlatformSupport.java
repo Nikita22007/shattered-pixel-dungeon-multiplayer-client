@@ -27,6 +27,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.watabou.input.ControllerHandler;
+import com.watabou.network.NOOPServiceInfoHandler;
+import com.watabou.network.ServiceInfoHandler;
+import com.watabou.network.ServiceInfoListener;
 import com.watabou.noosa.Game;
 
 import java.util.HashMap;
@@ -159,5 +162,7 @@ public abstract class PlatformSupport {
 
 		return fonts.get(generator).get(key);
 	}
-
+	public ServiceInfoHandler createServiceInfoHandler(ServiceInfoListener listener){
+		return new NOOPServiceInfoHandler(listener);
+	}
 }
