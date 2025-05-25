@@ -4,37 +4,25 @@ import com.watabou.network.ServiceInfo;
 import com.watabou.network.ServiceInfoHandler;
 import com.watabou.network.ServiceInfoListener;
 
-import javax.jmdns.JmDNS;
+import javax.jmdns.JmmDNS;
 import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceListener;
-import java.io.IOException;
+import java.net.InetAddress;
+import java.util.Arrays;
 
 public class DesktopServiceInfoHandler extends ServiceInfoHandler {
-    JmDNS dns;
-
-    {
-        try {
-            dns = JmDNS.create();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    JmmDNS dns = JmmDNS.Factory.getInstance();
+    Listener serviceListener = new Listener();
 
     public void startDiscovery() {
-        try {
-            dns = JmDNS.create();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        dns.addServiceListener(serviceType + "local.", new Listener());
+        dns.addServiceListener(serviceType +"local.", serviceListener);
     }
 
     @Override
     public void stopDiscovery() {
-        try {
-            dns.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        //Don't know if it can or should ever be stopped
+        if (dns != null) {
+            dns.removeServiceListener(serviceType + "local.", serviceListener);
         }
     }
 
@@ -46,25 +34,40 @@ public class DesktopServiceInfoHandler extends ServiceInfoHandler {
         @Override
         public void serviceAdded(ServiceEvent event) {
             if (event.getInfo() != null){
-                listener.onServiceFound(fromServiceEvent(event));
+                ServiceInfo info = fromServiceEvent(event);
+                if (info != null) {
+                    listener.onServiceFound(info);
+                }
             }
         }
 
         @Override
         public void serviceRemoved(ServiceEvent event) {
             if (event.getInfo() != null){
-                listener.onServiceLost(fromServiceEvent(event));
+                ServiceInfo info = fromServiceEvent(event);
+                if (info != null) {
+                    listener.onServiceLost(info);
+                }
             }
         }
 
         @Override
         public void serviceResolved(ServiceEvent event) {
             if (event.getInfo() != null){
-                listener.onServiceResolved(fromServiceEvent(event));
+                ServiceInfo info = fromServiceEvent(event);
+                if (info != null) {
+                    listener.onServiceResolved(info);
+                }
             }
         }
     }
     protected ServiceInfo fromServiceEvent(ServiceEvent event){
-        return new com.watabou.network.ServiceInfo(event.getName(), event.getInfo().getInetAddresses()[0], event.getType(), event.getInfo().getPort());
+        try {
+            return new com.watabou.network.ServiceInfo(event.getName(), event.getInfo().getInetAddresses()[0], event.getType(), event.getInfo().getPort());
+        }
+        catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
+            //Happens when service is added and IP is not yet resolved
+            return null;
+        }
     }
 }
