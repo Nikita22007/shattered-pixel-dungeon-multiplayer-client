@@ -5,6 +5,7 @@ import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.network.NetworkScanner;
+import com.shatteredpixel.shatteredpixeldungeon.network.scanners.DirectServerInfo;
 import com.shatteredpixel.shatteredpixeldungeon.network.scanners.ServerInfo;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -237,10 +238,10 @@ public class ConnectScene extends PixelScene implements NetworkScanner.NetworkSc
             desc.text( rec.name );
             desc.measure();
 
-            if (rec.haveChallenges) {
+            if (rec instanceof DirectServerInfo) {
                 shield.view(ItemSpriteSheet.AMULET, null );
-                position.hardlight( TEXT_WIN );
-                desc.hardlight( TEXT_WIN );
+                position.hardlight( TEXT_LOSE );
+                desc.hardlight( TEXT_LOSE );
             } else {
                 shield.view(ItemSpriteSheet.CHEST, null );
                 position.hardlight( TEXT_LOSE );
