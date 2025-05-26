@@ -7,6 +7,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.bags.CustomBag;
 import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 
+import com.watabou.noosa.ColorBlock;
+import com.watabou.noosa.Visual;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -180,6 +182,7 @@ public class CustomItem extends Item {
             private final Label topLeft;
             private final Label topRight;
             private final Label bottomRight;
+            private final ColorBlock background;
 
             public UI(JSONObject obj) {
                 JSONObject topLeftObj = obj.isNull("top_left") ? null : obj.optJSONObject("top_left");
@@ -226,12 +229,22 @@ public class CustomItem extends Item {
                             bottomRightObj.optBoolean("visible", false)
                     );
                 }
+                if (obj.isNull("background")) {
+                    background = null;
+                } else {
+                    JSONObject bgObj = obj.getJSONObject("background");
+                    background = new ColorBlock(1,1,  0);
+                    background.ra = (float) bgObj.optDouble("ra", 0);
+                    background.ga = (float) bgObj.optDouble("ga", 0);
+                    background.ba = (float) bgObj.optDouble("ba", 0);
+                }
             }
 
             public UI() {
                 topLeft = new Label(null, null, false);
                 topRight = new Label(null, null, false);
                 bottomRight = new Label(null, null, false);
+                background = null;
             }
 
             public Label getTopLeft() {
@@ -244,6 +257,10 @@ public class CustomItem extends Item {
 
             public Label getBottomRight() {
                 return bottomRight;
+            }
+
+            public ColorBlock getBackground() {
+                return background;
             }
         }
 

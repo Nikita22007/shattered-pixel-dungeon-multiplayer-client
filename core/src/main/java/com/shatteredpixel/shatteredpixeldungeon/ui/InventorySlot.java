@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.ui;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -86,7 +87,13 @@ public class InventorySlot extends ItemSlot {
 
 			bg.texture( TextureCache.createSolid( equipped ? EQUIPPED : NORMAL ) );
 			bg.resetColor();
-			if (item.cursed && item.cursedKnown) {
+			if (item instanceof CustomItem){
+				CustomItem.UI ui = ((CustomItem)item).ui;
+				bg.ra = ui.getBackground().ra;
+				bg.ba = ui.getBackground().ba;
+				bg.ga = ui.getBackground().ga;
+			}
+			else if (item.cursed && item.cursedKnown) {
 				bg.ra = +0.3f;
 				bg.ga = -0.15f;
 			} else if (!item.isIdentified()) {
