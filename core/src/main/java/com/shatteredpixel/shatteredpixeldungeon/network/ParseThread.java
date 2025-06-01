@@ -37,6 +37,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.TitleScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.*;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.FadingTraps;
+import com.shatteredpixel.shatteredpixeldungeon.ui.AttackIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Banner;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BossHealthBar;
 import com.shatteredpixel.shatteredpixeldungeon.ui.GameLog;
@@ -431,6 +432,9 @@ public class ParseThread implements Callable<String> {
         }
         if (uiObject.has("cell_listener_prompt")) {
             GameScene.defaultCellListener.setCustomPrompt(uiObject.optString("cell_listener_prompt", null));
+        }
+        if (uiObject.has("attack_indicator_target")){
+            AttackIndicator.setCandidates(uiObject.getInt("attack_indicator_target"));
         }
     }
 

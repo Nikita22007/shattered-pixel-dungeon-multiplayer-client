@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.ui;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDAction;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -47,9 +48,9 @@ public class AttackIndicator extends Tag {
 	private static AttackIndicator instance;
 	
 	private CharSprite sprite = null;
-	
+
 	private Mob lastTarget;
-	private ArrayList<Mob> candidates = new ArrayList<>();
+	private final ArrayList<Mob> candidates = new ArrayList<>();
 	
 	public AttackIndicator() {
 		super( DangerIndicator.COLOR );
@@ -113,15 +114,6 @@ public class AttackIndicator extends Tag {
 	
 	private synchronized void checkEnemies() {
 
-		candidates.clear();
-		int v = Dungeon.hero.visibleEnemies();
-		for (int i=0; i < v; i++) {
-			Mob mob = Dungeon.hero.visibleEnemy( i );
-			if ( Dungeon.hero.canAttack( mob) ) {
-				candidates.add( mob );
-			}
-		}
-		
 		if (lastTarget == null || !candidates.contains( lastTarget )) {
 			if (candidates.isEmpty()) {
 				lastTarget = null;
@@ -190,6 +182,18 @@ public class AttackIndicator extends Tag {
 	@Override
 	protected String hoverText() {
 		return Messages.titleCase(Messages.get(WndKeyBindings.class, "tag_attack"));
+	}
+
+
+	public static void setCandidates(int ID) {
+		Actor target = Actor.findById(ID);
+		synchronized (instance) {
+			instance.candidates.clear();
+			if (target instanceof Mob) {
+				instance.candidates.add((Mob) target);
+			}
+			updateState();
+		}
 	}
 
 	public static void target(Char target ) {
