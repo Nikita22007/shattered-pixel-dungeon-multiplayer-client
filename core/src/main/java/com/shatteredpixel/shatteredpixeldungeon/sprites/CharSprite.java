@@ -933,7 +933,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	}
 	public void setEmo(JSONObject emoObj) {
 		if (!emoObj.has("type")) {
-			removeEmo();
+			hideEmo();
 			return;
 		}
 		String emoType = emoObj.optString("type");
@@ -948,18 +948,14 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 		switch (emotion){
 			case "alert": showAlert(); break;
 			case "sleep": showSleep(); break;
+			case "lost": showLost(); break;
 			default: {
 				GLog.h("Unknown emo: " + emotion + ". ID: " + (ch == null? "null": ch.id()));
 				showAlert();
 			}break; //todo
 		}
 	}
-	protected void removeEmo() {
-		if (emo != null) {
-			emo.killAndErase();
-		}
-		emo = null;
-	}
+
 	public static CharSprite spriteFromClass(Class<? extends CharSprite> sprite_class) {
 		CharSprite sprite = null;
 		try {
