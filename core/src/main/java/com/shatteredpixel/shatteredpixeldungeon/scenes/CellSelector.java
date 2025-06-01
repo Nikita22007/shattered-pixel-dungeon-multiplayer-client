@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
-import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.watabou.input.ControllerHandler;
 import com.watabou.input.GameAction;
@@ -44,6 +43,7 @@ import com.watabou.utils.Point;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Signal;
 
+import static com.shatteredpixel.shatteredpixeldungeon.network.SendData.SendCellListenerCell;
 
 public class CellSelector extends ScrollArea {
 
@@ -166,8 +166,8 @@ public class CellSelector extends ScrollArea {
 			GameScene.ready();
 			
 		} else {
-			SendData.SendCellListenerCell(null);
-			//GameScene.cancel();
+			
+			GameScene.cancel();
 			
 		}
 	}
@@ -487,7 +487,7 @@ public class CellSelector extends ScrollArea {
 
 	public void cancel() {
 		if (listener != null) {
-			SendData.SendCellListenerCell(null);
+			SendCellListenerCell(null);
 			//listener.onSelect( null );
 		}
 
