@@ -149,6 +149,8 @@ import com.watabou.utils.RectF;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -1217,6 +1219,9 @@ public class GameScene extends PixelScene {
 	
 	public static void updateKeyDisplay(){
 		if (scene != null && scene.menu != null) scene.menu.updateKeys();
+	}
+	public static void updateKeyDisplay(JSONArray keys){
+		if (scene != null && scene.menu != null) scene.menu.updateKeys(keys);
 	}
 
 	public static void showlevelUpStars(){

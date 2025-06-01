@@ -39,6 +39,7 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.ui.Component;
+import org.json.JSONArray;
 
 public class MenuPane extends Component {
 
@@ -203,6 +204,9 @@ public class MenuPane extends Component {
 	public void updateKeys(){
 		btnJournal.updateKeyDisplay();
 	}
+	public void updateKeys(JSONArray keys){
+		btnJournal.updateKeyDisplay(keys);
+	}
 
 	private static class JournalButton extends Button {
 
@@ -276,6 +280,16 @@ public class MenuPane extends Component {
 
 		public void updateKeyDisplay() {
 			keyIcon.updateKeys();
+			keyIcon.visible = keyIcon.keyCount() > 0;
+			journalIcon.visible = !keyIcon.visible;
+			if (keyIcon.keyCount() > 0) {
+				bg.brightness(.8f - (Math.min(6, keyIcon.keyCount()) / 20f));
+			} else {
+				bg.resetColor();
+			}
+		}
+		public void updateKeyDisplay(JSONArray array) {
+			keyIcon.updateKeys(array);
 			keyIcon.visible = keyIcon.keyCount() > 0;
 			journalIcon.visible = !keyIcon.visible;
 			if (keyIcon.keyCount() > 0) {

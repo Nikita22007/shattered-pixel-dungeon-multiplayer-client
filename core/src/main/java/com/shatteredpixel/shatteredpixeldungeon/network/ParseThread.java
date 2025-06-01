@@ -419,7 +419,11 @@ public class ParseThread implements Callable<String> {
             Dungeon.depth = uiObject.optInt("depth");
         }
         if (uiObject.has("iron_keys_count") || uiObject.has("iron_key_count")) {
-            IronKey.curDepthQuantity = uiObject.optInt("iron_keys_count", uiObject.optInt("iron_key_count", -20));
+            if (isConnectedToOldServer()) {
+                IronKey.curDepthQuantity = uiObject.optInt("iron_keys_count", uiObject.optInt("iron_key_count", -20));
+            } else {
+                GameScene.updateKeyDisplay(uiObject.getJSONArray("iron_keys_count"));
+            }
         }
         if (uiObject.has("resume_button_visible")) {
             //TODO: might remove this

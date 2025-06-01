@@ -36,6 +36,7 @@ import com.watabou.glwrap.Vertexbuffer;
 import com.watabou.noosa.NoosaScript;
 import com.watabou.noosa.Visual;
 import com.watabou.utils.RectF;
+import org.json.JSONArray;
 
 import java.nio.Buffer;
 import java.nio.FloatBuffer;
@@ -87,7 +88,19 @@ public class KeyDisplay extends Visual {
 		}
 		dirty = true;
 	}
-	
+	public void updateKeys(JSONArray keys){
+		this.keys = new int[keyMap.size()+1];
+
+
+		totalKeys = 0;
+		for (int i = 0; i < keys.length(); i++) {
+			int key = keys.getInt(i);
+			this.keys[i] = key;
+			totalKeys+= key;
+		}
+		dirty = true;
+	}
+
 	public int keyCount(){
 		return totalKeys;
 	}
