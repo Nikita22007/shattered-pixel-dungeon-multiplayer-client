@@ -19,7 +19,7 @@ import static com.nikita22007.pixeldungeonmultiplayer.TranslationUtils.translate
 import static com.shatteredpixel.shatteredpixeldungeon.network.ParseThread.isConnectedToOldServer;
 
 public class CustomItem extends Item {
-    protected String name;
+    protected String name = "";
     protected String spriteSheet;
     protected String descString;
 
