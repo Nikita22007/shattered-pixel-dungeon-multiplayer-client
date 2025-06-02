@@ -1304,7 +1304,7 @@ public class Hero extends Char {
 			}
 		}
 	}
-	
+
 	public void checkVisibleMobs() {
 		ArrayList<Mob> visible = new ArrayList<>();
 
@@ -1342,12 +1342,12 @@ public class Hero extends Char {
 
 		Char lastTarget = QuickSlotButton.lastTarget;
 		if (target != null && (lastTarget == null ||
-							!lastTarget.isAlive() || !lastTarget.isActive() ||
-							lastTarget.alignment == Alignment.ALLY ||
-							!fieldOfView[lastTarget.pos])){
+				!lastTarget.isAlive() || !lastTarget.isActive() ||
+				lastTarget.alignment == Alignment.ALLY ||
+				!fieldOfView[lastTarget.pos])){
 			QuickSlotButton.target(target);
 		}
-		
+
 		if (newMob) {
 			if (resting){
 				Dungeon.observe();
@@ -1365,16 +1365,14 @@ public class Hero extends Char {
 				//if a single cell within the blob is visible, we add the landmark
 				for (int i=b.area.top; i < b.area.bottom; i++) {
 					for (int j = b.area.left; j < b.area.right; j++) {
-						cell = j + i * Dungeon.level.width();
-						if (fieldOfView.length > cell) {
-							if (fieldOfView[cell] && b.cur[cell] > 0) {
-								Notes.add(b.landmark());
-								found = true;
-								break;
-							}
+						cell = j + i* Dungeon.level.width();
+						if (b.cur.length > cell && fieldOfView[cell] && b.cur[cell] > 0) {
+							Notes.add( b.landmark() );
+							found = true;
+							break;
 						}
-						if (found) break;
 					}
+					if (found) break;
 				}
 
 				//Clear blobs that only exist for landmarks.
