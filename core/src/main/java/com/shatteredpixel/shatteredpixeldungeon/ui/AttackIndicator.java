@@ -31,6 +31,7 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ClassSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.CustomCharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.TieredSprite;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndKeyBindings;
 import com.watabou.input.GameAction;
@@ -143,20 +144,16 @@ public class AttackIndicator extends Tag {
 			sprite.killAndErase();
 			sprite = null;
 		}
-		int tier = -1;
-		HeroClass heroClass = null;
-		if (lastTarget.sprite instanceof TieredSprite){
-			tier = ((TieredSprite) sprite).tier();
+		if (lastTarget.sprite instanceof CustomCharSprite){
+			sprite = new CustomCharSprite(((CustomCharSprite) lastTarget.sprite).getSpriteAsset());
+		} else {
+			sprite = Reflection.newInstance(lastTarget.sprite.getClass());
 		}
-		if (lastTarget.sprite instanceof ClassSprite){
-			heroClass = ((ClassSprite) sprite).heroClass();
+		if (lastTarget.sprite instanceof TieredSprite) {
+			((TieredSprite) sprite).tier(((TieredSprite) lastTarget.sprite).tier());
 		}
-		sprite = Reflection.newInstance(lastTarget.sprite.getClass());
-		if (tier > -1) {
-			((TieredSprite) sprite).tier(tier);
-		}
-		if (heroClass != null) {
-			((ClassSprite) sprite).heroClass(heroClass);
+		if (lastTarget.sprite instanceof ClassSprite) {
+			((ClassSprite) sprite).heroClass(((ClassSprite) lastTarget.sprite).heroClass());
 		}
 		active = true;
 		sprite.linkVisuals(lastTarget);
