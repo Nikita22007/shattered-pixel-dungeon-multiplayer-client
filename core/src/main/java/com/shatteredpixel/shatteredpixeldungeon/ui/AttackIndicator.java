@@ -25,10 +25,13 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDAction;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ClassSprite;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.TieredSprite;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndKeyBindings;
 import com.watabou.input.GameAction;
 import com.watabou.noosa.Game;
@@ -140,8 +143,21 @@ public class AttackIndicator extends Tag {
 			sprite.killAndErase();
 			sprite = null;
 		}
-		
-		sprite = Reflection.newInstance(lastTarget.spriteClass);
+		int tier = -1;
+		HeroClass heroClass = null;
+		if (lastTarget.sprite instanceof TieredSprite){
+			tier = ((TieredSprite) sprite).tier();
+		}
+		if (lastTarget.sprite instanceof ClassSprite){
+			heroClass = ((ClassSprite) sprite).heroClass();
+		}
+		sprite = Reflection.newInstance(lastTarget.sprite.getClass());
+		if (tier > -1) {
+			((TieredSprite) sprite).tier(tier);
+		}
+		if (heroClass != null) {
+			((ClassSprite) sprite).heroClass(heroClass);
+		}
 		active = true;
 		sprite.linkVisuals(lastTarget);
 		sprite.idle();
