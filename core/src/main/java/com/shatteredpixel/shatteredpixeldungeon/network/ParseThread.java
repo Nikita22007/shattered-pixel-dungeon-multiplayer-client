@@ -1555,7 +1555,7 @@ public class ParseThread implements Callable<String> {
             if(!isConnectedToOldServer()) {
                 blob_name = actorObj.getString("blob_type");
             } else {
-                blob_name = "com.shatteredpixel.shatteredpixeldungeon.actor.blobs." + actorObj.getBoolean("blob_type");
+                blob_name = "com.shatteredpixel.shatteredpixeldungeon.actor.blobs." + ToPascalCase(actorObj.getString("blob_type"));
             }
             try {
                 blob_class = ClassReflection.forName(blob_name);
