@@ -7,7 +7,11 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.RatSprite;
 public class CustomMob extends Mob {
     @Override
     public String name() {
-        return Messages.get(name);
+        String messageName = Messages.get(name);
+        if (Messages.NO_TEXT_FOUND.equals(messageName)) {
+            return name;
+        }
+        return messageName;
     }
 
     public CustomMob(int id) {
