@@ -718,8 +718,20 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 			}
 			case "place": {
 				int to = params.getInt("to");
+				ch.pos = to;
 				sprite.place(to);
 				break;
+			}
+			case ("pushing"):
+			case ("push"):
+			{
+				//FIXME
+//				GameScene.effect(new Pushing(sprite.ch,
+//								params.getInt("from"),
+//								params.getInt("to")
+//						)
+//				);
+				GLog.n("push does not work");
 			}
 			case "run":
 			case "move": {
@@ -749,7 +761,9 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 				break;
 			}
 			case "jump": {
-				sprite.jump(params.getInt("from"), params.getInt("to"), () -> {
+				final int to = params.getInt("to");
+				sprite.jump(params.getInt("from"), to, () -> {
+					ch.pos = to;
 				});
 				break;
 			}
@@ -772,17 +786,6 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 						(float) params.getDouble("target_alpha"),
 						(float) params.getDouble("interval")
 				));
-				break;
-			}
-			case ("pushing"):
-			case ("push"):
-			{
-				//FIXME
-//				GameScene.effect(new Pushing(sprite.ch,
-//								params.getInt("from"),
-//								params.getInt("to")
-//						)
-//				);
 				break;
 			}
 			default:
