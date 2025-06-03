@@ -127,6 +127,7 @@ public class CustomItem extends Item {
                 }
             }
         }
+        updateQuickslot();
     }
 
     @Override

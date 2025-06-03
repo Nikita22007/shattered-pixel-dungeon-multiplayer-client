@@ -945,7 +945,6 @@ public class ParseThread implements Callable<String> {
                 Log.w("ParseThread", "Unexpected item update mode: " + update_mode);
                 return;
         }
-        Dungeon.quickslot.reset();
     }
 
     private void parseShowStatusAction(JSONObject actionObj) throws JSONException {

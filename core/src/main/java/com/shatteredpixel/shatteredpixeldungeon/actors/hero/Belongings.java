@@ -27,6 +27,7 @@ import com.badlogic.gdx.Gdx;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
+import com.shatteredpixel.shatteredpixeldungeon.QuickSlot;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.items.*;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
@@ -587,11 +588,13 @@ public class Belongings implements Iterable<Item> {
 	public void removeItemFromSlot(@NotNull List<Integer> slotPath){
 		assert (slotPath != null) : "null item path";
 		assert (slotPath.size() > 0) : "empty item path";
+		Item item = getItemInSlot(slotPath);
 		if (slotPath.get(0)<0) {
 			putItemIntoSlot(slotPath, null, true);
 		} else {
 			backpack.removeItemFromSlot(slotPath);
 		}
+		Dungeon.quickslot.clearItem(item);
 		Item.updateQuickslot();
 	}
 	public void updateSpecialSlot(CustomItem item, int id){
