@@ -101,6 +101,69 @@ public class SewerLevel extends RegularLevel {
 			}
 		}
 
+	private static class Sink extends Emitter {
 
+		private int pos;
+		private float rippleDelay = 0;
 
+		private static final Emitter.Factory factory = new Factory() {
+
+			@Override
+			public void emit( Emitter emitter, int index, float x, float y ) {
+				WaterParticle p = (WaterParticle)emitter.recycle( WaterParticle.class );
+				p.reset( x, y );
+			}
+		};
+
+		public Sink( int pos ) {
+			super();
+
+			this.pos = pos;
+
+			PointF p = DungeonTilemap.tileCenterToWorld( pos );
+			pos( p.x - 2, p.y + 3, 4, 0 );
+
+			pour( factory, 0.1f );
+		}
+
+		@Override
+		public void update() {
+			if (visible = (pos < Dungeon.level.heroFOV.length && Dungeon.level.heroFOV[pos])) {
+
+				super.update();
+
+				if (!isFrozen() && (rippleDelay -= Game.elapsed) <= 0) {
+					Ripple ripple = GameScene.ripple( pos + Dungeon.level.width() );
+					if (ripple != null) {
+						ripple.y -= DungeonTilemap.SIZE / 2;
+						rippleDelay = Random.Float(0.4f, 0.6f);
+					}
+				}
+			}
+		}
 	}
+
+	public static final class WaterParticle extends PixelParticle {
+
+		public WaterParticle() {
+			super();
+
+			acc.y = 50;
+			am = 0.5f;
+
+			color( ColorMath.random( 0xb6ccc2, 0x3b6653 ) );
+			size( 2 );
+		}
+
+		public void reset( float x, float y ) {
+			revive();
+
+			this.x = x;
+			this.y = y;
+
+			speed.set( Random.Float( -2, +2 ), 0 );
+
+			left = lifespan = 0.4f;
+		}
+	}
+}
