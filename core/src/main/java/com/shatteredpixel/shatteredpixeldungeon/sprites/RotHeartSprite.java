@@ -62,10 +62,10 @@ public class RotHeartSprite extends MobSprite {
 
 		renderShadow = false;
 
-		if (cloud == null) {
-			cloud = emitter();
-			cloud.pour( Speck.factory(Speck.TOXIC), 0.7f );
-		}
+//		if (cloud == null) {
+//			cloud = emitter();
+//			cloud.pour( Speck.factory(Speck.TOXIC), 0.7f );
+//		}
 	}
 
 	@Override
