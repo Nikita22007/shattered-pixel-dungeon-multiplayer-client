@@ -1413,7 +1413,12 @@ public class ParseThread implements Callable<String> {
         {
             //deprecated
             CharSprite old_sprite = chr.sprite;
-            Class<? extends CharSprite> new_sprite_class = spriteClassFromName(ToPascalCase(actorObj.getString("sprite_name")), chr != hero);
+            Class<? extends CharSprite> new_sprite_class;
+            if(isConnectedToOldServer()) {
+                new_sprite_class = spriteClassFromName(ToPascalCase(actorObj.getString("sprite_name")), chr != hero);
+            } else {
+                new_sprite_class = spriteClassFromName(actorObj.getString("sprite_name"), chr != hero);
+            }
             if ((old_sprite == null) || (!old_sprite.getClass().equals(new_sprite_class))) {
                 CharSprite sprite = spriteFromClass(new_sprite_class);
                 //Do we merge HeroSprite and CustomHeroSprite??

@@ -978,7 +978,12 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 				return WraithSprite.class;
 			}
 		}
-		String sprite_name = Utils.format("com.shatteredpixel.shatteredpixeldungeon.sprites.%s", spriteName);
+		String sprite_name;
+		if (ParseThread.isConnectedToOldServer()) {
+			sprite_name = Utils.format("com.shatteredpixel.shatteredpixeldungeon.sprites.%s", spriteName);
+		} else {
+			sprite_name = spriteName;
+		}
 		Class<? extends CharSprite> sprite_class = null;
 		CharSprite sprite = null;
 		try {
