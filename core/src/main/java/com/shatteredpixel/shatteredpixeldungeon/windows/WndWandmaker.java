@@ -46,9 +46,9 @@ public class WndWandmaker extends Window {
 
 	public WndWandmaker(JSONObject object){
 		id = object.getInt("id");
-		Item item = CustomItem.createItem(object.getJSONObject("quest_item"));
 		IconTitle titlebar = new IconTitle();
 		JSONObject args = object.getJSONObject("args");
+		Item item = CustomItem.createItem(args.getJSONObject("quest_item"));
 		Item wand1 = CustomItem.createItem(args.getJSONObject("wand1"));
 		Item wand2 = CustomItem.createItem(args.getJSONObject("wand2"));
 		String key = args.getString("quest_item_class");
