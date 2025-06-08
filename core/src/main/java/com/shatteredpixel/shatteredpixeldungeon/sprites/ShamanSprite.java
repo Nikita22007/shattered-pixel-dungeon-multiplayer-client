@@ -71,7 +71,7 @@ public abstract class ShamanSprite extends MobSprite {
 				new Callback() {
 					@Override
 					public void call() {
-						((Shaman)ch).onZapComplete();
+//						((Shaman)ch).onZapComplete();
 					}
 				} );
 		Sample.INSTANCE.play( Assets.Sounds.ZAP );
