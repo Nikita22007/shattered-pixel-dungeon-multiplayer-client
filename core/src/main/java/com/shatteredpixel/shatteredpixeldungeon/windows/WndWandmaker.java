@@ -110,7 +110,7 @@ public class WndWandmaker extends Window {
 				@Override
 				protected void onClick() {
 					RewardWindow.this.hide();
-
+					WndWandmaker.this.hide();
 					selectReward( index );
 				}
 			};
