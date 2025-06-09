@@ -143,7 +143,7 @@ public class HeroSelectScene extends PixelScene {
 				Dungeon.initSeed();
 				ActionIndicator.clearAction();
 				InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
-				Game.switchScene( ConnectScene.class );
+				ShatteredPixelDungeon.switchNoFade( ConnectScene.class );
 			}
 		};
 		startBtn.icon(Icons.get(Icons.ENTER));
