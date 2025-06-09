@@ -1408,12 +1408,16 @@ public class ParseThread implements Callable<String> {
     //TODO: check this
     protected Char parseActorChar(JSONObject actorObj, int ID, Actor actor) throws JSONException {
         Char chr;
-        if (actor == null) {
+        final boolean add_actor = actor == null;
+        if (add_actor) {
             chr = new CustomMob(ID);
             level.mobs.add((Mob) chr);
             GameScene.add((Mob) chr);
         } else {
             chr = (Char) actor;
+        }
+        if (actorObj.has("position")) {
+            chr.pos = actorObj.getInt("position");
         }
         if (hasNotNull(actorObj,"sprite_name"))
         {

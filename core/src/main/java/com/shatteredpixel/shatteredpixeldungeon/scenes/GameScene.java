@@ -940,6 +940,7 @@ public class GameScene extends PixelScene {
 			oldSprite.killAndErase();
 			chr.sprite = newSprite;
 			scene.addMobSprite((Mob) chr);
+			chr.sprite.link(chr);
 		} else {
 			GLog.n("trying on change sprite on char that is not mob");
 		}
