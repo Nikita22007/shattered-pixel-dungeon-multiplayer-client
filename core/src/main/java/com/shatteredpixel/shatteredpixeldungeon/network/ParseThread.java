@@ -1055,7 +1055,7 @@ public class ParseThread implements Callable<String> {
 
     private void parseEmitterVisualAction(JSONObject actionObj) {
         try {
-            if(actionObj.has("kill")) {
+            if(actionObj.has("kill") && actionObj.getBoolean("kill")) {
                 int id = actionObj.getInt("id");
                 Emitter emitter = Emitter.infiniteEmitters.get(id);
                 if (emitter != null) {
