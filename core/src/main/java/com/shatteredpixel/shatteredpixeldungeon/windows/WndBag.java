@@ -55,6 +55,7 @@ import com.watabou.noosa.Image;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Signal;
 import com.watabou.utils.Utils;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
@@ -394,8 +395,14 @@ public class WndBag extends WndTabbed {
 		};
 		slot.setRect( x, y, slotWidth, slotHeight );
 		add(slot);
-		if (selector != null || (!allowedItems.isEmpty() && listener == null)) {
-			if (item == null || (selector != null && !selector.itemSelectable(item)) || (selector == null && !allowedItems.contains(item))) {
+		if (allowedItems != null) {
+			if (item == null){
+				slot.enable(false);
+			} else if (!allowedItems.contains(item)){
+				slot.enable(false);
+			}
+		} else if (selector != null) {
+			if (item == null || !selector.itemSelectable(item)) {
 				slot.enable(false);
 			}
 		}
@@ -529,7 +536,8 @@ public class WndBag extends WndTabbed {
 		public abstract boolean itemSelectable( Item item );
 		public abstract void onSelect( Item item );
 	}
-	protected List<Item> allowedItems = new ArrayList<>();
+	@Nullable
+	protected List<Item> allowedItems = null;
 	public String title;
 	public Listener listener;
 	public Mode lastMode;
@@ -591,7 +599,7 @@ public class WndBag extends WndTabbed {
 
 		super();
 
-		this.allowedItems = (allowedItems == null) ? new ArrayList<Item>() : ParseArrayOfItems(Dungeon.hero, allowedItems);
+		this.allowedItems = (allowedItems == null) ? null : ParseArrayOfItems(Dungeon.hero, allowedItems);
 
 
 		this.listener = listener;
