@@ -141,6 +141,19 @@ public class MenuPane extends Component {
 		add( danger );
 
 		add( pickedUp = new Toolbar.PickedUpItem());
+
+		//hidden chat button. Add it later when icon will be drawn
+		add(new Button(){
+			@Override
+			protected void onClick() {
+				GameScene.show(new WndChat());
+			}
+
+			@Override
+			public GameAction keyAction() {
+				return SPDAction.CHAT;
+			}
+		});
 	}
 
 	@Override
