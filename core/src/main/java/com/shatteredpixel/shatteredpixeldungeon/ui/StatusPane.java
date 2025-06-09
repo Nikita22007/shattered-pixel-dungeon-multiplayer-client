@@ -166,6 +166,7 @@ public class StatusPane extends Component {
 		counter = new CircleArc(18, 4.25f);
 		counter.color( 0x808080, true );
 		counter.show(this, busy.center(), 0f);
+		counter.setSweep(0);
 	}
 
 	@Override
@@ -322,9 +323,11 @@ public class StatusPane extends Component {
 			avatar.copy( HeroSprite.avatar( Dungeon.hero ) );
 		}
 
-		counter.setSweep((1f - Actor.now()%1f)%1f);
 	}
 
+	public void setSweep(float sweep){
+		counter.setSweep(sweep);
+	}
 	public void updateAvatar(){
 		avatar.copy( HeroSprite.avatar( Dungeon.hero ) );
 	}

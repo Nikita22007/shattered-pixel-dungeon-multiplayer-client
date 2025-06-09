@@ -1684,6 +1684,9 @@ public class GameScene extends PixelScene {
 			flare.show(scene.effects, position, duration);
 		}
 	}
+	public void setCounter(float sweep){
+		status.setSweep(sweep);
+	}
 
 	public static class CustomCellListener extends CellSelector.Listener {
 

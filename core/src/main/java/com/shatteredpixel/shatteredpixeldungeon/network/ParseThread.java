@@ -437,6 +437,12 @@ public class ParseThread implements Callable<String> {
         if (uiObject.has("attack_indicator_target")){
             AttackIndicator.setCandidates(uiObject.getInt("attack_indicator_target"));
         }
+        if(uiObject.has("counter")){
+            Scene scene = Game.scene();
+            if (scene instanceof GameScene){
+                ((GameScene) scene).setCounter((float) uiObject.getDouble("counter"));
+            }
+        }
     }
 
     private void parseWindow(JSONObject windowObj) {
