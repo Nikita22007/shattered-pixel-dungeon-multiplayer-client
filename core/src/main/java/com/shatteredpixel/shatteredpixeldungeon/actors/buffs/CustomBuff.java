@@ -16,6 +16,8 @@ public class CustomBuff extends Buff {
     float rm = 0;
     float gm = 0;
     float bm = 0;
+    private String name = "";
+    private float iconFadePercent;
 
     public CustomBuff(JSONObject obj) throws JSONException {
         //TODO: check this
@@ -32,6 +34,14 @@ public class CustomBuff extends Buff {
             rm = (float) hardlight.getDouble("rm");
             gm = (float) hardlight.getDouble("gm");
             bm = (float) hardlight.getDouble("bm");
+        }
+        if (obj.has("name")) {
+            this.name = obj.getString("name");
+        }
+        if (obj.has("fade_percent")) {
+            iconFadePercent = Float.parseFloat(obj.getString("fade_percent"));
+        } else {
+            iconFadePercent = 0f; //default to no fade
         }
     }
 
@@ -60,5 +70,17 @@ public class CustomBuff extends Buff {
     public String toString()  {
         return desc;
     }
+    public String name(){
+        return name;
+    }
 
+    @Override
+    public String desc() {
+        return desc;
+    }
+
+    @Override
+    public float iconFadePercent() {
+        return iconFadePercent;
+    }
 }
