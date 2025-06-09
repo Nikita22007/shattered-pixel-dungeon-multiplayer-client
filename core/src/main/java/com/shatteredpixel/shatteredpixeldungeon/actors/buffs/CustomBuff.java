@@ -1,5 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
+import com.nikita22007.pixeldungeonmultiplayer.Text;
 import com.watabou.noosa.Image;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,11 +13,11 @@ import static com.shatteredpixel.shatteredpixeldungeon.network.ParseThread.isCon
 public class CustomBuff extends Buff {
     private int icon = 0;
 
-    private String desc = "unknown";
+    private Text desc = new Text("unknown");
     float rm = 0;
     float gm = 0;
     float bm = 0;
-    private String name = "";
+    private Text name = new Text("unknown");
     private float iconFadePercent;
 
     public CustomBuff(JSONObject obj) throws JSONException {
@@ -28,7 +29,7 @@ public class CustomBuff extends Buff {
 
     public void update(JSONObject obj) throws JSONException {
         setIcon(obj.optInt("icon", icon));
-        setDesc(obj.optString("desc", desc));
+        setDesc(Text.of(obj.opt("desc")));
         if (obj.has("hardlight")){
             JSONObject hardlight = obj.getJSONObject("hardlight");
             rm = (float) hardlight.getDouble("rm");
@@ -36,7 +37,7 @@ public class CustomBuff extends Buff {
             bm = (float) hardlight.getDouble("bm");
         }
         if (obj.has("name")) {
-            this.name = obj.getString("name");
+            this.name = Text.of(obj.get("name"));
         }
         if (obj.has("fade_percent")) {
             iconFadePercent = Float.parseFloat(obj.getString("fade_percent"));
@@ -62,21 +63,18 @@ public class CustomBuff extends Buff {
         icon.hardlight(rm, gm , bm);
     }
 
-    public void setDesc(String desc) {
+    public void setDesc(Text desc) {
         this.desc = desc;
     }
 
     @Override
-    public String toString()  {
-        return desc;
-    }
     public String name(){
-        return name;
+        return name.asString();
     }
 
     @Override
     public String desc() {
-        return desc;
+        return desc.asString();
     }
 
     @Override
