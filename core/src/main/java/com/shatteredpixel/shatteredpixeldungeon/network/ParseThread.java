@@ -1398,6 +1398,8 @@ public class ParseThread implements Callable<String> {
                     }
                     break;
                 }
+                case "feeling":
+                    level.feeling = Level.Feeling.valueOf(levelParamsObj.getString(token));
                 default: {
                     GLog.n("Unexpected token \"%s\" in level params. Ignored.", token);
                     break;
