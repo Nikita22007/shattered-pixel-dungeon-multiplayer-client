@@ -45,6 +45,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShaftParticle;
+import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
@@ -55,6 +56,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.AlchemyScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -73,12 +75,14 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndInfoItem;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndQuest;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndUseItem;
+import com.sun.org.apache.bcel.internal.util.Args;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -147,73 +151,6 @@ public class DriedRose extends Artifact {
 
 		super.execute(hero, action);
 
-		if (action.equals(AC_SUMMON)) {
-
-			if (hero.buff(MagicImmune.class) != null) return;
-
-			if (!Ghost.Quest.completed())   GameScene.show(new WndUseItem(null, this));
-			else if (ghost != null)         GLog.i( Messages.get(this, "spawned") );
-			else if (!isEquipped( hero ))   GLog.i( Messages.get(Artifact.class, "need_to_equip") );
-			else if (charge != chargeCap)   GLog.i( Messages.get(this, "no_charge") );
-			else if (cursed)                GLog.i( Messages.get(this, "cursed") );
-			else {
-				ArrayList<Integer> spawnPoints = new ArrayList<>();
-				for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
-					int p = hero.pos + PathFinder.NEIGHBOURS8[i];
-					if (Actor.findChar(p) == null && (Dungeon.level.passable[p] || Dungeon.level.avoid[p])) {
-						spawnPoints.add(p);
-					}
-				}
-
-				if (spawnPoints.size() > 0) {
-					ghost = new GhostHero( this );
-					ghostID = ghost.id();
-					ghost.pos = Random.element(spawnPoints);
-
-					GameScene.add(ghost, 1f);
-					Dungeon.level.occupyCell(ghost);
-					
-					CellEmitter.get(ghost.pos).start( ShaftParticle.FACTORY, 0.3f, 4 );
-					CellEmitter.get(ghost.pos).start( Speck.factory(Speck.LIGHT), 0.2f, 3 );
-
-					hero.spend(1f);
-					hero.busy();
-					hero.sprite.operate(hero.pos);
-
-					if (!firstSummon) {
-						ghost.yell( Messages.get(GhostHero.class, "hello", Messages.titleCase(Dungeon.hero.name())) );
-						Sample.INSTANCE.play( Assets.Sounds.GHOST );
-						firstSummon = true;
-						
-					} else {
-						if (BossHealthBar.isAssigned()) {
-							ghost.sayBoss();
-						} else {
-							ghost.sayAppeared();
-						}
-					}
-
-					Invisibility.dispel(hero);
-					Talent.onArtifactUsed(hero);
-					charge = 0;
-					partialCharge = 0;
-					updateQuickslot();
-
-				} else
-					GLog.i( Messages.get(this, "no_space") );
-			}
-
-		} else if (action.equals(AC_DIRECT)){
-			if (ghost == null && ghostID != 0){
-				findGhost();
-			}
-			if (ghost != null && ghost != Stasis.getStasisAlly()){
-				GameScene.selectCell(ghostDirector);
-			}
-			
-		} else if (action.equals(AC_OUTFIT)){
-			GameScene.show( new WndGhostHero(this) );
-		}
 	}
 
 	private void findGhost(){
@@ -846,7 +783,7 @@ public class DriedRose extends Artifact {
 
 	}
 	
-	private static class WndGhostHero extends Window{
+	public static class WndGhostHero extends Window{
 		
 		private static final int BTN_SIZE	= 32;
 		private static final float GAP		= 2;
@@ -856,16 +793,20 @@ public class DriedRose extends Artifact {
 		private ItemButton btnWeapon;
 		private ItemButton btnArmor;
 		
-		WndGhostHero(final DriedRose rose){
-			
+		public WndGhostHero(JSONObject obj){
+			final JSONObject args = obj.getJSONObject("args");
+			final int id = obj.getInt("id");
+			final CustomItem weapon = args.has("weapon") && !args.isNull("weapon") ? CustomItem.createItem(args.getJSONObject("weapon")) : null;
+			final CustomItem armor = args.has("armor") && !args.isNull("armor") ? CustomItem.createItem(args.getJSONObject("armor")) : null;
+			final CustomItem rose = CustomItem.createItem(args.getJSONObject("rose"));
 			IconTitle titlebar = new IconTitle();
 			titlebar.icon( new ItemSprite(rose) );
-			titlebar.label( Messages.get(this, "title") );
+			titlebar.label( args.getString("title") );
 			titlebar.setRect( 0, 0, WIDTH, 0 );
 			add( titlebar );
 			
 			RenderedTextBlock message =
-					PixelScene.renderTextBlock(Messages.get(this, "desc", rose.ghostStrength()), 6);
+					PixelScene.renderTextBlock(args.getString("message"), 6);
 			message.maxWidth( WIDTH );
 			message.setPos(0, titlebar.bottom() + GAP);
 			add( message );
@@ -873,59 +814,8 @@ public class DriedRose extends Artifact {
 			btnWeapon = new ItemButton(){
 				@Override
 				protected void onClick() {
-					if (rose.weapon != null){
-						item(new WndBag.Placeholder(ItemSpriteSheet.WEAPON_HOLDER));
-						if (!rose.weapon.doPickUp(Dungeon.hero)){
-							Dungeon.level.drop( rose.weapon, Dungeon.hero.pos);
-						}
-						rose.weapon = null;
-					} else {
-						GameScene.selectItem(new WndBag.ItemSelector() {
-
-							@Override
-							public String textPrompt() {
-								return Messages.get(WndGhostHero.class, "weapon_prompt");
-							}
-
-							@Override
-							public Class<?extends Bag> preferredBag(){
-								return Belongings.Backpack.class;
-							}
-
-							@Override
-							public boolean itemSelectable(Item item) {
-								return item instanceof MeleeWeapon;
-							}
-
-							@Override
-							public void onSelect(Item item) {
-								if (!(item instanceof MeleeWeapon)) {
-									//do nothing, should only happen when window is cancelled
-								} else if (item.unique) {
-									GLog.w( Messages.get(WndGhostHero.class, "cant_unique"));
-									hide();
-								} else if (!item.isIdentified()) {
-									GLog.w( Messages.get(WndGhostHero.class, "cant_unidentified"));
-									hide();
-								} else if (item.cursed) {
-									GLog.w( Messages.get(WndGhostHero.class, "cant_cursed"));
-									hide();
-								} else if (((MeleeWeapon)item).STRReq() > rose.ghostStrength()) {
-									GLog.w( Messages.get(WndGhostHero.class, "cant_strength"));
-									hide();
-								} else {
-									if (item.isEquipped(Dungeon.hero)){
-										((MeleeWeapon) item).doUnequip(Dungeon.hero, false, false);
-									} else {
-										item.detach(Dungeon.hero.belongings.backpack);
-									}
-									rose.weapon = (MeleeWeapon) item;
-									item(rose.weapon);
-								}
-								
-							}
-						});
-					}
+					SendData.sendWindowResult(id, 0);
+					hide();
 				}
 
 				@Override
@@ -938,8 +828,8 @@ public class DriedRose extends Artifact {
 				}
 			};
 			btnWeapon.setRect( (WIDTH - BTN_GAP) / 2 - BTN_SIZE, message.top() + message.height() + GAP, BTN_SIZE, BTN_SIZE );
-			if (rose.weapon != null) {
-				btnWeapon.item(rose.weapon);
+			if (weapon != null) {
+				btnWeapon.item(weapon);
 			} else {
 				btnWeapon.item(new WndBag.Placeholder(ItemSpriteSheet.WEAPON_HOLDER));
 			}
@@ -948,59 +838,8 @@ public class DriedRose extends Artifact {
 			btnArmor = new ItemButton(){
 				@Override
 				protected void onClick() {
-					if (rose.armor != null){
-						item(new WndBag.Placeholder(ItemSpriteSheet.ARMOR_HOLDER));
-						if (!rose.armor.doPickUp(Dungeon.hero)){
-							Dungeon.level.drop( rose.armor, Dungeon.hero.pos);
-						}
-						rose.armor = null;
-					} else {
-						GameScene.selectItem(new WndBag.ItemSelector() {
-
-							@Override
-							public String textPrompt() {
-								return Messages.get(WndGhostHero.class, "armor_prompt");
-							}
-
-							@Override
-							public Class<?extends Bag> preferredBag(){
-								return Belongings.Backpack.class;
-							}
-
-							@Override
-							public boolean itemSelectable(Item item) {
-								return item instanceof Armor;
-							}
-
-							@Override
-							public void onSelect(Item item) {
-								if (!(item instanceof Armor)) {
-									//do nothing, should only happen when window is cancelled
-								} else if (item.unique || ((Armor) item).checkSeal() != null) {
-									GLog.w( Messages.get(WndGhostHero.class, "cant_unique"));
-									hide();
-								} else if (!item.isIdentified()) {
-									GLog.w( Messages.get(WndGhostHero.class, "cant_unidentified"));
-									hide();
-								} else if (item.cursed) {
-									GLog.w( Messages.get(WndGhostHero.class, "cant_cursed"));
-									hide();
-								} else if (((Armor)item).STRReq() > rose.ghostStrength()) {
-									GLog.w( Messages.get(WndGhostHero.class, "cant_strength"));
-									hide();
-								} else {
-									if (item.isEquipped(Dungeon.hero)){
-										((Armor) item).doUnequip(Dungeon.hero, false, false);
-									} else {
-										item.detach(Dungeon.hero.belongings.backpack);
-									}
-									rose.armor = (Armor) item;
-									item(rose.armor);
-								}
-								
-							}
-						});
-					}
+					SendData.sendWindowResult(id, 1);
+					hide();
 				}
 
 				@Override
@@ -1013,8 +852,8 @@ public class DriedRose extends Artifact {
 				}
 			};
 			btnArmor.setRect( btnWeapon.right() + BTN_GAP, btnWeapon.top(), BTN_SIZE, BTN_SIZE );
-			if (rose.armor != null) {
-				btnArmor.item(rose.armor);
+			if (armor != null) {
+				btnArmor.item(armor);
 			} else {
 				btnArmor.item(new WndBag.Placeholder(ItemSpriteSheet.ARMOR_HOLDER));
 			}

@@ -23,6 +23,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.*;
 import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.IronKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfIntuition;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
@@ -518,6 +519,10 @@ public class ParseThread implements Callable<String> {
                     break;
                 case "guess":
                     GameScene.show(new StoneOfIntuition.WndGuess(windowObj));
+                    break;
+                case "ghost_hero":
+                    GameScene.show(new DriedRose.WndGhostHero(windowObj));
+                    break;
                 default: {
                     Log.e("parse_window", String.format("incorrect window type: %s", type));
                 }
