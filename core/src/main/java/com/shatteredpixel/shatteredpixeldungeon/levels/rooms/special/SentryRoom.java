@@ -394,9 +394,6 @@ public class SentryRoom extends SpecialRoom {
 			chargeParticles.pour(MagicMissile.MagicParticle.ATTRACTING, 0.05f);
 			chargeParticles.on = false;
 
-			if (((Sentry)ch).curChargeDelay != ((Sentry) ch).initialChargeDelay){
-				play(charging);
-			}
 		}
 
 		@Override
