@@ -89,9 +89,11 @@ public class InventorySlot extends ItemSlot {
 			bg.resetColor();
 			if (item instanceof CustomItem){
 				CustomItem.UI ui = ((CustomItem)item).ui;
-				bg.ra = ui.getBackground().ra;
-				bg.ba = ui.getBackground().ba;
-				bg.ga = ui.getBackground().ga;
+				if (ui.getBackground() != null) {
+					bg.ra = ui.getBackground().ra;
+					bg.ba = ui.getBackground().ba;
+					bg.ga = ui.getBackground().ga;
+				}
 			}
 			else if (item.cursed && item.cursedKnown) {
 				bg.ra = +0.3f;
