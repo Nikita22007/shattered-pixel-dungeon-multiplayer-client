@@ -326,6 +326,11 @@ public class ItemSlot extends Button {
 			} else {
 				level.resetColor();
 			}
+
+			extra.visible = ui.getTopLeft().isVisible();
+			status.visible = ui.getTopRight().isVisible();
+			level.visible = ui.getBottomRight().isVisible();
+
 			if(item.icon != -1 && item.isIdentified()) {
 				itemIcon = new Image(Assets.Sprites.ITEM_ICONS);
 				itemIcon.frame(ItemSpriteSheet.Icons.film.get(item.icon));
