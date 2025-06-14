@@ -29,7 +29,9 @@ public class CustomBuff extends Buff {
 
     public void update(JSONObject obj) throws JSONException {
         setIcon(obj.optInt("icon", icon));
-        setDesc(Text.of(obj.opt("desc")));
+        if (obj.has("desc")) {
+            setDesc(Text.of(obj.opt("desc")));
+        }
         if (obj.has("hardlight")){
             JSONObject hardlight = obj.getJSONObject("hardlight");
             rm = (float) hardlight.getDouble("rm");
