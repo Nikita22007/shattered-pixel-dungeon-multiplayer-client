@@ -1,11 +1,8 @@
 package com.shatteredpixel.shatteredpixeldungeon.network;
 
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
-import com.shatteredpixel.shatteredpixeldungeon.network.scanners.DirectServerInfo;
-import com.shatteredpixel.shatteredpixeldungeon.network.scanners.RelaySD;
+import com.shatteredpixel.shatteredpixeldungeon.network.scanners.*;
 
-import com.shatteredpixel.shatteredpixeldungeon.network.scanners.ServerInfo;
-import com.shatteredpixel.shatteredpixeldungeon.network.scanners.ServiceDiscovery;
 import com.watabou.network.ServiceInfo;
 import com.watabou.network.ServiceInfoHandler;
 import com.watabou.network.ServiceInfoListener;
@@ -17,6 +14,7 @@ import java.util.List;
 public class NetworkScanner {
     protected static NetworkScannerListener scannerListener;
     protected static RelaySD relayServer = null;
+    protected static ServerListScanner serverListScanner;
     protected static ServiceInfoListener serviceInfoListener = new ServiceInfoListener();
     protected static ServiceInfoHandler serviceInfoHandler = ShatteredPixelDungeon.platform.createServiceInfoHandler(serviceInfoListener);
 
@@ -24,6 +22,8 @@ public class NetworkScanner {
         boolean res = true;
         initListener();
         NetworkScanner.scannerListener = scannerListener;
+        serverListScanner = new ServerListScanner();
+        serverListScanner.startDiscovery(listener);
         serviceInfoHandler.startDiscovery();
         if (ShatteredPixelDungeon.onlineMode()) {
             relayServer = new RelaySD();
@@ -50,6 +50,7 @@ public class NetworkScanner {
         if (relayServer != null) {
             result.addAll(relayServer.getServerList());
         }
+        result.addAll(serverListScanner.getServerList());
         return result;
     }
 

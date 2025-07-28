@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon;
 
+import com.badlogic.gdx.Gdx;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Languages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
@@ -31,13 +32,19 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.GameSettings;
 import com.watabou.utils.Point;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.swing.undo.AbstractUndoableEdit;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class SPDSettings extends GameSettings {
@@ -526,5 +533,28 @@ public class SPDSettings extends GameSettings {
 
 	public static int fulLScreenMonitor(){
 		return getInt( KEY_FULLSCREEN_MONITOR, 0 );
+	}
+
+	public static List<InetSocketAddress> serverList() {
+		JSONArray serverList = new JSONArray(getString("server_list","{}"));
+		ArrayList<InetSocketAddress> addressList = new ArrayList<>();
+		JSONObject serverAddress;
+		for (int i = 0; i < serverList.length(); i++) {
+			serverAddress = serverList.getJSONObject(i);
+            try {
+                addressList.add(new InetSocketAddress(InetAddress.getByName(serverAddress.getString("host")), serverAddress.getInt("port")));
+            } catch (UnknownHostException e) {
+				Gdx.app.error("Server Discovery", "Invalid address", e);
+            }
+        }
+		return addressList;
+	}
+	public static void addServer(String host, int port){
+		JSONArray serverList = new JSONArray(getString("server_list","[]"));
+		JSONObject serverAddress = new JSONObject();
+		serverAddress.put("host", host);
+		serverAddress.put("port", port);
+		serverList.put(serverAddress);
+		put("server_list", serverList.toString());
 	}
 }

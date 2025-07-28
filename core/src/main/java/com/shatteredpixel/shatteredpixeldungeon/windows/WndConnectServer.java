@@ -41,14 +41,14 @@ public class WndConnectServer extends Window {
         tfTitle.x= (tfTitle.maxWidth-tfTitle.width()) / 2 ;
         add( tfTitle );
 
-        BitmapTextMultiline tfMesage = new BitmapTextMultiline(server.name, PixelScene.pixelFont);
-        tfMesage.maxWidth = WIDTH - MARGIN * 2;
-        tfMesage.measure();
-        tfMesage.x = MARGIN;
-        tfMesage.y = tfTitle.y + tfTitle.height() + MARGIN;
-        add( tfMesage );
+        BitmapTextMultiline tfMessage = new BitmapTextMultiline("Players: " + server.players + "/" + server.maxPlayers, PixelScene.pixelFont);
+        tfMessage.maxWidth = WIDTH - MARGIN * 2;
+        tfMessage.measure();
+        tfMessage.x = MARGIN;
+        tfMessage.y = tfTitle.y + tfTitle.height() + MARGIN;
+        add( tfMessage );
 
-        float pos = tfMesage.y + tfMesage.height() + MARGIN;
+        float pos = tfMessage.y + tfMessage.height() + MARGIN;
 
       /*  for (int i=0; i < options.length; i++) {
             final int index = i;

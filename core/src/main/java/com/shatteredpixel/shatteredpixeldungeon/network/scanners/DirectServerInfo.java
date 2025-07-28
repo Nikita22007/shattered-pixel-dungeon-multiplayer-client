@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.network.scanners;
 
 
 import com.shatteredpixel.shatteredpixeldungeon.network.ServerAddress;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 import java.net.InetAddress;
 import java.util.Objects;
@@ -40,5 +41,10 @@ public class DirectServerInfo extends ServerInfo {
         int result = Objects.hashCode(IP);
         result = 31 * result + port;
         return result;
+    }
+
+    @Override
+    public int icon() {
+        return ItemSpriteSheet.AMULET;
     }
 }
