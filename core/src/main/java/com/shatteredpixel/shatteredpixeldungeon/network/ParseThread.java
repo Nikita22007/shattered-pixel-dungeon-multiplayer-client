@@ -65,6 +65,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.util.*;
@@ -75,6 +76,7 @@ import java.util.concurrent.FutureTask;
 import static com.nikita22007.pixeldungeonmultiplayer.JavaUtils.hasNotNull;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.level;
+import static com.shatteredpixel.shatteredpixeldungeon.network.Client.client;
 import static com.shatteredpixel.shatteredpixeldungeon.network.Client.disconnect;
 import static com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite.spriteClassFromName;
 import static com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite.spriteFromClass;
@@ -348,6 +350,19 @@ public class ParseThread implements Callable<String> {
                     Gdx.app.log("ParseThread", "ServerUUID");
                     serverUUID = data.getString("server_uuid");
                     Client.sendHeroClass(GamesInProgress.selectedClass);
+                    break;
+                }
+                case "redirect": {
+                    Client.disconnectWithoutSwitch();
+                    ShatteredPixelDungeon.switchScene(InterlevelScene.class);
+                    JSONObject redirectObject = data.getJSONObject(token);
+                    if (redirectObject.has("uuid")){
+                        NetworkPacket.redirectUUID = redirectObject.getString("uuid");
+                    }
+                    if(redirectObject.has("password")){
+                        NetworkPacket.password = redirectObject.getString("password");
+                    }
+                    Client.connect(redirectObject.getString("host"), redirectObject.getInt("port"));
                     break;
                 }
                 default: {

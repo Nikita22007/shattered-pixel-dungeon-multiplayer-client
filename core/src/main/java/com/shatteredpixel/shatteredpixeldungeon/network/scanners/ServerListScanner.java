@@ -23,14 +23,8 @@ public class ServerListScanner implements ServiceDiscovery {
         List<InetSocketAddress> serverList = SPDSettings.serverList();
         for (InetSocketAddress address : serverList) {
             UserServerInfo serverInfo;
-            try {
-                socket = new Socket();
-                socket.connect(address);
-                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                JSONObject object = new JSONObject(reader.readLine());
-                serverInfo = new UserServerInfo(object, address, true);
-
-            } catch (IOException e) {
+            serverInfo = DirectServerParser.fromAddress(address);
+            if (serverInfo == null) {
                 serverInfo = new UserServerInfo(address.getHostName(), address.getAddress(), address.getPort(), 0, -1, false);
                 serverInfo.online = false;
             }

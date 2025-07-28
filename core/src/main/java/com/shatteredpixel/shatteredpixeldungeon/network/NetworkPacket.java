@@ -36,12 +36,18 @@ class NetworkPacket {
             dataRef.set(new JSONObject());
         }
     }
+    public static String password = null;
+    public static String redirectUUID = null;
 
     public void packAndAddHeroClass(String heroClass) {
         synchronized (dataRef) {
             try {
                 dataRef.get().put("hero_class", heroClass);
-                dataRef.get().put("uuid", SPDSettings.heroUUID(ParseThread.serverUUID));
+                dataRef.get().put("uuid", redirectUUID != null ? redirectUUID : SPDSettings.heroUUID(ParseThread.serverUUID));
+                if (password!= null) {
+                    dataRef.get().put("password", password);
+                }
+                redirectUUID = null;
                 Gdx.app.log("ServerUUID", ParseThread.serverUUID);
             } catch (Exception ignored) {
             }
