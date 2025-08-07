@@ -536,7 +536,7 @@ public class SPDSettings extends GameSettings {
 	}
 
 	public static List<InetSocketAddress> serverList() {
-		JSONArray serverList = new JSONArray(getString("server_list","{}"));
+		JSONArray serverList = new JSONArray(getString("server_list","[]"));
 		ArrayList<InetSocketAddress> addressList = new ArrayList<>();
 		JSONObject serverAddress;
 		for (int i = 0; i < serverList.length(); i++) {
