@@ -56,7 +56,6 @@ public class FadingTraps extends CustomTilemap {
     private void remove() {
         if (vis != null) {
             vis.killAndErase();
-            vis.parent.killAndErase();
         }
         Dungeon.level.customTiles.remove(this);
     }
@@ -87,10 +86,11 @@ public class FadingTraps extends CustomTilemap {
             trapObject = trapData.getJSONObject(i);
             instance.data[trapObject.getInt("pos")] = trapObject.getInt("data");
             instance.fadeDelay = 2f;
-            if (newInstance) {
-                GameScene.add(instance, false);
-                Dungeon.level.customTiles.add(instance);
-            }
+
+        }
+        if (newInstance) {
+            GameScene.add(instance, false);
+            Dungeon.level.customTiles.add(instance);
         }
         instance.vis.alpha((float) object.getDouble("alpha"));
     }
