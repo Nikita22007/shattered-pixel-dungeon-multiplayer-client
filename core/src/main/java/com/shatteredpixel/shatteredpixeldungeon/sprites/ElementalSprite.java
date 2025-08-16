@@ -115,7 +115,7 @@ public abstract class ElementalSprite extends MobSprite {
 				new Callback() {
 					@Override
 					public void call() {
-						((Elemental)ch).onZapComplete();
+						//((Elemental)ch).onZapComplete();
 					}
 				} );
 		Sample.INSTANCE.play( Assets.Sounds.ZAP );
@@ -208,7 +208,7 @@ public abstract class ElementalSprite extends MobSprite {
 		public void zap( int cell ) {
 			super.zap( cell, null );
 			
-			((Elemental)ch).onZapComplete();
+			//((Elemental)ch).onZapComplete();
 			parent.add( new Beam.LightRay(center(), DungeonTilemap.raisedTileCenterToWorld(cell)));
 		}
 		
@@ -236,7 +236,7 @@ public abstract class ElementalSprite extends MobSprite {
 		public void zap(int cell) {
 			zap( cell, null ); //effectively super.super.zap
 			//relies on cursed wand for effects
-			((Elemental)ch).onZapComplete();
+			//((Elemental)ch).onZapComplete();
 		}
 
 		@Override

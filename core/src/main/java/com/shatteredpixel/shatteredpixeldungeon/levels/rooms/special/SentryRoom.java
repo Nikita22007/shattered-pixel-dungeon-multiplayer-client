@@ -382,7 +382,7 @@ public class SentryRoom extends SpecialRoom {
 			} else {
 				parent.add(new Beam.DeathRay(center(), DungeonTilemap.raisedTileCenterToWorld(pos)));
 			}
-			((Sentry)ch).onZapComplete();
+			//((Sentry)ch).onZapComplete();
 		}
 
 		@Override

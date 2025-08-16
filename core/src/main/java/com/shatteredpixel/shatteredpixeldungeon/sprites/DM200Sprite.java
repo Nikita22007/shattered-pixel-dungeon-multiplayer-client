@@ -69,7 +69,7 @@ public class DM200Sprite extends MobSprite {
 				new Callback() {
 					@Override
 					public void call() {
-						((DM200)ch).onZapComplete();
+						//((DM200)ch).onZapComplete();
 					}
 				} );
 		Sample.INSTANCE.play( Assets.Sounds.GAS );

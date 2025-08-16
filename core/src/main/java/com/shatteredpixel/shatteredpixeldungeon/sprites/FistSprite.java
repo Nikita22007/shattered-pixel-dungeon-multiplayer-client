@@ -130,7 +130,7 @@ public abstract class FistSprite extends MobSprite {
 				new Callback() {
 					@Override
 					public void call() {
-						((YogFist)ch).onZapComplete();
+						//((YogFist)ch).onZapComplete();
 					}
 				} );
 		Sample.INSTANCE.play( Assets.Sounds.ZAP );
@@ -268,7 +268,7 @@ public abstract class FistSprite extends MobSprite {
 		public void zap( int cell ) {
 			super.zap( cell, null );
 
-			((YogFist)ch).onZapComplete();
+			//((YogFist)ch).onZapComplete();
 			parent.add( new Beam.LightRay(center(), DungeonTilemap.raisedTileCenterToWorld(cell)));
 		}
 		@Override

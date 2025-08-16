@@ -139,12 +139,12 @@ public class NecromancerSprite extends MobSprite {
 		super.onComplete(anim);
 		if (anim == zap){
 			if (ch instanceof Necromancer){
-				if (((Necromancer) ch).summoning){
-					charge();
-				} else {
-					((Necromancer)ch).onZapComplete();
-					idle();
-				}
+//				if (((Necromancer) ch).summoning){
+//					charge();
+//				} else {
+//					((Necromancer)ch).onZapComplete();
+//					idle();
+//				}
 			} else {
 				idle();
 			}
