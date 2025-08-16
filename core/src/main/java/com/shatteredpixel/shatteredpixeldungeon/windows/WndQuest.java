@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.windows;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.GhostSprite;
 import com.watabou.utils.Reflection;
@@ -33,8 +34,14 @@ public class WndQuest extends WndTitledMessage {
 	public WndQuest( NPC questgiver, String text ) {
 		super( questgiver.sprite(), Messages.titleCase( questgiver.name() ), text );
 	}
-	public WndQuest(JSONObject object) {
+	public WndQuest(int id, JSONObject object) {
 		super((CharSprite) Reflection.newInstance(Reflection.forName(object.getString("sprite_name"))), Messages.titleCase(object.getString("char_name")), object.getString("text"));
-
+		this.id = id;
     }
+
+	@Override
+	public void hide() {
+		SendData.sendWindowResult(id, -1);
+		super.hide();
+	}
 }

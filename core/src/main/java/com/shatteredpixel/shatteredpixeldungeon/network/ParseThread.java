@@ -500,7 +500,7 @@ public class ParseThread implements Callable<String> {
                     GameScene.show(new WndClericSpells(id, windowObj.getJSONObject("args")));
                     break;
                 case "quest":
-                    GameScene.show(new WndQuest(windowObj.getJSONObject("args")));
+                    GameScene.show(new WndQuest(id, windowObj.getJSONObject("args")));
                     break;
                 case "sad_ghost":
                     GameScene.show(new WndSadGhost(id, windowObj.getJSONObject("args")));
