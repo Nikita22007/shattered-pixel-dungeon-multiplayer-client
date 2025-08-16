@@ -81,7 +81,7 @@ public class SpinnerSprite extends MobSprite {
 				new Callback() {
 					@Override
 					public void call() {
-						((Spinner)ch).shootWeb();
+//						((Spinner)ch).shootWeb();
 					}
 				} );
 		Sample.INSTANCE.play( Assets.Sounds.MISS );
