@@ -365,6 +365,10 @@ public class ParseThread implements Callable<String> {
                     Client.connect(redirectObject.getString("host"), redirectObject.getInt("port"));
                     break;
                 }
+                case "server_info": {
+                    //Doesn't need to be parsed
+                    break;
+                }
                 default: {
                     GLog.h("Incorrect packet token: \"%s\". Ignored", token);
                     continue;

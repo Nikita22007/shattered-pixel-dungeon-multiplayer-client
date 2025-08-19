@@ -22,14 +22,15 @@ public class UserServerInfo extends ServerInfo{
         this.haveChallenges = haveChallenges;
     }
     public UserServerInfo(JSONObject object, InetSocketAddress address){
-        this.name = object.getString("name");
-        this.currentFloor = object.getInt("current_floor");
-        this.haveChallenges = object.getInt("challenges") > 0;
+        JSONObject serverInfo = object.getJSONObject("server_info");
+        this.name = serverInfo.getString("name");
+        this.currentFloor = serverInfo.getInt("current_floor");
+        this.haveChallenges = serverInfo.getInt("challenges") > 0;
         this.IP = address.getAddress();
-        this.port = object.getInt("port");
-        this.motd = object.optString("motd", null);
-        this.players = object.getInt("players");
-        this.maxPlayers = object.getInt("max_players");
+        this.port = address.getPort();
+        this.motd = serverInfo.optString("motd", null);
+        this.players = serverInfo.getInt("players");
+        this.maxPlayers = serverInfo.getInt("max_players");
     }
     public UserServerInfo(JSONObject object, InetSocketAddress address, boolean online){
         this(object, address);
