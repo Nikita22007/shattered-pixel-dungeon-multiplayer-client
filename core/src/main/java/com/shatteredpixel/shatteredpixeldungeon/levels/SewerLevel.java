@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2024 Evan Debenham
+ * Copyright (C) 2014-2025 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Ghost;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Ripple;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.LevelTransition;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
@@ -84,6 +85,9 @@ public class SewerLevel extends RegularLevel {
 			switch (tile) {
 				case Terrain.WATER:
 					return "Murky water";
+			case Terrain.REGION_DECO:
+			case Terrain.REGION_DECO_ALT:
+				return Messages.get(SewerLevel.class, "region_deco_name");
 				default:
 					return super.tileName( tile );
 			}
@@ -96,6 +100,9 @@ public class SewerLevel extends RegularLevel {
 					return "Wet yellowish moss covers the floor.";
 				case Terrain.BOOKSHELF:
 					return "The bookshelf is packed with cheap useless books. Might it burn?";
+			case Terrain.REGION_DECO:
+			case Terrain.REGION_DECO_ALT:
+				return Messages.get(SewerLevel.class, "region_deco_desc");
 				default:
 					return super.tileDesc( tile );
 			}

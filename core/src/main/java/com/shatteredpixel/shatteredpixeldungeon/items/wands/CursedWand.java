@@ -3,7 +3,7 @@
  * Copyright (C) 2012-2015 Oleg Dolya
  *
  * Shattered Pixel Dungeon
- * Copyright (C) 2014-2024 Evan Debenham
+ * Copyright (C) 2014-2025 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -286,7 +286,7 @@ public class CursedWand {
 						&& !ch.properties().contains(Char.Property.MINIBOSS)
 						&& !(ch instanceof NPC && ch.alignment == Char.Alignment.NEUTRAL)){
 					Sheep sheep = new Sheep();
-					sheep.lifespan = 10;
+				sheep.initialize(10);
 					sheep.pos = ch.pos;
 					ch.destroy();
 					ch.sprite.killAndErase();
@@ -421,7 +421,7 @@ public class CursedWand {
 
 			//appears to crash the game (actually just closes it)
 			case 2:
-				
+
 				try {
 					Dungeon.saveAll();
 					if(Messages.lang() != Languages.ENGLISH){
