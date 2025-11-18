@@ -127,11 +127,13 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	protected AlphaTweener invisible;
 	protected Flare aura;
 	private int auraColor = 0;
+    public int auraRays = 0;
 	//Aura needs color data too
-	public void aura( int color ){
-		add(State.AURA);
-		auraColor = color;
-	}
+    public void aura( int color, int nRays ){
+        add(State.AURA);
+        auraColor = color;
+        auraRays = nRays;
+    }
 	public void clearAura(){
 		remove(State.AURA);
 	}
