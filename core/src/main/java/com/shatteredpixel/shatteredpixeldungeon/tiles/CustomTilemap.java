@@ -29,6 +29,7 @@ import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.Tilemap;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
+import org.json.JSONObject;
 
 public abstract class CustomTilemap implements Bundlable {
 
@@ -140,4 +141,10 @@ public abstract class CustomTilemap implements Bundlable {
 		bundle.put(TILE_W, tileW);
 		bundle.put(TILE_H, tileH);
 	}
+    public void fromJson(JSONObject object){
+        tileX = object.getInt(TILE_X);
+        tileY = object.getInt(TILE_Y);
+        tileW = object.getInt(TILE_W);
+        tileH = object.getInt(TILE_H);
+    }
 }
