@@ -37,6 +37,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.TitleScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.*;
+import com.shatteredpixel.shatteredpixeldungeon.tiles.CustomTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.FadingTraps;
 import com.shatteredpixel.shatteredpixeldungeon.ui.AttackIndicator;
@@ -56,6 +57,7 @@ import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.PointF;
 
+import com.watabou.utils.Reflection;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -171,14 +173,8 @@ public class ParseThread implements Callable<String> {
                 disconnect();
                 return;
             }
-        } catch (Exception e) {
-            if (json != null) {
-                Log.w("parsing", json);
-                e.printStackTrace();
-                disconnect();
-                return;
-            }
         }
+
     }
 
     protected static void returnToMainScreen() {
@@ -1379,6 +1375,39 @@ public class ParseThread implements Callable<String> {
                     }
                     break;
                 }
+                case "custom_tilemaps":
+                    JSONObject customTiles = levelObj.getJSONObject("custom_tilemaps");
+                    JSONArray tiles = customTiles.getJSONArray("tiles");
+                    JSONArray walls = customTiles.getJSONArray("walls");
+                    JSONObject tilemap;
+                    CustomTilemap customTilemap;
+
+                    for (int i = 0; i < tiles.length(); i++) {
+                        tilemap = tiles.getJSONObject(i);
+                        String classname = tilemap.getString("__classname");
+                        try {
+                            customTilemap = (CustomTilemap) Reflection.newInstance(Reflection.forNameUnhandled(classname));
+                            customTilemap.fromJson(tilemap);
+                            level.customTiles.add(customTilemap);
+                        } catch (Exception e) {
+                            Gdx.app.error("ParseThread", "Failed to find class", e);
+                        }
+
+                    }
+                    for (int i = 0; i < walls.length(); i++) {
+                        tilemap = walls.getJSONObject(i);
+                        String classname = tilemap.getString("__classname");
+                        try {
+                            customTilemap = (CustomTilemap) Reflection.newInstance(Reflection.forNameUnhandled(classname));
+                            customTilemap.fromJson(tilemap);
+                            level.customWalls.add(customTilemap);
+                        } catch (Exception e) {
+                            Gdx.app.error("ParseThread", "Failed to find class", e);
+                        }
+
+                    }
+
+                    break;
                 default: {
                     GLog.n("Unexpected token \"%s\" in level. Ignored.", token);
                     break;
