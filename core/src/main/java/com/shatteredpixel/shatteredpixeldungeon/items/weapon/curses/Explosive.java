@@ -89,7 +89,7 @@ public class Explosive extends Weapon.Enchantment {
 
 			if (weapon instanceof MissileWeapon){
 				//the explosion damages thrown weapons
-				((MissileWeapon) weapon).damage(9*((MissileWeapon) weapon).durabilityPerUse());
+				//((MissileWeapon) weapon).damage(9*((MissileWeapon) weapon).durabilityPerUse());
 			}
 		}
 

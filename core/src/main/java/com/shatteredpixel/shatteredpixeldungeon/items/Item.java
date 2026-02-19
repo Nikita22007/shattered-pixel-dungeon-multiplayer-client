@@ -617,12 +617,12 @@ public class Item implements Bundlable {
 		
 		cursed	= bundle.getBoolean( CURSED );
 
-		//only want to populate slots when restoring belongings
-		if (Belongings.bundleRestoring) {
-			if (bundle.contains(QUICKSLOT)) {
-				Dungeon.quickslot.setSlot(bundle.getInt(QUICKSLOT), this);
-			}
-		}
+//		//only want to populate slots when restoring belongings
+//		if (Belongings.bundleRestoring) {
+//			if (bundle.contains(QUICKSLOT)) {
+//				Dungeon.quickslot.setSlot(bundle.getInt(QUICKSLOT), this);
+//			}
+//		}
 
 		keptThoughLostInvent = bundle.getBoolean( KEPT_LOST );
 		if (bundle.contains(CUSTOM_NOTE_ID))    customNoteID = bundle.getInt(CUSTOM_NOTE_ID);

@@ -27,11 +27,9 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.watabou.glwrap.Texture;
 import com.watabou.noosa.Game;
 
-import java.io.InputStream;
 import java.io.File;
 import java.util.*;
 
-import jdk.internal.org.jline.utils.Log;
 
 public class TextureCache {
 

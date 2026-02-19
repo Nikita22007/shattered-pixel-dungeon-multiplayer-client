@@ -32,7 +32,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
-import com.shatteredpixel.shatteredpixeldungeon.levels.VaultLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.LevelTransition;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -69,7 +68,7 @@ public class EscapeCrystal extends Item {
 
 		if (action.equals( AC_USE )) {
 
-			if (Dungeon.depth > 15 && Dungeon.depth < 20 && Dungeon.branch == 1 && Dungeon.level instanceof VaultLevel){
+			if (Dungeon.depth > 15 && Dungeon.depth < 20 && Dungeon.branch == 1 ){
 
 				Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
 
@@ -120,28 +119,27 @@ public class EscapeCrystal extends Item {
 		Dungeon.quickslot.storePlaceholders(quickslots);
 		storedItems.put(QUICKSLOTS, quickslots);
 
-		storedItems.put(GOLD, Dungeon.gold);
+		storedItems.put(GOLD, Dungeon.hero.gold);
 		storedItems.put(ENERGY, Dungeon.energy);
 
 		Dungeon.quickslot.reset();
 		QuickSlotButton.reset();
-		Dungeon.gold = Dungeon.energy = 0;
-		hero.belongings.clear();
+		Dungeon.hero.gold = Dungeon.energy = 0;
 	}
 
 	public void restoreHeroBelongings( Hero hero ){
-		hero.belongings.clear();
-
-		Dungeon.quickslot.reset();
-		Dungeon.quickslot.restorePlaceholders(storedItems.getBundle(QUICKSLOTS));
-		QuickSlotButton.reset();
-
-		Dungeon.hero.belongings.restoreFromBundle(storedItems.getBundle(BELONGINGS));
-
-		Dungeon.gold = storedItems.getInt(GOLD);
-		Dungeon.energy = storedItems.getInt(ENERGY);
-
-		storedItems = null;
+//		hero.belongings.clear();
+//
+//		Dungeon.quickslot.reset();
+//		Dungeon.quickslot.restorePlaceholders(storedItems.getBundle(QUICKSLOTS));
+//		QuickSlotButton.reset();
+//
+//		Dungeon.hero.belongings.restoreFromBundle(storedItems.getBundle(BELONGINGS));
+//
+//		Dungeon.gold = storedItems.getInt(GOLD);
+//		Dungeon.energy = storedItems.getInt(ENERGY);
+//
+//		storedItems = null;
 	}
 
 	@Override

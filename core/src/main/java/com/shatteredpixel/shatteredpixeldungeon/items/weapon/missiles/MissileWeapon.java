@@ -72,7 +72,7 @@ abstract public class MissileWeapon extends Weapon {
 	public boolean holster;
 	
 	//used to reduce durability from the source weapon stack, rather than the one being thrown.
-	protected MissileWeapon parent;
+	public MissileWeapon parent;
 	
 	public int tier;
 	

@@ -155,14 +155,14 @@ public class Alchemize extends Spell {
 			if (Shopkeeper.canSell(item)) {
 				if (item.quantity() == 1 || (item instanceof MissileWeapon && item.isUpgradable())) {
 
-					if (item instanceof MissileWeapon && ((MissileWeapon) item).extraThrownLeft){
-						RenderedTextBlock warn = PixelScene.renderTextBlock(Messages.get(WndUpgrade.class, "thrown_dust"), 6);
-						warn.hardlight(CharSprite.WARNING);
-						warn.maxWidth(this.width);
-						warn.setPos(0, pos + GAP);
-						add(warn);
-						pos = warn.bottom();
-					}
+//					if (item instanceof MissileWeapon && ((MissileWeapon) item).extraThrownLeft){
+//						RenderedTextBlock warn = PixelScene.renderTextBlock(Messages.get(WndUpgrade.class, "thrown_dust"), 6);
+//						warn.hardlight(CharSprite.WARNING);
+//						warn.maxWidth(this.width);
+//						warn.setPos(0, pos + GAP);
+//						add(warn);
+//						pos = warn.bottom();
+//					}
 
 					RedButton btnSell = new RedButton(Messages.get(this, "sell", item.value())) {
 						@Override

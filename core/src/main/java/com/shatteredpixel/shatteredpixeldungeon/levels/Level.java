@@ -231,8 +231,8 @@ public abstract class Level implements Bundlable {
 			blobs = new HashMap<>();
 			plants = new SparseArray<>();
 			traps = new SparseArray<>();
-			customTiles = new HashSet<>();
-			customWalls = new HashSet<>();
+			customTiles = new ArrayList<>();
+			customWalls = new ArrayList<>();
 	}
 	
 	public void setSize(int w, int h){

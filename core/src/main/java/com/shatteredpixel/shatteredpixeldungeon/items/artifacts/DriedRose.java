@@ -74,8 +74,6 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.IconTitle;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndInfoItem;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndQuest;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndUseItem;
-import com.sun.org.apache.bcel.internal.util.Args;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;

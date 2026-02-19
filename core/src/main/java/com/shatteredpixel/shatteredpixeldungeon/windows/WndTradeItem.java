@@ -76,14 +76,14 @@ public class WndTradeItem extends WndInfoItem {
 
 		if (item.quantity() == 1 || (item instanceof MissileWeapon && item.isUpgradable())) {
 
-			if (item instanceof MissileWeapon && ((MissileWeapon) item).extraThrownLeft){
-				RenderedTextBlock warn = PixelScene.renderTextBlock(Messages.get(WndUpgrade.class, "thrown_dust"), 6);
-				warn.hardlight(CharSprite.WARNING);
-				warn.maxWidth(this.width);
-				warn.setPos(0, pos + GAP);
-				add(warn);
-				pos = warn.bottom();
-			}
+//			if (item instanceof MissileWeapon && ((MissileWeapon) item).extraThrownLeft){
+//				RenderedTextBlock warn = PixelScene.renderTextBlock(Messages.get(WndUpgrade.class, "thrown_dust"), 6);
+//				warn.hardlight(CharSprite.WARNING);
+//				warn.maxWidth(this.width);
+//				warn.setPos(0, pos + GAP);
+//				add(warn);
+//				pos = warn.bottom();
+//			}
 
 			RedButton btnSell = new RedButton( Messages.get(this, "sell", item.value()) ) {
 				@Override
@@ -366,7 +366,7 @@ public class WndTradeItem extends WndInfoItem {
 		item.detachAll( hero.belongings.backpack );
 
 		if (item instanceof MissileWeapon && item.isUpgradable()){
-			Buff.affect(hero, MissileWeapon.UpgradedSetTracker.class).levelThresholds.put(((MissileWeapon) item).setID, Integer.MAX_VALUE);
+			//Buff.affect(hero, MissileWeapon.UpgradedSetTracker.class).levelThresholds.put(((MissileWeapon) item).setID, Integer.MAX_VALUE);
 		}
 
 		//selling items in the sell interface doesn't spend time

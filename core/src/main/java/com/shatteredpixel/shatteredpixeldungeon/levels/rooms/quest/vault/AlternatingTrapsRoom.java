@@ -2,7 +2,6 @@ package com.shatteredpixel.shatteredpixeldungeon.levels.rooms.quest.vault;
 
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
-import com.shatteredpixel.shatteredpixeldungeon.levels.VaultLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.Room;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.standard.StandardRoom;
@@ -31,7 +30,7 @@ public class AlternatingTrapsRoom extends StandardRoom {
 			for (int y = top+1; y <= bottom-1; y++){
 				cell = x + y*level.width();
 
-				VaultLevel.VaultFlameTrap.setupTrap(level, cell, alternate ? 2 : 1, 2);
+				//VaultLevel.VaultFlameTrap.setupTrap(level, cell, alternate ? 2 : 1, 2);
 				alternate = !alternate;
 			}
 		}

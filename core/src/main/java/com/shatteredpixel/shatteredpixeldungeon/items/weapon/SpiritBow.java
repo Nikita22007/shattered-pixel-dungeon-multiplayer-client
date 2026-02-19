@@ -301,10 +301,10 @@ public class SpiritBow extends Weapon {
 
 			hitSound = Assets.Sounds.HIT_ARROW;
 
-			setID = 0;
+	//		setID = 0;
 		}
 
-		@Override
+		//@Override
 		public int defaultQuantity() {
 			return 1;
 		}

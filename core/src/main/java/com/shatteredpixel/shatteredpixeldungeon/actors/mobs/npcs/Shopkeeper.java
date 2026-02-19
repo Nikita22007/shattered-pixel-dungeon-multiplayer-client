@@ -267,7 +267,7 @@ public class Shopkeeper extends NPC {
 							Dungeon.hero.gold -= returned.value();
 							Statistics.goldCollected -= returned.value();
 							if (returned instanceof MissileWeapon && returned.isUpgradable()){
-								Buff.affect(Dungeon.hero, MissileWeapon.UpgradedSetTracker.class).levelThresholds.put(((MissileWeapon) returned).setID, returned.level());
+								//Buff.affect(Dungeon.hero, MissileWeapon.UpgradedSetTracker.class).levelThresholds.put(((MissileWeapon) returned).setID, returned.level());
 							}
 							if (!returned.doPickUp(Dungeon.hero)){
 								Dungeon.level.drop(returned, Dungeon.hero.pos);

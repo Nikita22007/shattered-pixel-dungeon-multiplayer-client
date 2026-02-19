@@ -260,9 +260,9 @@ public class ScrollOfTransmutation extends InventoryScroll {
 
 		//technically a new set, ensure old one is destroyed (except for darts)
 		if (w instanceof MissileWeapon && w.isUpgradable()){
-			Buff.affect(Dungeon.hero, MissileWeapon.UpgradedSetTracker.class).levelThresholds.put(((MissileWeapon) w).setID, Integer.MAX_VALUE);
+			//Buff.affect(Dungeon.hero, MissileWeapon.UpgradedSetTracker.class).levelThresholds.put(((MissileWeapon) w).setID, Integer.MAX_VALUE);
 			//also extra missile weapon properties
-			((MissileWeapon) n).damage(100 - ((MissileWeapon)w).durabilityLeft());
+			//((MissileWeapon) n).damage(100 - ((MissileWeapon)w).durabilityLeft());
 		}
 		
 		return n;

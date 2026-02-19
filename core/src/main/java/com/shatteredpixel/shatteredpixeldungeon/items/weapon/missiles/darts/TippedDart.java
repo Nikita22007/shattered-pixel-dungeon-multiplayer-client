@@ -165,15 +165,15 @@ public abstract class TippedDart extends Dart {
 	private static int targetPos = -1;
 
 	{
-		useRoundingInDurabilityCalc = false;
+		//useRoundingInDurabilityCalc = false;
 	}
 
-	@Override
+	//@Override
 	public float durabilityPerUse(int level) {
-		float use = super.durabilityPerUse(level);
+		//float use = super.durabilityPerUse(level);
 
 		if (Dungeon.hero != null) {
-			use /= (1 + Dungeon.hero.pointsInTalent(Talent.DURABLE_TIPS));
+			//use /= (1 + Dungeon.hero.pointsInTalent(Talent.DURABLE_TIPS));
 
 			//checks both destination and source position
 			float lotusPreserve = 0f;
@@ -197,10 +197,10 @@ public abstract class TippedDart extends Dart {
 					}
 				}
 			}
-			use *= (1f - lotusPreserve);
+			//use *= (1f - lotusPreserve);
 		}
 
-		float usages = Math.round(MAX_DURABILITY/use);
+		float usages = Math.round(MAX_DURABILITY/1);
 
 		//grants 3+lvl extra uses with charged shot
 		if (bow != null && Dungeon.hero != null && Dungeon.hero.buff(Crossbow.ChargedShot.class) != null){

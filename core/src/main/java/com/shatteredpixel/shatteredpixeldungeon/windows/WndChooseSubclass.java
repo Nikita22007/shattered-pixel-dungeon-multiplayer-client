@@ -42,6 +42,8 @@ import com.watabou.noosa.Game;
 import com.watabou.utils.Random;
 import org.json.JSONObject;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+
 public class WndChooseSubclass extends Window {
 	
 	private static final int WIDTH		= 130;
@@ -82,7 +84,8 @@ public class WndChooseSubclass extends Window {
 						if (index == 0){
 							WndChooseSubclass.this.hide();
 							HeroSubClass cls = Random.oneOf(hero.heroClass.subClasses());
-							tome.choose(cls);
+							//TODO: fix this
+							//tome.choose(cls);
 							GameScene.show(new WndInfoSubclass(hero.heroClass, cls));
 						}
 					}
@@ -144,7 +147,7 @@ public class WndChooseSubclass extends Window {
 			IconButton clsInfo = new IconButton(Icons.get(Icons.INFO)){
 				@Override
 				protected void onClick() {
-					GameScene.show(new WndInfoSubclass(Dungeon.hero.heroClass, subCls));
+					GameScene.show(new WndInfoSubclass(hero.heroClass, subCls));
 				}
 			};
 			clsInfo.setRect(WIDTH-20, btnCls.top() + (btnCls.height()-20)/2, 20, 20);

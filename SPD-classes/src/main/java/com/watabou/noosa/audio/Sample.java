@@ -201,7 +201,8 @@ public enum Sample {
 		for (int i = 0; i < assets.length(); i++) {
 			loadingQueue.add( assets.getString(i) );
 		}
-		load();
+		// TODO: 19.02.2026 Check this
+		//load();
 	}
 	public long play( JSONObject sampleObj ) throws JSONException {
 		String sample = sampleObj.getString("sample");

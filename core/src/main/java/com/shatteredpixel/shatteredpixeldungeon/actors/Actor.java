@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.utils.Log;
-import com.shatteredpixel.shatteredpixeldungeon.levels.VaultLevel;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
@@ -204,10 +203,6 @@ public abstract class Actor implements Bundlable {
 		min = (int)min;
 		for (Actor a : all) {
 			a.time -= min;
-		}
-
-		if (Dungeon.hero != null && all.contains( Dungeon.hero ) && !(Dungeon.level instanceof VaultLevel)) {
-			Statistics.duration += min;
 		}
 		now -= min;
 	}

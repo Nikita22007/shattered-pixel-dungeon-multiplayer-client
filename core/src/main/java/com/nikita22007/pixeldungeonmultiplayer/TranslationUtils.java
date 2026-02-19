@@ -133,7 +133,7 @@ public class TranslationUtils {
             case 5: return ItemSpriteSheet.WEAPON_HOLDER;
             case 6: return ItemSpriteSheet.ARMOR_HOLDER;
             case 7: return ItemSpriteSheet.RING_HOLDER;
-            case 8: return ItemSpriteSheet.SKELETON_KEY;
+            case 8: return ItemSpriteSheet.ARTIFACT_KEY;
             case 9: return ItemSpriteSheet.IRON_KEY;
             case 10: return ItemSpriteSheet.GOLDEN_KEY;
             case 11: return ItemSpriteSheet.CHEST;

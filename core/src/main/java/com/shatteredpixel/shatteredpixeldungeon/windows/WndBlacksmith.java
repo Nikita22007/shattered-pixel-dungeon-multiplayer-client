@@ -280,8 +280,8 @@ public class WndBlacksmith extends Window {
 							Dungeon.level.drop( seal, Dungeon.hero.pos );
 						}
 					} else if (second instanceof MissileWeapon){
-						Buff.affect(Dungeon.hero, MissileWeapon.UpgradedSetTracker.class)
-								.levelThresholds.put(((MissileWeapon) second).setID, Integer.MAX_VALUE);
+//						Buff.affect(Dungeon.hero, MissileWeapon.UpgradedSetTracker.class)
+//								.levelThresholds.put(((MissileWeapon) second).setID, Integer.MAX_VALUE);
 					}
 
 					//preserves enchant/glyphs if present
