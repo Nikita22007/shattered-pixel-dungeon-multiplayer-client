@@ -25,10 +25,10 @@ import com.shatteredpixel.shatteredpixeldungeon.*;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Journal;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.ui.Archs;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Button;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ExitButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
+import com.shatteredpixel.shatteredpixeldungeon.ui.TitleBackground;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.StyledButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
@@ -37,6 +37,7 @@ import com.watabou.noosa.*;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.RectF;
 
 import java.util.ArrayList;
 
@@ -56,20 +57,23 @@ public class StartScene extends PixelScene {
 
 		int w = Camera.main.width;
 		int h = Camera.main.height;
+		RectF insets = getCommonInsets();
 
-		Archs archs = new Archs();
-		archs.setSize( w, h );
-		add( archs );
+		TitleBackground BG = new TitleBackground(w, h);
+		add( BG );
+
+		w -= insets.left + insets.right;
+		h -= insets.top + insets.bottom;
 
 		ExitButton btnExit = new ExitButton();
-		btnExit.setPos( w - btnExit.width(), 0 );
+		btnExit.setPos( insets.left + w - btnExit.width(), insets.top );
 		add( btnExit );
 
 		IconTitle title = new IconTitle( Icons.ENTER.get(), Messages.get(this, "title"));
 		title.setSize(200, 0);
 		title.setPos(
-				(w - title.reqWidth()) / 2f,
-				(20 - title.height()) / 2f
+				insets.left + (w - title.reqWidth()) / 2f,
+				insets.top + (20 - title.height()) / 2f
 		);
 		align(title);
 		add(title);
@@ -86,9 +90,9 @@ public class StartScene extends PixelScene {
 			slotsHeight -= slotCount-1;
 		}
 
-		float yPos = (h - slotsHeight + title.bottom() + 2)/2f - 4;
+		float yPos = insets.top + (h - slotsHeight + title.bottom() + 2)/2f - 4;
 		yPos = Math.max(yPos, title.bottom()+2);
-		float slotLeft = (w - SLOT_WIDTH) / 2f;
+		float slotLeft = insets.left + (w - SLOT_WIDTH) / 2f;
 
 		for (GamesInProgress.Info game : games) {
 			SaveSlotButton existingGame = new SaveSlotButton();

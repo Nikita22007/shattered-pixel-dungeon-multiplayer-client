@@ -59,13 +59,6 @@ public class DistortionTrap extends Trap{
 		shape = LARGE_DOT;
 	}
 
-	private static final ArrayList<Class<?extends Mob>> RARE = new ArrayList<>(Arrays.asList(
-			Albino.class, CausticSlime.class,
-			Bandit.class,
-			ArmoredBrute.class, DM201.class,
-			Elemental.ChaosElemental.class, Senior.class,
-			Acidic.class));
-
 	@Override
 	public void activate() {
 
@@ -115,7 +108,7 @@ public class DistortionTrap extends Trap{
 					mob = Reflection.newInstance(MobSpawner.getMobRotation(floor).get(0));
 					break;
 				case 2:
-					switch (2){
+					switch (Random.Int(4)){
 						case 0: default:
 							Wraith.spawnAt(point);
 							continue; //wraiths spawn themselves, no need to do more
@@ -134,7 +127,7 @@ public class DistortionTrap extends Trap{
 					}
 					break;
 				case 4:
-					mob = Reflection.newInstance(Random.element(RARE));
+					mob = Reflection.newInstance(Random.element(MobSpawner.RARE_ALTS.values()));
 					break;
 			}
 

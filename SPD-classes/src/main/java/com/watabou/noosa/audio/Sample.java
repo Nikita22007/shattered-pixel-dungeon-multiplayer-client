@@ -67,33 +67,10 @@ public enum Sample {
 		}
 	}
 
-	private static LinkedList<String> loadingQueue = new LinkedList<>();
-
-	public synchronized void load( final String... assets ) {
-
-		for (String asset : assets){
-			if (!ids.containsKey(asset) && !loadingQueue.contains(asset)){
-				loadingQueue.add(asset);
-			}
-		}
-
-		//cancel if all assets are already loaded
-		if (loadingQueue.isEmpty()) return;
-
-		//load one at a time on the UI thread to prevent this blocking the UI
-		//yes this may cause hitching, but only in the first couple seconds of game runtime
-		Game.runOnRenderThread(loadingCallback);
-		
-	}
-
-	private Callback loadingCallback = new Callback() {
-		@Override
-		public void call() {
-			synchronized (INSTANCE) {
-				String asset = loadingQueue.poll();
-				if (asset != null) {
+	public synchronized void load( final String asset){
+		if (asset != null) {
 					Sound newSound;
-					try {
+			try {
 						if (TextureManagerInterface.INSTANCE.hasSound(asset.replaceFirst("sounds/", ""))){
 							newSound = TextureManagerInterface.INSTANCE.getSound(asset.replaceFirst("sounds/",""));
 						} else if(asset.startsWith("snd")){
@@ -101,17 +78,26 @@ public enum Sample {
 						} else {
 							newSound = Gdx.audio.newSound(Gdx.files.internal(asset));
 						}
-						ids.put(asset, newSound);
-					} catch (Exception e){
-						Game.reportException(e);
-					}
-				}
-				if (!loadingQueue.isEmpty()){
-					Game.runOnRenderThread(this);
+				ids.put(asset, newSound);
+			} catch (Exception e){
+				Game.reportException(e);
+			}
+		}
+	}
+
+	private static final LinkedList<String> loadingQueue = new LinkedList<>();
+
+	//queues multiple assets for loading, which happens in update()
+	// this prevents blocking while we load many assets
+	public void load( final String[] assets ) {
+		synchronized (loadingQueue) {
+			for (String asset : assets) {
+				if (!ids.containsKey(asset) && !loadingQueue.contains(asset)) {
+					loadingQueue.add(asset);
 				}
 			}
 		}
-	};
+	}
 
 	public synchronized void unload( Object src ) {
 		if (ids.containsKey( src )) {
@@ -182,6 +168,12 @@ public enum Sample {
 	}
 
 	public void update(){
+		synchronized (loadingQueue) {
+			if (!loadingQueue.isEmpty()) {
+				load(loadingQueue.poll());
+			}
+		}
+
 		synchronized (delayedSFX) {
 			if (delayedSFX.isEmpty()) return;
 			for (DelayedSoundEffect sfx : delayedSFX.toArray(new DelayedSoundEffect[0])) {

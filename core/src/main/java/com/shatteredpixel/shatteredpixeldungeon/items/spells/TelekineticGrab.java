@@ -57,6 +57,12 @@ public class TelekineticGrab extends TargetedSpell {
 	}
 
 	@Override
+	protected float timeToCast() {
+		//time is processed in the spell's logic, as it relates to items picked up
+		return 0;
+	}
+
+	@Override
 	protected void affectTarget(Ballistica bolt, Hero hero) {
 		Char ch = Actor.findChar(bolt.collisionPos);
 
@@ -65,21 +71,28 @@ public class TelekineticGrab extends TargetedSpell {
 			ch = Actor.findChar(bolt.path.get(bolt.dist+1));
 		}
 
+		float totalpickupTime = 0;
+
 		if (ch != null && ch.buff(PinCushion.class) != null){
 
 			while (ch.buff(PinCushion.class) != null) {
 				Item item = ch.buff(PinCushion.class).grabOne();
 
 				if (item.doPickUp(hero, ch.pos)) {
-					hero.spend(-Item.TIME_TO_PICK_UP); //casting the spell already takes a turn
+					totalpickupTime += item.pickupDelay();
 					GLog.i( Messages.capitalize(Messages.get(hero, "you_now_have", item.name())) );
 
 				} else {
 					GLog.w(Messages.get(this, "cant_grab"));
 					Dungeon.level.drop(item, ch.pos).sprite.drop();
-					return;
+					break;
 				}
 
+			}
+
+			//casting the spell takes at most 1 turn
+			if (totalpickupTime > 1){
+				hero.spend(-(totalpickupTime-1));
 			}
 
 		} else if (Dungeon.level.heaps.get(bolt.collisionPos) != null){
@@ -88,6 +101,7 @@ public class TelekineticGrab extends TargetedSpell {
 
 			if (h.type != Heap.Type.HEAP){
 				GLog.w(Messages.get(this, "cant_grab"));
+				hero.spend(Actor.TICK);
 				h.sprite.drop();
 				return;
 			}
@@ -96,20 +110,27 @@ public class TelekineticGrab extends TargetedSpell {
 				Item item = h.peek();
 				if (item.doPickUp(hero, h.pos)) {
 					h.pickUp();
-					hero.spend(-Item.TIME_TO_PICK_UP); //casting the spell already takes a turn
+					totalpickupTime += item.pickupDelay();
 					GLog.i( Messages.capitalize(Messages.get(hero, "you_now_have", item.name())) );
 
 				} else {
 					GLog.w(Messages.get(this, "cant_grab"));
 					h.sprite.drop();
-					return;
+					break;
 				}
+			}
+
+			//casting the spell takes at most 1 turn
+			if (totalpickupTime > 1){
+				hero.spend(-(totalpickupTime-1));
 			}
 
 		} else {
 			GLog.w(Messages.get(this, "no_target"));
+			hero.spend(Actor.TICK);
 		}
 
+		onSpellused();
 	}
 
 	@Override

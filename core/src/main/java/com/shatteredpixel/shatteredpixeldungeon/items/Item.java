@@ -30,6 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Degrade;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
@@ -130,7 +131,7 @@ public class Item implements Bundlable {
 			
 			GameScene.pickUp( this, pos );
 			Sample.INSTANCE.play( Assets.Sounds.ITEM );
-			hero.spendAndNext( TIME_TO_PICK_UP );
+			hero.spendAndNext( pickupDelay() );
 			return true;
 			
 		} else {
@@ -616,8 +617,8 @@ public class Item implements Bundlable {
 		
 		cursed	= bundle.getBoolean( CURSED );
 
-		//only want to populate slot on first load.
-		if (Dungeon.hero == null) {
+		//only want to populate slots when restoring belongings
+		if (Belongings.bundleRestoring) {
 			if (bundle.contains(QUICKSLOT)) {
 				Dungeon.quickslot.setSlot(bundle.getInt(QUICKSLOT), this);
 			}
@@ -650,7 +651,7 @@ public class Item implements Bundlable {
 		Char enemy = Actor.findChar( cell );
 		QuickSlotButton.target(enemy);
 		
-		final float delay = castDelay(user, dst);
+		final float delay = castDelay(user, cell);
 
 		if (enemy != null) {
 			((MissileSprite) user.sprite.parent.recycle(MissileSprite.class)).
@@ -698,8 +699,12 @@ public class Item implements Bundlable {
 		}
 	}
 	
-	public float castDelay( Char user, int dst ){
+	public float castDelay( Char user, int cell ){
 		return TIME_TO_THROW;
+	}
+
+	public float pickupDelay(){
+		return TIME_TO_PICK_UP;
 	}
 	
 	protected static Hero curUser = null;

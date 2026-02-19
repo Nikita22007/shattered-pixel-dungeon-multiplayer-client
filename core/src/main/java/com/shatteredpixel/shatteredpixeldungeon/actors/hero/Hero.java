@@ -80,6 +80,9 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap.Type;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Stone;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Viscosity;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CapeOfThorns;
@@ -89,6 +92,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.EtherealChains;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.MasterThievesArmband;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.SkeletonKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.MagicalHolster;
@@ -97,7 +101,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.keys.CrystalKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.GoldenKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.IronKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.Key;
-import com.shatteredpixel.shatteredpixeldungeon.items.keys.SkeletonKey;
+import com.shatteredpixel.shatteredpixeldungeon.items.keys.WornKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfExperience;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
@@ -114,6 +118,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfCha
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Quarterstaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RoundShield;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Sai;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Scimitar;
@@ -186,7 +192,8 @@ public class Hero extends Char {
 	public HeroAction curAction = null;
 	public HeroAction lastAction = null;
 
-	private Char enemy;
+	//reference to the enemy the hero is currently in the process of attacking
+	private Char attackTarget;
 	
 	public boolean resting = false;
 	
@@ -421,7 +428,7 @@ public class Hero extends Char {
 
 	public boolean shoot( Char enemy, MissileWeapon wep ) {
 
-		this.enemy = enemy;
+		attackTarget = enemy;
 		boolean wasEnemy = enemy.alignment == Alignment.ENEMY
 				|| (enemy instanceof Mimic && enemy.alignment == Alignment.NEUTRAL);
 
@@ -440,6 +447,7 @@ public class Hero extends Char {
 			Buff.affect( this, Sai.ComboStrikeTracker.class).addHit();
 		}
 
+		attackTarget = null;
 		return hit;
 	}
 
@@ -449,7 +457,7 @@ public class Hero extends Char {
 		Combo.ParryTracker parry = buff(Combo.ParryTracker.class);
 		if (parry != null){
 			parry.parried = true;
-			if (buff(Combo.class).getComboCount() < 9 || pointsInTalent(Talent.ENHANCED_COMBO) < 2){
+			if (buff(Combo.class) == null || buff(Combo.class).getComboCount() < 9 || pointsInTalent(Talent.ENHANCED_COMBO) < 2){
 				parry.detach();
 			}
 			return Messages.get(Monk.class, "parried");
@@ -549,7 +557,6 @@ public class Hero extends Char {
 
 	@Override
 	public void spendConstant(float time) {
-		justMoved = false;
 		super.spendConstant(time);
 	}
 
@@ -811,7 +818,8 @@ public class Hero extends Char {
 							|| item instanceof TimekeepersHourglass.sandBag
 							|| item instanceof DriedRose.Petal
 							|| item instanceof Key
-							|| item instanceof Guidebook) {
+							|| item instanceof Guidebook
+							|| (item instanceof MissileWeapon && !MissileWeapon.UpgradedSetTracker.pickupValid(this, (MissileWeapon) item))) {
 						//Do Nothing
 					} else if (item instanceof DarkGold) {
 						DarkGold existing = belongings.getItem(DarkGold.class);
@@ -935,14 +943,25 @@ public class Hero extends Char {
 					&& Notes.keyCount(new IronKey(Dungeon.depth)) > 0) {
 				
 				hasKey = true;
-				
+
+			} else if (door == Terrain.HERO_LKD_DR){
+
+				if (belongings.getItem(SkeletonKey.class) != null
+						&& !belongings.getItem(SkeletonKey.class).cursed){
+					GLog.i(Messages.get(SkeletonKey.class, "locked_with_key"));
+					ready();
+					return false;
+				} else {
+					hasKey = true;
+				}
+
 			} else if (door == Terrain.CRYSTAL_DOOR
 					&& Notes.keyCount(new CrystalKey(Dungeon.depth)) > 0) {
 
 				hasKey = true;
 
 			} else if (door == Terrain.LOCKED_EXIT
-					&& Notes.keyCount(new SkeletonKey(Dungeon.depth)) > 0) {
+					&& Notes.keyCount(new WornKey(Dungeon.depth)) > 0) {
 
 				hasKey = true;
 				
@@ -1119,15 +1138,15 @@ public class Hero extends Char {
 	
 	private boolean actAttack( HeroAction.Attack action ) {
 
-		enemy = action.target;
+		attackTarget = action.target;
 
-		if (isCharmedBy( enemy )){
+		if (isCharmedBy(attackTarget)){
 			GLog.w( Messages.get(Charm.class, "cant_attack"));
 			ready();
 			return false;
 		}
 
-		if (enemy.isAlive() && canAttack( enemy ) && enemy.invisible == 0) {
+		if (attackTarget.isAlive() && canAttack(attackTarget) && attackTarget.invisible == 0) {
 
 			if (heroClass != HeroClass.DUELIST
 					&& hasTalent(Talent.AGGRESSIVE_BARRIER)
@@ -1139,26 +1158,29 @@ public class Hero extends Char {
 				Buff.affect(this, Talent.AggressiveBarrierCooldown.class, 50f);
 
 			}
-			sprite.attack( enemy.pos );
+			//attack target cleared on onAttackComplete
+			sprite.attack( attackTarget.pos );
 
 			return false;
 
 		} else {
 
-			if (fieldOfView[enemy.pos] && getCloser( enemy.pos )) {
+			if (fieldOfView[attackTarget.pos] && getCloser( attackTarget.pos )) {
 
+				attackTarget = null;
 				return true;
 
 			} else {
 				ready();
+				attackTarget = null;
 				return false;
 			}
 
 		}
 	}
 
-	public Char enemy(){
-		return enemy;
+	public Char attackTarget(){
+		return attackTarget;
 	}
 	
 	public void rest( boolean fullRest ) {
@@ -1368,11 +1390,7 @@ public class Hero extends Char {
 	}
 	
 	private boolean walkingToVisibleTrapInFog = false;
-	
-	//FIXME this is a fairly crude way to track this, really it would be nice to have a short
-	//history of hero actions
-	public boolean justMoved = false;
-	
+
 	private boolean getCloser( final int target ) {
 
 		if (target == pos)
@@ -1440,14 +1458,14 @@ public class Hero extends Char {
 
 		if (step != -1) {
 
-			float delay = 1 / speed();
+			float delay = 1;
 
 			if (buff(GreaterHaste.class) != null){
 				delay = 0;
 			}
 
 			if (Dungeon.level.pit[step] && !Dungeon.level.solid[step]
-					&& (!flying || buff(Levitation.class) != null && buff(Levitation.class).detachesWithinDelay(delay))){
+					&& (!flying || buff(Levitation.class) != null && buff(Levitation.class).detachesWithinDelay(delay / speed()))){
 				if (!Chasm.jumpConfirmed){
 					Chasm.heroJump(this);
 					interrupt();
@@ -1471,8 +1489,7 @@ public class Hero extends Char {
 			sprite.move(pos, step);
 			move(step);
 
-			spend( delay );
-			justMoved = true;
+			spend( delay / speed() );
 			
 			search(false);
 
@@ -1608,8 +1625,8 @@ public class Hero extends Char {
 	@Override
 	public boolean add( Buff buff ) {
 
-		if (buff(TimekeepersHourglass.timeStasis.class) != null
-			|| buff(TimeStasis.class) != null) {
+		if (buff.type == Buff.buffType.NEGATIVE &&
+				(buff(TimekeepersHourglass.timeStasis.class) != null || buff(TimeStasis.class) != null)) {
 			return false;
 		}
 
@@ -1834,23 +1851,23 @@ public class Hero extends Char {
 	@Override
 	public void onAttackComplete() {
 
-		if (enemy == null){
+		if (attackTarget == null){
 			curAction = null;
 			super.onAttackComplete();
 			return;
 		}
 		
-		AttackIndicator.target(enemy);
-		boolean wasEnemy = enemy.alignment == Alignment.ENEMY
-				|| (enemy instanceof Mimic && enemy.alignment == Alignment.NEUTRAL);
+		AttackIndicator.target(attackTarget);
+		boolean wasEnemy = attackTarget.alignment == Alignment.ENEMY
+				|| (attackTarget instanceof Mimic && attackTarget.alignment == Alignment.NEUTRAL);
 
-		boolean hit = attack( enemy );
+		boolean hit = attack(attackTarget);
 		
 		Invisibility.dispel();
 		spend( attackDelay() );
 
 		if (hit && subClass == HeroSubClass.GLADIATOR && wasEnemy){
-			Buff.affect( this, Combo.class ).hit( enemy );
+			Buff.affect( this, Combo.class ).hit(attackTarget);
 		}
 
 		if (hit && heroClass == HeroClass.DUELIST && wasEnemy){
@@ -1858,6 +1875,7 @@ public class Hero extends Char {
 		}
 
 		curAction = null;
+		attackTarget = null;
 
 		super.onAttackComplete();
 	}
@@ -1874,22 +1892,43 @@ public class Hero extends Char {
 
 			int doorCell = ((HeroAction.Unlock)curAction).dst;
 			int door = Dungeon.level.map[doorCell];
-			
-			if (Dungeon.level.distance(pos, doorCell) <= 1) {
+
+			SkeletonKey.keyRecharge skele = buff(SkeletonKey.keyRecharge.class);
+			SkeletonKey.KeyReplacementTracker keyUseTrack = buff(SkeletonKey.KeyReplacementTracker.class);
+
+			if (skele != null && skele.isCursed() && Random.Int(6) != 0){
+				GLog.n(Messages.get(this, "key_distracted"));
+				spendAndNext(2*Key.TIME_TO_UNLOCK);
+				Buff.affect(this, Hunger.class).affectHunger(-4);
+			} else if (Dungeon.level.distance(pos, doorCell) <= 1) {
 				boolean hasKey = true;
 				if (door == Terrain.LOCKED_DOOR) {
 					hasKey = Notes.remove(new IronKey(Dungeon.depth));
-					if (hasKey) Level.set(doorCell, Terrain.DOOR);
+					if (hasKey) {
+						if (keyUseTrack != null){
+							keyUseTrack.processIronLockOpened();
+						}
+						Level.set(doorCell, Terrain.DOOR);
+					}
+				} else if (door == Terrain.HERO_LKD_DR) {
+					hasKey = true;
+					Level.set(doorCell, Terrain.DOOR);
+					GLog.i( Messages.get(SkeletonKey.class, "force_lock"));
 				} else if (door == Terrain.CRYSTAL_DOOR) {
 					hasKey = Notes.remove(new CrystalKey(Dungeon.depth));
 					if (hasKey) {
+						if (keyUseTrack != null){
+							keyUseTrack.processCrystalLockOpened();
+						}
 						Level.set(doorCell, Terrain.EMPTY);
 						Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
 						CellEmitter.get( doorCell ).start( Speck.factory( Speck.DISCOVER ), 0.025f, 20 );
 					}
 				} else {
-					hasKey = Notes.remove(new SkeletonKey(Dungeon.depth));
-					if (hasKey) Level.set(doorCell, Terrain.UNLOCKED_EXIT);
+					hasKey = Notes.remove(new WornKey(Dungeon.depth));
+					if (hasKey) {
+						Level.set(doorCell, Terrain.UNLOCKED_EXIT);
+					}
 				}
 				
 				if (hasKey) {
@@ -1902,17 +1941,31 @@ public class Hero extends Char {
 		} else if (curAction instanceof HeroAction.OpenChest) {
 			
 			Heap heap = Dungeon.level.heaps.get( ((HeroAction.OpenChest)curAction).dst );
-			
-			if (Dungeon.level.distance(pos, heap.pos) <= 1){
+			SkeletonKey.keyRecharge skele = buff(SkeletonKey.keyRecharge.class);
+			SkeletonKey.KeyReplacementTracker keyUseTrack = buff(SkeletonKey.KeyReplacementTracker.class);
+
+			if (skele != null && skele.isCursed()
+					&& (heap.type == Type.LOCKED_CHEST || heap.type == Type.CRYSTAL_CHEST)
+					&& Random.Int(6) != 0){
+				GLog.n(Messages.get(this, "key_distracted"));
+				spend(2*Key.TIME_TO_UNLOCK);
+				Buff.affect(this, Hunger.class).affectHunger(-4);
+			} else if (Dungeon.level.distance(pos, heap.pos) <= 1){
 				boolean hasKey = true;
 				if (heap.type == Type.SKELETON || heap.type == Type.REMAINS) {
 					Sample.INSTANCE.play( Assets.Sounds.BONES );
 				} else if (heap.type == Type.LOCKED_CHEST){
 					hasKey = Notes.remove(new GoldenKey(Dungeon.depth));
+					if (hasKey && keyUseTrack != null){
+						keyUseTrack.processGoldLockOpened();
+					}
 				} else if (heap.type == Type.CRYSTAL_CHEST){
 					hasKey = Notes.remove(new CrystalKey(Dungeon.depth));
+					if (hasKey && keyUseTrack != null){
+						keyUseTrack.processCrystalLockOpened();
+					}
 				}
-				
+
 				if (hasKey) {
 					GameScene.updateKeyDisplay();
 					heap.open(this);

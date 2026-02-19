@@ -83,7 +83,7 @@ public class WndOptions extends Window {
 				}
 			};
 			if (hasIcon(i)) btn.icon(getIcon(i));
-			btn.enable(enabled(i));
+			btn.multiline = true;
 			add( btn );
 
 			if (!hasInfo(i)) {
@@ -99,6 +99,8 @@ public class WndOptions extends Window {
 				info.setRect(width-BUTTON_HEIGHT, pos, BUTTON_HEIGHT, BUTTON_HEIGHT);
 				add(info);
 			}
+
+			btn.enable(enabled(i));
 
 			pos += BUTTON_HEIGHT + MARGIN;
 		}

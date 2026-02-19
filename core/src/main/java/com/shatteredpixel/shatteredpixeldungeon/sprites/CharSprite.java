@@ -226,8 +226,9 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 			}
 			float x = destinationCenter().x;
 			float y = destinationCenter().y - height()/2f;
+			int pos = DungeonTilemap.worldToTile(x, y + height(), Dungeon.level.width());
 			if (ch != null) {
-				FloatingText.show( x, y, ch.pos, text, color, icon, true );
+				FloatingText.show( x, y, pos, text, color, icon, true );
 			} else {
 				FloatingText.show( x, y, -1, text, color, icon, true );
 			}
@@ -670,6 +671,27 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	public void hideAlert() {
 		synchronized (EmoIcon.class) {
 			if (emo instanceof EmoIcon.Alert) {
+				emo.killAndErase();
+				emo = null;
+			}
+		}
+	}
+
+	public void showInvestigate() {
+		synchronized (EmoIcon.class) {
+			if (!(emo instanceof EmoIcon.Investigate)) {
+				if (emo != null) {
+					emo.killAndErase();
+				}
+				emo = new EmoIcon.Investigate(this);
+				emo.visible = visible;
+			}
+		}
+	}
+
+	public void hideInvestigate() {
+		synchronized (EmoIcon.class) {
+			if (emo instanceof EmoIcon.Investigate) {
 				emo.killAndErase();
 				emo = null;
 			}

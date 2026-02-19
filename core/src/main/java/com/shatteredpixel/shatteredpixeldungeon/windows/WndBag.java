@@ -188,13 +188,20 @@ public class WndBag extends WndTabbed {
 				BagTab tab = new BagTab( b, i++ );
 				add( tab );
 				tab.select( b == bag );
+				if  (b == bag){
+					selected = tab;
+				}
 			}
 		}
 
 		layoutTabs();
 	}
-	
-	public static WndBag lastBag( ItemSelector selector ) {
+
+	public ItemSelector getSelector() {
+		return selector;
+	}
+
+	public static WndBag lastBag(ItemSelector selector ) {
 		
 		if (lastBag != null && Dungeon.hero.belongings.backpack.contains( lastBag )) {
 			

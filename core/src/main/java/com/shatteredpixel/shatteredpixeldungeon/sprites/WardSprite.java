@@ -105,7 +105,7 @@ public class WardSprite extends MobSprite implements TieredSprite{
 	}
 
 	public void linkVisuals(Char ch ){
-		
+
 		if (ch == null) return;
 
 	}
@@ -118,11 +118,12 @@ public class WardSprite extends MobSprite implements TieredSprite{
 	@Override
 	public void tier(int tier) {
 		this.tier = tier;
+        updateTier();
 	}
 
 	@Override
 	public void updateTier() {
-
+        updateTier(tier);
 	}
 
 	public void updateTier(int tier){
