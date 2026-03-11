@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    android:installLocation="auto"
-	android:targetSandboxVersion="2">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+		  android:installLocation="auto"
+		  android:targetSandboxVersion="2">
 
 	<uses-feature android:glEsVersion="0x00020000"/>
 
@@ -11,32 +11,36 @@
 	<uses-permission android:name="android.permission.READ_LOGS" tools:ignore="ProtectedPermissions"/>
 	<!-- Hilariously small screens still exist but are usually high enough DPI to work now -->
 	<supports-screens
-		android:smallScreens="true"
-		android:normalScreens="true"
-		android:largeScreens="true"
-		android:xlargeScreens="true"/>
+			android:smallScreens="true"
+			android:normalScreens="true"
+			android:largeScreens="true"
+			android:xlargeScreens="true"/>
 
 	<application
-		android:icon="@mipmap/ic_launcher"
-		android:label="${appName}"
-		android:theme="@style/GameTheme"
-		android:appCategory="game"
-		android:isGame="true"
-		android:resizeableActivity="true"
-		android:allowBackup="true"
-		android:fullBackupOnly="true"
-		android:backupAgent=".AndroidBackupHandler">
+			android:icon="@mipmap/ic_launcher"
+			android:label="${appName}"
+			android:theme="@style/GameTheme"
+			android:appCategory="game"
+			android:isGame="true"
+			android:resizeableActivity="true"
+			android:allowBackup="true"
+			android:fullBackupOnly="true"
+			android:backupAgent=".AndroidBackupHandler"
+			tools:replace="android:appComponentFactory" android:appComponentFactory="androidx"
+	>
+
+
 		<activity
-			android:name=".AndroidLauncher"
-			android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize"
-			android:exported="true">
+				android:name=".AndroidLauncher"
+				android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize"
+				android:exported="true">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
 		<activity
-			android:name=".AndroidMissingNativesHandler">
+				android:name=".AndroidMissingNativesHandler">
 		</activity>
 	</application>
 
