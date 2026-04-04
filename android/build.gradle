@@ -74,6 +74,10 @@ dependencies {
     implementation "com.github.RohitSurwase.UCE-Handler:uce_handler:1.4"
 }
 
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
 // called every time gradle gets executed, takes the native dependencies of
 // the natives configuration, and extracts them to the proper libs/ folders
 // so they get packed with the APK.

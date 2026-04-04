@@ -26,7 +26,6 @@
 			android:allowBackup="true"
 			android:fullBackupOnly="true"
 			android:backupAgent=".AndroidBackupHandler"
-			tools:replace="android:appComponentFactory" android:appComponentFactory="androidx"
 	>
 
 
