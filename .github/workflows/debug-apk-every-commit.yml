@@ -76,19 +76,13 @@ jobs:
 
       - name: Rename APK
         run: mv android/build/outputs/apk/release/android-release-unsigned-signed.apk android/build/outputs/apk/release/android-release.apk
-      
-      - name: Prepare Tags
-        id: prep
-        run: |
-          echo "snapshot_tag=snapshot-${{ env.version }}" >> $GITHUB_OUTPUT
-          echo "rolling_tag=latest_release" >> $GITHUB_OUTPUT
 
       # 1. Создаем основной Snapshot релиз
       - name: Create Snapshot Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ steps.prep.outputs.snapshot_tag }}
-          name: "Snapshot ${{ env.version }}"
+          tag_name: ${{ env.version }}
+          name: ${{ env.version }}
           prerelease: true
           generate_release_notes: true
           files: |
