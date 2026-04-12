@@ -20,18 +20,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      # 1
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: '17'
           cache: 'gradle'
 
-      # 1
-      - name: Checkout code
-        uses: actions/checkout@v4  # ✅ Актуальная версия
-        with:
-          fetch-depth: 1
         
       - name: Create dynamic version number
         id: vars
