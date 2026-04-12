@@ -24,10 +24,6 @@ android {
         debug {
             applicationIdSuffix ".indev"
             versionNameSuffix '-INDEV'
-            dependencies {
-                debugImplementation project(':services:updates:debugUpdates')
-                debugImplementation project(':services:news:debugNews')
-            }
         }
         release {
 
@@ -38,11 +34,6 @@ android {
             shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
-            dependencies {
-                releaseImplementation project(':services:updates:githubUpdates')
-                releaseImplementation project(':services:news:shatteredNews')
-            }
         }
     }
 
@@ -59,6 +50,12 @@ repositories {
 }
 dependencies {
     implementation project(':core')
+
+    debugImplementation project(':services:updates:debugUpdates')
+    debugImplementation project(':services:news:debugNews')
+    releaseImplementation project(':services:updates:githubUpdates')
+    releaseImplementation project(':services:news:shatteredNews')
+
 
     implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
     natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
