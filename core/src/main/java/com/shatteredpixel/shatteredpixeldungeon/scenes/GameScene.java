@@ -1187,9 +1187,9 @@ public class GameScene extends PixelScene {
 		delay = (float)Math.ceil(Actor.now() + delay) - Actor.now();
 		if (scene != null) {
 			scene.addMobSprite(mob);
-			Actor.addDelayed(mob, delay);
-			mob.spendToWhole();
 		}
+		Actor.addDelayed(mob, delay);
+		mob.spendToWhole();
 	}
 	
 	public static void add( EmoIcon icon ) {
