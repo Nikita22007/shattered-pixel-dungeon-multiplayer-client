@@ -475,6 +475,10 @@ public class ParseThread implements Callable<String> {
                     GameScene.show(new WndMessage(id, args.getString("text")));
                     break;
                 }
+                case "wnd_generic": {
+                    GameScene.show(new com.shatteredpixel.shatteredpixeldungeon.windows.WndGeneric(id, windowObj));
+                    break;
+                }
                 case "option":
                 case "wnd_option": {
                     GameScene.show(new WndOptions(id, args));

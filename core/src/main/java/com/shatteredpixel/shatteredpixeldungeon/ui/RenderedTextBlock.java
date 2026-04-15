@@ -57,11 +57,11 @@ public class RenderedTextBlock extends Component {
 	private int alignment = LEFT_ALIGN;
 	
 	public RenderedTextBlock(int size){
-		this.size = size;
+		this.size = size; 
 	}
 
 	public RenderedTextBlock(String text, int size){
-		this.size = size;
+		this.size = size; 
 		text(text);
 	}
 
