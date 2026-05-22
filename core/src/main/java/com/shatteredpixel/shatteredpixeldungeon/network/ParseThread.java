@@ -740,6 +740,7 @@ public class ParseThread implements Callable<String> {
     }
 
     protected void parseActions(@NotNull JSONArray actions) {
+        ArrayList<JSONObject> spriteActions = new ArrayList<>();
         for (int i = 0; i < actions.length(); i++) {
             JSONObject actionObj;
             try {
@@ -750,17 +751,28 @@ public class ParseThread implements Callable<String> {
                 continue;
             }
             String type = actionObj.optString("action_name", actionObj.optString("action_type"));
-            try {
-                ActionParser parser = actionParsers.get(type);
-                if (parser == null) {
-                    GLog.h("unknown action type " + type + ". Ignored");
-                    continue;
-                }
-                parser.parse(this, actionObj);
-            } catch (JSONException e) {
-                GLog.n("Incorrect action ( " + type + "). Ignored");
-                e.printStackTrace();
+            if ("sprite_action".equals(type)) {
+                spriteActions.add(actionObj);
+                continue;
             }
+            parseAction(type, actionObj);
+        }
+        for (JSONObject actionObj : spriteActions) {
+            parseAction(actionObj.optString("action_name", actionObj.optString("action_type")), actionObj);
+        }
+    }
+
+    private void parseAction(String type, JSONObject actionObj) {
+        try {
+            ActionParser parser = actionParsers.get(type);
+            if (parser == null) {
+                GLog.h("unknown action type " + type + ". Ignored");
+                return;
+            }
+            parser.parse(this, actionObj);
+        } catch (JSONException e) {
+            GLog.n("Incorrect action ( " + type + "). Ignored");
+            e.printStackTrace();
         }
     }
 
