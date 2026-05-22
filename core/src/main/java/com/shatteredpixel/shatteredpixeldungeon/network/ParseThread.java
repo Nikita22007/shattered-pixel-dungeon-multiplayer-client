@@ -80,6 +80,9 @@ import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.level;
 import static com.shatteredpixel.shatteredpixeldungeon.network.Client.client;
 import static com.shatteredpixel.shatteredpixeldungeon.network.Client.disconnect;
+import com.shatteredpixel.shatteredpixeldungeon.network.actions.ActionParser;
+import com.shatteredpixel.shatteredpixeldungeon.network.actions.ActionParserRegistry;
+import com.shatteredpixel.shatteredpixeldungeon.network.actions.DefaultActionParserRegistry;
 import static com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite.spriteClassFromName;
 import static com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite.spriteFromClass;
 import static java.lang.Thread.sleep;
@@ -95,6 +98,8 @@ public class ParseThread implements Callable<String> {
     private static ParseThread activeThread;
     @NotNull
     private FutureTask<String> jsonCall;
+    @NotNull
+    private final ActionParserRegistry actionParsers;
 
     private static boolean isOldServer = true;
     static String serverUUID = null;
@@ -107,6 +112,7 @@ public class ParseThread implements Callable<String> {
         isOldServer = true;
         this.socket = socket;
         this.reader = readStream;
+        this.actionParsers = DefaultActionParserRegistry.create();
         activeThread = this;
         updateTask();
     }
@@ -211,9 +217,6 @@ public class ParseThread implements Callable<String> {
             Log.i("Parsing", data.toString(4));
         }
 
-        if (data.has("level_params")){
-            parseLevelParams(data.getJSONObject("level_params"));
-        }
         if (data.has("server_type")){
             String serverType = data.getString("server_type");
             if (!CLIENT_TYPE.equals(serverType)) {
@@ -222,6 +225,29 @@ public class ParseThread implements Callable<String> {
             }
             Log.i("Parsing", "Server mode changed to SPD");
             isOldServer = false;
+        }
+        if (!isConnectedToOldServer() && data.has("server_uuid")) {
+            Gdx.app.log("ParseThread", "ServerUUID");
+            serverUUID = data.getString("server_uuid");
+            Client.sendHeroClass(GamesInProgress.selectedClass);
+        }
+
+        if (isConnectedToOldServer()) {
+            parseLegacy(data);
+        } else {
+            parseActionPacket(data);
+        }
+    }
+
+    private void parseActionPacket(JSONObject data) throws JSONException {
+        if (data.has("actions")) {
+            parseActions(data.getJSONArray("actions"));
+        }
+    }
+
+    private void parseLegacy(JSONObject data) throws JSONException, InterruptedException {
+        if (data.has("level_params")){
+            parseLevelParams(data.getJSONObject("level_params"));
         }
 
         //Log.w("data", data.toString(4));
@@ -375,7 +401,7 @@ public class ParseThread implements Callable<String> {
     }
 
 
-    private void parsePlants(JSONArray plantsArray) {
+    public void parsePlants(JSONArray plantsArray) {
         for (int i = 0; i < plantsArray.length(); i++) {
             JSONObject plantObject = plantsArray.optJSONObject(i);
             if (plantObject == null) {
@@ -404,7 +430,7 @@ public class ParseThread implements Callable<String> {
             }
         }
     }
-    private void parseTraps(JSONArray trapsArray) {
+    public void parseTraps(JSONArray trapsArray) {
         for (int i = 0; i < trapsArray.length(); i++) {
             JSONObject trapObject = trapsArray.optJSONObject(i);
             if (trapObject == null) {
@@ -432,7 +458,7 @@ public class ParseThread implements Callable<String> {
         }
     }
 
-    private void parseUI(JSONObject uiObject) {
+    public void parseUI(JSONObject uiObject) {
         if (uiObject.has("depth")) {
             Dungeon.depth = uiObject.optInt("depth");
         }
@@ -461,7 +487,7 @@ public class ParseThread implements Callable<String> {
         }
     }
 
-    private void parseWindow(JSONObject windowObj) {
+    public void parseWindow(JSONObject windowObj) {
         try {
             int id = windowObj.getInt("id");
             String type = windowObj.getString("type");
@@ -549,7 +575,7 @@ public class ParseThread implements Callable<String> {
         }
     }
 
-    private void parseServerActions(JSONArray server_actions_arr) {
+    public void parseServerActions(JSONArray server_actions_arr) {
         JSONObject debug_action = null;
         for (int i = 0; i < server_actions_arr.length(); i += 1) {
             try {
@@ -586,7 +612,7 @@ public class ParseThread implements Callable<String> {
         }
     }
 
-    private void parseHeap(JSONObject heapObj) {
+    public void parseHeap(JSONObject heapObj) {
         try {
             if (level == null) {
                 Log.e("ParseHeap", "level == null");
@@ -627,7 +653,7 @@ public class ParseThread implements Callable<String> {
         }
     }
 
-    private void parseMessages(JSONArray messages) {
+    public void parseMessages(JSONArray messages) {
         Scene scene = Game.scene();
         if (!(scene instanceof GameScene)) {
             return;
@@ -647,7 +673,7 @@ public class ParseThread implements Callable<String> {
         }
     }
 
-    private void parseInventory(JSONObject inv) {
+    public void parseInventory(JSONObject inv) {
         if (inv.has("backpack")) {
             try {
                 hero.belongings.backpack = new Belongings.Backpack(inv.getJSONObject("backpack"));
@@ -697,7 +723,7 @@ public class ParseThread implements Callable<String> {
         }
     }
 
-    protected void parseSpriteAction(JSONObject actionObj) throws JSONException {
+    public void parseSpriteAction(JSONObject actionObj) throws JSONException {
         int actorID = actionObj.getInt("actor_id");
         Actor actor = Actor.findById(actorID);
         if (actor == null) {
@@ -723,160 +749,14 @@ public class ParseThread implements Callable<String> {
                 e.printStackTrace();
                 continue;
             }
-            String type = actionObj.optString("action_type");
+            String type = actionObj.optString("action_name", actionObj.optString("action_type"));
             try {
-                switch (type) {
-                    case ("sprite_action"): {
-                        parseSpriteAction(actionObj);
-                        break;
-                    }
-                    case ("add_item_to_bag"): {
-                        parse_update_bag_action(actionObj);
-                        break;
-                    }
-                    case ("show_status"): {
-                        parseShowStatusAction(actionObj);
-                        break;
-                    }
-                    case ("degradation"): {
-                        parseDegradationAction(actionObj);
-                        break;
-                    }
-                    case ("show_banner"):
-                    case ("visual_show_banner"): {
-                        parseBannerShowAction(actionObj);
-                        break;
-                    }
-                    case ("lightning_visual"): {
-                        parseLightningVisualAction(actionObj);
-                        break;
-                    }
-                    case ("death_ray_centered_visual"): {
-                        parseDeathRayCenteredVisualAction(actionObj);
-                        break;
-                    }
-                    case ("wound_visual"): {
-                        parseWoundVisualAction(actionObj);
-                        break;
-                    }
-                    case ("ripple_visual"): {
-                        parseRippleVisualAction(actionObj);
-                        break;
-                    }
-                    case ("missile_sprite_visual"): {
-                        parseMissileSpriteVisualAction(actionObj);
-                        break;
-                    }
-                    case ("checked_cell_visual"): {
-                        if (Dungeon.level.heroFOV[actionObj.getInt("pos")]) {
-                            GameScene.effect(new CheckedCell(actionObj.getInt("pos")));
-                        }
-                        break;
-                    }
-                    case ("play_sample"): {
-                        Sample.INSTANCE.play(actionObj);
-                        break;
-                    }
-                    case "music":
-                        Music.INSTANCE.parseAction(actionObj).execute();
-                        break;
-                    case ("load_sample"): {
-                        Sample.INSTANCE.load(actionObj.getJSONArray("samples"));
-                        break;
-                    }
-                    case ("unload_sample"): {
-                        Sample.INSTANCE.unload(actionObj.getString("sample"));
-                        break;
-                    }
-                    case ("shake_camera"): {
-                        Camera.main.shake((float) actionObj.getDouble("magnitude"), (float) actionObj.getDouble("duration"));
-                        break;
-                    }
-                    case ("enchanting_visual"): {
-                        int targetCharId = actionObj.getInt("target");
-                        Actor actor = Actor.findById(targetCharId);
-                        if (!(actor instanceof Char)) {
-                            GLog.n("Enchanting: Can't find char with id " + targetCharId + ". Ignored");
-                            break;
-                        }
-                        Item item = CustomItem.createItem(actionObj.getJSONObject("item"));
-                        Enchanting.show((Char) actor, item);
-                        break;
-                    }
-                    case ("flare_visual"): {
-                        PointF position;
-                        if (actionObj.has("pos")) {
-                            position = DungeonTilemap.tileCenterToWorld(
-                                    actionObj.getInt("pos")
-                            );
-                        } else {
-                            position = new PointF(
-                                    (float) actionObj.getDouble("position_x"),
-                                    (float) actionObj.getDouble("position_y")
-                            );
-                        }
-
-                        Flare flare = new Flare(
-                                actionObj.getInt("rays"),
-                                (float) actionObj.getDouble("radius")
-                        );
-                        flare.angle = (float) actionObj.optDouble("angle", 45);
-                        flare.angularSpeed = (float) actionObj.optDouble("angular_speed", 180);
-                        flare.color(actionObj.getInt("color"), actionObj.optBoolean("light_moode", true));
-                        GameScene.showFlare(flare, position, (float) actionObj.getDouble("duration"));
-                        break;
-                    }
-                    case ("emitter_visual"): {
-                        parseEmitterVisualAction(actionObj);
-                        break;
-                    }
-                    case ("emitter_decor"):
-                    {
-                        level.addVisual(actionObj);
-                        break;
-                    }
-                    case ("heap_drop_visual"):
-                    {
-                        parseHeadDropVisualAction(actionObj);
-                        break;
-                    }
-                    case ("magic_missile_visual"):
-                    {
-                        parseMagicMissileVisual(actionObj);
-                        break;
-                    }
-                    case ("spell_sprite"):
-                    {
-                        ShowSpellSprite(actionObj);
-                        break;
-                    }
-                    case ("discover_tile"):
-                    {
-                        GameScene.discoverTile(
-                                actionObj.getInt("pos"),
-                                actionObj.getInt("old_tile")
-                        );
-                        break;
-                    }
-                    case ("surprise_visual"): {
-                        int pos = actionObj.getInt("pos");
-                        int angle = actionObj.getInt("angle");
-                        Surprise.hit(pos, angle);
-                        break;
-                    }
-                    case "boss_health_bar":{
-                        BossHealthBar.parseAction(actionObj);
-                        break;
-                    }
-                    case ("game_scene_flash"):
-                        GameScene.flash(actionObj.getInt("color"), actionObj.getBoolean("light"));
-                        break;
-                    case "fading_traps":
-                        FadingTraps.fromJSON(actionObj);
-                        break;
-                    default:
-                        GLog.h("unknown action type " + type + ". Ignored");
+                ActionParser parser = actionParsers.get(type);
+                if (parser == null) {
+                    GLog.h("unknown action type " + type + ". Ignored");
+                    continue;
                 }
+                parser.parse(this, actionObj);
             } catch (JSONException e) {
                 GLog.n("Incorrect action ( " + type + "). Ignored");
                 e.printStackTrace();
@@ -884,7 +764,7 @@ public class ParseThread implements Callable<String> {
         }
     }
 
-    private void ShowSpellSprite(JSONObject actionObj) throws JSONException {
+    public void ShowSpellSprite(JSONObject actionObj) throws JSONException {
         Actor actor = Actor.findById(actionObj.getInt("target"));
         Char chr = actor instanceof Char? (Char) actor: null;
         SpellSprite.show(
@@ -893,7 +773,7 @@ public class ParseThread implements Callable<String> {
                 );
     }
 
-    private void parseMagicMissileVisual(JSONObject actionObj) throws JSONException{
+    public void parseMagicMissileVisual(JSONObject actionObj) throws JSONException{
         int from = actionObj.getInt("from");
         int to = actionObj.getInt("to");
         Char actor = Actor.findChar(from);
@@ -909,7 +789,7 @@ public class ParseThread implements Callable<String> {
         }
     }
 
-    private void parseHeadDropVisualAction(JSONObject actionObj) throws JSONException {
+    public void parseHeadDropVisualAction(JSONObject actionObj) throws JSONException {
         int from =actionObj.getInt("from");
         int to = actionObj.getInt("to");
         //Item item = CustomItem.createItem(actionObj.getJSONObject("item"));
@@ -924,7 +804,7 @@ public class ParseThread implements Callable<String> {
         heap.sprite.drop();
     }
 
-    private void parse_update_bag_action(JSONObject actionObj) throws JSONException {
+    public void parse_update_bag_action(JSONObject actionObj) throws JSONException {
         if (!actionObj.has("slot") ||
                 !actionObj.has("update_mode") ||
                 (!actionObj.has("item") && actionObj.getString("update_mode").equals("remove"))
@@ -976,7 +856,7 @@ public class ParseThread implements Callable<String> {
         }
     }
 
-    private void parseShowStatusAction(JSONObject actionObj) throws JSONException {
+    public void parseShowStatusAction(JSONObject actionObj) throws JSONException {
         float x = (float) actionObj.getDouble("x");
         float y = (float) actionObj.getDouble("y");
         Integer key = actionObj.has("key") ? actionObj.getInt("key") : null;
@@ -998,7 +878,7 @@ public class ParseThread implements Callable<String> {
     }
 
     @Deprecated
-    private void parseDegradationAction(JSONObject actionObj) {
+    public void parseDegradationAction(JSONObject actionObj) {
         try {
             //TODO: chceck if any of this is needed
             PointF point = new PointF((float) actionObj.getDouble("position_x"), (float) actionObj.getDouble("position_y"));
@@ -1015,7 +895,7 @@ public class ParseThread implements Callable<String> {
     }
 
     //FIXME
-    private void parseBannerShowAction(JSONObject actionObj) {
+    public void parseBannerShowAction(JSONObject actionObj) {
         try {
             BannerSprites.Type bannerType = BannerSprites.Type.valueOf(actionObj.getString(actionObj.getString("banner").toUpperCase()));
 
@@ -1028,7 +908,7 @@ public class ParseThread implements Callable<String> {
     }
 
 
-    private void parseLightningVisualAction(JSONObject actionObj) {
+    public void parseLightningVisualAction(JSONObject actionObj) {
         try {
             JSONArray cellsJson = actionObj.getJSONArray("cells");
             int[] cells = new int[cellsJson.length()];
@@ -1042,7 +922,7 @@ public class ParseThread implements Callable<String> {
         }
     }
 
-    private void parseDeathRayCenteredVisualAction(JSONObject actionObj) {
+    public void parseDeathRayCenteredVisualAction(JSONObject actionObj) {
         try {
             GameScene.effect(new Beam.DeathRay(actionObj.getInt("start"), actionObj.getInt("stop"), (float) actionObj.getDouble("duration")));
         } catch (JSONException e) {
@@ -1050,7 +930,7 @@ public class ParseThread implements Callable<String> {
         }
     }
 
-    private void parseWoundVisualAction(JSONObject actionObj) {
+    public void parseWoundVisualAction(JSONObject actionObj) {
         try {
             Wound.hitWithTimeToFade(actionObj.getInt("pos"), (float) actionObj.getDouble("duration"));
         } catch (JSONException e) {
@@ -1058,7 +938,7 @@ public class ParseThread implements Callable<String> {
         }
     }
 
-    private void parseRippleVisualAction(JSONObject actionObj) {
+    public void parseRippleVisualAction(JSONObject actionObj) {
         try {
             GameScene.ripple(actionObj.getInt("pos"));
         } catch (JSONException e) {
@@ -1066,14 +946,14 @@ public class ParseThread implements Callable<String> {
         }
     }
 
-    private void parseMissileSpriteVisualAction(JSONObject actionObj) {
+    public void parseMissileSpriteVisualAction(JSONObject actionObj) {
         try {
             MissileSprite.show(actionObj);
         } catch (JSONException e) {
         }
     }
 
-    private void parseEmitterVisualAction(JSONObject actionObj) {
+    public void parseEmitterVisualAction(JSONObject actionObj) {
         try {
             if(actionObj.has("kill") && actionObj.getBoolean("kill")) {
                 int id = actionObj.getInt("id");
@@ -1316,7 +1196,7 @@ public class ParseThread implements Callable<String> {
         }
     }
 
-    protected void parseLevel(JSONObject levelObj) throws JSONException {
+    public void parseLevel(JSONObject levelObj) throws JSONException {
         for (Iterator<String> it = levelObj.keys(); it.hasNext(); ) {
             String token = it.next();
             switch (token) {
@@ -1416,7 +1296,7 @@ public class ParseThread implements Callable<String> {
         }
     }
 
-    protected void parseLevelParams(JSONObject levelParamsObj) throws JSONException {
+    public void parseLevelParams(JSONObject levelParamsObj) throws JSONException {
         if (hasNotNull(levelParamsObj, "width") || hasNotNull(levelParamsObj, "height")) {
             assert hasNotNull(levelParamsObj, "width") && hasNotNull(levelParamsObj, "height");
             int width = levelParamsObj.getInt("width");
@@ -1672,7 +1552,7 @@ public class ParseThread implements Callable<String> {
     }
 
 
-    protected void parseActors(JSONArray actors) throws JSONException {
+    public void parseActors(JSONArray actors) throws JSONException {
         for (int i = 0; i < actors.length(); i++) {
             JSONObject actorObj = actors.getJSONObject(i);
             int ID = actorObj.getInt("id");
@@ -1718,7 +1598,7 @@ public class ParseThread implements Callable<String> {
         }
     }
 
-    protected void parseHero(JSONObject heroObj) throws JSONException {
+    public void parseHero(JSONObject heroObj) throws JSONException {
         for (Iterator<String> it = heroObj.keys(); it.hasNext(); ) {
             String token = it.next();
             switch (token) {
@@ -1795,7 +1675,7 @@ public class ParseThread implements Callable<String> {
     }
 
 
-    private void parseBuffs(JSONArray buffs) {
+    public void parseBuffs(JSONArray buffs) {
         for (int i = 0; i < buffs.length(); i++) {
             try {
                 JSONObject obj = buffs.getJSONObject(i);

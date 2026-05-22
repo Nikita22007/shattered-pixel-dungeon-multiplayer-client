@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.Locale;
 
-class NetworkPacket {
+public class NetworkPacket {
 
 
     enum CellState {
@@ -115,4 +115,3 @@ class NetworkPacket {
     }
 
 }
-
