@@ -92,7 +92,8 @@ public class DefaultActionParserRegistry {
         registry.register("item_remove", new ItemRemoveParser());
         registry.register("item_update", new ItemUpdateParser());
         registry.register("item_replace", new ItemReplaceParser());
-        registry.register("heaps", new HeapsParser());
+        registry.register("heap_update", new HeapUpdateParser());
+        registry.register("heap_remove", new HeapRemoveParser());
         registry.register("show_window", new ShowWindowParser());
         registry.register("update_depth", new UpdateDepthParser());
         registry.register("update_counter", new UpdateCounterParser());
@@ -352,15 +353,6 @@ public class DefaultActionParserRegistry {
     private static class InventoryParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
             parseThread.parseInventory(payloadObject(action));
-        }
-    }
-
-    private static class HeapsParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            JSONArray heaps = payloadArray(action);
-            for (int i = 0; i < heaps.length(); i++) {
-                parseThread.parseHeap(heaps.getJSONObject(i));
-            }
         }
     }
 
