@@ -654,24 +654,36 @@ public class ParseThread implements Callable<String> {
         }
     }
 
-    public void parseMessages(JSONArray messages) {
+    public void parseMessage(JSONObject messageObj) {
         Scene scene = Game.scene();
         if (!(scene instanceof GameScene)) {
             return;
         }
         GameLog log = ((GameScene) scene).getGameLog();
+        try {
+            if (messageObj.has("color")) {
+                log.WriteMessage(messageObj.getString("text"), messageObj.getInt("color"));
+            } else {
+                log.WriteMessageAutoColor(messageObj.getString("text"));
+            }
+        } catch (JSONException e) {
+            Log.w("ParseThread", "Incorrect message");
+        }
+    }
+
+    public void parseMessages(JSONArray messages) {
         for (int i = 0; i < messages.length(); i++) {
             try {
-                JSONObject messageObj = messages.getJSONObject(i);
-                if (messageObj.has("color")) {
-                    log.WriteMessage(messageObj.getString("text"), messageObj.getInt("color"));
-                } else {
-                    log.WriteMessageAutoColor(messageObj.getString("text"));
-                }
+                parseMessage(messages.getJSONObject(i));
             } catch (JSONException e) {
-                Log.w("ParseThread", "Incorrect message");
+                e.printStackTrace();
             }
         }
+    }
+
+    public void parseBadge(JSONObject badgeObj) {
+        // Implementation for badge notifications
+        Log.i("ParseThread", "Badge unlocked: " + badgeObj.optString("name"));
     }
 
     public void parseInventoryDefineSpecialSlots(JSONArray slotsArr) {

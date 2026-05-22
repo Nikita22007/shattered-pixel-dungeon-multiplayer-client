@@ -91,8 +91,14 @@ public class DefaultActionParserRegistry {
         registry.register("item_update", new ItemUpdateParser());
         registry.register("item_replace", new ItemReplaceParser());
         registry.register("heaps", new HeapsParser());
-        registry.register("window", new WindowParser());
-        registry.register("ui", new UiParser());
+        registry.register("show_window", new ShowWindowParser());
+        registry.register("update_depth", new UpdateDepthParser());
+        registry.register("update_counter", new UpdateCounterParser());
+        registry.register("update_keys", new UpdateKeysParser());
+        registry.register("unlock_badge", new UnlockBadgeParser());
+        registry.register("show_message", new ShowMessageParser());
+        registry.register("ui", new UiParser()); // Legacy
+        registry.register("window", new WindowParser()); // Legacy
         registry.register("plants", new PlantsParser());
         registry.register("traps", new TrapsParser());
         registry.register("texturepack", new TexturePackParser());
