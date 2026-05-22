@@ -1354,7 +1354,7 @@ public class ParseThread implements Callable<String> {
         }
     }
     //TODO: check this
-    protected Char parseActorChar(JSONObject actorObj, int ID, Actor actor) throws JSONException {
+    public Char parseActorChar(JSONObject actorObj, int ID, Actor actor) throws JSONException {
         Char chr;
         final boolean add_actor = actor == null;
         if (add_actor) {
@@ -1513,7 +1513,7 @@ public class ParseThread implements Callable<String> {
         return chr;
     }
 
-    protected void parseActorBlob(JSONObject actorObj, int id, Actor actor) throws JSONException {
+    public void parseActorBlob(JSONObject actorObj, int id, Actor actor) throws JSONException {
         Class blob_class = null;
         if (actor == null) {
             String blob_name;
@@ -1547,7 +1547,7 @@ public class ParseThread implements Callable<String> {
         }
     }
 
-    protected void parseActorHero(JSONObject actorObj, int id, Actor actor) throws JSONException {
+    public void parseActorHero(JSONObject actorObj, int id, Actor actor) throws JSONException {
         if ((actor != null) && !(actor instanceof Hero)) {
             Actor.remove(actor);
             Log.e("ParseThread", format("Actor is not hero. Deleted. Id:  %d", id));
@@ -1563,50 +1563,6 @@ public class ParseThread implements Callable<String> {
         Actor.add(actor); // it has check inside, no more checks
     }
 
-
-    public void parseActorUpdate(JSONObject actorObj) throws JSONException {
-        int ID = actorObj.getInt("id");
-        boolean erase_old = actorObj.optBoolean("erase_old", false);
-
-        if (!actorObj.has("type")) {
-            GLog.n("Actor does not have type. Ignored");
-            return;
-        }
-
-        Actor actor = (erase_old ? null : Actor.findById(ID));
-        String type = actorObj.getString("type");
-        switch (type) {
-            case "char":
-            case "character": {
-                parseActorChar(actorObj, ID, actor);
-                break;
-            }
-            case "hero": {
-                parseActorHero(actorObj, ID, actor);
-                break;
-            }
-            case "blob": {
-                parseActorBlob(actorObj, ID, actor);
-                break;
-            }
-            default: {
-                GLog.n("can't resolve actor type: \"" + type + "\". ID: " + ID);
-            }
-        }
-    }
-
-    public void parseActorDelete(JSONObject actorObj) throws JSONException {
-        int ID = actorObj.getInt("id");
-        Actor actor = Actor.findById(ID);
-        if (actor == null) return;
-
-        if (actor instanceof Char) {
-            Char ch = (Char) actor;
-            ch.destroy();
-        } else {
-            Actor.remove(actor);
-        }
-    }
 
     public void parseActors(JSONArray actors) throws JSONException {
         for (int i = 0; i < actors.length(); i++) {

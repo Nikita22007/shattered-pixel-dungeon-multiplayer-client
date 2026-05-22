@@ -279,11 +279,11 @@ public class DefaultActionParserRegistry {
         }
     }
 
-    private static JSONObject payloadObject(JSONObject action) throws JSONException {
+    static JSONObject payloadObject(JSONObject action) throws JSONException {
         return action.has("payload") ? action.getJSONObject("payload") : action;
     }
 
-    private static JSONArray payloadArray(JSONObject action) throws JSONException {
+    public static JSONArray payloadArray(JSONObject action) throws JSONException {
         return action.getJSONArray("payload");
     }
 
@@ -327,18 +327,6 @@ public class DefaultActionParserRegistry {
                     Game.switchScene(InterlevelScene.class);
                 }
             }
-        }
-    }
-
-    private static class ActorUpdateParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            parseThread.parseActorUpdate(payloadObject(action));
-        }
-    }
-
-    private static class ActorDeleteParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            parseThread.parseActorDelete(payloadObject(action));
         }
     }
 
