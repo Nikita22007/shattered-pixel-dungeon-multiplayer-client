@@ -68,7 +68,9 @@ public class DefaultActionParserRegistry {
         registry.register("boss_health_bar", new BossHealthBarParser());
         registry.register("game_scene_flash", new GameSceneFlashParser());
         registry.register("fading_traps", new FadingTrapsParser());
-        registry.register("server_actions", new ServerActionsParser());
+        registry.register("reset_level", new ResetLevelParser());
+        registry.register("show_banner", new ShowBannerParser());
+        registry.register("redirect_server", new RedirectServerParser());
         registry.register("resize_level", new ResizeLevelParser());
         registry.register("set_level_visuals", new SetLevelVisualsParser());
         registry.register("set_level_entrance", new SetLevelEntranceParser());
@@ -102,7 +104,6 @@ public class DefaultActionParserRegistry {
         registry.register("plants", new PlantsParser());
         registry.register("traps", new TrapsParser());
         registry.register("texturepack", new TexturePackParser());
-        registry.register("redirect", new RedirectParser());
         return registry;
     }
 
@@ -305,12 +306,6 @@ public class DefaultActionParserRegistry {
         return action.getJSONArray("payload");
     }
 
-    private static class ServerActionsParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            parseThread.parseServerActions(payloadArray(action));
-        }
-    }
-
     private static class InterlevelSceneParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
             JSONObject ilsObj = payloadObject(action);
@@ -403,18 +398,4 @@ public class DefaultActionParserRegistry {
         }
     }
 
-    private static class RedirectParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            JSONObject redirectObject = payloadObject(action);
-            Client.disconnectWithoutSwitch();
-            ShatteredPixelDungeon.switchScene(InterlevelScene.class);
-            if (redirectObject.has("uuid")){
-                com.shatteredpixel.shatteredpixeldungeon.network.NetworkPacket.redirectUUID = redirectObject.getString("uuid");
-            }
-            if(redirectObject.has("password")){
-                com.shatteredpixel.shatteredpixeldungeon.network.NetworkPacket.password = redirectObject.getString("password");
-            }
-            Client.connect(redirectObject.getString("host"), redirectObject.getInt("port"));
-        }
-    }
 }
