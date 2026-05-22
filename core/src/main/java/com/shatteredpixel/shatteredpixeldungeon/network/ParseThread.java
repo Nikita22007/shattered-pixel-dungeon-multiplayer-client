@@ -1564,6 +1564,50 @@ public class ParseThread implements Callable<String> {
     }
 
 
+    public void parseActorUpdate(JSONObject actorObj) throws JSONException {
+        int ID = actorObj.getInt("id");
+        boolean erase_old = actorObj.optBoolean("erase_old", false);
+
+        if (!actorObj.has("type")) {
+            GLog.n("Actor does not have type. Ignored");
+            return;
+        }
+
+        Actor actor = (erase_old ? null : Actor.findById(ID));
+        String type = actorObj.getString("type");
+        switch (type) {
+            case "char":
+            case "character": {
+                parseActorChar(actorObj, ID, actor);
+                break;
+            }
+            case "hero": {
+                parseActorHero(actorObj, ID, actor);
+                break;
+            }
+            case "blob": {
+                parseActorBlob(actorObj, ID, actor);
+                break;
+            }
+            default: {
+                GLog.n("can't resolve actor type: \"" + type + "\". ID: " + ID);
+            }
+        }
+    }
+
+    public void parseActorDelete(JSONObject actorObj) throws JSONException {
+        int ID = actorObj.getInt("id");
+        Actor actor = Actor.findById(ID);
+        if (actor == null) return;
+
+        if (actor instanceof Char) {
+            Char ch = (Char) actor;
+            ch.destroy();
+        } else {
+            Actor.remove(actor);
+        }
+    }
+
     public void parseActors(JSONArray actors) throws JSONException {
         for (int i = 0; i < actors.length(); i++) {
             JSONObject actorObj = actors.getJSONObject(i);

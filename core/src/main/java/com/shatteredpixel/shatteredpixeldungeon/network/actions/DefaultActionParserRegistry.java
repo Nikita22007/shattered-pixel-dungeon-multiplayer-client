@@ -72,7 +72,8 @@ public class DefaultActionParserRegistry {
         registry.register("level_params", new LevelParamsParser());
         registry.register("map", new MapParser());
         registry.register("interlevel_scene", new InterlevelSceneParser());
-        registry.register("actors", new ActorsParser());
+        registry.register("actor_update", new ActorUpdateParser());
+        registry.register("actor_delete", new ActorDeleteParser());
         registry.register("buffs", new BuffsParser());
         registry.register("hero", new HeroParser());
         registry.register("messages", new MessagesParser());
@@ -329,9 +330,15 @@ public class DefaultActionParserRegistry {
         }
     }
 
-    private static class ActorsParser implements ActionParser {
+    private static class ActorUpdateParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            parseThread.parseActors(payloadArray(action));
+            parseThread.parseActorUpdate(payloadObject(action));
+        }
+    }
+
+    private static class ActorDeleteParser implements ActionParser {
+        public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
+            parseThread.parseActorDelete(payloadObject(action));
         }
     }
 
