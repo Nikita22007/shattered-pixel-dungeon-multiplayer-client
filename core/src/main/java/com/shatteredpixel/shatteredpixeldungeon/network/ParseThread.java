@@ -402,6 +402,22 @@ public class ParseThread implements Callable<String> {
     }
 
 
+    public void parsePlant(JSONObject plantObject) throws JSONException {
+        if (plantObject.isNull("plant_info")) {
+            if (level == null || level.plants == null) {
+                return;
+            }
+            Plant plant = level.plants.get(plantObject.getInt("pos"));
+            if (plant != null) {
+                plant.wither();
+            }
+            return;
+        }
+        JSONObject plantInfo = plantObject.optJSONObject("plant_info");
+        Plant.Seed seed = new CustomPlant.Seed(plantInfo);
+        level.plant(seed, plantObject.getInt("pos"));
+    }
+
     public void parsePlants(JSONArray plantsArray) {
         for (int i = 0; i < plantsArray.length(); i++) {
             JSONObject plantObject = plantsArray.optJSONObject(i);
@@ -410,22 +426,7 @@ public class ParseThread implements Callable<String> {
                 continue;
             }
             try {
-                if (plantObject.isNull("plant_info")) {
-                    if (level == null) {
-                        continue;
-                    }
-                    if (level.plants == null) {
-                        continue;
-                    }
-                    Plant plant = level.plants.get(plantObject.getInt("pos"));
-                    if (plant != null) {
-                        plant.wither();
-                    }
-                    continue;
-                }
-                JSONObject plantInfo = plantObject.optJSONObject("plant_info");
-                Plant.Seed seed = new CustomPlant.Seed(plantInfo);
-                level.plant(seed, plantObject.getInt("pos"));
+                parsePlant(plantObject);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
