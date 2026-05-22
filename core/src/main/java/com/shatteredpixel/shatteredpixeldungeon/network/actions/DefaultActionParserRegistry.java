@@ -104,7 +104,8 @@ public class DefaultActionParserRegistry {
         registry.register("window", new WindowParser()); // Legacy
         registry.register("plant_update", new PlantUpdateParser());
         registry.register("plant_remove", new PlantRemoveParser());
-        registry.register("traps", new TrapsParser());
+        registry.register("trap_update", new TrapUpdateParser());
+        registry.register("trap_remove", new TrapRemoveParser());
         registry.register("texturepack", new TexturePackParser());
         return registry;
     }
@@ -366,12 +367,6 @@ public class DefaultActionParserRegistry {
     private static class UiParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
             parseThread.parseUI(payloadObject(action));
-        }
-    }
-
-    private static class TrapsParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            parseThread.parseTraps(payloadArray(action));
         }
     }
 

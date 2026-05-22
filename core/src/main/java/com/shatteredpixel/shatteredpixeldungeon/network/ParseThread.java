@@ -432,6 +432,20 @@ public class ParseThread implements Callable<String> {
             }
         }
     }
+    public void parseTrap(JSONObject trapObject) throws JSONException {
+        if (trapObject.isNull("trap_info")) {
+            if (level == null || level.traps == null) {
+                return;
+            }
+            int pos = trapObject.getInt("pos");
+            level.traps.remove(pos);
+            GameScene.updateMap(pos);
+            return;
+        }
+        Trap trap = new CustomTrap(trapObject);
+        level.setTrap(trap, trapObject.getInt("pos"));
+    }
+
     public void parseTraps(JSONArray trapsArray) {
         for (int i = 0; i < trapsArray.length(); i++) {
             JSONObject trapObject = trapsArray.optJSONObject(i);
@@ -440,20 +454,7 @@ public class ParseThread implements Callable<String> {
                 continue;
             }
             try {
-                if (trapObject.isNull("trap_info")) {
-                    if (level == null) {
-                        continue;
-                    }
-                    if (level.traps == null) {
-                        continue;
-                    }
-                    int pos = trapObject.getInt("pos");
-                    level.traps.remove(pos);
-                    GameScene.updateMap(pos);
-                    continue;
-                }
-                Trap trap = new CustomTrap(trapObject);
-                level.setTrap(trap, trapObject.getInt("pos"));
+                parseTrap(trapObject);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
