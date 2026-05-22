@@ -1209,7 +1209,7 @@ public class ParseThread implements Callable<String> {
     }
 
 
-    protected void parseCell(JSONObject cell) throws JSONException {
+    public void parseCell(JSONObject cell) throws JSONException {
         int pos = cell.getInt("position");
         if ((pos < 0) || (pos >= level.length())) {
             GLog.n("incorrect cell position: \"%s\". Ignored.", pos);
@@ -1262,7 +1262,7 @@ public class ParseThread implements Callable<String> {
                 }
 
                 case "exit": {
-                    level.entrance = levelObj.getInt("exit");
+                    level.exit = levelObj.getInt("exit");
                     break;
                 }
                 case "visible_positions": {

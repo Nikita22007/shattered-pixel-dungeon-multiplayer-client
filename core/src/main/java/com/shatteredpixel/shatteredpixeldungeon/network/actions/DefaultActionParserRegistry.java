@@ -69,8 +69,14 @@ public class DefaultActionParserRegistry {
         registry.register("game_scene_flash", new GameSceneFlashParser());
         registry.register("fading_traps", new FadingTrapsParser());
         registry.register("server_actions", new ServerActionsParser());
-        registry.register("level_params", new LevelParamsParser());
-        registry.register("map", new MapParser());
+        registry.register("resize_level", new ResizeLevelParser());
+        registry.register("set_level_visuals", new SetLevelVisualsParser());
+        registry.register("set_level_entrance", new SetLevelEntranceParser());
+        registry.register("set_level_exit", new SetLevelExitParser());
+        registry.register("set_level_tiles", new SetLevelTilesParser());
+        registry.register("set_level_states", new SetLevelStatesParser());
+        registry.register("update_fov", new UpdateFovParser());
+        registry.register("update_cells", new UpdateCellsParser());
         registry.register("interlevel_scene", new InterlevelSceneParser());
         registry.register("actor_update", new ActorUpdateParser());
         registry.register("actor_delete", new ActorDeleteParser());
@@ -296,18 +302,6 @@ public class DefaultActionParserRegistry {
     private static class ServerActionsParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
             parseThread.parseServerActions(payloadArray(action));
-        }
-    }
-
-    private static class LevelParamsParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            parseThread.parseLevelParams(payloadObject(action));
-        }
-    }
-
-    private static class MapParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            parseThread.parseLevel(payloadObject(action));
         }
     }
 
