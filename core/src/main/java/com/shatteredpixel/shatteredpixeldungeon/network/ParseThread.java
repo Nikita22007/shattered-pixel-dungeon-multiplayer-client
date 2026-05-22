@@ -1747,7 +1747,7 @@ public class ParseThread implements Callable<String> {
                 }
 
                 CustomBuff buff = new CustomBuff(obj);
-                if (!buff.attachTo((Char) Actor.findById(targetId))) {
+                if (!buff.attachTo(target)) {
                     GLog.n("failed to attach buf. Buf id: %d; bug name: %s", buff.buff_id, buff.toString());
                 }
             } catch (JSONException e) {
@@ -1755,7 +1755,6 @@ public class ParseThread implements Callable<String> {
                 continue;
             }
         }
-
     }
 
     public static String format( String format, Object...args ) {

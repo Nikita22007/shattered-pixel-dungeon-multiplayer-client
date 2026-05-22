@@ -74,7 +74,8 @@ public class DefaultActionParserRegistry {
         registry.register("interlevel_scene", new InterlevelSceneParser());
         registry.register("actor_update", new ActorUpdateParser());
         registry.register("actor_delete", new ActorDeleteParser());
-        registry.register("buffs", new BuffsParser());
+        registry.register("buff_update", new BuffUpdateParser());
+        registry.register("buff_remove", new BuffRemoveParser());
         registry.register("hero", new HeroParser());
         registry.register("messages", new MessagesParser());
         registry.register("inventory_rebuild", new InventoryRebuildParser());
