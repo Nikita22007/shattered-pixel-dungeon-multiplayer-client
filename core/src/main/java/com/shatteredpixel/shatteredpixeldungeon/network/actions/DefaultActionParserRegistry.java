@@ -77,7 +77,12 @@ public class DefaultActionParserRegistry {
         registry.register("buffs", new BuffsParser());
         registry.register("hero", new HeroParser());
         registry.register("messages", new MessagesParser());
-        registry.register("inventory", new InventoryParser());
+        registry.register("inventory_rebuild", new InventoryRebuildParser());
+        registry.register("inventory_define_special_slots", new InventoryDefineSpecialSlotsParser());
+        registry.register("item_add", new ItemAddParser());
+        registry.register("item_remove", new ItemRemoveParser());
+        registry.register("item_update", new ItemUpdateParser());
+        registry.register("item_replace", new ItemReplaceParser());
         registry.register("heaps", new HeapsParser());
         registry.register("window", new WindowParser());
         registry.register("ui", new UiParser());

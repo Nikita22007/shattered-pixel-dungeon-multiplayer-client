@@ -59,6 +59,7 @@ import com.watabou.utils.PointF;
 
 import com.watabou.utils.Reflection;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -669,6 +670,40 @@ public class ParseThread implements Callable<String> {
                 }
             } catch (JSONException e) {
                 Log.w("ParseThread", "Incorrect message");
+            }
+        }
+    }
+
+    public void parseInventoryDefineSpecialSlots(JSONArray slotsArr) {
+        Log.w("ParseThread", "inventory_define_special_slots received, but dynamic slots are not implemented on client yet. Slots count: " + slotsArr.length());
+    }
+
+    public void parseItemAction(List<Integer> path, JSONObject itemObj, String mode) throws JSONException {
+        Belongings belongings = hero.belongings;
+        switch (mode) {
+            case "add": {
+                Item item = itemObj != null ? CustomItem.createItem(itemObj) : null;
+                belongings.putItemIntoSlot(path, item, false);
+                break;
+            }
+            case "remove": {
+                belongings.removeItemFromSlot(path);
+                break;
+            }
+            case "update": {
+                CustomItem item = ((CustomItem) belongings.getItemInSlot(path));
+                if (item != null && itemObj != null) {
+                    item.update(itemObj);
+                } else if (itemObj != null) {
+                    CustomItem newItem = CustomItem.createItem(itemObj);
+                    belongings.putItemIntoSlot(path, newItem, true);
+                }
+                break;
+            }
+            case "replace": {
+                Item item = itemObj != null ? CustomItem.createItem(itemObj) : null;
+                belongings.putItemIntoSlot(path, item, true);
+                break;
             }
         }
     }
