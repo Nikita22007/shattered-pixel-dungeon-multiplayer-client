@@ -101,7 +101,32 @@ public class NetworkScanner {
             scannerListener.OnServerLost(fromServiceInfo(info));
         }
         private ServerInfo fromServiceInfo(ServiceInfo info){
-            return new DirectServerInfo(info.getServiceName(), info.getHost(), info.getPort(), -1,-1, false);
+            DirectServerInfo serverInfo = new DirectServerInfo(
+                    info.getServiceName(),
+                    info.getHost(),
+                    info.getPort(),
+                    propertyInt(info, "players", -1),
+                    propertyInt(info, "max_players", -1),
+                    propertyInt(info, "challenges", 0) > 0
+            );
+            serverInfo.currentFloor = propertyInt(info, "current_floor", 0);
+            serverInfo.motd = info.getProperty("motd");
+            serverInfo.serverVersion = info.getProperty("server_version");
+            serverInfo.serverVersionCode = propertyInt(info, "server_version_code", 0);
+            serverInfo.serverProtocolVersion = propertyInt(info, "server_protocol_version", 0);
+            return serverInfo;
+        }
+
+        private int propertyInt(ServiceInfo info, String key, int defaultValue) {
+            String value = info.getProperty(key);
+            if (value == null) {
+                return defaultValue;
+            }
+            try {
+                return Integer.parseInt(value);
+            } catch (NumberFormatException e) {
+                return defaultValue;
+            }
         }
 
         public ArrayList<ServerInfo> getServerList() {

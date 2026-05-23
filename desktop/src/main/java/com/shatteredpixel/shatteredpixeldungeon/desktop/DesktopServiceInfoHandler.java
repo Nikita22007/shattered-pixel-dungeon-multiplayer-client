@@ -9,6 +9,9 @@ import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceListener;
 import java.net.InetAddress;
 import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DesktopServiceInfoHandler extends ServiceInfoHandler {
     JmmDNS dns = JmmDNS.Factory.getInstance();
@@ -67,7 +70,16 @@ public class DesktopServiceInfoHandler extends ServiceInfoHandler {
     }
     protected ServiceInfo fromServiceEvent(ServiceEvent event){
         try {
-            return new com.watabou.network.ServiceInfo(event.getName(), event.getInfo().getInetAddresses()[0], event.getType(), event.getInfo().getPort());
+            Map<String, String> properties = new HashMap<>();
+            Enumeration<String> names = event.getInfo().getPropertyNames();
+            while (names.hasMoreElements()) {
+                String name = names.nextElement();
+                String value = event.getInfo().getPropertyString(name);
+                if (value != null) {
+                    properties.put(name, value);
+                }
+            }
+            return new com.watabou.network.ServiceInfo(event.getName(), event.getInfo().getInetAddresses()[0], event.getType(), event.getInfo().getPort(), properties);
         }
         catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
             //Happens when service is added and IP is not yet resolved

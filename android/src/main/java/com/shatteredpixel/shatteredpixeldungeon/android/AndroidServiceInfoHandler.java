@@ -11,7 +11,10 @@ import com.watabou.network.ServiceInfoListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Executor;
+import java.nio.charset.Charset;
 
 @SuppressLint("NewApi")
 
@@ -78,7 +81,11 @@ public class AndroidServiceInfoHandler extends ServiceInfoHandler {
         discoveryListeners.clear();
     }
     private static ServiceInfo fromNsd(NsdServiceInfo nsdServiceInfo){
-        return new ServiceInfo(nsdServiceInfo.getServiceName(), nsdServiceInfo.getHost(), nsdServiceInfo.getServiceType(), nsdServiceInfo.getPort());
+        Map<String, String> properties = new HashMap<>();
+        for (Map.Entry<String, byte[]> entry : nsdServiceInfo.getAttributes().entrySet()) {
+            properties.put(entry.getKey(), new String(entry.getValue(), Charset.forName("UTF-8")));
+        }
+        return new ServiceInfo(nsdServiceInfo.getServiceName(), nsdServiceInfo.getHost(), nsdServiceInfo.getServiceType(), nsdServiceInfo.getPort(), properties);
     }
     private class ResolveListener implements NsdManager.ResolveListener {
 
