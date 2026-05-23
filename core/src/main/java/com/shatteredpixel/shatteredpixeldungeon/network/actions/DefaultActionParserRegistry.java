@@ -373,7 +373,8 @@ public class DefaultActionParserRegistry {
     private static class TexturePackParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
             try {
-                TextureManager.INSTANCE.loadTexturePack(JavaUtils.InputStreamFromBase64(action.getString("payload")));
+                String data = action.has("texturepack") ? action.getString("texturepack") : action.getString("payload");
+                TextureManager.INSTANCE.loadTexturePack(JavaUtils.InputStreamFromBase64(data));
             } catch (IOException err) {
                 ShatteredPixelDungeon.scene().add(new WndError("Malformed texture pack"));
             }
