@@ -23,6 +23,7 @@ public class RelaySD extends Thread implements ServiceDiscovery {
 
     private static final String CHARSET = "UTF-8";
     private static final int DELAY = 3000;
+    public enum Protocol { V1, V2 }
     protected OutputStreamWriter writeStream;
     protected BufferedWriter writer;
     protected InputStreamReader readStream;
@@ -31,8 +32,17 @@ public class RelaySD extends Thread implements ServiceDiscovery {
 
     private List<ServerInfo> servers = new ArrayList<>();
     ServiceDiscoveryListener listener;
+    private final Protocol protocol;
+    private final String relayAddress;
+    private final int relayPort;
 
-    private int getRelayPort(){
+    public RelaySD(Protocol protocol, String relayAddress, int relayPort) {
+        this.protocol = protocol;
+        this.relayAddress = relayAddress;
+        this.relayPort = relayPort;
+    }
+
+    public static int getNewRelayPort(){
         if (!ShatteredPixelDungeon.useCustomRelay()){
             return SPDSettings.defaultRelayServerPort;
         }
@@ -40,7 +50,7 @@ public class RelaySD extends Thread implements ServiceDiscovery {
         return (port != 0)? port: SPDSettings.defaultRelayServerPort;
     }
 
-    static String getRelayAddress(){
+    public static String getRelayAddress(){
         if (!ShatteredPixelDungeon.useCustomRelay()){
             return SPDSettings.defaultRelayServerAddress;
         }
@@ -55,7 +65,7 @@ public class RelaySD extends Thread implements ServiceDiscovery {
         while (!Thread.currentThread().isInterrupted()) {
             Socket socket = null;
             try {
-                socket = new Socket(getRelayAddress(), getRelayPort());
+                socket = new Socket(relayAddress, relayPort);
             } catch (IOException e) {
                 e.printStackTrace();
                 GLog.h("relay thread stopped, no restart");
@@ -79,7 +89,7 @@ public class RelaySD extends Thread implements ServiceDiscovery {
                         Thread.sleep(DELAY);
                         synchronized (writer) {
                             JSONObject get_request = new JSONObject();
-                            get_request.put("action", "get");
+                            get_request.put("action", protocol == Protocol.V2 ? "list_servers" : "get");
                             writer.write(get_request.toString());
                             writer.write('\n');
                             writer.flush();
@@ -91,6 +101,10 @@ public class RelaySD extends Thread implements ServiceDiscovery {
                             }
                             JSONObject servers_obj = new JSONObject(json);
                             updateServers(servers_obj);
+                            if (protocol == Protocol.V2) {
+                                socket.close();
+                                break;
+                            }
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -120,13 +134,26 @@ public class RelaySD extends Thread implements ServiceDiscovery {
             }
             String name = infoObj.getString("name");
             int id = infoObj.getInt("id");
+            JSONObject serverInfo = infoObj.optJSONObject("server_info");
+            if (serverInfo == null) {
+                serverInfo = infoObj;
+            }
             RelayServerInfo info = new RelayServerInfo(
+                    this,
+                    protocol,
+                    relayAddress,
+                    relayPort,
                     id,
                     name,
-                    0,
-                    0,
-                    false
+                    serverInfo.optInt("players", 0),
+                    serverInfo.optInt("max_players", 0),
+                    serverInfo.optInt("challenges", 0) > 0
             );
+            info.currentFloor = serverInfo.optInt("current_floor", 0);
+            info.motd = serverInfo.optString("motd", null);
+            info.serverVersion = infoObj.optString("server_version", serverInfo.optString("server_version", null));
+            info.serverVersionCode = infoObj.optInt("server_version_code", serverInfo.optInt("server_version_code", 0));
+            info.serverProtocolVersion = infoObj.optInt("server_protocol_version", serverInfo.optInt("server_protocol_version", 0));
             serverAddresses.add(info);
         }
         servers = serverAddresses;

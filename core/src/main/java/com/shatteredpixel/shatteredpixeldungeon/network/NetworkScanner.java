@@ -14,6 +14,7 @@ import java.util.List;
 public class NetworkScanner {
     protected static NetworkScannerListener scannerListener;
     protected static RelaySD relayServer = null;
+    protected static RelaySD legacyRelayServer = null;
     protected static ServerListScanner serverListScanner;
     protected static ServiceInfoListener serviceInfoListener = new ServiceInfoListener();
     protected static ServiceInfoHandler serviceInfoHandler = ShatteredPixelDungeon.platform.createServiceInfoHandler(serviceInfoListener);
@@ -26,8 +27,10 @@ public class NetworkScanner {
         serverListScanner.startDiscovery(listener);
         serviceInfoHandler.startDiscovery();
         if (ShatteredPixelDungeon.onlineMode()) {
-            relayServer = new RelaySD();
+            relayServer = new RelaySD(RelaySD.Protocol.V2, RelaySD.getRelayAddress(), RelaySD.getNewRelayPort());
             res &= relayServer.startDiscovery(listener);
+            legacyRelayServer = new RelaySD(RelaySD.Protocol.V1, RelaySD.getRelayAddress(), com.shatteredpixel.shatteredpixeldungeon.SPDSettings.legacyRelayServerPort);
+            res &= legacyRelayServer.startDiscovery(listener);
         }
         return res;
     }
@@ -37,6 +40,10 @@ public class NetworkScanner {
         if (relayServer != null) {
             res &= relayServer.stopDiscovery();
             relayServer = null;
+        }
+        if (legacyRelayServer != null) {
+            res &= legacyRelayServer.stopDiscovery();
+            legacyRelayServer = null;
         }
         serviceInfoHandler.stopDiscovery();
         serviceInfoListener.serverList.clear();
@@ -49,6 +56,9 @@ public class NetworkScanner {
         result.addAll(serviceInfoListener.getServerList());
         if (relayServer != null) {
             result.addAll(relayServer.getServerList());
+        }
+        if (legacyRelayServer != null) {
+            result.addAll(legacyRelayServer.getServerList());
         }
         result.addAll(serverListScanner.getServerList());
         return result;
@@ -74,12 +84,6 @@ public class NetworkScanner {
         public void OnServerLost(ServerInfo info);
     }
 
-    public static int getPortForServerID(int id) {
-        if (relayServer == null){
-            return 0;
-        }
-        return relayServer.getPortForServerID(id);
-    }
     private static class ServiceInfoListener implements com.watabou.network.ServiceInfoListener {
         protected ArrayList<ServerInfo> serverList = new ArrayList<>();
         @Override

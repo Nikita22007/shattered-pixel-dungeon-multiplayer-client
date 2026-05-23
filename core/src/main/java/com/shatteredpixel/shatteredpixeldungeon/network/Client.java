@@ -27,17 +27,24 @@ public class Client extends Thread {
     protected static final int BUFFER_SIZE = 16 * 1024; // bytes
 
     public static boolean connect(ServerInfo server) {
-        ServerAddress address = server.getAddress();
-        if (address == null) {
-            return false;
-        }
-        return connect(address.host, address.port);
+        return server.connect();
     }
 
     public static boolean connect(String server, int port) {
         packet.clearData();
         try {
-            socket = new Socket(server, port);
+            return connect(new Socket(server, port));
+        } catch (UnknownHostException e) {
+            return false;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    public static boolean connect(Socket connectedSocket) {
+        packet.clearData();
+        try {
+            socket = connectedSocket;
             writeStream = new OutputStreamWriter(
                     socket.getOutputStream(),
                     Charset.forName(CHARSET).newEncoder()
@@ -52,8 +59,6 @@ public class Client extends Thread {
             client.setDaemon(true);
             client.start();
             return socket.isConnected();
-        } catch (UnknownHostException e) {
-            return false;
         } catch (IOException e) {
             return false;
         }

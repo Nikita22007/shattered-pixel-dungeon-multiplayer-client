@@ -15,14 +15,18 @@ public class DesktopServiceInfoHandler extends ServiceInfoHandler {
     Listener serviceListener = new Listener();
 
     public void startDiscovery() {
-        dns.addServiceListener(serviceType +"local.", serviceListener);
+        for (String serviceType : serviceTypes) {
+            dns.addServiceListener(serviceType +"local.", serviceListener);
+        }
     }
 
     @Override
     public void stopDiscovery() {
         //Don't know if it can or should ever be stopped
         if (dns != null) {
-            dns.removeServiceListener(serviceType + "local.", serviceListener);
+            for (String serviceType : serviceTypes) {
+                dns.removeServiceListener(serviceType + "local.", serviceListener);
+            }
         }
     }
 
