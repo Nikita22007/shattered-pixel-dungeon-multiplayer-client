@@ -348,7 +348,7 @@ public class DefaultActionParserRegistry {
 
     private static class MessagesParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            parseThread.parseMessages(payloadArray(action));
+            parseThread.parseMessages(action.has("messages") ? action.getJSONArray("messages") : payloadArray(action));
         }
     }
 
