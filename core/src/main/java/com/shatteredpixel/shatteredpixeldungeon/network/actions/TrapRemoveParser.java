@@ -11,6 +11,7 @@ public class TrapRemoveParser implements ActionParser {
         int pos = action.getInt("pos");
         if (Dungeon.level != null) {
             Dungeon.level.traps.remove(pos);
+            com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene.updateMap(pos);
         }
     }
 }
