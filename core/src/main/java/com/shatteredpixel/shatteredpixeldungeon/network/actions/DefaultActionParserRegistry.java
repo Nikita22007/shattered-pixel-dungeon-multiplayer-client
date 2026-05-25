@@ -6,6 +6,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CheckedCell;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Enchanting;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
+import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Surprise;
 import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -22,6 +23,7 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndError;
 import com.nikita22007.pixeldungeonmultiplayer.JavaUtils;
 import com.nikita22007.pixeldungeonmultiplayer.TextureManager;
 import com.watabou.noosa.Game;
+import com.watabou.noosa.Group;
 import com.watabou.noosa.particles.Emitter;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Camera;
@@ -60,7 +62,8 @@ public class DefaultActionParserRegistry {
         registry.register("shake_camera", new ShakeCameraParser());
         registry.register("enchanting_visual", new EnchantingVisualParser());
         registry.register("flare_visual", new FlareVisualParser());
-        registry.register("emitter_visual", new EmitterVisualParser());
+        registry.register("emitter_visual_start", new EmitterVisualStartParser());
+        registry.register("emitter_visual_stop", new EmitterVisualStopParser());
         registry.register("emitter_decor", new EmitterDecorParser());
         registry.register("heap_drop_visual", new HeapDropVisualParser());
         registry.register("magic_missile_visual", new MagicMissileVisualParser());
@@ -243,24 +246,20 @@ public class DefaultActionParserRegistry {
         }
     }
 
-    private static class EmitterVisualParser implements ActionParser {
+    private static class EmitterVisualStopParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            if (ParseThread.isConnectedToOldServer()) {
-                parseThread.parseEmitterVisualAction(action);
-                return;
+            int id = action.getInt("id");
+            Emitter emitter = Emitter.infiniteEmitters.get(id);
+            if (emitter != null) {
+                emitter.killAndErase();
+            } else {
+                GLog.n("Failed to find emitter");
             }
+        }
+    }
 
-            if(action.has("kill") && action.getBoolean("kill")) {
-                int id = action.getInt("id");
-                Emitter emitter = Emitter.infiniteEmitters.get(id);
-                if (emitter != null) {
-                    emitter.killAndErase();
-                } else {
-                    GLog.n("Failed to find emitter");
-                }
-                return;
-            }
-
+    private static class EmitterVisualStartParser implements ActionParser {
+        public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
             Char target = null;
             boolean fillTarget = true;
             PointF position = null;
@@ -358,7 +357,19 @@ public class DefaultActionParserRegistry {
 
     private static class MagicMissileVisualParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            parseThread.parseMagicMissileVisual(action);
+            int from = action.getInt("from");
+            int to = action.getInt("to");
+            Char actor = Actor.findChar(from);
+            Group group = null;
+            if ((actor != null) && (actor.sprite != null)) {
+                group = actor.sprite.parent;
+            }
+            Object type = action.get("type");
+            if (type instanceof String) {
+                MagicMissile.show((String) type, from, to, group);
+            } else {
+                MagicMissile.show(action.getInt("type"), from, to, group);
+            }
         }
     }
 
