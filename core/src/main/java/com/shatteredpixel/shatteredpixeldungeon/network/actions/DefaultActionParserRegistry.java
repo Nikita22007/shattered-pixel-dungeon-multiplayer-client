@@ -66,7 +66,7 @@ public class DefaultActionParserRegistry {
         registry.register("buff_update", new BuffUpdateParser());
         registry.register("buff_remove", new BuffRemoveParser());
         registry.register("hero", new HeroParser());
-        registry.register("messages", new MessagesParser());
+        registry.register("messages", new com.shatteredpixel.shatteredpixeldungeon.network.actions.MessagesParser());
         registry.register("inventory_rebuild", new InventoryRebuildParser());
         registry.register("inventory_define_special_slots", new InventoryDefineSpecialSlotsParser());
         registry.register("item_add", new ItemAddParser());
@@ -240,12 +240,6 @@ public class DefaultActionParserRegistry {
     private static class HeroParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
             parseThread.parseHero(payloadObject(action));
-        }
-    }
-
-    private static class MessagesParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            parseThread.parseMessages(action.has("messages") ? action.getJSONArray("messages") : payloadArray(action));
         }
     }
 
