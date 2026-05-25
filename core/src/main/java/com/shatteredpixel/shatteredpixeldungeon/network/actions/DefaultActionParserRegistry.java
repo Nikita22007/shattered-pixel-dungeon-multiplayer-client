@@ -1,37 +1,17 @@
 package com.shatteredpixel.shatteredpixeldungeon.network.actions;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.effects.CheckedCell;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Enchanting;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Surprise;
-import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
-import com.shatteredpixel.shatteredpixeldungeon.network.Client;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
-import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
-import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.FadingTraps;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BossHealthBar;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndError;
-import com.nikita22007.pixeldungeonmultiplayer.JavaUtils;
-import com.nikita22007.pixeldungeonmultiplayer.TextureManager;
-import com.watabou.noosa.Game;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.PointF;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
 
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.level;
 
@@ -171,14 +151,6 @@ public class DefaultActionParserRegistry {
         }
     }
 
-    private static class CheckedCellVisualParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            if (Dungeon.level.heroFOV[action.getInt("pos")]) {
-                GameScene.effect(new CheckedCell(action.getInt("pos")));
-            }
-        }
-    }
-
     private static class PlaySampleParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) {
             Sample.INSTANCE.play(action);
@@ -206,39 +178,6 @@ public class DefaultActionParserRegistry {
     private static class ShakeCameraParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
             Camera.main.shake((float) action.getDouble("magnitude"), (float) action.getDouble("duration"));
-        }
-    }
-
-    private static class EnchantingVisualParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            int targetCharId = action.getInt("target");
-            Actor actor = Actor.findById(targetCharId);
-            if (!(actor instanceof Char)) {
-                GLog.n("Enchanting: Can't find char with id " + targetCharId + ". Ignored");
-                return;
-            }
-            Item item = CustomItem.createItem(action.getJSONObject("item"));
-            Enchanting.show((Char) actor, item);
-        }
-    }
-
-    private static class FlareVisualParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            PointF position;
-            if (action.has("pos")) {
-                position = DungeonTilemap.tileCenterToWorld(action.getInt("pos"));
-            } else {
-                position = new PointF(
-                        (float) action.getDouble("position_x"),
-                        (float) action.getDouble("position_y")
-                );
-            }
-
-            Flare flare = new Flare(action.getInt("rays"), (float) action.getDouble("radius"));
-            flare.angle = (float) action.optDouble("angle", 45);
-            flare.angularSpeed = (float) action.optDouble("angular_speed", 180);
-            flare.color(action.getInt("color"), action.optBoolean("light_moode", true));
-            GameScene.showFlare(flare, position, (float) action.getDouble("duration"));
         }
     }
 
@@ -298,37 +237,6 @@ public class DefaultActionParserRegistry {
         return action.getJSONArray("payload");
     }
 
-    private static class InterlevelSceneParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            JSONObject ilsObj = payloadObject(action);
-            if (ilsObj.has("state")) {
-                InterlevelScene.phase = InterlevelScene.Phase.valueOf(ilsObj.getString("state").toUpperCase());
-            }
-            if (ilsObj.has("type")) {
-                String modeName = ilsObj.getString("type").toUpperCase();
-                if (modeName.equals("CUSTOM")) {
-                    modeName = "NONE";
-                }
-                InterlevelScene.mode = InterlevelScene.Mode.valueOf(modeName);
-            }
-            InterlevelScene.reset_level = ilsObj.optBoolean("reset_level");
-            if (ilsObj.has("message")) {
-                InterlevelScene.customMessage = ilsObj.getString("message");
-            }
-            if (!(Game.scene() instanceof InterlevelScene)) {
-                if (!((Game.scene() instanceof GameScene) && (InterlevelScene.phase == InterlevelScene.Phase.FADE_OUT))) {
-                    Game.switchScene(InterlevelScene.class);
-                }
-            }
-        }
-    }
-
-    private static class BuffsParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            parseThread.parseBuffs(payloadArray(action));
-        }
-    }
-
     private static class HeroParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
             parseThread.parseHero(payloadObject(action));
@@ -341,12 +249,6 @@ public class DefaultActionParserRegistry {
         }
     }
 
-    private static class InventoryParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            parseThread.parseInventory(payloadObject(action));
-        }
-    }
-
     private static class WindowParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
             parseThread.parseWindow(payloadObject(action));
@@ -356,17 +258,6 @@ public class DefaultActionParserRegistry {
     private static class UiParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
             parseThread.parseUI(payloadObject(action));
-        }
-    }
-
-    private static class TexturePackParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            try {
-                String data = action.has("texturepack") ? action.getString("texturepack") : action.getString("payload");
-                TextureManager.INSTANCE.loadTexturePack(JavaUtils.InputStreamFromBase64(data));
-            } catch (IOException err) {
-                ShatteredPixelDungeon.scene().add(new WndError("Malformed texture pack"));
-            }
         }
     }
 
