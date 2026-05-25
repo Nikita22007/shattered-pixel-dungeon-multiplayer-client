@@ -41,7 +41,7 @@ public class CavesBossLevel {
 
         private static CharSprite energySourceSprite = null;
 
-        private static Emitter.Factory DIRECTED_SPARKS = new Emitter.Factory() {
+		public static Emitter.Factory DIRECTED_SPARKS = new Emitter.Factory() {
             @Override
             public void emit(Emitter emitter, int index, float x, float y) {
                 if (energySourceSprite == null){

@@ -108,12 +108,12 @@ public class SewerLevel extends RegularLevel {
 			}
 		}
 
-	private static class Sink extends Emitter {
+	public static class Sink extends Emitter {
 
 		private int pos;
 		private float rippleDelay = 0;
 
-		private static final Emitter.Factory factory = new Factory() {
+		public static final Emitter.Factory factory = new Factory() {
 
 			@Override
 			public void emit( Emitter emitter, int index, float x, float y ) {
