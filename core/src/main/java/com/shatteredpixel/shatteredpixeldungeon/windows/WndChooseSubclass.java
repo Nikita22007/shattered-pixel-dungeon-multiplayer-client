@@ -59,8 +59,8 @@ public class WndChooseSubclass extends Window {
 		id = object.getInt("id");
 		JSONObject args = object.getJSONObject("args");
 		HeroSubClass[] options = new HeroSubClass[]{
-				HeroSubClass.valueOf(args.getString("option1")),
-				HeroSubClass.valueOf(args.getString("option2"))
+				HeroSubClass.valueOf(JsonStringHelper.getString(args, "option1")),
+				HeroSubClass.valueOf(JsonStringHelper.getString(args, "option2"))
 		};
 
 		IconTitle titlebar = new IconTitle();

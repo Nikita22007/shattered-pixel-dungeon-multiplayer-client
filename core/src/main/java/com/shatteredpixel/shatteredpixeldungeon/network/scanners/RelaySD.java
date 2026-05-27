@@ -132,7 +132,7 @@ public class RelaySD extends Thread implements ServiceDiscovery {
             if (infoObj == null) {
                 break;
             }
-            String name = infoObj.getString("name");
+            String name = JsonStringHelper.getString(infoObj, "name");
             int id = infoObj.getInt("id");
             JSONObject serverInfo = infoObj.optJSONObject("server_info");
             if (serverInfo == null) {
@@ -151,7 +151,7 @@ public class RelaySD extends Thread implements ServiceDiscovery {
             );
             info.currentFloor = serverInfo.optInt("current_floor", 0);
             info.motd = serverInfo.optString("motd", null);
-            info.serverVersion = infoObj.optString("server_version", serverInfo.optString("server_version", null));
+            info.serverVersion = JsonStringHelper.optString(infoObj, "server_version", serverInfo.optString("server_version", null));
             info.serverVersionCode = infoObj.optInt("server_version_code", serverInfo.optInt("server_version_code", 0));
             info.serverProtocolVersion = infoObj.optInt("server_protocol_version", serverInfo.optInt("server_protocol_version", 0));
             serverAddresses.add(info);

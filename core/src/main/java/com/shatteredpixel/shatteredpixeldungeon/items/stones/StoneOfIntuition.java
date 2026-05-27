@@ -111,7 +111,7 @@ public class StoneOfIntuition extends InventoryStone {
 				icons.add(iconsJson.getInt(i));
 			}
 			for (int i = 0; i < keysJson.length(); i++) {
-				keys.add(keysJson.getString(i));
+				keys.add(JsonStringHelper.optString(keysJson, i));
 			}
 			IconTitle titlebar = new IconTitle();
 			titlebar.icon( new ItemSprite(ItemSpriteSheet.STONE_INTUITION, null) );

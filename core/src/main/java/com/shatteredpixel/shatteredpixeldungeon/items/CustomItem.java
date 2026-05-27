@@ -60,10 +60,10 @@ public class CustomItem extends Item {
             String token = it.next();
             switch (token) {
                 case "name":
-                    name = obj.getString(token);
+                    name = JsonStringHelper.getString(obj, token);
                     break;
                 case "info":
-                    descString = obj.getString(token);
+                    descString = JsonStringHelper.getString(obj, token);
                     break;
                 case "image":
                     if (isConnectedToOldServer()) {
@@ -100,7 +100,7 @@ public class CustomItem extends Item {
                     parseActions(obj.getJSONArray(token));
                     break;
                 case "default_action":
-                    String action = obj.getString(token);
+                    String action = JsonStringHelper.getString(obj, token);
                     defaultAction = action.equals("null") ? null : action;
                     break;
                 case "ui":
@@ -119,7 +119,7 @@ public class CustomItem extends Item {
                     }
                     break;
                 case "sprite_sheet":
-                    this.spriteSheet = obj.getString(token);
+                    this.spriteSheet = JsonStringHelper.getString(obj, token);
                     break;
                 case "energy_value": {
                     this.energyVal = obj.getInt(token);
@@ -138,7 +138,7 @@ public class CustomItem extends Item {
     private void parseActions(JSONArray actionsArr) {
         ArrayList<String> actions = new ArrayList<>(actionsArr.length());
         for (int i = 0; i < actionsArr.length(); i++) {
-            String action = actionsArr.getString(i);
+            String action = JsonStringHelper.optString(actionsArr, i);
             actions.add(action);
         }
         actionsList = actions;
@@ -196,7 +196,7 @@ public class CustomItem extends Item {
                     }
                     topLeft = new Label(
                             color,
-                            topLeftObj.isNull("text") ? null : topLeftObj.optString("text", ""),
+                            topLeftObj.isNull("text") ? null : JsonStringHelper.optString(topLeftObj, "text", ""),
                             topLeftObj.optBoolean("visible", false)
                     );
                 }
@@ -211,7 +211,7 @@ public class CustomItem extends Item {
                     }
                     topRight = new Label(
                             color,
-                            topRightObj.isNull("text") ? null : topRightObj.optString("text", ""),
+                            topRightObj.isNull("text") ? null : JsonStringHelper.optString(topRightObj, "text", ""),
                             topRightObj.optBoolean("visible", false)
                     );
                 }
@@ -226,7 +226,7 @@ public class CustomItem extends Item {
                     }
                     bottomRight = new Label(
                             color,
-                            bottomRightObj.isNull("text") ? null : bottomRightObj.optString("text", ""),
+                            bottomRightObj.isNull("text") ? null : JsonStringHelper.optString(bottomRightObj, "text", ""),
                             bottomRightObj.optBoolean("visible", false)
                     );
                 }

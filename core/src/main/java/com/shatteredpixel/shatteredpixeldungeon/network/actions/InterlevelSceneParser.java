@@ -11,10 +11,10 @@ class InterlevelSceneParser implements ActionParser {
     public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
         JSONObject ilsObj = DefaultActionParserRegistry.payloadObject(action);
         if (ilsObj.has("state")) {
-            InterlevelScene.phase = InterlevelScene.Phase.valueOf(ilsObj.getString("state").toUpperCase());
+            InterlevelScene.phase = InterlevelScene.Phase.valueOf(JsonStringHelper.getString(ilsObj, "state").toUpperCase());
         }
         if (ilsObj.has("type")) {
-            String modeName = ilsObj.getString("type").toUpperCase();
+            String modeName = JsonStringHelper.getString(ilsObj, "type").toUpperCase();
             if (modeName.equals("CUSTOM")) {
                 modeName = "NONE";
             }
@@ -22,7 +22,7 @@ class InterlevelSceneParser implements ActionParser {
         }
         InterlevelScene.reset_level = ilsObj.optBoolean("reset_level");
         if (ilsObj.has("message")) {
-            InterlevelScene.customMessage = ilsObj.getString("message");
+            InterlevelScene.customMessage = JsonStringHelper.getString(ilsObj, "message");
         }
         if (!(Game.scene() instanceof InterlevelScene)) {
             if (!((Game.scene() instanceof GameScene) && (InterlevelScene.phase == InterlevelScene.Phase.FADE_OUT))) {

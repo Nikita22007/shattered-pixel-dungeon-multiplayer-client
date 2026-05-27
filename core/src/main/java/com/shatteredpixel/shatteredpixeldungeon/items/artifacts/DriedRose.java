@@ -816,12 +816,12 @@ public class DriedRose extends Artifact {
 			final CustomItem rose = CustomItem.createItem(args.getJSONObject("rose"));
 			IconTitle titlebar = new IconTitle();
 			titlebar.icon( new ItemSprite(rose) );
-			titlebar.label( args.getString("title") );
+			titlebar.label( JsonStringHelper.getString(args, "title") );
 			titlebar.setRect( 0, 0, WIDTH, 0 );
 			add( titlebar );
 			
 			RenderedTextBlock message =
-					PixelScene.renderTextBlock(args.getString("message"), 6);
+					PixelScene.renderTextBlock(JsonStringHelper.getString(args, "message"), 6);
 			message.maxWidth( WIDTH );
 			message.setPos(0, titlebar.bottom() + GAP);
 			add( message );

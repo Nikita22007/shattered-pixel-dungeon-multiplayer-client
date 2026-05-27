@@ -46,7 +46,7 @@ public class Text {
 
     public Text(JSONObject object) {
         if (object.has("key")){
-            key = removeRoot(object.getString("key"));
+            key = removeRoot(JsonStringHelper.getString(object, "key"));
         } else {
             GLog.n("Message object without key");
             text = "!!NO TEXT FOUND!!";

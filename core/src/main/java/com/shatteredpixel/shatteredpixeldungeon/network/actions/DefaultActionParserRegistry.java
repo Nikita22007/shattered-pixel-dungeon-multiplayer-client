@@ -171,7 +171,7 @@ public class DefaultActionParserRegistry {
 
     private static class UnloadSampleParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            Sample.INSTANCE.unload(action.getString("sample"));
+            Sample.INSTANCE.unload(JsonStringHelper.getString(action, "sample"));
         }
     }
 

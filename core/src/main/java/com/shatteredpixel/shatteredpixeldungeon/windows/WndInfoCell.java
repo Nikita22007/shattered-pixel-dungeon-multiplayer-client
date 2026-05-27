@@ -165,7 +165,7 @@ public class WndInfoCell extends Window {
 		titlebar.setRect(0, 0, WIDTH, 0);
 		add(titlebar);
 		RenderedTextBlock info = PixelScene.renderTextBlock(6);
-		info.text(object.getString("desc"));
+		info.text(JsonStringHelper.getString(object, "desc"));
 		add(info);
 		info.maxWidth(WIDTH);
 		info.setPos(titlebar.left(), titlebar.bottom() + 2*GAP);

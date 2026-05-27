@@ -1428,7 +1428,7 @@ public abstract class Level implements Bundlable {
 		}
 		GameScene gameScene = (GameScene) scene;
 		try {
-			switch (actionObj.getString("type"))
+			switch (JsonStringHelper.getString(actionObj, "type"))
 			{
 				case ("torch"):
 				{

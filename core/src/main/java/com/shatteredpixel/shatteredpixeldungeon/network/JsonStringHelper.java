@@ -16,7 +16,11 @@ public class JsonStringHelper {
     }
 
     public static String getString(JSONObject obj, String key) throws JSONException {
-        return getLocalizedString(obj, key).resolve();
+        LocalizedString text = getLocalizedString(obj, key);
+        if (text == null) {
+            throw new JSONException("Value is null: " + key);
+        }
+        return text.resolve();
     }
 
     public static String optString(JSONObject obj, String key, String fallback) {
@@ -29,7 +33,11 @@ public class JsonStringHelper {
     }
 
     public static String getString(JSONArray arr, int index) throws JSONException {
-        return getLocalizedString(arr, index).resolve();
+        LocalizedString text = getLocalizedString(arr, index);
+        if (text == null) {
+            throw new JSONException("Value is null: " + index);
+        }
+        return text.resolve();
     }
 
     public static String optString(JSONArray arr, int index, String fallback) {

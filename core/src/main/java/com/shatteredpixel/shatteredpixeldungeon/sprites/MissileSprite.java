@@ -207,7 +207,7 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 				actionObj.getDouble("speed"),
 				actionObj.getDouble("angular_speed"),
 				actionObj.getDouble("angle"),
-				actionObj.optString("item_sprite_sheet", Assets.Sprites.ITEMS),
+				JsonStringHelper.optString(actionObj, "item_sprite_sheet", Assets.Sprites.ITEMS),
 				actionObj.getInt("item_image"),
 				glowing
 		);

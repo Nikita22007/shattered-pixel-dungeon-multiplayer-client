@@ -223,8 +223,8 @@ public class WndClericSpells extends Window {
 			}));
 			info = object.getBoolean("info");
 			icon.alpha((float) object.getDouble("alpha"));
-			spellName = object.getString("spell_name");
-			spellShortDesc = object.getString("spell_short_desc");
+			spellName = JsonStringHelper.getString(object, "spell_name");
+			spellShortDesc = JsonStringHelper.getString(object, "spell_short_desc");
 			spellID = object.getInt("spell_id");
 			bg = Chrome.get(Chrome.Type.TOAST);
 			addToBack(bg);

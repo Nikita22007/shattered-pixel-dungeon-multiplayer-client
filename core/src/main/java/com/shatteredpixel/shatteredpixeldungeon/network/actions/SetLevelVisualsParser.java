@@ -15,17 +15,17 @@ public class SetLevelVisualsParser implements ActionParser {
         Level level = Dungeon.level;
         
         if (action.has("tiles_texture")) {
-            String tex = action.getString("tiles_texture");
+            String tex = JsonStringHelper.getString(action, "tiles_texture");
             level.tilesTexture = isConnectedToOldServer() ? TranslationUtils.translateTilesTexture(tex) : tex;
         }
         
         if (action.has("water_texture")) {
-            String tex = action.getString("water_texture");
+            String tex = JsonStringHelper.getString(action, "water_texture");
             level.waterTexture = isConnectedToOldServer() ? "environment/" + tex : tex;
         }
         
         if (action.has("feeling")) {
-            level.feeling = Level.Feeling.valueOf(action.getString("feeling"));
+            level.feeling = Level.Feeling.valueOf(JsonStringHelper.getString(action, "feeling"));
         }
     }
 }

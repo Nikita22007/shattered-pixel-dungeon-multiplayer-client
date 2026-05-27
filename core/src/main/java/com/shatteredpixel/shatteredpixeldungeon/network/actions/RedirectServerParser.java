@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.network.actions;
 
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.network.Client;
+import com.shatteredpixel.shatteredpixeldungeon.network.NetworkPacket;
 import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
 import org.json.JSONException;
@@ -14,11 +15,11 @@ public class RedirectServerParser implements ActionParser {
         ShatteredPixelDungeon.switchScene(InterlevelScene.class);
         
         if (action.has("uuid")){
-            com.shatteredpixel.shatteredpixeldungeon.network.NetworkPacket.redirectUUID = action.getString("uuid");
+            NetworkPacket.redirectUUID = JsonStringHelper.getString(action, "uuid");
         }
         if(action.has("password")){
-            com.shatteredpixel.shatteredpixeldungeon.network.NetworkPacket.password = action.getString("password");
+            NetworkPacket.password = JsonStringHelper.getString(action, "password");
         }
-        Client.connect(action.getString("host"), action.getInt("port"));
+        Client.connect(JsonStringHelper.getString(action, "host"), action.getInt("port"));
     }
 }

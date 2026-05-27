@@ -219,7 +219,7 @@ public class ParseThread implements Callable<String> {
         }
 
         if (data.has("server_type")){
-            String serverType = data.getString("server_type");
+            String serverType = JsonStringHelper.getString(data, "server_type");
             if (!CLIENT_TYPE.equals(serverType)) {
                 throw new RuntimeException("Unsupported server");
                 //todo
@@ -229,7 +229,7 @@ public class ParseThread implements Callable<String> {
         }
         if (!isConnectedToOldServer() && data.has("server_uuid")) {
             Gdx.app.log("ParseThread", "ServerUUID");
-            serverUUID = data.getString("server_uuid");
+            serverUUID = JsonStringHelper.getString(data, "server_uuid");
             Client.sendHeroClass(GamesInProgress.selectedClass);
         }
 
@@ -262,7 +262,7 @@ public class ParseThread implements Callable<String> {
                 case "texturepack":
                 {
                     try {
-                        TextureManager.INSTANCE.loadTexturePack(JavaUtils.InputStreamFromBase64(data.getString(token)));
+                        TextureManager.INSTANCE.loadTexturePack(JavaUtils.InputStreamFromBase64(JsonStringHelper.getString(data, token)));
                     }catch (IOException err){
                         ShatteredPixelDungeon.scene().add(new WndError("Malformed texture pack"));
                         }
@@ -293,12 +293,12 @@ public class ParseThread implements Callable<String> {
                     //todo can cause crash
                     JSONObject ilsObj = data.getJSONObject(token);
                     if (ilsObj.has("state")) {
-                        String stateName = data.getJSONObject(token).getString("state").toUpperCase();
+                        String stateName = JsonStringHelper.getString(data.getJSONObject(token), "state").toUpperCase();
                         InterlevelScene.Phase phase = InterlevelScene.Phase.valueOf(stateName);
                         InterlevelScene.phase = phase;
                     }
                     if (ilsObj.has("type")) {
-                        String modeName = ilsObj.getString("type").toUpperCase(Locale.ENGLISH);
+                        String modeName = JsonStringHelper.getString(ilsObj, "type").toUpperCase(Locale.ENGLISH);
                         if (modeName.equals("CUSTOM")) {
                             modeName = "NONE";
                         }
@@ -309,7 +309,7 @@ public class ParseThread implements Callable<String> {
                     InterlevelScene.reset_level = ilsObj.optBoolean("reset_level");
 
                     if (ilsObj.has("message")) {
-                        InterlevelScene.customMessage = ilsObj.getString("message");
+                        InterlevelScene.customMessage = JsonStringHelper.getString(ilsObj, "message");
                     }
                     if (!(Game.scene() instanceof InterlevelScene)) {
                         if (!((Game.scene() instanceof GameScene) && (InterlevelScene.phase == InterlevelScene.Phase.FADE_OUT))) {
@@ -371,7 +371,7 @@ public class ParseThread implements Callable<String> {
                     break;
                 case "server_uuid": {
                     Gdx.app.log("ParseThread", "ServerUUID");
-                    serverUUID = data.getString("server_uuid");
+                    serverUUID = JsonStringHelper.getString(data, "server_uuid");
                     Client.sendHeroClass(GamesInProgress.selectedClass);
                     break;
                 }
@@ -380,12 +380,12 @@ public class ParseThread implements Callable<String> {
                     ShatteredPixelDungeon.switchScene(InterlevelScene.class);
                     JSONObject redirectObject = data.getJSONObject(token);
                     if (redirectObject.has("uuid")){
-                        NetworkPacket.redirectUUID = redirectObject.getString("uuid");
+                        NetworkPacket.redirectUUID = JsonStringHelper.getString(redirectObject, "uuid");
                     }
                     if(redirectObject.has("password")){
-                        NetworkPacket.password = redirectObject.getString("password");
+                        NetworkPacket.password = JsonStringHelper.getString(redirectObject, "password");
                     }
-                    Client.connect(redirectObject.getString("host"), redirectObject.getInt("port"));
+                    Client.connect(JsonStringHelper.getString(redirectObject, "host"), redirectObject.getInt("port"));
                     break;
                 }
                 case "server_info": {
@@ -493,7 +493,7 @@ public class ParseThread implements Callable<String> {
     public void parseWindow(JSONObject windowObj) {
         try {
             int id = windowObj.getInt("id");
-            String type = windowObj.getString("type");
+            String type = JsonStringHelper.getString(windowObj, "type");
             JSONObject args = windowObj.optJSONObject("params");
             if (args == null) {
                 args = windowObj.optJSONObject("args");
@@ -501,7 +501,7 @@ public class ParseThread implements Callable<String> {
             switch (type) {
                 case "message":
                 case "wnd_message": {
-                    GameScene.show(new WndMessage(id, args.getString("text")));
+                    GameScene.show(new WndMessage(id, JsonStringHelper.getString(args, "text")));
                     break;
                 }
                 case "option":
@@ -511,7 +511,7 @@ public class ParseThread implements Callable<String> {
                 }
                 case "bag":
                 case "wnd_bag": {
-                    String title = args.getString("title");
+                    String title = JsonStringHelper.getString(args, "title");
                     boolean has_listener = args.getBoolean("has_listener");
                     JSONArray allowed_items = args.optJSONArray("allowed_items");
                     JSONArray last_bag_path = args.optJSONArray("last_bag_path"); // todo
@@ -603,7 +603,7 @@ public class ParseThread implements Callable<String> {
     }
 
     private void parseServerAction(JSONObject action_object) throws JSONException {
-        switch (action_object.getString("type")) {
+        switch (JsonStringHelper.getString(action_object, "type")) {
             case "reset_level": {
                 Level old_level = level;
                 level = new SewerLevel();
@@ -611,7 +611,7 @@ public class ParseThread implements Callable<String> {
                 break;
             }
             default:
-                Log.e("parse_server_actions", String.format("unknown_action  %s", action_object.getString("type")));
+                Log.e("parse_server_actions", String.format("unknown_action  %s", JsonStringHelper.getString(action_object, "type")));
         }
     }
 
@@ -664,9 +664,9 @@ public class ParseThread implements Callable<String> {
         GameLog log = ((GameScene) scene).getGameLog();
         try {
             if (messageObj.has("color")) {
-                log.WriteMessage(messageObj.getString("text"), messageObj.getInt("color"));
+                log.WriteMessage(JsonStringHelper.getString(messageObj, "text"), messageObj.getInt("color"));
             } else {
-                log.WriteMessageAutoColor(messageObj.getString("text"));
+                log.WriteMessageAutoColor(JsonStringHelper.getString(messageObj, "text"));
             }
         } catch (JSONException e) {
             Log.w("ParseThread", "Incorrect message");
@@ -799,7 +799,7 @@ public class ParseThread implements Callable<String> {
                 e.printStackTrace();
                 continue;
             }
-            String type = actionObj.optString("action_name", actionObj.optString("action_type"));
+            String type = JsonStringHelper.optString(actionObj, "action_name", actionObj.optString("action_type"));
             if ("sprite_action".equals(type)) {
                 spriteActions.add(actionObj);
                 continue;
@@ -807,7 +807,7 @@ public class ParseThread implements Callable<String> {
             parseAction(type, actionObj);
         }
         for (JSONObject actionObj : spriteActions) {
-            parseAction(actionObj.optString("action_name", actionObj.optString("action_type")), actionObj);
+            parseAction(JsonStringHelper.optString(actionObj, "action_name", actionObj.optString("action_type")), actionObj);
         }
     }
 
@@ -844,7 +844,7 @@ public class ParseThread implements Callable<String> {
             group = actor.sprite.parent;
         }
         if (isConnectedToOldServer()) {
-            MagicMissile.show(actionObj.getString("type"), from, to, group);
+            MagicMissile.show(JsonStringHelper.getString(actionObj, "type"), from, to, group);
         } else {
             MagicMissile.show(actionObj.getInt("type"), from, to, group);
         }
@@ -868,7 +868,7 @@ public class ParseThread implements Callable<String> {
     public void parse_update_bag_action(JSONObject actionObj) throws JSONException {
         if (!actionObj.has("slot") ||
                 !actionObj.has("update_mode") ||
-                (!actionObj.has("item") && actionObj.getString("update_mode").equals("remove"))
+                (!actionObj.has("item") && JsonStringHelper.getString(actionObj, "update_mode").equals("remove"))
         ) {
             Log.w("ParseActions", "bad \"add_item_to_bag\" action");
             return;
@@ -921,7 +921,7 @@ public class ParseThread implements Callable<String> {
         float x = (float) actionObj.getDouble("x");
         float y = (float) actionObj.getDouble("y");
         Integer key = actionObj.has("key") ? actionObj.getInt("key") : null;
-        String text = actionObj.getString("text");
+        String text = JsonStringHelper.getString(actionObj, "text");
         int color = actionObj.getInt("color");
         boolean ignore_position = actionObj.optBoolean("ignore_position", true);
         if ((key != null) && ignore_position) {
@@ -958,7 +958,7 @@ public class ParseThread implements Callable<String> {
     //FIXME
     public void parseBannerShowAction(JSONObject actionObj) {
         try {
-            BannerSprites.Type bannerType = BannerSprites.Type.valueOf(actionObj.getString(actionObj.getString("banner").toUpperCase()));
+            BannerSprites.Type bannerType = BannerSprites.Type.valueOf(JsonStringHelper.getString(actionObj, actionObj.getString("banner").toUpperCase()));
 
             Banner banner = new Banner(BannerSprites.get(bannerType));
             banner.show(actionObj.getInt("color"), (float) actionObj.getDouble("fade_time"), (float) actionObj.getDouble("fade_time"));
@@ -1127,7 +1127,7 @@ public class ParseThread implements Callable<String> {
         if (!isConnectedToOldServer() && factoryObj.has("path")) {
             Emitter.Factory factory = null;
             try {
-                Class<?> factoryClass = ClassReflection.forName(factoryObj.getString("path"));
+                Class<?> factoryClass = ClassReflection.forName(JsonStringHelper.getString(factoryObj, "path"));
                 Constructor<?> contructor;
                 try {
                     contructor = factoryClass.getDeclaredConstructor(JSONObject.class);
@@ -1153,7 +1153,7 @@ public class ParseThread implements Callable<String> {
             }
         }
         boolean lightMode = factoryObj.optBoolean("light_mode", false);
-        switch (factoryObj.getString("factory_type").toLowerCase(Locale.ENGLISH)) {
+        switch (JsonStringHelper.getString(factoryObj, "factory_type").toLowerCase(Locale.ENGLISH)) {
             case "blast":
                 return BlastParticle.FACTORY;
             case "earth":
@@ -1218,7 +1218,7 @@ public class ParseThread implements Callable<String> {
                 );
 
         }
-        GLog.n("incorrect factory: " + factoryObj.getString("factory_type"));
+        GLog.n("incorrect factory: " + JsonStringHelper.getString(factoryObj, "factory_type"));
         return null;
     }
 
@@ -1244,7 +1244,7 @@ public class ParseThread implements Callable<String> {
                     break;
                 }
                 case "state": {
-                    String state = cell.getString("state");
+                    String state = JsonStringHelper.getString(cell, "state");
                     level.visited[pos] = state.equals("visited");
                     level.mapped[pos] = state.equals("mapped");
                     break;
@@ -1325,7 +1325,7 @@ public class ParseThread implements Callable<String> {
 
                     for (int i = 0; i < tiles.length(); i++) {
                         tilemap = tiles.getJSONObject(i);
-                        String classname = tilemap.getString("__classname");
+                        String classname = JsonStringHelper.getString(tilemap, "__classname");
                         try {
                             customTilemap = (CustomTilemap) Reflection.newInstance(Reflection.forNameUnhandled(classname));
                             customTilemap.fromJson(tilemap);
@@ -1337,7 +1337,7 @@ public class ParseThread implements Callable<String> {
                     }
                     for (int i = 0; i < walls.length(); i++) {
                         tilemap = walls.getJSONObject(i);
-                        String classname = tilemap.getString("__classname");
+                        String classname = JsonStringHelper.getString(tilemap, "__classname");
                         try {
                             customTilemap = (CustomTilemap) Reflection.newInstance(Reflection.forNameUnhandled(classname));
                             customTilemap.fromJson(tilemap);
@@ -1377,23 +1377,23 @@ public class ParseThread implements Callable<String> {
                 }
                 case ("tiles_texture"): {
                     if (isConnectedToOldServer()){
-                        level.tilesTexture = TranslationUtils.translateTilesTexture(levelParamsObj.getString(token));
+                        level.tilesTexture = TranslationUtils.translateTilesTexture(JsonStringHelper.getString(levelParamsObj, token));
                     } else {
-                        level.tilesTexture = levelParamsObj.getString(token);
+                        level.tilesTexture = JsonStringHelper.getString(levelParamsObj, token);
                     }
                     break;
                 }
                 case ("water_texture"): {
                     if (isConnectedToOldServer()){
-                        level.waterTexture = "environment/"+ levelParamsObj.getString(token);
+                        level.waterTexture = "environment/"+ JsonStringHelper.getString(levelParamsObj, token);
                     }
                     else {
-                        level.waterTexture = levelParamsObj.getString(token);
+                        level.waterTexture = JsonStringHelper.getString(levelParamsObj, token);
                     }
                     break;
                 }
                 case "feeling":
-                    level.feeling = Level.Feeling.valueOf(levelParamsObj.getString(token));
+                    level.feeling = Level.Feeling.valueOf(JsonStringHelper.getString(levelParamsObj, token));
                     break;
                 default: {
                     GLog.n("Unexpected token \"%s\" in level params. Ignored.", token);
@@ -1422,9 +1422,9 @@ public class ParseThread implements Callable<String> {
             CharSprite old_sprite = chr.sprite;
             Class<? extends CharSprite> new_sprite_class;
             if(isConnectedToOldServer()) {
-                new_sprite_class = spriteClassFromName(ToPascalCase(actorObj.getString("sprite_name")), chr != hero);
+                new_sprite_class = spriteClassFromName(ToPascalCase(JsonStringHelper.getString(actorObj, "sprite_name")), chr != hero);
             } else {
-                new_sprite_class = spriteClassFromName(actorObj.getString("sprite_name"), chr != hero);
+                new_sprite_class = spriteClassFromName(JsonStringHelper.getString(actorObj, "sprite_name"), chr != hero);
             }
             if ((old_sprite == null) || (!old_sprite.getClass().equals(new_sprite_class))) {
                 CharSprite sprite = spriteFromClass(new_sprite_class);
@@ -1434,7 +1434,7 @@ public class ParseThread implements Callable<String> {
                     ((TieredSprite) sprite).updateTier(actorObj.getInt("tier"));
                 }
                 if (sprite instanceof ClassSprite && actorObj.has("class")) {
-                    HeroClass heroClass = HeroClass.valueOf(actorObj.getString("class"));
+                    HeroClass heroClass = HeroClass.valueOf(JsonStringHelper.getString(actorObj, "class"));
                     ((ClassSprite) sprite).updateHeroClass(heroClass);
                 }
                 if(!(sprite instanceof HeroSprite)) {
@@ -1449,7 +1449,7 @@ public class ParseThread implements Callable<String> {
         if (hasNotNull(actorObj,"sprite_asset"))
         {
             CharSprite old_sprite = chr.sprite;
-            String spriteAsset = actorObj.getString("sprite_asset");
+            String spriteAsset = JsonStringHelper.getString(actorObj, "sprite_asset");
             if ((!(old_sprite instanceof CustomCharSprite)) || (!spriteAsset.equals(((CustomCharSprite) old_sprite).getSpriteAsset()))) {
                 GameScene.updateCharSprite(chr, new CustomCharSprite(spriteAsset));
             }
@@ -1481,7 +1481,7 @@ public class ParseThread implements Callable<String> {
                     break;
                 }
                 case "name": {
-                    chr.name = actorObj.getString(token);
+                    chr.name = JsonStringHelper.getString(actorObj, token);
                     break;
                 }
                 case "sprite_name": {
@@ -1500,7 +1500,7 @@ public class ParseThread implements Callable<String> {
                 }
                 case "description": {
                     if (chr instanceof Mob) {
-                        ((Mob) chr).setDesc(actorObj.getString(token));
+                        ((Mob) chr).setDesc(JsonStringHelper.getString(actorObj, token));
                     } else {
                         Gdx.app.error("parseActorChar", actorObj.toString(4));
                     }
@@ -1516,7 +1516,7 @@ public class ParseThread implements Callable<String> {
                     Set<CharSprite.State> newStates = new HashSet<>(3);
                     for (int i = 0; i < statesArr.length(); i++) {
                         try {
-                            CharSprite.State state = CharSprite.State.valueOf(statesArr.getString(i).toUpperCase());
+                            CharSprite.State state = CharSprite.State.valueOf(JsonStringHelper.optString(statesArr, i).toUpperCase());
                             newStates.add(state);
                             if (states.contains(state)) {
                                 continue;
@@ -1567,9 +1567,9 @@ public class ParseThread implements Callable<String> {
         if (actor == null) {
             String blob_name;
             if(!isConnectedToOldServer()) {
-                blob_name = actorObj.getString("blob_type");
+                blob_name = JsonStringHelper.getString(actorObj, "blob_type");
             } else {
-                blob_name = "com.shatteredpixel.shatteredpixeldungeon.actor.blobs." + ToPascalCase(actorObj.getString("blob_type"));
+                blob_name = "com.shatteredpixel.shatteredpixeldungeon.actor.blobs." + ToPascalCase(JsonStringHelper.getString(actorObj, "blob_type"));
             }
             try {
                 blob_class = ClassReflection.forName(blob_name);
@@ -1626,7 +1626,7 @@ public class ParseThread implements Callable<String> {
                 continue;
             }
             Actor actor = (erase_old ? null : Actor.findById(ID));
-            String type = actorObj.getString("type");
+            String type = JsonStringHelper.getString(actorObj, "type");
             switch (type) {
                 case "remove":
                 case "removed":
@@ -1680,7 +1680,7 @@ public class ParseThread implements Callable<String> {
                     break;
                 }
                 case "class": {
-                    String className = heroObj.getString(token);
+                    String className = JsonStringHelper.getString(heroObj, token);
                     className = className.toUpperCase();
                     hero.heroClass = HeroClass.valueOf(className);
                     hero.sprite = new HeroSprite();
@@ -1701,8 +1701,8 @@ public class ParseThread implements Callable<String> {
                     break;
                 }
                 case "uuid":{
-                        SPDSettings.heroUUID(serverUUID, heroObj.getString("uuid"));
-                        Gdx.app.log("ParseThread", "heroUUID: " + heroObj.getString("uuid"));
+                        SPDSettings.heroUUID(serverUUID, JsonStringHelper.getString(heroObj, "uuid"));
+                        Gdx.app.log("ParseThread", "heroUUID: " + JsonStringHelper.getString(heroObj, "uuid"));
                     break;
                 }
                 case "talents" : {

@@ -42,7 +42,7 @@ public class CustomBuff extends Buff {
             this.name = Text.of(obj.get("name"));
         }
         if (obj.has("fade_percent")) {
-            iconFadePercent = Float.parseFloat(obj.getString("fade_percent"));
+            iconFadePercent = Float.parseFloat(JsonStringHelper.getString(obj, "fade_percent"));
         } else {
             iconFadePercent = 0f; //default to no fade
         }

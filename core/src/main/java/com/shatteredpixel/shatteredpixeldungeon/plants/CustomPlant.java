@@ -45,8 +45,8 @@ public class CustomPlant extends Plant {
             Plant plant = new CustomPlant(
                     plantInfo.optInt("sprite_id"),
                     pos,
-                    plantInfo.optString("name", "unknown"),
-                    plantInfo.optString("desc", "unknown")
+                    JsonStringHelper.optString(plantInfo, "name", "unknown"),
+                    JsonStringHelper.optString(plantInfo, "desc", "unknown")
             );
             plant.pos = pos;
             return plant;

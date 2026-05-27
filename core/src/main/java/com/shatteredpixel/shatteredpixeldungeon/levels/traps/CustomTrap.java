@@ -35,7 +35,7 @@ public class CustomTrap extends Trap {
         JSONObject params = object.getJSONObject("trap_info");
         this.color = params.getInt("color");
         this.shape = params.getInt("shape");
-        this.name = "com.shatteredpixel.shatteredpixeldungeon.level.traps."+params.getString("name");
+        this.name = "com.shatteredpixel.shatteredpixeldungeon.level.traps."+JsonStringHelper.getString(params, "name");
         this.active = params.getBoolean("active");
     }
 }

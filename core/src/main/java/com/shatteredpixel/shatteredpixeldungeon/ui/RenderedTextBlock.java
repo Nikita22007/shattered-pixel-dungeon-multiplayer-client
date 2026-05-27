@@ -285,7 +285,7 @@ public class RenderedTextBlock extends Component {
 		}
 	}
 	public JSONObject fromJson(JSONObject object){
-		text(object.getString("text"));
+		text(JsonStringHelper.getString(object, "text"));
 		color = object.getInt("color");
 		setHightlighting(object.getBoolean("highlighting_enabled"), object.getInt("highlight_color"));
 		return object;

@@ -729,7 +729,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	}
 
 	public final void parseAction(JSONObject actionObj) throws JSONException {
-		String action = actionObj.getString("action");
+		String action = JsonStringHelper.getString(actionObj, "action");
 		parseAction(action, actionObj);
 	}
 

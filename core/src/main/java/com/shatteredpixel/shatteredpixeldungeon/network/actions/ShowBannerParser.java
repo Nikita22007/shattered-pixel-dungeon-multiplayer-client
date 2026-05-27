@@ -12,7 +12,7 @@ import java.util.Locale;
 public class ShowBannerParser implements ActionParser {
     @Override
     public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-        BannerSprites.Type bannerType = BannerSprites.Type.valueOf(action.getString("banner").toUpperCase(Locale.ROOT));
+        BannerSprites.Type bannerType = BannerSprites.Type.valueOf(JsonStringHelper.getString(action, "banner").toUpperCase(Locale.ROOT));
         Banner banner = new Banner(BannerSprites.get(bannerType));
         banner.show(
             action.getInt("color"), 

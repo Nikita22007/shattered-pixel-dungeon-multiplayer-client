@@ -21,7 +21,7 @@ public class ActorUpdateParser implements ActionParser {
         }
 
         Actor actor = (erase_old ? null : Actor.findById(ID));
-        String type = actorObj.getString("type");
+        String type = JsonStringHelper.getString(actorObj, "type");
         switch (type) {
             case "char":
             case "character": {

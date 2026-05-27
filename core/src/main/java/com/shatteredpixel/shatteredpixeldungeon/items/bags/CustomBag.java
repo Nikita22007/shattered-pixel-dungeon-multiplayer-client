@@ -30,7 +30,7 @@ public class CustomBag extends Bag {
         }
         if (obj.has("bag_icon")) {
             try {
-                bagIcon = Icons.valueOf(obj.getString("bag_icon").toUpperCase(Locale.ENGLISH));
+                bagIcon = Icons.valueOf(JsonStringHelper.getString(obj, "bag_icon").toUpperCase(Locale.ENGLISH));
             } catch (RuntimeException e) {
                 GLog.n("incorrect icon: " + e.getMessage());
                 e.printStackTrace();

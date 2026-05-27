@@ -35,7 +35,7 @@ public class WndQuest extends WndTitledMessage {
 		super( questgiver.sprite(), Messages.titleCase( questgiver.name() ), text );
 	}
 	public WndQuest(int id, JSONObject object) {
-		super((CharSprite) Reflection.newInstance(Reflection.forName(object.getString("sprite_name"))), Messages.titleCase(object.getString("char_name")), object.getString("text"));
+		super((CharSprite) Reflection.newInstance(Reflection.forName(JsonStringHelper.getString(object, "sprite_name"))), Messages.titleCase(JsonStringHelper.getString(object, "char_name")), JsonStringHelper.getString(object, "text"));
 		this.id = id;
     }
 
