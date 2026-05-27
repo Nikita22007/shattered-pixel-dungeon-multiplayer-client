@@ -10,11 +10,14 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 
 import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Visual;
+import com.nikita22007.multiplayer.utils.text.LocalizedString;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import static com.nikita22007.pixeldungeonmultiplayer.TranslationUtils.translateItemImage;
 import static com.shatteredpixel.shatteredpixeldungeon.network.ParseThread.isConnectedToOldServer;
@@ -25,6 +28,7 @@ public class CustomItem extends Item {
     protected String descString;
 
     protected ArrayList<String> actionsList = new ArrayList<>();
+    protected HashMap<String, LocalizedString> actionNamesMap = new HashMap<>();
 
     protected boolean identified = false;
     protected int maxDurability = 1;
@@ -100,6 +104,9 @@ public class CustomItem extends Item {
                 case "actions":
                     parseActions(obj.getJSONArray(token));
                     break;
+                case "action_names":
+                    parseActionNames(obj.getJSONObject(token));
+                    break;
                 case "default_action":
                     String action = JsonStringHelper.getString(obj, token);
                     defaultAction = action.equals("null") ? null : action;
@@ -145,6 +152,18 @@ public class CustomItem extends Item {
         actionsList = actions;
     }
 
+    private void parseActionNames(JSONObject namesObj) {
+        Iterator<String> it = namesObj.keys();
+        while (it.hasNext()) {
+            String action = it.next();
+            try {
+                actionNamesMap.put(action, JsonStringHelper.getLocalizedString(namesObj, action));
+            } catch (Exception e) {
+                // ignore
+            }
+        }
+    }
+
     @Override
     public String desc() {
         return descString != null ? descString : "idk,wtf";
@@ -162,7 +181,12 @@ public class CustomItem extends Item {
     public ArrayList<String> actions(Hero hero) {
         return new ArrayList<>(actionsList);
     }
+
+    @Override
     public String actionName(String action, Hero hero){
+        if (actionNamesMap.containsKey(action)) {
+            return actionNamesMap.get(action).resolve();
+        }
         return action;
     }
 
