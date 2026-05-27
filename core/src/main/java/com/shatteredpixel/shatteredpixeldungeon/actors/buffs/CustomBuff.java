@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
 import com.nikita22007.pixeldungeonmultiplayer.Text;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.watabou.noosa.Image;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,7 +43,7 @@ public class CustomBuff extends Buff {
             this.name = Text.of(obj.get("name"));
         }
         if (obj.has("fade_percent")) {
-            iconFadePercent = Float.parseFloat(obj.getString("fade_percent"));
+            iconFadePercent = Float.parseFloat(JsonStringHelper.getString(obj, "fade_percent"));
         } else {
             iconFadePercent = 0f; //default to no fade
         }

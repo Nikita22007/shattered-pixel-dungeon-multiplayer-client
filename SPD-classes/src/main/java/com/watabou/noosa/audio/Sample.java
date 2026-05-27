@@ -198,6 +198,7 @@ public enum Sample {
 		return enabled;
 	}
 	public void load( JSONArray assets ) throws JSONException {
+		//TODO SPDMP: move network JSON sample loading out of SPD-classes.
 		for (int i = 0; i < assets.length(); i++) {
 			loadingQueue.add( assets.getString(i) );
 		}
@@ -205,6 +206,7 @@ public enum Sample {
 		//load();
 	}
 	public long play( JSONObject sampleObj ) throws JSONException {
+		//TODO SPDMP: move network JSON sample playback parsing out of SPD-classes.
 		String sample = sampleObj.getString("sample");
 		if (!ids.containsKey(sample)){
 			load(sample);

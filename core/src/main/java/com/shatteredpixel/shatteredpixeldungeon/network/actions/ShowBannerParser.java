@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.network.actions;
 
 import com.shatteredpixel.shatteredpixeldungeon.effects.BannerSprites;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Banner;
@@ -12,7 +13,7 @@ import java.util.Locale;
 public class ShowBannerParser implements ActionParser {
     @Override
     public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-        BannerSprites.Type bannerType = BannerSprites.Type.valueOf(action.getString("banner").toUpperCase(Locale.ROOT));
+        BannerSprites.Type bannerType = BannerSprites.Type.valueOf(JsonStringHelper.getString(action, "banner").toUpperCase(Locale.ROOT));
         Banner banner = new Banner(BannerSprites.get(bannerType));
         banner.show(
             action.getInt("color"), 

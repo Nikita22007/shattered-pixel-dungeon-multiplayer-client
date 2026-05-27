@@ -45,7 +45,7 @@ public class GLog {
 	public static void i( String text, Object... args ) {
 		
 		if (args.length > 0) {
-			text = Messages.format( text, args );
+			text = Messages.resolveFormat( text, args );
 		}
 		
 		DeviceCompat.log( TAG, text );

@@ -3,6 +3,7 @@ package com.shatteredpixel.shatteredpixeldungeon.plants;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Reflection;
 
@@ -45,8 +46,8 @@ public class CustomPlant extends Plant {
             Plant plant = new CustomPlant(
                     plantInfo.optInt("sprite_id"),
                     pos,
-                    plantInfo.optString("name", "unknown"),
-                    plantInfo.optString("desc", "unknown")
+                    JsonStringHelper.optString(plantInfo, "name", "unknown"),
+                    JsonStringHelper.optString(plantInfo, "desc", "unknown")
             );
             plant.pos = pos;
             return plant;

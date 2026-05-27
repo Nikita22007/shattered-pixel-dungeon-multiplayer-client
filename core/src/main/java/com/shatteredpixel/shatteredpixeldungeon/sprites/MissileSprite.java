@@ -40,6 +40,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingSp
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingSpike;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Trident;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.watabou.noosa.Visual;
@@ -207,7 +208,7 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 				actionObj.getDouble("speed"),
 				actionObj.getDouble("angular_speed"),
 				actionObj.getDouble("angle"),
-				actionObj.optString("item_sprite_sheet", Assets.Sprites.ITEMS),
+				JsonStringHelper.optString(actionObj, "item_sprite_sheet", Assets.Sprites.ITEMS),
 				actionObj.getInt("item_image"),
 				glowing
 		);

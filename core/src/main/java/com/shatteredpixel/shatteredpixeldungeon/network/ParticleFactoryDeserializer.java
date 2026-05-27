@@ -124,7 +124,7 @@ public class ParticleFactoryDeserializer {
     }
 
     public static Emitter.Factory deserialize(JSONObject object) throws JSONException {
-        String name = object.getString("factory_type").toLowerCase(Locale.ENGLISH);
+        String name = JsonStringHelper.getString(object, "factory_type").toLowerCase(Locale.ENGLISH);
         FactoryDeserializer deserializer = factories.get(name);
         return deserializer == null ? null : deserializer.deserialize(object);
     }

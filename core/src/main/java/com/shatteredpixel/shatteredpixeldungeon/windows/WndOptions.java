@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.windows;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
@@ -141,21 +142,21 @@ public class WndOptions extends Window {
 		JSONArray optionsArr = args.getJSONArray("options");
 		String[] options = new String[optionsArr.length()];
 		for (int i = 0; i < optionsArr.length(); i += 1) {
-			options[i] = optionsArr.getString(i);
+			options[i] = JsonStringHelper.optString(optionsArr, i);
 		}
-		String title = args.getString("title");
+		String title = JsonStringHelper.getString(args, "title");
 		int titleColor = args.optInt("title_color", TITLE_COLOR);
-		String text = args.getString("message");
+		String text = JsonStringHelper.getString(args, "message");
 		if (args.has("item"))
 		{
 			icon = new ItemSprite(CustomItem.createItem(args.getJSONObject("item")));
 		} else if (args.has("sprite_asset")) {
-			icon = new CustomCharSprite(args.getString("sprite_asset"));
+			icon = new CustomCharSprite(JsonStringHelper.getString(args, "sprite_asset"));
 		} else if (args.has("sprite_class")) {
 
 			icon = CharSprite.spriteFromClass(
 					CharSprite.spriteClassFromName(
-							ToPascalCase(args.getString("sprite_class")
+							ToPascalCase(JsonStringHelper.getString(args, "sprite_class")
 							), true)
 			);
 		}

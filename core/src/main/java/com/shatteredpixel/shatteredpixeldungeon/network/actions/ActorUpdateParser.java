@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.network.actions;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import org.json.JSONException;
@@ -21,7 +22,7 @@ public class ActorUpdateParser implements ActionParser {
         }
 
         Actor actor = (erase_old ? null : Actor.findById(ID));
-        String type = actorObj.getString("type");
+        String type = JsonStringHelper.getString(actorObj, "type");
         switch (type) {
             case "char":
             case "character": {
