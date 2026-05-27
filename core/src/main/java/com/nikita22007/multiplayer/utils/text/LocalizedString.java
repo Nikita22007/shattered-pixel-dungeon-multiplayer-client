@@ -99,6 +99,14 @@ public class LocalizedString {
         return parts;
     }
 
+    public int maxLength() {
+        return maxLength;
+    }
+
+    public String ellipsis() {
+        return ellipsis;
+    }
+
     @Override
     public String toString() {
         return Messages.resolve(this);
@@ -119,12 +127,20 @@ public class LocalizedString {
                 && Arrays.equals(args, other.args)
                 && transform == other.transform
                 && Objects.equals(text, other.text)
-                && Arrays.equals(parts, other.parts);
+                && Arrays.equals(parts, other.parts)
+                && maxLength == other.maxLength
+                && Objects.equals(ellipsis, other.ellipsis);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(mode, key, raw, transform, text);
+        int result = Objects.hash(mode, key, raw, transform, text, maxLength, ellipsis);
+        result = 31 * result + Arrays.hashCode(args);
+        result = 31 * result + Arrays.hashCode(parts);
+        return result;
+    }
+}
+jects.hash(mode, key, raw, transform, text);
         result = 31 * result + Arrays.hashCode(args);
         result = 31 * result + Arrays.hashCode(parts);
         return result;

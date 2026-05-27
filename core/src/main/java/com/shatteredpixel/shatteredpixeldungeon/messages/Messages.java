@@ -147,6 +147,9 @@ public class Messages {
 		if (text.mode() == LocalizedString.Mode.CONCAT) {
 			return resolveConcat(text.parts());
 		}
+		if (text.mode() == LocalizedString.Mode.TRUNCATE) {
+			return com.nikita22007.pixeldungeonmultiplayer.Utils.truncate(resolve(text.text()), text.maxLength(), text.ellipsis());
+		}
 		return resolve(text.key(), args);
 	}
 
