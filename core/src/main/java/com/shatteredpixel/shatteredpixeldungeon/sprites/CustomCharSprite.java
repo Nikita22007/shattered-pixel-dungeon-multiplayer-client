@@ -4,6 +4,7 @@ import static com.nikita22007.pixeldungeonmultiplayer.JavaUtils.hasNotNull;
 
 import com.nikita22007.pixeldungeonmultiplayer.JavaUtils;
 import com.nikita22007.pixeldungeonmultiplayer.TextureManager;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.watabou.gltextures.SmartTexture;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.noosa.TextureFilm;

@@ -310,6 +310,7 @@ public enum Music {
 			new FadeOutAction()
 	};
     public MusicAction parseAction(JSONObject actionObj) {
+		//TODO SPDMP: move music action parsing out of SPD-classes into network actions/deserializers.
 		String type = actionObj.getString("music_action_type");
 		for (MusicAction action: actions) {
 			if (action.musicActionType().equals(type)) {

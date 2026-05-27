@@ -1,5 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.network.scanners;
 
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.network.ServerAddress;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import org.json.JSONObject;

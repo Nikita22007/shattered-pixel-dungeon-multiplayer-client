@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.network.scanners;
 
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 
 import org.json.JSONArray;

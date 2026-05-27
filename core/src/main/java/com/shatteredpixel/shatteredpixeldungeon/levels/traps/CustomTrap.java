@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.levels.traps;
 
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import org.json.JSONObject;
 
 public class CustomTrap extends Trap {
@@ -35,7 +36,7 @@ public class CustomTrap extends Trap {
         JSONObject params = object.getJSONObject("trap_info");
         this.color = params.getInt("color");
         this.shape = params.getInt("shape");
-        this.name = "com.shatteredpixel.shatteredpixeldungeon.level.traps."+JsonStringHelper.getString(params, "name");
+        this.name = "com.shatteredpixel.shatteredpixeldungeon.level.traps."+ JsonStringHelper.getString(params, "name");
         this.active = params.getBoolean("active");
     }
 }

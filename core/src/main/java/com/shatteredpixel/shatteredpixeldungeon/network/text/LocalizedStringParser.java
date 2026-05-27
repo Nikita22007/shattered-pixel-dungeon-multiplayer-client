@@ -3,7 +3,6 @@ package com.shatteredpixel.shatteredpixeldungeon.network.text;
 import com.nikita22007.multiplayer.utils.text.LocalizedKey;
 import com.nikita22007.multiplayer.utils.text.LocalizedString;
 
-import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,15 +14,15 @@ public class LocalizedStringParser {
     public LocalizedString parse(Object value) throws JSONException {
         if (value instanceof JSONObject) {
             JSONObject object = (JSONObject) value;
-            String type = JsonStringHelper.getString(object, "type");
+            String type = object.getString("type");
             Object[] args = parseArgs(object.optJSONArray("args"));
 
             if ("raw".equals(type)) {
-                return LocalizedString.raw(JsonStringHelper.optString(object, "raw", ""), args);
+                return LocalizedString.raw(object.optString("raw", ""), args);
             }
             if ("transform".equals(type)) {
                 return LocalizedString.transform(
-                        parseTransform(JsonStringHelper.getString(object, "transform")),
+                        parseTransform(object.getString("transform")),
                         parse(object.get("text"))
                 );
             }
@@ -34,13 +33,13 @@ public class LocalizedStringParser {
                 return LocalizedString.truncate(
                         parse(object.get("text")),
                         object.getInt("max_length"),
-                        JsonStringHelper.optString(object, "ellipsis", "")
+                        object.optString("ellipsis", "")
                 );
             }
             if ("replace".equals(type)) {
                 return parse(object.get("text")).replace(
-                        parseChar(JsonStringHelper.getString(object, "old_char")),
-                        parseChar(JsonStringHelper.getString(object, "new_char"))
+                        parseChar(object.getString("old_char")),
+                        parseChar(object.getString("new_char"))
                 );
             }
             if ("key".equals(type)) {
@@ -61,12 +60,12 @@ public class LocalizedStringParser {
     }
 
     private LocalizedKey parseKey(JSONObject object) throws JSONException {
-        String type = JsonStringHelper.getString(object, "type");
+        String type = object.getString("type");
         if (!"localized_key".equals(type)) {
             throw new JSONException("Expected localized_key, got: " + type);
         }
-        String owner = object.has("owner") && !object.isNull("owner") ? JsonStringHelper.getString(object, "owner") : null;
-        return new LocalizedKey(owner, JsonStringHelper.getString(object, "name"));
+        String owner = object.has("owner") && !object.isNull("owner") ? object.getString("owner") : null;
+        return new LocalizedKey(owner, object.getString("name"));
     }
 
     private char parseChar(String value) throws JSONException {

@@ -1,6 +1,7 @@
 package com.nikita22007.pixeldungeonmultiplayer;
 
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import org.json.JSONArray;
 import org.json.JSONException;

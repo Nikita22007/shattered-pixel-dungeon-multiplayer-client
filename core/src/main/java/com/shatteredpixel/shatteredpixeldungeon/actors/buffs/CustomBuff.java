@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
 import com.nikita22007.pixeldungeonmultiplayer.Text;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.watabou.noosa.Image;
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -196,6 +196,7 @@ public class Image extends Visual {
 			buffer.delete();
 	}
 	public void fromJson(JSONObject args) {
+		//TODO SPDMP: move network JSON image parsing out of SPD-classes.
 		texture(args.getString("asset"));
 		if (args.has("left")) {
 			frame(new RectF((float) args.getDouble("left"), (float) args.getDouble("top"), (float) args.getDouble("right"), (float) args.getDouble("bottom")));
