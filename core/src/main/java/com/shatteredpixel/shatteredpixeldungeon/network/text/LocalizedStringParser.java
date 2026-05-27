@@ -64,8 +64,25 @@ public class LocalizedStringParser {
         if (!"localized_key".equals(type)) {
             throw new JSONException("Expected localized_key, got: " + type);
         }
-        String owner = object.has("owner") && !object.isNull("owner") ? object.getString("owner") : null;
-        return new LocalizedKey(owner, object.getString("name"));
+        return new LocalizedKey(parseOwners(object), object.getString("name"));
+    }
+
+    private String[] parseOwners(JSONObject object) throws JSONException {
+        if (!object.has("owner") || object.isNull("owner")) {
+            return null;
+        }
+
+        Object owner = object.get("owner");
+        if (owner instanceof JSONArray) {
+            JSONArray owners = (JSONArray) owner;
+            String[] result = new String[owners.length()];
+            for (int i = 0; i < owners.length(); i++) {
+                result[i] = owners.getString(i);
+            }
+            return result;
+        }
+
+        return new String[]{String.valueOf(owner)};
     }
 
     private char parseChar(String value) throws JSONException {

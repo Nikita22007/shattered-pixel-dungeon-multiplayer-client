@@ -141,22 +141,19 @@ public class Messages {
 	}
 
 	public static String resolve(LocalizedKey key, Object... args) {
-		String ownerClass = key.ownerClass();
-		if (ownerClass == null) {
+		String[] ownerClasses = key.ownerClasses();
+		if (ownerClasses == null || ownerClasses.length == 0) {
 			return resolve(key.name(), args);
 		}
-		return resolveByKey(toPropertyOwner(ownerClass) + "." + key.name(), key.name(), args);
+		return resolveByOwners(ownerClasses, key.name(), args);
 	}
 
 	public static String resolve(Class<?> c, String k, Object...args){
-		String key;
 		if (c != null){
-			key = c.getName().replace("com.shatteredpixel.shatteredpixeldungeon.", "");
-			key += "." + k;
-		} else
-			key = k;
+			return resolveByOwners(ownerHierarchy(c), k, args);
+		}
 
-		return resolveByKey(key, k, args);
+		return resolveByKey(k, k, args);
 	}
 
 	private static String resolveByKey(String key, String fallbackKey, Object... args) {
@@ -168,12 +165,33 @@ public class Messages {
 			//this is so child classes can inherit properties from their parents.
 			//in cases where text is commonly grabbed as a utility from classes that aren't mean to be instantiated
 			//(e.g. flavourbuff.dispTurns()) using .class directly is probably smarter to prevent unnecessary recursive calls.
+
 			return fallbackKey;
 		}
 	}
 
+	private static String resolveByOwners(String[] ownerClasses, String fallbackKey, Object... args) {
+		for (String ownerClass : ownerClasses) {
+			String value = getFromBundle((toPropertyOwner(ownerClass) + "." + fallbackKey).toLowerCase(Locale.ENGLISH));
+			if (value != null) {
+				if (args.length > 0) return resolveFormat(value, args);
+				else return value;
+			}
+		}
+		return fallbackKey;
+	}
+
 	private static String toPropertyOwner(String ownerClass) {
 		return ownerClass.replace("com.shatteredpixel.shatteredpixeldungeon.", "");
+	}
+
+	private static String[] ownerHierarchy(Class<?> c) {
+		ArrayList<String> owners = new ArrayList<>();
+		while (c != null) {
+			owners.add(c.getName());
+			c = c.getSuperclass();
+		}
+		return owners.toArray(new String[0]);
 	}
 
 	private static String getFromBundle(String key){

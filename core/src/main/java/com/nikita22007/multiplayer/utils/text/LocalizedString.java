@@ -130,8 +130,13 @@ public abstract class LocalizedString implements JSONString {
     static JSONObject keyToJson(LocalizedKey key) {
         JSONObject object = new JSONObject();
         object.put("type", "localized_key");
-        if (key.ownerClass() != null) {
-            object.put("owner", key.ownerClass());
+        String[] ownerClasses = key.ownerClasses();
+        if (ownerClasses != null && ownerClasses.length > 0) {
+            JSONArray owners = new JSONArray();
+            for (String ownerClass : ownerClasses) {
+                owners.put(ownerClass);
+            }
+            object.put("owner", owners);
         }
         object.put("name", key.name());
         return object;
