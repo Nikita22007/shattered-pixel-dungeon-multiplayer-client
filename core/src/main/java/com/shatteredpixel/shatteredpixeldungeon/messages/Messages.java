@@ -116,16 +116,16 @@ public class Messages {
 	 * Resource grabbing methods
 	 */
 
-	public static LocalizedString get(String key, Object...args){
-		return LocalizedString.key(new LocalizedKey(null, key), args);
+	public static String get(String key, Object...args){
+		return resolve((Class<?>) null, key, args);
 	}
 
-	public static LocalizedString get(Object o, String k, Object...args){
-		return get(o.getClass(), k, args);
+	public static String get(Object o, String k, Object...args){
+		return resolve(o.getClass(), k, args);
 	}
 
-	public static LocalizedString get(Class<?> c, String k, Object...args){
-		return LocalizedString.key(new LocalizedKey(c == null ? null : c.getName(), k), args);
+	public static String get(Class<?> c, String k, Object...args){
+		return resolve(c, k, args);
 	}
 
 	public static String resolve(String key, Object...args){
@@ -137,23 +137,7 @@ public class Messages {
 	}
 
 	public static String resolve(LocalizedString text) {
-		Object[] args = resolveArgs(text.args());
-		if (text.mode() == LocalizedString.Mode.RAW) {
-			return args.length > 0 ? resolveFormat(text.raw(), args) : text.raw();
-		}
-		if (text.mode() == LocalizedString.Mode.TRANSFORM) {
-			return resolveTransform(text.transform(), resolve(text.text()));
-		}
-		if (text.mode() == LocalizedString.Mode.CONCAT) {
-			return resolveConcat(text.parts());
-		}
-		if (text.mode() == LocalizedString.Mode.TRUNCATE) {
-			return com.nikita22007.pixeldungeonmultiplayer.Utils.truncate(resolve(text.text()), text.maxLength(), text.ellipsis());
-		}
-		if (text.mode() == LocalizedString.Mode.REPLACE) {
-			return resolve(text.text()).replace(text.oldChar(), text.newChar());
-		}
-		return resolve(text.key(), args);
+		return text.resolve();
 	}
 
 	public static String resolve(LocalizedKey key, Object... args) {
@@ -188,14 +172,6 @@ public class Messages {
 		}
 	}
 
-	private static Object[] resolveArgs(Object[] args) {
-		Object[] resolved = new Object[args.length];
-		for (int i = 0; i < args.length; i++) {
-			resolved[i] = args[i] instanceof LocalizedString ? resolve((LocalizedString) args[i]) : args[i];
-		}
-		return resolved;
-	}
-
 	private static String toPropertyOwner(String ownerClass) {
 		return ownerClass.replace("com.shatteredpixel.shatteredpixeldungeon.", "");
 	}
@@ -218,12 +194,12 @@ public class Messages {
 	 * String Utility Methods
 	 */
 
-	public static LocalizedString format( String format, Object...args ) {
-		return LocalizedString.raw(format, args);
+	public static String format( String format, Object...args ) {
+		return resolveFormat(format, args);
 	}
 
-	public static LocalizedString concat( Object...parts ) {
-		return LocalizedString.concat(parts);
+	public static String concat( Object...parts ) {
+		return resolveConcat(parts);
 	}
 
 	public static String resolveFormat( String format, Object...args ) {
@@ -244,12 +220,12 @@ public class Messages {
 		return formatters.get(format).format(number);
 	}
 
-	public static LocalizedString capitalize( String str ){
-		return capitalize(LocalizedString.raw(str));
+	public static String capitalize( String str ){
+		return resolveCapitalize(str);
 	}
 
-	public static LocalizedString capitalize( LocalizedString text ){
-		return LocalizedString.transform(LocalizedString.Transform.CAPITALIZE, text);
+	public static String capitalize( LocalizedString text ){
+		return resolveCapitalize(text.resolve());
 	}
 
 	public static String resolveCapitalize( String str ){
@@ -263,12 +239,12 @@ public class Messages {
 			Arrays.asList("a", "an", "and", "of", "by", "to", "the", "x", "for")
 	);
 
-	public static LocalizedString titleCase( String str ){
-		return titleCase(LocalizedString.raw(str));
+	public static String titleCase( String str ){
+		return resolveTitleCase(str);
 	}
 
-	public static LocalizedString titleCase( LocalizedString text ){
-		return LocalizedString.transform(LocalizedString.Transform.TITLE_CASE, text);
+	public static String titleCase( LocalizedString text ){
+		return resolveTitleCase(text.resolve());
 	}
 
 	public static String resolveTitleCase( String str ){
@@ -291,20 +267,20 @@ public class Messages {
 		return resolveCapitalize(str);
 	}
 
-	public static LocalizedString upperCase( String str ){
-		return upperCase(LocalizedString.raw(str));
+	public static String upperCase( String str ){
+		return resolveUpperCase(str);
 	}
 
-	public static LocalizedString upperCase( LocalizedString text ){
-		return LocalizedString.transform(LocalizedString.Transform.UPPER_CASE, text);
+	public static String upperCase( LocalizedString text ){
+		return resolveUpperCase(text.resolve());
 	}
 
-	public static LocalizedString toUpperCase( String str, Locale ignoredLocale ){
-		return toUpperCase(LocalizedString.raw(str), ignoredLocale);
+	public static String toUpperCase( String str, Locale ignoredLocale ){
+		return resolveToUpperCase(str, ignoredLocale);
 	}
 
-	public static LocalizedString toUpperCase( LocalizedString text, Locale ignoredLocale ){
-		return LocalizedString.transform(LocalizedString.Transform.UPPER_CASE, text);
+	public static String toUpperCase( LocalizedString text, Locale ignoredLocale ){
+		return resolveToUpperCase(text.resolve(), ignoredLocale);
 	}
 
 	public static String resolveUpperCase( String str ){
@@ -315,31 +291,16 @@ public class Messages {
 		return str.toUpperCase(locale);
 	}
 
-	public static LocalizedString lowerCase( String str ){
-		return lowerCase(LocalizedString.raw(str));
+	public static String lowerCase( String str ){
+		return resolveLowerCase(str);
 	}
 
-	public static LocalizedString lowerCase( LocalizedString text ){
-		return LocalizedString.transform(LocalizedString.Transform.LOWER_CASE, text);
+	public static String lowerCase( LocalizedString text ){
+		return resolveLowerCase(text.resolve());
 	}
 
 	public static String resolveLowerCase( String str ){
 		return str.toLowerCase(locale);
-	}
-
-	private static String resolveTransform(LocalizedString.Transform transform, String text) {
-		switch (transform) {
-			case CAPITALIZE:
-				return resolveCapitalize(text);
-			case TITLE_CASE:
-				return resolveTitleCase(text);
-			case UPPER_CASE:
-				return resolveUpperCase(text);
-			case LOWER_CASE:
-				return resolveLowerCase(text);
-			default:
-				return text;
-		}
 	}
 
 	private static String resolveConcat(Object[] parts) {
@@ -353,4 +314,5 @@ public class Messages {
 		}
 		return result.toString();
 	}
+
 }

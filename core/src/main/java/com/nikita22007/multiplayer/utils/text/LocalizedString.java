@@ -1,12 +1,17 @@
 package com.nikita22007.multiplayer.utils.text;
 
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import org.jetbrains.annotations.CheckReturnValue;
+import org.json.JSONArray;
+import org.json.JSONString;
+import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
+import java.util.Locale;
 
-public class LocalizedString {
+public abstract class LocalizedString implements JSONString {
+
+    static final Object[] EMPTY_OBJECTS = new Object[0];
 
     public static final LocalizedString EMPTY = LocalizedString.raw("");
 
@@ -23,155 +28,127 @@ public class LocalizedString {
         CAPITALIZE,
         TITLE_CASE,
         UPPER_CASE,
-        LOWER_CASE
-    }
+        LOWER_CASE;
 
-    private final Mode mode;
-    private final LocalizedKey key;
-    private final String raw;
-    private final Object[] args;
-    private final Transform transform;
-    private final LocalizedString text;
-    private final Object[] parts;
-
-    private final int maxLength;
-    private final String ellipsis;
-    private final char oldChar;
-    private final char newChar;
-
-    private LocalizedString(Mode mode, LocalizedKey key, String raw, Object[] args, Transform transform, LocalizedString text, Object[] parts, int maxLength, String ellipsis, char oldChar, char newChar) {
-        this.mode = mode;
-        this.key = key;
-        this.raw = raw;
-        this.args = args == null ? new Object[0] : args;
-        this.transform = transform;
-        this.text = text;
-        this.parts = parts == null ? new Object[0] : parts;
-        this.maxLength = maxLength;
-        this.ellipsis = ellipsis;
-        this.oldChar = oldChar;
-        this.newChar = newChar;
-    }
-
-    public static LocalizedString key(LocalizedKey key, Object... args) {
-        return new LocalizedString(Mode.KEY, key, null, args, null, null, null, 0, null, '\0', '\0');
-    }
-
-    public static LocalizedString raw(String raw, Object... args) {
-        return new LocalizedString(Mode.RAW, null, raw, args, null, null, null, 0, null, '\0', '\0');
-    }
-
-    public static LocalizedString transform(Transform transform, LocalizedString text) {
-        return new LocalizedString(Mode.TRANSFORM, null, null, null, transform, text, null, 0, null, '\0', '\0');
-    }
-
-    public static LocalizedString truncate(LocalizedString text, int maxLength, String ellipsis) {
-        return new LocalizedString(Mode.TRUNCATE, null, null, null, null, text, null, maxLength, ellipsis, '\0', '\0');
-    }
-
-    public LocalizedString replace(char oldChar, char newChar) {
-        return new LocalizedString(Mode.REPLACE, null, null, null, null, this, null, 0, null, oldChar, newChar);
-    }
-
-    public static LocalizedString concat(Object... parts) {
-        ArrayList<Object> flattened = new ArrayList<>();
-        flattenConcatParts(flattened, parts);
-        return new LocalizedString(Mode.CONCAT, null, null, null, null, null, flattened.toArray(new Object[0]), 0, null, '\0', '\0');
-    }
-
-    private static void flattenConcatParts(ArrayList<Object> flattened, Object[] parts) {
-        if (parts == null) {
-            return;
-        }
-        for (Object part : parts) {
-            if (part instanceof LocalizedString && ((LocalizedString) part).mode() == Mode.CONCAT) {
-                flattenConcatParts(flattened, ((LocalizedString) part).parts());
-            } else {
-                flattened.add(part);
+        String resolve(String text) {
+            switch (this) {
+                case CAPITALIZE:
+                    return Messages.resolveCapitalize(text);
+                case TITLE_CASE:
+                    return Messages.resolveTitleCase(text);
+                case UPPER_CASE:
+                    return Messages.resolveUpperCase(text);
+                case LOWER_CASE:
+                    return Messages.resolveLowerCase(text);
+                default:
+                    return text;
             }
         }
     }
 
-    public Mode mode() {
-        return mode;
+    LocalizedString() {
     }
 
-    public LocalizedKey key() {
-        return key;
+    @CheckReturnValue
+    public static LocalizedString key(LocalizedKey key, Object... args) {
+        return new KeyLocalizedString(key, args);
     }
 
-    public String raw() {
-        return raw;
+    @CheckReturnValue
+    public static LocalizedString raw(String raw, Object... args) {
+        return new RawLocalizedString(raw, args);
     }
 
-    public Object[] args() {
-        return args;
+    @CheckReturnValue
+    public static LocalizedString transform(Transform transform, LocalizedString text) {
+        return new TransformedLocalizedString(transform, text);
     }
 
-    public Transform transform() {
-        return transform;
+    @CheckReturnValue
+    public static LocalizedString truncate(LocalizedString text, int maxLength, String ellipsis) {
+        return new TruncatedLocalizedString(text, maxLength, ellipsis);
     }
 
-    public LocalizedString text() {
-        return text;
+    @CheckReturnValue
+    public LocalizedString replace(char oldChar, char newChar) {
+        return new ReplacedLocalizedString(this, oldChar, newChar);
     }
 
-    public Object[] parts() {
-        return parts;
+    @CheckReturnValue
+    public static LocalizedString concat(Object... parts) {
+        return ConcatLocalizedString.of(parts);
     }
 
-    public int maxLength() {
-        return maxLength;
+    @CheckReturnValue
+    public abstract Mode mode();
+
+    @CheckReturnValue
+    public final String resolve() {
+        return resolveInternal();
     }
 
-    public String ellipsis() {
-        return ellipsis;
+    abstract String resolveInternal();
+
+    public final JSONObject toJsonObject() {
+        return toJsonObjectInternal();
     }
 
-    public char oldChar() {
-        return oldChar;
+    abstract JSONObject toJsonObjectInternal();
+
+    @CheckReturnValue
+    public LocalizedString toUpperCase(Locale locale) {
+        return transform(Transform.UPPER_CASE, this);
     }
 
-    public char newChar() {
-        return newChar;
-    }
-
+    @CheckReturnValue
     public boolean isEmpty() {
-        return this.equals(EMPTY);
+        return equals(EMPTY);
     }
 
     @Override
-    public String toString() {
-        return Messages.resolve(this);
+    public final String toString() {
+        return resolve();
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
+    public final String toJSONString() {
+        return toJsonObject().toString();
+    }
+
+    static Object[] copy(Object[] values) {
+        return values == null || values.length == 0 ? EMPTY_OBJECTS : Arrays.copyOf(values, values.length);
+    }
+
+    static Object[] resolveArgs(Object[] args) {
+        Object[] resolved = new Object[args.length];
+        for (int i = 0; i < args.length; i++) {
+            resolved[i] = args[i] instanceof LocalizedString ? ((LocalizedString) args[i]).resolveInternal() : args[i];
         }
-        if (!(obj instanceof LocalizedString)) {
-            return false;
-        }
-        LocalizedString other = (LocalizedString) obj;
-        return mode == other.mode
-                && Objects.equals(key, other.key)
-                && Objects.equals(raw, other.raw)
-                && Arrays.equals(args, other.args)
-                && transform == other.transform
-                && Objects.equals(text, other.text)
-                && Arrays.equals(parts, other.parts)
-                && maxLength == other.maxLength
-                && Objects.equals(ellipsis, other.ellipsis)
-                && oldChar == other.oldChar
-                && newChar == other.newChar;
+        return resolved;
     }
 
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(mode, key, raw, transform, text, maxLength, ellipsis, oldChar, newChar);
-        result = 31 * result + Arrays.hashCode(args);
-        result = 31 * result + Arrays.hashCode(parts);
-        return result;
+    static JSONObject keyToJson(LocalizedKey key) {
+        JSONObject object = new JSONObject();
+        object.put("type", "localized_key");
+        if (key.ownerClass() != null) {
+            object.put("owner", key.ownerClass());
+        }
+        object.put("name", key.name());
+        return object;
+    }
+
+    static Object toJsonValue(Object value) {
+        if (value instanceof LocalizedString) {
+            return ((LocalizedString) value).toJsonObject();
+        }
+        return value == null ? JSONObject.NULL : value;
+    }
+
+    static JSONArray argsToJson(Object[] args) {
+        JSONArray array = new JSONArray();
+        for (Object arg : args) {
+            array.put(toJsonValue(arg));
+        }
+        return array;
     }
 }

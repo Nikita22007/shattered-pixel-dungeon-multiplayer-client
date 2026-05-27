@@ -1,13 +1,11 @@
 package com.shatteredpixel.shatteredpixeldungeon.network.actions;
 
-import com.nikita22007.multiplayer.utils.Log;
-import com.nikita22007.multiplayer.utils.text.LocalizedString;
-import com.shatteredpixel.shatteredpixeldungeon.Game;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
-import com.shatteredpixel.shatteredpixeldungeon.network.text.LocalizedStringParser;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.GameLog;
+import com.shatteredpixel.shatteredpixeldungeon.utils.Log;
+import com.watabou.noosa.Game;
 import com.watabou.noosa.Scene;
 
 import org.json.JSONArray;
@@ -15,8 +13,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MessagesParser implements ActionParser {
-
-    private final LocalizedStringParser textParser = new LocalizedStringParser();
 
     @Override
     public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
@@ -37,8 +33,7 @@ public class MessagesParser implements ActionParser {
 
         GameLog log = ((GameScene) scene).getGameLog();
         try {
-            LocalizedString text = textParser.parse(messageObj.get("text"));
-            String resolved = Messages.resolve(text);
+            String resolved = JsonStringHelper.getString(messageObj, "text");
             if (messageObj.has("color")) {
                 log.WriteMessage(resolved, messageObj.getInt("color"));
             } else {
