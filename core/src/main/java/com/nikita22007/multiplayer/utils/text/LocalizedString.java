@@ -8,11 +8,14 @@ import java.util.Objects;
 
 public class LocalizedString {
 
+    public static final LocalizedString EMPTY = LocalizedString.raw("");
+
     public enum Mode {
         KEY,
         RAW,
         TRANSFORM,
-        CONCAT
+        CONCAT,
+        TRUNCATE
     }
 
     public enum Transform {
@@ -30,7 +33,10 @@ public class LocalizedString {
     private final LocalizedString text;
     private final Object[] parts;
 
-    private LocalizedString(Mode mode, LocalizedKey key, String raw, Object[] args, Transform transform, LocalizedString text, Object[] parts) {
+    private final int maxLength;
+    private final String ellipsis;
+
+    private LocalizedString(Mode mode, LocalizedKey key, String raw, Object[] args, Transform transform, LocalizedString text, Object[] parts, int maxLength, String ellipsis) {
         this.mode = mode;
         this.key = key;
         this.raw = raw;
@@ -38,6 +44,8 @@ public class LocalizedString {
         this.transform = transform;
         this.text = text;
         this.parts = parts == null ? new Object[0] : parts;
+        this.maxLength = maxLength;
+        this.ellipsis = ellipsis;
     }
 
     public static LocalizedString key(LocalizedKey key, Object... args) {
@@ -107,6 +115,10 @@ public class LocalizedString {
         return ellipsis;
     }
 
+    public boolean isEmpty() {
+        return this.equals(EMPTY);
+    }
+
     @Override
     public String toString() {
         return Messages.resolve(this);
@@ -135,12 +147,6 @@ public class LocalizedString {
     @Override
     public int hashCode() {
         int result = Objects.hash(mode, key, raw, transform, text, maxLength, ellipsis);
-        result = 31 * result + Arrays.hashCode(args);
-        result = 31 * result + Arrays.hashCode(parts);
-        return result;
-    }
-}
-jects.hash(mode, key, raw, transform, text);
         result = 31 * result + Arrays.hashCode(args);
         result = 31 * result + Arrays.hashCode(parts);
         return result;
