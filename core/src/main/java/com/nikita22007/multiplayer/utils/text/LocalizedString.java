@@ -15,7 +15,8 @@ public class LocalizedString {
         RAW,
         TRANSFORM,
         CONCAT,
-        TRUNCATE
+        TRUNCATE,
+        REPLACE
     }
 
     public enum Transform {
@@ -115,6 +116,14 @@ public class LocalizedString {
         return ellipsis;
     }
 
+    public char oldChar() {
+        return oldChar;
+    }
+
+    public char newChar() {
+        return newChar;
+    }
+
     public boolean isEmpty() {
         return this.equals(EMPTY);
     }
@@ -141,13 +150,20 @@ public class LocalizedString {
                 && Objects.equals(text, other.text)
                 && Arrays.equals(parts, other.parts)
                 && maxLength == other.maxLength
-                && Objects.equals(ellipsis, other.ellipsis);
+                && Objects.equals(ellipsis, other.ellipsis)
+                && oldChar == other.oldChar
+                && newChar == other.newChar;
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(mode, key, raw, transform, text, maxLength, ellipsis);
+        int result = Objects.hash(mode, key, raw, transform, text, maxLength, ellipsis, oldChar, newChar);
         result = 31 * result + Arrays.hashCode(args);
+        result = 31 * result + Arrays.hashCode(parts);
+        return result;
+    }
+}
+       result = 31 * result + Arrays.hashCode(args);
         result = 31 * result + Arrays.hashCode(parts);
         return result;
     }

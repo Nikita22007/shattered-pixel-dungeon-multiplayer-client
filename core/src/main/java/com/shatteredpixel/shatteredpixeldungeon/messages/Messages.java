@@ -150,6 +150,9 @@ public class Messages {
 		if (text.mode() == LocalizedString.Mode.TRUNCATE) {
 			return com.nikita22007.pixeldungeonmultiplayer.Utils.truncate(resolve(text.text()), text.maxLength(), text.ellipsis());
 		}
+		if (text.mode() == LocalizedString.Mode.REPLACE) {
+			return resolve(text.text()).replace(text.oldChar(), text.newChar());
+		}
 		return resolve(text.key(), args);
 	}
 
