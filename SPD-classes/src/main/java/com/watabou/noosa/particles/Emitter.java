@@ -43,6 +43,7 @@ public class Emitter extends Group {
 	
 	protected Visual target;
 	public boolean fillTarget = true;
+	private final PointF shift = new PointF();
 	
 	protected float interval;
 	protected int quantity;
@@ -57,6 +58,7 @@ public class Emitter extends Group {
 	
 	protected Factory factory;
 	public static SparseArray<Emitter> infiniteEmitters = new SparseArray<>();
+	private VisibilityTracker visibilityTracker;
 	
 	public void pos( float x, float y ) {
 		pos( x, y, 0, 0 );
@@ -73,6 +75,14 @@ public class Emitter extends Group {
 		this.height = height;
 		
 		target = null;
+	}
+
+	public void shift(float x, float y) {
+		shift.set(x, y);
+	}
+
+	public void trackVisibility(VisibilityTracker visibilityTracker) {
+		this.visibilityTracker = visibilityTracker;
 	}
 
 	public void pos( Visual target ) {
@@ -123,6 +133,12 @@ public class Emitter extends Group {
 		if (isFrozen()){
 			return;
 		}
+
+		if (visibilityTracker != null) {
+			visible = visibilityTracker.visible();
+		} else if (target != null) {
+			visible = target.visible;
+		}
 		
 		if (on) {
 			time += Game.elapsed;
@@ -148,6 +164,9 @@ public class Emitter extends Group {
 		visible = true;
 		fillTarget = true;
 		autoKill = true;
+		visibilityTracker = null;
+		id = -1;
+		shift.set(0, 0);
 		super.revive();
 	}
 
@@ -156,21 +175,21 @@ public class Emitter extends Group {
 			factory.emit(
 				this,
 				index,
-				x + Random.Float( width ),
-				y + Random.Float( height ) );
+				x + Random.Float( width ) + shift.x,
+				y + Random.Float( height ) + shift.y );
 		} else {
 			if (fillTarget) {
 				factory.emit(
 						this,
 						index,
-						target.x + Random.Float( target.width ),
-						target.y + Random.Float( target.height ) );
+						target.x + Random.Float( target.width ) + shift.x,
+						target.y + Random.Float( target.height ) + shift.y );
 			} else {
 				factory.emit(
 						this,
 						index,
-						target.x + x + Random.Float( width ),
-						target.y + y + Random.Float( height ) );
+						target.x + x + Random.Float( width ) + shift.x,
+						target.y + y + Random.Float( height ) + shift.y );
 			}
 		}
 	}
@@ -201,4 +220,9 @@ public class Emitter extends Group {
 		public Factory() {
 		}
 	}
+
+	public interface VisibilityTracker {
+		boolean visible();
+	}
+
 }
