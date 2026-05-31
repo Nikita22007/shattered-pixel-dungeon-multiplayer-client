@@ -45,6 +45,12 @@ public class LocalizedStringParser {
             if ("key".equals(type)) {
                 return LocalizedString.key(parseKey(object.getJSONObject("key")), args);
             }
+            if ("decimal_format".equals(type)) {
+                return LocalizedString.decimalFormat(
+                        object.getString("format"),
+                        object.getDouble("number")
+                );
+            }
             throw new JSONException("Unknown localized string type: " + type);
         }
 

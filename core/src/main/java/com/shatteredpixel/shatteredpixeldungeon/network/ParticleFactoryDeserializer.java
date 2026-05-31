@@ -30,6 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.WoolParticle;
 import com.shatteredpixel.shatteredpixeldungeon.levels.CavesBossLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.SewerLevel;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.GooSprite;
+import com.shatteredpixel.shatteredpixeldungeon.utils.Log;
 import com.watabou.noosa.particles.Emitter;
 
 import org.json.JSONException;
@@ -126,6 +127,9 @@ public class ParticleFactoryDeserializer {
     public static Emitter.Factory deserialize(JSONObject object) throws JSONException {
         String name = JsonStringHelper.getString(object, "factory_type").toLowerCase(Locale.ENGLISH);
         FactoryDeserializer deserializer = factories.get(name);
+        if (deserializer == null) {
+            Log.w(ParticleFactoryDeserializer.class.getSimpleName(), String.format("No such particle factory: %s", name));
+        }
         return deserializer == null ? null : deserializer.deserialize(object);
     }
 

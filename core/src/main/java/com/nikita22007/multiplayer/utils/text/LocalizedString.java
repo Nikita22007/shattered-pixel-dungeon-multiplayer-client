@@ -21,7 +21,8 @@ public abstract class LocalizedString implements JSONString {
         TRANSFORM,
         CONCAT,
         TRUNCATE,
-        REPLACE
+        REPLACE,
+        DECIMAL_FORMAT
     }
 
     public enum Transform {
@@ -77,6 +78,11 @@ public abstract class LocalizedString implements JSONString {
     @CheckReturnValue
     public static LocalizedString concat(Object... parts) {
         return ConcatLocalizedString.of(parts);
+    }
+
+    @CheckReturnValue
+    public static LocalizedString decimalFormat(String format, double number) {
+        return new DecimalFormatLocalizedString(format, number);
     }
 
     @CheckReturnValue
