@@ -70,6 +70,8 @@ public class DefaultActionParserRegistry {
         registry.register("interlevel_scene", new InterlevelSceneParser());
         registry.register("actor_update", new ActorUpdateParser());
         registry.register("actor_delete", new ActorDeleteParser());
+        registry.register("char_sprite_state_add", new CharSpriteStateParser(false));
+        registry.register("char_sprite_state_remove", new CharSpriteStateParser(true));
         registry.register("buff_update", new BuffUpdateParser());
         registry.register("buff_remove", new BuffRemoveParser());
         registry.register("hero", new HeroParser());
