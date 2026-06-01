@@ -865,58 +865,6 @@ public class ParseThread implements Callable<String> {
         heap.sprite.drop();
     }
 
-    public void parse_update_bag_action(JSONObject actionObj) throws JSONException {
-        if (!actionObj.has("slot") ||
-                !actionObj.has("update_mode") ||
-                (!actionObj.has("item") && JsonStringHelper.getString(actionObj, "update_mode").equals("remove"))
-        ) {
-            Log.w("ParseActions", "bad \"add_item_to_bag\" action");
-            return;
-        }
-        List<Integer> slot = new ArrayList<Integer>(2);
-        {
-            JSONArray slotArr = actionObj.getJSONArray("slot");
-            for (int j = 0; j < slotArr.length(); j++) {
-                slot.add(slotArr.getInt(j));
-            }
-        }
-        Belongings belongings = hero.belongings;
-        String update_mode = actionObj.optString("update_mode");
-        /*
-        place/add: move other items to the next slot
-        replace: changes item to other. Previous item will be destroyed
-        update: changes item fields. it is same item in the quickslot. Item field has diff
-        remove: removes item. "item" field in action will be ignored
-         */
-        switch (update_mode) {
-            case ("replace"):
-            case ("add"):
-            case ("place"): {
-                JSONObject itemObj = actionObj.optJSONObject("item" );
-                Item item = itemObj != null ? CustomItem.createItem(actionObj.getJSONObject("item")) : null;
-                belongings.putItemIntoSlot(slot, item, update_mode.equals("replace"));
-                break;
-            }
-            case ("remove"):{
-                belongings.removeItemFromSlot(slot);
-                break;
-            }
-            case ("update"): {
-                CustomItem item = ((CustomItem) belongings.getItemInSlot(slot));
-                if (item != null) {
-                    item.update(actionObj.getJSONObject("item"));
-                } else {
-                    CustomItem newItem = CustomItem.createItem(actionObj.getJSONObject("item"));
-                    belongings.putItemIntoSlot(slot, newItem, true);
-                }
-                break;
-            }
-            default:
-                Log.w("ParseThread", "Unexpected item update mode: " + update_mode);
-                return;
-        }
-    }
-
     public void parseShowStatusAction(JSONObject actionObj) throws JSONException {
         float x = (float) actionObj.getDouble("x");
         float y = (float) actionObj.getDouble("y");

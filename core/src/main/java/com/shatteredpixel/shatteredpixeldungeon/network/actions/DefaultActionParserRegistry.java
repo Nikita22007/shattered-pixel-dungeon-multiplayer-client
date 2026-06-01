@@ -25,7 +25,6 @@ public class DefaultActionParserRegistry {
     public static ActionParserRegistry create() {
         ActionParserRegistry registry = new ActionParserRegistry();
         registry.register("sprite_action", new SpriteActionParser());
-        registry.register("add_item_to_bag", new AddItemToBagParser());
         registry.register("show_status", new ShowStatusParser());
         registry.register("degradation", new DegradationParser());
         registry.register("show_banner", new BannerParser());
@@ -101,12 +100,6 @@ public class DefaultActionParserRegistry {
     private static class SpriteActionParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
             parseThread.parseSpriteAction(action);
-        }
-    }
-
-    private static class AddItemToBagParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            parseThread.parse_update_bag_action(action);
         }
     }
 
