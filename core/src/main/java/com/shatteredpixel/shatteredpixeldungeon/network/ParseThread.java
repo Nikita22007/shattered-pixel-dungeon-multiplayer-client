@@ -185,6 +185,10 @@ public class ParseThread implements Callable<String> {
     }
 
     protected static void returnToMainScreen() {
+        returnToMainScreen("Disconnected");
+    }
+
+    public static void returnToMainScreen(final String message) {
         Log.i("ParseThread", "parsing stopped");
         ShatteredPixelDungeon.switchScene(
                 TitleScene.class,
@@ -196,7 +200,7 @@ public class ParseThread implements Callable<String> {
 
                     @Override
                     public void afterCreate() {
-                        ShatteredPixelDungeon.scene().add(new WndError("Disconnected"));
+                        ShatteredPixelDungeon.scene().add(new WndError(message));
                     }
                 }
 
@@ -272,11 +276,6 @@ public class ParseThread implements Callable<String> {
                     parseServerActions(data.getJSONArray(token));
                     break;
                 }
-                        /*case Codes.SERVER_FULL: {
-                            PixelDungeon.switchScene(TitleScene.class);
-                            // TODO   PixelDungeon.scene().add(new WndError("Server full"));
-                            return;
-                        }*/
                 //level block
                 case "map": {
                     parseLevel(data.getJSONObject(token));

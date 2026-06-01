@@ -25,6 +25,7 @@ public class DefaultActionParserRegistry {
     public static ActionParserRegistry create() {
         ActionParserRegistry registry = new ActionParserRegistry();
         registry.register("sprite_action", new SpriteActionParser());
+        registry.register("connection_rejected", new ConnectionRejectedParser());
         registry.register("show_status", new ShowStatusParser());
         registry.register("degradation", new DegradationParser());
         registry.register("show_banner", new BannerParser());
