@@ -1,9 +1,10 @@
-package com.shatteredpixel.shatteredpixeldungeon.network.actions;
+package com.shatteredpixel.shatteredpixeldungeon.network.actions.charsprites;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
+import com.shatteredpixel.shatteredpixeldungeon.network.actions.ActionParser;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import org.json.JSONException;
@@ -11,11 +12,11 @@ import org.json.JSONObject;
 
 import java.util.Locale;
 
-class CharSpriteStateParser implements ActionParser {
+public class CharSpriteStateParser implements ActionParser {
 
     private final boolean remove;
 
-    CharSpriteStateParser(boolean remove) {
+    public CharSpriteStateParser(boolean remove) {
         this.remove = remove;
     }
 

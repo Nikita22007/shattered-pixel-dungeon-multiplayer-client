@@ -1,4 +1,4 @@
-package com.shatteredpixel.shatteredpixeldungeon.network.actions;
+package com.shatteredpixel.shatteredpixeldungeon.network.actions.items;
 
 public class ItemRemoveParser extends BaseItemActionParser {
     @Override

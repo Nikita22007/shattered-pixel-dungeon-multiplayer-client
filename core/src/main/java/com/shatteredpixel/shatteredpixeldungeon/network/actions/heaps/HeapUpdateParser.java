@@ -1,6 +1,7 @@
-package com.shatteredpixel.shatteredpixeldungeon.network.actions;
+package com.shatteredpixel.shatteredpixeldungeon.network.actions.heaps;
 
 import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
+import com.shatteredpixel.shatteredpixeldungeon.network.actions.ActionParser;
 import org.json.JSONException;
 import org.json.JSONObject;
 

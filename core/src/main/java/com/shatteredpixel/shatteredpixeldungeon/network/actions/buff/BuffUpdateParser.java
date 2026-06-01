@@ -1,10 +1,11 @@
-package com.shatteredpixel.shatteredpixeldungeon.network.actions;
+package com.shatteredpixel.shatteredpixeldungeon.network.actions.buff;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CustomBuff;
 import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
+import com.shatteredpixel.shatteredpixeldungeon.network.actions.ActionParser;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,10 +1,11 @@
-package com.shatteredpixel.shatteredpixeldungeon.network.actions;
+package com.shatteredpixel.shatteredpixeldungeon.network.actions.level;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
 import com.nikita22007.pixeldungeonmultiplayer.TranslationUtils;
+import com.shatteredpixel.shatteredpixeldungeon.network.actions.ActionParser;
 import org.json.JSONException;
 import org.json.JSONObject;
 

@@ -1,14 +1,15 @@
-package com.shatteredpixel.shatteredpixeldungeon.network.actions;
+package com.shatteredpixel.shatteredpixeldungeon.network.actions.effects;
 
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
+import com.shatteredpixel.shatteredpixeldungeon.network.actions.ActionParser;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.watabou.utils.PointF;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-class FlareVisualParser implements ActionParser {
+public class FlareVisualParser implements ActionParser {
     public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
         PointF position;
         if (action.has("pos")) {
