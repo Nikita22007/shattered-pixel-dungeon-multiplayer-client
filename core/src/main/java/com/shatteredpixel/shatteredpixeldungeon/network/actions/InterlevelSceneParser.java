@@ -22,8 +22,8 @@ class InterlevelSceneParser implements ActionParser {
             InterlevelScene.mode = InterlevelScene.Mode.valueOf(modeName);
         }
         InterlevelScene.reset_level = ilsObj.optBoolean("reset_level");
-        if (ilsObj.has("message")) {
-            InterlevelScene.customMessage = JsonStringHelper.getString(ilsObj, "message");
+        if (ilsObj.has("custom_message")) {
+            InterlevelScene.customMessage = JsonStringHelper.getString(ilsObj, "custom_message");
         }
         if (!(Game.scene() instanceof InterlevelScene)) {
             if (!((Game.scene() instanceof GameScene) && (InterlevelScene.phase == InterlevelScene.Phase.FADE_OUT))) {
