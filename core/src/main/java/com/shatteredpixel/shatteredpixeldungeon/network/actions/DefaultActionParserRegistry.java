@@ -251,7 +251,7 @@ public class DefaultActionParserRegistry {
         }
     }
 
-    static JSONObject payloadObject(JSONObject action) throws JSONException {
+    public static JSONObject payloadObject(JSONObject action) throws JSONException {
         return action.has("payload") ? action.getJSONObject("payload") : action;
     }
 
