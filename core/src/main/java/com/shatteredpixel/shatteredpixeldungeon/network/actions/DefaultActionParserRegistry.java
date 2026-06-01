@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.network.actions.items.ItemReplac
 import com.shatteredpixel.shatteredpixeldungeon.network.actions.items.ItemUpdateParser;
 import com.shatteredpixel.shatteredpixeldungeon.network.actions.level.*;
 import com.shatteredpixel.shatteredpixeldungeon.network.actions.plants.PlantRemoveParser;
+import com.shatteredpixel.shatteredpixeldungeon.network.actions.plants.PlantUpdateParser;
 import com.shatteredpixel.shatteredpixeldungeon.network.actions.traps.TrapRemoveParser;
 import com.shatteredpixel.shatteredpixeldungeon.network.actions.traps.TrapUpdateParser;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
