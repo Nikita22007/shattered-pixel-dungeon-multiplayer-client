@@ -103,7 +103,7 @@ public class ParseThread implements Callable<String> {
     private final ActionParserRegistry actionParsers;
 
     private static boolean isOldServer = true;
-    static String serverUUID = null;
+    public static String serverUUID = null;
 
     public ParseThread(InputStreamReader readStream, Socket socket) {
         this(new BufferedReader(readStream), socket);

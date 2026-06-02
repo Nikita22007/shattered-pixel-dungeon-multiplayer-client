@@ -27,14 +27,7 @@ public class HeroParser implements ActionParser {
             return;
         }
 
-        String serverUUID = null;
-        try {
-            java.lang.reflect.Field field = ParseThread.class.getDeclaredField("serverUUID");
-            field.setAccessible(true);
-            serverUUID = (String) field.get(null);
-        } catch (Exception e) {
-            Gdx.app.log("HeroParser", "Failed to get serverUUID via reflection", e);
-        }
+        String serverUUID = ParseThread.serverUUID;
 
         for (Iterator<String> it = heroObj.keys(); it.hasNext(); ) {
             String token = it.next();
