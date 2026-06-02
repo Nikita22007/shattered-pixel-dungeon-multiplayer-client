@@ -55,10 +55,7 @@ public class HeroParser implements ActionParser {
                     hero.sprite = new HeroSprite();
                     break;
                 }
-                case "gold": {
-                    hero.gold = heroObj.getInt(token);
-                    break;
-                }
+
                 case "uuid": {
                     SPDSettings.heroUUID(serverUUID, JsonStringHelper.getString(heroObj, "uuid"));
                     Gdx.app.log("ParseThread", "heroUUID: " + JsonStringHelper.getString(heroObj, "uuid"));

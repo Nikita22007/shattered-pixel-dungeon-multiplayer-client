@@ -96,6 +96,7 @@ public class DefaultActionParserRegistry {
         registry.register("buff_remove", new BuffRemoveParser());
         registry.register("hero", new HeroParser());
         registry.register("hero_ready", new HeroReadyParser());
+        registry.register("hero_gold", new HeroGoldParser());
         registry.register("messages", new MessagesParser());
         registry.register("inventory_rebuild", new InventoryRebuildParser());
         registry.register("inventory_define_special_slots", new InventoryDefineSpecialSlotsParser());
