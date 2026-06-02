@@ -83,7 +83,10 @@ public class AndroidServiceInfoHandler extends ServiceInfoHandler {
     private static ServiceInfo fromNsd(NsdServiceInfo nsdServiceInfo){
         Map<String, String> properties = new HashMap<>();
         for (Map.Entry<String, byte[]> entry : nsdServiceInfo.getAttributes().entrySet()) {
-            properties.put(entry.getKey(), new String(entry.getValue(), Charset.forName("UTF-8")));
+            byte[] value = entry.getValue();
+            if (value != null) {
+                properties.put(entry.getKey(), new String(value, Charset.forName("UTF-8")));
+            }
         }
         return new ServiceInfo(nsdServiceInfo.getServiceName(), nsdServiceInfo.getHost(), nsdServiceInfo.getServiceType(), nsdServiceInfo.getPort(), properties);
     }
