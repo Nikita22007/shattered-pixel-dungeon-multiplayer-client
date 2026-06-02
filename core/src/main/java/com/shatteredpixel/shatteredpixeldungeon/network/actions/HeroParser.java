@@ -27,8 +27,6 @@ public class HeroParser implements ActionParser {
             return;
         }
 
-        String serverUUID = ParseThread.serverUUID;
-
         for (Iterator<String> it = heroObj.keys(); it.hasNext(); ) {
             String token = it.next();
             switch (token) {
@@ -56,11 +54,7 @@ public class HeroParser implements ActionParser {
                     break;
                 }
 
-                case "uuid": {
-                    SPDSettings.heroUUID(serverUUID, JsonStringHelper.getString(heroObj, "uuid"));
-                    Gdx.app.log("ParseThread", "heroUUID: " + JsonStringHelper.getString(heroObj, "uuid"));
-                    break;
-                }
+
                 case "talents": {
                     if (hero.talents.size() < 4) {
                         Talent.initClassTalents(hero);
