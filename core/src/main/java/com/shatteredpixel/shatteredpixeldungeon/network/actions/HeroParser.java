@@ -1,0 +1,96 @@
+package com.shatteredpixel.shatteredpixeldungeon.network.actions;
+
+import com.badlogic.gdx.Gdx;
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.TalentCache;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
+import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+
+public class HeroParser implements ActionParser {
+
+    @Override
+    public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
+        JSONObject heroObj = DefaultActionParserRegistry.payloadObject(action);
+        Hero hero = Dungeon.hero;
+        if (hero == null) {
+            return;
+        }
+
+        String serverUUID = null;
+        try {
+            java.lang.reflect.Field field = ParseThread.class.getDeclaredField("serverUUID");
+            field.setAccessible(true);
+            serverUUID = (String) field.get(null);
+        } catch (Exception e) {
+            Gdx.app.log("HeroParser", "Failed to get serverUUID via reflection", e);
+        }
+
+        for (Iterator<String> it = heroObj.keys(); it.hasNext(); ) {
+            String token = it.next();
+            switch (token) {
+                case "actor_id": {
+                    hero.changeID(heroObj.getInt(token));
+                    break;
+                }
+                case "strength": {
+                    hero.STR = heroObj.getInt(token);
+                    break;
+                }
+                case "lvl": {
+                    hero.lvl = heroObj.getInt(token);
+                    break;
+                }
+                case "exp": {
+                    hero.exp = heroObj.getInt(token);
+                    break;
+                }
+                case "class": {
+                    String className = JsonStringHelper.getString(heroObj, token);
+                    className = className.toUpperCase();
+                    hero.heroClass = HeroClass.valueOf(className);
+                    hero.sprite = new HeroSprite();
+                    break;
+                }
+                case "gold": {
+                    hero.gold = heroObj.getInt(token);
+                    break;
+                }
+                case "uuid": {
+                    SPDSettings.heroUUID(serverUUID, JsonStringHelper.getString(heroObj, "uuid"));
+                    Gdx.app.log("ParseThread", "heroUUID: " + JsonStringHelper.getString(heroObj, "uuid"));
+                    break;
+                }
+                case "talents": {
+                    if (hero.talents.size() < 4) {
+                        Talent.initClassTalents(hero);
+                    }
+                    JSONArray talentsArray = heroObj.getJSONArray("talents");
+                    for (int i = 0; i < talentsArray.length(); i++) {
+                        JSONArray talentRow = talentsArray.getJSONArray(i);
+                        LinkedHashMap<Talent, Integer> talentIntMap = new LinkedHashMap<>();
+                        for (int index = 0; index < talentRow.length(); index++) {
+                            JSONObject talentObject = talentRow.getJSONObject(index);
+                            int points = talentObject.getInt("points");
+                            int icon = talentObject.getInt("icon");
+                            Talent talent = TalentCache.talentByIcon(icon);
+                            talentIntMap.put(talent, points);
+                        }
+                        hero.talents.set(i, talentIntMap);
+                    }
+                    break;
+                }
+            }
+        }
+    }
+}
