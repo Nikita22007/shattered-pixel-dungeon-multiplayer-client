@@ -8,6 +8,7 @@ import com.shatteredpixel.shatteredpixeldungeon.network.actions.actors.ActorUpda
 import com.shatteredpixel.shatteredpixeldungeon.network.actions.buff.BuffRemoveParser;
 import com.shatteredpixel.shatteredpixeldungeon.network.actions.buff.BuffUpdateParser;
 import com.shatteredpixel.shatteredpixeldungeon.network.actions.charsprites.CharSpriteStateParser;
+import com.shatteredpixel.shatteredpixeldungeon.network.actions.charsprites.SpriteFlashParser;
 import com.shatteredpixel.shatteredpixeldungeon.network.actions.effects.CheckedCellVisualParser;
 import com.shatteredpixel.shatteredpixeldungeon.network.actions.effects.EnchantingVisualParser;
 import com.shatteredpixel.shatteredpixeldungeon.network.actions.effects.FlareVisualParser;
@@ -46,6 +47,7 @@ public class DefaultActionParserRegistry {
     public static ActionParserRegistry create() {
         ActionParserRegistry registry = new ActionParserRegistry();
         registry.register("sprite_action", new SpriteActionParser());
+        registry.register("sprite_flash", new SpriteFlashParser());
         registry.register("connection_rejected", new ConnectionRejectedParser());
         registry.register("show_status", new ShowStatusParser());
         registry.register("degradation", new DegradationParser());
