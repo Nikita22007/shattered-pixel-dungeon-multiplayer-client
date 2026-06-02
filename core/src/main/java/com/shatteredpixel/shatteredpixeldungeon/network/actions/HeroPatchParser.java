@@ -1,8 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.network.actions;
 
-import com.badlogic.gdx.Gdx;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -17,11 +15,11 @@ import org.json.JSONObject;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
-public class HeroParser implements ActionParser {
+public class HeroPatchParser implements ActionParser {
 
     @Override
     public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-        JSONObject heroObj = DefaultActionParserRegistry.payloadObject(action);
+        JSONObject heroObj = action;
         Hero hero = Dungeon.hero;
         if (hero == null) {
             return;
