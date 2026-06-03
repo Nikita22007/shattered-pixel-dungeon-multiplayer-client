@@ -42,7 +42,12 @@ public class NetworkPacket {
     public void packAndAddHeroClass(String heroClass) {
         synchronized (dataRef) {
             try {
-                dataRef.get().put("hero_class", heroClass);
+                if (ParseThread.isConnectedToOldServer()) {
+                    dataRef.get().put("hero_class", heroClass);
+                } else {
+                    dataRef.get().put(Protocol.FIELD_PACKET_TYPE, Protocol.PACKET_JOIN);
+                    dataRef.get().put("hero_class", heroClass);
+                }
                 dataRef.get().put("uuid", redirectUUID != null ? redirectUUID : SPDSettings.heroUUID(ParseThread.serverUUID));
                 if (password!= null) {
                     dataRef.get().put("password", password);

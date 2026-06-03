@@ -101,6 +101,7 @@ public class ParseThread implements Callable<String> {
     private FutureTask<String> jsonCall;
     @NotNull
     private final ActionParserRegistry actionParsers;
+    private boolean firstPacketReceived = false;
 
     private static boolean isOldServer = true;
     public static String serverUUID = null;
@@ -111,6 +112,7 @@ public class ParseThread implements Callable<String> {
 
     public ParseThread(@NotNull BufferedReader readStream, @NotNull Socket socket) {
         isOldServer = true;
+        serverUUID = null;
         this.socket = socket;
         this.reader = readStream;
         this.actionParsers = DefaultActionParserRegistry.create();
@@ -222,6 +224,27 @@ public class ParseThread implements Callable<String> {
             Log.i("Parsing", data.toString(4));
         }
 
+        boolean isFirstPacket = !firstPacketReceived;
+        firstPacketReceived = true;
+
+        if (isHandshakePacket(data)) {
+            if (!isFirstPacket) {
+                Log.w("Parsing", "Late handshake packet ignored");
+                return;
+            }
+            if (!isCompatibleHandshake(data)) {
+                Log.w("Parsing", "Unsupported handshake packet: " + data);
+                Client.disconnectWithoutSwitch();
+                returnToMainScreen("Unsupported server protocol");
+                return;
+            }
+            Log.i("Parsing", "Server mode changed to SPDMP");
+            isOldServer = false;
+            serverUUID = JsonStringHelper.getString(data, Protocol.FIELD_SERVER_ID);
+            Client.sendHeroClass(GamesInProgress.selectedClass);
+            return;
+        }
+
         if (data.has("server_type")){
             String serverType = JsonStringHelper.getString(data, "server_type");
             if (!CLIENT_TYPE.equals(serverType)) {
@@ -244,7 +267,22 @@ public class ParseThread implements Callable<String> {
         }
     }
 
+    private boolean isHandshakePacket(JSONObject data) {
+        return Protocol.PACKET_HANDSHAKE.equals(data.optString(Protocol.FIELD_PACKET_TYPE, ""));
+    }
+
+    private boolean isCompatibleHandshake(JSONObject data) {
+        return isHandshakePacket(data)
+                && Protocol.NAME.equals(data.optString(Protocol.FIELD_PROTOCOL, ""))
+                && data.optInt(Protocol.FIELD_VERSION, -1) == Protocol.VERSION
+                && data.has(Protocol.FIELD_SERVER_ID);
+    }
+
     private void parseActionPacket(JSONObject data) throws JSONException {
+        if (!Protocol.PACKET_ACTIONS_BATCH.equals(data.optString(Protocol.FIELD_PACKET_TYPE, ""))) {
+            Log.w("Parsing", "Unsupported packet type: " + data.optString(Protocol.FIELD_PACKET_TYPE, ""));
+            return;
+        }
         if (data.has("actions")) {
             parseActions(data.getJSONArray("actions"));
         }

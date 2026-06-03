@@ -98,6 +98,13 @@ public class Client extends Thread {
         try {
             synchronized (packet.dataRef) {
                 synchronized (writeStream) {
+                    if (packet.dataRef.get().length() == 0) {
+                        return;
+                    }
+                    if (!ParseThread.isConnectedToOldServer()
+                            && !packet.dataRef.get().has(Protocol.FIELD_PACKET_TYPE)) {
+                        packet.dataRef.get().put(Protocol.FIELD_PACKET_TYPE, Protocol.PACKET_CLIENT_COMMAND);
+                    }
                     writer.write(packet.dataRef.get().toString());
                     writer.write('\n');
                     writer.flush();
