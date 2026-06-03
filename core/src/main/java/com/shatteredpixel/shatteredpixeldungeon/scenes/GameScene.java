@@ -1838,6 +1838,12 @@ public class GameScene extends PixelScene {
 		status.setSweep(sweep);
 	}
 
+	public static void setResumeButtonVisible(boolean visible) {
+		if (scene != null && scene.resume != null) {
+			scene.resume.visible = visible;
+		}
+	}
+
 	public static class CustomCellListener extends CellSelector.Listener {
 
 		@Nullable

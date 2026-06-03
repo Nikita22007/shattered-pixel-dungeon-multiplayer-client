@@ -111,11 +111,14 @@ public class DefaultActionParserRegistry {
         registry.register("heap_remove", new HeapRemoveParser());
         registry.register("show_window", new ShowWindowParser());
         registry.register("update_depth", new UpdateDepthParser());
+        registry.register("locked_floor_state", new LockedFloorStateParser());
         registry.register("update_counter", new UpdateCounterParser());
-        registry.register("update_keys", new UpdateKeysParser());
+        registry.register("keys_indicator", new KeysIndicatorParser());
+        registry.register("cell_listener_prompt", new CellListenerPromptParser());
+        registry.register("attack_indicator_target", new AttackIndicatorTargetParser());
+        registry.register("resume_button_visible", new ResumeButtonVisibleParser());
         registry.register("unlock_badge", new UnlockBadgeParser());
         registry.register("show_message", new ShowMessageParser());
-        registry.register("ui", new UiParser()); // Legacy
         registry.register("window", new WindowParser()); // Legacy
         registry.register("plant_update", new PlantUpdateParser());
         registry.register("plant_remove", new PlantRemoveParser());
@@ -265,17 +268,9 @@ public class DefaultActionParserRegistry {
         return action.getJSONArray("payload");
     }
 
-
-
     private static class WindowParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
             parseThread.parseWindow(payloadObject(action));
-        }
-    }
-
-    private static class UiParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-            parseThread.parseUI(payloadObject(action));
         }
     }
 
