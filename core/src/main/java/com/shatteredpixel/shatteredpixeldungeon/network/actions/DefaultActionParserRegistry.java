@@ -110,7 +110,7 @@ public class DefaultActionParserRegistry {
         registry.register("heap_update", new HeapUpdateParser());
         registry.register("heap_remove", new HeapRemoveParser());
         registry.register("show_window", new ShowWindowParser());
-        registry.register("update_depth", new UpdateDepthParser());
+        registry.register("update_floor_info", new UpdateFloorInfoParser());
         registry.register("locked_floor_state", new LockedFloorStateParser());
         registry.register("update_counter", new UpdateCounterParser());
         registry.register("keys_indicator", new KeysIndicatorParser());

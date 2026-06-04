@@ -7,7 +7,7 @@ import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class UpdateDepthParser implements ActionParser {
+public class UpdateFloorInfoParser implements ActionParser {
     @Override
     public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
         if (action.has("depth")) {
