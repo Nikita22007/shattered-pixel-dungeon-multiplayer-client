@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.network.actions;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -22,14 +23,20 @@ public class HeroPatchParser implements ActionParser {
         JSONObject heroObj = action;
         Hero hero = Dungeon.hero;
         if (hero == null) {
-            return;
+            if (!heroObj.has("actor_id")) {
+                return;
+            }
+            Dungeon.hero = new Hero();
+            hero = Dungeon.hero;
         }
 
         for (Iterator<String> it = heroObj.keys(); it.hasNext(); ) {
             String token = it.next();
             switch (token) {
                 case "actor_id": {
+                    Actor.remove(hero);
                     hero.changeID(heroObj.getInt(token));
+                    Actor.add(hero);
                     break;
                 }
                 case "strength": {
@@ -54,7 +61,7 @@ public class HeroPatchParser implements ActionParser {
 
 
                 case "talents": {
-                    if (hero.talents.size() < 4) {
+                    if (hero.talents.size() < 4) { //todo check this trash
                         Talent.initClassTalents(hero);
                     }
                     JSONArray talentsArray = heroObj.getJSONArray("talents");
