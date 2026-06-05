@@ -3,7 +3,7 @@ package com.shatteredpixel.shatteredpixeldungeon.network.actions;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Surprise;
 import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
-import com.shatteredpixel.shatteredpixeldungeon.network.actions.actors.ActorDeleteParser;
+import com.shatteredpixel.shatteredpixeldungeon.network.actions.actors.ActorRemoveParser;
 import com.shatteredpixel.shatteredpixeldungeon.network.actions.actors.BlobUpdateParser;
 import com.shatteredpixel.shatteredpixeldungeon.network.actions.actors.CharUpdateParser;
 import com.shatteredpixel.shatteredpixeldungeon.network.actions.buff.BuffRemoveParser;
@@ -93,7 +93,7 @@ public class DefaultActionParserRegistry {
         registry.register("interlevel_scene", new InterlevelSceneParser());
         registry.register("char_update", new CharUpdateParser());
         registry.register("blob_update", new BlobUpdateParser());
-        registry.register("actor_delete", new ActorDeleteParser());
+        registry.register("actor_remove", new ActorRemoveParser());
         registry.register("char_sprite_state_add", new CharSpriteStateParser(false));
         registry.register("char_sprite_state_remove", new CharSpriteStateParser(true));
         registry.register("buff_update", new BuffUpdateParser());

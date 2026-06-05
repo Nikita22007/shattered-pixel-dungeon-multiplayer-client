@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import static com.shatteredpixel.shatteredpixeldungeon.network.actions.DefaultActionParserRegistry.payloadObject;
 
-public class ActorDeleteParser implements ActionParser {
+public class ActorRemoveParser implements ActionParser {
     @Override
     public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
         JSONObject actorObj = payloadObject(action);
