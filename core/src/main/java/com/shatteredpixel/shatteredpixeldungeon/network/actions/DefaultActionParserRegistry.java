@@ -8,6 +8,7 @@ import com.shatteredpixel.shatteredpixeldungeon.network.actions.actors.BlobUpdat
 import com.shatteredpixel.shatteredpixeldungeon.network.actions.actors.CharUpdateParser;
 import com.shatteredpixel.shatteredpixeldungeon.network.actions.buff.BuffRemoveParser;
 import com.shatteredpixel.shatteredpixeldungeon.network.actions.buff.BuffUpdateParser;
+import com.shatteredpixel.shatteredpixeldungeon.network.actions.charsprites.CharEmoParser;
 import com.shatteredpixel.shatteredpixeldungeon.network.actions.charsprites.CharSpriteStateParser;
 import com.shatteredpixel.shatteredpixeldungeon.network.actions.charsprites.SpriteFlashParser;
 import com.shatteredpixel.shatteredpixeldungeon.network.actions.effects.CheckedCellVisualParser;
@@ -96,6 +97,7 @@ public class DefaultActionParserRegistry {
         registry.register("actor_remove", new ActorRemoveParser());
         registry.register("char_sprite_state_add", new CharSpriteStateParser(false));
         registry.register("char_sprite_state_remove", new CharSpriteStateParser(true));
+        registry.register("char_emo", new CharEmoParser());
         registry.register("buff_update", new BuffUpdateParser());
         registry.register("buff_remove", new BuffRemoveParser());
         registry.register("hero_patch", new HeroPatchParser());
