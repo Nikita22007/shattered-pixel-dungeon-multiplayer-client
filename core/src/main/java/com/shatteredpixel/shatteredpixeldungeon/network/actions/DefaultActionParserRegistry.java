@@ -180,11 +180,7 @@ public class DefaultActionParserRegistry {
         }
     }
 
-    private static class MissileSpriteVisualParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) {
-            parseThread.parseMissileSpriteVisualAction(action);
-        }
-    }
+
 
     private static class PlaySampleParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) {

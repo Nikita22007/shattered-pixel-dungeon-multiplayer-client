@@ -237,4 +237,37 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 		parent.add( tweener );
 	}
 
+	public void reset(PointF from, PointF to, float SPEED, float angularSpeed, float angle, boolean flipHorizontal, Item item) {
+		revive();
+
+		if (item == null) {
+			view(0, null);
+		} else {
+			view(item);
+		}
+		this.callback = null;
+
+		originToCenter();
+
+		// Adjust points so they work with the center of the missile sprite, not the corner
+		from.x -= width() / 2;
+		to.x -= width() / 2;
+		from.y -= height() / 2;
+		to.y -= height() / 2;
+
+		point(from);
+
+		PointF d = PointF.diff(to, from);
+		this.speed.set(d).normalize().scale(SPEED);
+
+		this.angularSpeed = angularSpeed;
+		this.angle = angle;
+		this.flipHorizontal = flipHorizontal;
+		updateFrame();
+
+		PosTweener tweener = new PosTweener(this, to, d.length() / SPEED);
+		tweener.listener = this;
+		parent.add(tweener);
+	}
+
 }
