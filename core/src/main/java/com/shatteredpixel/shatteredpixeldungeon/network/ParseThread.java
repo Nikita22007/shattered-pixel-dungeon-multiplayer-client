@@ -1530,6 +1530,8 @@ public class ParseThread implements Callable<String> {
                 case "class" :
                     break;
                     //already parsed
+                case "action_name":
+                    break;
                 case "tier":
                     if (chr.sprite instanceof HeroCustomSprite){
                         ((HeroCustomSprite) chr.sprite).updateTier(actorObj.getInt("tier"));
