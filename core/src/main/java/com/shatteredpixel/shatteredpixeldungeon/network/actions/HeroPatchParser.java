@@ -2,12 +2,15 @@ package com.shatteredpixel.shatteredpixeldungeon.network.actions;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.TalentCache;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
 import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
+import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,15 +31,20 @@ public class HeroPatchParser implements ActionParser {
             }
             Dungeon.hero = new Hero();
             hero = Dungeon.hero;
+            hero.changeID(heroObj.getInt("actor_id"));
+            Actor.add(hero);
+        } else {
+            if (heroObj.has("actor_id")) {
+                Actor.remove(hero);
+                hero.changeID(heroObj.getInt("actor_id"));
+                Actor.add(hero);
+            }
         }
-
         for (Iterator<String> it = heroObj.keys(); it.hasNext(); ) {
             String token = it.next();
             switch (token) {
                 case "actor_id": {
-                    Actor.remove(hero);
-                    hero.changeID(heroObj.getInt(token));
-                    Actor.add(hero);
+                    //parsed before
                     break;
                 }
                 case "strength": {
@@ -55,7 +63,9 @@ public class HeroPatchParser implements ActionParser {
                     String className = JsonStringHelper.getString(heroObj, token);
                     className = className.toUpperCase();
                     hero.heroClass = HeroClass.valueOf(className);
-                    hero.sprite = new HeroSprite();
+                    if (hero.sprite instanceof HeroSprite) {
+                        ((HeroSprite) hero.sprite).disguise(hero.heroClass);
+                    }
                     break;
                 }
 
