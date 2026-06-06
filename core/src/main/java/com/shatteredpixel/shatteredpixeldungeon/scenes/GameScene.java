@@ -1865,6 +1865,9 @@ public class GameScene extends PixelScene {
 			} else {
 				customPrompt = prompt;
 			}
+			if (cellSelector == null) {
+				return;
+			}
 			if (cellSelector.listener == this) {
 				selectCell(this);
 			}
