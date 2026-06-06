@@ -5,14 +5,19 @@ import java.util.ArrayList;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.CustomBag;
 import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
+import com.shatteredpixel.shatteredpixeldungeon.network.ParticleFactoryDeserializer;
 import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
+import com.shatteredpixel.shatteredpixeldungeon.network.actions.emitters.EmitterAnchorParser;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 
 import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Visual;
+import com.watabou.noosa.particles.Emitter;
 import com.nikita22007.multiplayer.utils.text.LocalizedString;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -33,6 +38,7 @@ public class CustomItem extends Item {
     protected boolean identified = false;
     protected int maxDurability = 1;
     protected ItemSprite.Glowing glowing;
+    protected JSONObject emitterAction;
 
     public boolean showBar = false;
     public UI ui = new UI();
@@ -126,6 +132,9 @@ public class CustomItem extends Item {
                         glowing = new ItemSprite.Glowing(glowingObj);
                     }
                     break;
+                case "emitter":
+                    emitterAction = obj.isNull(token) ? null : obj.getJSONObject(token);
+                    break;
                 case "sprite_sheet":
                     this.spriteSheet = JsonStringHelper.getString(obj, token);
                     break;
@@ -175,6 +184,37 @@ public class CustomItem extends Item {
     @Override
     public ItemSprite.Glowing glowing() {
         return glowing;
+    }
+
+    @Override
+    public Emitter emitter() {
+        if (emitterAction == null) {
+            return super.emitter();
+        }
+
+        try {
+            Emitter.Factory factory = ParticleFactoryDeserializer.deserialize(emitterAction.getJSONObject("factory"));
+            if (factory == null) {
+                GLog.n("incorrect item emitter factory: " + emitterAction.getJSONObject("factory").optString("factory_type"));
+                return super.emitter();
+            }
+
+            Emitter emitter = new Emitter();
+            if (!EmitterAnchorParser.apply(emitter, emitterAction.getJSONObject("anchor"))) {
+                GLog.n("incorrect item emitter anchor");
+                return super.emitter();
+            }
+            emitter.fillTarget = emitterAction.optBoolean("fill_target", emitter.fillTarget);
+            emitter.start(
+                    factory,
+                    (float) emitterAction.getDouble("interval"),
+                    emitterAction.getInt("quantity")
+            );
+            return emitter;
+        } catch (JSONException e) {
+            GLog.n("incorrect item emitter: " + e.getMessage());
+            return super.emitter();
+        }
     }
 
     @Override
@@ -313,7 +353,5 @@ public class CustomItem extends Item {
                 }
     }
 }
-
-
 
 

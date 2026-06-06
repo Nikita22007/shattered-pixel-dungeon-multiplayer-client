@@ -9,13 +9,13 @@ import com.watabou.utils.PointF;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-class EmitterAnchorParser {
+public class EmitterAnchorParser {
 
 	private static final String TYPE_WORLD = "world";
 	private static final String TYPE_CELL = "cell";
 	private static final String TYPE_TARGET = "target";
 
-	static boolean apply(Emitter emitter, JSONObject anchor) throws JSONException {
+	public static boolean apply(Emitter emitter, JSONObject anchor) throws JSONException {
 		String type = anchor.getString("type");
 		float x = (float) anchor.optDouble("x", 0);
 		float y = (float) anchor.optDouble("y", 0);
