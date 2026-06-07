@@ -67,7 +67,6 @@ public class DefaultActionParserRegistry {
         register(registry, "emitter_start", 1, new EmitterStartParser());
         register(registry, "emitter_pour", 1, new EmitterPourParser());
         register(registry, "emitter_stop", 1, new EmitterStopParser());
-        register(registry, "emitter_decor", 1, new EmitterDecorParser());
         register(registry, "heap_drop_visual", 1, new HeapDropVisualParser());
         register(registry, "magic_missile_visual", 1, new MagicMissileVisualParser());
         register(registry, "spell_sprite", 1, new SpellSpriteParser());
@@ -195,12 +194,6 @@ public class DefaultActionParserRegistry {
     private static class ShakeCameraParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
             Camera.main.shake((float) action.getDouble("magnitude"), (float) action.getDouble("duration"));
-        }
-    }
-
-    private static class EmitterDecorParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) {
-            level.addVisual(action);
         }
     }
 
