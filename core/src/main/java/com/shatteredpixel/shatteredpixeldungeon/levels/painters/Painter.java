@@ -19,18 +19,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.shatteredpixel.shatteredpixeldungeon.levels.traps;
+package com.shatteredpixel.shatteredpixeldungeon.levels.painters;
 
-public class RockfallTrap extends Trap {
+import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
+import com.watabou.utils.Point;
+import com.watabou.utils.Rect;
 
-	{
-		color = GREY;
-		shape = DIAMOND;
-		
-		canBeHidden = false;
-		avoidsHallways = true;
-	}
+import java.util.Arrays;
+
+public abstract class Painter {
 	
-	@Override
-	public void activate() {}
+	//If painters require additional parameters, they should
+	// request them in their constructor or other methods
+
+	// Static methods
+
+	public static void set( Level level, int cell, int value ) {
+		level.map[cell] = value;
+	}
+
 }

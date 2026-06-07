@@ -59,6 +59,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.DecorEmitters;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Door;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.LevelTransition;
+import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.ShadowCaster;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -936,13 +937,6 @@ public abstract class Level implements Bundlable {
 		if (!ch.isImmune(Web.class) && Blob.volumeAt(ch.pos, Web.class) > 0){
 			blobs.get(Web.class).clear(ch.pos);
 			Web.affectChar( ch );
-		}
-
-		if (Blob.volumeAt(ch.pos, SacrificialFire.class) > 0 && ch.buff( SacrificialFire.Marked.class ) == null){
-			if (Dungeon.level.heroFOV[ch.pos]) {
-				CellEmitter.get(ch.pos).burst( SacrificialParticle.FACTORY, 5 );
-			}
-			Buff.prolong( ch, SacrificialFire.Marked.class, SacrificialFire.Marked.DURATION );
 		}
 
 		if (!ch.flying){
