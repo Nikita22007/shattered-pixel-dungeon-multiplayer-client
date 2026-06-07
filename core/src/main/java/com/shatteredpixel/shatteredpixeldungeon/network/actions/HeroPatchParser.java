@@ -5,6 +5,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.TalentCache;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Challenge;
@@ -71,6 +72,10 @@ public class HeroPatchParser implements ActionParser {
                         }
                         hero.talents.set(i, talentIntMap);
                     }
+                    break;
+                }
+                case "subclass_id": {
+                    hero.subClass = HeroSubClass.values()[heroObj.getInt(token)];
                     break;
                 }
             }
