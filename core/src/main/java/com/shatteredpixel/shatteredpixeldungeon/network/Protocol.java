@@ -14,7 +14,7 @@ public final class Protocol {
     public static final String PACKET_STATUS_REQUEST = "status_request";
     public static final String PACKET_SERVER_STATUS = "server_status";
     public static final String PACKET_JOIN = "join";
-    public static final String PACKET_DISCONNECTED = "disconnected";
+    public static final String PACKET_DISCONNECT = "disconnect";
     public static final String PACKET_ACTIONS_BATCH = "actions_batch";
     public static final String PACKET_CLIENT_COMMAND = "client_command";
 

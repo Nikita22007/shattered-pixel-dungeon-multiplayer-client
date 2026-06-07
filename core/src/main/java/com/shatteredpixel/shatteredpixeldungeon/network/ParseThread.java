@@ -229,7 +229,7 @@ public class ParseThread implements Callable<String> {
         boolean isFirstPacket = !firstPacketReceived;
         firstPacketReceived = true;
 
-        if (isDisconnectedPacket(data)) {
+        if (isDisconnectPacket(data)) {
             Client.disconnectWithoutSwitch();
             returnToMainScreen(data.optString("message", "Disconnected"));
             return;
@@ -280,8 +280,8 @@ public class ParseThread implements Callable<String> {
         return Protocol.PACKET_HANDSHAKE.equals(data.optString(Protocol.FIELD_PACKET_TYPE, ""));
     }
 
-    private boolean isDisconnectedPacket(JSONObject data) {
-        return Protocol.PACKET_DISCONNECTED.equals(data.optString(Protocol.FIELD_PACKET_TYPE, ""));
+    private boolean isDisconnectPacket(JSONObject data) {
+        return Protocol.PACKET_DISCONNECT.equals(data.optString(Protocol.FIELD_PACKET_TYPE, ""));
     }
 
     private boolean isCompatibleHandshake(JSONObject data) {
