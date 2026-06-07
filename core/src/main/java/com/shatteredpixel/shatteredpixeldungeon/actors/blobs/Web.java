@@ -37,26 +37,6 @@ public class Web extends Blob {
 		//acts before the hero, to ensure terrain is adjusted correctly
 		actPriority = HERO_PRIO+1;
 	}
-	
-	@Override
-	protected void evolve() {
-
-		int cell;
-
-		Level l = Dungeon.level;
-		for (int i = area.left; i < area.right; i++){
-			for (int j = area.top; j < area.bottom; j++){
-				cell = i + j*l.width();
-				off[cell] = cur[cell] > 0 ? cur[cell] - 1 : 0;
-
-				volume += off[cell];
-
-				l.solid[cell] = off[cell] > 0 || (Terrain.flags[l.map[cell]] & Terrain.SOLID) != 0;
-				l.flamable[cell] = off[cell] > 0 || (Terrain.flags[l.map[cell]] & Terrain.FLAMABLE) != 0;
-				l.updateOpenSpace(cell);
-			}
-		}
-	}
 
 	@Override
 	public void seed(Level level, int cell, int amount) {

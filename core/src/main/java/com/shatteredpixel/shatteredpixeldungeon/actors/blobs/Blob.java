@@ -21,8 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.blobs;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.effects.BlobEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
@@ -121,7 +119,7 @@ public class Blob extends Actor {
 
 			volume = 0;
 
-			evolve();
+
 			int[] tmp = off;
 			off = cur;
 			cur = tmp;
@@ -147,59 +145,6 @@ public class Blob extends Actor {
 	
 	public void use( BlobEmitter emitter ) {
 		this.emitter = emitter;
-	}
-	
-	protected void evolve() {
-		
-		boolean[] blocking = level.solid;
-		int cell;
-		for (int i=area.top-1; i <= area.bottom; i++) {
-			for (int j = area.left-1; j <= area.right; j++) {
-				cell = j + i* level.width();
-				if (level.insideMap(cell)) {
-					if (!blocking[cell]) {
-
-						int count = 1;
-						int sum = cur[cell];
-
-						if (j > area.left && !blocking[cell-1]) {
-							sum += cur[cell-1];
-							count++;
-						}
-						if (j < area.right && !blocking[cell+1]) {
-							sum += cur[cell+1];
-							count++;
-						}
-						if (i > area.top && !blocking[cell- level.width()]) {
-							sum += cur[cell- level.width()];
-							count++;
-						}
-						if (i < area.bottom && !blocking[cell+ level.width()]) {
-							sum += cur[cell+ level.width()];
-							count++;
-						}
-
-						int value = sum >= count ? (sum / count) - 1 : 0;
-						off[cell] = value;
-
-						if (value > 0){
-							if (i < area.top)
-								area.top = i;
-							else if (i >= area.bottom)
-								area.bottom = i+1;
-							if (j < area.left)
-								area.left = j;
-							else if (j >= area.right)
-								area.right = j+1;
-						}
-
-						volume += value;
-					} else {
-						off[cell] = 0;
-					}
-				}
-			}
-		}
 	}
 
 	public void seed( Level level, int cell, int amount ) {

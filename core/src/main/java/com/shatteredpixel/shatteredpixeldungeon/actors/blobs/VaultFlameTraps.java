@@ -1,23 +1,11 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.blobs;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.effects.BlobEmitter;
-import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
-import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
-import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.GameMath;
 
 import java.util.Arrays;
 
@@ -44,50 +32,6 @@ public class VaultFlameTraps extends Blob {
 		}
 
 		return true;
-	}
-
-	@Override
-	protected void evolve() {
-		int cell;
-
-		for (int i = area.left; i < area.right; i++) {
-			for (int j = area.top; j < area.bottom; j++) {
-				cell = i + j* Dungeon.level.width();
-				if (cur[cell] > 0) {
-
-					//similar to fire.burn(), but Tengu is immune, and hero loses score
-					Char ch = Actor.findChar( cell );
-					if (ch == Dungeon.hero){
-						Sample.INSTANCE.play(Assets.Sounds.BURNING);
-						ch.sprite.showStatus(CharSprite.NEGATIVE, "!!!");
-					}
-					/*if (ch != null && !ch.isImmune(Fire.class)) {
-						Buff.affect( ch, Burning.class ).reignite( ch );
-					}
-
-					Heap heap = Dungeon.level.heaps.get( cell );
-					if (heap != null) {
-						heap.burn();
-					}
-
-					Plant plant = Dungeon.level.plants.get( cell );
-					if (plant != null){
-						plant.wither();
-					}
-
-					if (Dungeon.level.flamable[cell]){
-						Dungeon.level.destroy( cell );
-
-						GameScene.updateMap( cell );
-					}*/
-
-					if (Dungeon.level.heroFOV[cell]){
-						CellEmitter.get(cell).start(ElmoParticle.FACTORY, 0.02f, 10);
-					}
-
-				}
-			}
-		}
 	}
 
 	public void seed(Level level, int cell, int amount ) {

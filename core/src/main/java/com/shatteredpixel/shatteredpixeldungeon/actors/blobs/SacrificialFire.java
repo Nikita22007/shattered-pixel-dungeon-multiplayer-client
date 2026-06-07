@@ -24,9 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.blobs;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Bee;
@@ -67,46 +65,6 @@ public class SacrificialFire extends Blob {
 	@Override
 	public Notes.Landmark landmark() {
 		return Notes.Landmark.SACRIFICIAL_FIRE;
-	}
-
-	@Override
-	protected void evolve() {
-		int cell;
-		for (int i=area.top-1; i <= area.bottom; i++) {
-			for (int j = area.left-1; j <= area.right; j++) {
-				cell = j + i* Dungeon.level.width();
-				if (Dungeon.level.insideMap(cell)) {
-					off[cell] = cur[cell];
-					volume += off[cell];
-
-					if (off[cell] > 0){
-						for (int k : PathFinder.NEIGHBOURS9){
-							Char ch = Actor.findChar( cell+k );
-							if (ch != null){
-								if (Dungeon.level.heroFOV[cell+k] && ch.buff( Marked.class ) == null) {
-									CellEmitter.get(cell+k).burst( SacrificialParticle.FACTORY, 5 );
-								}
-								Buff.prolong( ch, Marked.class, Marked.DURATION );
-							}
-						}
-
-						if (off[cell] > 0 && Dungeon.level.visited[cell]) {
-
-							if (Dungeon.level.mobCount() == 0
-									&& bonusSpawns > 0) {
-								if (Dungeon.level.spawnMob(4)) {
-									bonusSpawns--;
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		//a bit brittle, assumes only one tile of sacrificial fire can exist per floor
-		int max = 6 + Dungeon.depth * 4;
-		curEmitter.pour( SacrificialParticle.FACTORY, 0.01f + ((volume / (float)max) * 0.09f) );
 	}
 
 	@Override

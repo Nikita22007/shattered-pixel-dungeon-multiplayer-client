@@ -244,27 +244,6 @@ public class WallOfLight extends TargetedClericSpell {
 	public static class LightWall extends Blob {
 
 		@Override
-		protected void evolve() {
-
-			int cell;
-
-			Level l = Dungeon.level;
-			for (int i = area.left; i < area.right; i++){
-				for (int j = area.top; j < area.bottom; j++){
-					cell = i + j*l.width();
-					off[cell] = cur[cell] > 0 ? cur[cell] - 1 : 0;
-
-					volume += off[cell];
-
-					l.solid[cell] = off[cell] > 0 || (Terrain.flags[l.map[cell]] & Terrain.SOLID) != 0;
-					l.passable[cell] = off[cell] == 0 && (Terrain.flags[l.map[cell]] & Terrain.PASSABLE) != 0;
-					l.avoid[cell] = off[cell] == 0 && (Terrain.flags[l.map[cell]] & Terrain.AVOID) != 0;
-					l.updateOpenSpace(cell);
-				}
-			}
-		}
-
-		@Override
 		public void seed(Level level, int cell, int amount) {
 			super.seed(level, cell, amount);
 			level.solid[cell] = cur[cell] > 0 || (Terrain.flags[level.map[cell]] & Terrain.SOLID) != 0;

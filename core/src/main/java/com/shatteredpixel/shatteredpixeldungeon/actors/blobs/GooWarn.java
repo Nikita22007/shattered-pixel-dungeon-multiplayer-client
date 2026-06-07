@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.blobs;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.effects.BlobEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -39,25 +38,7 @@ public class GooWarn extends Blob {
 
 	protected int pos;
 
-	@Override
-	protected void evolve() {
-
-		int cell;
-
-		for (int i = area.left; i < area.right; i++){
-			for (int j = area.top; j < area.bottom; j++){
-				cell = i + j*Dungeon.level.width();
-				off[cell] = cur[cell] > 0 ? cur[cell] - 1 : 0;
-
-				if (off[cell] > 0) {
-					volume += off[cell];
-				}
-			}
-		}
-
-	}
-
-	//to prevent multiple arcane bombs from visually stacking their effects
+    //to prevent multiple arcane bombs from visually stacking their effects
 	public void seed(Level level, int cell, int amount ) {
 		if (cur == null) cur = new int[level.length()];
 		if (off == null) off = new int[cur.length];

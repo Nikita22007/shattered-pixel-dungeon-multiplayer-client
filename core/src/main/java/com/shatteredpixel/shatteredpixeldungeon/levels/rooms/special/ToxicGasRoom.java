@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ToxicGas;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
@@ -33,7 +32,6 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.watabou.utils.Point;
 
 import java.util.ArrayList;
@@ -125,33 +123,7 @@ public class ToxicGasRoom extends SpecialRoom {
 
 	public static class ToxicGasSeed extends Blob {
 
-		@Override
-		protected void evolve() {
-			int cell;
-			ToxicGas gas = (ToxicGas) Dungeon.level.blobs.get(ToxicGas.class);
-			for (int i=area.top-1; i <= area.bottom; i++) {
-				for (int j = area.left-1; j <= area.right; j++) {
-					cell = j + i* Dungeon.level.width();
-					if (Dungeon.level.insideMap(cell)) {
-						if (Dungeon.level.map[cell] != Terrain.INACTIVE_TRAP){
-							off[cell] = 0;
-							continue;
-						}
-
-						off[cell] = cur[cell];
-						volume += off[cell];
-
-						if (gas == null || gas.volume == 0){
-							GameScene.add(Blob.seed(cell, off[cell], ToxicGas.class));
-						} else if (gas.cur[cell] <= 9*off[cell]){
-							GameScene.add(Blob.seed(cell, off[cell], ToxicGas.class));
-						}
-					}
-				}
-			}
-		}
-
-	}
+    }
 
 	public static class ToxicVent extends Trap {
 

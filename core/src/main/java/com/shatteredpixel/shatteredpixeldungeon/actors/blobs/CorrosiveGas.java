@@ -21,11 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.blobs;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corrosion;
 import com.shatteredpixel.shatteredpixeldungeon.effects.BlobEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -38,29 +33,6 @@ public class CorrosiveGas extends Blob {
 
 	//used in specific cases where the source of the corrosion is important for death logic
 	private Class source;
-
-	@Override
-	protected void evolve() {
-		super.evolve();
-
-		if (volume == 0){
-			strength = 0;
-			source = null;
-		} else {
-			Char ch;
-			int cell;
-
-			for (int i = area.left; i < area.right; i++){
-				for (int j = area.top; j < area.bottom; j++){
-					cell = i + j*Dungeon.level.width();
-					if (cur[cell] > 0 && (ch = Actor.findChar( cell )) != null) {
-						if (!ch.isImmune(this.getClass()))
-							Buff.affect(ch, Corrosion.class).set(2f, strength, source);
-					}
-				}
-			}
-		}
-	}
 
 	public CorrosiveGas setStrength(int str){
 		return setStrength(str, null);

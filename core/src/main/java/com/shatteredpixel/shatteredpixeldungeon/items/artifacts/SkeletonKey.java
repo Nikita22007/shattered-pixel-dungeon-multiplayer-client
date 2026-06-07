@@ -476,40 +476,6 @@ public class SkeletonKey extends Artifact {
 		}
 
 		@Override
-		protected void evolve() {
-
-			int cell;
-			boolean cellEnded = false;
-
-			Level l = Dungeon.level;
-			for (int i = area.left; i < area.right; i++){
-				for (int j = area.top; j < area.bottom; j++){
-					cell = i + j*l.width();
-					off[cell] = cur[cell] > 0 ? cur[cell] - 1 : 0;
-
-					if (cur[cell] > 0 && off[cell] == 0){
-						cellEnded = true;
-					}
-
-					//caps at 10 turns
-					off[cell] = Math.min(off[cell], 9);
-
-					volume += off[cell];
-
-					l.losBlocking[cell] = off[cell] > 0 || (Terrain.flags[l.map[cell]] & Terrain.LOS_BLOCKING) != 0;
-					l.solid[cell] = off[cell] > 0 || (Terrain.flags[l.map[cell]] & Terrain.SOLID) != 0;
-					l.passable[cell] = off[cell] == 0 && (Terrain.flags[l.map[cell]] & Terrain.PASSABLE) != 0;
-					l.avoid[cell] = off[cell] == 0 && (Terrain.flags[l.map[cell]] & Terrain.AVOID) != 0;
-					l.updateOpenSpace(cell);
-				}
-			}
-
-			if (cellEnded){
-				Dungeon.observe();
-			}
-		}
-
-		@Override
 		public void seed(Level level, int cell, int amount) {
 			super.seed(level, cell, amount);
 			level.losBlocking[cell] = cur[cell] > 0 || (Terrain.flags[level.map[cell]] & Terrain.LOS_BLOCKING) != 0;

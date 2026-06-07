@@ -35,36 +35,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.MagicalFire
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 
 public class Freezing extends Blob {
-	
-	@Override
-	protected void evolve() {
-		
-		int cell;
-		
-		Fire fire = (Fire)Dungeon.level.blobs.get( Fire.class );
-		
-		for (int i = area.left-1; i <= area.right; i++) {
-			for (int j = area.top-1; j <= area.bottom; j++) {
-				cell = i + j*Dungeon.level.width();
-				if (cur[cell] > 0) {
-					
-					if (fire != null && fire.volume > 0 && fire.cur[cell] > 0){
-						fire.clear(cell);
-						off[cell] = cur[cell] = 0;
-						continue;
-					}
-					
-					Freezing.freeze(cell);
-					
-					off[cell] = cur[cell] - 1;
-					volume += off[cell];
-				} else {
-					off[cell] = 0;
-				}
-			}
-		}
-	}
-	
+
 	public static void freeze( int cell ){
 		Char ch = Actor.findChar( cell );
 		if (ch != null && !ch.isImmune(Freezing.class)) {

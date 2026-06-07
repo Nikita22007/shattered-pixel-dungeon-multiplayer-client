@@ -34,21 +34,6 @@ import com.watabou.utils.Random;
 
 public abstract class WellWater extends Blob {
 
-	@Override
-	protected void evolve() {
-		int cell;
-		boolean seen = false;
-		for (int i=area.top-1; i <= area.bottom; i++) {
-			for (int j = area.left-1; j <= area.right; j++) {
-				cell = j + i* Dungeon.level.width();
-				if (Dungeon.level.insideMap(cell)) {
-					off[cell] = cur[cell];
-					volume += off[cell];
-				}
-			}
-		}
-	}
-	
 	protected boolean affect( int pos ) {
 		
 		Heap heap;
