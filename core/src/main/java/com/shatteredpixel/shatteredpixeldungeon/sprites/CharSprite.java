@@ -805,7 +805,9 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 				break;
 			}
 			case "alpha_tweener": {
-				sprite.alpha((float) params.getDouble("start_alpha"));
+				if (params.has("start_alpha")) {
+					sprite.alpha((float) params.getDouble("start_alpha"));
+				}
 				sprite.parent.add(new AlphaTweener(
 						sprite,
 						(float) params.getDouble("target_alpha"),
