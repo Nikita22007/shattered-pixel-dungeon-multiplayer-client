@@ -34,8 +34,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.quest.Pickaxe;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ParchmentScrap;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
-import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.Room;
-import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.quest.BlacksmithRoom;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.BlacksmithSprite;
@@ -350,74 +348,7 @@ public class Blacksmith extends NPC {
 				reset();
 			}
 		}
-		
-		public static ArrayList<Room> spawn( ArrayList<Room> rooms ) {
-			if (!spawned && Dungeon.depth > 11 && Random.Int( 15 - Dungeon.depth ) == 0) {
-				
-				rooms.add(new BlacksmithRoom());
-				spawned = true;
 
-				//Currently cannot roll the fungi quest, as it is not fully implemented
-				type = Random.IntRange(1, 2);
-				
-				given = false;
-				generateRewards( true );
-				
-			}
-			return rooms;
-		}
-
-		public static void generateRewards( boolean useDecks ){
-			smithRewards = new ArrayList<>();
-			smithRewards.add(Generator.randomWeapon(3, useDecks));
-			smithRewards.add(Generator.randomWeapon(3, useDecks));
-			ArrayList<Item> toUndo = new ArrayList<>();
-			while (smithRewards.get(0).getClass() == smithRewards.get(1).getClass()) {
-				if (useDecks)   toUndo.add(smithRewards.get(1));
-				smithRewards.remove(1);
-				smithRewards.add(Generator.randomWeapon(3, useDecks));
-			}
-			for (Item i : toUndo){
-				Generator.undoDrop(i);
-			}
-			smithRewards.add(Generator.randomMissile(3, useDecks));
-			smithRewards.add(Generator.randomArmor(3));
-
-			//30%:+0, 45%:+1, 20%:+2, 5%:+3
-			int rewardLevel;
-			float itemLevelRoll = Random.Float();
-			if (itemLevelRoll < 0.3f){
-				rewardLevel = 0;
-			} else if (itemLevelRoll < 0.75f){
-				rewardLevel = 1;
-			} else if (itemLevelRoll < 0.95f){
-				rewardLevel = 2;
-			} else {
-				rewardLevel = 3;
-			}
-
-			for (Item i : smithRewards){
-				i.level(rewardLevel);
-				if (i instanceof Weapon) {
-					((Weapon) i).enchant(null);
-				} else if (i instanceof Armor){
-					((Armor) i).inscribe(null);
-				}
-				i.cursed = false;
-			}
-
-			// 30% base chance to be enchanted, stored separately so status isn't revealed early
-			//we generate first so that the outcome doesn't affect the number of RNG rolls
-			smithEnchant = Weapon.Enchantment.random();
-			smithGlyph = Armor.Glyph.random();
-
-			float enchantRoll = Random.Float();
-			if (enchantRoll > 0.3f * ParchmentScrap.enchantChanceMultiplier()){
-				smithEnchant = null;
-				smithGlyph = null;
-			}
-
-		}
 
 		public static int Type(){
 			return type;

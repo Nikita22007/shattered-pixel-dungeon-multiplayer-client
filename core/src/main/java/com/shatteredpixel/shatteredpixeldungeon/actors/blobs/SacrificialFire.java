@@ -21,31 +21,15 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.blobs;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Bee;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Piranha;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Statue;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Swarm;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Wraith;
 import com.shatteredpixel.shatteredpixeldungeon.effects.BlobEmitter;
-import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SacrificialParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.SacrificeRoom;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.PathFinder;
-import com.watabou.utils.Random;
 
 public class SacrificialFire extends Blob {
 
@@ -99,92 +83,8 @@ public class SacrificialFire extends Blob {
 		if (bundle.contains(PRIZE)) prize = (Item) bundle.get(PRIZE);
 	}
 
-	public void setPrize( Item prize ){
-		this.prize = prize;
-	}
-
-	public void sacrifice( Char ch ) {
-
-		int firePos = -1;
-		for (int i : PathFinder.NEIGHBOURS9){
-			if (volume > 0 && cur[ch.pos+i] > 0){
-				firePos = ch.pos+i;
-				break;
-			}
-		}
-
-		if (firePos != -1) {
-
-			int exp = 0;
-			if (ch instanceof Mob) {
-				//same rates as used in wand of corruption, except for swarms
-				if (ch instanceof Statue || ch instanceof Mimic){
-					exp = 1 + Dungeon.depth;
-				} else if (ch instanceof Piranha || ch instanceof Bee) {
-					exp = 1 + Dungeon.depth/2;
-				} else if (ch instanceof Wraith) {
-					exp = 1 + Dungeon.depth/3;
-				} else if (ch instanceof Swarm && ((Swarm) ch).EXP == 0){
-					//give 1 exp for child swarms, instead of 0
-					exp = 1;
-				} else if (((Mob) ch).EXP > 0) {
-					exp = 1 + ((Mob)ch).EXP;
-				}
-				exp *= Random.IntRange( 2, 3 );
-			} else if (ch instanceof Hero) {
-				exp = 1_000_000; //always enough to activate the reward, if you can somehow get it
-				Badges.validateDeathFromSacrifice();
-			}
-
-			if (exp > 0) {
-
-				int volumeLeft = cur[firePos] - exp;
-				if (volumeLeft > 0) {
-					cur[firePos] -= exp;
-					volume -= exp;
-					bonusSpawns++;
-					CellEmitter.get(firePos).burst( SacrificialParticle.FACTORY, 20 );
-					Sample.INSTANCE.play(Assets.Sounds.BURNING );
-					GLog.w( Messages.get(SacrificialFire.class, "worthy"));
-				} else {
-					clear(firePos);
-					if (volume <= 0) Notes.remove( landmark() );
-
-					for (int i : PathFinder.NEIGHBOURS9){
-						CellEmitter.get(firePos+i).burst( SacrificialParticle.FACTORY, 20 );
-					}
-					Sample.INSTANCE.play(Assets.Sounds.BURNING );
-					Sample.INSTANCE.play(Assets.Sounds.BURNING );
-					Sample.INSTANCE.play(Assets.Sounds.BURNING );
-					GLog.w( Messages.get(SacrificialFire.class, "reward"));
-					if (prize != null) {
-						Dungeon.level.drop(prize, firePos).sprite.drop();
-					} else {
-						Dungeon.level.drop(SacrificeRoom.prize(Dungeon.level), firePos).sprite.drop();
-					}
-				}
-			} else {
-
-				GLog.w( Messages.get(SacrificialFire.class, "unworthy"));
-
-			}
-		}
-	}
-
 	public static class Marked extends FlavourBuff {
 
-		public static final float DURATION	= 2f;
-
-		@Override
-		public void detach() {
-			if (!target.isAlive()) {
-				SacrificialFire fire = (SacrificialFire) Dungeon.level.blobs.get(SacrificialFire.class);
-				if (fire != null) {
-					fire.sacrifice(target);
-				}
-			}
-			super.detach();
-		}
 	}
 
 }

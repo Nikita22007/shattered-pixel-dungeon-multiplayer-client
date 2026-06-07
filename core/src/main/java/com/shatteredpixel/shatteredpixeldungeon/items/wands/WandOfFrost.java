@@ -33,7 +33,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
-import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.MagicalFireRoom;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
@@ -68,15 +67,7 @@ public class WandOfFrost extends DamageWand {
 			fire.clear( bolt.collisionPos );
 		}
 
-		MagicalFireRoom.EternalFire eternalFire = (MagicalFireRoom.EternalFire)Dungeon.level.blobs.get(MagicalFireRoom.EternalFire.class);
-		if (eternalFire != null && eternalFire.volume > 0) {
-			eternalFire.clear( bolt.collisionPos );
-			//bolt ends 1 tile short of fire, so check next tile too
-			if (bolt.path.size() > bolt.dist+1){
-				eternalFire.clear( bolt.path.get(bolt.dist+1) );
-			}
 
-		}
 
 		Char ch = Actor.findChar(bolt.collisionPos);
 		if (ch != null){

@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Elemental;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.RotHeart;
-import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.CeremonialCandle;
@@ -37,13 +36,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.quest.CorpseDust;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.Embers;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
-import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.RegularLevel;
-import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
-import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.Room;
-import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.quest.MassGraveRoom;
-import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.quest.RitualSiteRoom;
-import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.quest.RotGardenRoom;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Rotberry;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -53,10 +46,6 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndWandmaker;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
-import com.watabou.utils.PathFinder;
-import com.watabou.utils.Random;
-
-import java.util.ArrayList;
 
 public class Wandmaker extends NPC {
 
@@ -291,89 +280,7 @@ public class Wandmaker extends NPC {
 				reset();
 			}
 		}
-		
-		private static boolean questRoomSpawned;
-		
-		public static void spawnWandmaker( Level level, Room room ) {
-			if (questRoomSpawned) {
-				
-				questRoomSpawned = false;
-				
-				Wandmaker npc = new Wandmaker();
-				boolean validPos;
-				//Do not spawn wandmaker on the entrance, in front of a door, or on bad terrain.
-				int tries = 0;
-				int dist = 2;
-				do {
-					validPos = true;
-					if (tries > 30 && dist > 0){
-						tries = 0;
-						dist--;
-					}
-					npc.pos = level.pointToCell(room.random(dist));
-					if (npc.pos == level.entrance() || level.solid[npc.pos]){
-						validPos = false;
-					}
-					for (int i : PathFinder.NEIGHBOURS4){
-						if (level.map[npc.pos+i] == Terrain.DOOR){
-							validPos = false;
-						}
-					}
-					if (level.traps.get(npc.pos) != null
-							|| !level.passable[npc.pos]
-							|| level.map[npc.pos] == Terrain.EMPTY_SP){
-						validPos = false;
-					}
-					tries++;
-				} while (!validPos);
-				level.mobs.add( npc );
 
-				spawned = true;
-
-				given = false;
-				wand1 = (Wand) Generator.random(Generator.Category.WAND);
-				wand1.cursed = false;
-				wand1.upgrade();
-
-				wand2 = (Wand) Generator.random(Generator.Category.WAND);
-				ArrayList<Item> toUndo = new ArrayList<>();
-				while (wand2.getClass() == wand1.getClass()) {
-					toUndo.add(wand2);
-					wand2 = (Wand) Generator.random(Generator.Category.WAND);
-				}
-				for (Item i :toUndo){
-					Generator.undoDrop(i);
-				}
-				wand2.cursed = false;
-				wand2.upgrade();
-				
-			}
-		}
-		
-		public static ArrayList<Room> spawnRoom( ArrayList<Room> rooms) {
-			questRoomSpawned = false;
-			if (!spawned && (type != 0 || (Dungeon.depth > 6 && Random.Int( 10 - Dungeon.depth ) == 0))) {
-
-				// decide between 1,2, or 3 for quest type.
-				if (type == 0) type = Random.Int(3)+1;
-				
-				switch (type){
-					case 1: default:
-						rooms.add(new MassGraveRoom());
-						break;
-					case 2:
-						rooms.add(new RitualSiteRoom());
-						break;
-					case 3:
-						rooms.add(new RotGardenRoom());
-						break;
-				}
-		
-				questRoomSpawned = true;
-				
-			}
-			return rooms;
-		}
 
 		//quest is active if:
 		public static boolean active(){

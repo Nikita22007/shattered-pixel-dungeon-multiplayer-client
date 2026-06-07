@@ -299,71 +299,7 @@ public class Ghost extends NPC {
 				reset();
 			}
 		}
-		
-		public static void spawn( SewerLevel level, Room room ) {
-			if (!spawned && Dungeon.depth > 1 && Random.Int( 5 - Dungeon.depth ) == 0) {
-				
-				Ghost ghost = new Ghost();
-				do {
-					ghost.pos = level.pointToCell(room.random());
-				} while (ghost.pos == -1 || level.solid[ghost.pos] || !level.openSpace[ghost.pos] || ghost.pos == level.exit());
-				level.mobs.add( ghost );
-				
-				spawned = true;
-				//dungeon depth determines type of quest.
-				//depth2=fetid rat, 3=gnoll trickster, 4=great crab
-				type = Dungeon.depth-1;
-				
-				given = false;
-				processed = false;
-				depth = Dungeon.depth;
 
-				//50%:tier2, 30%:tier3, 15%:tier4, 5%:tier5
-				switch (Random.chances(new float[]{0, 0, 10, 6, 3, 1})){
-					default:
-					case 2: armor = new LeatherArmor(); break;
-					case 3: armor = new MailArmor();    break;
-					case 4: armor = new ScaleArmor();   break;
-					case 5: armor = new PlateArmor();   break;
-				}
-				//50%:tier2, 30%:tier3, 15%:tier4, 5%:tier5
-				int wepTier = Random.chances(new float[]{0, 0, 10, 6, 3, 1});
-				weapon = (Weapon) Generator.random(Generator.wepTiers[wepTier - 1]);
-
-				//clear weapon's starting properties
-				weapon.level(0);
-				weapon.enchant(null);
-				weapon.cursed = false;
-
-				//50%:+0, 30%:+1, 15%:+2, 5%:+3
-				float itemLevelRoll = Random.Float();
-				int itemLevel;
-				if (itemLevelRoll < 0.5f){
-					itemLevel = 0;
-				} else if (itemLevelRoll < 0.8f){
-					itemLevel = 1;
-				} else if (itemLevelRoll < 0.95f){
-					itemLevel = 2;
-				} else {
-					itemLevel = 3;
-				}
-				weapon.upgrade(itemLevel);
-				armor.upgrade(itemLevel);
-
-				// 20% base chance to be enchanted, stored separately so status isn't revealed early
-				//we generate first so that the outcome doesn't affect the number of RNG rolls
-				enchant = Weapon.Enchantment.random();
-				glyph = Armor.Glyph.random();
-
-				float enchantRoll = Random.Float();
-				if (enchantRoll > 0.2f * ParchmentScrap.enchantChanceMultiplier()){
-					enchant = null;
-					glyph = null;
-				}
-
-			}
-		}
-		
 		public static void process() {
 			if (spawned && given && !processed && (depth == Dungeon.depth)) {
 				GLog.n( Messages.get(Ghost.class, "find_me") );

@@ -36,8 +36,6 @@ import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
-import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.Room;
-import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.quest.AmbitiousImpRoom;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ImpSprite;
@@ -210,37 +208,6 @@ public class Imp extends NPC {
 				completed = node.getBoolean( COMPLETED );
 				reward = (Ring)node.get( REWARD );
 			}
-		}
-
-		public static ArrayList<Room> spawn( ArrayList<Room> rooms ) {
-			if (!spawned && Dungeon.depth > 16 && Random.Int( 20 - Dungeon.depth ) == 0) {
-
-				rooms.add(new AmbitiousImpRoom());
-				spawned = true;
-
-				//always assigns monks on floor 17, golems on floor 19, and 50/50 between either on 18
-				switch (Dungeon.depth){
-					case 17: default:
-						alternative = true;
-						break;
-					case 18:
-						alternative = Random.Int(2) == 0;
-						break;
-					case 19:
-						alternative = false;
-						break;
-				}
-				
-				given = false;
-				
-				do {
-					reward = (Ring)Generator.random( Generator.Category.RING );
-				} while (reward.cursed);
-				reward.upgrade( 2 );
-				reward.cursed = true;
-			}
-
-			return rooms;
 		}
 
 		public static boolean given(){

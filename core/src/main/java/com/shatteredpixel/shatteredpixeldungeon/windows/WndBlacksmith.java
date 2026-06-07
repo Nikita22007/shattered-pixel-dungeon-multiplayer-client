@@ -475,7 +475,6 @@ public class WndBlacksmith extends Window {
 			add( message );
 
 			if (Blacksmith.Quest.smithRewards == null || Blacksmith.Quest.smithRewards.isEmpty()){
-				Blacksmith.Quest.generateRewards(false);
 			}
 
 			int count = 0;

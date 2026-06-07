@@ -35,7 +35,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.StenchGas;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.StormCloud;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ToxicGas;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Web;
-import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.MagicalFireRoom;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 
 public class BlobImmunity extends FlavourBuff {
@@ -63,7 +62,6 @@ public class BlobImmunity extends FlavourBuff {
 		immunities.add( CorrosiveGas.class );
 		immunities.add( Electricity.class );
 		immunities.add( Fire.class );
-		immunities.add( MagicalFireRoom.EternalFire.class );
 		immunities.add( Freezing.class );
 		immunities.add( Inferno.class );
 		immunities.add( ParalyticGas.class );
