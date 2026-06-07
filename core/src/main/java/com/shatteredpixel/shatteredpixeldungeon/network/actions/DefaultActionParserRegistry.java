@@ -52,7 +52,6 @@ public class DefaultActionParserRegistry {
         registry.register("sprite_flash", new SpriteFlashParser());
         registry.register("connection_rejected", new ConnectionRejectedParser());
         registry.register("show_status", new ShowStatusParser());
-        registry.register("degradation", new DegradationParser());
         registry.register("show_banner", new BannerParser());
         registry.register("visual_show_banner", new BannerParser());
         registry.register("lightning_visual", new LightningVisualParser());
@@ -140,12 +139,6 @@ public class DefaultActionParserRegistry {
     private static class ShowStatusParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
             parseThread.parseShowStatusAction(action);
-        }
-    }
-
-    private static class DegradationParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) {
-            parseThread.parseDegradationAction(action);
         }
     }
 
