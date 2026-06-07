@@ -34,6 +34,7 @@ import com.shatteredpixel.shatteredpixeldungeon.network.actions.traps.TrapUpdate
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.FadingTraps;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BossHealthBar;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
@@ -48,83 +49,97 @@ public class DefaultActionParserRegistry {
 
     public static ActionParserRegistry create() {
         ActionParserRegistry registry = new ActionParserRegistry();
-        registry.register("sprite_action", new SpriteActionParser());
-        registry.register("sprite_flash", new SpriteFlashParser());
-        registry.register("show_status", new ShowStatusParser());
-        registry.register("wound_visual", new WoundVisualParser());
-        registry.register("ripple_visual", new RippleVisualParser());
-        registry.register("missile_sprite_visual", new MissileSpriteVisualParser());
-        registry.register("checked_cell_visual", new CheckedCellVisualParser());
-        registry.register("play_sample", new PlaySampleParser());
-        registry.register("music", new MusicParser());
-        registry.register("load_sample", new LoadSampleParser());
-        registry.register("unload_sample", new UnloadSampleParser());
-        registry.register("shake_camera", new ShakeCameraParser());
-        registry.register("enchanting_visual", new EnchantingVisualParser());
-        registry.register("flare_visual", new FlareVisualParser());
-        registry.register("emitter_burst", new EmitterBurstParser());
-        registry.register("emitter_start", new EmitterStartParser());
-        registry.register("emitter_pour", new EmitterPourParser());
-        registry.register("emitter_stop", new EmitterStopParser());
-        registry.register("emitter_decor", new EmitterDecorParser());
-        registry.register("heap_drop_visual", new HeapDropVisualParser());
-        registry.register("magic_missile_visual", new MagicMissileVisualParser());
-        registry.register("spell_sprite", new SpellSpriteParser());
-        registry.register("discover_tile", new DiscoverTileParser());
-        registry.register("surprise_visual", new SurpriseVisualParser());
-        registry.register("boss_health_bar", new BossHealthBarParser());
-        registry.register("game_scene_flash", new GameSceneFlashParser());
-        registry.register("fading_traps", new FadingTrapsParser());
-        registry.register("show_banner", new ShowBannerParser());
-        registry.register("redirect_server", new RedirectServerParser());
-        registry.register("resize_level", new ResizeLevelParser());
-        registry.register("set_level_visuals", new SetLevelVisualsParser());
-        registry.register("set_level_entrance", new SetLevelEntranceParser());
-        registry.register("set_level_exit", new SetLevelExitParser());
-        registry.register("set_level_tiles", new SetLevelTilesParser());
-        registry.register("set_level_states", new SetLevelStatesParser());
-        registry.register("update_fov", new UpdateFovParser());
-        registry.register("update_cells", new UpdateCellsParser());
-        registry.register("interlevel_scene", new InterlevelSceneParser());
-        registry.register("char_update", new CharUpdateParser());
-        registry.register("blob_update", new BlobUpdateParser());
-        registry.register("actor_remove", new ActorRemoveParser());
-        registry.register("char_sprite_state_add", new CharSpriteStateParser(false));
-        registry.register("char_sprite_state_remove", new CharSpriteStateParser(true));
-        registry.register("char_emo", new CharEmoParser());
-        registry.register("buff_update", new BuffUpdateParser());
-        registry.register("buff_remove", new BuffRemoveParser());
-        registry.register("hero_patch", new HeroPatchParser());
-        registry.register("change_hero_actor_id", new ChangeHeroActorIdParser());
-        registry.register("hero_ready", new HeroReadyParser());
-        registry.register("hero_gold", new HeroGoldParser());
-        registry.register("hero_uuid", new HeroUUIDParser());
-        registry.register("messages", new MessagesParser());
-        registry.register("inventory_rebuild", new InventoryRebuildParser());
-        registry.register("inventory_define_special_slots", new InventoryDefineSpecialSlotsParser());
-        registry.register("item_add", new ItemAddParser());
-        registry.register("item_remove", new ItemRemoveParser());
-        registry.register("item_update", new ItemUpdateParser());
-        registry.register("item_replace", new ItemReplaceParser());
-        registry.register("heap_update", new HeapUpdateParser());
-        registry.register("heap_remove", new HeapRemoveParser());
-        registry.register("show_window", new ShowWindowParser());
-        registry.register("update_floor_info", new UpdateFloorInfoParser());
-        registry.register("locked_floor_state", new LockedFloorStateParser());
-        registry.register("update_counter", new UpdateCounterParser());
-        registry.register("keys_indicator", new KeysIndicatorParser());
-        registry.register("cell_listener_prompt", new CellListenerPromptParser());
-        registry.register("attack_indicator_target", new AttackIndicatorTargetParser());
-        registry.register("resume_button_visible", new ResumeButtonVisibleParser());
-        registry.register("unlock_badge", new UnlockBadgeParser());
-        registry.register("show_message", new ShowMessageParser());
-        registry.register("window", new WindowParser()); // Legacy
-        registry.register("plant_update", new PlantUpdateParser());
-        registry.register("plant_remove", new PlantRemoveParser());
-        registry.register("trap_update", new TrapUpdateParser());
-        registry.register("trap_remove", new TrapRemoveParser());
-        registry.register("texturepack", new TexturePackParser());
+        register(registry, "sprite_action", 1, new SpriteActionParser());
+        register(registry, "sprite_flash", 1, new SpriteFlashParser());
+        register(registry, "show_status", 1, new ShowStatusParser());
+        register(registry, "wound_visual", 1, new WoundVisualParser());
+        register(registry, "ripple_visual", 1, new RippleVisualParser());
+        register(registry, "missile_sprite_visual", 1, new MissileSpriteVisualParser());
+        register(registry, "checked_cell_visual", 1, new CheckedCellVisualParser());
+        register(registry, "play_sample", 1, new PlaySampleParser());
+        register(registry, "music", 1, new MusicParser());
+        register(registry, "load_sample", 1, new LoadSampleParser());
+        register(registry, "unload_sample", 1, new UnloadSampleParser());
+        register(registry, "shake_camera", 1, new ShakeCameraParser());
+        register(registry, "enchanting_visual", 1, new EnchantingVisualParser());
+        register(registry, "flare_visual", 1, new FlareVisualParser());
+        register(registry, "emitter_burst", 1, new EmitterBurstParser());
+        register(registry, "emitter_start", 1, new EmitterStartParser());
+        register(registry, "emitter_pour", 1, new EmitterPourParser());
+        register(registry, "emitter_stop", 1, new EmitterStopParser());
+        register(registry, "emitter_decor", 1, new EmitterDecorParser());
+        register(registry, "heap_drop_visual", 1, new HeapDropVisualParser());
+        register(registry, "magic_missile_visual", 1, new MagicMissileVisualParser());
+        register(registry, "spell_sprite", 1, new SpellSpriteParser());
+        register(registry, "discover_tile", 1, new DiscoverTileParser());
+        register(registry, "surprise_visual", 1, new SurpriseVisualParser());
+        register(registry, "boss_health_bar", 1, new BossHealthBarParser());
+        register(registry, "game_scene_flash", 1, new GameSceneFlashParser());
+        register(registry, "fading_traps", 1, new FadingTrapsParser());
+        register(registry, "show_banner", 1, new ShowBannerParser());
+        register(registry, "redirect_server", 1, new RedirectServerParser());
+        register(registry, "resize_level", 1, new ResizeLevelParser());
+        register(registry, "set_level_visuals", 1, new SetLevelVisualsParser());
+        register(registry, "set_level_entrance", 1, new SetLevelEntranceParser());
+        register(registry, "set_level_exit", 1, new SetLevelExitParser());
+        register(registry, "set_level_tiles", 1, new SetLevelTilesParser());
+        register(registry, "set_level_states", 1, new SetLevelStatesParser());
+        register(registry, "update_fov", 1, new UpdateFovParser());
+        register(registry, "update_cells", 1, new UpdateCellsParser());
+        register(registry, "interlevel_scene", 1, new InterlevelSceneParser());
+        register(registry, "char_update", 1, new CharUpdateParser());
+        register(registry, "blob_update", 1, new BlobUpdateParser());
+        register(registry, "actor_remove", 1, new ActorRemoveParser());
+        register(registry, "char_sprite_state_add", 1, new CharSpriteStateParser(false));
+        register(registry, "char_sprite_state_remove", 1, new CharSpriteStateParser(true));
+        register(registry, "char_emo", 1, new CharEmoParser());
+        register(registry, "buff_update", 1, new BuffUpdateParser());
+        register(registry, "buff_remove", 1, new BuffRemoveParser());
+        register(registry, "hero_patch", 1, new HeroPatchParser());
+        register(registry, "change_hero_actor_id", 1, new ChangeHeroActorIdParser());
+        register(registry, "hero_ready", 1, new HeroReadyParser());
+        register(registry, "hero_gold", 1, new HeroGoldParser());
+        register(registry, "hero_uuid", 1, new HeroUUIDParser());
+        register(registry, "messages", 1, new MessagesParser());
+        register(registry, "inventory_rebuild", 1, new InventoryRebuildParser());
+        register(registry, "inventory_define_special_slots", 1, new InventoryDefineSpecialSlotsParser());
+        register(registry, "item_add", 1, new ItemAddParser());
+        register(registry, "item_remove", 1, new ItemRemoveParser());
+        register(registry, "item_update", 1, new ItemUpdateParser());
+        register(registry, "item_replace", 1, new ItemReplaceParser());
+        register(registry, "heap_update", 1, new HeapUpdateParser());
+        register(registry, "heap_remove", 1, new HeapRemoveParser());
+        register(registry, "show_window", 1, new ShowWindowParser());
+        register(registry, "update_floor_info", 1, new UpdateFloorInfoParser());
+        register(registry, "locked_floor_state", 1, new LockedFloorStateParser());
+        register(registry, "update_counter", 1, new UpdateCounterParser());
+        register(registry, "keys_indicator", 1, new KeysIndicatorParser());
+        register(registry, "cell_listener_prompt", 1, new CellListenerPromptParser());
+        register(registry, "attack_indicator_target", 1, new AttackIndicatorTargetParser());
+        register(registry, "resume_button_visible", 1, new ResumeButtonVisibleParser());
+        register(registry, "unlock_badge", 1, new UnlockBadgeParser());
+        register(registry, "show_message", 1, new ShowMessageParser());
+        register(registry, "window", 1, new WindowParser()); // Legacy
+        register(registry, "plant_update", 1, new PlantUpdateParser());
+        register(registry, "plant_remove", 1, new PlantRemoveParser());
+        register(registry, "trap_update", 1, new TrapUpdateParser());
+        register(registry, "trap_remove", 1, new TrapRemoveParser());
+        register(registry, "texturepack", 1, new TexturePackParser());
         return registry;
+    }
+
+    public static ActionParser register(ActionParserRegistry registry, String actionName, int protocolVersion, ActionParser parser) {
+        ActionParser previous = registry.register(actionName, protocolVersion, parser);
+        if (previous != null) {
+            GLog.w(
+                    "Duplicate parser registration for action %s protocol %d: %s replaced by %s",
+                    actionName,
+                    protocolVersion,
+                    previous.getClass().getSimpleName(),
+                    parser.getClass().getSimpleName()
+            );
+        }
+        return previous;
     }
 
     private static class SpriteActionParser implements ActionParser {

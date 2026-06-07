@@ -1046,7 +1046,7 @@ public class ParseThread implements Callable<String> {
 
     private void parseAction(String type, JSONObject actionObj) {
         try {
-            ActionParser parser = actionParsers.get(type);
+            ActionParser parser = actionParsers.get(type, negotiatedProtocolVersion);
             if (parser == null) {
                 GLog.h("unknown action type " + type + ". Ignored");
                 return;
