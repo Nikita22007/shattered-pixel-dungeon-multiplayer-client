@@ -8,20 +8,21 @@ buildscript {
     }
 }
 
-allprojects {
-    // load verson grom file
-    def versionFile = new File(rootProject.rootDir, "version")
-    def versionName = "Local-build"
+// load version from file
+def versionFile = new File(rootProject.rootDir, "version")
+def versionName = "Local-build"
 
-    if (versionFile.exists()) {
-        try {
-            versionName = versionFile.text.trim()
-        } catch (Exception e) {
-            println("Error reading version file: ${e.message}")
-        }
-    } else {
-        println("Version file not found, using default: '${versionName}'")
+if (versionFile.exists()) {
+    try {
+        versionName = versionFile.text.trim()
+    } catch (Exception e) {
+        println("Error reading version file: ${e.message}")
     }
+} else {
+    println("Version file not found, using default: 'Local-build'")
+}
+
+allprojects {
     ext {
         appName = 'Shattered Pixel Dungeon Client'
         appPackageName = 'com.shatteredpixel.shatteredpixeldungeon.multiplayer.client'

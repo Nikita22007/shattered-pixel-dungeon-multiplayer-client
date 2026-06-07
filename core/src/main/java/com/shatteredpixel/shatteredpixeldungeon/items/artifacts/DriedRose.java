@@ -56,6 +56,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.AlchemyScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
@@ -816,12 +817,12 @@ public class DriedRose extends Artifact {
 			final CustomItem rose = CustomItem.createItem(args.getJSONObject("rose"));
 			IconTitle titlebar = new IconTitle();
 			titlebar.icon( new ItemSprite(rose) );
-			titlebar.label( args.getString("title") );
+			titlebar.label( JsonStringHelper.getString(args, "title") );
 			titlebar.setRect( 0, 0, WIDTH, 0 );
 			add( titlebar );
 			
 			RenderedTextBlock message =
-					PixelScene.renderTextBlock(args.getString("message"), 6);
+					PixelScene.renderTextBlock(JsonStringHelper.getString(args, "message"), 6);
 			message.maxWidth( WIDTH );
 			message.setPos(0, titlebar.bottom() + GAP);
 			add( message );

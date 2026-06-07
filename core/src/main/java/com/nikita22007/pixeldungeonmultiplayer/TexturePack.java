@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.files.FileHandleStream;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.DeviceCompat;
@@ -78,9 +79,9 @@ public class TexturePack {
                             )
                     )
             );
-            name = reader.optString("name", file.getName());
-            description = reader.optString("description", "No description");
-            version = reader.optString("version", "0.0.0");
+            name = JsonStringHelper.optString(reader, "name", file.getName());
+            description = JsonStringHelper.optString(reader, "description", "No description");
+            version = JsonStringHelper.optString(reader, "version", "0.0.0");
             frameSize = new Point(
                     reader.optInt("frame_size_x", 16),
                     reader.optInt("frame_size_y", 16)

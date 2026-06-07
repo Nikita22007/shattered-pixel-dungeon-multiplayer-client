@@ -223,15 +223,5 @@ public class GooSprite extends MobSprite {
 	@Override
 	public void onComplete( Animation anim ) {
 		super.onComplete(anim);
-
-		if (anim == pumpAttack) {
-
-			triggerEmitters();
-
-			idle();
-			ch.onAttackComplete();
-		} else if (anim == die) {
-			spray.killAndErase();
-		}
 	}
 }

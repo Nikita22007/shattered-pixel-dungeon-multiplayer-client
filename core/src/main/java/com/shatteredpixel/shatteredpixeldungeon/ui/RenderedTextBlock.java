@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.ui;
 
 import com.shatteredpixel.shatteredpixeldungeon.messages.Languages;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.RenderedText;
@@ -285,7 +286,7 @@ public class RenderedTextBlock extends Component {
 		}
 	}
 	public JSONObject fromJson(JSONObject object){
-		text(object.getString("text"));
+		text(JsonStringHelper.getString(object, "text"));
 		color = object.getInt("color");
 		setHightlighting(object.getBoolean("highlighting_enabled"), object.getInt("highlight_color"));
 		return object;

@@ -27,17 +27,24 @@ public class Client extends Thread {
     protected static final int BUFFER_SIZE = 16 * 1024; // bytes
 
     public static boolean connect(ServerInfo server) {
-        ServerAddress address = server.getAddress();
-        if (address == null) {
-            return false;
-        }
-        return connect(address.host, address.port);
+        return server.connect();
     }
 
     public static boolean connect(String server, int port) {
         packet.clearData();
         try {
-            socket = new Socket(server, port);
+            return connect(new Socket(server, port));
+        } catch (UnknownHostException e) {
+            return false;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    public static boolean connect(Socket connectedSocket) {
+        packet.clearData();
+        try {
+            socket = connectedSocket;
             writeStream = new OutputStreamWriter(
                     socket.getOutputStream(),
                     Charset.forName(CHARSET).newEncoder()
@@ -52,8 +59,6 @@ public class Client extends Thread {
             client.setDaemon(true);
             client.start();
             return socket.isConnected();
-        } catch (UnknownHostException e) {
-            return false;
         } catch (IOException e) {
             return false;
         }
@@ -93,6 +98,13 @@ public class Client extends Thread {
         try {
             synchronized (packet.dataRef) {
                 synchronized (writeStream) {
+                    if (packet.dataRef.get().length() == 0) {
+                        return;
+                    }
+                    if (!ParseThread.isConnectedToOldServer()
+                            && !packet.dataRef.get().has(Protocol.FIELD_PACKET_TYPE)) {
+                        packet.dataRef.get().put(Protocol.FIELD_PACKET_TYPE, Protocol.PACKET_CLIENT_COMMAND);
+                    }
                     writer.write(packet.dataRef.get().toString());
                     writer.write('\n');
                     writer.flush();

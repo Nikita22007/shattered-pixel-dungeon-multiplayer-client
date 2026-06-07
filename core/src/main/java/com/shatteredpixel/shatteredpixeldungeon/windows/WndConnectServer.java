@@ -19,14 +19,23 @@ public class WndConnectServer extends Window {
     private ServerInfo serverInfo;
     private Scene scene;
 
-    private String generateMessage(int players, int playersMax){
-        String message="Players: ";
-        message+=(players>-1)?players:"?";
-        message+='/';
-        message+=(playersMax>-1)?playersMax:"?";
-        message+='\n';
-        //message+=IP+':'+port;
-        return message;
+    private String generateMessage(ServerInfo server){
+        StringBuilder message = new StringBuilder();
+        message.append("Players: ");
+        message.append((server.players > -1) ? server.players : "?");
+        message.append('/');
+        message.append((server.maxPlayers > -1) ? server.maxPlayers : "?");
+        if (server.serverVersion != null && !server.serverVersion.trim().isEmpty()) {
+            message.append('\n');
+            message.append("Version: ");
+            message.append(server.serverVersion);
+        }
+        if (server.motd != null && !server.motd.trim().isEmpty()) {
+            message.append('\n');
+            message.append('\n');
+            message.append(server.motd.trim());
+        }
+        return message.toString();
     }
     public WndConnectServer(Scene scene, ServerInfo server){
         super();
@@ -41,7 +50,7 @@ public class WndConnectServer extends Window {
         tfTitle.x= (tfTitle.maxWidth-tfTitle.width()) / 2 ;
         add( tfTitle );
 
-        BitmapTextMultiline tfMessage = new BitmapTextMultiline("Players: " + server.players + "/" + server.maxPlayers, PixelScene.pixelFont);
+        BitmapTextMultiline tfMessage = new BitmapTextMultiline(generateMessage(server), PixelScene.pixelFont);
         tfMessage.maxWidth = WIDTH - MARGIN * 2;
         tfMessage.measure();
         tfMessage.x = MARGIN;

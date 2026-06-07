@@ -32,6 +32,10 @@ import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.SparseArray;
 
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public abstract class Actor implements Bundlable {
@@ -136,7 +140,11 @@ public abstract class Actor implements Bundlable {
 		if (id > 0) {
 			return id;
 		} else {
-			Log.e("[Actor.id()]", String.format("actor has negative id: %s", this));
+			StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+			new RuntimeException().printStackTrace(pw);
+			pw.flush();
+			Log.e("Actor.id()", String.format("actor has negative id: %s. Stacktrace: %s", this, sw.toString()));
 			return -1;
 		}
 	}

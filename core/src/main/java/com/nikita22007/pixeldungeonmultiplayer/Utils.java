@@ -24,4 +24,12 @@ public class Utils {
         }
         return result;
     }
+
+    public static String truncate(String text, int maxLength, String ellipsis) {
+        if (text == null || text.length() <= maxLength) {
+            return text;
+        }
+        int targetLength = Math.max(0, maxLength - (ellipsis != null ? ellipsis.length() : 0));
+        return text.substring(0, targetLength) + (ellipsis != null ? ellipsis : "");
+    }
 }

@@ -4,16 +4,25 @@ import java.util.ArrayList;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.CustomBag;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
+import com.shatteredpixel.shatteredpixeldungeon.network.ParticleFactoryDeserializer;
 import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
+import com.shatteredpixel.shatteredpixeldungeon.network.actions.emitters.EmitterAnchorParser;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 
 import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Visual;
+import com.watabou.noosa.particles.Emitter;
+import com.nikita22007.multiplayer.utils.text.LocalizedString;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import static com.nikita22007.pixeldungeonmultiplayer.TranslationUtils.translateItemImage;
 import static com.shatteredpixel.shatteredpixeldungeon.network.ParseThread.isConnectedToOldServer;
@@ -24,10 +33,12 @@ public class CustomItem extends Item {
     protected String descString;
 
     protected ArrayList<String> actionsList = new ArrayList<>();
+    protected HashMap<String, LocalizedString> actionNamesMap = new HashMap<>();
 
     protected boolean identified = false;
     protected int maxDurability = 1;
     protected ItemSprite.Glowing glowing;
+    protected JSONObject emitterAction;
 
     public boolean showBar = false;
     public UI ui = new UI();
@@ -60,10 +71,10 @@ public class CustomItem extends Item {
             String token = it.next();
             switch (token) {
                 case "name":
-                    name = obj.getString(token);
+                    name = JsonStringHelper.getString(obj, token);
                     break;
                 case "info":
-                    descString = obj.getString(token);
+                    descString = JsonStringHelper.getString(obj, token);
                     break;
                 case "image":
                     if (isConnectedToOldServer()) {
@@ -99,8 +110,11 @@ public class CustomItem extends Item {
                 case "actions":
                     parseActions(obj.getJSONArray(token));
                     break;
+                case "action_names":
+                    parseActionNames(obj.getJSONObject(token));
+                    break;
                 case "default_action":
-                    String action = obj.getString(token);
+                    String action = JsonStringHelper.getString(obj, token);
                     defaultAction = action.equals("null") ? null : action;
                     break;
                 case "ui":
@@ -118,8 +132,11 @@ public class CustomItem extends Item {
                         glowing = new ItemSprite.Glowing(glowingObj);
                     }
                     break;
+                case "emitter":
+                    emitterAction = obj.isNull(token) ? null : obj.getJSONObject(token);
+                    break;
                 case "sprite_sheet":
-                    this.spriteSheet = obj.getString(token);
+                    this.spriteSheet = JsonStringHelper.getString(obj, token);
                     break;
                 case "energy_value": {
                     this.energyVal = obj.getInt(token);
@@ -138,10 +155,22 @@ public class CustomItem extends Item {
     private void parseActions(JSONArray actionsArr) {
         ArrayList<String> actions = new ArrayList<>(actionsArr.length());
         for (int i = 0; i < actionsArr.length(); i++) {
-            String action = actionsArr.getString(i);
+            String action = JsonStringHelper.optString(actionsArr, i);
             actions.add(action);
         }
         actionsList = actions;
+    }
+
+    private void parseActionNames(JSONObject namesObj) {
+        Iterator<String> it = namesObj.keys();
+        while (it.hasNext()) {
+            String action = it.next();
+            try {
+                actionNamesMap.put(action, JsonStringHelper.getLocalizedString(namesObj, action));
+            } catch (Exception e) {
+                // ignore
+            }
+        }
     }
 
     @Override
@@ -158,10 +187,46 @@ public class CustomItem extends Item {
     }
 
     @Override
+    public Emitter emitter() {
+        if (emitterAction == null) {
+            return super.emitter();
+        }
+
+        try {
+            Emitter.Factory factory = ParticleFactoryDeserializer.deserialize(emitterAction.getJSONObject("factory"));
+            if (factory == null) {
+                GLog.n("incorrect item emitter factory: " + emitterAction.getJSONObject("factory").optString("factory_type"));
+                return super.emitter();
+            }
+
+            Emitter emitter = new Emitter();
+            if (!EmitterAnchorParser.apply(emitter, emitterAction.getJSONObject("anchor"))) {
+                GLog.n("incorrect item emitter anchor");
+                return super.emitter();
+            }
+            emitter.fillTarget = emitterAction.optBoolean("fill_target", emitter.fillTarget);
+            emitter.start(
+                    factory,
+                    (float) emitterAction.getDouble("interval"),
+                    emitterAction.getInt("quantity")
+            );
+            return emitter;
+        } catch (JSONException e) {
+            GLog.n("incorrect item emitter: " + e.getMessage());
+            return super.emitter();
+        }
+    }
+
+    @Override
     public ArrayList<String> actions(Hero hero) {
         return new ArrayList<>(actionsList);
     }
+
+    @Override
     public String actionName(String action, Hero hero){
+        if (actionNamesMap.containsKey(action)) {
+            return actionNamesMap.get(action).resolve();
+        }
         return action;
     }
 
@@ -196,7 +261,7 @@ public class CustomItem extends Item {
                     }
                     topLeft = new Label(
                             color,
-                            topLeftObj.isNull("text") ? null : topLeftObj.optString("text", ""),
+                            topLeftObj.isNull("text") ? null : JsonStringHelper.optString(topLeftObj, "text", ""),
                             topLeftObj.optBoolean("visible", false)
                     );
                 }
@@ -211,7 +276,7 @@ public class CustomItem extends Item {
                     }
                     topRight = new Label(
                             color,
-                            topRightObj.isNull("text") ? null : topRightObj.optString("text", ""),
+                            topRightObj.isNull("text") ? null : JsonStringHelper.optString(topRightObj, "text", ""),
                             topRightObj.optBoolean("visible", false)
                     );
                 }
@@ -226,7 +291,7 @@ public class CustomItem extends Item {
                     }
                     bottomRight = new Label(
                             color,
-                            bottomRightObj.isNull("text") ? null : bottomRightObj.optString("text", ""),
+                            bottomRightObj.isNull("text") ? null : JsonStringHelper.optString(bottomRightObj, "text", ""),
                             bottomRightObj.optBoolean("visible", false)
                     );
                 }
@@ -288,7 +353,5 @@ public class CustomItem extends Item {
                 }
     }
 }
-
-
 
 

@@ -1,5 +1,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.network.scanners;
 
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.network.ServerAddress;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import org.json.JSONObject;
@@ -23,7 +24,7 @@ public class UserServerInfo extends ServerInfo{
     }
     public UserServerInfo(JSONObject object, InetSocketAddress address){
         JSONObject serverInfo = object.getJSONObject("server_info");
-        this.name = serverInfo.getString("name");
+        this.name = JsonStringHelper.getString(serverInfo, "name");
         this.currentFloor = serverInfo.getInt("current_floor");
         this.haveChallenges = serverInfo.getInt("challenges") > 0;
         this.IP = address.getAddress();

@@ -91,6 +91,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.ShadowCaster;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -1428,7 +1429,7 @@ public abstract class Level implements Bundlable {
 		}
 		GameScene gameScene = (GameScene) scene;
 		try {
-			switch (actionObj.getString("type"))
+			switch (JsonStringHelper.getString(actionObj, "type"))
 			{
 				case ("torch"):
 				{

@@ -30,6 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.ClericSpell;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.GuidingLight;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
@@ -223,8 +224,8 @@ public class WndClericSpells extends Window {
 			}));
 			info = object.getBoolean("info");
 			icon.alpha((float) object.getDouble("alpha"));
-			spellName = object.getString("spell_name");
-			spellShortDesc = object.getString("spell_short_desc");
+			spellName = JsonStringHelper.getString(object, "spell_name");
+			spellShortDesc = JsonStringHelper.getString(object, "spell_short_desc");
 			spellID = object.getInt("spell_id");
 			bg = Chrome.get(Chrome.Type.TOAST);
 			addToBack(bg);

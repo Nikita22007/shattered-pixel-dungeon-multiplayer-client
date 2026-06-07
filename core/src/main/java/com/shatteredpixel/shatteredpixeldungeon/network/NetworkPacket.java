@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.Locale;
 
-class NetworkPacket {
+public class NetworkPacket {
 
 
     enum CellState {
@@ -42,7 +42,14 @@ class NetworkPacket {
     public void packAndAddHeroClass(String heroClass) {
         synchronized (dataRef) {
             try {
-                dataRef.get().put("hero_class", heroClass);
+                if (ParseThread.isConnectedToOldServer()) {
+                    dataRef.get().put("hero_class", heroClass);
+                } else {
+                    dataRef.get().put(Protocol.FIELD_PACKET_TYPE, Protocol.PACKET_JOIN);
+                    dataRef.get().put(Protocol.FIELD_PROTOCOL, Protocol.NAME);
+                    dataRef.get().put(Protocol.FIELD_VERSION, ParseThread.negotiatedProtocolVersion);
+                    dataRef.get().put("hero_class", heroClass);
+                }
                 dataRef.get().put("uuid", redirectUUID != null ? redirectUUID : SPDSettings.heroUUID(ParseThread.serverUUID));
                 if (password!= null) {
                     dataRef.get().put("password", password);
@@ -115,4 +122,3 @@ class NetworkPacket {
     }
 
 }
-

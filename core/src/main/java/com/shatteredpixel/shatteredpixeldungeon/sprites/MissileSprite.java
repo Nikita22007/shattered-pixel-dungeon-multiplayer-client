@@ -40,6 +40,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingSp
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingSpike;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Trident;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.watabou.noosa.Visual;
@@ -207,7 +208,7 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 				actionObj.getDouble("speed"),
 				actionObj.getDouble("angular_speed"),
 				actionObj.getDouble("angle"),
-				actionObj.optString("item_sprite_sheet", Assets.Sprites.ITEMS),
+				JsonStringHelper.optString(actionObj, "item_sprite_sheet", Assets.Sprites.ITEMS),
 				actionObj.getInt("item_image"),
 				glowing
 		);
@@ -234,6 +235,39 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 		PosTweener tweener = new PosTweener( this, dest, d.length() / (float)SPEED );
 		tweener.listener = this;
 		parent.add( tweener );
+	}
+
+	public void reset(PointF from, PointF to, float SPEED, float angularSpeed, float angle, boolean flipHorizontal, Item item) {
+		revive();
+
+		if (item == null) {
+			view(0, null);
+		} else {
+			view(item);
+		}
+		this.callback = null;
+
+		originToCenter();
+
+		// Adjust points so they work with the center of the missile sprite, not the corner
+		from.x -= width() / 2;
+		to.x -= width() / 2;
+		from.y -= height() / 2;
+		to.y -= height() / 2;
+
+		point(from);
+
+		PointF d = PointF.diff(to, from);
+		this.speed.set(d).normalize().scale(SPEED);
+
+		this.angularSpeed = angularSpeed;
+		this.angle = angle;
+		this.flipHorizontal = flipHorizontal;
+		updateFrame();
+
+		PosTweener tweener = new PosTweener(this, to, d.length() / SPEED);
+		tweener.listener = this;
+		parent.add(tweener);
 	}
 
 }

@@ -4,6 +4,7 @@ import static com.nikita22007.pixeldungeonmultiplayer.JavaUtils.hasNotNull;
 
 import com.nikita22007.pixeldungeonmultiplayer.JavaUtils;
 import com.nikita22007.pixeldungeonmultiplayer.TextureManager;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.watabou.gltextures.SmartTexture;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.noosa.TextureFilm;
@@ -30,7 +31,7 @@ public class CustomCharSprite extends MobSprite {
         try {
             if (JavaUtils.hasNotNull(animationsObj,"default_texture"))
             {
-                String textureAsset = animationsObj.getString("default_texture");
+                String textureAsset = JsonStringHelper.getString(animationsObj, "default_texture");
                 texture(textureAsset);
             }
             if (JavaUtils.hasNotNull(animationsObj,"default_frame_size_x"))
@@ -54,13 +55,13 @@ public class CustomCharSprite extends MobSprite {
     protected void addAnimation(final JSONObject animationObj) throws JSONException {
         SmartTexture animationTexture = texture;
         if (hasNotNull(animationObj, "texture")) {
-            String textureAsset = animationObj.getString("texture");
+            String textureAsset = JsonStringHelper.getString(animationObj, "texture");
             texture = TextureCache.get(textureAsset);
         }
         assert animationTexture != null;
         //Asserts.checkNotNull(animationTexture);
 
-        String name = animationObj.getString("animation");
+        String name = JsonStringHelper.getString(animationObj, "animation");
         boolean looped = animationObj.getBoolean("looped");
         JSONArray framesObj = animationObj.getJSONArray("frames");
         int fps = animationObj.getInt("fps");

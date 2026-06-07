@@ -595,9 +595,21 @@ public class GameScene extends PixelScene {
 		Camera.main.panTo(hero.center(), 2.5f);
 
 		if (InterlevelScene.mode != InterlevelScene.Mode.NONE) {
+			if (ParseThread.isConnectedToOldServer()) {
+				if (Dungeon.depth == Statistics.deepestFloor
+						&& (InterlevelScene.mode == InterlevelScene.Mode.DESCEND || InterlevelScene.mode == InterlevelScene.Mode.FALL)) {
+					GLog.h(Messages.get(this, "descend"), Dungeon.depth);
+				} else if (InterlevelScene.mode == InterlevelScene.Mode.RESET) {
+					GLog.h(Messages.get(this, "warp"));
+				} else if (InterlevelScene.mode == InterlevelScene.Mode.RESURRECT) {
+					GLog.h(Messages.get(this, "resurrect"), Dungeon.depth);
+				} else {
+					GLog.h(Messages.get(this, "return"), Dungeon.depth);
+				}
+			}
+
 			if (Dungeon.depth == Statistics.deepestFloor
 					&& (InterlevelScene.mode == InterlevelScene.Mode.DESCEND || InterlevelScene.mode == InterlevelScene.Mode.FALL)) {
-				GLog.h(Messages.get(this, "descend"), Dungeon.depth);
 				Sample.INSTANCE.play(Assets.Sounds.DESCEND);
 				
 				for (Char ch : Actor.chars()){
@@ -623,12 +635,6 @@ public class GameScene extends PixelScene {
 					}
 				}
 				
-			} else if (InterlevelScene.mode == InterlevelScene.Mode.RESET) {
-				GLog.h(Messages.get(this, "warp"));
-			} else if (InterlevelScene.mode == InterlevelScene.Mode.RESURRECT) {
-				GLog.h(Messages.get(this, "resurrect"), Dungeon.depth);
-			} else {
-				GLog.h(Messages.get(this, "return"), Dungeon.depth);
 			}
 
 			if (Dungeon.hero.hasTalent(Talent.ROGUES_FORESIGHT)
@@ -1832,6 +1838,12 @@ public class GameScene extends PixelScene {
 		status.setSweep(sweep);
 	}
 
+	public static void setResumeButtonVisible(boolean visible) {
+		if (scene != null && scene.resume != null) {
+			scene.resume.visible = visible;
+		}
+	}
+
 	public static class CustomCellListener extends CellSelector.Listener {
 
 		@Nullable
@@ -1852,6 +1864,9 @@ public class GameScene extends PixelScene {
 				customPrompt = null;
 			} else {
 				customPrompt = prompt;
+			}
+			if (cellSelector == null) {
+				return;
 			}
 			if (cellSelector.listener == this) {
 				selectCell(this);

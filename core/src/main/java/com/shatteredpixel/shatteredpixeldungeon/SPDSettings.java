@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon;
 
 import com.badlogic.gdx.Gdx;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Languages;
+import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.watabou.noosa.Game;
@@ -473,7 +474,8 @@ public class SPDSettings extends GameSettings {
 		return getBoolean( KEY_WINDOW_MAXIMIZED, false );
 	}
 	// Will add buttons for changing these in the future
-	public static final int defaultRelayServerPort = 25556;
+	public static final int defaultRelayServerPort = 25566;
+	public static final int legacyRelayServerPort = 25556;
 	public static int customRelayPort(){
 		return defaultRelayServerPort;
 	}
@@ -527,7 +529,7 @@ public class SPDSettings extends GameSettings {
 		for (int i = 0; i < serverList.length(); i++) {
 			serverAddress = serverList.getJSONObject(i);
             try {
-                addressList.add(new InetSocketAddress(InetAddress.getByName(serverAddress.getString("host")), serverAddress.getInt("port")));
+                addressList.add(new InetSocketAddress(InetAddress.getByName(JsonStringHelper.getString(serverAddress, "host")), serverAddress.getInt("port")));
             } catch (UnknownHostException e) {
 				Gdx.app.error("Server Discovery", "Invalid address", e);
             }

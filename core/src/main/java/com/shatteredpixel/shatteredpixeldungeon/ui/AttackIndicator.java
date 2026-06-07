@@ -201,6 +201,7 @@ public class AttackIndicator extends Tag {
 
 	public static void setCandidates(int ID) {
 		Actor target = Actor.findById(ID);
+		if (instance == null) return;
 		synchronized (instance) {
 			instance.candidates.clear();
 			if (target instanceof Mob) {
