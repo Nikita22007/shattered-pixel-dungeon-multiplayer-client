@@ -52,8 +52,6 @@ public class DefaultActionParserRegistry {
         registry.register("sprite_flash", new SpriteFlashParser());
         registry.register("connection_rejected", new ConnectionRejectedParser());
         registry.register("show_status", new ShowStatusParser());
-        registry.register("show_banner", new BannerParser());
-        registry.register("visual_show_banner", new BannerParser());
         registry.register("wound_visual", new WoundVisualParser());
         registry.register("ripple_visual", new RippleVisualParser());
         registry.register("missile_sprite_visual", new MissileSpriteVisualParser());
@@ -139,12 +137,6 @@ public class DefaultActionParserRegistry {
     private static class ShowStatusParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
             parseThread.parseShowStatusAction(action);
-        }
-    }
-
-    private static class BannerParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) {
-            parseThread.parseBannerShowAction(action);
         }
     }
 
