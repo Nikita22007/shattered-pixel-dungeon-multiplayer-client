@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
-import com.nikita22007.pixeldungeonmultiplayer.Text;
+import com.nikita22007.multiplayer.utils.text.LocalizedString;
+import com.shatteredpixel.shatteredpixeldungeon.network.text.LocalizedStringParser;
 import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.watabou.noosa.Image;
 import org.json.JSONException;
@@ -14,11 +15,11 @@ import static com.shatteredpixel.shatteredpixeldungeon.network.ParseThread.isCon
 public class CustomBuff extends Buff {
     private int icon = 0;
 
-    private Text desc = new Text("unknown");
+    private LocalizedString desc = LocalizedString.raw("unknown");
     float rm = 0;
     float gm = 0;
     float bm = 0;
-    private Text name = new Text("unknown");
+    private LocalizedString name = LocalizedString.raw("unknown");
     private float iconFadePercent;
 
     public CustomBuff(JSONObject obj) throws JSONException {
@@ -31,7 +32,7 @@ public class CustomBuff extends Buff {
     public void update(JSONObject obj) throws JSONException {
         setIcon(obj.optInt("icon", icon));
         if (obj.has("desc")) {
-            setDesc(Text.of(obj.opt("desc")));
+            setDesc(new LocalizedStringParser().parse(obj.opt("desc")));
         }
         if (obj.has("hardlight")){
             JSONObject hardlight = obj.getJSONObject("hardlight");
@@ -40,7 +41,7 @@ public class CustomBuff extends Buff {
             bm = (float) hardlight.getDouble("bm");
         }
         if (obj.has("name")) {
-            this.name = Text.of(obj.get("name"));
+            this.name = new LocalizedStringParser().parse(obj.get("name"));
         }
         if (obj.has("fade_percent")) {
             iconFadePercent = Float.parseFloat(JsonStringHelper.getString(obj, "fade_percent"));
@@ -66,18 +67,18 @@ public class CustomBuff extends Buff {
         icon.hardlight(rm, gm , bm);
     }
 
-    public void setDesc(Text desc) {
+    public void setDesc(LocalizedString desc) {
         this.desc = desc;
     }
 
     @Override
     public String name(){
-        return name.asString();
+        return name != null ? name.toString() : "unknown";
     }
 
     @Override
     public String desc() {
-        return desc.asString();
+        return desc != null ? desc.toString() : "unknown";
     }
 
     @Override
