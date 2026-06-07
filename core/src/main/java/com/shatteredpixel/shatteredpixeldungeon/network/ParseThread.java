@@ -105,6 +105,7 @@ public class ParseThread implements Callable<String> {
 
     private static boolean isOldServer = true;
     public static String serverUUID = null;
+    public static int negotiatedProtocolVersion = Protocol.VERSION;
 
     public ParseThread(InputStreamReader readStream, Socket socket) {
         this(new BufferedReader(readStream), socket);
@@ -113,6 +114,7 @@ public class ParseThread implements Callable<String> {
     public ParseThread(@NotNull BufferedReader readStream, @NotNull Socket socket) {
         isOldServer = true;
         serverUUID = null;
+        negotiatedProtocolVersion = Protocol.VERSION;
         this.socket = socket;
         this.reader = readStream;
         this.actionParsers = DefaultActionParserRegistry.create();
@@ -227,9 +229,9 @@ public class ParseThread implements Callable<String> {
         boolean isFirstPacket = !firstPacketReceived;
         firstPacketReceived = true;
 
-        if (isConnectionRejectedPacket(data)) {
+        if (isDisconnectedPacket(data)) {
             Client.disconnectWithoutSwitch();
-            returnToMainScreen(data.optString("message", "Connection rejected"));
+            returnToMainScreen(data.optString("message", "Disconnected"));
             return;
         }
 
@@ -246,6 +248,7 @@ public class ParseThread implements Callable<String> {
             }
             Log.i("Parsing", "Server mode changed to SPDMP");
             isOldServer = false;
+            negotiatedProtocolVersion = negotiatedProtocolVersion(data);
             serverUUID = JsonStringHelper.getString(data, Protocol.FIELD_SERVER_ID);
             Client.sendHeroClass(GamesInProgress.selectedClass);
             return;
@@ -277,15 +280,19 @@ public class ParseThread implements Callable<String> {
         return Protocol.PACKET_HANDSHAKE.equals(data.optString(Protocol.FIELD_PACKET_TYPE, ""));
     }
 
-    private boolean isConnectionRejectedPacket(JSONObject data) {
-        return Protocol.PACKET_CONNECTION_REJECTED.equals(data.optString(Protocol.FIELD_PACKET_TYPE, ""));
+    private boolean isDisconnectedPacket(JSONObject data) {
+        return Protocol.PACKET_DISCONNECTED.equals(data.optString(Protocol.FIELD_PACKET_TYPE, ""));
     }
 
     private boolean isCompatibleHandshake(JSONObject data) {
         return isHandshakePacket(data)
                 && Protocol.NAME.equals(data.optString(Protocol.FIELD_PROTOCOL, ""))
-                && data.optInt(Protocol.FIELD_VERSION, -1) == Protocol.VERSION
+                && data.optInt(Protocol.FIELD_VERSION, -1) >= Protocol.MIN_VERSION
                 && data.has(Protocol.FIELD_SERVER_ID);
+    }
+
+    private int negotiatedProtocolVersion(JSONObject data) {
+        return Math.min(Protocol.VERSION, data.getInt(Protocol.FIELD_VERSION));
     }
 
     private void parseActionPacket(JSONObject data) throws JSONException {

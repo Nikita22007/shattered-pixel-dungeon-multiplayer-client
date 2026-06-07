@@ -47,7 +47,7 @@ public class NetworkPacket {
                 } else {
                     dataRef.get().put(Protocol.FIELD_PACKET_TYPE, Protocol.PACKET_JOIN);
                     dataRef.get().put(Protocol.FIELD_PROTOCOL, Protocol.NAME);
-                    dataRef.get().put(Protocol.FIELD_VERSION, Protocol.VERSION);
+                    dataRef.get().put(Protocol.FIELD_VERSION, ParseThread.negotiatedProtocolVersion);
                     dataRef.get().put("hero_class", heroClass);
                 }
                 dataRef.get().put("uuid", redirectUUID != null ? redirectUUID : SPDSettings.heroUUID(ParseThread.serverUUID));

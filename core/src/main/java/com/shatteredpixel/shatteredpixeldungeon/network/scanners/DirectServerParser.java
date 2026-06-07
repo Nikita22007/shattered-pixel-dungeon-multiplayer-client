@@ -20,7 +20,7 @@ public class DirectServerParser {
         JSONObject object = new JSONObject(reader.readLine());
         if (Protocol.PACKET_HANDSHAKE.equals(object.optString(Protocol.FIELD_PACKET_TYPE, ""))
                 && Protocol.NAME.equals(object.optString(Protocol.FIELD_PROTOCOL, ""))
-                && object.optInt(Protocol.FIELD_VERSION, -1) == Protocol.VERSION) {
+                && object.optInt(Protocol.FIELD_VERSION, -1) >= Protocol.MIN_VERSION) {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             writer.write(new JSONObject().put(Protocol.FIELD_PACKET_TYPE, Protocol.PACKET_STATUS_REQUEST).toString());
             writer.write('\n');

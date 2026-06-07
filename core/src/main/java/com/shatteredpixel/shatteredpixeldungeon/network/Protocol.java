@@ -2,6 +2,7 @@ package com.shatteredpixel.shatteredpixeldungeon.network;
 
 public final class Protocol {
     public static final String NAME = "spdmp";
+    public static final int MIN_VERSION = 1;
     public static final int VERSION = 1;
 
     public static final String FIELD_PACKET_TYPE = "packet_type";
@@ -13,7 +14,7 @@ public final class Protocol {
     public static final String PACKET_STATUS_REQUEST = "status_request";
     public static final String PACKET_SERVER_STATUS = "server_status";
     public static final String PACKET_JOIN = "join";
-    public static final String PACKET_CONNECTION_REJECTED = "connection_rejected";
+    public static final String PACKET_DISCONNECTED = "disconnected";
     public static final String PACKET_ACTIONS_BATCH = "actions_batch";
     public static final String PACKET_CLIENT_COMMAND = "client_command";
 
