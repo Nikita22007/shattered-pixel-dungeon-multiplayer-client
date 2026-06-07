@@ -368,7 +368,7 @@ public class ParseThread implements Callable<String> {
                     break;
                 }
                 case "actions": {
-                    parseActions(data.getJSONArray(token));
+                    parseLegacyActions(data.getJSONArray(token));
                     break;
                 }
                 case "messages": {
@@ -732,6 +732,7 @@ public class ParseThread implements Callable<String> {
     public void parseItemAction(List<Integer> path, JSONObject itemObj, String mode) throws JSONException {
         Belongings belongings = hero.belongings;
         switch (mode) {
+            case "place":
             case "add": {
                 Item item = itemObj != null ? CustomItem.createItem(itemObj) : null;
                 belongings.putItemIntoSlot(path, item, false);
@@ -846,6 +847,184 @@ public class ParseThread implements Callable<String> {
         for (JSONObject actionObj : spriteActions) {
             parseAction(JsonStringHelper.optString(actionObj, "action_name", actionObj.optString("action_type")), actionObj);
         }
+    }
+
+    protected void parseLegacyActions(@NotNull JSONArray actions) {
+        for (int i = 0; i < actions.length(); i++) {
+            JSONObject actionObj;
+            try {
+                actionObj = actions.getJSONObject(i);
+            } catch (JSONException e) {
+                Log.wtf("ParseActions", "can't get action from array. " + e.toString());
+                e.printStackTrace();
+                continue;
+            }
+            String type = JsonStringHelper.optString(actionObj, "action_type", actionObj.optString("action_name"));
+            try {
+                parseLegacyAction(type, actionObj);
+            } catch (JSONException e) {
+                GLog.n("Incorrect action ( " + type + "). Ignored");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void parseLegacyAction(String type, JSONObject actionObj) throws JSONException {
+        switch (type) {
+            case "sprite_action": {
+                parseSpriteAction(actionObj);
+                break;
+            }
+            case "add_item_to_bag": {
+                JSONObject itemObj = actionObj.optJSONObject("item");
+                parseItemAction(parseIntegerList(actionObj.getJSONArray("slot")), itemObj, actionObj.optString("update_mode"));
+                break;
+            }
+            case "show_status": {
+                parseShowStatusAction(actionObj);
+                break;
+            }
+            case "degradation": {
+                parseDegradationAction(actionObj);
+                break;
+            }
+            case "show_banner":
+            case "visual_show_banner": {
+                parseBannerShowAction(actionObj);
+                break;
+            }
+            case "lightning_visual": {
+                parseLightningVisualAction(actionObj);
+                break;
+            }
+            case "death_ray_centered_visual": {
+                parseDeathRayCenteredVisualAction(actionObj);
+                break;
+            }
+            case "wound_visual": {
+                parseWoundVisualAction(actionObj);
+                break;
+            }
+            case "ripple_visual": {
+                parseRippleVisualAction(actionObj);
+                break;
+            }
+            case "missile_sprite_visual": {
+                parseMissileSpriteVisualAction(actionObj);
+                break;
+            }
+            case "checked_cell_visual": {
+                if (Dungeon.level.heroFOV[actionObj.getInt("pos")]) {
+                    GameScene.effect(new CheckedCell(actionObj.getInt("pos")));
+                }
+                break;
+            }
+            case "play_sample": {
+                Sample.INSTANCE.play(actionObj);
+                break;
+            }
+            case "music": {
+                Music.INSTANCE.parseAction(actionObj).execute();
+                break;
+            }
+            case "load_sample": {
+                Sample.INSTANCE.load(actionObj.getJSONArray("samples"));
+                break;
+            }
+            case "unload_sample": {
+                Sample.INSTANCE.unload(JsonStringHelper.getString(actionObj, "sample"));
+                break;
+            }
+            case "shake_camera": {
+                Camera.main.shake((float) actionObj.getDouble("magnitude"), (float) actionObj.getDouble("duration"));
+                break;
+            }
+            case "enchanting_visual": {
+                int targetCharId = actionObj.getInt("target");
+                Actor actor = Actor.findById(targetCharId);
+                if (!(actor instanceof Char)) {
+                    GLog.n("Enchanting: Can't find char with id " + targetCharId + ". Ignored");
+                    break;
+                }
+                Item item = CustomItem.createItem(actionObj.getJSONObject("item"));
+                Enchanting.show((Char) actor, item);
+                break;
+            }
+            case "flare_visual": {
+                PointF position;
+                if (actionObj.has("pos")) {
+                    position = DungeonTilemap.tileCenterToWorld(actionObj.getInt("pos"));
+                } else {
+                    position = new PointF(
+                            (float) actionObj.getDouble("position_x"),
+                            (float) actionObj.getDouble("position_y")
+                    );
+                }
+
+                Flare flare = new Flare(
+                        actionObj.getInt("rays"),
+                        (float) actionObj.getDouble("radius")
+                );
+                flare.angle = (float) actionObj.optDouble("angle", 45);
+                flare.angularSpeed = (float) actionObj.optDouble("angular_speed", 180);
+                flare.color(actionObj.getInt("color"), actionObj.optBoolean("light_moode", true));
+                GameScene.showFlare(flare, position, (float) actionObj.getDouble("duration"));
+                break;
+            }
+            case "emitter_visual": {
+                parseEmitterVisualAction(actionObj);
+                break;
+            }
+            case "emitter_decor": {
+                level.addVisual(actionObj);
+                break;
+            }
+            case "heap_drop_visual": {
+                parseHeadDropVisualAction(actionObj);
+                break;
+            }
+            case "magic_missile_visual": {
+                parseMagicMissileVisual(actionObj);
+                break;
+            }
+            case "spell_sprite": {
+                ShowSpellSprite(actionObj);
+                break;
+            }
+            case "discover_tile": {
+                GameScene.discoverTile(
+                        actionObj.getInt("pos"),
+                        actionObj.getInt("old_tile")
+                );
+                break;
+            }
+            case "surprise_visual": {
+                Surprise.hit(actionObj.getInt("pos"), actionObj.getInt("angle"));
+                break;
+            }
+            case "boss_health_bar": {
+                BossHealthBar.parseAction(actionObj);
+                break;
+            }
+            case "game_scene_flash": {
+                GameScene.flash(actionObj.getInt("color"), actionObj.getBoolean("light"));
+                break;
+            }
+            case "fading_traps": {
+                FadingTraps.fromJSON(actionObj);
+                break;
+            }
+            default:
+                GLog.h("unknown action type " + type + ". Ignored");
+        }
+    }
+
+    private List<Integer> parseIntegerList(JSONArray array) throws JSONException {
+        List<Integer> result = new ArrayList<>(array.length());
+        for (int i = 0; i < array.length(); i++) {
+            result.add(array.getInt(i));
+        }
+        return result;
     }
 
     private void parseAction(String type, JSONObject actionObj) {
