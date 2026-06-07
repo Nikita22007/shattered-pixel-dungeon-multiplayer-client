@@ -227,6 +227,12 @@ public class ParseThread implements Callable<String> {
         boolean isFirstPacket = !firstPacketReceived;
         firstPacketReceived = true;
 
+        if (isConnectionRejectedPacket(data)) {
+            Client.disconnectWithoutSwitch();
+            returnToMainScreen(data.optString("message", "Connection rejected"));
+            return;
+        }
+
         if (isHandshakePacket(data)) {
             if (!isFirstPacket) {
                 Log.w("Parsing", "Late handshake packet ignored");
@@ -269,6 +275,10 @@ public class ParseThread implements Callable<String> {
 
     private boolean isHandshakePacket(JSONObject data) {
         return Protocol.PACKET_HANDSHAKE.equals(data.optString(Protocol.FIELD_PACKET_TYPE, ""));
+    }
+
+    private boolean isConnectionRejectedPacket(JSONObject data) {
+        return Protocol.PACKET_CONNECTION_REJECTED.equals(data.optString(Protocol.FIELD_PACKET_TYPE, ""));
     }
 
     private boolean isCompatibleHandshake(JSONObject data) {

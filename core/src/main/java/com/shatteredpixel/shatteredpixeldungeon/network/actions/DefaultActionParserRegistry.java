@@ -50,7 +50,6 @@ public class DefaultActionParserRegistry {
         ActionParserRegistry registry = new ActionParserRegistry();
         registry.register("sprite_action", new SpriteActionParser());
         registry.register("sprite_flash", new SpriteFlashParser());
-        registry.register("connection_rejected", new ConnectionRejectedParser());
         registry.register("show_status", new ShowStatusParser());
         registry.register("wound_visual", new WoundVisualParser());
         registry.register("ripple_visual", new RippleVisualParser());
