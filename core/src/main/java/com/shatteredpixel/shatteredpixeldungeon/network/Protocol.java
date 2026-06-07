@@ -6,7 +6,7 @@ public final class Protocol {
 
     public static final String FIELD_PACKET_TYPE = "packet_type";
     public static final String FIELD_PROTOCOL = "protocol";
-    public static final String FIELD_VERSION = "version";
+    public static final String FIELD_VERSION = "protocol_version";
     public static final String FIELD_SERVER_ID = "server_id";
 
     public static final String PACKET_HANDSHAKE = "handshake";
