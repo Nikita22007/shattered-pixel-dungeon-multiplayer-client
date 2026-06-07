@@ -26,27 +26,11 @@ public class HeroPatchParser implements ActionParser {
         JSONObject heroObj = action;
         Hero hero = Dungeon.hero;
         if (hero == null) {
-            if (!heroObj.has("actor_id")) {
-                return;
-            }
-            Dungeon.hero = new Hero();
-            hero = Dungeon.hero;
-            hero.changeID(heroObj.getInt("actor_id"));
-            Actor.add(hero);
-        } else {
-            if (heroObj.has("actor_id")) {
-                Actor.remove(hero);
-                hero.changeID(heroObj.getInt("actor_id"));
-                Actor.add(hero);
-            }
+            return;
         }
         for (Iterator<String> it = heroObj.keys(); it.hasNext(); ) {
             String token = it.next();
             switch (token) {
-                case "actor_id": {
-                    //parsed before
-                    break;
-                }
                 case "strength": {
                     hero.STR = heroObj.getInt(token);
                     break;

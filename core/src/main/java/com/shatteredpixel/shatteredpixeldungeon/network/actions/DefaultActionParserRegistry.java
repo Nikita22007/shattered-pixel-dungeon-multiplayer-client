@@ -98,6 +98,7 @@ public class DefaultActionParserRegistry {
         registry.register("buff_update", new BuffUpdateParser());
         registry.register("buff_remove", new BuffRemoveParser());
         registry.register("hero_patch", new HeroPatchParser());
+        registry.register("change_hero_actor_id", new ChangeHeroActorIdParser());
         registry.register("hero_ready", new HeroReadyParser());
         registry.register("hero_gold", new HeroGoldParser());
         registry.register("hero_uuid", new HeroUUIDParser());
