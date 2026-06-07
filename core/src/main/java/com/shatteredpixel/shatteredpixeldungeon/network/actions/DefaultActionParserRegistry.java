@@ -54,7 +54,6 @@ public class DefaultActionParserRegistry {
         registry.register("show_status", new ShowStatusParser());
         registry.register("show_banner", new BannerParser());
         registry.register("visual_show_banner", new BannerParser());
-        registry.register("lightning_visual", new LightningVisualParser());
         registry.register("wound_visual", new WoundVisualParser());
         registry.register("ripple_visual", new RippleVisualParser());
         registry.register("missile_sprite_visual", new MissileSpriteVisualParser());
@@ -145,12 +144,6 @@ public class DefaultActionParserRegistry {
     private static class BannerParser implements ActionParser {
         public void parse(ParseThread parseThread, JSONObject action) {
             parseThread.parseBannerShowAction(action);
-        }
-    }
-
-    private static class LightningVisualParser implements ActionParser {
-        public void parse(ParseThread parseThread, JSONObject action) {
-            parseThread.parseLightningVisualAction(action);
         }
     }
 
