@@ -25,11 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDAction;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.journal.RemoteJournal;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.effects.BadgeBanner;
@@ -40,6 +35,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.CustomCharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
+import com.shatteredpixel.shatteredpixeldungeon.ui.Button;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
@@ -50,13 +46,16 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.watabou.input.KeyBindings;
 import com.watabou.input.KeyEvent;
 import com.watabou.noosa.BitmapText;
+import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
+import com.watabou.noosa.PointerArea;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.Visual;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.ui.Component;
-import com.watabou.utils.Reflection;
+import com.watabou.input.PointerEvent;
 
-import java.util.Collection;
+import java.util.ArrayList;
 
 public class WndJournal extends WndTabbed {
 
@@ -627,8 +626,8 @@ public class WndJournal extends WndTabbed {
 
 		private RenderedTextBlock title;
 
-		private ScrollingGridPane badgesLocal;
-		private ScrollingGridPane badgesGlobal;
+		private Component badgesLocal;
+		private Component badgesGlobal;
 
 		public static boolean global = false;
 
@@ -658,7 +657,7 @@ public class WndJournal extends WndTabbed {
 				btnGlobal.icon(Icons.BADGES.get());
 				add(btnGlobal);
 
-				badgesLocal = new ScrollingGridPane();
+				badgesLocal = remoteBadgesComponent(childTabAt(RemoteJournal.findTab("badges"), 0), true);
 				add( badgesLocal );
 			} else {
 				title = PixelScene.renderTextBlock(Messages.get(this, "title_main_menu"), 9);
@@ -666,7 +665,7 @@ public class WndJournal extends WndTabbed {
 				add(title);
 			}
 
-			badgesGlobal = new ScrollingGridPane();
+			badgesGlobal = remoteBadgesComponent(childTabAt(RemoteJournal.findTab("badges"), 1), false);
 			add( badgesGlobal );
 		}
 
@@ -688,11 +687,6 @@ public class WndJournal extends WndTabbed {
 		}
 
 		private void updateList(){
-			RemoteJournal.Tab tab = RemoteJournal.findTab("badges");
-			if (badgesLocal != null) {
-				addGridEntries(badgesLocal, childTabAt(tab, 0));
-			}
-			addGridEntries(badgesGlobal, childTabAt(tab, 1));
 			if (btnLocal != null) {
 				badgesLocal.visible = badgesLocal.active = !global;
 				badgesGlobal.visible = badgesGlobal.active = global;
@@ -704,6 +698,237 @@ public class WndJournal extends WndTabbed {
 			}
 		}
 
+	}
+
+	private static Component remoteBadgesComponent(RemoteJournal.Tab tab, boolean local) {
+		if (local && tab != null && tab.entries.size() <= 8) {
+			return new RemoteBadgesList(tab);
+		}
+		return new RemoteBadgesGrid(tab);
+	}
+
+	private static class RemoteBadgesGrid extends Component {
+
+		private final ArrayList<RemoteBadgeButton> badgeButtons = new ArrayList<>();
+
+		private RemoteBadgesGrid(RemoteJournal.Tab tab) {
+			super();
+			if (tab == null) {
+				return;
+			}
+			for (RemoteJournal.Entry entry : tab.entries) {
+				if (!"header".equals(entry.kind)) {
+					RemoteBadgeButton button = new RemoteBadgeButton(entry);
+					add(button);
+					badgeButtons.add(button);
+				}
+			}
+		}
+
+		@Override
+		protected void layout() {
+			super.layout();
+			if (badgeButtons.isEmpty()) {
+				return;
+			}
+			float badgeArea = (float) Math.sqrt(width * height / badgeButtons.size());
+			int nCols = Math.max(1, Math.round(width / badgeArea));
+			int nRows = (int) Math.ceil(badgeButtons.size() / (float) nCols);
+
+			float badgeWidth = width() / nCols;
+			float badgeHeight = height() / nRows;
+
+			for (int i = 0; i < badgeButtons.size(); i++) {
+				int row = i / nCols;
+				int col = i % nCols;
+				RemoteBadgeButton button = badgeButtons.get(i);
+				button.setPos(
+						left() + col * badgeWidth + (badgeWidth - button.width()) / 2,
+						top() + row * badgeHeight + (badgeHeight - button.height()) / 2);
+				PixelScene.align(button);
+			}
+		}
+	}
+
+	private static class RemoteBadgesList extends ScrollPane {
+
+		private final ArrayList<ListItem> items = new ArrayList<>();
+
+		private RemoteBadgesList(RemoteJournal.Tab tab) {
+			super(new Component());
+			if (tab == null) {
+				return;
+			}
+			for (RemoteJournal.Entry entry : tab.entries) {
+				if (!"header".equals(entry.kind)) {
+					ListItem item = new ListItem(entry);
+					content.add(item);
+					items.add(item);
+				}
+			}
+		}
+
+		@Override
+		protected void layout() {
+			float pos = 0;
+			for (ListItem item : items) {
+				item.setRect(0, pos, width, ListItem.HEIGHT);
+				pos += ListItem.HEIGHT;
+			}
+			content.setSize(width, pos);
+			super.layout();
+		}
+
+		@Override
+		public void onClick(float x, float y) {
+			for (ListItem item : items) {
+				if (item.onClick(x, y)) {
+					break;
+				}
+			}
+		}
+
+		private static class ListItem extends Component {
+
+			private static final float HEIGHT = 18;
+
+			private final RemoteJournal.Entry entry;
+			private Image icon;
+			private RenderedTextBlock label;
+
+			private ListItem(RemoteJournal.Entry entry) {
+				super();
+				this.entry = entry;
+				icon.copy(remoteIcon(entry.icon));
+				label.text(entry.title.resolve());
+			}
+
+			@Override
+			protected void createChildren() {
+				icon = new Image();
+				add(icon);
+
+				label = PixelScene.renderTextBlock(6);
+				add(label);
+			}
+
+			@Override
+			protected void layout() {
+				icon.x = x;
+				icon.y = y + (height - icon.height) / 2;
+				PixelScene.align(icon);
+
+				label.setPos(
+						icon.x + icon.width + 2,
+						y + (height - label.height()) / 2
+				);
+				PixelScene.align(label);
+			}
+
+			private boolean onClick(float x, float y) {
+				if (inside(x, y)) {
+					Sample.INSTANCE.play(Assets.Sounds.CLICK, 0.7f, 0.7f, 1.2f);
+					Game.scene().addToFront(new RemoteBadgeWindow(entry));
+					return true;
+				}
+				return false;
+			}
+		}
+	}
+
+	private static class RemoteBadgeButton extends Button {
+
+		private final RemoteJournal.Entry entry;
+		private Image icon;
+
+		private RemoteBadgeButton(RemoteJournal.Entry entry) {
+			super();
+			this.entry = entry;
+
+			icon = remoteIcon(entry.icon);
+			if (!entry.seen) {
+				icon.brightness(0.4f);
+			}
+			add(icon);
+			setSize(icon.width(), icon.height());
+		}
+
+		@Override
+		protected void layout() {
+			super.layout();
+
+			icon.x = x + (width - icon.width()) / 2;
+			icon.y = y + (height - icon.height()) / 2;
+		}
+
+		@Override
+		protected void onClick() {
+			Sample.INSTANCE.play(Assets.Sounds.CLICK, 0.7f, 0.7f, 1.2f);
+			Game.scene().addToFront(new RemoteBadgeWindow(entry));
+		}
+
+		@Override
+		protected String hoverText() {
+			return entry.title.resolve();
+		}
+	}
+
+	private static class RemoteBadgeWindow extends Window {
+
+		private static final int MAX_WIDTH = 125;
+		private static final int MARGIN = 4;
+
+		private RemoteBadgeWindow(RemoteJournal.Entry entry) {
+			super();
+
+			Image icon = remoteIcon(entry.icon);
+			icon.scale.set(2);
+			if (!entry.seen) {
+				icon.brightness(0.4f);
+			}
+			add(icon);
+
+			RenderedTextBlock title = PixelScene.renderTextBlock(entry.title.resolve(), 9);
+			title.maxWidth(MAX_WIDTH - MARGIN * 2);
+			title.align(RenderedTextBlock.CENTER_ALIGN);
+			title.hardlight(entry.seen ? TITLE_COLOR : 0x888822);
+			add(title);
+
+			RenderedTextBlock info = PixelScene.renderTextBlock(entry.body.resolve(), 6);
+			info.maxWidth(MAX_WIDTH - MARGIN * 2);
+			info.align(RenderedTextBlock.CENTER_ALIGN);
+			if (!entry.seen) {
+				info.hardlight(0x888888);
+				info.setHightlighting(true, 0x888822);
+			}
+			add(info);
+
+			float w = Math.max(icon.width(), Math.max(title.width(), info.width())) + MARGIN * 2;
+
+			icon.x = (w - icon.width()) / 2f;
+			icon.y = MARGIN;
+			PixelScene.align(icon);
+
+			title.setPos((w - title.width()) / 2, icon.y + icon.height() + MARGIN);
+			PixelScene.align(title);
+
+			info.setPos((w - info.width()) / 2, title.bottom() + MARGIN);
+			PixelScene.align(info);
+			resize((int) w, (int) (info.bottom() + MARGIN));
+
+			if (entry.seen) {
+				BadgeBanner.highlight(icon, entry.icon.image);
+			}
+
+			PointerArea blocker = new PointerArea(0, 0, PixelScene.uiCamera.width, PixelScene.uiCamera.height) {
+				@Override
+				protected void onClick(PointerEvent event) {
+					onBackPressed();
+				}
+			};
+			blocker.camera = PixelScene.uiCamera;
+			add(blocker);
+		}
 	}
 
 	private static Visual remoteVisual(RemoteJournal.Icon icon) {

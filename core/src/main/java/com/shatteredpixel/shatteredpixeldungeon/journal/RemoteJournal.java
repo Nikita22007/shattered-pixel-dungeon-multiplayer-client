@@ -102,7 +102,7 @@ public class RemoteJournal {
 			secondIcon = obj.has("second_icon") && !obj.isNull("second_icon") ? new Icon(obj.getJSONObject("second_icon")) : null;
 			enabled = !obj.has("enabled") || obj.getBoolean("enabled");
 			seen = !obj.has("seen") || obj.getBoolean("seen");
-			read = obj.has("read") && obj.getBoolean("read");
+			read = !obj.has("read") || obj.getBoolean("read");
 			headerSize = obj.optInt("header_size", 7);
 			headerCenter = obj.optBoolean("header_center", false);
 			order = obj.optInt("order", 0);
