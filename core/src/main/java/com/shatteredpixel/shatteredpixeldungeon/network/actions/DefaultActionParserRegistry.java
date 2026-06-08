@@ -116,13 +116,13 @@ public class DefaultActionParserRegistry {
         register(registry, "cell_listener_prompt", 1, new CellListenerPromptParser());
         register(registry, "attack_indicator_target", 1, new AttackIndicatorTargetParser());
         register(registry, "resume_button_visible", 1, new ResumeButtonVisibleParser());
-        register(registry, "unlock_badge", 1, new UnlockBadgeParser());
         register(registry, "show_message", 1, new ShowMessageParser());
         register(registry, "window", 1, new WindowParser()); // Legacy
         register(registry, "plant_update", 1, new PlantUpdateParser());
         register(registry, "plant_remove", 1, new PlantRemoveParser());
         register(registry, "trap_update", 1, new TrapUpdateParser());
         register(registry, "trap_remove", 1, new TrapRemoveParser());
+        register(registry, "journal_snapshot", 1, new JournalSnapshotParser());
         register(registry, "texturepack", 1, new TexturePackParser());
         return registry;
     }

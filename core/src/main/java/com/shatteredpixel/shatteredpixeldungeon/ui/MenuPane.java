@@ -347,40 +347,10 @@ public class MenuPane extends Component {
 
 		@Override
 		protected void onClick() {
-//
-//			time = 0;
-//			keyIcon.am = journalIcon.am = 1;
-//			if (flashingPage != null){
-//				if (flashingDoc == Document.ALCHEMY_GUIDE){
-//					WndJournal.last_index = 2;
-//					GameScene.show( new WndJournal() );
-//				} else if (flashingDoc.pageNames().contains(flashingPage)){
-//					if (flashingDoc == Document.ADVENTURERS_GUIDE){
-//						WndJournal.last_index = 1;
-//					} else if (flashingDoc.isLoreDoc()){
-//						WndJournal.last_index = 3;
-//						WndJournal.CatalogTab.currentItemIdx = 3;
-//					}
-//					GameScene.show( new WndStory( flashingDoc.pageSprite(flashingPage),
-//							flashingDoc.pageTitle(flashingPage),
-//							flashingDoc.pageBody(flashingPage) ){
-//						@Override
-//						public void hide() {
-//							super.hide();
-//							if (SPDSettings.intro()){
-//								GameScene.endIntro();
-//							}
-//						}
-//					});
-//					flashingDoc.readPage(flashingPage);
-//				} else {
-//					GameScene.show( new WndJournal() );
-//				}
-//				flashingPage = null;
-//			} else {
-//				GameScene.show( new WndJournal() );
-//			}
-			GameScene.show(new WndError("Journal is not yet implemented"));
+			time = 0;
+			keyIcon.am = journalIcon.am = 1;
+			flashingPage = null;
+			GameScene.show(new WndJournal());
 		}
 
 		@Override

@@ -54,6 +54,10 @@ public class Client extends Thread {
                     Charset.forName(CHARSET).newDecoder()
             );
             writer = new BufferedWriter(writeStream, BUFFER_SIZE);
+            com.shatteredpixel.shatteredpixeldungeon.journal.Catalog.reset();
+            com.shatteredpixel.shatteredpixeldungeon.journal.Bestiary.reset();
+            com.shatteredpixel.shatteredpixeldungeon.journal.Document.reset();
+            com.shatteredpixel.shatteredpixeldungeon.journal.Notes.reset();
             parceThread = new ParseThread(readStream, socket);
             client = new Client();
             client.setDaemon(true);
