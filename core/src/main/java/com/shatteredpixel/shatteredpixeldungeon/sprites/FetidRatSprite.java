@@ -56,7 +56,7 @@ public class FetidRatSprite extends MobSprite {
 	@Override
 	public void link( Char ch ) {
 		super.link( ch );
-		
+		if (true) return;
 		if (cloud == null) {
 			cloud = emitter();
 			cloud.pour( Speck.factory( Speck.STENCH ), 0.7f );
