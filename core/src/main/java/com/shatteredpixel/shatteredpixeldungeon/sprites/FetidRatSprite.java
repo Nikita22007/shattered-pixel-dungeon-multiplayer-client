@@ -28,8 +28,6 @@ import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.particles.Emitter;
 
 public class FetidRatSprite extends MobSprite {
-	
-	private Emitter cloud;
 
 	public FetidRatSprite() {
 		super();
@@ -51,34 +49,5 @@ public class FetidRatSprite extends MobSprite {
 		die.frames( frames, 43, 44, 45, 46 );
 
 		play( idle );
-	}
-	
-	@Override
-	public void link( Char ch ) {
-		super.link( ch );
-		if (true) return;
-		if (cloud == null) {
-			cloud = emitter();
-			cloud.pour( Speck.factory( Speck.STENCH ), 0.7f );
-		}
-	}
-	
-	@Override
-	public void update() {
-		
-		super.update();
-		
-		if (cloud != null) {
-			cloud.visible = visible;
-		}
-	}
-	
-	@Override
-	public void kill() {
-		super.kill();
-		
-		if (cloud != null) {
-			cloud.on = false;
-		}
 	}
 }
