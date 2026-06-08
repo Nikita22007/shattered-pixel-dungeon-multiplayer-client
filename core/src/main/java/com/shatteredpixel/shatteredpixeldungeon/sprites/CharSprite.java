@@ -50,10 +50,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.CharHealthIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.glwrap.Matrix;
 import com.watabou.glwrap.Vertexbuffer;
-import com.watabou.noosa.Camera;
-import com.watabou.noosa.Game;
-import com.watabou.noosa.MovieClip;
-import com.watabou.noosa.NoosaScript;
+import com.watabou.noosa.*;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.tweeners.AlphaTweener;
@@ -71,6 +68,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.Buffer;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.HashSet;
@@ -808,6 +806,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 				if (params.has("start_alpha")) {
 					sprite.alpha((float) params.getDouble("start_alpha"));
 				}
+				if (sprite.parent == null) break;
 				sprite.parent.add(new AlphaTweener(
 						sprite,
 						(float) params.getDouble("target_alpha"),
