@@ -291,18 +291,6 @@ public class WndJournal extends WndTabbed {
 		private RedButton[] pageButtons;
 		private static final int NUM_BUTTONS = 9;
 
-		private static final int[] sprites = {
-				ItemSpriteSheet.SEED_HOLDER,
-				ItemSpriteSheet.STONE_HOLDER,
-				ItemSpriteSheet.FOOD_HOLDER,
-				ItemSpriteSheet.POTION_HOLDER,
-				ItemSpriteSheet.SCROLL_HOLDER,
-				ItemSpriteSheet.BOMB_HOLDER,
-				ItemSpriteSheet.MISSILE_HOLDER,
-				ItemSpriteSheet.ELIXIR_HOLDER,
-				ItemSpriteSheet.SPELL_HOLDER
-		};
-
 		public static int currentPageIdx   = 0;
 
 		private IconTitle title;
@@ -324,8 +312,9 @@ public class WndJournal extends WndTabbed {
 					}
 				};
 				RemoteJournal.Entry entry = entryAt(tab, i);
-				if (entry != null && entry.enabled) {
+				if (entry != null) {
 					pageButtons[i].icon(remoteIcon(entry.icon));
+					pageButtons[i].enable(entry.enabled);
 				} else {
 					pageButtons[i].icon(new ItemSprite(ItemSpriteSheet.SOMETHING, null));
 					pageButtons[i].enable(false);
@@ -416,7 +405,7 @@ public class WndJournal extends WndTabbed {
 			content.clear();
 
 			title.visible = true;
-			title.icon(remoteIcon(page.icon));
+			title.icon(remoteIcon(page.titleIcon));
 			title.label(page.title.resolve());
 			title.setRect(0, 0, width(), 10);
 			content.add(title);

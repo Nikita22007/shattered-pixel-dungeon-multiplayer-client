@@ -86,6 +86,7 @@ public class RemoteJournal {
 		public final LocalizedString title;
 		public final LocalizedString body;
 		public final Icon icon;
+		public final Icon titleIcon;
 		public final Icon secondIcon;
 		public final boolean enabled;
 		public final boolean seen;
@@ -99,6 +100,7 @@ public class RemoteJournal {
 			title = parseText(obj, "title", LocalizedString.EMPTY);
 			body = parseText(obj, "body", LocalizedString.EMPTY);
 			icon = obj.has("icon") && !obj.isNull("icon") ? new Icon(obj.getJSONObject("icon")) : Icon.defaultIcon();
+			titleIcon = obj.has("title_icon") && !obj.isNull("title_icon") ? new Icon(obj.getJSONObject("title_icon")) : icon;
 			secondIcon = obj.has("second_icon") && !obj.isNull("second_icon") ? new Icon(obj.getJSONObject("second_icon")) : null;
 			enabled = !obj.has("enabled") || obj.getBoolean("enabled");
 			seen = !obj.has("seen") || obj.getBoolean("seen");
