@@ -322,7 +322,7 @@ public enum Music {
     }
 	public static abstract class MusicAction {
 
-		//Indicates which action related to music client should parese
+		//Indicates which action related to music client should parse
 		public abstract String musicActionType();
 
 		public void unpack(JSONObject object){};
