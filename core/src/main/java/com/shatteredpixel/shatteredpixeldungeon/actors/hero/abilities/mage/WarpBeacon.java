@@ -62,10 +62,9 @@ public class WarpBeacon extends ArmorAbility {
 
 	@Override
 	public String targetingPrompt() {
-        if (true
-                && Dungeon.hero.hasTalent(Talent.REMOTE_BEACON)){
-			return Messages.get(this, "prompt");
-		}
+        if (Dungeon.hero.hasTalent(Talent.REMOTE_BEACON)) {
+            return Messages.get(this, "prompt");
+        }
 		return super.targetingPrompt();
 	}
 

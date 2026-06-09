@@ -1099,8 +1099,7 @@ public class Hero extends Char {
 
 			if (heroClass != HeroClass.DUELIST
 					&& hasTalent(Talent.AGGRESSIVE_BARRIER)) {
-				if (true
-						&& (HP / (float) HT) <= 0.5f) {
+				if ((HP / (float) HT) <= 0.5f) {
 					int shieldAmt = 1 + 2 * pointsInTalent(Talent.AGGRESSIVE_BARRIER);
 					((Barrier) null).setShield(shieldAmt);
 					sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(shieldAmt), FloatingText.SHIELDING);

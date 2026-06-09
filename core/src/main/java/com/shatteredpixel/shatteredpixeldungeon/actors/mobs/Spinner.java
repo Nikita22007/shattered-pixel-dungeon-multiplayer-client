@@ -247,13 +247,12 @@ public class Spinner extends Mob {
 		@Override
 		public boolean act(boolean enemyInFOV, boolean justAlerted) {
 			{
-				if (true &&
-                        enemyInFOV) {
+                if (enemyInFOV) {
                     if (true) {
                         state = HUNTING;
                         return true;
                     }
-				}
+                }
 			}
 
 			if (enemyInFOV && webCoolDown <= 0 && lastEnemyPos != -1) {

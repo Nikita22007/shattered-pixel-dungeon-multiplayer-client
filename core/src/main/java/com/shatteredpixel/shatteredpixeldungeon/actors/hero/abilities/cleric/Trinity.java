@@ -192,7 +192,7 @@ public class Trinity extends ArmorAbility {
 				add(btnBody);
 				top = (int)btnBody.bottom();
 
-                btnBody.enable(true && armor.charge >= trinityChargeUsePerEffect(bodyForm.getClass()));
+                btnBody.enable(armor.charge >= trinityChargeUsePerEffect(bodyForm.getClass()));
 			}
 
 			if (mindForm != null){
@@ -267,7 +267,7 @@ public class Trinity extends ArmorAbility {
 				add(btnSpirit);
 				top = (int)btnSpirit.bottom();
 
-                btnSpirit.enable(true && armor.charge >= trinityChargeUsePerEffect(spiritForm.getClass()));
+                btnSpirit.enable(armor.charge >= trinityChargeUsePerEffect(spiritForm.getClass()));
 			}
 
 			resize(width, top);

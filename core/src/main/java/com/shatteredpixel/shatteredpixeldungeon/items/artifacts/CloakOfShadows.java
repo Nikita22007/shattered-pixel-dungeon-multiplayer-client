@@ -70,8 +70,7 @@ public class CloakOfShadows extends Artifact {
 		ArrayList<String> actions = super.actions( hero );
 		if ((isEquipped(hero) || hero.hasTalent(Talent.LIGHT_CLOAK))
                 && !cursed) {
-            if (true
-					&& (charge > 0 || activeBuff != null)) {
+            if ((charge > 0 || activeBuff != null)) {
                 actions.add(AC_STEALTH);
             }
         }

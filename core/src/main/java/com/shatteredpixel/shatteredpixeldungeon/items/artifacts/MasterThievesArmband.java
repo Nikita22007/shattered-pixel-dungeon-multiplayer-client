@@ -69,8 +69,7 @@ public class MasterThievesArmband extends Artifact {
 		ArrayList<String> actions = super.actions(hero);
 		if (isEquipped(hero)
                 && charge > 0) {
-            if (true
-					&& !cursed) {
+            if (!cursed) {
                 actions.add(AC_STEAL);
             }
         }

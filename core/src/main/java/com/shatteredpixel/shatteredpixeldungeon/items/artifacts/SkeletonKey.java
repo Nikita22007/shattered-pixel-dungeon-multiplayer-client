@@ -80,10 +80,9 @@ public class SkeletonKey extends Artifact {
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
 		if (isEquipped(hero)) {
-            if (true
-                    && !cursed) {
-                actions.add(AC_INSERT);
-            }
+			if (!cursed) {
+				actions.add(AC_INSERT);
+			}
         }
 		return actions;
 	}
@@ -425,22 +424,21 @@ public class SkeletonKey extends Artifact {
 		public boolean act() {
 			if (charge < chargeCap
                     && !cursed) {
-                if (true
-                        && Regeneration.regenOn()) {
+				if (Regeneration.regenOn()) {
 //120 turns to charge at full, 60 turns to charge at 0/8
-                    float chargeGain = 1 / (120f - (chargeCap - charge) * 7.5f);
-                    chargeGain *= RingOfEnergy.artifactChargeMultiplier(target);
-                    partialCharge += chargeGain;
+					float chargeGain = 1 / (120f - (chargeCap - charge) * 7.5f);
+					chargeGain *= RingOfEnergy.artifactChargeMultiplier(target);
+					partialCharge += chargeGain;
 
-                    while (partialCharge >= 1) {
-                        partialCharge--;
-                        charge++;
+					while (partialCharge >= 1) {
+						partialCharge--;
+						charge++;
 
-                        if (charge == chargeCap) {
-                            partialCharge = 0;
-                        }
-                    }
-                }
+						if (charge == chargeCap) {
+							partialCharge = 0;
+						}
+					}
+				}
             }
 
 			updateQuickslot();
