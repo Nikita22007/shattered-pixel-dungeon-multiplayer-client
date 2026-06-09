@@ -195,10 +195,6 @@ public class Buff extends Actor {
 		return null;
 	}
 
-	public static<T extends CounterBuff> T count( Char target, Class<T> buffclass, float count ) {
-		return null;
-	}
-
 	//network
 	public static Dictionary<Integer, Buff> all_buffs = new Hashtable<>();
 	public static void detach(int id) {

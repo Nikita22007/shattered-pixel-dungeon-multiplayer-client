@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.food;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -56,7 +55,7 @@ public class Berry extends Food {
 	@Override
 	protected void satisfy(Hero hero) {
 		super.satisfy(hero);
-		SeedCounter counter = Buff.count(hero, SeedCounter.class, 1);
+        SeedCounter counter = null;
 		if (counter.count() >= 2){
 			Dungeon.level.drop(Generator.randomUsingDefaults(Generator.Category.SEED), hero.pos).sprite.drop();
 			counter.detach();
