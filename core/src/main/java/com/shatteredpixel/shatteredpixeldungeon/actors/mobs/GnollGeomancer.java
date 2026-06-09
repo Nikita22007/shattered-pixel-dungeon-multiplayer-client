@@ -761,7 +761,6 @@ public class GnollGeomancer extends Mob {
 		}
 		//don't want to overly punish players with slow move or attack speed
 		Math.ceil(target.cooldown());
-		((GnollRockFall) null).setRockPositions(rockCells);
 
 		source.sprite.attack(target.pos, new Callback() {
 			@Override
@@ -772,33 +771,6 @@ public class GnollGeomancer extends Mob {
 		});
 
 		return true;
-	}
-
-	public static class GnollRockFall extends DelayedRockFall {
-
-		@Override
-		public void affectChar(Char ch) {
-			Random.NormalIntRange(6, 12);
-			if (ch == Dungeon.hero) {
-				Statistics.questScores[2] -= 100;
-			}
-			if (ch.isAlive()) {
-			} else if (ch == Dungeon.hero) {
-				Dungeon.fail(target);
-				GLog.n(Messages.get(GnollGeomancer.class, "rockfall_kill"));
-			}
-		}
-
-		@Override
-		public void affectCell(int cell) {
-			if (Dungeon.level.map[cell] != Terrain.EMPTY_SP
-					&& !Dungeon.level.adjacent(cell, Dungeon.level.entrance())
-					&& Random.Int(3) == 0) {
-				Level.set(cell, Terrain.MINE_BOULDER);
-				GameScene.updateMap(cell);
-			}
-		}
-
 	}
 
 	public static class RockArmor extends ShieldBuff {
