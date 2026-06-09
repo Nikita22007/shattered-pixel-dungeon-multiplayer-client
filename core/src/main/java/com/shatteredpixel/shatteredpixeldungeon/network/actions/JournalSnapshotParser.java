@@ -10,7 +10,7 @@ import org.json.JSONObject;
 public class JournalSnapshotParser implements ActionParser {
 	@Override
 	public void parse(ParseThread parseThread, JSONObject action) throws JSONException {
-		RemoteJournal.update(DefaultActionParserRegistry.payloadObject(action));
+		RemoteJournal.patch(DefaultActionParserRegistry.payloadObject(action));
 		WndJournal.refreshNotes();
 	}
 }

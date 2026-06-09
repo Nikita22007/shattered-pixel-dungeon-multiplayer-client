@@ -4,6 +4,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.nikita22007.multiplayer.utils.text.LocalizedString;
 import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
+import com.shatteredpixel.shatteredpixeldungeon.network.JSONObjectDiff;
 import com.shatteredpixel.shatteredpixeldungeon.network.text.LocalizedStringParser;
 
 import org.jetbrains.annotations.Contract;
@@ -24,6 +25,7 @@ public class RemoteJournal {
 	private static final ArrayList<Tab> tabs = new ArrayList<>();
 	@NotNull
 	private static final LocalizedStringParser TEXT_PARSER = new LocalizedStringParser();
+	private static JSONObject currentJournalJson = null;
 
 	@Contract(pure = true)
 	public static boolean hasData() {
@@ -46,11 +48,21 @@ public class RemoteJournal {
 	}
 
 	public static void update(@NotNull JSONObject payload) throws JSONException {
+		currentJournalJson = payload;
 		tabs.clear();
 		JSONArray tabArray = payload.getJSONArray("tabs");
 		for (int i = 0; i < tabArray.length(); i++) {
 			tabs.add(new Tab(tabArray.getJSONObject(i)));
 		}
+	}
+
+	public static void patch(@NotNull JSONObject patch) throws JSONException {
+		if (currentJournalJson == null) {
+			currentJournalJson = new JSONObject();
+		}
+		patch.remove("action_name");
+		JSONObjectDiff.applyPatch(currentJournalJson, patch);
+		update(currentJournalJson);
 	}
 
 	public static class Tab {
@@ -84,6 +96,7 @@ public class RemoteJournal {
 	}
 
 	public static class Entry {
+		public final String id;
 		public final String kind;
 		public final LocalizedString title;
 		public final LocalizedString body;
@@ -99,6 +112,7 @@ public class RemoteJournal {
 		public final ArrayList<RemoteRecipe> recipes = new ArrayList<>();
 
 		Entry(@NotNull JSONObject obj) throws JSONException {
+			id = JsonStringHelper.optString(obj, "id", "");
 			kind = JsonStringHelper.optString(obj, "kind", "item");
 			title = parseText(obj, "title", LocalizedString.EMPTY);
 			body = parseText(obj, "body", LocalizedString.EMPTY);
