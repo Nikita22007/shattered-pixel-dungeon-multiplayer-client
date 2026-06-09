@@ -28,6 +28,8 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.utils.Bundle;
 
+import java.util.HashSet;
+
 public class Barkskin extends Buff {
 	
 	{
@@ -118,7 +120,7 @@ public class Barkskin extends Buff {
 
 	public static int currentLevel(Char ch ){
 		int level = 0;
-		for (Barkskin b : ch.buffs(Barkskin.class)){
+        for (Barkskin b : new HashSet<Barkskin>()){
 			level = Math.max(level, b.level);
 		}
 		return level;
@@ -126,7 +128,7 @@ public class Barkskin extends Buff {
 
 	//reset if a matching buff exists, otherwise append
 	public static void conditionallyAppend(Char ch, int level, int interval){
-		for (Barkskin b : ch.buffs(Barkskin.class)){
+        for (Barkskin b : new HashSet<Barkskin>()){
 			if (b.interval == interval){
 				b.set(level, interval);
 				return;

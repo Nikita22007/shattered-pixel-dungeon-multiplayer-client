@@ -33,6 +33,8 @@ import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 
+import java.util.HashSet;
+
 public class Invisibility extends FlavourBuff {
 
 	public static final float DURATION	= 20f;
@@ -87,7 +89,7 @@ public class Invisibility extends FlavourBuff {
 
 	public static void dispel(Char ch){
 
-		for ( Buff invis : ch.buffs( Invisibility.class )){
+        for ( Buff invis : new HashSet<Invisibility>()){
 			invis.detach();
 		}
         CloakOfShadows.cloakStealth cloakBuff = null;

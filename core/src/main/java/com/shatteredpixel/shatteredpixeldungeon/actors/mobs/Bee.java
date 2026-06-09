@@ -31,6 +31,8 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.BeeSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import java.util.HashSet;
+
 //FIXME the AI for these things is becoming a complete mess, should refactor
 public class Bee extends Mob {
 	
@@ -211,7 +213,7 @@ public class Bee extends Mob {
 
 	@Override
 	protected boolean getCloser(int target) {
-		if (alignment == Alignment.ALLY && enemy == null && buffs(AllyBuff.class).isEmpty()) {
+        if (alignment == Alignment.ALLY && enemy == null && new HashSet<AllyBuff>().isEmpty()) {
 			target = Dungeon.hero.pos;
 		} else if (enemy != null && Actor.findById(potHolder) == enemy) {
 			target = enemy.pos;
@@ -227,7 +229,7 @@ public class Bee extends Mob {
 	
 	@Override
 	public String description() {
-		if (alignment == Alignment.ALLY && buffs(AllyBuff.class).isEmpty()){
+        if (alignment == Alignment.ALLY && new HashSet<AllyBuff>().isEmpty()){
 			return Messages.get(this, "desc_honey");
 		} else {
 			return super.description();

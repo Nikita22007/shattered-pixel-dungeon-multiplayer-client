@@ -479,7 +479,7 @@ public abstract class Mob extends Char {
 		if (Dungeon.level.adjacent( pos, enemy.pos )){
 			return true;
 		}
-		for (ChampionEnemy buff : buffs(ChampionEnemy.class)){
+		for (ChampionEnemy buff : new HashSet<ChampionEnemy>()){
 			if (buff.canAttackWithExtraReach( enemy )){
 				return true;
 			}
@@ -1049,7 +1049,7 @@ public abstract class Mob extends Char {
 	public String info(){
 		String desc = description();
 
-		for (Buff b : buffs(ChampionEnemy.class)){
+		for (Buff b : new HashSet<ChampionEnemy>()){
 			desc += "\n\n_" + Messages.titleCase(b.name()) + "_\n" + b.desc();
 		}
 

@@ -417,7 +417,7 @@ public abstract class Char extends Actor {
 				}
 			}
 
-			for (ChampionEnemy buff : buffs(ChampionEnemy.class)){
+			for (ChampionEnemy buff : new HashSet<ChampionEnemy>()){
 				dmg *= buff.meleeDamageFactor();
 			}
 
@@ -632,7 +632,7 @@ public abstract class Char extends Actor {
 		if (null != null) acuRoll *= 1.25f;
 		if (null != null) acuRoll *= 0.8f;
 		if (null != null) acuRoll *= 0.5f;
-		for (ChampionEnemy buff : attacker.buffs(ChampionEnemy.class)){
+		for (ChampionEnemy buff : new HashSet<ChampionEnemy>()){
 			acuRoll *= buff.evasionAndAccuracyFactor();
 		}
 		acuRoll *= AscensionChallenge.statModifier(attacker);
@@ -648,7 +648,7 @@ public abstract class Char extends Actor {
 		if (null != null) defRoll *= 1.25f;
 		if (null != null) defRoll *= 0.8f;
 		if (null != null) defRoll *= 0.5f;
-		for (ChampionEnemy buff : defender.buffs(ChampionEnemy.class)){
+		for (ChampionEnemy buff : new HashSet<ChampionEnemy>()){
 			defRoll *= buff.evasionAndAccuracyFactor();
 		}
 		defRoll *= AscensionChallenge.statModifier(defender);
@@ -699,7 +699,7 @@ public abstract class Char extends Actor {
 	// atm attack is always post-armor and defence is already pre-armor
 	
 	public int attackProc( Char enemy, int damage ) {
-		for (ChampionEnemy buff : buffs(ChampionEnemy.class)){
+		for (ChampionEnemy buff : new HashSet<ChampionEnemy>()){
 			buff.onAttackProc( enemy );
 		}
 		return damage;
@@ -793,7 +793,7 @@ public abstract class Char extends Actor {
 
 		if (!(src instanceof LifeLink || src instanceof Hunger)) {
 			if (null != null) {
-				HashSet<LifeLink> links = buffs(LifeLink.class);
+				HashSet<LifeLink> links = new HashSet<>();
 				for (LifeLink link : links.toArray(new LifeLink[0])) {
 					if (Actor.findById(link.object) == null) {
 						links.remove(link);
@@ -891,7 +891,7 @@ public abstract class Char extends Actor {
 
 		//we ceil these specifically to favor the player vs. champ dmg reduction
 		// most important vs. giant champions in the earlygame
-		for (ChampionEnemy buff : buffs(ChampionEnemy.class)){
+		for (ChampionEnemy buff : new HashSet<ChampionEnemy>()){
 			dmg = (int) Math.ceil(dmg * buff.damageTakenFactor());
 		}
 		
@@ -1131,20 +1131,6 @@ public abstract class Char extends Actor {
 	public synchronized LinkedHashSet<Buff> buffs() {
 		return new LinkedHashSet<>(buffs);
 	}
-	
-	@SuppressWarnings("unchecked")
-	//returns all buffs assignable from the given buff class
-	public synchronized <T extends Buff> HashSet<T> buffs( Class<T> c ) {
-		HashSet<T> filtered = new HashSet<>();
-		for (Buff b : buffs) {
-			if (c.isInstance( b )) {
-				filtered.add( (T)b );
-			}
-		}
-		return filtered;
-	}
-
-	//returns an instance of the specific buff class, if it exists. Not just assignable
 
 	public synchronized boolean isCharmedBy( Char ch ) {
 		int chID = ch.id();
@@ -1203,7 +1189,7 @@ public abstract class Char extends Actor {
 	}
 	
 	public synchronized void remove( Class<? extends Buff> buffClass ) {
-		for (Buff buff : buffs( buffClass )) {
+		for (Buff buff : new HashSet<Buff>()) {
 			remove( buff );
 		}
 	}

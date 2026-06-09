@@ -77,6 +77,7 @@ import org.json.JSONArray;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Locale;
 
 public class GameScene extends PixelScene {
@@ -619,7 +620,7 @@ public class GameScene extends PixelScene {
 			}
 
 			for (Mob mob : Dungeon.level.mobs) {
-				if (!mob.buffs(ChampionEnemy.class).isEmpty()) {
+				if (!new HashSet<ChampionEnemy>().isEmpty()) {
 					GLog.w(Messages.get(ChampionEnemy.class, "warn"));
 				}
 			}
@@ -1418,7 +1419,7 @@ public class GameScene extends PixelScene {
 					}
 				}
 				if (mob instanceof Ghoul){
-					for (Ghoul.GhoulLifeLink link : mob.buffs(Ghoul.GhoulLifeLink.class)){
+					for (Ghoul.GhoulLifeLink link : new HashSet<Ghoul.GhoulLifeLink>()){
 						link.updateVisibility();
 					}
 				}

@@ -29,6 +29,8 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
 
+import java.util.HashSet;
+
 public class LifeLink extends FlavourBuff {
 
 	public int object = 0;
@@ -45,7 +47,7 @@ public class LifeLink extends FlavourBuff {
 		super.detach();
 		Char ch = (Char)Actor.findById(object);
 		if (!target.isActive() && ch != null){
-			for (LifeLink l : ch.buffs(LifeLink.class)){
+            for (LifeLink l : new HashSet<LifeLink>()){
 				if (l.object == target.id()){
 					l.detach();
 				}

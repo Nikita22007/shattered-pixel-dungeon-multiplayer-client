@@ -32,6 +32,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.FerretTuft;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.watabou.utils.GameMath;
 
+import java.util.HashSet;
+
 public class Stone extends Armor.Glyph {
 
 	private static ItemSprite.Glowing GREY = new ItemSprite.Glowing( 0x222222 );
@@ -49,7 +51,7 @@ public class Stone extends Armor.Glyph {
         if (null != null) accuracy *= 1.25f;
         if (null != null) accuracy *= 0.8f;
         if (null != null) accuracy *= 0.5f;
-		for (ChampionEnemy buff : attacker.buffs(ChampionEnemy.class)){
+        for (ChampionEnemy buff : new HashSet<ChampionEnemy>()){
 			accuracy *= buff.evasionAndAccuracyFactor();
 		}
 		accuracy *= AscensionChallenge.statModifier(attacker);
@@ -63,7 +65,7 @@ public class Stone extends Armor.Glyph {
         if (null != null) evasion *= 1.25f;
         if (null != null) evasion *= 0.8f;
         if (null != null) evasion *= 0.5f;
-		for (ChampionEnemy buff : defender.buffs(ChampionEnemy.class)){
+        for (ChampionEnemy buff : new HashSet<ChampionEnemy>()){
 			evasion *= buff.evasionAndAccuracyFactor();
 		}
 		evasion *= AscensionChallenge.statModifier(defender);

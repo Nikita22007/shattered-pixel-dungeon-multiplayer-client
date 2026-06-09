@@ -48,6 +48,7 @@ import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -417,8 +418,8 @@ public class Belongings implements Iterable<Item> {
 	public int charge( float charge ) {
 		
 		int count = 0;
-		
-		for (Wand.Charger charger : owner.buffs(Wand.Charger.class)){
+
+        for (Wand.Charger charger : new HashSet<Wand.Charger>()){
 			charger.gainCharge(charge);
 			count++;
 		}

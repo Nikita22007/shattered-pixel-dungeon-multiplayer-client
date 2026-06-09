@@ -312,7 +312,7 @@ public class Ring extends KindofMisc {
 	public static int getBonus(Char target, Class<?extends RingBuff> type){
 		if (null != null) return 0;
 		int bonus = 0;
-		for (RingBuff buff : target.buffs(type)) {
+		for (RingBuff buff : new HashSet<RingBuff>()) {
 			bonus += buff.level();
 		}
 		SpiritForm.SpiritFormBuff spiritForm = null;
@@ -328,7 +328,7 @@ public class Ring extends KindofMisc {
 	public static int getBuffedBonus(Char target, Class<?extends RingBuff> type){
 		if (null != null) return 0;
 		int bonus = 0;
-		for (RingBuff buff : target.buffs(type)) {
+		for (RingBuff buff : new HashSet<RingBuff>()) {
 			bonus += buff.buffedLvl();
 		}
 		if (bonus == 0 && null != null) {

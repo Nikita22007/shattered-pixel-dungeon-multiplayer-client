@@ -36,6 +36,8 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import java.util.HashSet;
+
 public class WandOfMagicMissile extends DamageWand {
 
 	{
@@ -63,7 +65,7 @@ public class WandOfMagicMissile extends DamageWand {
 			ch.sprite.burst(0xFFFFFFFF, buffedLvl() / 2 + 2);
 
 			//apply the magic charge buff if we have another wand in inventory of a lower level, or already have the buff
-			for (Wand.Charger wandCharger : curUser.buffs(Wand.Charger.class)){
+            for (Wand.Charger wandCharger : new HashSet<Charger>()){
                 if (wandCharger.wand().buffedLvl() < buffedLvl() || null != null){
                     ((MagicCharge) null).setup(this);
 					break;
@@ -76,7 +78,7 @@ public class WandOfMagicMissile extends DamageWand {
 	@Override
 	public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
 		SpellSprite.show(attacker, SpellSprite.CHARGE);
-		for (Wand.Charger c : attacker.buffs(Wand.Charger.class)){
+        for (Wand.Charger c : new HashSet<Charger>()){
 			if (c.wand() != this){
 				c.gainCharge(0.5f * procChanceMultiplier(attacker));
 			}

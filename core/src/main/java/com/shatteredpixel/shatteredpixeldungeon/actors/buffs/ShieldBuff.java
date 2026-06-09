@@ -29,6 +29,7 @@ import com.watabou.utils.Bundle;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 
 public abstract class ShieldBuff extends Buff {
 	
@@ -112,7 +113,7 @@ public abstract class ShieldBuff extends Buff {
 			return damage;
 		}
 
-		ArrayList<ShieldBuff> buffs = new ArrayList<>(target.buffs(ShieldBuff.class));
+        ArrayList<ShieldBuff> buffs = new ArrayList<>(new HashSet<ShieldBuff>());
 		if (!buffs.isEmpty()){
 			//sort in descending order based on shield use priority
 			Collections.sort(buffs, new Comparator<ShieldBuff>() {

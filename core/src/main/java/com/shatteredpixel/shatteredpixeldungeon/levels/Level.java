@@ -439,11 +439,11 @@ public abstract class Level implements Bundlable {
 			}
 		}
 		for (Mob m : mobs){
-			for (PinCushion b : m.buffs(PinCushion.class)){
+			for (PinCushion b : new HashSet<PinCushion>()){
 				items.addAll(b.getStuckItems());
 			}
 		}
-		for (HeavyBoomerang.CircleBack b : Dungeon.hero.buffs(HeavyBoomerang.CircleBack.class)){
+		for (HeavyBoomerang.CircleBack b : new HashSet<HeavyBoomerang.CircleBack>()){
 			if (b.activeDepth() == Dungeon.depth) items.add(b.cancel());
 		}
 		return items;
@@ -550,7 +550,7 @@ public abstract class Level implements Bundlable {
 
 		if (Dungeon.hero.isAlive() && mob.pos != -1 && PathFinder.distance[mob.pos] >= disLimit) {
 			GameScene.add( mob );
-			if (!mob.buffs(ChampionEnemy.class).isEmpty()){
+			if (!new HashSet<ChampionEnemy>().isEmpty()){
 				GLog.w(Messages.get(ChampionEnemy.class, "warn"));
 			}
 			return true;
@@ -1005,7 +1005,7 @@ public abstract class Level implements Bundlable {
 		int sense = 1;
 		//Currently only the hero can get mind vision
 		if (c.isAlive() && c == Dungeon.hero) {
-			for (Buff b : c.buffs( MindVision.class )) {
+			for (Buff b : new HashSet<MindVision>()) {
 				sense = Math.max( ((MindVision)b).distance, sense );
 			}
 			if (null != null){
@@ -1113,7 +1113,7 @@ public abstract class Level implements Bundlable {
 				}
 			}
 
-			for (TalismanOfForesight.CharAwareness a : c.buffs(TalismanOfForesight.CharAwareness.class)){
+			for (TalismanOfForesight.CharAwareness a : new HashSet<TalismanOfForesight.CharAwareness>()){
 				Char ch = (Char) Actor.findById(a.charID);
 				if (ch == null || !ch.isAlive()) {
 					continue;
@@ -1122,7 +1122,7 @@ public abstract class Level implements Bundlable {
 				for (int i : PathFinder.NEIGHBOURS9) heroMindFov[p+i] = true;
 			}
 
-			for (TalismanOfForesight.HeapAwareness h : c.buffs(TalismanOfForesight.HeapAwareness.class)){
+			for (TalismanOfForesight.HeapAwareness h : new HashSet<TalismanOfForesight.HeapAwareness>()){
 				if (Dungeon.depth != h.depth || Dungeon.branch != h.branch) continue;
 				for (int i : PathFinder.NEIGHBOURS9) heroMindFov[h.pos+i] = true;
 			}
@@ -1140,7 +1140,7 @@ public abstract class Level implements Bundlable {
 				}
 			}
 
-			for (RevealedArea a : c.buffs(RevealedArea.class)){
+			for (RevealedArea a : new HashSet<RevealedArea>()){
 				if (Dungeon.depth != a.depth || Dungeon.branch != a.branch) continue;
 				for (int i : PathFinder.NEIGHBOURS9) heroMindFov[a.pos+i] = true;
 			}

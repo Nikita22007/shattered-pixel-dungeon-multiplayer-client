@@ -36,6 +36,8 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import java.util.HashSet;
+
 public class Brute extends Mob {
 	
 	{
@@ -91,7 +93,7 @@ public class Brute extends Mob {
 				triggerEnrage();
 			}
 			if (rage == null){
-				for (BruteRage b : buffs(BruteRage.class)){
+                for (BruteRage b : new HashSet<BruteRage>()){
 					rage = b;
 				}
 			}

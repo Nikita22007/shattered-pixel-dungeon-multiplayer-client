@@ -67,6 +67,7 @@ import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public abstract class Wand extends Item {
 
@@ -844,7 +845,7 @@ public abstract class Wand extends Item {
 			if (Regeneration.regenOn())
 				partialCharge += (1f/turnsToCharge) * RingOfEnergy.wandChargeMultiplier(target);
 
-			for (Recharging bonus : target.buffs(Recharging.class)){
+			for (Recharging bonus : new HashSet<Recharging>()){
 				if (bonus != null && bonus.remainder() > 0f) {
 					partialCharge += CHARGE_BUFF_BONUS * bonus.remainder();
 				}
