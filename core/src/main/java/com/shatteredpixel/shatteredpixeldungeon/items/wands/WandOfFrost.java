@@ -69,30 +69,22 @@ public class WandOfFrost extends DamageWand {
 
 
 		Char ch = Actor.findChar(bolt.collisionPos);
-		if (ch != null){
+		if (ch != null) {
 
 			int damage = damageRoll();
-
-            if (null != null){
-				return; //do nothing, can't affect a frozen target
-			}
-            if (null != null){
-				//6.67% less damage per turn of chill remaining, to a max of 10 turns (50% dmg)
-                float chillturns = Math.min(10, ((Chill) null).cooldown());
-				damage = (int)Math.round(damage * Math.pow(0.9333f, chillturns));
-			} else {
-				ch.sprite.burst( 0xFF99CCFF, buffedLvl() / 2 + 2 );
+			{
+				ch.sprite.burst(0xFF99CCFF, buffedLvl() / 2 + 2);
 			}
 
 			wandProc(ch, chargesPerCast());
 			ch.damage(damage, this);
-			Sample.INSTANCE.play( Assets.Sounds.HIT_MAGIC, 1, 1.1f * Random.Float(0.87f, 1.15f) );
+			Sample.INSTANCE.play(Assets.Sounds.HIT_MAGIC, 1, 1.1f * Random.Float(0.87f, 1.15f));
 
-			if (ch.isAlive()){
+			if (ch.isAlive()) {
 				if (Dungeon.level.water[ch.pos])
-                    buffedLvl();
+					buffedLvl();
 				else
-                    buffedLvl();
+					buffedLvl();
 			}
 		}
 	}

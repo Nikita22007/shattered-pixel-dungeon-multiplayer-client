@@ -420,9 +420,6 @@ public abstract class Level implements Bundlable {
 	public void unseal(){
 		if (locked) {
 			locked = false;
-			if (null != null){
-				((LockedFloor) null).detach();
-			}
 		}
 	}
 
@@ -1006,10 +1003,7 @@ public abstract class Level implements Bundlable {
 		//Currently only the hero can get mind vision
 		if (c.isAlive() && c == Dungeon.hero) {
 			for (Buff b : new HashSet<MindVision>()) {
-				sense = Math.max( ((MindVision)b).distance, sense );
-			}
-			if (null != null){
-				sense = Math.max( MagicalSight.DISTANCE, sense );
+				sense = Math.max(((MindVision) b).distance, sense);
 			}
 		}
 		
@@ -1052,34 +1046,17 @@ public abstract class Level implements Bundlable {
 		//Currently only the hero can get mind vision or awareness
 		if (c.isAlive() && c == Dungeon.hero) {
 
-			if (heroMindFov == null || heroMindFov.length != length()){
+			if (heroMindFov == null || heroMindFov.length != length()) {
 				heroMindFov = new boolean[length];
 			} else {
 				BArray.setFalse(heroMindFov);
 			}
 
 			Dungeon.hero.mindVisionEnemies.clear();
-			if (null != null) {
-				for (Mob mob : mobs) {
-					if (mob instanceof Mimic && mob.alignment == Char.Alignment.NEUTRAL&& ((Mimic) mob).stealthy()){
-						continue;
-					}
-					for (int i : PathFinder.NEIGHBOURS9) {
-						heroMindFov[mob.pos + i] = true;
-					}
-				}
-			} else {
-
+			{
 				int mindVisRange = 0;
-				if (((Hero) c).hasTalent(Talent.HEIGHTENED_SENSES)){
-					mindVisRange = 1+((Hero) c).pointsInTalent(Talent.HEIGHTENED_SENSES);
-				}
-				if (null != null){
-					if (((Hero) c).heroClass == HeroClass.CLERIC){
-						mindVisRange = 4+4*((Hero) c).pointsInTalent(Talent.DIVINE_SENSE);
-					} else {
-						mindVisRange = 1+2*((Hero) c).pointsInTalent(Talent.DIVINE_SENSE);
-					}
+				if (((Hero) c).hasTalent(Talent.HEIGHTENED_SENSES)) {
+					mindVisRange = 1 + ((Hero) c).pointsInTalent(Talent.HEIGHTENED_SENSES);
 				}
 				mindVisRange = Math.max(mindVisRange, EyeOfNewt.mindVisionRange());
 
@@ -1093,7 +1070,7 @@ public abstract class Level implements Bundlable {
 
 				if (mindVisRange >= 1) {
 					for (Mob mob : mobs) {
-						if (mob instanceof Mimic && mob.alignment == Char.Alignment.NEUTRAL && ((Mimic) mob).stealthy()){
+						if (mob instanceof Mimic && mob.alignment == Char.Alignment.NEUTRAL && ((Mimic) mob).stealthy()) {
 							continue;
 						}
 						int p = mob.pos;
@@ -1106,48 +1083,41 @@ public abstract class Level implements Bundlable {
 				}
 			}
 
-			if (null != null) {
-				for (Heap heap : heaps.valueList()) {
-					int p = heap.pos;
-					for (int i : PathFinder.NEIGHBOURS9) heroMindFov[p+i] = true;
-				}
-			}
-
-			for (TalismanOfForesight.CharAwareness a : new HashSet<TalismanOfForesight.CharAwareness>()){
+			for (TalismanOfForesight.CharAwareness a : new HashSet<TalismanOfForesight.CharAwareness>()) {
 				Char ch = (Char) Actor.findById(a.charID);
 				if (ch == null || !ch.isAlive()) {
 					continue;
 				}
 				int p = ch.pos;
-				for (int i : PathFinder.NEIGHBOURS9) heroMindFov[p+i] = true;
+				for (int i : PathFinder.NEIGHBOURS9) heroMindFov[p + i] = true;
 			}
 
-			for (TalismanOfForesight.HeapAwareness h : new HashSet<TalismanOfForesight.HeapAwareness>()){
+			for (TalismanOfForesight.HeapAwareness h : new HashSet<TalismanOfForesight.HeapAwareness>()) {
 				if (Dungeon.depth != h.depth || Dungeon.branch != h.branch) continue;
-				for (int i : PathFinder.NEIGHBOURS9) heroMindFov[h.pos+i] = true;
+				for (int i : PathFinder.NEIGHBOURS9) heroMindFov[h.pos + i] = true;
 			}
 
-			for (Mob m : mobs){
+			for (Mob m : mobs) {
 				if (m instanceof WandOfWarding.Ward
 						|| m instanceof WandOfRegrowth.Lotus
 						|| m instanceof SpiritHawk.HawkAlly
-						|| null != null){
-					if (m.fieldOfView == null || m.fieldOfView.length != length()){
+						|| null != null) {
+					if (m.fieldOfView == null || m.fieldOfView.length != length()) {
 						m.fieldOfView = new boolean[length()];
-						Dungeon.level.updateFieldOfView( m, m.fieldOfView );
+						Dungeon.level.updateFieldOfView(m, m.fieldOfView);
 					}
 					BArray.or(heroMindFov, m.fieldOfView, heroMindFov);
 				}
 			}
 
-			for (RevealedArea a : new HashSet<RevealedArea>()){
+			for (RevealedArea a : new HashSet<RevealedArea>()) {
 				if (Dungeon.depth != a.depth || Dungeon.branch != a.branch) continue;
-				for (int i : PathFinder.NEIGHBOURS9) heroMindFov[a.pos+i] = true;
+				for (int i : PathFinder.NEIGHBOURS9) heroMindFov[a.pos + i] = true;
 			}
 
 			//set mind vision chars
 			for (Mob mob : mobs) {
-				if (heroMindFov[mob.pos] && !fieldOfView[mob.pos]){
+				if (heroMindFov[mob.pos] && !fieldOfView[mob.pos]) {
 					Dungeon.hero.mindVisionEnemies.add(mob);
 				}
 			}

@@ -213,18 +213,14 @@ public class Hero extends Char {
 		return 0;
 	}
 
-	public void updateHT( boolean boostHP ){
+	public void updateHT( boolean boostHP ) {
 		int curHT = HT;
-		
-		HT = 20 + 5*(lvl-1) + HTBoost;
+
+		HT = 20 + 5 * (lvl - 1) + HTBoost;
 		float multiplier = RingOfMight.HTMultiplier(this);
 		HT = Math.round(multiplier * HT);
 
-		if (null != null){
-			HT += ((ElixirOfMight.HTBoost) null).boost();
-		}
-		
-		if (boostHP){
+		if (boostHP) {
 			HP += Math.max(HT - curHT, 0);
 		}
 		HP = Math.min(HP, HT);
@@ -378,10 +374,8 @@ public class Hero extends Char {
 	}
 
 	@Override
-	public String name(){
-		if (null != null) {
-			return ((HeroDisguise) null).getDisguise().title();
-		} else {
+	public String name() {
+		{
 			return className();
 		}
 	}
@@ -438,25 +432,10 @@ public class Hero extends Char {
 	@Override
 	public String defenseVerb() {
 		Combo.ParryTracker parry = null;
-		if (parry != null){
+		if (parry != null) {
 			parry.parried = true;
-			if (null == null || ((Combo) null).getComboCount() < 9 || pointsInTalent(Talent.ENHANCED_COMBO) < 2){
+			if (null == null || ((Combo) null).getComboCount() < 9 || pointsInTalent(Talent.ENHANCED_COMBO) < 2) {
 				parry.detach();
-			}
-			return Messages.get(Monk.class, "parried");
-		}
-
-		if (null != null){
-			((RoundShield.GuardTracker) null).hasBlocked = true;
-			BuffIndicator.refreshHero();
-			Sample.INSTANCE.play(Assets.Sounds.HIT_PARRY, 1, Random.Float(0.96f, 1.05f));
-			return Messages.get(RoundShield.GuardTracker.class, "guarded");
-		}
-
-		if (null != null){
-			((MonkEnergy.MonkAbility.Focus.FocusBuff) null).detach();
-			if (sprite != null && sprite.visible) {
-				Sample.INSTANCE.play(Assets.Sounds.HIT_PARRY, 1, Random.Float(0.96f, 1.05f));
 			}
 			return Messages.get(Monk.class, "parried");
 		}
@@ -506,30 +485,23 @@ public class Hero extends Char {
 	}
 	
 	public float attackDelay() {
-		if (null != null){
-			((Talent.LethalMomentumTracker) null).detach();
-			return 0;
-		}
 
 		float delay = 1f;
 
-		 {
+		{
 			//Normally putting furor speed on unarmed attacks would be unnecessary
 			//But there's going to be that one guy who gets a furor+force ring combo
 			//This is for that one guy, you shall get your fists of fury!
 			float speed = RingOfFuror.attackSpeedMultiplier(this);
 
 			//ditto for furor + sword dance!
-			 if (null != null){
-				speed += 0.6f;
-			}
 
 			//and augments + brawler's stance! My goodness, so many options now compared to 2014!
-			if (RingOfForce.unarmedGetsWeaponAugment(this)){
-				delay = ((Weapon)belongings.weapon).augment.delayFactor(delay);
+			if (RingOfForce.unarmedGetsWeaponAugment(this)) {
+				delay = ((Weapon) belongings.weapon).augment.delayFactor(delay);
 			}
 
-			return delay/speed;
+			return delay / speed;
 		}
 	}
 
@@ -557,14 +529,10 @@ public class Hero extends Char {
 	
 	@Override
 	public boolean act() {
-		
+
 		//calls to dungeon.observe will also update hero's local FOV.
 		fieldOfView = Dungeon.level.heroFOV;
 
-		if (null != null){
-			((Endure.EndureTracker) null).endEnduring();
-		}
-		
 		if (!ready) {
 			//do a full observe (including fog update) if not resting.
 			if (!resting || null != null || null != null) {
@@ -574,87 +542,83 @@ public class Hero extends Char {
 				Dungeon.level.updateFieldOfView(this, fieldOfView);
 			}
 		}
-		
+
 		checkVisibleMobs();
 		BuffIndicator.refreshHero();
 		BuffIndicator.refreshBoss();
-		
+
 		if (paralysed > 0) {
-			
+
 			curAction = null;
-			
-			spendAndNext( TICK );
+
+			spendAndNext(TICK);
 			return false;
 		}
-		
+
 		boolean actResult;
 		if (curAction == null) {
-			
+
 			if (resting) {
-				spendConstant( TIME_TO_REST );
+				spendConstant(TIME_TO_REST);
 				next();
 			} else {
 				ready();
 			}
 
 			//if we just loaded into a level and have a search buff, make sure to process them
-			if(Actor.now() == 0){
-				if (null != null){
-					search(false);
-				} else {
-					if (null != null){
-						((TalismanOfForesight.Foresight) null).checkAwareness();
-					}
+			if (Actor.now() == 0) {
+				{
+
 				}
 			}
-			
+
 			actResult = false;
-			
+
 		} else {
-			
+
 			resting = false;
-			
+
 			ready = false;
-			
+
 			if (curAction instanceof HeroAction.Move) {
-				actResult = actMove( (HeroAction.Move)curAction );
-				
+				actResult = actMove((HeroAction.Move) curAction);
+
 			} else if (curAction instanceof HeroAction.Interact) {
-				actResult = actInteract( (HeroAction.Interact)curAction );
-				
+				actResult = actInteract((HeroAction.Interact) curAction);
+
 			} else if (curAction instanceof HeroAction.Buy) {
-				actResult = actBuy( (HeroAction.Buy)curAction );
-				
-			}else if (curAction instanceof HeroAction.PickUp) {
-				actResult = actPickUp( (HeroAction.PickUp)curAction );
-				
+				actResult = actBuy((HeroAction.Buy) curAction);
+
+			} else if (curAction instanceof HeroAction.PickUp) {
+				actResult = actPickUp((HeroAction.PickUp) curAction);
+
 			} else if (curAction instanceof HeroAction.OpenChest) {
-				actResult = actOpenChest( (HeroAction.OpenChest)curAction );
-				
+				actResult = actOpenChest((HeroAction.OpenChest) curAction);
+
 			} else if (curAction instanceof HeroAction.Unlock) {
 				actResult = actUnlock((HeroAction.Unlock) curAction);
-				
-			} else if (curAction instanceof HeroAction.Mine) {
-				actResult = actMine( (HeroAction.Mine)curAction );
 
-			}else if (curAction instanceof HeroAction.LvlTransition) {
-				actResult = actTransition( (HeroAction.LvlTransition)curAction );
-				
+			} else if (curAction instanceof HeroAction.Mine) {
+				actResult = actMine((HeroAction.Mine) curAction);
+
+			} else if (curAction instanceof HeroAction.LvlTransition) {
+				actResult = actTransition((HeroAction.LvlTransition) curAction);
+
 			} else if (curAction instanceof HeroAction.Attack) {
-				actResult = actAttack( (HeroAction.Attack)curAction );
-				
+				actResult = actAttack((HeroAction.Attack) curAction);
+
 			} else if (curAction instanceof HeroAction.Alchemy) {
-				actResult = actAlchemy( (HeroAction.Alchemy)curAction );
-				
+				actResult = actAlchemy((HeroAction.Alchemy) curAction);
+
 			} else {
 				actResult = false;
 			}
 		}
-		
-		if(hasTalent(Talent.BARKSKIN) && Dungeon.level.map[pos] == Terrain.FURROWED_GRASS){
-			Barkskin.conditionallyAppend(this, (lvl*pointsInTalent(Talent.BARKSKIN))/2, 1 );
+
+		if (hasTalent(Talent.BARKSKIN) && Dungeon.level.map[pos] == Terrain.FURROWED_GRASS) {
+			Barkskin.conditionallyAppend(this, (lvl * pointsInTalent(Talent.BARKSKIN)) / 2, 1);
 		}
-		
+
 		return actResult;
 	}
 	
@@ -1208,74 +1172,55 @@ public class Hero extends Char {
 			interrupt();
 		}
 
-		if (null != null){
-			GLog.w( Messages.get(this, "pain_resist") );
-		}
-
 		//temporarily assign to a float to avoid rounding a bunch
 		float damage = dmg;
 
 		Endure.EndureTracker endure = null;
-		if (!(src instanceof Char)){
+		if (!(src instanceof Char)) {
 			//reduce damage here if it isn't coming from a character (if it is we already reduced it)
-			if (endure != null){
+			if (endure != null) {
 				damage = endure.adjustDamageTaken(dmg);
 			}
 			//the same also applies to challenge scroll damage reduction
-			if (null != null){
-				damage *= 0.67f;
-			}
 			//and to monk meditate damage reduction
-			if (null != null){
-				damage *= 0.2f;
-			}
 		}
 
 		//unused, could be removed
 		CapeOfThorns.Thorns thorns = null;
 		if (thorns != null) {
-			damage = thorns.proc((int)damage, (src instanceof Char ? (Char)src : null),  this);
+			damage = thorns.proc((int) damage, (src instanceof Char ? (Char) src : null), this);
 		}
 
 		//TODO improve this when I have proper damage source logic
 
-		if (null != null){
-			if (pointsInTalent(Talent.IRON_STOMACH) == 1)       damage /= 4f;
-			else if (pointsInTalent(Talent.IRON_STOMACH) == 2)  damage = 0;
-		}
-
 		dmg = Math.round(damage);
 
 		//we ceil this one to avoid letting the player easily take 0 dmg from tenacity early
-		dmg = (int)Math.ceil(dmg * RingOfTenacity.damageMultiplier( this ));
+		dmg = (int) Math.ceil(dmg * RingOfTenacity.damageMultiplier(this));
 
 		int preHP = HP + shielding();
 		if (src instanceof Hunger) preHP -= shielding();
-		super.damage( dmg, src );
+		super.damage(dmg, src);
 		int postHP = HP + shielding();
 		if (src instanceof Hunger) postHP -= shielding();
 		int effectiveDamage = preHP - postHP;
 
 		if (effectiveDamage <= 0) return;
 
-		if (null != null){
-			((Challenge.DuelParticipant) null).addDamage(effectiveDamage);
-		}
-
 		//flash red when hit for serious damage.
-		float percentDMG = effectiveDamage / (float)preHP; //percent of current HP that was taken
-		float percentHP = 1 - ((HT - postHP) / (float)HT); //percent health after damage was taken
+		float percentDMG = effectiveDamage / (float) preHP; //percent of current HP that was taken
+		float percentHP = 1 - ((HT - postHP) / (float) HT); //percent health after damage was taken
 		// The flash intensity increases primarily based on damage taken and secondarily on missing HP.
 		float flashIntensity = 0.25f * (percentDMG * percentDMG) / percentHP;
 		//if the intensity is very low don't flash at all
-		if (flashIntensity >= 0.05f){
-			flashIntensity = Math.min(1/3f, flashIntensity); //cap intensity at 1/3
-			GameScene.flash( (int)(0xFF*flashIntensity) << 16 );
+		if (flashIntensity >= 0.05f) {
+			flashIntensity = Math.min(1 / 3f, flashIntensity); //cap intensity at 1/3
+			GameScene.flash((int) (0xFF * flashIntensity) << 16);
 			if (isAlive()) {
-				if (flashIntensity >= 1/6f) {
-					Sample.INSTANCE.play(Assets.Sounds.HEALTH_CRITICAL, 1/3f + flashIntensity * 2f);
+				if (flashIntensity >= 1 / 6f) {
+					Sample.INSTANCE.play(Assets.Sounds.HEALTH_CRITICAL, 1 / 3f + flashIntensity * 2f);
 				} else {
-					Sample.INSTANCE.play(Assets.Sounds.HEALTH_WARN, 1/3f + flashIntensity * 4f);
+					Sample.INSTANCE.play(Assets.Sounds.HEALTH_WARN, 1 / 3f + flashIntensity * 4f);
 				}
 				//hero gets interrupted on taking serious damage, regardless of any other factor
 				interrupt();
@@ -1440,13 +1385,9 @@ public class Hero extends Char {
 
 			float delay = 1;
 
-			if (null != null){
-				delay = 0;
-			}
-
 			if (Dungeon.level.pit[step] && !Dungeon.level.solid[step]
-					&& (!flying || null != null && ((Levitation) null).detachesWithinDelay(delay / speed()))){
-				if (!Chasm.jumpConfirmed){
+					&& (!flying || null != null && ((Levitation) null).detachesWithinDelay(delay / speed()))) {
+				if (!Chasm.jumpConfirmed) {
 					Chasm.heroJump(this);
 					interrupt();
 				} else {
@@ -1458,19 +1399,15 @@ public class Hero extends Char {
 				return false;
 			}
 
-			if (null != null){
-				((GreaterHaste) null).spendMove();
-			}
-
-			if (subClass == HeroSubClass.FREERUNNER){
+			if (subClass == HeroSubClass.FREERUNNER) {
 				((Momentum) null).gainStack();
 			}
-			
+
 			sprite.move(pos, step);
 			move(step);
 
-			spend( delay / speed() );
-			
+			spend(delay / speed());
+
 			search(false);
 
 			return true;
@@ -1517,24 +1454,6 @@ public class Hero extends Char {
 					i.onHeroGainExp(percent, this);
 				}
 			}
-			if (null != null){
-				((Talent.RejuvenatingStepsFurrow) null).countDown(percent*200f);
-				if (((Talent.RejuvenatingStepsFurrow) null).count() <= 0){
-					((Talent.RejuvenatingStepsFurrow) null).detach();
-				}
-			}
-			if (null != null){
-				((ElementalStrike.ElementalStrikeFurrowCounter) null).countDown(percent*20f);
-				if (((ElementalStrike.ElementalStrikeFurrowCounter) null).count() <= 0){
-					((ElementalStrike.ElementalStrikeFurrowCounter) null).detach();
-				}
-			}
-			if (null != null){
-				((HallowedGround.HallowedFurrowTracker) null).countDown(percent*100f);
-				if (((HallowedGround.HallowedFurrowTracker) null).count() <= 0){
-					((HallowedGround.HallowedFurrowTracker) null).detach();
-				}
-			}
 		}
 		
 		boolean levelUp = false;
@@ -1550,11 +1469,7 @@ public class Hero extends Char {
 				lvl++;
 				levelUp = true;
 
-				if (null != null){
-					((ElixirOfMight.HTBoost) null).onLevelUp();
-				}
-				
-				updateHT( true );
+				updateHT(true);
 				attackSkill++;
 				defenseSkill++;
 

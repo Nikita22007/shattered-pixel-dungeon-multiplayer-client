@@ -158,18 +158,7 @@ public class WandOfTransfusion extends DamageWand {
 
 	@Override
 	public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
-        if (null != null) {
-            if (((Charm) null).object == attacker.id()) {
-//grants a free use of the staff and shields self
-                freeCharge = true;
-                int shieldToGive = Math.round((2 * (5 + buffedLvl())) * procChanceMultiplier(attacker));
-                ((Barrier) null).setShield(shieldToGive);
-                attacker.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(shieldToGive), FloatingText.SHIELDING);
-                GLog.p(Messages.get(this, "charged"));
-                attacker.sprite.emitter().burst(BloodParticle.BURST, 20);
-            }
-        }
-	}
+    }
 
 	@Override
 	public void fx(Ballistica beam, Callback callback) {

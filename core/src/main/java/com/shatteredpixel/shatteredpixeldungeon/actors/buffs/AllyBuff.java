@@ -42,11 +42,8 @@ public abstract class AllyBuff extends Buff {
 
 	@Override
 	public boolean attachTo(Char target) {
-		if (super.attachTo(target)){
+		if (super.attachTo(target)) {
 			target.alignment = Char.Alignment.ALLY;
-			if (null != null){
-				((PinCushion) null).detach();
-			}
 			return true;
 		} else {
 			return false;

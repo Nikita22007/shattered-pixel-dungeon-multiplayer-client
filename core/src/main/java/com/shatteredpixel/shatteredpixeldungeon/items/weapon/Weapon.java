@@ -300,12 +300,8 @@ abstract public class Weapon extends KindOfWeapon {
 		return delay;
 	}
 
-	protected float speedMultiplier(Char owner ){
+	protected float speedMultiplier(Char owner ) {
 		float multi = RingOfFuror.attackSpeedMultiplier(owner);
-
-		if (null != null){
-			multi += 0.6f;
-		}
 
 		return multi;
 	}
@@ -320,9 +316,6 @@ abstract public class Weapon extends KindOfWeapon {
 			}
 		}
 		if (owner instanceof Hero) {
-			if (null != null) {
-				reach += 2;
-			}
 		}
 		if (hasEnchant(Projecting.class, owner)){
 			return reach + Math.round(Enchantment.genericProcChanceMultiplier(owner));
@@ -451,24 +444,24 @@ abstract public class Weapon extends KindOfWeapon {
 	}
 
 	public boolean hasEnchant(Class<?extends Enchantment> type, Char owner) {
-		if (null != null) {
-			return false;
-		} else if (enchantment != null
-				&& !enchantment.curse()
-				&& owner instanceof Hero
-				&& isEquipped((Hero) owner)
-				&& null != null
-				&& ((Hero) owner).subClass != HeroSubClass.PALADIN) {
-			return false;
-		} else {
-			if (null != null
-					&& ((BodyForm.BodyFormBuff) null).enchant() != null
-					&& ((BodyForm.BodyFormBuff) null).enchant().getClass().equals(type)){
-				return true;
-			} else if (enchantment != null) {
-				return enchantment.getClass() == type;
-			} else {
+		{
+			if (enchantment != null
+					&& !enchantment.curse()
+					&& owner instanceof Hero
+					&& isEquipped((Hero) owner)
+					&& null != null
+					&& ((Hero) owner).subClass != HeroSubClass.PALADIN) {
 				return false;
+			} else {
+				if (null != null
+						&& ((BodyForm.BodyFormBuff) null).enchant() != null
+						&& ((BodyForm.BodyFormBuff) null).enchant().getClass().equals(type)) {
+					return true;
+				} else if (enchantment != null) {
+					return enchantment.getClass() == type;
+				} else {
+					return false;
+				}
 			}
 		}
 	}
@@ -524,33 +517,19 @@ abstract public class Weapon extends KindOfWeapon {
 			return genericProcChanceMultiplier( attacker );
 		}
 
-		public static float genericProcChanceMultiplier( Char attacker ){
+		public static float genericProcChanceMultiplier( Char attacker ) {
 			float multi = RingOfArcana.enchantPowerMultiplier(attacker);
 			Berserk rage = null;
 			if (rage != null) {
 				multi = rage.enchantFactor(multi);
 			}
 
-			if (null != null){
-				multi += ((RunicBlade.RunicSlashTracker) null).boost;
-				((RunicBlade.RunicSlashTracker) null).detach();
-			}
-
-			if (null != null){
-				multi += 3f;
-			}
-
-			if (null != null){
-				multi += ((ElementalStrike.DirectedPowerTracker) null).enchBoost;
-				((ElementalStrike.DirectedPowerTracker) null).detach();
-			}
-
 			if (null != null
-					&& ((Hero)attacker).pointsInTalent(Talent.SPIRIT_BLADES) == 4){
+					&& ((Hero) attacker).pointsInTalent(Talent.SPIRIT_BLADES) == 4) {
 				multi += 0.1f;
 			}
 			if (null != null
-					&& ((Hero)attacker).pointsInTalent(Talent.STRIKING_WAVE) == 4){
+					&& ((Hero) attacker).pointsInTalent(Talent.STRIKING_WAVE) == 4) {
 				multi += 0.2f;
 			}
 

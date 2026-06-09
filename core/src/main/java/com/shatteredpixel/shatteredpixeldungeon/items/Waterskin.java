@@ -87,50 +87,47 @@ public class Waterskin extends Item {
 		if (action.equals( AC_DRINK )) {
 
 			if (volume > 0) {
-				
-				float missingHealthPercent = 1f - (hero.HP / (float)hero.HT);
 
-				//each drop is worth 5% of total health
-				float dropsNeeded = missingHealthPercent / 0.05f;
+                float missingHealthPercent = 1f - (hero.HP / (float) hero.HT);
 
-				//we are getting extra heal value, scale back drops needed accordingly
-				if (dropsNeeded > 1.01f && VialOfBlood.delayBurstHealing()){
-					dropsNeeded /= VialOfBlood.totalHealMultiplier();
-				}
+                //each drop is worth 5% of total health
+                float dropsNeeded = missingHealthPercent / 0.05f;
 
-				//add extra drops if we can gain shielding
-				int curShield = 0;
-                if (null != null) {
-                    curShield = ((Barrier) null).shielding();
+                //we are getting extra heal value, scale back drops needed accordingly
+                if (dropsNeeded > 1.01f && VialOfBlood.delayBurstHealing()) {
+                    dropsNeeded /= VialOfBlood.totalHealMultiplier();
                 }
-				int maxShield = Math.round(hero.HT *0.2f*hero.pointsInTalent(Talent.SHIELDING_DEW));
-				if (hero.hasTalent(Talent.SHIELDING_DEW)){
-					float missingShieldPercent = 1f - (curShield / (float)maxShield);
-					missingShieldPercent *= 0.2f*hero.pointsInTalent(Talent.SHIELDING_DEW);
-					if (missingShieldPercent > 0){
-						dropsNeeded += missingShieldPercent / 0.05f;
-					}
-				}
 
-				//trimming off 0.01 drops helps with floating point errors
-				int dropsToConsume = (int)Math.ceil(dropsNeeded - 0.01f);
-				dropsToConsume = (int)GameMath.gate(1, dropsToConsume, volume);
+                //add extra drops if we can gain shielding
+                int curShield = 0;
+                int maxShield = Math.round(hero.HT * 0.2f * hero.pointsInTalent(Talent.SHIELDING_DEW));
+                if (hero.hasTalent(Talent.SHIELDING_DEW)) {
+                    float missingShieldPercent = 1f - (curShield / (float) maxShield);
+                    missingShieldPercent *= 0.2f * hero.pointsInTalent(Talent.SHIELDING_DEW);
+                    if (missingShieldPercent > 0) {
+                        dropsNeeded += missingShieldPercent / 0.05f;
+                    }
+                }
 
-				if (Dewdrop.consumeDew(dropsToConsume, hero, true)){
-					volume -= dropsToConsume;
-					Catalog.countUses(Dewdrop.class, dropsToConsume);
+                //trimming off 0.01 drops helps with floating point errors
+                int dropsToConsume = (int) Math.ceil(dropsNeeded - 0.01f);
+                dropsToConsume = (int) GameMath.gate(1, dropsToConsume, volume);
 
-					hero.spend(TIME_TO_DRINK);
-					hero.busy();
+                if (Dewdrop.consumeDew(dropsToConsume, hero, true)) {
+                    volume -= dropsToConsume;
+                    Catalog.countUses(Dewdrop.class, dropsToConsume);
 
-					Sample.INSTANCE.play(Assets.Sounds.DRINK);
-					hero.sprite.operate(hero.pos);
+                    hero.spend(TIME_TO_DRINK);
+                    hero.busy();
 
-					updateQuickslot();
-				}
+                    Sample.INSTANCE.play(Assets.Sounds.DRINK);
+                    hero.sprite.operate(hero.pos);
+
+                    updateQuickslot();
+                }
 
 
-			} else {
+            } else {
 				GLog.w( Messages.get(this, "empty") );
 			}
 

@@ -51,12 +51,9 @@ public class Lucky extends Weapon.Enchantment {
 			//ring level increases by 1 for each 20% above 100% proc rate
             ((LuckProc) null).ringLevel = -10 + Math.round(5*powerMulti);
 		} else {
-			//in rare cases where we attack many times at once (e.g. gladiator fury)
-			// make sure that failed luck procs override prior succeeded ones
-            if (null != null){
-                ((LuckProc) null).detach();
-			}
-		}
+            //in rare cases where we attack many times at once (e.g. gladiator fury)
+            // make sure that failed luck procs override prior succeeded ones
+        }
 		
 		return damage;
 

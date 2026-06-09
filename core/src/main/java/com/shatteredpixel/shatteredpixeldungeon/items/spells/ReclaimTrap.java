@@ -77,10 +77,6 @@ public class ReclaimTrap extends TargetedSpell {
 			storedTrap = this.storedTrap;
 			this.storedTrap = null;
 		} else {
-			if (null != null){
-				storedTrap = ((ReclaimedTrap) null).trap;
-				((ReclaimedTrap) null).detach();
-			}
 		}
 		if (storedTrap == null) {
 			Trap t = Dungeon.level.traps.get(bolt.collisionPos);
@@ -121,9 +117,6 @@ public class ReclaimTrap extends TargetedSpell {
 			desc += "\n\n" + Messages.get(this, "desc_trap", Messages.get(storedTrap, "name"));
 		} else {
 			if (Dungeon.hero != null && Dungeon.hero.belongings.contains(this)) {
-				if (null != null) {
-					desc += "\n\n" + Messages.get(this, "desc_trap", Messages.get(((ReclaimedTrap) null).trap, "name"));
-				}
 			}
 		}
 		return desc;
@@ -147,9 +140,6 @@ public class ReclaimTrap extends TargetedSpell {
 			return COLORS[Reflection.newInstance(storedTrap).color];
 		} else {
 			if (Dungeon.hero != null && Dungeon.hero.belongings.contains(this)) {
-				if (null != null) {
-					return COLORS[Reflection.newInstance(((ReclaimedTrap) null).trap).color];
-				}
 			}
 		}
 		return null;

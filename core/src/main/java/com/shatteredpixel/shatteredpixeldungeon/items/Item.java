@@ -658,25 +658,22 @@ public class Item implements Bundlable {
 							new Callback() {
 						@Override
 						public void call() {
-							curUser = user;
-							Item i = Item.this.detach(user.belongings.backpack);
-							if (i != null) i.onThrow(cell);
-							if (curUser.hasTalent(Talent.IMPROVISED_PROJECTILES)
+                            curUser = user;
+                            Item i = Item.this.detach(user.belongings.backpack);
+                            if (i != null) i.onThrow(cell);
+                            if (curUser.hasTalent(Talent.IMPROVISED_PROJECTILES)
                                     && !(Item.this instanceof MissileWeapon)) {
-								{
-									if (enemy != null && enemy.alignment != curUser.alignment) {
-										Sample.INSTANCE.play(Assets.Sounds.HIT);
-										curUser.pointsInTalent(Talent.IMPROVISED_PROJECTILES);
-									}
-								}
-							}
-                            if (null != null){
-                                ((Talent.LethalMomentumTracker) null).detach();
-								user.next();
-							} else {
-								user.spendAndNext(delay);
-							}
-						}
+                                {
+                                    if (enemy != null && enemy.alignment != curUser.alignment) {
+                                        Sample.INSTANCE.play(Assets.Sounds.HIT);
+                                        curUser.pointsInTalent(Talent.IMPROVISED_PROJECTILES);
+                                    }
+                                }
+                            }
+                            {
+                                user.spendAndNext(delay);
+                            }
+                        }
 					});
 		} else {
 			((MissileSprite) user.sprite.parent.recycle(MissileSprite.class)).

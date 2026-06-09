@@ -121,11 +121,8 @@ public class AscendedForm extends ArmorAbility {
 			left--;
 			if (left <= 0){
 				detach();
-				for (Char ch : Actor.chars()){
-                    if (null != null){
-                        ((DivineIntervention.DivineShield) null).detach();
-					}
-				}
+				for (Char ch : Actor.chars()) {
+                }
 				return true;
 			}
 

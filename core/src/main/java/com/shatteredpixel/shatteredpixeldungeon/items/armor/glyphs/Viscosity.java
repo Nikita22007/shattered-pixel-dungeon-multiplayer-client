@@ -64,34 +64,31 @@ public class Viscosity extends Glyph {
 
 		private int level = 0;
 
-		public int deferDamage(int dmg){
-			//account for icon stomach (just skip the glyph)
-            if (null != null){
-				return dmg;
-			}
+		public int deferDamage(int dmg) {
+            //account for icon stomach (just skip the glyph)
 
-			int level = Math.max( 0, this.level );
+            int level = Math.max(0, this.level);
 
-			float percent = (level+1)/(float)(level+6);
-			percent *= genericProcChanceMultiplier(target);
+            float percent = (level + 1) / (float) (level + 6);
+            percent *= genericProcChanceMultiplier(target);
 
-			int amount;
-			if (percent > 1f){
-				dmg = Math.round(dmg / percent);
-				amount = dmg;
-			} else {
-				amount = (int)Math.ceil(dmg * percent);
-			}
+            int amount;
+            if (percent > 1f) {
+                dmg = Math.round(dmg / percent);
+                amount = dmg;
+            } else {
+                amount = (int) Math.ceil(dmg * percent);
+            }
 
-			if (amount > 0){
+            if (amount > 0) {
                 DeferedDamage deferred = null;
-				deferred.extend( amount );
+                deferred.extend(amount);
 
-				target.sprite.showStatus( CharSprite.WARNING, Messages.get(Viscosity.class, "deferred", amount) );
-			}
+                target.sprite.showStatus(CharSprite.WARNING, Messages.get(Viscosity.class, "deferred", amount));
+            }
 
-			return dmg - amount;
-		}
+            return dmg - amount;
+        }
 
 		@Override
 		public boolean act() {

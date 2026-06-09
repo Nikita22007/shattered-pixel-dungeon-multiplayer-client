@@ -190,31 +190,6 @@ public class Dart extends MissileWeapon {
 		//don't update xbow here, as dart may be the active weapon atm
 		processingChargedShot = true;
 		if (chargedShotPos != -1 && bow != null) {
-            if (null != null) {
-                PathFinder.buildDistanceMap(chargedShotPos, Dungeon.level.passable, 3);
-//necessary to clone as some on-hit effects use Pathfinder
-                int[] distance = PathFinder.distance.clone();
-                for (Char ch : Actor.chars()) {
-                    if (ch == target) {
-                        Actor.add(new Actor() {
-                            {
-                                actPriority = VFX_PRIO;
-                            }
-
-                            @Override
-                            protected boolean act() {
-                                if (!ch.isAlive()) {
-                                    bow.onAbilityKill(Dungeon.hero, ch);
-                                }
-                                Actor.remove(this);
-                                return true;
-                            }
-                        });
-                    } else if (distance[ch.pos] != Integer.MAX_VALUE) {
-                        proc(Dungeon.hero, ch, dmg);
-                    }
-                }
-            }
         }
 		chargedShotPos = -1;
 		processingChargedShot = false;
@@ -222,11 +197,8 @@ public class Dart extends MissileWeapon {
 
 	@Override
 	protected void decrementDurability() {
-		super.decrementDurability();
-        if (null != null) {
-            ((Crossbow.ChargedShot) null).detach();
-		}
-	}
+        super.decrementDurability();
+    }
 
 	@Override
 	public void throwSound() {

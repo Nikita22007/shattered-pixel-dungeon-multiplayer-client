@@ -42,12 +42,10 @@ public class Flash extends TargetedClericSpell {
 
 	@Override
 	public float chargeUse(Hero hero) {
-        if (null != null){
-            return 2 + ((AscendedForm.AscendBuff) null).flashCasts;
-		} else {
-			return 2;
-		}
-	}
+        {
+            return 2;
+        }
+    }
 
 	@Override
 	public boolean canCast(Hero hero) {

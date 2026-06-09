@@ -86,25 +86,22 @@ public class Hunger extends Buff implements Hero.Doom {
 			} else {
 
 				float hungerDelay = 1f;
-				if (null != null){
-					hungerDelay *= 1.5f;
-				}
 				hungerDelay /= SaltCube.hungerGainMultiplier();
 
-				float newLevel = level + (1f/hungerDelay);
+				float newLevel = level + (1f / hungerDelay);
 				if (newLevel >= STARVING) {
 
-					GLog.n( Messages.get(this, "onstarving") );
-					hero.damage( 1, this );
+					GLog.n(Messages.get(this, "onstarving"));
+					hero.damage(1, this);
 
 					hero.interrupt();
 					newLevel = STARVING;
 
 				} else if (newLevel >= HUNGRY && level < HUNGRY) {
 
-					GLog.w( Messages.get(this, "onhungry") );
+					GLog.w(Messages.get(this, "onhungry"));
 
-					if (!Document.ADVENTURERS_GUIDE.isPageRead(Document.GUIDE_FOOD)){
+					if (!Document.ADVENTURERS_GUIDE.isPageRead(Document.GUIDE_FOOD)) {
 						GameScene.flashForDocument(Document.ADVENTURERS_GUIDE, Document.GUIDE_FOOD);
 					}
 
@@ -135,11 +132,6 @@ public class Hunger extends Buff implements Hero.Doom {
 	public void affectHunger(float energy, boolean overrideLimits ) {
 		if (target == null) {detach(); return;}
 		if (energy < 0) {
-			if (null != null) {
-				((WellFed) null).left += energy;
-				BuffIndicator.refreshHero();
-				return;
-			}
 		}
 
 		float oldLevel = level;

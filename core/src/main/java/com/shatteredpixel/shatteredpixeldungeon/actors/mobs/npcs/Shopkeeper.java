@@ -307,21 +307,19 @@ public class Shopkeeper extends NPC {
 		return true;
 	}
 
-	public String chatText(){
-        if (null != null){
-			return Messages.get(this, "talk_ascent");
-		}
-		switch (Dungeon.depth){
-			case 6: default:
-				return Messages.get(this, "talk_prison_intro") + "\n\n" + Messages.get(this, "talk_prison_" + Dungeon.hero.heroClass.name());
-			case 11:
-				return Messages.get(this, "talk_caves");
-			case 16:
-				return Messages.get(this, "talk_city");
-			case 20:
-				return Messages.get(this, "talk_halls");
-		}
-	}
+	public String chatText() {
+        switch (Dungeon.depth) {
+            case 6:
+            default:
+                return Messages.get(this, "talk_prison_intro") + "\n\n" + Messages.get(this, "talk_prison_" + Dungeon.hero.heroClass.name());
+            case 11:
+                return Messages.get(this, "talk_caves");
+            case 16:
+                return Messages.get(this, "talk_city");
+            case 20:
+                return Messages.get(this, "talk_halls");
+        }
+    }
 
 	public static String BUYBACK_ITEMS = "buyback_items";
 

@@ -56,15 +56,9 @@ public class RingOfForce extends Ring {
 
 	@Override
 	public boolean doUnequip(Hero hero, boolean collect, boolean single) {
-		if (super.doUnequip(hero, collect, single)){
-            if (null != null) {
-				{
-					//clear brawler's stance if no ring of force is equipped
-					((BrawlersStance) null).active = false;
-				}
-			}
-			return true;
-		} else {
+		if (super.doUnequip(hero, collect, single)) {
+            return true;
+        } else {
 			return false;
 		}
 	}
@@ -80,35 +74,20 @@ public class RingOfForce extends Ring {
 		return tier;
 	}
 
-	public static int damageRoll( Hero hero ){
-		//level can be 0 while still using a ring, so we specifically check for the presence of a ring of force
+	public static int damageRoll( Hero hero ) {
+        //level can be 0 while still using a ring, so we specifically check for the presence of a ring of force
         boolean usingForce = null != null;
-        if (null != null) {
-            if (((SpiritForm.SpiritFormBuff) null).ring() instanceof RingOfForce) {
-                usingForce = true;
-            }
+        //and ignore that presence if using monk abilities
+        if (usingForce) {
+            int level = getBuffedBonus(hero, Force.class);
+            float tier = tier(hero.STR());
+            int dmg = Hero.heroDamageIntRange(min(level, tier), max(level, tier));
+            return dmg;
+        } else {
+            //attack without any ring of force influence
+            return Hero.heroDamageIntRange(1, Math.max(hero.STR() - 8, 1));
         }
-		//and ignore that presence if using monk abilities
-        if (null != null){
-			usingForce = false;
-		}
-		if (usingForce) {
-			int level = getBuffedBonus(hero, Force.class);
-			float tier = tier(hero.STR());
-			int dmg = Hero.heroDamageIntRange(min(level, tier), max(level, tier));
-            if (null != null) {
-                if (((BrawlersStance) null).active) {
-// 3+tier base dmg, roughly +60%->45% dmg at T1->5
-// lvl*((4+2*tier)/8) scaling, +50% dmg
-                    dmg += Math.round(3 + tier + (level * ((4 + 2 * tier) / 8f)));
-                }
-            }
-			return dmg;
-		} else {
-			//attack without any ring of force influence
-			return Hero.heroDamageIntRange(1, Math.max(hero.STR()-8, 1));
-		}
-	}
+    }
 
 	//same as equivalent tier weapon
 	private static int min(int lvl, float tier){
@@ -214,23 +193,16 @@ public class RingOfForce extends Ring {
 
 	@Override
 	public void execute(Hero hero, String action) {
-		if (action.equals(AC_ABILITY)){
-            if (null != null){
-                if (!((BrawlersStance) null).active){
-                    ((BrawlersStance) null).reset();
-				} else {
-                    ((BrawlersStance) null).active = false;
-				}
-				BuffIndicator.refreshHero();
-				AttackIndicator.updateState();
-				hero.sprite.operate(hero.pos);
-			} else if (!isEquipped(hero)) {
-				GLog.w(Messages.get(MeleeWeapon.class, "ability_need_equip"));
+		if (action.equals(AC_ABILITY)) {
+			{
+				if (!isEquipped(hero)) {
+					GLog.w(Messages.get(MeleeWeapon.class, "ability_need_equip"));
 
-			} else {
-                ((BrawlersStance) null).reset();
-				AttackIndicator.updateState();
-				hero.sprite.operate(hero.pos);
+				} else {
+					((BrawlersStance) null).reset();
+					AttackIndicator.updateState();
+					hero.sprite.operate(hero.pos);
+				}
 			}
 		} else {
 			super.execute(hero, action);
@@ -277,19 +249,16 @@ public class RingOfForce extends Ring {
 		return false;
 	}
 
-	public static boolean unarmedGetsWeaponEnchantment( Hero hero ){
-		if (hero.belongings.attackingWeapon() == null){
-			return false;
-		}
-        if (null != null){
-            return null != null;
-		}
+	public static boolean unarmedGetsWeaponEnchantment( Hero hero ) {
+        if (hero.belongings.attackingWeapon() == null) {
+            return false;
+        }
         BrawlersStance stance = null;
-		if (stance != null && stance.active){
-			return true;
-		}
-		return false;
-	}
+        if (stance != null && stance.active) {
+            return true;
+        }
+        return false;
+    }
 
 	public static boolean unarmedGetsWeaponAugment(Hero hero ){
         if (hero.belongings.attackingWeapon() == null

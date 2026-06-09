@@ -110,14 +110,12 @@ public class PrismaticGuard extends Buff {
 		powerOfManyTurns = 0;
 	}
 
-	public void set( PrismaticImage img){
-		this.HP = img.HP;
-        if (null != null){
-            powerOfManyTurns = ((PowerOfMany.PowerBuff) null).cooldown()+1;
-		} else {
-			powerOfManyTurns = 0;
-		}
-	}
+	public void set( PrismaticImage img) {
+        this.HP = img.HP;
+        {
+            powerOfManyTurns = 0;
+        }
+    }
 	
 	public int maxHP(){
 		return maxHP((Hero)target);

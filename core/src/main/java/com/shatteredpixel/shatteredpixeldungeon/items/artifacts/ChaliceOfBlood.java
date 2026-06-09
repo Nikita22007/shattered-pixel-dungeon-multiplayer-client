@@ -122,50 +122,44 @@ public class ChaliceOfBlood extends Artifact {
 		return (int)Math.floor(7 + 3.5f*(level()*level()));
 	}
 
-	private void prick(Hero hero){
-		int damage = Random.NormalIntRange(minPrickDmg(), maxPrickDmg());
+	private void prick(Hero hero) {
+        int damage = Random.NormalIntRange(minPrickDmg(), maxPrickDmg());
 
-		//need to process on-hit effects manually
+        //need to process on-hit effects manually
         Earthroot.Armor armor = null;
-		if (armor != null) {
-			damage = armor.absorb(damage);
-		}
-
-        if (null != null) {
-            if (null != null) {
-                damage -= hero.subClass == HeroSubClass.PALADIN ? 3 : 1;
-            }
+        if (armor != null) {
+            damage = armor.absorb(damage);
         }
 
         WandOfLivingEarth.RockArmor rockArmor = null;
-		if (rockArmor != null) {
-			damage = rockArmor.absorb(damage);
-		}
+        if (rockArmor != null) {
+            damage = rockArmor.absorb(damage);
+        }
 
-		damage -= hero.drRoll();
+        damage -= hero.drRoll();
 
-		hero.sprite.operate( hero.pos );
-		hero.busy();
-		hero.spend(Actor.TICK);
-		GLog.w( Messages.get(this, "onprick") );
-		if (damage <= 0){
-			damage = 1;
-		} else {
-			Sample.INSTANCE.play(Assets.Sounds.CURSED);
-			hero.sprite.emitter().burst( ShadowParticle.CURSE, 4+(damage/10) );
-		}
+        hero.sprite.operate(hero.pos);
+        hero.busy();
+        hero.spend(Actor.TICK);
+        GLog.w(Messages.get(this, "onprick"));
+        if (damage <= 0) {
+            damage = 1;
+        } else {
+            Sample.INSTANCE.play(Assets.Sounds.CURSED);
+            hero.sprite.emitter().burst(ShadowParticle.CURSE, 4 + (damage / 10));
+        }
 
-		hero.damage(damage, this);
+        hero.damage(damage, this);
 
-		if (!hero.isAlive()) {
-			Badges.validateDeathFromFriendlyMagic();
-			Dungeon.fail( this );
-			GLog.n( Messages.get(this, "ondeath") );
-		} else {
-			upgrade();
-			Catalog.countUse(getClass());
-		}
-	}
+        if (!hero.isAlive()) {
+            Badges.validateDeathFromFriendlyMagic();
+            Dungeon.fail(this);
+            GLog.n(Messages.get(this, "ondeath"));
+        } else {
+            upgrade();
+            Catalog.countUse(getClass());
+        }
+    }
 
 	@Override
 	public Item upgrade() {

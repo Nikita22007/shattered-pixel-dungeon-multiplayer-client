@@ -388,13 +388,10 @@ public class ElementalBlast extends ArmorAbility {
 							}
 
 						//*** Wand of Frost ***
-						} else if (finalWandCls == WandOfFrost.class){
-                            if (null != null) {
-                                ((Burning) null).detach();
-							}
+						} else if (finalWandCls == WandOfFrost.class) {
 
-						//*** Wand of Prismatic Light ***
-						} else if (finalWandCls == WandOfPrismaticLight.class){
+                            //*** Wand of Prismatic Light ***
+                        } else if (finalWandCls == WandOfPrismaticLight.class){
 							if (Dungeon.isChallenged(Challenges.DARKNESS)){
                             } else {
                             }

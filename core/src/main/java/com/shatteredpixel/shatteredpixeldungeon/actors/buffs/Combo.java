@@ -304,9 +304,6 @@ public class Combo extends Buff implements ActionIndicator.Action {
 		@Override
 		public void detach() {
 			if (!parried) {
-				if (null != null) {
-					((Combo) null).detach();
-				}
 			}
 			super.detach();
 		}
@@ -319,18 +316,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 
 		@Override
 		public boolean act() {
-			if (null != null) {
-				moveBeingUsed = ComboMove.PARRY;
-				target.sprite.attack(enemy.pos, new Callback() {
-					@Override
-					public void call() {
-						((Combo) null).doAttack(enemy);
-						next();
-					}
-				});
-				detach();
-				return false;
-			} else {
+			{
 				detach();
 				return true;
 			}
@@ -402,13 +388,12 @@ public class Combo extends Buff implements ActionIndicator.Action {
 							int aoeHit = Math.round(target.damageRoll() * 0.25f * count);
 							aoeHit /= 2;
 							aoeHit -= ch.drRoll();
-							if (null != null) aoeHit *= 1.33f;
 							ch.damage(aoeHit, target);
 							ch.sprite.bloodBurstA(target.sprite.center(), aoeHit);
 							ch.sprite.flash();
 
 							if (!ch.isAlive() && hero.hasTalent(Talent.LETHAL_DEFENSE)) {
-								((BrokenSeal.WarriorShield) null).reduceCooldown(hero.pointsInTalent(Talent.LETHAL_DEFENSE)/3f);
+								((BrokenSeal.WarriorShield) null).reduceCooldown(hero.pointsInTalent(Talent.LETHAL_DEFENSE) / 3f);
 							}
 						}
 					}

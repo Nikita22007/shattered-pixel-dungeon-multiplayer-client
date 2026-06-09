@@ -461,16 +461,13 @@ public class WandOfLivingEarth extends DamageWand {
 
 			@Override
 			public boolean act(boolean enemyInFOV, boolean justAlerted) {
-				if (!enemyInFOV){
-					((RockArmor) null).addArmor(wandLevel, HP);
-                    if (null != null){
-                        ((RockArmor) null).powerOfManyTurns = ((PowerOfMany.PowerBuff) null).cooldown()+1;
-					}
-					Dungeon.hero.sprite.centerEmitter().burst(MagicMissile.EarthParticle.ATTRACT, 8 + wandLevel/2);
-					destroy();
-					sprite.die();
-					return true;
-				} else {
+				if (!enemyInFOV) {
+                    ((RockArmor) null).addArmor(wandLevel, HP);
+                    Dungeon.hero.sprite.centerEmitter().burst(MagicMissile.EarthParticle.ATTRACT, 8 + wandLevel / 2);
+                    destroy();
+                    sprite.die();
+                    return true;
+                } else {
 					return super.act(enemyInFOV, justAlerted);
 				}
 			}

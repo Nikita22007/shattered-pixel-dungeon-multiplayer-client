@@ -192,31 +192,25 @@ public class ShardOfOblivion extends Trinket {
 		return lootChanceMultiplier(trinketLevel(ShardOfOblivion.class));
 	}
 
-	public static float lootChanceMultiplier(int level){
-		if (level < 0) return 1f;
+	public static float lootChanceMultiplier(int level) {
+        if (level < 0) return 1f;
 
-		int wornUnIDed = 0;
-		if (Dungeon.hero.belongings.weapon() != null && !Dungeon.hero.belongings.weapon().isIdentified()){
-			wornUnIDed++;
-		}
-		if (Dungeon.hero.belongings.armor() != null && !Dungeon.hero.belongings.armor().isIdentified()){
-			wornUnIDed++;
-		}
-		if (Dungeon.hero.belongings.ring() != null && !Dungeon.hero.belongings.ring().isIdentified()){
-			wornUnIDed++;
-		}
-		if (Dungeon.hero.belongings.misc() != null && !Dungeon.hero.belongings.misc().isIdentified()){
-			wornUnIDed++;
-		}
-        if (null != null){
-			wornUnIDed++;
-		}
-        if (null != null){
-			wornUnIDed++;
-		}
+        int wornUnIDed = 0;
+        if (Dungeon.hero.belongings.weapon() != null && !Dungeon.hero.belongings.weapon().isIdentified()) {
+            wornUnIDed++;
+        }
+        if (Dungeon.hero.belongings.armor() != null && !Dungeon.hero.belongings.armor().isIdentified()) {
+            wornUnIDed++;
+        }
+        if (Dungeon.hero.belongings.ring() != null && !Dungeon.hero.belongings.ring().isIdentified()) {
+            wornUnIDed++;
+        }
+        if (Dungeon.hero.belongings.misc() != null && !Dungeon.hero.belongings.misc().isIdentified()) {
+            wornUnIDed++;
+        }
 
-		wornUnIDed = Math.min(wornUnIDed, level+1);
-		return 1f + .2f*wornUnIDed;
+        wornUnIDed = Math.min(wornUnIDed, level + 1);
+        return 1f + .2f * wornUnIDed;
 
-	}
+    }
 }

@@ -57,21 +57,17 @@ public class Imp extends NPC {
 
 	@Override
 	protected boolean act() {
-        if (null != null){
-			die(null);
-			return true;
-		}
-		if (!Quest.given && Dungeon.level.visited[pos]) {
-			if (!seenBefore && Dungeon.level.heroFOV[pos]) {
-				yell(Messages.get(this, "hey", Messages.titleCase(Dungeon.hero.name())));
-				seenBefore = true;
-			}
-		} else {
-			seenBefore = false;
-		}
-		
-		return super.act();
-	}
+        if (!Quest.given && Dungeon.level.visited[pos]) {
+            if (!seenBefore && Dungeon.level.heroFOV[pos]) {
+                yell(Messages.get(this, "hey", Messages.titleCase(Dungeon.hero.name())));
+                seenBefore = true;
+            }
+        } else {
+            seenBefore = false;
+        }
+
+        return super.act();
+    }
 	
 	@Override
 	public int defenseSkill( Char enemy ) {

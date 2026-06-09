@@ -92,13 +92,11 @@ public class Flail extends MeleeWeapon {
 	}
 
 	@Override
-	protected int baseChargeUse(Hero hero, Char target){
-        if (null != null){
-			return 0;
-		} else {
-			return 1;
-		}
-	}
+	protected int baseChargeUse(Hero hero, Char target) {
+        {
+            return 1;
+        }
+    }
 
 	@Override
 	protected void duelistAbility(Hero hero, Integer target) {

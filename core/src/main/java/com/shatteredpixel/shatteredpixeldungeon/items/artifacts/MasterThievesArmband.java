@@ -79,33 +79,31 @@ public class MasterThievesArmband extends Artifact {
 
 	@Override
 	public void execute(Hero hero, String action) {
-		super.execute(hero, action);
+        super.execute(hero, action);
 
-        if (null != null) return;
+        if (action.equals(AC_STEAL)) {
 
-		if (action.equals(AC_STEAL)){
+            curUser = hero;
 
-			curUser = hero;
+            if (!isEquipped(hero)) {
+                GLog.i(Messages.get(Artifact.class, "need_to_equip"));
+                usesTargeting = false;
 
-			if (!isEquipped( hero )) {
-				GLog.i( Messages.get(Artifact.class, "need_to_equip") );
-				usesTargeting = false;
+            } else if (charge < 1) {
+                GLog.i(Messages.get(this, "no_charge"));
+                usesTargeting = false;
 
-			} else if (charge < 1) {
-				GLog.i( Messages.get(this, "no_charge") );
-				usesTargeting = false;
+            } else if (cursed) {
+                GLog.w(Messages.get(this, "cursed"));
+                usesTargeting = false;
 
-			} else if (cursed) {
-				GLog.w( Messages.get(this, "cursed") );
-				usesTargeting = false;
+            } else {
+                usesTargeting = true;
+                GameScene.selectCell(targeter);
+            }
 
-			} else {
-				usesTargeting = true;
-				GameScene.selectCell(targeter);
-			}
-
-		}
-	}
+        }
+    }
 
 	public CellSelector.Listener targeter = new CellSelector.Listener(){
 
@@ -149,9 +147,6 @@ public class MasterThievesArmband extends Artifact {
 							if (Dungeon.hero.lvl > ((Mob) ch).maxLvl + 2) {
 								lootChance = 0;
 							} else {
-                                if (null != null){
-                                    lootChance = 0;
-                                }
                             }
 
 							if (lootChance == 0){

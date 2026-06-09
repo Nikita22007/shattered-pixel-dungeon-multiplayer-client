@@ -81,16 +81,14 @@ public class TalismanOfForesight extends Artifact {
 
 	@Override
 	public void execute( Hero hero, String action ) {
-		super.execute(hero, action);
+        super.execute(hero, action);
 
-        if (null != null) return;
-
-		if (action.equals(AC_SCRY)){
-			if (!isEquipped(hero))  GLog.i( Messages.get(Artifact.class, "need_to_equip") );
-			else if (charge < 5)    GLog.i( Messages.get(this, "low_charge") );
-			else                    GameScene.selectCell(scry);
-		}
-	}
+        if (action.equals(AC_SCRY)) {
+            if (!isEquipped(hero)) GLog.i(Messages.get(Artifact.class, "need_to_equip"));
+            else if (charge < 5) GLog.i(Messages.get(this, "low_charge"));
+            else GameScene.selectCell(scry);
+        }
+    }
 
 	@Override
 	protected ArtifactBuff passiveBuff() {

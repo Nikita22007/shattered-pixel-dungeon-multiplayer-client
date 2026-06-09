@@ -223,9 +223,6 @@ public class Trinity extends ArmorAbility {
 
 				btnMind.enable(armor.charge >= trinityChargeUsePerEffect(mindForm.getClass()));
 				if (mindForm instanceof Wand) {
-                    if (null != null) {
-                        btnMind.enable(false);
-                    }
                 }
 			}
 

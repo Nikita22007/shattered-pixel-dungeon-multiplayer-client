@@ -165,10 +165,6 @@ public class Bee extends Mob {
                 }
 				for (Char ch : Actor.chars()) {
 					if (ch != this && fieldOfView[ch.pos] && Dungeon.level.distance(ch.pos, potPos) <= 3) {
-                        if (null != null) {
-                            state = HUNTING;
-                            return ch;
-                        }
                     }
 				}
 			}

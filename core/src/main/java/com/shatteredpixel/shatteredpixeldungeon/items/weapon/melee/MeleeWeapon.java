@@ -189,47 +189,42 @@ public class MeleeWeapon extends Weapon {
 		updateQuickslot();
 	}
 
-	protected void afterAbilityUsed( Hero hero ){
-		hero.belongings.abilityWeapon = null;
-		if (hero.hasTalent(Talent.PRECISE_ASSAULT)){
+	protected void afterAbilityUsed( Hero hero ) {
+        hero.belongings.abilityWeapon = null;
+        if (hero.hasTalent(Talent.PRECISE_ASSAULT)) {
             hero.cooldown();
         }
-		if (hero.hasTalent(Talent.VARIED_CHARGE)){
+        if (hero.hasTalent(Talent.VARIED_CHARGE)) {
             Talent.VariedChargeTracker tracker = null;
-			if (tracker == null || tracker.weapon == getClass() || tracker.weapon == null){
-				((Talent.VariedChargeTracker) null).weapon = getClass();
-			} else {
-				tracker.detach();
-				Charger charger = null;
-				charger.gainCharge(hero.pointsInTalent(Talent.VARIED_CHARGE) / 6f);
-				ScrollOfRecharging.charge(hero);
-			}
-		}
-		if (hero.hasTalent(Talent.COMBINED_LETHALITY)) {
+            if (tracker == null || tracker.weapon == getClass() || tracker.weapon == null) {
+                ((Talent.VariedChargeTracker) null).weapon = getClass();
+            } else {
+                tracker.detach();
+                Charger charger = null;
+                charger.gainCharge(hero.pointsInTalent(Talent.VARIED_CHARGE) / 6f);
+                ScrollOfRecharging.charge(hero);
+            }
+        }
+        if (hero.hasTalent(Talent.COMBINED_LETHALITY)) {
             Talent.CombinedLethalityAbilityTracker tracker = null;
-			if (tracker == null || tracker.weapon == this || tracker.weapon == null){
+            if (tracker == null || tracker.weapon == this || tracker.weapon == null) {
                 hero.cooldown();
                 ((Talent.CombinedLethalityAbilityTracker) null).weapon = this;
-			} else {
-				//we triggered the talent, so remove the tracker
-				tracker.detach();
-			}
-		}
-		if (hero.hasTalent(Talent.COMBINED_ENERGY)){
+            } else {
+                //we triggered the talent, so remove the tracker
+                tracker.detach();
+            }
+        }
+        if (hero.hasTalent(Talent.COMBINED_ENERGY)) {
             Talent.CombinedEnergyAbilityTracker tracker = null;
-			if (tracker == null || !tracker.monkAbilused){
+            if (tracker == null || !tracker.monkAbilused) {
                 ((Talent.CombinedEnergyAbilityTracker) null).wepAbilUsed = true;
-			} else {
-				tracker.wepAbilUsed = true;
-				((MonkEnergy) null).processCombinedEnergy(tracker);
-			}
-		}
-        if (null != null){
-			Charger charger = null;
-			charger.gainCharge(hero.pointsInTalent(Talent.COUNTER_ABILITY)*0.375f);
-            ((Talent.CounterAbilityTacker) null).detach();
-		}
-	}
+            } else {
+                tracker.wepAbilUsed = true;
+                ((MonkEnergy) null).processCombinedEnergy(tracker);
+            }
+        }
+    }
 
 	public static void onAbilityKill( Hero hero, Char killed ){
 		if (killed.alignment == Char.Alignment.ENEMY && hero.hasTalent(Talent.LETHAL_HASTE)){
@@ -423,22 +418,19 @@ public class MeleeWeapon extends Weapon {
 		@Override
 		public boolean act() {
 			if (charges < chargeCap()){
-				if (Regeneration.regenOn()){
-					//60 to 45 turns per charge
-					float chargeToGain = 1/(60f-1.5f*(chargeCap()-charges));
+				if (Regeneration.regenOn()) {
+                    //60 to 45 turns per charge
+                    float chargeToGain = 1 / (60f - 1.5f * (chargeCap() - charges));
 
-					//40 to 30 turns per charge for champion
-					if (Dungeon.hero.subClass == HeroSubClass.CHAMPION){
-						chargeToGain *= 1.5f;
-					}
+                    //40 to 30 turns per charge for champion
+                    if (Dungeon.hero.subClass == HeroSubClass.CHAMPION) {
+                        chargeToGain *= 1.5f;
+                    }
 
-					//50% slower charge gain with brawler's stance enabled, even if buff is inactive
-                    if (null != null){
-						chargeToGain *= 0.50f;
-					}
+                    //50% slower charge gain with brawler's stance enabled, even if buff is inactive
 
-					partialCharge += chargeToGain;
-				}
+                    partialCharge += chargeToGain;
+                }
 
 				int points = ((Hero)target).pointsInTalent(Talent.WEAPON_RECHARGING);
                 if (points > 0 && null != null || null != null){

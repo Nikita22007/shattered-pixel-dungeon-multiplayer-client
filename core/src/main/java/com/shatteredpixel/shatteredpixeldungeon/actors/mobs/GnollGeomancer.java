@@ -501,16 +501,9 @@ public class GnollGeomancer extends Mob {
 		if (state == SLEEPING){
 			return Messages.get(this, "desc_sleeping");
 		} else {
-			String desc = super.description();
-            if (null != null){
-				if (hasSapper()){
-					desc += "\n\n" + Messages.get(this, "desc_armor_sapper");
-				} else {
-					desc += "\n\n" + Messages.get(this, "desc_armor");
-				}
-			}
-			return desc;
-		}
+            String desc = super.description();
+            return desc;
+        }
 	}
 
 	@Override
@@ -567,11 +560,6 @@ public class GnollGeomancer extends Mob {
 				//use abilities more frequently on the enemy's initial approach or if sapper is alive
 				// but only if enemy isn't stunned, to prevent stunlocking
 				if ((Dungeon.level.distance(pos, enemy.pos) > 2 || hasSapper())) {
-                    if (null != null) {
-						{
-							abilityCooldown -= 1f;
-						}
-					}
                 }
 
 				if (hasSapper()){

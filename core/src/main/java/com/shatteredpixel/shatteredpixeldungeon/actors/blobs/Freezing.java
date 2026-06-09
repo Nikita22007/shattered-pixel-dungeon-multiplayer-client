@@ -37,11 +37,10 @@ public class Freezing extends Blob {
 	public static void freeze( int cell ){
 		Char ch = Actor.findChar( cell );
 		if (ch != null && !ch.isImmune(Freezing.class)) {
-			if (null != null){
-			} else {
+			{
 				Chill chill = null;
 				float turnsToAdd = Dungeon.level.water[cell] ? 5f : 3f;
-				if (chill != null){
+				if (chill != null) {
 					float chillToCap = Chill.DURATION - chill.cooldown();
 					chillToCap /= ch.resist(Chill.class); //account for resistance to chill
 					turnsToAdd = Math.min(turnsToAdd, chillToCap);
@@ -50,7 +49,7 @@ public class Freezing extends Blob {
 				}
 				if (chill != null
 						&& chill.cooldown() >= Chill.DURATION &&
-						!ch.isImmune(Frost.class)){
+						!ch.isImmune(Frost.class)) {
 				}
 			}
 		}

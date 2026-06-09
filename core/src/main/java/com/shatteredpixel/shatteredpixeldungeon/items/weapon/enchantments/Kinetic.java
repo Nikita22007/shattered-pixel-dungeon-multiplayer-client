@@ -37,18 +37,14 @@ public class Kinetic extends Weapon.Enchantment {
 	
 	@Override
 	public int proc(Weapon weapon, Char attacker, Char defender, int damage) {
-		
-		int conservedDamage = 0;
-        if (null != null) {
-            conservedDamage = ((ConservedDamage) null).damageBonus();
-            ((ConservedDamage) null).detach();
-		}
 
-		//use a tracker so that we can know the true final damage
+        int conservedDamage = 0;
+
+        //use a tracker so that we can know the true final damage
         ((KineticTracker) null).conservedDamage = conservedDamage;
-		
-		return damage + conservedDamage;
-	}
+
+        return damage + conservedDamage;
+    }
 	
 	@Override
 	public ItemSprite.Glowing glowing() {

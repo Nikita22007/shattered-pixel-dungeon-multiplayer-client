@@ -263,13 +263,9 @@ public class SpiritBow extends Weapon {
 
 	@Override
 	protected float speedMultiplier(Char owner) {
-		float speed = super.speedMultiplier(owner);
-        if (null != null){
-			// +33% speed to +50% speed, depending on talent points
-			speed += ((8 + ((Hero)owner).pointsInTalent(Talent.GROWING_POWER)) / 24f);
-		}
-		return speed;
-	}
+        float speed = super.speedMultiplier(owner);
+        return speed;
+    }
 
 	@Override
 	public int level() {
@@ -386,17 +382,14 @@ public class SpiritBow extends Weapon {
 				
 				final Char enemy = Actor.findChar( cell );
 				
-				if (enemy == null){
-                    if (null != null){
-                        ((Talent.LethalMomentumTracker) null).detach();
-						user.next();
-					} else {
+				if (enemy == null) {
+					{
 						user.spendAndNext(castDelay(user, cell));
 					}
 					sniperSpecial = false;
 					flurryCount = -1;
 
-					if (flurryActor != null){
+					if (flurryActor != null) {
 						flurryActor.next();
 						flurryActor = null;
 					}
@@ -442,10 +435,7 @@ public class SpiritBow extends Weapon {
 											});
 											curUser.next();
 										} else {
-                                            if (null != null){
-                                                ((Talent.LethalMomentumTracker) null).detach();
-												user.next();
-											} else {
+											{
 												user.spendAndNext(castDelay(user, cell));
 											}
 											sniperSpecial = false;

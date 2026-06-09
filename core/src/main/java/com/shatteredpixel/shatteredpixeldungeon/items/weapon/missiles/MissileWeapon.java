@@ -198,11 +198,6 @@ abstract public class MissileWeapon extends Weapon {
 	public float accuracyFactor(Char owner, Char target) {
 		float accFactor = super.accuracyFactor(owner, target);
 		if (owner instanceof Hero) {
-			if (null != null) {
-				if (((Momentum) null).freerunning()) {
-					accFactor *= 1f + 0.2f * ((Hero) owner).pointsInTalent(Talent.PROJECTILE_MOMENTUM);
-				}
-			}
 		}
 
 		accFactor *= adjacentAccFactor(owner, target);
@@ -396,14 +391,9 @@ abstract public class MissileWeapon extends Weapon {
 		int damage = augment.damageFactor(super.damageRoll( owner ));
 		
 		if (owner instanceof Hero) {
-			int exStr = ((Hero)owner).STR() - STRReq();
+			int exStr = ((Hero) owner).STR() - STRReq();
 			if (exStr > 0) {
-				damage += Hero.heroDamageIntRange( 0, exStr );
-			}
-			if (null != null) {
-				if (((Momentum) null).freerunning()) {
-					damage = Math.round(damage * (1f + 0.15f * ((Hero) owner).pointsInTalent(Talent.PROJECTILE_MOMENTUM)));
-				}
+				damage += Hero.heroDamageIntRange(0, exStr);
 			}
 		}
 		

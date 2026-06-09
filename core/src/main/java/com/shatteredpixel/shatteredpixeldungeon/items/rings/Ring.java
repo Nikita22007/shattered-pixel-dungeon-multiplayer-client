@@ -303,14 +303,10 @@ public class Ring extends KindofMisc {
 	@Override
 	public int buffedLvl() {
 		int lvl = super.buffedLvl();
-		if (null != null){
-			lvl++;
-		}
 		return lvl;
 	}
 
-	public static int getBonus(Char target, Class<?extends RingBuff> type){
-		if (null != null) return 0;
+	public static int getBonus(Char target, Class<?extends RingBuff> type) {
 		int bonus = 0;
 		for (RingBuff buff : new HashSet<RingBuff>()) {
 			bonus += buff.level();
@@ -319,14 +315,13 @@ public class Ring extends KindofMisc {
 		if (bonus == 0
 				&& spiritForm != null
 				&& spiritForm.ring() != null
-				&& spiritForm.ring().buffClass == type){
+				&& spiritForm.ring().buffClass == type) {
 			bonus += spiritForm.ring().soloBonus();
 		}
 		return bonus;
 	}
 
-	public static int getBuffedBonus(Char target, Class<?extends RingBuff> type){
-		if (null != null) return 0;
+	public static int getBuffedBonus(Char target, Class<?extends RingBuff> type) {
 		int bonus = 0;
 		for (RingBuff buff : new HashSet<RingBuff>()) {
 			bonus += buff.buffedLvl();

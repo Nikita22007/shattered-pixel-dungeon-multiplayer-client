@@ -231,13 +231,10 @@ public class ElementalStrike extends ArmorAbility {
 		float powerMulti = 1f + 0.30f*Dungeon.hero.pointsInTalent(Talent.STRIKING_FORCE);
 
 		//*** Kinetic ***
-		if (ench instanceof Kinetic){
-            if (null != null) {
-                storedKineticDamage = ((Kinetic.ConservedDamage) null).damageBonus();
-			}
+		if (ench instanceof Kinetic) {
 
-		//*** Blocking ***
-		} else if (ench instanceof Blocking){
+            //*** Blocking ***
+        } else if (ench instanceof Blocking){
 			if (targetsHit > 0){
 				int shield = Math.round(Math.round(6f*targetsHit*powerMulti));
 				((Barrier) null).setShield(Math.round(6f*targetsHit*powerMulti));
@@ -372,9 +369,6 @@ public class ElementalStrike extends ArmorAbility {
 			}
 			//clear stored damage if there was no primary target
 			if (primaryTarget == null) {
-                if (null != null) {
-                    ((Kinetic.ConservedDamage) null).detach();
-                }
             }
 
 		//*** Blooming ***

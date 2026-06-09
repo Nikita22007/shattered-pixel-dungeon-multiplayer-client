@@ -236,17 +236,14 @@ public class WildMagic extends ArmorAbility {
 			});
 			hero.next();
 		} else {
-            if (null != null) {
-                ((WildMagicTracker) null).detach();
-			}
-			Item.updateQuickslot();
-			Invisibility.dispel();
-			if (Random.Int(4) >= hero.pointsInTalent(Talent.CONSERVED_MAGIC)) {
-				hero.spendAndNext(Actor.TICK);
-			} else {
-				hero.next();
-			}
-		}
+            Item.updateQuickslot();
+            Invisibility.dispel();
+            if (Random.Int(4) >= hero.pointsInTalent(Talent.CONSERVED_MAGIC)) {
+                hero.spendAndNext(Actor.TICK);
+            } else {
+                hero.next();
+            }
+        }
 	}
 
 	@Override

@@ -188,14 +188,11 @@ public class WandOfFireblast extends DamageWand {
 
 					Char ch = Actor.findChar(defender.pos + i);
 					if (ch != null) {
-                        if (null != null) {
-                            ((Burning) null).detach();
-						}
-						if (ch.alignment == Char.Alignment.ENEMY) {
-							//damage of a 2-charge zap
-							ch.damage(Math.round(powerMulti*Random.NormalIntRange(2 + 2*buffedLvl(), 8 + 4*buffedLvl())), this);
-						}
-					}
+                        if (ch.alignment == Char.Alignment.ENEMY) {
+                            //damage of a 2-charge zap
+                            ch.damage(Math.round(powerMulti * Random.NormalIntRange(2 + 2 * buffedLvl(), 8 + 4 * buffedLvl())), this);
+                        }
+                    }
 				}
 			}
 

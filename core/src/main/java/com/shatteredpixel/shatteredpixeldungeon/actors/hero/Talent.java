@@ -777,10 +777,7 @@ public enum Talent {
 
 				//don't trigger on 1st intuition use
 				if (cls.equals(StoneOfIntuition.class)) {
-                    if (null != null) {
-                        return;
-                    }
-                }
+				}
 				// 10/15%
 				if (Random.Int(20) < 1 + hero.pointsInTalent(RECALL_INSCRIPTION)){
 					Reflection.newInstance(cls).collect();
@@ -857,18 +854,10 @@ public enum Talent {
 	public static int onAttackProc( Hero hero, Char enemy, int dmg ){
 
 		if (hero.hasTalent(Talent.PROVOKED_ANGER)) {
-            if (null != null) {
-                dmg += 1 + 2 * hero.pointsInTalent(Talent.PROVOKED_ANGER);
-                ((ProvokedAngerTracker) null).detach();
-            }
-        }
+		}
 
 		if (hero.hasTalent(Talent.LINGERING_MAGIC)) {
-            if (null != null) {
-                dmg += Random.IntRange(hero.pointsInTalent(Talent.LINGERING_MAGIC), 2);
-                ((LingeringMagicTracker) null).detach();
-            }
-        }
+		}
 
 		if (hero.hasTalent(Talent.SUCKER_PUNCH)
                 && enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)) {
@@ -881,13 +870,7 @@ public enum Talent {
 			if (hero.belongings.attackingWeapon() instanceof MissileWeapon) {
                 ((FollowupStrikeTracker) null).object = enemy.id();
 			} else {
-                if (null != null) {
-                    if (((FollowupStrikeTracker) null).object == enemy.id()) {
-                        dmg += 1 + hero.pointsInTalent(FOLLOWUP_STRIKE);
-                        ((FollowupStrikeTracker) null).detach();
-                    }
-                }
-            }
+			}
 		}
 
         if (null != null
@@ -911,12 +894,7 @@ public enum Talent {
                     ((DeadlyFollowupTracker) null).object = enemy.id();
 				}
 			} else {
-                if (null != null) {
-                    if (((DeadlyFollowupTracker) null).object == enemy.id()) {
-                        dmg = Math.round(dmg * (1.0f + .1f * hero.pointsInTalent(DEADLY_FOLLOWUP)));
-                    }
-                }
-            }
+			}
 		}
 
 		return dmg;

@@ -221,13 +221,11 @@ public class HeroSprite extends CharSprite implements ClassSprite, TieredSprite{
 		return tiers;
 	}
 
-	public static Image avatar( Hero hero ){
-        if (null != null){
-            return avatar(((HeroDisguise) null).getDisguise(), hero.tier());
-		} else {
-			return avatar(hero.heroClass, hero.tier());
-		}
-	}
+	public static Image avatar( Hero hero ) {
+        {
+            return avatar(hero.heroClass, hero.tier());
+        }
+    }
 	
 	public static Image avatar( HeroClass cl, int armorTier ) {
 		

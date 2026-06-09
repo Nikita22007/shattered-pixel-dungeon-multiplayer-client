@@ -114,29 +114,25 @@ public class BeaconOfReturning extends Spell {
 		super.doDrop(hero);
 	}
 	
-	private void setBeacon(Hero hero ){
-		if (returnDepth != -1){
+	private void setBeacon(Hero hero ) {
+		if (returnDepth != -1) {
 			Notes.remove(Notes.Landmark.BEACON_LOCATION, returnDepth);
 		}
-        if (null != null){
-            Notes.remove(Notes.Landmark.BEACON_LOCATION,
-					((BeaconTracker) null).returnDepth);
-		}
 
-        BeaconTracker tracker = null;
+		BeaconTracker tracker = null;
 		tracker.returnDepth = Dungeon.depth;
 		tracker.returnBranch = Dungeon.branch;
 		tracker.returnPos = hero.pos;
 
 		Notes.add(Notes.Landmark.BEACON_LOCATION, tracker.returnDepth);
-		
-		hero.spend( 1f );
+
+		hero.spend(1f);
 		hero.busy();
-		
-		GLog.i( Messages.get(this, "set") );
-		
-		hero.sprite.operate( hero.pos );
-		Sample.INSTANCE.play( Assets.Sounds.BEACON );
+
+		GLog.i(Messages.get(this, "set"));
+
+		hero.sprite.operate(hero.pos);
+		Sample.INSTANCE.play(Assets.Sounds.BEACON);
 		updateQuickslot();
 	}
 	

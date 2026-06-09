@@ -63,20 +63,7 @@ public class Crossbow extends MeleeWeapon {
 
 	@Override
 	public float accuracyFactor(Char owner, Char target) {
-        if (null != null){
-			Actor.add(new Actor() {
-				{ actPriority = VFX_PRIO; }
-				@Override
-				protected boolean act() {
-					if (owner instanceof Hero && !target.isAlive()){
-						onAbilityKill((Hero)owner, target);
-					}
-					Actor.remove(this);
-					return true;
-				}
-			});
-			return Float.POSITIVE_INFINITY;
-		} else {
+		{
 			return super.accuracyFactor(owner, target);
 		}
 	}
@@ -141,16 +128,12 @@ public class Crossbow extends MeleeWeapon {
 
 	@Override
 	protected void duelistAbility(Hero hero, Integer target) {
-        if (null != null){
-			GLog.w(Messages.get(this, "ability_cant_use"));
-			return;
-		}
 
-		beforeAbilityUsed(hero, null);
+        beforeAbilityUsed(hero, null);
         hero.sprite.operate(hero.pos);
-		hero.next();
-		afterAbilityUsed(hero);
-	}
+        hero.next();
+        afterAbilityUsed(hero);
+    }
 
 	@Override
 	public String abilityInfo() {

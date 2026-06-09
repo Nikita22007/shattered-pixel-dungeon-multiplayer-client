@@ -128,18 +128,13 @@ public class BeamingRay extends TargetedClericSpell {
             }
 		}
 
-		if (ally == Stasis.getStasisAlly()){
-			ally.pos = telePos;
-			GameScene.add((Mob) ally);
+		if (ally == Stasis.getStasisAlly()) {
+            ally.pos = telePos;
+            GameScene.add((Mob) ally);
             ((Stasis.StasisBuff) null).detach();
-			hero.sprite.parent.add(
-					new Beam.SunRay(hero.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(telePos)));
-
-            if (null != null){
-                ((LifeLink) null).cooldown();
-                ((LifeLink) null).object = ally.id();
-			}
-		} else {
+            hero.sprite.parent.add(
+                    new Beam.SunRay(hero.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(telePos)));
+        } else {
 			hero.sprite.parent.add(
 					new Beam.SunRay(ally.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(telePos)));
 		}

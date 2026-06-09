@@ -358,18 +358,14 @@ public abstract class Char extends Actor {
 			return false;
 
 		} else if (hit( this, enemy, accMulti, false )) {
-			
+
 			int dr = Math.round(enemy.drRoll() * AscensionChallenge.statModifier(enemy));
-			
-			if (this instanceof Hero){
-				Hero h = (Hero)this;
+
+			if (this instanceof Hero) {
+				Hero h = (Hero) this;
 				if (h.belongings.attackingWeapon() instanceof MissileWeapon
 						&& h.subClass == HeroSubClass.SNIPER
-						&& !Dungeon.level.adjacent(h.pos, enemy.pos)){
-					dr = 0;
-				}
-
-				if (null != null){
+						&& !Dungeon.level.adjacent(h.pos, enemy.pos)) {
 					dr = 0;
 				}
 			}
@@ -378,7 +374,7 @@ public abstract class Char extends Actor {
 			// potentially applying various multiplier effects
 			float dmg;
 			Preparation prep = null;
-			if (prep != null){
+			if (prep != null) {
 				dmg = prep.damageRoll(this);
 				if (this instanceof Hero && Dungeon.hero.hasTalent(Talent.BOUNTY_HUNTER)) {
 				}
@@ -386,38 +382,15 @@ public abstract class Char extends Actor {
 				dmg = damageRoll();
 			}
 
-			dmg = dmg*dmgMulti;
+			dmg = dmg * dmgMulti;
 
 			//flat damage bonus is affected by multipliers
 			dmg += dmgBonus;
 
-			if (null != null){
-				((GuidingLight.Illuminated) null).detach();
-				if (this == Dungeon.hero && Dungeon.hero.hasTalent(Talent.SEARING_LIGHT)){
-					dmg += 1 + 2*Dungeon.hero.pointsInTalent(Talent.SEARING_LIGHT);
-				}
-				if (this != Dungeon.hero && Dungeon.hero.subClass == HeroSubClass.PRIEST){
-					enemy.damage(5+Dungeon.hero.lvl, GuidingLight.INSTANCE);
-				}
-			}
-
 			Berserk berserk = null;
 			if (berserk != null) dmg = berserk.damageFactor(dmg);
 
-			if (null != null) {
-				dmg *= 1.5f;
-			}
-
-			if (null != null){
-				if (null != null
-					&& ((BeamingRay.BeamingRayBoost) null).object == enemy.id()){
-					dmg *= 1.3f + 0.05f*Dungeon.hero.pointsInTalent(Talent.BEAMING_RAY);
-				} else {
-					dmg *= 1.25f;
-				}
-			}
-
-			for (ChampionEnemy buff : new HashSet<ChampionEnemy>()){
+			for (ChampionEnemy buff : new HashSet<ChampionEnemy>()) {
 				dmg *= buff.meleeDamageFactor();
 			}
 
@@ -429,12 +402,8 @@ public abstract class Char extends Actor {
 
 			//enemy endure
 			endure = null;
-			if (endure != null){
+			if (endure != null) {
 				dmg = endure.adjustDamageTaken(dmg);
-			}
-
-			if (null != null){
-				dmg *= 0.67f;
 			}
 
 			if (Dungeon.hero.alignment == enemy.alignment) {
@@ -444,39 +413,23 @@ public abstract class Char extends Actor {
 				}
 			}
 
-			if (null != null){
-				dmg *= 0.2f;
-			}
-
-			if ( null != null ){
-				dmg *= 0.67f;
-			}
-
 			//characters influenced by aggression deal 1/2 damage to bosses
-			if ( null != null
+			if (null != null
 					&& enemy.alignment == alignment
-					&& (Char.hasProp(enemy, Property.BOSS) || Char.hasProp(enemy, Property.MINIBOSS))){
+					&& (Char.hasProp(enemy, Property.BOSS) || Char.hasProp(enemy, Property.MINIBOSS))) {
 				dmg *= 0.5f;
 				//yog-dzewa specifically takes 1/4 damage
-				if (enemy instanceof YogDzewa){
+				if (enemy instanceof YogDzewa) {
 					dmg *= 0.5f;
 				}
 			}
 
-			int effectiveDamage = enemy.defenseProc( this, Math.round(dmg) );
+			int effectiveDamage = enemy.defenseProc(this, Math.round(dmg));
 			//do not trigger on-hit logic if defenseProc returned a negative value
 			if (effectiveDamage >= 0) {
 				effectiveDamage = Math.max(effectiveDamage - dr, 0);
 
-				if (null != null) {
-					effectiveDamage = ((Viscosity.ViscosityTracker) null).deferDamage(effectiveDamage);
-					((Viscosity.ViscosityTracker) null).detach();
-				}
-
 				//vulnerable specifically applies after armor reductions
-				if (null != null) {
-					effectiveDamage *= 1.33f;
-				}
 
 				effectiveDamage = attackProc(enemy, effectiveDamage);
 			}
@@ -488,24 +441,14 @@ public abstract class Char extends Actor {
 
 			// If the enemy is already dead, interrupt the attack.
 			// This matters as defence procs can sometimes inflict self-damage, such as armor glyphs.
-			if (!enemy.isAlive()){
+			if (!enemy.isAlive()) {
 				return true;
 			}
 
-			enemy.damage( effectiveDamage, this );
+			enemy.damage(effectiveDamage, this);
 
-			if (null != null) {
-				((FireImbue) null).proc(enemy);
-			}
-			if (null != null) {
-				((FrostImbue) null).proc(enemy);
-			}
-
-			if (enemy.isAlive() && enemy.alignment != alignment && prep != null && prep.canKO(enemy)){
+			if (enemy.isAlive() && enemy.alignment != alignment && prep != null && prep.canKO(enemy)) {
 				enemy.HP = 0;
-				if (null != null){
-					((Brute.BruteRage) null).detach();
-				}
 				if (!enemy.isAlive()) {
 					enemy.die(this);
 				} else {
@@ -519,14 +462,11 @@ public abstract class Char extends Actor {
 			}
 
 			Talent.CombinedLethalityAbilityTracker combinedLethality = null;
-			if (combinedLethality != null && this instanceof Hero && ((Hero) this).belongings.attackingWeapon() instanceof MeleeWeapon && combinedLethality.weapon != ((Hero) this).belongings.attackingWeapon()){
-				if ( enemy.isAlive() && enemy.alignment != alignment && !Char.hasProp(enemy, Property.BOSS)
+			if (combinedLethality != null && this instanceof Hero && ((Hero) this).belongings.attackingWeapon() instanceof MeleeWeapon && combinedLethality.weapon != ((Hero) this).belongings.attackingWeapon()) {
+				if (enemy.isAlive() && enemy.alignment != alignment && !Char.hasProp(enemy, Property.BOSS)
 						&& !Char.hasProp(enemy, Property.MINIBOSS) &&
-						(enemy.HP/(float)enemy.HT) <= 0.4f*((Hero)this).pointsInTalent(Talent.COMBINED_LETHALITY)/3f) {
+						(enemy.HP / (float) enemy.HT) <= 0.4f * ((Hero) this).pointsInTalent(Talent.COMBINED_LETHALITY) / 3f) {
 					enemy.HP = 0;
-					if (null != null){
-						((Brute.BruteRage) null).detach();
-					}
 					if (!enemy.isAlive()) {
 						enemy.die(this);
 					} else {
@@ -548,25 +488,25 @@ public abstract class Char extends Actor {
 
 			if (!enemy.isAlive() && visibleFight) {
 				if (enemy == Dungeon.hero) {
-					
+
 					if (this == Dungeon.hero) {
 						return true;
 					}
 
 					if (this instanceof WandOfLivingEarth.EarthGuardian
-							|| this instanceof MirrorImage || this instanceof PrismaticImage){
+							|| this instanceof MirrorImage || this instanceof PrismaticImage) {
 						Badges.validateDeathFromFriendlyMagic();
 					}
-					Dungeon.fail( this );
-					GLog.n( Messages.capitalize(Messages.get(Char.class, "kill", name())) );
-					
+					Dungeon.fail(this);
+					GLog.n(Messages.capitalize(Messages.get(Char.class, "kill", name())));
+
 				} else if (this == Dungeon.hero) {
-					GLog.i( Messages.capitalize(Messages.get(Char.class, "defeat", enemy.name())) );
+					GLog.i(Messages.capitalize(Messages.get(Char.class, "defeat", enemy.name())));
 				}
 			}
-			
+
 			return true;
-			
+
 		} else {
 
 			if (enemy.sprite != null){
@@ -602,65 +542,55 @@ public abstract class Char extends Actor {
 	}
 
 	public static boolean hit( Char attacker, Char defender, float accMulti, boolean magic ) {
-		float acuStat = attacker.attackSkill( defender );
-		float defStat = defender.defenseSkill( attacker );
+		float acuStat = attacker.attackSkill(defender);
+		float defStat = defender.defenseSkill(attacker);
 
-		if (defender instanceof Hero && ((Hero) defender).damageInterrupt){
+		if (defender instanceof Hero && ((Hero) defender).damageInterrupt) {
 			((Hero) defender).interrupt();
 		}
 
 		//invisible chars always hit (for the hero this is surprise attacking)
-		if (attacker.invisible > 0 && attacker.canSurpriseAttack()){
+		if (attacker.invisible > 0 && attacker.canSurpriseAttack()) {
 			acuStat = INFINITE_ACCURACY;
-		}
-
-		if (null != null){
-			defStat = INFINITE_EVASION;
 		}
 
 		//if accuracy or evasion are large enough, treat them as infinite.
 		//note that infinite evasion beats infinite accuracy
-		if (defStat >= INFINITE_EVASION){
+		if (defStat >= INFINITE_EVASION) {
 			hitMissIcon = FloatingText.getMissReasonIcon(attacker, acuStat, defender, INFINITE_EVASION);
 			return false;
-		} else if (acuStat >= INFINITE_ACCURACY){
+		} else if (acuStat >= INFINITE_ACCURACY) {
 			hitMissIcon = FloatingText.getHitReasonIcon(attacker, INFINITE_ACCURACY, defender, defStat);
 			return true;
 		}
 
-		float acuRoll = Random.Float( acuStat );
-		if (null != null) acuRoll *= 1.25f;
-		if (null != null) acuRoll *= 0.8f;
-		if (null != null) acuRoll *= 0.5f;
-		for (ChampionEnemy buff : new HashSet<ChampionEnemy>()){
+		float acuRoll = Random.Float(acuStat);
+		for (ChampionEnemy buff : new HashSet<ChampionEnemy>()) {
 			acuRoll *= buff.evasionAndAccuracyFactor();
 		}
 		acuRoll *= AscensionChallenge.statModifier(attacker);
 		if (Dungeon.hero.heroClass != HeroClass.CLERIC
 				&& Dungeon.hero.hasTalent(Talent.BLESS)
-				&& attacker.alignment == Alignment.ALLY){
+				&& attacker.alignment == Alignment.ALLY) {
 			// + 3%/5%
-			acuRoll *= 1.01f + 0.02f*Dungeon.hero.pointsInTalent(Talent.BLESS);
+			acuRoll *= 1.01f + 0.02f * Dungeon.hero.pointsInTalent(Talent.BLESS);
 		}
 		acuRoll *= accMulti;
 
-		float defRoll = Random.Float( defStat );
-		if (null != null) defRoll *= 1.25f;
-		if (null != null) defRoll *= 0.8f;
-		if (null != null) defRoll *= 0.5f;
-		for (ChampionEnemy buff : new HashSet<ChampionEnemy>()){
+		float defRoll = Random.Float(defStat);
+		for (ChampionEnemy buff : new HashSet<ChampionEnemy>()) {
 			defRoll *= buff.evasionAndAccuracyFactor();
 		}
 		defRoll *= AscensionChallenge.statModifier(defender);
 		if (Dungeon.hero.heroClass != HeroClass.CLERIC
 				&& Dungeon.hero.hasTalent(Talent.BLESS)
-				&& defender.alignment == Alignment.ALLY){
+				&& defender.alignment == Alignment.ALLY) {
 			// + 3%/5%
-			defRoll *= 1.01f + 0.02f*Dungeon.hero.pointsInTalent(Talent.BLESS);
+			defRoll *= 1.01f + 0.02f * Dungeon.hero.pointsInTalent(Talent.BLESS);
 		}
 		defRoll *= FerretTuft.evasionMultiplier();
 
-		if (acuRoll >= defRoll){
+		if (acuRoll >= defRoll) {
 			hitMissIcon = FloatingText.getHitReasonIcon(attacker, acuRoll, defender, defRoll);
 			return true;
 		} else {
@@ -755,11 +685,6 @@ public abstract class Char extends Actor {
 
 	public float speed() {
 		float speed = baseSpeed;
-		if ( null != null ) speed /= 2f;
-		if ( null != null) speed *= 1.5f;
-		if ( null != null) speed *= 2f;
-		if ( null != null) speed *= 3f;
-		if ( null != null) speed *= 2f;
 
 		speed *= Swiftness.speedBoost(this, glyphLevel(Swiftness.class));
 		speed *= Flow.speedBoost(this, glyphLevel(Flow.class));
@@ -781,41 +706,17 @@ public abstract class Char extends Actor {
 	}
 	
 	public void damage( int dmg, Object src ) {
-		
+
 		if (!isAlive() || dmg < 0) {
 			return;
 		}
 
-		if(isInvulnerable(src.getClass())){
+		if (isInvulnerable(src.getClass())) {
 			sprite.showStatus(CharSprite.POSITIVE, Messages.get(this, "invulnerable"));
 			return;
 		}
 
 		if (!(src instanceof LifeLink || src instanceof Hunger)) {
-			if (null != null) {
-				HashSet<LifeLink> links = new HashSet<>();
-				for (LifeLink link : links.toArray(new LifeLink[0])) {
-					if (Actor.findById(link.object) == null) {
-						links.remove(link);
-						link.detach();
-					}
-				}
-				dmg = (int) Math.ceil(dmg / (float) (links.size() + 1));
-				for (LifeLink link : links) {
-					Char ch = (Char) Actor.findById(link.object);
-					if (ch != null) {
-						ch.damage(dmg, link);
-						if (!ch.isAlive()) {
-							link.detach();
-							if (ch == Dungeon.hero) {
-								Badges.validateDeathFromFriendlyMagic();
-								Dungeon.fail(src);
-								GLog.n(Messages.get(LifeLink.class, "ondeath"));
-							}
-						}
-					}
-				}
-			}
 		}
 
 		//temporarily assign to a float to avoid rounding a bunch
@@ -831,81 +732,43 @@ public abstract class Char extends Actor {
 			}
 		}
 
-		if (null != null){
-			if (null != null){
-				damage *= 0.70f - 0.05f*Dungeon.hero.pointsInTalent(Talent.LIFE_LINK);
-			} else {
-				damage *= 0.75f;
-			}
-		}
-
 		Terror t = null;
-		if (t != null){
+		if (t != null) {
 			t.recover();
 		}
 		Dread d = null;
-		if (d != null){
+		if (d != null) {
 			d.recover();
 		}
 		Charm c = null;
-		if (c != null){
+		if (c != null) {
 			c.recover(src);
 		}
-		if (null != null){
-		}
-		if (null != null){
-		}
-		if (null != null && !isImmune(Doom.class)){
+		if (null != null && !isImmune(Doom.class)) {
 			damage *= 1.67f;
 		}
 		if (alignment != Alignment.ALLY) {
-			if (null != null) {
-				damage *= 1.25f;
-			}
-		}
-
-		if (null != null){
-			((Sickle.HarvestBleedTracker) null).detach();
-
-			if (!isImmune(Bleeding.class)){
-				Bleeding b = null;
-				if (b == null){
-					b = new Bleeding();
-				}
-				b.announced = false;
-				b.set(dmg, Sickle.HarvestBleedTracker.class);
-				b.attachTo(this);
-				sprite.showStatus(CharSprite.WARNING, Messages.titleCase(b.name()) + " " + (int)b.level());
-				return;
-			}
 		}
 
 		Class<?> srcClass = src.getClass();
-		if (isImmune( srcClass )) {
+		if (isImmune(srcClass)) {
 			damage = 0;
 		} else {
-			damage *= resist( srcClass );
+			damage *= resist(srcClass);
 		}
 
 		dmg = Math.round(damage);
 
 		//we ceil these specifically to favor the player vs. champ dmg reduction
 		// most important vs. giant champions in the earlygame
-		for (ChampionEnemy buff : new HashSet<ChampionEnemy>()){
+		for (ChampionEnemy buff : new HashSet<ChampionEnemy>()) {
 			dmg = (int) Math.ceil(dmg * buff.damageTakenFactor());
 		}
-		
-		//TODO improve this when I have proper damage source logic
-		if (AntiMagic.RESISTS.contains(src.getClass())){
-			dmg -= AntiMagic.drRoll(this, glyphLevel(AntiMagic.class));
-			if (null != null) {
-				dmg -= Random.NormalIntRange(0, ((ArcaneArmor) null).level());
-			}
-			if (dmg < 0) dmg = 0;
-		}
 
-		if (null != null) {
-			((Paralysis) null).processDamage(dmg);
+		//TODO improve this when I have proper damage source logic
+		if (AntiMagic.RESISTS.contains(src.getClass())) {
+			dmg -= AntiMagic.drRoll(this, glyphLevel(AntiMagic.class));
+			if (dmg < 0) dmg = 0;
 		}
 
 		BrokenSeal.WarriorShield shield = null;
@@ -913,8 +776,8 @@ public abstract class Char extends Actor {
 				&& dmg > 0
 				//either HP is already half or below (ignoring shield)
 				// or the hit will reduce it to half or below
-				&& (HP <= HT/2 || HP + shielding() - dmg <= HT/2)
-				&& shield != null && !shield.coolingDown()){
+				&& (HP <= HT / 2 || HP + shielding() - dmg <= HT / 2)
+				&& shield != null && !shield.coolingDown()) {
 			sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(((BrokenSeal.WarriorShield) null).maxShield()), FloatingText.SHIELDING);
 			shield.activate();
 		}
@@ -925,76 +788,46 @@ public abstract class Char extends Actor {
 		HP -= dmg;
 
 		if (HP > 0) {
-			if (null != null) {
-
-				float finalChance = ((Grim.GrimTracker) null).maxChance;
-				finalChance *= (float) Math.pow(((HT - HP) / (float) HT), 2);
-
-				if (Random.Float() < finalChance) {
-					int extraDmg = Math.round(HP * resist(Grim.class));
-					dmg += extraDmg;
-					HP -= extraDmg;
-
-					sprite.emitter().burst(ShadowParticle.UP, 5);
-					if (!isAlive()) {
-						if (((Grim.GrimTracker) null).qualifiesForBadge) {
-							Badges.validateGrimWeapon();
-						}
-					}
-				}
-			}
 		}
 
-		if (HP < 0 && src instanceof Char && alignment == Alignment.ENEMY){
-			if (null != null){
-				int dmgToAdd = -HP;
-				dmgToAdd -= ((Kinetic.KineticTracker) null).conservedDamage;
-				dmgToAdd = Math.round(dmgToAdd * Weapon.Enchantment.genericProcChanceMultiplier((Char) src));
-				if (dmgToAdd > 0) {
-					((Kinetic.ConservedDamage) null).setBonus(dmgToAdd);
-				}
-				((Kinetic.KineticTracker) null).detach();
-			}
+		if (HP < 0 && src instanceof Char && alignment == Alignment.ENEMY) {
 		}
-		
+
 		if (sprite != null) {
 			//defaults to normal damage icon if no other ones apply
-			int                                                         icon = FloatingText.PHYS_DMG;
-			if (NO_ARMOR_PHYSICAL_SOURCES.contains(src.getClass()))     icon = FloatingText.PHYS_DMG_NO_BLOCK;
-			if (AntiMagic.RESISTS.contains(src.getClass()))             icon = FloatingText.MAGIC_DMG;
-			if (src instanceof Pickaxe)                                 icon = FloatingText.PICK_DMG;
+			int icon = FloatingText.PHYS_DMG;
+			if (NO_ARMOR_PHYSICAL_SOURCES.contains(src.getClass())) icon = FloatingText.PHYS_DMG_NO_BLOCK;
+			if (AntiMagic.RESISTS.contains(src.getClass())) icon = FloatingText.MAGIC_DMG;
+			if (src instanceof Pickaxe) icon = FloatingText.PICK_DMG;
 
 			//special case for sniper when using ranged attacks
 			if (src == Dungeon.hero
 					&& Dungeon.hero.subClass == HeroSubClass.SNIPER
 					&& !Dungeon.level.adjacent(Dungeon.hero.pos, pos)
-					&& Dungeon.hero.belongings.attackingWeapon() instanceof MissileWeapon){
+					&& Dungeon.hero.belongings.attackingWeapon() instanceof MissileWeapon) {
 				icon = FloatingText.PHYS_DMG_NO_BLOCK;
 			}
 
 			//special case for monk using unarmed abilities
 			if (src == Dungeon.hero) {
-				if (null != null) {
-					icon = FloatingText.PHYS_DMG_NO_BLOCK;
-				}
 			}
 
-			if (src instanceof Hunger)                                  icon = FloatingText.HUNGER;
-			if (src instanceof Burning)                                 icon = FloatingText.BURNING;
-			if (src instanceof Chill || src instanceof Frost)           icon = FloatingText.FROST;
+			if (src instanceof Hunger) icon = FloatingText.HUNGER;
+			if (src instanceof Burning) icon = FloatingText.BURNING;
+			if (src instanceof Chill || src instanceof Frost) icon = FloatingText.FROST;
 			if (src instanceof GeyserTrap || src instanceof StormCloud) icon = FloatingText.WATER;
-			if (src instanceof Burning)                                 icon = FloatingText.BURNING;
-			if (src instanceof Electricity)                             icon = FloatingText.SHOCKING;
-			if (src instanceof Bleeding)                                icon = FloatingText.BLEEDING;
-			if (src instanceof ToxicGas)                                icon = FloatingText.TOXIC;
-			if (src instanceof Corrosion)                               icon = FloatingText.CORROSION;
-			if (src instanceof Poison)                                  icon = FloatingText.POISON;
-			if (src instanceof Ooze)                                    icon = FloatingText.OOZE;
-			if (src instanceof Viscosity.DeferedDamage)                 icon = FloatingText.DEFERRED;
-			if (src instanceof Corruption)                              icon = FloatingText.CORRUPTION;
-			if (src instanceof AscensionChallenge)                      icon = FloatingText.AMULET;
+			if (src instanceof Burning) icon = FloatingText.BURNING;
+			if (src instanceof Electricity) icon = FloatingText.SHOCKING;
+			if (src instanceof Bleeding) icon = FloatingText.BLEEDING;
+			if (src instanceof ToxicGas) icon = FloatingText.TOXIC;
+			if (src instanceof Corrosion) icon = FloatingText.CORROSION;
+			if (src instanceof Poison) icon = FloatingText.POISON;
+			if (src instanceof Ooze) icon = FloatingText.OOZE;
+			if (src instanceof Viscosity.DeferedDamage) icon = FloatingText.DEFERRED;
+			if (src instanceof Corruption) icon = FloatingText.CORRUPTION;
+			if (src instanceof AscensionChallenge) icon = FloatingText.AMULET;
 
-			if ((icon == FloatingText.PHYS_DMG || icon == FloatingText.PHYS_DMG_NO_BLOCK) && hitMissIcon != -1){
+			if ((icon == FloatingText.PHYS_DMG || icon == FloatingText.PHYS_DMG_NO_BLOCK) && hitMissIcon != -1) {
 				if (icon == FloatingText.PHYS_DMG_NO_BLOCK) hitMissIcon += 18; //extra row
 				icon = hitMissIcon;
 			}
@@ -1006,12 +839,9 @@ public abstract class Char extends Actor {
 		if (HP < 0) HP = 0;
 
 		if (!isAlive()) {
-			die( src );
+			die(src);
 		} else {
 			if (HP == 0) {
-				if (null != null) {
-					DeathMark.processFearTheReaper(this);
-				}
 			}
 		}
 	}
@@ -1035,37 +865,7 @@ public abstract class Char extends Actor {
 		HP = 0;
 		Actor.remove( this );
 
-		for (Char ch : Actor.chars().toArray(new Char[0])){
-			if (null != null) {
-				if (((Charm) null).object == id()) {
-					((Charm) null).detach();
-				}
-			}
-			if (null != null) {
-				if (((Dread) null).object == id()) {
-					((Dread) null).detach();
-				}
-			}
-			if (null != null) {
-				if (((Terror) null).object == id()) {
-					((Terror) null).detach();
-				}
-			}
-			if (null != null) {
-				if (((SnipersMark) null).object == id()) {
-					((SnipersMark) null).detach();
-				}
-			}
-			if (null != null) {
-				if (((Talent.FollowupStrikeTracker) null).object == id()) {
-					((Talent.FollowupStrikeTracker) null).detach();
-				}
-			}
-			if (null != null) {
-				if (((Talent.DeadlyFollowupTracker) null).object == id()) {
-					((Talent.DeadlyFollowupTracker) null).detach();
-				}
-			}
+		for (Char ch : Actor.chars().toArray(new Char[0])) {
 		}
 	}
 	
@@ -1113,19 +913,11 @@ public abstract class Char extends Actor {
 	protected void spend( float time ) {
 
 		float timeScale = 1f;
-		if (null != null) {
-			timeScale *= 0.5f;
-			//slowed and chilled do not stack
-		} else {
-			if (null != null) {
-				timeScale *= ((Chill) null).speedFactor();
-			}
+		{
+
 		}
-		if (null != null) {
-			timeScale *= 2.0f;
-		}
-		
-		super.spend( time / timeScale );
+
+		super.spend(time / timeScale);
 	}
 	
 	public synchronized LinkedHashSet<Buff> buffs() {
@@ -1144,22 +936,11 @@ public abstract class Char extends Actor {
 
 	public synchronized boolean add( Buff buff ) {
 
-		if (null != null) { //cleansing buff
-			if (buff.type == Buff.buffType.NEGATIVE
-					&& !(buff instanceof AllyBuff)
-					&& !(buff instanceof LostInventory)){
-				return false;
-			}
-		}
-
 		if (sprite != null) {
-			if (null != null) {
-				return false; //can't add buffs while frozen and game is loaded
-			}
 		}
 
-		buffs.add( buff );
-		if (Actor.chars().contains(this)) Actor.add( buff );
+		buffs.add(buff);
+		if (Actor.chars().contains(this)) Actor.add(buff);
 
 		if (sprite != null && buff.announced) {
 			switch (buff.type) {
@@ -1217,18 +998,6 @@ public abstract class Char extends Actor {
 	public void move( int step, boolean travelling ) {
 
 		if (travelling && Dungeon.level.adjacent(step, pos)) {
-			if (null != null) {
-				sprite.interruptMotion();
-				int newPos = pos + PathFinder.NEIGHBOURS8[Random.Int(8)];
-				if (!(Dungeon.level.passable[newPos] || Dungeon.level.avoid[newPos])
-						|| (properties().contains(Property.LARGE) && !Dungeon.level.openSpace[newPos])
-						|| Actor.findChar(newPos) != null)
-					return;
-				else {
-					sprite.move(pos, newPos);
-					step = newPos;
-				}
-			}
 		}
 
 		if (Dungeon.level.map[pos] == Terrain.OPEN_DOOR) {
@@ -1313,8 +1082,7 @@ public abstract class Char extends Actor {
 
 	//similar to isImmune, but only factors in damage.
 	//Is used in AI decision-making
-	public boolean isInvulnerable( Class effect ){
-		if (null != null) return true;
+	public boolean isInvulnerable( Class effect ) {
 		return null != null;
 	}
 
@@ -1323,9 +1091,6 @@ public abstract class Char extends Actor {
 	public HashSet<Property> properties() {
 		HashSet<Property> props = new HashSet<>(properties);
 		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
-		if (null != null) {
-			props.add(Property.LARGE);
-		}
 		return props;
 	}
 

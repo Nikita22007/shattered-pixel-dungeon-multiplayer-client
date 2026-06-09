@@ -69,22 +69,19 @@ public class CrystalGuardian extends Mob{
 
 	@Override
 	protected boolean act() {
-		if (recovering){
-            if (null != null){
-                ((PinCushion) null).detach();
-			}
-			throwItems();
-			HP = Math.min(HT, HP+5);
-			if (Dungeon.level.heroFOV[pos]) {
-				sprite.showStatusWithIcon(CharSprite.POSITIVE, "5", FloatingText.HEALING);
-			}
-			if (HP == HT){
-				recovering = false;
-				if (sprite instanceof CrystalGuardianSprite) ((CrystalGuardianSprite) sprite).endCrumple();
-			}
-			spend(TICK);
-			return true;
-		}
+		if (recovering) {
+            throwItems();
+            HP = Math.min(HT, HP + 5);
+            if (Dungeon.level.heroFOV[pos]) {
+                sprite.showStatusWithIcon(CharSprite.POSITIVE, "5", FloatingText.HEALING);
+            }
+            if (HP == HT) {
+                recovering = false;
+                if (sprite instanceof CrystalGuardianSprite) ((CrystalGuardianSprite) sprite).endCrumple();
+            }
+            spend(TICK);
+            return true;
+        }
 		return super.act();
 	}
 

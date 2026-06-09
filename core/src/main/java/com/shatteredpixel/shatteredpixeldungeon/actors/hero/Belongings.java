@@ -410,10 +410,9 @@ public class Belongings implements Iterable<Item> {
 	}
 	
 	public Item randomUnequipped() {
-        if (null != null) return null;
 
-		return Random.element( backpack.items );
-	}
+        return Random.element(backpack.items);
+    }
 	
 	public int charge( float charge ) {
 		

@@ -47,10 +47,8 @@ public class Sword extends MeleeWeapon {
 	}
 
 	@Override
-	protected int baseChargeUse(Hero hero, Char target){
-        if (null != null){
-			return 0;
-		} else {
+	protected int baseChargeUse(Hero hero, Char target) {
+		{
 			return 1;
 		}
 	}
@@ -112,20 +110,12 @@ public class Sword extends MeleeWeapon {
 
 				Invisibility.dispel();
 
-				if (!enemy.isAlive()){
-					hero.next();
-					wep.onAbilityKill(hero, enemy);
-                    if (null != null) {
-                        ((CleaveTracker) null).detach();
-					} else {
-                        //1 less as attack was instant
-                    }
-				} else {
-					hero.spendAndNext(hero.attackDelay());
-                    if (null != null) {
-                        ((CleaveTracker) null).detach();
-					}
-				}
+				if (!enemy.isAlive()) {
+                    hero.next();
+                    wep.onAbilityKill(hero, enemy);
+                } else {
+                    hero.spendAndNext(hero.attackDelay());
+                }
 				wep.afterAbilityUsed(hero);
 			}
 		});

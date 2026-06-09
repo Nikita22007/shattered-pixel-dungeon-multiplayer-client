@@ -102,12 +102,6 @@ public class SummonElemental extends Spell {
 
 			for (Char ch : Actor.chars()){
 				if (ch instanceof Elemental) {
-                    if (null != null) {
-                        ScrollOfTeleportation.appear(ch, Random.element(spawnPoints));
-                        ((Elemental) ch).state = ((Elemental) ch).HUNTING;
-                        curUser.spendAndNext(Actor.TICK);
-                        return;
-                    }
                 }
 			}
 

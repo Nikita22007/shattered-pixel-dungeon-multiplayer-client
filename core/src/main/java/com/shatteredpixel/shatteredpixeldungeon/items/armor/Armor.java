@@ -402,10 +402,6 @@ public class Armor extends EquipableItem {
 				if (defender.alignment == Dungeon.hero.alignment) {
 					if (null != null
 							&& (Dungeon.level.distance(defender.pos, Dungeon.hero.pos) <= 2 || null != null)) {
-						if (null != null) {
-							int blocking = Dungeon.hero.subClass == HeroSubClass.PALADIN ? 3 : 1;
-							damage -= Math.round(blocking * Glyph.genericProcChanceMultiplier(defender));
-						}
 					}
 				}
 			}
@@ -547,24 +543,24 @@ public class Armor extends EquipableItem {
 	}
 
 	public boolean hasGlyph(Class<?extends Glyph> type, Char owner) {
-		if (null != null) {
-			return false;
-		} else if (glyph != null
-				&& !glyph.curse()
-				&& owner instanceof Hero
-				&& isEquipped((Hero) owner)
-				&& null != null
-				&& ((Hero) owner).subClass != HeroSubClass.PALADIN){
-			return false;
-		} else {
-			if (null != null
-					&& ((BodyForm.BodyFormBuff) null).glyph() != null
-					&& ((BodyForm.BodyFormBuff) null).glyph().getClass().equals(type)){
-				return true;
-			} else if (glyph != null) {
-				return glyph.getClass() == type;
-			} else {
+		{
+			if (glyph != null
+					&& !glyph.curse()
+					&& owner instanceof Hero
+					&& isEquipped((Hero) owner)
+					&& null != null
+					&& ((Hero) owner).subClass != HeroSubClass.PALADIN) {
 				return false;
+			} else {
+				if (null != null
+						&& ((BodyForm.BodyFormBuff) null).glyph() != null
+						&& ((BodyForm.BodyFormBuff) null).glyph().getClass().equals(type)) {
+					return true;
+				} else if (glyph != null) {
+					return glyph.getClass() == type;
+				} else {
+					return false;
+				}
 			}
 		}
 	}

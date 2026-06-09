@@ -59,15 +59,13 @@ public class Blacksmith extends NPC {
 
 	@Override
 	protected boolean act() {
-        if (null != null){
-			die(null);
-			Notes.remove( landmark() );
-			return true;
-		} else if (!Quest.rewardsAvailable() && Quest.completed()){
-			Notes.remove( landmark() );
-		}
-		return super.act();
-	}
+        {
+            if (!Quest.rewardsAvailable() && Quest.completed()) {
+                Notes.remove(landmark());
+            }
+        }
+        return super.act();
+    }
 	
 	@Override
 	public boolean interact(Char c) {

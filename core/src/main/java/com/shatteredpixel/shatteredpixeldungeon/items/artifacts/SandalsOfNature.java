@@ -119,42 +119,37 @@ public class SandalsOfNature extends Artifact {
 
 	@Override
 	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
-        if (null != null){
-			return actions;
-		}
-		if (isEquipped( hero ) && !cursed) {
-			actions.add(AC_FEED);
-		}
-		if (isEquipped( hero )
-				&& !cursed
-				&& curSeedEffect != null
-				&& charge >= seedChargeReqs.get(curSeedEffect)) {
-			actions.add(AC_ROOT);
-		}
-		return actions;
-	}
+        ArrayList<String> actions = super.actions(hero);
+        if (isEquipped(hero) && !cursed) {
+            actions.add(AC_FEED);
+        }
+        if (isEquipped(hero)
+                && !cursed
+                && curSeedEffect != null
+                && charge >= seedChargeReqs.get(curSeedEffect)) {
+            actions.add(AC_ROOT);
+        }
+        return actions;
+    }
 
 	@Override
 	public void execute( Hero hero, String action ) {
-		super.execute(hero, action);
+        super.execute(hero, action);
 
-        if (null != null) return;
+        if (action.equals(AC_FEED)) {
 
-		if (action.equals(AC_FEED)){
+            GameScene.selectItem(itemSelector);
 
-			GameScene.selectItem(itemSelector);
+        } else if (action.equals(AC_ROOT) && !cursed) {
 
-		} else if (action.equals(AC_ROOT) && !cursed){
-
-			if (!isEquipped( hero ))                                GLog.i( Messages.get(Artifact.class, "need_to_equip") );
-			else if (curSeedEffect == null)                         GLog.i( Messages.get(this, "no_effect") );
-			else if (charge < seedChargeReqs.get(curSeedEffect))    GLog.i( Messages.get(this, "low_charge") );
-			else {
-				GameScene.selectCell(cellSelector);
-			}
-		}
-	}
+            if (!isEquipped(hero)) GLog.i(Messages.get(Artifact.class, "need_to_equip"));
+            else if (curSeedEffect == null) GLog.i(Messages.get(this, "no_effect"));
+            else if (charge < seedChargeReqs.get(curSeedEffect)) GLog.i(Messages.get(this, "low_charge"));
+            else {
+                GameScene.selectCell(cellSelector);
+            }
+        }
+    }
 
 	@Override
 	protected ArtifactBuff passiveBuff() {

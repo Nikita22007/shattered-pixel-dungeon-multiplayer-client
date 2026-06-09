@@ -54,15 +54,8 @@ public class Regeneration extends Buff {
 				boolean chaliceCursed = false;
 				int chaliceLevel = -1;
 				{
-					if (null != null) {
-						chaliceCursed = ((ChaliceOfBlood.chaliceRegen) null).isCursed();
-						chaliceLevel = ((ChaliceOfBlood.chaliceRegen) null).itemLevel();
-					} else {
-						if (null != null) {
-							if (((SpiritForm.SpiritFormBuff) null).artifact() instanceof ChaliceOfBlood) {
-								chaliceLevel = SpiritForm.artifactLevel();
-							}
-						}
+					{
+
 					}
 				}
 

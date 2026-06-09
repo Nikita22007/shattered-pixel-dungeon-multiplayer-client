@@ -70,9 +70,6 @@ public class Piranha extends Mob {
 		
 		if (!Dungeon.level.water[pos] || flying) {
 			if (sprite != null) {
-                if (null != null) {
-                    sprite.emitter().burst(Speck.factory(Speck.JET), 10);
-                }
             }
 			dieOnLand();
 			return true;

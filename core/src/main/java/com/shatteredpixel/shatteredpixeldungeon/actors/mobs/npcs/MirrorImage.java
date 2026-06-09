@@ -153,21 +153,12 @@ public class MirrorImage extends NPC {
 			}
 			return damage;
 		} else {
-			//hero benefits from holy weapon and body form when unarmed, so do mirror images
-			boolean wasEnemy = enemy.alignment == Alignment.ENEMY;
-            if (null != null) {
-                if (((BodyForm.BodyFormBuff) null).enchant() != null) {
-                    damage = ((BodyForm.BodyFormBuff) null).enchant().proc(new WornShortsword(), this, enemy, damage);
-                }
+            //hero benefits from holy weapon and body form when unarmed, so do mirror images
+            boolean wasEnemy = enemy.alignment == Alignment.ENEMY;
+            if (!wasEnemy || enemy.alignment == Alignment.ENEMY) {
             }
-			if (!wasEnemy || enemy.alignment == Alignment.ENEMY) {
-                if (null != null) {
-					int dmg = hero.subClass == HeroSubClass.PALADIN ? 6 : 2;
-					enemy.damage(Math.round(dmg * Weapon.Enchantment.genericProcChanceMultiplier(this)), HolyWeapon.INSTANCE);
-				}
-			}
-			return damage;
-		}
+            return damage;
+        }
 	}
 	
 	@Override

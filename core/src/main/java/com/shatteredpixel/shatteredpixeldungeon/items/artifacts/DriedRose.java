@@ -704,40 +704,36 @@ public class DriedRose extends Artifact {
 			super.destroy();
 		}
 		
-		public void sayAppeared(){
-            if (null != null){
-				yell( Messages.get( this, "dialogue_ascension_" + Random.IntRange(1, 6) ));
+		public void sayAppeared() {
+            {
+                int depth = (Dungeon.depth - 1) / 5;
 
-			} else {
+                //only some lines are said on the first floor of a depth
+                int variant = Dungeon.depth % 5 == 1 ? Random.IntRange(1, 3) : Random.IntRange(1, 6);
 
-				int depth = (Dungeon.depth - 1) / 5;
-
-				//only some lines are said on the first floor of a depth
-				int variant = Dungeon.depth % 5 == 1 ? Random.IntRange(1, 3) : Random.IntRange(1, 6);
-
-				switch (depth) {
-					case 0:
-						yell(Messages.get(this, "dialogue_sewers_" + variant));
-						break;
-					case 1:
-						yell(Messages.get(this, "dialogue_prison_" + variant));
-						break;
-					case 2:
-						yell(Messages.get(this, "dialogue_caves_" + variant));
-						break;
-					case 3:
-						yell(Messages.get(this, "dialogue_city_" + variant));
-						break;
-					case 4:
-					default:
-						yell(Messages.get(this, "dialogue_halls_" + variant));
-						break;
-				}
-			}
-			if (ShatteredPixelDungeon.scene() instanceof GameScene) {
-				Sample.INSTANCE.play( Assets.Sounds.GHOST );
-			}
-		}
+                switch (depth) {
+                    case 0:
+                        yell(Messages.get(this, "dialogue_sewers_" + variant));
+                        break;
+                    case 1:
+                        yell(Messages.get(this, "dialogue_prison_" + variant));
+                        break;
+                    case 2:
+                        yell(Messages.get(this, "dialogue_caves_" + variant));
+                        break;
+                    case 3:
+                        yell(Messages.get(this, "dialogue_city_" + variant));
+                        break;
+                    case 4:
+                    default:
+                        yell(Messages.get(this, "dialogue_halls_" + variant));
+                        break;
+                }
+            }
+            if (ShatteredPixelDungeon.scene() instanceof GameScene) {
+                Sample.INSTANCE.play(Assets.Sounds.GHOST);
+            }
+        }
 		
 		public void sayBoss(){
 			int depth = (Dungeon.depth - 1) / 5;

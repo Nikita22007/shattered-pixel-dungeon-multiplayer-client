@@ -72,41 +72,19 @@ public abstract class ClericSpell {
 		return HeroIcon.NONE;
 	}
 
-	public void onSpellCast(HolyTome tome, Hero hero){
-		Invisibility.dispel();
-		if (hero.hasTalent(Talent.SATIATED_SPELLS)) {
-            if (null != null) {
-                int amount = 1 + 2 * hero.pointsInTalent(Talent.SATIATED_SPELLS);
-                ((Barrier) null).setShield(amount);
-                Char ally = PowerOfMany.getPoweredAlly();
-                if (ally != null) {
-                    if (null != null) {
-                        ((Barrier) null).setShield(amount);
-                    }
-                }
-                ((Talent.SatiatedSpellsTracker) null).detach();
+	public void onSpellCast(HolyTome tome, Hero hero) {
+        Invisibility.dispel();
+        if (hero.hasTalent(Talent.SATIATED_SPELLS)) {
+        }
+        tome.spendCharge(chargeUse(hero));
+        Talent.onArtifactUsed(hero);
+        if (hero.subClass == HeroSubClass.PALADIN) {
+            if (this != HolyWeapon.INSTANCE) {
+            }
+            if (this != HolyWard.INSTANCE) {
             }
         }
-		tome.spendCharge(chargeUse(hero));
-		Talent.onArtifactUsed(hero);
-		if (hero.subClass == HeroSubClass.PALADIN){
-			if (this != HolyWeapon.INSTANCE) {
-                if (null != null) {
-                    ((HolyWeapon.HolyWepBuff) null).extend(10 * chargeUse(hero));
-                }
-            }
-			if (this != HolyWard.INSTANCE) {
-                if (null != null) {
-                    ((HolyWard.HolyArmBuff) null).extend(10 * chargeUse(hero));
-                }
-            }
-		}
-
-        if (null != null){
-            ((AscendedForm.AscendBuff) null).spellCasts++;
-            ((AscendedForm.AscendBuff) null).incShield((int)(10*chargeUse(hero)));
-		}
-	}
+    }
 
 	public static ArrayList<ClericSpell> getSpellList(Hero cleric, int tier){
 		ArrayList<ClericSpell> spells = new ArrayList<>();

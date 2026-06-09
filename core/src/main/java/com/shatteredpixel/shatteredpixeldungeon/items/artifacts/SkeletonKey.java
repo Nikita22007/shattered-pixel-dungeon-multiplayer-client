@@ -90,26 +90,24 @@ public class SkeletonKey extends Artifact {
 
 	@Override
 	public void execute(Hero hero, String action) {
-		super.execute(hero, action);
+        super.execute(hero, action);
 
-        if (null != null) return;
+        if (action.equals(AC_INSERT)) {
 
-		if (action.equals(AC_INSERT)){
+            curUser = hero;
 
-			curUser = hero;
+            if (!isEquipped(hero)) {
+                GLog.i(Messages.get(Artifact.class, "need_to_equip"));
 
-			if (!isEquipped( hero )) {
-				GLog.i( Messages.get(Artifact.class, "need_to_equip") );
+            } else if (cursed) {
+                GLog.w(Messages.get(this, "cursed"));
 
-			} else if (cursed) {
-				GLog.w( Messages.get(this, "cursed") );
+            } else {
+                GameScene.selectCell(targeter);
+            }
 
-			} else {
-				GameScene.selectCell(targeter);
-			}
-
-		}
-	}
+        }
+    }
 
 	//levels when used, with bonus xp for opening locks that could be opened with keys
 	public void gainExp( int xpGain ){

@@ -84,33 +84,31 @@ public class EtherealChains extends Artifact {
 	@Override
 	public void execute(Hero hero, String action) {
 
-		super.execute(hero, action);
+        super.execute(hero, action);
 
-        if (null != null) return;
+        if (action.equals(AC_CAST)) {
 
-		if (action.equals(AC_CAST)){
+            curUser = hero;
 
-			curUser = hero;
+            if (!isEquipped(hero)) {
+                GLog.i(Messages.get(Artifact.class, "need_to_equip"));
+                usesTargeting = false;
 
-			if (!isEquipped( hero )) {
-				GLog.i( Messages.get(Artifact.class, "need_to_equip") );
-				usesTargeting = false;
+            } else if (charge < 1) {
+                GLog.i(Messages.get(this, "no_charge"));
+                usesTargeting = false;
 
-			} else if (charge < 1) {
-				GLog.i( Messages.get(this, "no_charge") );
-				usesTargeting = false;
+            } else if (cursed) {
+                GLog.w(Messages.get(this, "cursed"));
+                usesTargeting = false;
 
-			} else if (cursed) {
-				GLog.w( Messages.get(this, "cursed") );
-				usesTargeting = false;
+            } else {
+                usesTargeting = true;
+                GameScene.selectCell(caster);
+            }
 
-			} else {
-				usesTargeting = true;
-				GameScene.selectCell(caster);
-			}
-
-		}
-	}
+        }
+    }
 
 	public void resetForTrinity(int visibleLevel) {
 		charge = 5+(level()*2); //sets charge to soft cap

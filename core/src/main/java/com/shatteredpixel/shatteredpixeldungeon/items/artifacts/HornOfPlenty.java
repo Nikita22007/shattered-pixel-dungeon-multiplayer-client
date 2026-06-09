@@ -73,54 +73,51 @@ public class HornOfPlenty extends Artifact {
 
 	@Override
 	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
-        if (null != null) return actions;
-		if (isEquipped( hero ) && charge > 0) {
-			actions.add(AC_SNACK);
-			actions.add(AC_EAT);
-		}
-		if (isEquipped( hero ) && level() < levelCap && !cursed) {
-			actions.add(AC_STORE);
-		}
-		return actions;
-	}
+        ArrayList<String> actions = super.actions(hero);
+        if (isEquipped(hero) && charge > 0) {
+            actions.add(AC_SNACK);
+            actions.add(AC_EAT);
+        }
+        if (isEquipped(hero) && level() < levelCap && !cursed) {
+            actions.add(AC_STORE);
+        }
+        return actions;
+    }
 
 	@Override
 	public void execute( Hero hero, String action ) {
 
-		super.execute(hero, action);
+        super.execute(hero, action);
 
-        if (null != null) return;
+        if (action.equals(AC_EAT) || action.equals(AC_SNACK)) {
 
-		if (action.equals(AC_EAT) || action.equals(AC_SNACK)){
-
-			if (!isEquipped(hero)) GLog.i( Messages.get(Artifact.class, "need_to_equip") );
-			else if (charge == 0)  GLog.i( Messages.get(this, "no_food") );
-			else {
-				//consume as much food as it takes to be full, to a minimum of 1
-				int satietyPerCharge = (int) (Hunger.STARVING/5f);
-				if (Dungeon.isChallenged(Challenges.NO_FOOD)){
-					satietyPerCharge /= 3;
-				}
+            if (!isEquipped(hero)) GLog.i(Messages.get(Artifact.class, "need_to_equip"));
+            else if (charge == 0) GLog.i(Messages.get(this, "no_food"));
+            else {
+                //consume as much food as it takes to be full, to a minimum of 1
+                int satietyPerCharge = (int) (Hunger.STARVING / 5f);
+                if (Dungeon.isChallenged(Challenges.NO_FOOD)) {
+                    satietyPerCharge /= 3;
+                }
 
                 Hunger hunger = null;
-				int chargesToUse = Math.max( 1, hunger.hunger() / satietyPerCharge);
-				if (chargesToUse > charge) chargesToUse = charge;
+                int chargesToUse = Math.max(1, hunger.hunger() / satietyPerCharge);
+                if (chargesToUse > charge) chargesToUse = charge;
 
-				//always use 1 charge if snacking
-				if (action.equals(AC_SNACK)){
-					chargesToUse = 1;
-				}
+                //always use 1 charge if snacking
+                if (action.equals(AC_SNACK)) {
+                    chargesToUse = 1;
+                }
 
-				doEatEffect(hero, chargesToUse);
-			}
+                doEatEffect(hero, chargesToUse);
+            }
 
-		} else if (action.equals(AC_STORE)){
+        } else if (action.equals(AC_STORE)) {
 
-			GameScene.selectItem(itemSelector);
+            GameScene.selectItem(itemSelector);
 
-		}
-	}
+        }
+    }
 
 	public void doEatEffect(Hero hero, int chargesToUse){
 		int satietyPerCharge = (int) (Hunger.STARVING/5f);

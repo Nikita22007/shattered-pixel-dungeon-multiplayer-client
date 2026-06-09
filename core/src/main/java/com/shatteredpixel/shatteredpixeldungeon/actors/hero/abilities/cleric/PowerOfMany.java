@@ -68,34 +68,22 @@ public class PowerOfMany extends ArmorAbility {
 
 	@Override
 	public String targetingPrompt() {
-		Char ally = getPoweredAlly();
+        Char ally = getPoweredAlly();
 
-		boolean allyExists = ally != null;
+        boolean allyExists = ally != null;
 
-        if (null != null) {
-            if (((PrismaticGuard) null).isEmpowered()) {
-                allyExists = true;
-            }
+        if (Stasis.getStasisAlly() != null) {
+            allyExists = true;
         }
 
-        if (null != null) {
-            if (((WandOfLivingEarth.RockArmor) null).isEmpowered()) {
-                allyExists = true;
-            }
+        if (ally instanceof LightAlly) {
+            return Messages.get(this, "prompt_ally");
+        } else if (!allyExists) {
+            return Messages.get(this, "prompt_default");
+        } else {
+            return null;
         }
-
-		if (Stasis.getStasisAlly() != null){
-			allyExists = true;
-		}
-
-		if (ally instanceof LightAlly){
-			return Messages.get(this, "prompt_ally");
-		} else if (!allyExists){
-			return Messages.get(this, "prompt_default");
-		} else {
-			return null;
-		}
-	}
+    }
 
 	public boolean useTargeting(){
 		return false;
@@ -104,80 +92,68 @@ public class PowerOfMany extends ArmorAbility {
 	@Override
 	protected void activate(ClassArmor armor, Hero hero, Integer target) {
 
-		Char ally = getPoweredAlly();
+        Char ally = getPoweredAlly();
 
-		boolean allyExists = ally != null;
+        boolean allyExists = ally != null;
 
-        if (null != null) {
-            if (((PrismaticGuard) null).isEmpowered()) {
-                allyExists = true;
-            }
+        if (Stasis.getStasisAlly() != null) {
+            allyExists = true;
         }
 
-        if (null != null) {
-            if (((WandOfLivingEarth.RockArmor) null).isEmpowered()) {
-                allyExists = true;
+        if (ally instanceof LightAlly) {
+            if (target == null) {
+                return;
+            } else {
+                ((LightAlly) ally).directTocell(target);
             }
-        }
+        } else if (allyExists) {
+            GLog.w(Messages.get(this, "ally_exists"));
+        } else {
+            if (target == null) {
+                return;
+            }
 
-		if (Stasis.getStasisAlly() != null){
-			allyExists = true;
-		}
+            if (!Dungeon.level.heroFOV[target]) {
+                GLog.w(Messages.get(this, "no_vision"));
+                return;
+            }
 
-		if (ally instanceof LightAlly){
-			if (target == null){
-				return;
-			} else {
-				((LightAlly) ally).directTocell(target);
-			}
-		} else if (allyExists) {
-			GLog.w( Messages.get(this, "ally_exists"));
-		} else {
-			if (target == null){
-				return;
-			}
+            //pre-calculate as cost becomes 0 if light ally starts to exist
+            float chargeUse = chargeUse(hero);
 
-			if (!Dungeon.level.heroFOV[target]){
-				GLog.w(Messages.get(this, "no_vision"));
-				return;
-			}
+            Char ch = Actor.findChar(target);
+            if (ch != null) {
+                if (ch.alignment != Char.Alignment.ALLY || ch == Dungeon.hero) {
+                    GLog.w(Messages.get(this, "only_allies"));
+                    return;
+                }
+            } else {
 
-			//pre-calculate as cost becomes 0 if light ally starts to exist
-			float chargeUse = chargeUse(hero);
+                if (!Dungeon.level.passable[target] || Dungeon.level.avoid[target]) {
+                    GLog.w(Messages.get(ClericSpell.class, "invalid_target"));
+                    return;
+                }
 
-			Char ch = Actor.findChar(target);
-			if (ch != null){
-				if (ch.alignment != Char.Alignment.ALLY || ch == Dungeon.hero){
-					GLog.w(Messages.get(this, "only_allies"));
-					return;
-				}
-			} else {
-
-				if (!Dungeon.level.passable[target] || Dungeon.level.avoid[target]){
-					GLog.w(Messages.get(ClericSpell.class, "invalid_target"));
-					return;
-				}
-
-				ch = new LightAlly(hero.lvl);
-				ch.pos = target;
-				GameScene.add((Mob) ch);
-				ScrollOfTeleportation.appear(ch, ch.pos);
-			}
+                ch = new LightAlly(hero.lvl);
+                ch.pos = target;
+                GameScene.add((Mob) ch);
+                ScrollOfTeleportation.appear(ch, ch.pos);
+            }
 
             ((Barrier) null).setShield(25);
 
-			armor.charge -= chargeUse;
-			armor.updateQuickslot();
+            armor.charge -= chargeUse;
+            armor.updateQuickslot();
 
-			hero.sprite.zap(target);
-			Sample.INSTANCE.play(Assets.Sounds.CHARGEUP);
+            hero.sprite.zap(target);
+            Sample.INSTANCE.play(Assets.Sounds.CHARGEUP);
 
-			Invisibility.dispel();
-			hero.spendAndNext(Actor.TICK);
+            Invisibility.dispel();
+            hero.spendAndNext(Actor.TICK);
 
-		}
+        }
 
-	}
+    }
 
 	@Override
 	public int icon() {
@@ -190,11 +166,8 @@ public class PowerOfMany extends ArmorAbility {
 	}
 
 	public static Char getPoweredAlly(){
-		for (Char ch : Actor.chars()){
-            if (null != null){
-				return ch;
-			}
-		}
+		for (Char ch : Actor.chars()) {
+        }
 		return null;
 	}
 

@@ -61,12 +61,8 @@ public class Wandmaker extends NPC {
 
 	@Override
 	protected boolean act() {
-        if (null != null){
-			die(null);
-			return true;
-		}
-		return super.act();
-	}
+        return super.act();
+    }
 	
 	@Override
 	public int defenseSkill( Char enemy ) {

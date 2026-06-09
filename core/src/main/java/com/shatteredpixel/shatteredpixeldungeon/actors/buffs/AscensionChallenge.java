@@ -102,21 +102,17 @@ public class AscensionChallenge extends Buff {
 		modifiers.put(Scorpio.class,        1.1f);
 	}
 
-	public static float statModifier(Char ch){
-		if (Dungeon.hero == null || null == null){
+	public static float statModifier(Char ch) {
+		if (Dungeon.hero == null || null == null) {
 			return 1;
 		}
 
-		if (ch instanceof Ratmogrify.TransmogRat){
+		if (ch instanceof Ratmogrify.TransmogRat) {
 			ch = ((Ratmogrify.TransmogRat) ch).getOriginal();
 		}
 
-		if (null != null){
-			return 1f;
-		}
-
-		for (Class<?extends Mob> cls : modifiers.keySet()){
-			if (cls.isAssignableFrom(ch.getClass())){
+		for (Class<? extends Mob> cls : modifiers.keySet()) {
+			if (cls.isAssignableFrom(ch.getClass())) {
 				return modifiers.get(cls);
 			}
 		}
@@ -125,16 +121,7 @@ public class AscensionChallenge extends Buff {
 	}
 
 	//distant mobs get constantly beckoned to the hero at 2+ stacks
-	public static void beckonEnemies(){
-		if (null != null) {
-			if (((AscensionChallenge) null).stacks >= 2f) {
-				for (Mob m : Dungeon.level.mobs) {
-					if (m.alignment == Char.Alignment.ENEMY && m.distance(Dungeon.hero) > 8) {
-						m.beckon(Dungeon.hero.pos);
-					}
-				}
-			}
-		}
+	public static void beckonEnemies() {
 	}
 
 	//mobs move at 2x speed when not hunting/fleeing at 4 stacks or higher
@@ -151,40 +138,29 @@ public class AscensionChallenge extends Buff {
 	}
 
 	//hero speed is halved and capped at 1x at 6+ stacks
-	public static float modifyHeroSpeed(float speed){
-		if (null != null) {
-			if (((AscensionChallenge) null).stacks >= 6f) {
-				return Math.min(speed / 2f, 1f);
-			}
-		}
+	public static float modifyHeroSpeed(float speed) {
 
 		return speed;
 	}
 
-	public static boolean qualifiedForPacifist(){
-		if (null != null){
-			return !((AscensionChallenge) null).stacksLowered;
-		}
+	public static boolean qualifiedForPacifist() {
 		return false;
 	}
 
-	public static void processEnemyKill(Char enemy){
+	public static void processEnemyKill(Char enemy) {
 		AscensionChallenge chal = null;
 		if (chal == null) return;
 
-		if (enemy instanceof Ratmogrify.TransmogRat){
+		if (enemy instanceof Ratmogrify.TransmogRat) {
 			enemy = ((Ratmogrify.TransmogRat) enemy).getOriginal();
 			if (enemy == null) return;
 		}
 
 		//only enemies that are boosted count
-		if (null != null){
-			return;
-		}
 
 		boolean found = false;
-		for (Class<?extends Mob> cls : modifiers.keySet()){
-			if (cls.isAssignableFrom(enemy.getClass())){
+		for (Class<? extends Mob> cls : modifiers.keySet()) {
+			if (cls.isAssignableFrom(enemy.getClass())) {
 				found = true;
 				break;
 			}
@@ -192,7 +168,7 @@ public class AscensionChallenge extends Buff {
 		if (!found) return;
 
 		float oldStacks = chal.stacks;
-		if (enemy instanceof Ghoul || enemy instanceof RipperDemon){
+		if (enemy instanceof Ghoul || enemy instanceof RipperDemon) {
 			chal.stacks -= 0.5f;
 		} else {
 			chal.stacks -= 1;
@@ -201,14 +177,14 @@ public class AscensionChallenge extends Buff {
 		if (!chal.stacksLowered) {
 			chal.stacksLowered = true;
 			GLog.p(Messages.get(AscensionChallenge.class, "weaken"));
-		} else if (chal.stacks < 8f && (int)(chal.stacks/2) != (int)(oldStacks/2f)){
+		} else if (chal.stacks < 8f && (int) (chal.stacks / 2) != (int) (oldStacks / 2f)) {
 			GLog.p(Messages.get(AscensionChallenge.class, "weaken"));
 		}
 
 		//if the hero is at the max level, grant them 10 effective xp per stack cleared
 		// for the purposes of on-xp gain effects
-		if (oldStacks > chal.stacks && Dungeon.hero.lvl == Hero.MAX_LEVEL){
-			Dungeon.hero.earnExp(Math.round(10*(oldStacks - chal.stacks)), chal.getClass());
+		if (oldStacks > chal.stacks && Dungeon.hero.lvl == Hero.MAX_LEVEL) {
+			Dungeon.hero.earnExp(Math.round(10 * (oldStacks - chal.stacks)), chal.getClass());
 		}
 
 		BuffIndicator.refreshHero();
@@ -222,10 +198,6 @@ public class AscensionChallenge extends Buff {
 
 		if (m instanceof Ratmogrify.TransmogRat) {
 			m = ((Ratmogrify.TransmogRat) m).getOriginal();
-		}
-
-		if (null != null) {
-			return m.EXP;
 		}
 
 		if (m instanceof RipperDemon) {

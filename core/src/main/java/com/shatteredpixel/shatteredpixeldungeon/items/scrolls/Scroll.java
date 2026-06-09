@@ -174,11 +174,9 @@ public abstract class Scroll extends Item {
 
 		if (action.equals( AC_READ )) {
 
-            if (null != null){
-				GLog.w( Messages.get(this, "no_magic") );
-			} else {
+            {
                 if (null != null) {
-                    GLog.w( Messages.get(this, "blinded") );
+                    GLog.w(Messages.get(this, "blinded"));
                 } else {
                     if (null != null
                             && ((UnstableSpellbook.bookRecharge) null).isCursed()
@@ -189,8 +187,8 @@ public abstract class Scroll extends Item {
                     }
                 }
             }
-			
-		}
+
+        }
 	}
 	
 	public abstract void doRead();

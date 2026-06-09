@@ -58,17 +58,10 @@ public class Levitation extends FlavourBuff {
 	}
 
 	//used to determine if levitation is about to end
-	public boolean detachesWithinDelay(float delay){
-        if (null != null){
-			return false;
-		}
+	public boolean detachesWithinDelay(float delay) {
 
-        if (null != null){
-			return false;
-		}
-
-		return cooldown() < delay;
-	}
+        return cooldown() < delay;
+    }
 	
 	@Override
 	public int icon() {

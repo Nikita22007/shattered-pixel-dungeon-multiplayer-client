@@ -310,37 +310,33 @@ public class Dungeon {
 	public static void switchLevel( final Level level, int pos ) {
 
 		//Position of -2 specifically means trying to place the hero the exit
-		if (pos == -2){
+		if (pos == -2) {
 			LevelTransition t = level.getTransition(LevelTransition.Type.REGULAR_EXIT);
 			if (t != null) pos = t.cell();
 		}
 
 		//Place hero at the entrance if they are out of the map (often used for pos = -1)
 		// or if they are in invalid terrain terrain (except in the mining level, where that happens normally)
-		if (pos < 0 || pos >= level.length() || level.invalidHeroPos(pos)){
+		if (pos < 0 || pos >= level.length() || level.invalidHeroPos(pos)) {
 			pos = level.getTransition(null).cell();
 		}
-		
+
 		PathFinder.setMapSize(level.width(), level.height());
-		
+
 		Dungeon.level = level;
 		hero.pos = pos;
 
-		if (null != null){
-			((AscensionChallenge) null).onLevelSwitch();
-		}
-
-		Mob.restoreAllies( level, pos );
+		Mob.restoreAllies(level, pos);
 
 		Actor.init();
 
 		level.addRespawner();
-		
-		for(Mob m : level.mobs){
-			if (m.pos == hero.pos && !Char.hasProp(m, Char.Property.IMMOVABLE)){
+
+		for (Mob m : level.mobs) {
+			if (m.pos == hero.pos && !Char.hasProp(m, Char.Property.IMMOVABLE)) {
 				//displace mob
-				for(int i : PathFinder.NEIGHBOURS8){
-					if (Actor.findChar(m.pos+i) == null && level.passable[m.pos + i]){
+				for (int i : PathFinder.NEIGHBOURS8) {
+					if (Actor.findChar(m.pos + i) == null && level.passable[m.pos + i]) {
 						m.pos += i;
 						break;
 					}
@@ -349,8 +345,8 @@ public class Dungeon {
 		}
 
 		Light light = null;
-		hero.viewDistance = light == null ? level.viewDistance : Math.max( Light.DISTANCE, level.viewDistance );
-		
+		hero.viewDistance = light == null ? level.viewDistance : Math.max(Light.DISTANCE, level.viewDistance);
+
 		hero.curAction = hero.lastAction = null;
 
 		observe();

@@ -85,23 +85,20 @@ public class Dewdrop extends Item {
 		int heal = Math.min( hero.HT - hero.HP, effect );
 
 		int shield = 0;
-		if (hero.hasTalent(Talent.SHIELDING_DEW)){
+		if (hero.hasTalent(Talent.SHIELDING_DEW)) {
 
-			//When vial is present, this allocates exactly as much of the effect as is needed
-			// to get to 100% HP, and the rest is then given as shielding (without the vial boost)
-			if (quantity > 1 && heal < effect && VialOfBlood.delayBurstHealing()){
-				heal = Math.round(heal/VialOfBlood.totalHealMultiplier());
-			}
-
-			shield = effect - heal;
-
-			int maxShield = Math.round(hero.HT *0.2f*hero.pointsInTalent(Talent.SHIELDING_DEW));
-			int curShield = 0;
-            if (null != null) {
-                curShield = ((Barrier) null).shielding();
+            //When vial is present, this allocates exactly as much of the effect as is needed
+            // to get to 100% HP, and the rest is then given as shielding (without the vial boost)
+            if (quantity > 1 && heal < effect && VialOfBlood.delayBurstHealing()) {
+                heal = Math.round(heal / VialOfBlood.totalHealMultiplier());
             }
-			shield = Math.min(shield, maxShield-curShield);
-		}
+
+            shield = effect - heal;
+
+            int maxShield = Math.round(hero.HT * 0.2f * hero.pointsInTalent(Talent.SHIELDING_DEW));
+            int curShield = 0;
+            shield = Math.min(shield, maxShield - curShield);
+        }
 
 		if (heal > 0 || shield > 0) {
 

@@ -62,43 +62,39 @@ public class DeathMark extends ArmorAbility {
 
 	@Override
 	public float chargeUse( Hero hero ) {
-		float chargeUse = super.chargeUse(hero);
-        if (null != null){
-			//reduced charge use by 30%/50%/65%/75%
-			chargeUse *= Math.pow(0.707, hero.pointsInTalent(Talent.DOUBLE_MARK));
-		}
-		return chargeUse;
-	}
+        float chargeUse = super.chargeUse(hero);
+        return chargeUse;
+    }
 
 	@Override
 	protected void activate(ClassArmor armor, Hero hero, Integer target) {
-		if (target == null){
+		if (target == null) {
 			return;
 		}
 
 		Char ch = Actor.findChar(target);
 
-		if (ch == null || !Dungeon.level.heroFOV[target]){
+		if (ch == null || !Dungeon.level.heroFOV[target]) {
 			GLog.w(Messages.get(this, "no_target"));
 			return;
-		} else if (ch.alignment != Char.Alignment.ENEMY){
+		} else if (ch.alignment != Char.Alignment.ENEMY) {
 			GLog.w(Messages.get(this, "ally_target"));
 			return;
 		}
 
-		if (ch != null){
+		if (ch != null) {
 			((DeathMarkTracker) null).setInitialHP(ch.HP);
 		}
 
-		armor.charge -= chargeUse( hero );
+		armor.charge -= chargeUse(hero);
 		armor.updateQuickslot();
 		hero.sprite.zap(target);
 
 		hero.next();
 
-        if (null != null){
-            ((DoubleMarkTracker) null).detach();
-		} else if (hero.hasTalent(Talent.DOUBLE_MARK)) {
+		{
+			if (hero.hasTalent(Talent.DOUBLE_MARK)) {
+			}
 		}
 
 	}

@@ -143,33 +143,29 @@ public class Golem extends Mob {
 		next();
 	}
 
-	public void teleportEnemy(){
-		spend(TICK);
+	public void teleportEnemy() {
+        spend(TICK);
 
-		int bestPos = enemy.pos;
-		for (int i : PathFinder.NEIGHBOURS8){
-			if (Dungeon.level.passable[pos + i]
-				&& Actor.findChar(pos+i) == null
-				&& Dungeon.level.trueDistance(pos+i, enemy.pos) > Dungeon.level.trueDistance(bestPos, enemy.pos)){
-				bestPos = pos+i;
-			}
-		}
+        int bestPos = enemy.pos;
+        for (int i : PathFinder.NEIGHBOURS8) {
+            if (Dungeon.level.passable[pos + i]
+                    && Actor.findChar(pos + i) == null
+                    && Dungeon.level.trueDistance(pos + i, enemy.pos) > Dungeon.level.trueDistance(bestPos, enemy.pos)) {
+                bestPos = pos + i;
+            }
+        }
 
-        if (null != null){
-			bestPos = enemy.pos;
-		}
+        if (bestPos != enemy.pos) {
+            ScrollOfTeleportation.appear(enemy, bestPos);
+            if (enemy instanceof Hero) {
+                ((Hero) enemy).interrupt();
+                Dungeon.observe();
+                GameScene.updateFog();
+            }
+        }
 
-		if (bestPos != enemy.pos){
-			ScrollOfTeleportation.appear(enemy, bestPos);
-			if (enemy instanceof Hero){
-				((Hero) enemy).interrupt();
-				Dungeon.observe();
-				GameScene.updateFog();
-			}
-		}
-
-		enemyTeleCooldown = 20;
-	}
+        enemyTeleCooldown = 20;
+    }
 
 	private boolean canTele(int target){
 		if (enemyTeleCooldown > 0) return false;

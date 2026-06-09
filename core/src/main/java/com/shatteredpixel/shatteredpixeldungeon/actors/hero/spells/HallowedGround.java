@@ -110,14 +110,7 @@ public class HallowedGround extends TargetedClericSpell {
 
 		Char ally = PowerOfMany.getPoweredAlly();
 		if (ally != null) {
-            if (null != null) {
-                if (affected.contains(hero) && !affected.contains(ally)) {
-                    affected.add(ally);
-                } else if (!affected.contains(hero) && affected.contains(ally)) {
-                    affected.add(hero);
-                }
-            }
-        }
+		}
 
 		for (Char ch : affected){
 			affectChar(ch);

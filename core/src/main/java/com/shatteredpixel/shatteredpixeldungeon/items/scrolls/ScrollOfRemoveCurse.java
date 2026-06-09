@@ -57,20 +57,17 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 				spirit = (TormentedSpirit) Actor.findChar(curUser.pos+i);
 			}
 		}
-		if (spirit != null){
-			identify();
-			Sample.INSTANCE.play( Assets.Sounds.READ );
-			readAnimation();
+		if (spirit != null) {
+            identify();
+            Sample.INSTANCE.play(Assets.Sounds.READ);
+            readAnimation();
 
-			new Flare( 6, 32 ).show( curUser.sprite, 2f );
+            new Flare(6, 32).show(curUser.sprite, 2f);
 
-            if (null != null) {
-            }
-
-			detach(curUser.belongings.backpack);
-			GLog.p(Messages.get(this, "spirit"));
-			spirit.cleanse();
-		} else {
+            detach(curUser.belongings.backpack);
+            GLog.p(Messages.get(this, "spirit"));
+            spirit.cleanse();
+        } else {
 			super.doRead();
 		}
 	}
@@ -82,9 +79,6 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 
 	public static boolean uncursable( Item item ){
 		if (item.isEquipped(Dungeon.hero)) {
-            if (null != null) {
-                return true;
-            }
         }
         if ((item instanceof EquipableItem || item instanceof Wand) && ((!item.isIdentified() && !item.cursedKnown) || item.cursed)){
 			return true;
@@ -99,20 +93,16 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 
 	@Override
 	protected void onItemSelected(Item item) {
-		new Flare( 6, 32 ).show( curUser.sprite, 2f );
+        new Flare(6, 32).show(curUser.sprite, 2f);
 
-		boolean procced = uncurse( curUser, item );
+        boolean procced = uncurse(curUser, item);
 
-        if (null != null) {
-            procced = true;
-		}
-
-		if (procced) {
-			GLog.p( Messages.get(this, "cleansed") );
-		} else {
-			GLog.i( Messages.get(this, "not_cleansed") );
-		}
-	}
+        if (procced) {
+            GLog.p(Messages.get(this, "cleansed"));
+        } else {
+            GLog.i(Messages.get(this, "not_cleansed"));
+        }
+    }
 
 	public static boolean uncurse( Hero hero, Item... items ) {
 		

@@ -40,62 +40,55 @@ public class Stone extends Armor.Glyph {
 
 	@Override
 	public int proc(Armor armor, Char attacker, Char defender, int damage) {
-		
-		testing = true;
-		float accuracy = attacker.attackSkill(defender);
-		float evasion = defender.defenseSkill(attacker);
-		testing = false;
 
-		//FIXME this is duplicated here because these apply in hit(), not in attack/defenseskill
-		// the true solution is probably to refactor accuracy/evasion code a little bit
-        if (null != null) accuracy *= 1.25f;
-        if (null != null) accuracy *= 0.8f;
-        if (null != null) accuracy *= 0.5f;
-        for (ChampionEnemy buff : new HashSet<ChampionEnemy>()){
-			accuracy *= buff.evasionAndAccuracyFactor();
-		}
-		accuracy *= AscensionChallenge.statModifier(attacker);
-		if (Dungeon.hero.heroClass != HeroClass.CLERIC
-				&& Dungeon.hero.hasTalent(Talent.BLESS)
-				&& attacker.alignment == Char.Alignment.ALLY){
-			// + 3%/5%
-			accuracy *= 1.01f + 0.02f*Dungeon.hero.pointsInTalent(Talent.BLESS);
-		}
+        testing = true;
+        float accuracy = attacker.attackSkill(defender);
+        float evasion = defender.defenseSkill(attacker);
+        testing = false;
 
-        if (null != null) evasion *= 1.25f;
-        if (null != null) evasion *= 0.8f;
-        if (null != null) evasion *= 0.5f;
-        for (ChampionEnemy buff : new HashSet<ChampionEnemy>()){
-			evasion *= buff.evasionAndAccuracyFactor();
-		}
-		evasion *= AscensionChallenge.statModifier(defender);
-		if (Dungeon.hero.heroClass != HeroClass.CLERIC
-				&& Dungeon.hero.hasTalent(Talent.BLESS)
-				&& defender.alignment == Char.Alignment.ALLY){
-			// + 3%/5%
-			evasion *= 1.01f + 0.02f*Dungeon.hero.pointsInTalent(Talent.BLESS);
-		}
-		evasion *= FerretTuft.evasionMultiplier();
+        //FIXME this is duplicated here because these apply in hit(), not in attack/defenseskill
+        // the true solution is probably to refactor accuracy/evasion code a little bit
+        for (ChampionEnemy buff : new HashSet<ChampionEnemy>()) {
+            accuracy *= buff.evasionAndAccuracyFactor();
+        }
+        accuracy *= AscensionChallenge.statModifier(attacker);
+        if (Dungeon.hero.heroClass != HeroClass.CLERIC
+                && Dungeon.hero.hasTalent(Talent.BLESS)
+                && attacker.alignment == Char.Alignment.ALLY) {
+            // + 3%/5%
+            accuracy *= 1.01f + 0.02f * Dungeon.hero.pointsInTalent(Talent.BLESS);
+        }
+        for (ChampionEnemy buff : new HashSet<ChampionEnemy>()) {
+            evasion *= buff.evasionAndAccuracyFactor();
+        }
+        evasion *= AscensionChallenge.statModifier(defender);
+        if (Dungeon.hero.heroClass != HeroClass.CLERIC
+                && Dungeon.hero.hasTalent(Talent.BLESS)
+                && defender.alignment == Char.Alignment.ALLY) {
+            // + 3%/5%
+            evasion *= 1.01f + 0.02f * Dungeon.hero.pointsInTalent(Talent.BLESS);
+        }
+        evasion *= FerretTuft.evasionMultiplier();
 
-		// end of copy-pasta
+        // end of copy-pasta
 
-		evasion *= genericProcChanceMultiplier(defender);
-		
-		float hitChance;
-		if (evasion >= accuracy){
-			hitChance = (accuracy/evasion)/2f;
-		} else {
-			hitChance = 1f - (evasion/accuracy)/2f;
-		}
-		
-		//75% of dodge chance is applied as damage reduction
-		// we clamp in case accuracy or evasion were negative
-		hitChance = GameMath.gate(0.25f, (1f + 3f*hitChance)/4f, 1f);
-		
-		damage = (int)Math.ceil(damage * hitChance);
-		
-		return damage;
-	}
+        evasion *= genericProcChanceMultiplier(defender);
+
+        float hitChance;
+        if (evasion >= accuracy) {
+            hitChance = (accuracy / evasion) / 2f;
+        } else {
+            hitChance = 1f - (evasion / accuracy) / 2f;
+        }
+
+        //75% of dodge chance is applied as damage reduction
+        // we clamp in case accuracy or evasion were negative
+        hitChance = GameMath.gate(0.25f, (1f + 3f * hitChance) / 4f, 1f);
+
+        damage = (int) Math.ceil(damage * hitChance);
+
+        return damage;
+    }
 	
 	private static boolean testing = false;
 	

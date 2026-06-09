@@ -78,13 +78,8 @@ public class Ghost extends NPC {
 
 	@Override
 	protected boolean act() {
-        if (null != null){
-			die(null);
-			Notes.remove( landmark() );
-			return true;
-		}
-		return super.act();
-	}
+        return super.act();
+    }
 
 	@Override
 	public int defenseSkill( Char enemy ) {

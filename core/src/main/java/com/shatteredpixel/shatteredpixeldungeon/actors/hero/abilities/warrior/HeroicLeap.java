@@ -53,13 +53,9 @@ public class HeroicLeap extends ArmorAbility {
 
 	@Override
 	public float chargeUse( Hero hero ) {
-		float chargeUse = super.chargeUse(hero);
-        if (null != null){
-			//reduced charge use by 16%/30%/41%/50%
-			chargeUse *= Math.pow(0.84, hero.pointsInTalent(Talent.DOUBLE_JUMP));
-		}
-		return chargeUse;
-	}
+        float chargeUse = super.chargeUse(hero);
+        return chargeUse;
+    }
 
 	@Override
 	public void activate( ClassArmor armor, Hero hero, Integer target ) {
@@ -96,18 +92,18 @@ public class HeroicLeap extends ArmorAbility {
 					for (int i : PathFinder.NEIGHBOURS8) {
 						Char mob = Actor.findChar(hero.pos + i);
 						if (mob != null && mob != hero && mob.alignment != Char.Alignment.ALLY) {
-							if (hero.hasTalent(Talent.BODY_SLAM)){
-								int damage = Hero.heroDamageIntRange(hero.pointsInTalent(Talent.BODY_SLAM), 4*hero.pointsInTalent(Talent.BODY_SLAM));
-								damage += Math.round(hero.drRoll()*0.25f*hero.pointsInTalent(Talent.BODY_SLAM));
+							if (hero.hasTalent(Talent.BODY_SLAM)) {
+								int damage = Hero.heroDamageIntRange(hero.pointsInTalent(Talent.BODY_SLAM), 4 * hero.pointsInTalent(Talent.BODY_SLAM));
+								damage += Math.round(hero.drRoll() * 0.25f * hero.pointsInTalent(Talent.BODY_SLAM));
 								damage -= mob.drRoll();
 								mob.damage(damage, hero);
 							}
-							if (mob.pos == hero.pos + i && hero.hasTalent(Talent.IMPACT_WAVE)){
+							if (mob.pos == hero.pos + i && hero.hasTalent(Talent.IMPACT_WAVE)) {
 								Ballistica trajectory = new Ballistica(mob.pos, mob.pos + i, Ballistica.MAGIC_BOLT);
-								int strength = 1+hero.pointsInTalent(Talent.IMPACT_WAVE);
+								int strength = 1 + hero.pointsInTalent(Talent.IMPACT_WAVE);
 								WandOfBlastWave.throwChar(mob, trajectory, strength, true, true, HeroicLeap.this);
-								if (Random.Int(4) < hero.pointsInTalent(Talent.IMPACT_WAVE)){
-                                }
+								if (Random.Int(4) < hero.pointsInTalent(Talent.IMPACT_WAVE)) {
+								}
 							}
 						}
 					}
@@ -118,11 +114,9 @@ public class HeroicLeap extends ArmorAbility {
 					Invisibility.dispel();
 					hero.spendAndNext(Actor.TICK);
 
-                    if (null != null){
-                        ((DoubleJumpTracker) null).detach();
-					} else {
+					{
 						if (hero.hasTalent(Talent.DOUBLE_JUMP)) {
-                        }
+						}
 					}
 				}
 			});

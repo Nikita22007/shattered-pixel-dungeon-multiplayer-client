@@ -74,119 +74,106 @@ public class Challenge extends ArmorAbility {
 
 	@Override
 	public float chargeUse( Hero hero ) {
-		float chargeUse = super.chargeUse(hero);
-        if (null != null){
-			//reduced charge use by 16%/30%/41%/50%
-			chargeUse *= Math.pow(0.84, hero.pointsInTalent(Talent.ELIMINATION_MATCH));
-		}
-		return chargeUse;
-	}
+        float chargeUse = super.chargeUse(hero);
+        return chargeUse;
+    }
 
 	@Override
 	protected void activate(ClassArmor armor, Hero hero, Integer target) {
-		if (target == null){
-			return;
-		}
+        if (target == null) {
+            return;
+        }
 
-		Char targetCh = Actor.findChar(target);
-		if (targetCh == null || !Dungeon.level.heroFOV[target]){
-			GLog.w(Messages.get(this, "no_target"));
-			return;
-		}
+        Char targetCh = Actor.findChar(target);
+        if (targetCh == null || !Dungeon.level.heroFOV[target]) {
+            GLog.w(Messages.get(this, "no_target"));
+            return;
+        }
 
-        if (null != null){
-			GLog.w(Messages.get(this, "already_dueling"));
-			return;
-		}
+        if (targetCh.alignment != Char.Alignment.ENEMY
+                && !(targetCh instanceof Mimic && targetCh.alignment == Char.Alignment.NEUTRAL)) {
+            GLog.w(Messages.get(this, "ally_target"));
+            return;
+        }
 
-		if (targetCh.alignment != Char.Alignment.ENEMY
-				&& !(targetCh instanceof Mimic && targetCh.alignment == Char.Alignment.NEUTRAL)){
-			GLog.w(Messages.get(this, "ally_target"));
-			return;
-		}
+        boolean[] passable = BArray.or(Dungeon.level.passable, Dungeon.level.avoid, null);
+        for (Char c : Actor.chars()) {
+            if (c != hero) passable[c.pos] = false;
+        }
+        PathFinder.buildDistanceMap(targetCh.pos, passable);
+        int[] reachable = PathFinder.distance.clone();
 
-		boolean[] passable = BArray.or(Dungeon.level.passable, Dungeon.level.avoid, null);
-		for (Char c : Actor.chars()) {
-			if (c != hero) passable[c.pos] = false;
-		}
-		PathFinder.buildDistanceMap(targetCh.pos, passable);
-		int[] reachable = PathFinder.distance.clone();
+        int blinkpos = hero.pos;
+        if (hero.hasTalent(Talent.CLOSE_THE_GAP) && !hero.rooted) {
 
-		int blinkpos = hero.pos;
-		if (hero.hasTalent(Talent.CLOSE_THE_GAP) && !hero.rooted){
+            int blinkrange = 1 + hero.pointsInTalent(Talent.CLOSE_THE_GAP);
+            PathFinder.buildDistanceMap(hero.pos, BArray.or(Dungeon.level.passable, Dungeon.level.avoid, null), blinkrange);
 
-			int blinkrange = 1 + hero.pointsInTalent(Talent.CLOSE_THE_GAP);
-			PathFinder.buildDistanceMap(hero.pos, BArray.or(Dungeon.level.passable, Dungeon.level.avoid, null), blinkrange);
+            for (int i = 0; i < PathFinder.distance.length; i++) {
+                if (PathFinder.distance[i] == Integer.MAX_VALUE
+                        || reachable[i] == Integer.MAX_VALUE
+                        || (!Dungeon.level.passable[i] && !(hero.flying && Dungeon.level.avoid[i]))
+                        || i == targetCh.pos) {
+                    continue;
+                }
 
-			for (int i = 0; i < PathFinder.distance.length; i++){
-				if (PathFinder.distance[i] == Integer.MAX_VALUE
-						|| reachable[i] == Integer.MAX_VALUE
-						|| (!Dungeon.level.passable[i] && !(hero.flying && Dungeon.level.avoid[i]))
-						|| i == targetCh.pos){
-					continue;
-				}
-
-				if (Dungeon.level.distance(i, targetCh.pos) < Dungeon.level.distance(blinkpos, targetCh.pos)){
-					blinkpos = i;
-				} else if (Dungeon.level.distance(i, targetCh.pos) == Dungeon.level.distance(blinkpos, targetCh.pos)){
-					if (Dungeon.level.trueDistance(i, hero.pos) < Dungeon.level.trueDistance(blinkpos, hero.pos)){
-						blinkpos = i;
-					}
-				}
-			}
-		}
-
-		if (reachable[blinkpos] == Integer.MAX_VALUE){
-			GLog.w(Messages.get(this, "unreachable_target"));
-			if (hero.rooted) PixelScene.shake( 1, 1f );
-			return;
-		}
-
-		if (Dungeon.level.distance(blinkpos, targetCh.pos) > 5){
-			GLog.w(Messages.get(this, "distant_target"));
-			if (hero.rooted) PixelScene.shake( 1, 1f );
-			return;
-		}
-
-		if (blinkpos != hero.pos){
-			Dungeon.hero.pos = blinkpos;
-			Dungeon.level.occupyCell(Dungeon.hero);
-			//prevents the hero from being interrupted by seeing new enemies
-			Dungeon.observe();
-			GameScene.updateFog();
-			Dungeon.hero.checkVisibleMobs();
-
-			Dungeon.hero.sprite.place( Dungeon.hero.pos );
-			CellEmitter.get( Dungeon.hero.pos ).burst( Speck.factory( Speck.WOOL ), 6 );
-			Sample.INSTANCE.play( Assets.Sounds.PUFF );
-		}
-
-		boolean bossTarget = Char.hasProp(targetCh, Char.Property.BOSS);
-		for (Char toFreeze : Actor.chars()){
-			if (toFreeze != targetCh && toFreeze.alignment != Char.Alignment.ALLY && !(toFreeze instanceof NPC)
-				&& (!bossTarget || !(Char.hasProp(targetCh, Char.Property.BOSS) || Char.hasProp(targetCh, Char.Property.BOSS_MINION)))) {
-				Actor.delayChar(toFreeze, DuelParticipant.DURATION);
+                if (Dungeon.level.distance(i, targetCh.pos) < Dungeon.level.distance(blinkpos, targetCh.pos)) {
+                    blinkpos = i;
+                } else if (Dungeon.level.distance(i, targetCh.pos) == Dungeon.level.distance(blinkpos, targetCh.pos)) {
+                    if (Dungeon.level.trueDistance(i, hero.pos) < Dungeon.level.trueDistance(blinkpos, hero.pos)) {
+                        blinkpos = i;
+                    }
+                }
             }
-		}
+        }
 
-        if (targetCh instanceof Mob){
-			((Mob) targetCh).aggro(hero);
-		}
+        if (reachable[blinkpos] == Integer.MAX_VALUE) {
+            GLog.w(Messages.get(this, "unreachable_target"));
+            if (hero.rooted) PixelScene.shake(1, 1f);
+            return;
+        }
 
-		GameScene.flash(0x80FFFFFF);
-		Sample.INSTANCE.play(Assets.Sounds.DESCEND);
+        if (Dungeon.level.distance(blinkpos, targetCh.pos) > 5) {
+            GLog.w(Messages.get(this, "distant_target"));
+            if (hero.rooted) PixelScene.shake(1, 1f);
+            return;
+        }
 
-		armor.charge -= chargeUse( hero );
-		armor.updateQuickslot();
-		Invisibility.dispel();
-		hero.sprite.zap(target);
+        if (blinkpos != hero.pos) {
+            Dungeon.hero.pos = blinkpos;
+            Dungeon.level.occupyCell(Dungeon.hero);
+            //prevents the hero from being interrupted by seeing new enemies
+            Dungeon.observe();
+            GameScene.updateFog();
+            Dungeon.hero.checkVisibleMobs();
 
-		hero.next();
+            Dungeon.hero.sprite.place(Dungeon.hero.pos);
+            CellEmitter.get(Dungeon.hero.pos).burst(Speck.factory(Speck.WOOL), 6);
+            Sample.INSTANCE.play(Assets.Sounds.PUFF);
+        }
 
-        if (null != null){
-            ((EliminationMatchTracker) null).detach();
-		}
-	}
+        boolean bossTarget = Char.hasProp(targetCh, Char.Property.BOSS);
+        for (Char toFreeze : Actor.chars()) {
+            if (toFreeze != targetCh && toFreeze.alignment != Char.Alignment.ALLY && !(toFreeze instanceof NPC)
+                    && (!bossTarget || !(Char.hasProp(targetCh, Char.Property.BOSS) || Char.hasProp(targetCh, Char.Property.BOSS_MINION)))) {
+                Actor.delayChar(toFreeze, DuelParticipant.DURATION);
+            }
+        }
+
+        if (targetCh instanceof Mob) {
+            ((Mob) targetCh).aggro(hero);
+        }
+
+        GameScene.flash(0x80FFFFFF);
+        Sample.INSTANCE.play(Assets.Sounds.DESCEND);
+
+        armor.charge -= chargeUse(hero);
+        armor.updateQuickslot();
+        Invisibility.dispel();
+        hero.sprite.zap(target);
+
+        hero.next();
+    }
 
 	@Override
 	public Talent[] talents() {
@@ -231,9 +218,6 @@ public class Challenge extends ArmorAbility {
 				Char other = null;
 				for (Char ch : Actor.chars()){
 					if (ch != target) {
-                        if (null != null) {
-                            other = ch;
-                        }
                     }
 				}
 
@@ -285,13 +269,10 @@ public class Challenge extends ArmorAbility {
 			}
 
 			for (Char ch : Actor.chars()) {
-                if (null != null) {
-                    ((SpectatorFreeze) null).detach();
-				}
                 if (null != null && ch != target) {
                     ((DuelParticipant) null).detach();
-				}
-			}
+                }
+            }
 		}
 
 		@Override

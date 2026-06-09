@@ -355,12 +355,9 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 				}
 
 				UnarmedAbilityTracker tracker = null;
-				if (!hero.canAttack(enemy)){
+				if (!hero.canAttack(enemy)) {
 					GLog.w(Messages.get(MeleeWeapon.class, "ability_target_range"));
 					tracker.detach();
-					if (null != null){
-						((FlurryEmpowerTracker) null).detach();
-					}
 					return;
 				}
 
@@ -379,9 +376,6 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 									hero.next();
 									tracker.detach();
 									((MonkEnergy) null).abilityUsed(Flurry.this);
-									if (null != null){
-										((FlurryEmpowerTracker) null).detach();
-									}
 								}
 							});
 						} else {
@@ -389,9 +383,6 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 							hero.next();
 							tracker.detach();
 							((MonkEnergy) null).abilityUsed(Flurry.this);
-							if (null != null){
-								((FlurryEmpowerTracker) null).detach();
-							}
 						}
 					}
 				});

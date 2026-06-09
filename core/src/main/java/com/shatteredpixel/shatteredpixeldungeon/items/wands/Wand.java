@@ -136,21 +136,14 @@ public abstract class Wand extends Item {
 	public abstract void onHit( MagesStaff staff, Char attacker, Char defender, int damage);
 
 	//not affected by enchantment proc chance changers
-	public static float procChanceMultiplier( Char attacker ){
-		if (null != null){
-			return 1f + ((Hero)attacker).pointsInTalent(Talent.EMPOWERED_STRIKE)/2f;
-		}
-		return 1f;
-	}
+	public static float procChanceMultiplier( Char attacker ) {
+        return 1f;
+    }
 
 	public boolean tryToZap( Hero owner, int target ) {
 
-		{
-			if (null != null) {
-				GLog.w(Messages.get(this, "no_magic"));
-				return false;
-			}
-		}
+        {
+        }
 
 		//if we're using wild magic, then assume we have charges
 		if (null != null || curCharges >= chargesPerCast()) {
@@ -218,11 +211,7 @@ public abstract class Wand extends Item {
 		}
 
 		if (Dungeon.hero.subClass == HeroSubClass.PRIEST) {
-			if (null != null) {
-				((GuidingLight.Illuminated) null).detach();
-				target.damage(Dungeon.hero.lvl + 5, GuidingLight.INSTANCE);
-			}
-		}
+        }
 
 		if (target.alignment != Char.Alignment.ALLY
 				&& Dungeon.hero.heroClass != HeroClass.CLERIC
@@ -388,38 +377,20 @@ public abstract class Wand extends Item {
 
 		if (charger != null && charger.target != null) {
 
-			//inside staff, still need to apply degradation
-			if (charger.target == Dungeon.hero
-					&& !Dungeon.hero.belongings.contains(this)) {
-				if (null != null) {
-					lvl = Degrade.reduceLevel(lvl);
-				}
-			}
+            //inside staff, still need to apply degradation
+            if (charger.target == Dungeon.hero
+                    && !Dungeon.hero.belongings.contains(this)) {
+            }
 
-			if (null != null){
-				lvl += 2;
-			}
+            if (curCharges == 1 && charger.target instanceof Hero && ((Hero) charger.target).hasTalent(Talent.DESPERATE_POWER)) {
+                lvl += ((Hero) charger.target).pointsInTalent(Talent.DESPERATE_POWER);
+            }
 
-			if (curCharges == 1 && charger.target instanceof Hero && ((Hero)charger.target).hasTalent(Talent.DESPERATE_POWER)){
-				lvl += ((Hero)charger.target).pointsInTalent(Talent.DESPERATE_POWER);
-			}
-
-			if (null != null){
-				int bonus = 4 + ((Hero)charger.target).pointsInTalent(Talent.WILD_POWER);
-				if (Random.Int(2) == 0) bonus++;
-				bonus /= 2; // +2/+2.5/+3/+3.5/+4 at 0/1/2/3/4 talent points
-
-				int maxBonusLevel = 3 + ((Hero)charger.target).pointsInTalent(Talent.WILD_POWER);
-				if (lvl < maxBonusLevel) {
-					lvl = Math.min(lvl + bonus, maxBonusLevel);
-				}
-			}
-
-			WandOfMagicMissile.MagicCharge buff = null;
-			if (buff != null && buff.level() > lvl){
-				return buff.level();
-			}
-		}
+            WandOfMagicMissile.MagicCharge buff = null;
+            if (buff != null && buff.level() > lvl) {
+                return buff.level();
+            }
+        }
 		return lvl;
 	}
 
@@ -675,30 +646,25 @@ public abstract class Wand extends Item {
 				int cell = shot.collisionPos;
 				
 				if (target == curUser.pos || cell == curUser.pos) {
-					if (target == curUser.pos && curUser.hasTalent(Talent.SHIELD_BATTERY)){
+					if (target == curUser.pos && curUser.hasTalent(Talent.SHIELD_BATTERY)) {
 
-						if (null != null){
-							GLog.w( Messages.get(Wand.class, "no_magic") );
-							return;
-						}
+                        if (curWand.curCharges == 0) {
+                            GLog.w(Messages.get(Wand.class, "fizzles"));
+                            return;
+                        }
 
-						if (curWand.curCharges == 0){
-							GLog.w( Messages.get(Wand.class, "fizzles") );
-							return;
-						}
-
-						float shield = curUser.HT * (0.04f*curWand.curCharges);
-						if (curUser.pointsInTalent(Talent.SHIELD_BATTERY) == 2) shield *= 1.5f;
-						((Barrier) null).setShield(Math.round(shield));
-						curUser.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(Math.round(shield)), FloatingText.SHIELDING);
-						curWand.curCharges = 0;
-						curUser.sprite.operate(curUser.pos);
-						Sample.INSTANCE.play(Assets.Sounds.CHARGEUP);
-						ScrollOfRecharging.charge(curUser);
-						updateQuickslot();
-						curUser.spendAndNext(Actor.TICK);
-						return;
-					}
+                        float shield = curUser.HT * (0.04f * curWand.curCharges);
+                        if (curUser.pointsInTalent(Talent.SHIELD_BATTERY) == 2) shield *= 1.5f;
+                        ((Barrier) null).setShield(Math.round(shield));
+                        curUser.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(Math.round(shield)), FloatingText.SHIELDING);
+                        curWand.curCharges = 0;
+                        curUser.sprite.operate(curUser.pos);
+                        Sample.INSTANCE.play(Assets.Sounds.CHARGEUP);
+                        ScrollOfRecharging.charge(curUser);
+                        updateQuickslot();
+                        curUser.spendAndNext(Actor.TICK);
+                        return;
+                    }
 					GLog.i( Messages.get(Wand.class, "self_target") );
 					return;
 				}
