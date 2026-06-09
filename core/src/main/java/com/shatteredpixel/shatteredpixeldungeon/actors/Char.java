@@ -39,7 +39,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corrosion;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LifeLink;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
@@ -68,14 +67,11 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Flow;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Obfuscation;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Potential;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Swiftness;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfElements;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfPsionicBlast;
-import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.FerretTuft;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfFireblast;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfFrost;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLightning;
@@ -89,7 +85,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Shoc
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Door;
-import com.shatteredpixel.shatteredpixeldungeon.levels.traps.GnollRockfallTrap;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.GrimTrap;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Languages;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -335,7 +330,7 @@ public abstract class Char extends Actor {
 
 			return false;
 
-		} else if (hit( this, enemy, accMulti, false )) {
+		} else if (false) {
 
 			int dr = Math.round(enemy.drRoll() * AscensionChallenge.statModifier(enemy));
 
@@ -467,77 +462,15 @@ public abstract class Char extends Actor {
 				//TODO enemy.defenseSound? currently miss plays for monks/crab even when they parry
 				Sample.INSTANCE.play(Assets.Sounds.MISS);
 			}
-			
+
 			return false;
-			
+
 		}
 
 	}
 
 	public static int INFINITE_ACCURACY = 1_000_000;
 	public static int INFINITE_EVASION = 1_000_000;
-
-	final public static boolean hit( Char attacker, Char defender, boolean magic ) {
-		return hit(attacker, defender, magic ? 2f : 1f, magic);
-	}
-
-	public static boolean hit( Char attacker, Char defender, float accMulti, boolean magic ) {
-		float acuStat = attacker.attackSkill(defender);
-		float defStat = defender.defenseSkill(attacker);
-
-		if (defender instanceof Hero && ((Hero) defender).damageInterrupt) {
-			((Hero) defender).interrupt();
-		}
-
-		//invisible chars always hit (for the hero this is surprise attacking)
-		if (attacker.invisible > 0 && attacker.canSurpriseAttack()) {
-			acuStat = INFINITE_ACCURACY;
-		}
-
-		//if accuracy or evasion are large enough, treat them as infinite.
-		//note that infinite evasion beats infinite accuracy
-		if (defStat >= INFINITE_EVASION) {
-			hitMissIcon = FloatingText.getMissReasonIcon(attacker, acuStat, defender, INFINITE_EVASION);
-			return false;
-		} else if (acuStat >= INFINITE_ACCURACY) {
-			hitMissIcon = FloatingText.getHitReasonIcon(attacker, INFINITE_ACCURACY, defender, defStat);
-			return true;
-		}
-
-		float acuRoll = Random.Float(acuStat);
-		for (ChampionEnemy buff : new HashSet<ChampionEnemy>()) {
-			acuRoll *= buff.evasionAndAccuracyFactor();
-		}
-		acuRoll *= AscensionChallenge.statModifier(attacker);
-		if (Dungeon.hero.heroClass != HeroClass.CLERIC
-				&& Dungeon.hero.hasTalent(Talent.BLESS)
-				&& attacker.alignment == Alignment.ALLY) {
-			// + 3%/5%
-			acuRoll *= 1.01f + 0.02f * Dungeon.hero.pointsInTalent(Talent.BLESS);
-		}
-		acuRoll *= accMulti;
-
-		float defRoll = Random.Float(defStat);
-		for (ChampionEnemy buff : new HashSet<ChampionEnemy>()) {
-			defRoll *= buff.evasionAndAccuracyFactor();
-		}
-		defRoll *= AscensionChallenge.statModifier(defender);
-		if (Dungeon.hero.heroClass != HeroClass.CLERIC
-				&& Dungeon.hero.hasTalent(Talent.BLESS)
-				&& defender.alignment == Alignment.ALLY) {
-			// + 3%/5%
-			defRoll *= 1.01f + 0.02f * Dungeon.hero.pointsInTalent(Talent.BLESS);
-		}
-		defRoll *= FerretTuft.evasionMultiplier();
-
-		if (acuRoll >= defRoll) {
-			hitMissIcon = FloatingText.getHitReasonIcon(attacker, acuRoll, defender, defRoll);
-			return true;
-		} else {
-			hitMissIcon = FloatingText.getMissReasonIcon(attacker, acuRoll, defender, defRoll);
-			return false;
-		}
-	}
 
 	private static int hitMissIcon = -1;
 

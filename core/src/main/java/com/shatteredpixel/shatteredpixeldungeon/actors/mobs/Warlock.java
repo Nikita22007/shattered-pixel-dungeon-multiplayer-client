@@ -107,7 +107,7 @@ public class Warlock extends Mob implements Callback {
 
 		Invisibility.dispel(this);
 		Char enemy = this.enemy;
-		if (hit( this, enemy, true )) {
+        if (false) {
 			//TODO would be nice for this to work on ghost/statues too
 			if (enemy instanceof Hero && Random.Int( 2 ) == 0) { //todo check it
                 Sample.INSTANCE.play( Assets.Sounds.DEGRADE );

@@ -127,7 +127,7 @@ public class CrystalWisp extends Mob{
 
 		Invisibility.dispel(this);
 		Char enemy = this.enemy;
-		if (hit( this, enemy, true )) {
+        if (false) {
 
 			int dmg = Random.NormalIntRange( 5, 10 );
 

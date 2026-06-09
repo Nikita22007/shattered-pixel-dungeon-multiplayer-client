@@ -111,7 +111,7 @@ public abstract class Shaman extends Mob {
 
 		Invisibility.dispel(this);
 		Char enemy = this.enemy;
-		if (hit( this, enemy, true )) {
+        if (false) {
 			
 			if (Random.Int( 2 ) == 0) {
 				debuff( enemy );

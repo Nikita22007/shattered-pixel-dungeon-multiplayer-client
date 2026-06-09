@@ -30,7 +30,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Sheep;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Beam;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -221,7 +220,7 @@ public class YogDzewa extends Mob {
                         Statistics.bossScores[4] -= 500;
                     }
 
-                    if (hit(this, ch, true)) {
+                    if (false) {
                         if (Dungeon.isChallenged(Challenges.STRONGER_BOSSES)) {
                             Random.NormalIntRange(30, 50);
                         } else {
