@@ -63,9 +63,7 @@ public class FrostImbue extends FlavourBuff {
 	@Override
 	public boolean attachTo(Char target) {
 		if (super.attachTo(target)){
-			Buff.detach(target, Frost.class);
-			Buff.detach(target, Chill.class);
-			return true;
+            return true;
 		} else {
 			return false;
 		}

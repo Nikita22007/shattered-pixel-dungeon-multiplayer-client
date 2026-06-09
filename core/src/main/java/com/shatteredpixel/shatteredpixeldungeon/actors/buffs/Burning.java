@@ -31,8 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Thief;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Brimstone;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.ChargrilledMeat;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.FrozenCarpaccio;
@@ -83,9 +81,8 @@ public class Burning extends Buff implements Hero.Doom {
 
 	@Override
 	public boolean attachTo(Char target) {
-		Buff.detach( target, Chill.class);
 
-		return super.attachTo(target);
+        return super.attachTo(target);
 	}
 
 	@Override
@@ -97,9 +94,8 @@ public class Burning extends Buff implements Hero.Doom {
 
 			acted = true;
 			int damage = Random.NormalIntRange( 1, 3 + Dungeon.scalingDepth()/4 );
-			Buff.detach( target, Chill.class);
 
-			if (target instanceof Hero
+            if (target instanceof Hero
 					&& target.buff(TimekeepersHourglass.timeStasis.class) == null
 					&& target.buff(TimeStasis.class) == null) {
 				

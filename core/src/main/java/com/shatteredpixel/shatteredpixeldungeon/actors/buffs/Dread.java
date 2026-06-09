@@ -45,8 +45,7 @@ public class Dread extends Buff {
 	@Override
 	public boolean attachTo(Char target) {
 		if (super.attachTo(target)){
-			Buff.detach( target, Terror.class );
-			return true;
+            return true;
 		} else {
 			return false;
 		}

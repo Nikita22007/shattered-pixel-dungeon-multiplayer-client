@@ -187,28 +187,16 @@ public class Buff extends Actor {
 	}
 	
 	public static<T extends FlavourBuff> T affect( Char target, Class<T> buffClass, float duration ) {
-		T buff = affect( target, buffClass );
-		buff.spend( duration * target.resist(buffClass) );
-		return buff;
+		return null;
 	}
 
 	//postpones an already active buff, or creates & attaches a new buff and delays that.
 	public static<T extends FlavourBuff> T prolong( Char target, Class<T> buffClass, float duration ) {
-		T buff = affect( target, buffClass );
-		buff.postpone( duration * target.resist(buffClass) );
-		return buff;
+		return null;
 	}
 
 	public static<T extends CounterBuff> T count( Char target, Class<T> buffclass, float count ) {
-		T buff = affect( target, buffclass );
-		buff.countUp( count );
-		return buff;
-	}
-	
-	public static void detach( Char target, Class<? extends Buff> cl ) {
-		for ( Buff b : target.buffs( cl )){
-			b.detach();
-		}
+		return null;
 	}
 
 	//network

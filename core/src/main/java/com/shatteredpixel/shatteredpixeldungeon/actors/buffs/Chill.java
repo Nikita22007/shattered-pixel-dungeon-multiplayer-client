@@ -37,9 +37,8 @@ public class Chill extends FlavourBuff {
 
 	@Override
 	public boolean attachTo(Char target) {
-		Buff.detach( target, Burning.class );
 
-		return super.attachTo(target);
+        return super.attachTo(target);
 	}
 
 	//reduces speed by 10% for every turn remaining, capping at 50%

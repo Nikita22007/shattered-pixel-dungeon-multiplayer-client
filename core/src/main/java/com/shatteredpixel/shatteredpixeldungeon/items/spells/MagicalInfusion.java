@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.spells;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Degrade;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -91,9 +90,7 @@ public class MagicalInfusion extends InventorySpell {
 	public Item upgradeItem( Item item ){
 		ScrollOfUpgrade.upgrade(curUser);
 
-		Degrade.detach( curUser, Degrade.class );
-
-		if (item instanceof Weapon && ((Weapon) item).enchantment != null) {
+        if (item instanceof Weapon && ((Weapon) item).enchantment != null) {
 			item = ((Weapon) item).upgrade(true);
 		} else if (item instanceof Armor && ((Armor) item).glyph != null) {
 			item = ((Armor) item).upgrade(true);

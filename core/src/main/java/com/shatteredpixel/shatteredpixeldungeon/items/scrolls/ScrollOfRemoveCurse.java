@@ -66,8 +66,7 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 			new Flare( 6, 32 ).show( curUser.sprite, 2f );
 
 			if (curUser.buff(Degrade.class) != null) {
-				Degrade.detach(curUser, Degrade.class);
-			}
+            }
 
 			detach(curUser.belongings.backpack);
 			GLog.p(Messages.get(this, "spirit"));
@@ -103,8 +102,7 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 		boolean procced = uncurse( curUser, item );
 
 		if (curUser.buff(Degrade.class) != null) {
-			Degrade.detach(curUser, Degrade.class);
-			procced = true;
+            procced = true;
 		}
 
 		if (procced) {

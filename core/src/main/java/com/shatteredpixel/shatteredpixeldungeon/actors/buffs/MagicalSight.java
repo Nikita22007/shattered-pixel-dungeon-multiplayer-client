@@ -55,8 +55,7 @@ public class MagicalSight extends FlavourBuff {
 	@Override
 	public boolean attachTo(Char target) {
 		if (super.attachTo(target)){
-			Buff.detach(target, Blindness.class);
-			return true;
+            return true;
 		}
 		return false;
 	}

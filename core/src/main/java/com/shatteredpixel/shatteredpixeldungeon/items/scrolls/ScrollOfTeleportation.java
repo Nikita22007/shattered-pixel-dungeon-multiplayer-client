@@ -25,8 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
@@ -76,8 +74,7 @@ public class ScrollOfTeleportation extends Scroll {
 		
 		appear( ch, pos );
 		Dungeon.level.occupyCell( ch );
-		Buff.detach(ch, Roots.class);
-		if (ch == Dungeon.hero) {
+        if (ch == Dungeon.hero) {
 			Dungeon.observe();
 			GameScene.updateFog();
 		}
@@ -118,9 +115,8 @@ public class ScrollOfTeleportation extends Scroll {
 			
 			appear( ch, pos );
 			Dungeon.level.occupyCell( ch );
-			Buff.detach(ch, Roots.class);
-			
-			if (ch == Dungeon.hero) {
+
+            if (ch == Dungeon.hero) {
 				GLog.i( Messages.get(ScrollOfTeleportation.class, "tele") );
 				
 				Dungeon.observe();
@@ -188,9 +184,7 @@ public class ScrollOfTeleportation extends Scroll {
 		appear( ch, pos );
 		Dungeon.level.occupyCell( ch );
 
-		Buff.detach(ch, Roots.class);
-
-		if (ch == Dungeon.hero) {
+        if (ch == Dungeon.hero) {
 			GLog.i( Messages.get(ScrollOfTeleportation.class, "tele") );
 
 			Dungeon.observe();

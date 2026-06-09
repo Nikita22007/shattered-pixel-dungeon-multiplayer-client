@@ -49,14 +49,12 @@ public class Frost extends FlavourBuff {
 	
 	@Override
 	public boolean attachTo( Char target ) {
-		Buff.detach( target, Burning.class );
 
-		if (super.attachTo( target )) {
+        if (super.attachTo( target )) {
 			
 			target.paralysed++;
-			Buff.detach( target, Chill.class );
 
-			if (target instanceof Hero) {
+            if (target instanceof Hero) {
 
 				Hero hero = (Hero)target;
 				ArrayList<Item> freezable = new ArrayList<>();

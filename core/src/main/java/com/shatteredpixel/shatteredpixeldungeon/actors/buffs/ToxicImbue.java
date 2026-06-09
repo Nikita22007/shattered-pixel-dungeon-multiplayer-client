@@ -123,8 +123,7 @@ public class ToxicImbue extends Buff {
 	@Override
 	public boolean attachTo(Char target) {
 		if (super.attachTo(target)){
-			Buff.detach(target, Poison.class);
-			return true;
+            return true;
 		} else {
 			return false;
 		}

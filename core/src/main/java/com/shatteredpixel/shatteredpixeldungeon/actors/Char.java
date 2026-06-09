@@ -864,10 +864,8 @@ public abstract class Char extends Actor {
 			c.recover(src);
 		}
 		if (this.buff(Frost.class) != null){
-			Buff.detach( this, Frost.class );
 		}
 		if (this.buff(MagicalSleep.class) != null){
-			Buff.detach(this, MagicalSleep.class);
 		}
 		if (this.buff(Doom.class) != null && !isImmune(Doom.class)){
 			damage *= 1.67f;
