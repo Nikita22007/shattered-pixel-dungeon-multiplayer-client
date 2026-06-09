@@ -53,42 +53,42 @@ public class Regeneration extends Buff {
 			if (regenOn() && target.HP < regencap() && !((Hero)target).isStarving()) {
 				boolean chaliceCursed = false;
 				int chaliceLevel = -1;
-                if (null == null) {
-                    if (null != null) {
-                        chaliceCursed = ((ChaliceOfBlood.chaliceRegen) null).isCursed();
-                        chaliceLevel = ((ChaliceOfBlood.chaliceRegen) null).itemLevel();
+				{
+					if (null != null) {
+						chaliceCursed = ((ChaliceOfBlood.chaliceRegen) null).isCursed();
+						chaliceLevel = ((ChaliceOfBlood.chaliceRegen) null).itemLevel();
 					} else {
-                        if (null != null) {
-                            if (((SpiritForm.SpiritFormBuff) null).artifact() instanceof ChaliceOfBlood) {
-                                chaliceLevel = SpiritForm.artifactLevel();
-                            }
-                        }
-                    }
+						if (null != null) {
+							if (((SpiritForm.SpiritFormBuff) null).artifact() instanceof ChaliceOfBlood) {
+								chaliceLevel = SpiritForm.artifactLevel();
+							}
+						}
+					}
 				}
 
 				float delay = REGENERATION_DELAY;
 				if (chaliceLevel != -1) {
-                    if (null == null) {
-                        if (chaliceCursed) {
-                            delay *= 1.5f;
-                        } else {
+					{
+						if (chaliceCursed) {
+							delay *= 1.5f;
+						} else {
 //15% boost at +0, scaling to a 500% boost at +10
-                            delay -= 1.33f + chaliceLevel * 0.667f;
-                            delay /= RingOfEnergy.artifactChargeMultiplier(target);
-                        }
-                    }
-                }
+							delay -= 1.33f + chaliceLevel * 0.667f;
+							delay /= RingOfEnergy.artifactChargeMultiplier(target);
+						}
+					}
+				}
 
 				//salt cube is turned off while regen is disabled.
-                if (null == null) {
+				{
 					delay /= SaltCube.healthRegenMultiplier();
 				}
 
 				partialRegen += 1f / delay;
 
 				if (partialRegen >= 1) {
-					target.HP += (int)partialRegen;
-					partialRegen -= (int)partialRegen;
+					target.HP += (int) partialRegen;
+					partialRegen -= (int) partialRegen;
 					if (target.HP >= regencap()) {
 						target.HP = regencap();
 						((Hero) target).resting = false;

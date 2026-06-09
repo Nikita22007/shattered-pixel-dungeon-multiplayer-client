@@ -1086,7 +1086,7 @@ public abstract class Level implements Bundlable {
 				//power of many's life link spell allows allies to get divine sense
 				Char ally = PowerOfMany.getPoweredAlly();
 				if (ally != null) {
-					if (null == null) {
+					{
 						ally = null;
 					}
 				}

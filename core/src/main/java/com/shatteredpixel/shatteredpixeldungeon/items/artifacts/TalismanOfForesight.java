@@ -72,10 +72,10 @@ public class TalismanOfForesight extends Artifact {
 		ArrayList<String> actions = super.actions( hero );
 		if (isEquipped(hero)
                 && !cursed) {
-            if (null == null) {
-                actions.add(AC_SCRY);
-            }
-        }
+			{
+				actions.add(AC_SCRY);
+			}
+		}
 		return actions;
 	}
 
@@ -353,11 +353,11 @@ public class TalismanOfForesight extends Artifact {
 
 		public void charge(int boost){
 			if (!cursed) {
-                if (null == null) {
-                    charge = Math.min((charge + boost), chargeCap);
-                    updateQuickslot();
-                }
-            }
+				{
+					charge = Math.min((charge + boost), chargeCap);
+					updateQuickslot();
+				}
+			}
 		}
 
 		@Override

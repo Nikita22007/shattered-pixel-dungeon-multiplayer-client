@@ -393,18 +393,18 @@ public class SkeletonKey extends Artifact {
 	@Override
 	public void charge(Hero target, float amount) {
 		if (charge < chargeCap && !cursed) {
-            if (null == null) {
-                partialCharge += 0.133f * amount;
-                while (partialCharge >= 1) {
-                    partialCharge--;
-                    charge++;
-                }
-                if (charge >= chargeCap) {
-                    partialCharge = 0;
-                }
-                updateQuickslot();
-            }
-        }
+			{
+				partialCharge += 0.133f * amount;
+				while (partialCharge >= 1) {
+					partialCharge--;
+					charge++;
+				}
+				if (charge >= chargeCap) {
+					partialCharge = 0;
+				}
+				updateQuickslot();
+			}
+		}
 	}
 
 	@Override

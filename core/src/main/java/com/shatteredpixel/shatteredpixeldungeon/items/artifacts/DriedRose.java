@@ -338,27 +338,26 @@ public class DriedRose extends Artifact {
 			
 			//rose does not charge while ghost hero is alive
 			if (ghost != null && !cursed) {
-                if (null == null) {
+				{
+					//heals to full over 500 turns
+					if (ghost.HP < ghost.HT && Regeneration.regenOn()) {
+						partialCharge += (ghost.HT / 500f) * RingOfEnergy.artifactChargeMultiplier(target);
+						updateQuickslot();
 
-//heals to full over 500 turns
-                    if (ghost.HP < ghost.HT && Regeneration.regenOn()) {
-                        partialCharge += (ghost.HT / 500f) * RingOfEnergy.artifactChargeMultiplier(target);
-                        updateQuickslot();
+						while (partialCharge > 1) {
+							ghost.HP++;
+							partialCharge--;
+							if (ghost.HP == ghost.HT) {
+								partialCharge = 0;
+							}
+						}
+					} else {
+						partialCharge = 0;
+					}
 
-                        while (partialCharge > 1) {
-                            ghost.HP++;
-                            partialCharge--;
-                            if (ghost.HP == ghost.HT) {
-                                partialCharge = 0;
-                            }
-                        }
-                    } else {
-                        partialCharge = 0;
-                    }
-
-                    return true;
-                }
-            }
+					return true;
+				}
+			}
 
             if (charge < chargeCap
 					&& !cursed

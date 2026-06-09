@@ -70,10 +70,10 @@ public class HolyTome extends Artifact {
 		ArrayList<String> actions = super.actions( hero );
 		if ((isEquipped(hero) || hero.hasTalent(Talent.LIGHT_READING))
                 && !cursed) {
-            if (null == null) {
-                actions.add(AC_CAST);
-            }
-        }
+			{
+				actions.add(AC_CAST);
+			}
+		}
 		return actions;
 	}
 

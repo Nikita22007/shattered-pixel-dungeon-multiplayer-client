@@ -211,17 +211,18 @@ public class GnollGeomancer extends Mob {
 					//ensure we don't do enough damage to break the armor at the start
 					if (wasSleeping) dmg = Math.min(dmg, 15);
 
-                    dmg = Math.min(dmg, ((RockArmor) null).shielding());
+					dmg = Math.min(dmg, ((RockArmor) null).shielding());
 
 					damage(dmg, p);
 					sprite.bloodBurstA(Dungeon.hero.sprite.center(), dmg);
 					sprite.flash();
 
 					hits++;
-					if (hits == 1){
-						GLog.w( Messages.get(GnollGeomancer.this, "warning"));
-					} if (hits == 3){
-						GLog.n( Messages.get(GnollGeomancer.this, "alert"));
+					if (hits == 1) {
+						GLog.w(Messages.get(GnollGeomancer.this, "warning"));
+					}
+					if (hits == 3) {
+						GLog.n(Messages.get(GnollGeomancer.this, "alert"));
 						wasSleeping = false;
 						spend(TICK);
 						sprite.idle();
@@ -232,13 +233,13 @@ public class GnollGeomancer extends Mob {
 						enemy = Dungeon.hero;
 						BossHealthBar.assignBoss(GnollGeomancer.this);
 
-						for (Mob m : Dungeon.level.mobs){
-							if (m instanceof GnollGuard){
+						for (Mob m : Dungeon.level.mobs) {
+							if (m instanceof GnollGuard) {
 								m.aggro(Dungeon.hero);
-								if (!((GnollGuard) m).hasSapper()){
+								if (!((GnollGuard) m).hasSapper()) {
 									m.beckon(pos);
 								}
-							} else if (m instanceof GnollSapper){
+							} else if (m instanceof GnollSapper) {
 								m.aggro(Dungeon.hero);
 							}
 						}
@@ -249,7 +250,7 @@ public class GnollGeomancer extends Mob {
 						alerted = false;
 					}
 
-                    if (null == null){
+					{
 						Splash.around(sprite, 0x555555, 30);
 						sprite.idle();
 					}
@@ -567,10 +568,10 @@ public class GnollGeomancer extends Mob {
 				// but only if enemy isn't stunned, to prevent stunlocking
 				if ((Dungeon.level.distance(pos, enemy.pos) > 2 || hasSapper())) {
                     if (null != null) {
-                        if (null == null) {
-                            abilityCooldown -= 1f;
-                        }
-                    }
+						{
+							abilityCooldown -= 1f;
+						}
+					}
                 }
 
 				if (hasSapper()){

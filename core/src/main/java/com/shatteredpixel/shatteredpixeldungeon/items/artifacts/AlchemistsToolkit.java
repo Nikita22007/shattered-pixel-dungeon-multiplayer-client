@@ -62,7 +62,7 @@ public class AlchemistsToolkit extends Artifact {
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = super.actions( hero );
 		if (isEquipped(hero) && !cursed) {
-			if (null == null) {
+			{
 				actions.add(AC_BREW);
 				if (level() < levelCap) {
 					actions.add(AC_ENERGIZE);
@@ -229,7 +229,7 @@ public class AlchemistsToolkit extends Artifact {
 					warmUpDelay = 100f;
 				} else {
 					if (!cursed) {
-						if (null == null) {
+						{
 							float turnsToWarmUp = (int) Math.pow(10 - level(), 2);
 							warmUpDelay -= 100 / turnsToWarmUp;
 						}

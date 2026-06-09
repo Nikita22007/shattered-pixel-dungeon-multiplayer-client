@@ -70,10 +70,10 @@ public class EtherealChains extends Artifact {
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions( hero );
 		if (isEquipped(hero) && charge > 0 && !cursed) {
-            if (null == null) {
-                actions.add(AC_CAST);
-            }
-        }
+			{
+				actions.add(AC_CAST);
+			}
+		}
 		return actions;
 	}
 

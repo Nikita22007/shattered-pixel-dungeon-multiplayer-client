@@ -326,7 +326,9 @@ public class Challenge extends ArmorAbility {
 				target.sprite.add(CharSprite.State.PARALYSED);
 			} else {
 				//allies can't be spectator frozen, so just check doom
-                if (null == null) target.sprite.remove(CharSprite.State.DARKENED);
+				{
+					target.sprite.remove(CharSprite.State.DARKENED);
+				}
 				if (target.paralysed == 0) target.sprite.remove(CharSprite.State.PARALYSED);
 			}
 		}

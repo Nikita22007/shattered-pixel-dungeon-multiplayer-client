@@ -663,13 +663,13 @@ public class Item implements Bundlable {
 							if (i != null) i.onThrow(cell);
 							if (curUser.hasTalent(Talent.IMPROVISED_PROJECTILES)
                                     && !(Item.this instanceof MissileWeapon)) {
-                                if (null == null) {
-                                    if (enemy != null && enemy.alignment != curUser.alignment) {
-                                        Sample.INSTANCE.play(Assets.Sounds.HIT);
-                                        curUser.pointsInTalent(Talent.IMPROVISED_PROJECTILES);
-                                    }
-                                }
-                            }
+								{
+									if (enemy != null && enemy.alignment != curUser.alignment) {
+										Sample.INSTANCE.play(Assets.Sounds.HIT);
+										curUser.pointsInTalent(Talent.IMPROVISED_PROJECTILES);
+									}
+								}
+							}
                             if (null != null){
                                 ((Talent.LethalMomentumTracker) null).detach();
 								user.next();

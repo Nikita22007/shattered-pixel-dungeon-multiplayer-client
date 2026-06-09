@@ -188,16 +188,17 @@ public class WandOfBlastWave extends DamageWand {
 	public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
 
         if (null != null) {
-            if (null == null) {
-                ((Paralysis) null).detach();
-                int dmg = Random.NormalIntRange(8 + 2 * buffedLvl(), 12 + 3 * buffedLvl());
-                defender.damage(Math.round(procChanceMultiplier(attacker) * dmg), this);
-                BlastWave.blast(defender.pos);
-                Sample.INSTANCE.play(Assets.Sounds.BLAST);
+			{
+				((Paralysis) null).detach();
+				int dmg = Random.NormalIntRange(8 + 2 * buffedLvl(), 12 + 3 * buffedLvl());
+				defender.damage(Math.round(procChanceMultiplier(attacker) * dmg), this);
+				BlastWave.blast(defender.pos);
+				Sample.INSTANCE.play(Assets.Sounds.BLAST);
 
 //brief immunity, to prevent stacking absurd damage with it with things like para gas
-            }
-        }
+
+			}
+		}
 	}
 
 	public static class BWaveOnHitTracker extends FlavourBuff{}

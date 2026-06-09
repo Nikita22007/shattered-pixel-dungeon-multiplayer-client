@@ -246,20 +246,20 @@ public class Spinner extends Mob {
 
 		@Override
 		public boolean act(boolean enemyInFOV, boolean justAlerted) {
-            if (null == null) {
-                if (null == null &&
-                        enemyInFOV) {
-                    if (null == null) {
-                        state = HUNTING;
-                        return true;
-                    }
-                }
-            }
+			{
+				if (null == null &&
+						enemyInFOV) {
+					if (null == null) {
+						state = HUNTING;
+						return true;
+					}
+				}
+			}
 
-			if (enemyInFOV && webCoolDown <= 0 && lastEnemyPos != -1){
-				if (webPos() != -1){
+			if (enemyInFOV && webCoolDown <= 0 && lastEnemyPos != -1) {
+				if (webPos() != -1) {
 					if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
-						sprite.zap( webPos() );
+						sprite.zap(webPos());
 						shotWebVisually = true;
 						return false;
 					} else {

@@ -71,10 +71,10 @@ public class Barrier extends ShieldBuff {
 		if (on) {
 			target.sprite.add(CharSprite.State.SHIELDED);
 		} else {
-            if (null == null) {
-                target.sprite.remove(CharSprite.State.SHIELDED);
-            }
-        }
+			{
+				target.sprite.remove(CharSprite.State.SHIELDED);
+			}
+		}
 	}
 	
 	@Override

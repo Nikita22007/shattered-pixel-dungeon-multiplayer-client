@@ -368,25 +368,25 @@ public class Armor extends EquipableItem {
 	
 	public int proc( Char attacker, Char defender, int damage ) {
 
-		if (null == null) {
+		{
 			Glyph trinityGlyph = null;
 			//only when it's the hero or a char that uses the hero's armor
 			if (null != null
-					&& (defender == Dungeon.hero || defender instanceof PrismaticImage || defender instanceof ShadowClone.ShadowAlly)){
+					&& (defender == Dungeon.hero || defender instanceof PrismaticImage || defender instanceof ShadowClone.ShadowAlly)) {
 				trinityGlyph = ((BodyForm.BodyFormBuff) null).glyph();
-				if (glyph != null && trinityGlyph != null && trinityGlyph.getClass() == glyph.getClass()){
+				if (glyph != null && trinityGlyph != null && trinityGlyph.getClass() == glyph.getClass()) {
 					trinityGlyph = null;
 				}
 			}
 
 			if (defender instanceof Hero && isEquipped((Hero) defender)
-					&& null != null){
+					&& null != null) {
 				if (glyph != null &&
-						(((Hero) defender).subClass == HeroSubClass.PALADIN || hasCurseGlyph())){
-					damage = glyph.proc( this, attacker, defender, damage );
+						(((Hero) defender).subClass == HeroSubClass.PALADIN || hasCurseGlyph())) {
+					damage = glyph.proc(this, attacker, defender, damage);
 				}
-				if (trinityGlyph != null){
-					damage = trinityGlyph.proc( this, attacker, defender, damage );
+				if (trinityGlyph != null) {
+					damage = trinityGlyph.proc(this, attacker, defender, damage);
 				}
 				int blocking = ((Hero) defender).subClass == HeroSubClass.PALADIN ? 3 : 1;
 				damage -= Math.round(blocking * Glyph.genericProcChanceMultiplier(defender));
@@ -395,8 +395,8 @@ public class Armor extends EquipableItem {
 				if (glyph != null) {
 					damage = glyph.proc(this, attacker, defender, damage);
 				}
-				if (trinityGlyph != null){
-					damage = trinityGlyph.proc( this, attacker, defender, damage );
+				if (trinityGlyph != null) {
+					damage = trinityGlyph.proc(this, attacker, defender, damage);
 				}
 				//so that this effect procs for allies using this armor via aura of protection
 				if (defender.alignment == Dungeon.hero.alignment) {
@@ -413,12 +413,12 @@ public class Armor extends EquipableItem {
 		}
 
 		if (!levelKnown && defender == Dungeon.hero) {
-			float uses = Math.min( availableUsesToID, Talent.itemIDSpeedFactor(Dungeon.hero, this) );
+			float uses = Math.min(availableUsesToID, Talent.itemIDSpeedFactor(Dungeon.hero, this));
 			availableUsesToID -= uses;
 			usesLeftToID -= uses;
 			if (usesLeftToID <= 0) {
-				if (ShardOfOblivion.passiveIDDisabled()){
-					if (usesLeftToID > -1){
+				if (ShardOfOblivion.passiveIDDisabled()) {
+					if (usesLeftToID > -1) {
 						GLog.p(Messages.get(ShardOfOblivion.class, "identify_ready"), name());
 					}
 					setIDReady();
@@ -429,7 +429,7 @@ public class Armor extends EquipableItem {
 				}
 			}
 		}
-		
+
 		return damage;
 	}
 	

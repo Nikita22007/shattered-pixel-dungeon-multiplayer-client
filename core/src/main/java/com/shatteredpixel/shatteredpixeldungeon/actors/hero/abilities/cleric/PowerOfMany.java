@@ -267,14 +267,14 @@ public class PowerOfMany extends ArmorAbility {
 
 		@Override
 		protected boolean act() {
-            if (null == null){
+			{
 				die(null);
 				return true;
 			}
 			int oldPos = pos;
 			boolean result = super.act();
 			//partially simulates how the hero switches to idle animation
-			if ((pos == target || oldPos == pos) && sprite.looping()){
+			if ((pos == target || oldPos == pos) && sprite.looping()) {
 				sprite.idle();
 			}
 			return result;

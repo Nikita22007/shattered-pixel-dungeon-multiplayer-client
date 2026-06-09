@@ -170,9 +170,10 @@ public class HallowedGround extends TargetedClericSpell {
 				}
 			} else {
                 if (!ch.flying) {
-                    if (null == null) {
-                    }
-                }
+					{
+
+					}
+				}
             }
 		}
 

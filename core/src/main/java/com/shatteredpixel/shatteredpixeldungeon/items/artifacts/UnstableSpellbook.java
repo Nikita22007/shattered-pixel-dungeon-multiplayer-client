@@ -105,15 +105,15 @@ public class UnstableSpellbook extends Artifact {
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = super.actions( hero );
 		if (isEquipped(hero) && charge > 0 && !cursed) {
-            if (null == null) {
-                actions.add(AC_READ);
-            }
-        }
+			{
+				actions.add(AC_READ);
+			}
+		}
 		if (isEquipped(hero) && level() < levelCap && !cursed) {
-            if (null == null) {
-                actions.add(AC_ADD);
-            }
-        }
+			{
+				actions.add(AC_ADD);
+			}
+		}
 		return actions;
 	}
 
@@ -261,18 +261,18 @@ public class UnstableSpellbook extends Artifact {
 	@Override
 	public void charge(Hero target, float amount) {
 		if (charge < chargeCap && !cursed) {
-            if (null == null) {
-                partialCharge += 0.1f * amount;
-                while (partialCharge >= 1) {
-                    partialCharge--;
-                    charge++;
-                }
-                if (charge >= chargeCap) {
-                    partialCharge = 0;
-                }
-                updateQuickslot();
-            }
-        }
+			{
+				partialCharge += 0.1f * amount;
+				while (partialCharge >= 1) {
+					partialCharge--;
+					charge++;
+				}
+				if (charge >= chargeCap) {
+					partialCharge = 0;
+				}
+				updateQuickslot();
+			}
+		}
 	}
 
 	@Override

@@ -462,17 +462,17 @@ public class SpiritBow extends Weapon {
 			} else {
 
 				if (user.hasTalent(Talent.SEER_SHOT)) {
-                    if (null == null) {
-                        int shotPos = throwPos(user, dst);
-                        if (Actor.findChar(shotPos) == null) {
-                            user.pointsInTalent(Talent.SEER_SHOT);
-                            RevealedArea a = null;
-                            a.depth = Dungeon.depth;
-                            a.branch = Dungeon.branch;
-                            a.pos = shotPos;
-                        }
-                    }
-                }
+					{
+						int shotPos = throwPos(user, dst);
+						if (Actor.findChar(shotPos) == null) {
+							user.pointsInTalent(Talent.SEER_SHOT);
+							RevealedArea a = null;
+							a.depth = Dungeon.depth;
+							a.branch = Dungeon.branch;
+							a.pos = shotPos;
+						}
+					}
+				}
 
 				super.cast(user, dst);
 			}

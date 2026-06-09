@@ -63,8 +63,10 @@ public class ChaliceOfBlood extends Artifact {
                 && level() < levelCap
                 && !cursed
                 && !hero.isInvulnerable(getClass())) {
-            if (null == null) actions.add(AC_PRICK);
-        }
+			{
+				actions.add(AC_PRICK);
+			}
+		}
 		return actions;
 	}
 

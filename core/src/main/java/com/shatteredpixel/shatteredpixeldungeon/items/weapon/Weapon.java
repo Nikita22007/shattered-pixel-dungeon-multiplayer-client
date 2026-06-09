@@ -120,25 +120,25 @@ abstract public class Weapon extends KindOfWeapon {
 
 		boolean becameAlly = false;
 		boolean wasAlly = defender.alignment == Char.Alignment.ALLY;
-		if (null == null) {
+		{
 			Enchantment trinityEnchant = null;
-			if (null != null && this instanceof MeleeWeapon){
+			if (null != null && this instanceof MeleeWeapon) {
 				trinityEnchant = ((BodyForm.BodyFormBuff) null).enchant();
-				if (enchantment != null && trinityEnchant != null && trinityEnchant.getClass() == enchantment.getClass()){
+				if (enchantment != null && trinityEnchant != null && trinityEnchant.getClass() == enchantment.getClass()) {
 					trinityEnchant = null;
 				}
 			}
 
 			if (attacker instanceof Hero && isEquipped((Hero) attacker)
-					&& null != null){
+					&& null != null) {
 				if (enchantment != null &&
-						(((Hero) attacker).subClass == HeroSubClass.PALADIN || hasCurseEnchant())){
+						(((Hero) attacker).subClass == HeroSubClass.PALADIN || hasCurseEnchant())) {
 					damage = enchantment.proc(this, attacker, defender, damage);
-					if (defender.alignment == Char.Alignment.ALLY && !wasAlly){
+					if (defender.alignment == Char.Alignment.ALLY && !wasAlly) {
 						becameAlly = true;
 					}
 				}
-				if (defender.isAlive() && !becameAlly && trinityEnchant != null){
+				if (defender.isAlive() && !becameAlly && trinityEnchant != null) {
 					damage = trinityEnchant.proc(this, attacker, defender, damage);
 				}
 				if (defender.isAlive() && !becameAlly) {
@@ -154,7 +154,7 @@ abstract public class Weapon extends KindOfWeapon {
 					}
 				}
 
-				if (defender.isAlive() && !becameAlly && trinityEnchant != null){
+				if (defender.isAlive() && !becameAlly && trinityEnchant != null) {
 					damage = trinityEnchant.proc(this, attacker, defender, damage);
 				}
 			}
@@ -165,14 +165,14 @@ abstract public class Weapon extends KindOfWeapon {
 				}
 			}
 		}
-		
+
 		if (!levelKnown && attacker == Dungeon.hero) {
-			float uses = Math.min( availableUsesToID, Talent.itemIDSpeedFactor(Dungeon.hero, this) );
+			float uses = Math.min(availableUsesToID, Talent.itemIDSpeedFactor(Dungeon.hero, this));
 			availableUsesToID -= uses;
 			usesLeftToID -= uses;
 			if (usesLeftToID <= 0) {
-				if (ShardOfOblivion.passiveIDDisabled()){
-					if (usesLeftToID > -1){
+				if (ShardOfOblivion.passiveIDDisabled()) {
+					if (usesLeftToID > -1) {
 						GLog.p(Messages.get(ShardOfOblivion.class, "identify_ready"), name());
 					}
 					setIDReady();

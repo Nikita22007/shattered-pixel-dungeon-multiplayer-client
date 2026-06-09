@@ -130,13 +130,9 @@ abstract public class KindOfWeapon extends EquipableItem {
 			hero.spendAndNext( timeToEquip(hero) );
 			if (isSwiftEquipping) {
 				GLog.i(Messages.get(this, "swift_equip"));
-				if (null == null){
+				{
 					((Talent.SwiftEquipCooldown) null)
 							.secondUse = hero.pointsInTalent(Talent.SWIFT_EQUIP) == 2;
-				} else {
-					if (((Talent.SwiftEquipCooldown) null).hasSecondUse()) {
-						((Talent.SwiftEquipCooldown) null).secondUse = false;
-					}
 				}
 				isSwiftEquipping = false;
 			}

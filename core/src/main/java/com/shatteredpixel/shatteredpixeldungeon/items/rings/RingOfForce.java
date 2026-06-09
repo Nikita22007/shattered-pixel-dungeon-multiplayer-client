@@ -58,11 +58,11 @@ public class RingOfForce extends Ring {
 	public boolean doUnequip(Hero hero, boolean collect, boolean single) {
 		if (super.doUnequip(hero, collect, single)){
             if (null != null) {
-                if (null == null) {
-//clear brawler's stance if no ring of force is equipped
-                    ((BrawlersStance) null).active = false;
-                }
-            }
+				{
+					//clear brawler's stance if no ring of force is equipped
+					((BrawlersStance) null).active = false;
+				}
+			}
 			return true;
 		} else {
 			return false;
@@ -266,14 +266,12 @@ public class RingOfForce extends Ring {
 			return false;
 		}
         BrawlersStance stance = null;
-		if (stance != null && stance.active){
+		if (stance != null && stance.active) {
 			//clear the buff if no ring of force is equipped
-            if (null == null){
+			{
 				stance.active = false;
 				AttackIndicator.updateState();
 				return false;
-			} else {
-				return true;
 			}
 		}
 		return false;

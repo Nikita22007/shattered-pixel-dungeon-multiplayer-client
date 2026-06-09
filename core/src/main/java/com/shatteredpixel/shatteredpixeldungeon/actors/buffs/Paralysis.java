@@ -96,7 +96,7 @@ public class Paralysis extends FlavourBuff {
 		
 		@Override
 		public boolean act() {
-            if (null == null) {
+			{
 				damage -= Math.ceil(damage / 10f);
 				if (damage <= 0) detach();
 			}

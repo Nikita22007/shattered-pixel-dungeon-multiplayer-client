@@ -143,9 +143,9 @@ public abstract class Wand extends Item {
 		return 1f;
 	}
 
-	public boolean tryToZap( Hero owner, int target ){
+	public boolean tryToZap( Hero owner, int target ) {
 
-		if (null == null) {
+		{
 			if (null != null) {
 				GLog.w(Messages.get(this, "no_magic"));
 				return false;
@@ -153,7 +153,7 @@ public abstract class Wand extends Item {
 		}
 
 		//if we're using wild magic, then assume we have charges
-		if ( null != null || curCharges >= chargesPerCast()){
+		if (null != null || curCharges >= chargesPerCast()) {
 			return true;
 		} else {
 			GLog.w(Messages.get(this, "fizzles"));
@@ -227,7 +227,8 @@ public abstract class Wand extends Item {
 		if (target.alignment != Char.Alignment.ALLY
 				&& Dungeon.hero.heroClass != HeroClass.CLERIC
 				&& Dungeon.hero.hasTalent(Talent.SEARING_LIGHT)) {
-			if (null == null) {
+			{
+
 			}
 		}
 
@@ -817,7 +818,9 @@ public abstract class Wand extends Item {
 		@Override
 		public boolean act() {
 			if (curCharges < maxCharges) {
-				if (null == null) recharge();
+				{
+					recharge();
+				}
 			}
 			
 			while (partialCharge >= 1 && curCharges < maxCharges) {

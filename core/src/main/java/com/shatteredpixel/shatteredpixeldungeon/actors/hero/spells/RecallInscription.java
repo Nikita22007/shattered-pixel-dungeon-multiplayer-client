@@ -62,24 +62,24 @@ public class RecallInscription extends ClericSpell {
 	@Override
 	public void onCast(HolyTome tome, Hero hero) {
 
-        if (null == null){
+		{
 			return;
 		}
 
-        Item item = Reflection.newInstance(((UsedItemTracker) null).item);
+		Item item = Reflection.newInstance(((UsedItemTracker) null).item);
 
 		item.setCurrent(hero);
 
 		hero.sprite.operate(hero.pos);
 		Enchanting.show(hero, item);
 
-		if (item instanceof Scroll){
+		if (item instanceof Scroll) {
 			((Scroll) item).anonymize();
 			((Scroll) item).talentChance = 0; //does not trigger on-scroll effects
 			((Scroll) item).doRead();
-		} else if (item instanceof Runestone){
+		} else if (item instanceof Runestone) {
 			((Runestone) item).anonymize();
-			if (item instanceof InventoryStone){
+			if (item instanceof InventoryStone) {
 				((InventoryStone) item).directActivate();
 			} else {
 				//we're already on the render thread, but we want to delay this
@@ -94,8 +94,8 @@ public class RecallInscription extends ClericSpell {
 		}
 
 		onSpellCast(tome, hero);
-        if (null != null){
-            ((UsedItemTracker) null).detach();
+		if (null != null) {
+			((UsedItemTracker) null).detach();
 		}
 
 	}

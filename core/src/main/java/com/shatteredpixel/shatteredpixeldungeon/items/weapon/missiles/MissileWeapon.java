@@ -237,7 +237,7 @@ abstract public class MissileWeapon extends Weapon {
 			//metamorphed seer shot logic
 			if (curUser.hasTalent(Talent.SEER_SHOT)
 					&& curUser.heroClass != HeroClass.HUNTRESS) {
-				if (null == null) {
+				{
 					if (Actor.findChar(cell) == null) {
 						curUser.pointsInTalent(Talent.SEER_SHOT);
 						RevealedArea a = null;
@@ -267,7 +267,7 @@ abstract public class MissileWeapon extends Weapon {
 			} else {
 				SpiritBow bow = Dungeon.hero.belongings.getItem(SpiritBow.class);
 				if (bow != null && bow.enchantment != null) {
-					if (null == null) {
+					{
 						damage = bow.enchantment.proc(this, attacker, defender, damage);
 					}
 				}

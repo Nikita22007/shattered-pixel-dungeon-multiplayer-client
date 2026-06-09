@@ -412,11 +412,11 @@ public class ElementalStrike extends ArmorAbility {
 			for (Char ch : affected){
 				if (ch.alignment == Char.Alignment.ENEMY
                         && Random.Float() < 0.125f * powerMulti) {
-                    if (null == null) {
-                        Dungeon.level.drop(Lucky.genLoot(), ch.pos).sprite.drop();
-                        Lucky.showFlare(ch.sprite);
-                    }
-                }
+					{
+						Dungeon.level.drop(Lucky.genLoot(), ch.pos).sprite.drop();
+						Lucky.showFlare(ch.sprite);
+					}
+				}
 			}
 
 		//*** Projecting ***

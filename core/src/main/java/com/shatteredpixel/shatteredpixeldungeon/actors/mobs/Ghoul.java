@@ -236,22 +236,22 @@ public class Ghoul extends Mob {
 
 		@Override
 		public boolean act() {
-			if (target.alignment != ghoul.alignment){
+			if (target.alignment != ghoul.alignment) {
 				detach();
 				return true;
 			}
 
-			if (target.fieldOfView == null){
+			if (target.fieldOfView == null) {
 				target.fieldOfView = new boolean[Dungeon.level.length()];
-				Dungeon.level.updateFieldOfView( target, target.fieldOfView );
+				Dungeon.level.updateFieldOfView(target, target.fieldOfView);
 			}
 
-			if (!target.fieldOfView[ghoul.pos] && Dungeon.level.distance(ghoul.pos, target.pos) >= 4){
+			if (!target.fieldOfView[ghoul.pos] && Dungeon.level.distance(ghoul.pos, target.pos) >= 4) {
 				detach();
 				return true;
 			}
 
-			if (Dungeon.level.pit[ghoul.pos]){
+			if (Dungeon.level.pit[ghoul.pos]) {
 				super.detach();
 				ghoul.beingLifeLinked = false;
 				ghoul.die(this);
@@ -259,23 +259,23 @@ public class Ghoul extends Mob {
 			}
 
 			//have to delay this manually here are a downed ghouls can't be directly frozen otherwise
-			if (null == null) {
+			{
 				turnsToRevive--;
 			}
-			if (turnsToRevive <= 0){
-				if (Actor.findChar( ghoul.pos ) != null) {
+			if (turnsToRevive <= 0) {
+				if (Actor.findChar(ghoul.pos) != null) {
 					ArrayList<Integer> candidates = new ArrayList<>();
 					for (int n : PathFinder.NEIGHBOURS8) {
 						int cell = ghoul.pos + n;
 						if (Dungeon.level.passable[cell]
-								&& Actor.findChar( cell ) == null
+								&& Actor.findChar(cell) == null
 								&& (!Char.hasProp(ghoul, Property.LARGE) || Dungeon.level.openSpace[cell])) {
-							candidates.add( cell );
+							candidates.add(cell);
 						}
 					}
 					if (candidates.size() > 0) {
-						int newPos = Random.element( candidates );
-						Actor.add( new Pushing( ghoul, ghoul.pos, newPos ) );
+						int newPos = Random.element(candidates);
+						Actor.add(new Pushing(ghoul, ghoul.pos, newPos));
 						ghoul.pos = newPos;
 
 					} else {
@@ -283,15 +283,15 @@ public class Ghoul extends Mob {
 						return true;
 					}
 				}
-				ghoul.HP = Math.round(ghoul.HT/10f);
+				ghoul.HP = Math.round(ghoul.HT / 10f);
 				ghoul.beingLifeLinked = false;
 				Actor.add(ghoul);
 				ghoul.timeToNow();
 				Dungeon.level.mobs.add(ghoul);
-				Dungeon.level.occupyCell( ghoul );
+				Dungeon.level.occupyCell(ghoul);
 				ghoul.sprite.idle();
-				ghoul.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(Math.round(ghoul.HT/10f)), FloatingText.HEALING);
-				if (ghoul.enemy != null && ghoul.enemy.alignment == ghoul.alignment){
+				ghoul.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(Math.round(ghoul.HT / 10f)), FloatingText.HEALING);
+				if (ghoul.enemy != null && ghoul.enemy.alignment == ghoul.alignment) {
 					ghoul.enemy = null; //reset enemy
 				}
 				super.detach();
@@ -358,7 +358,7 @@ public class Ghoul extends Mob {
 				//don't count hero ally ghouls or duel frozen ghouls
 				if (ch != dieing && ch instanceof Ghoul
 						&& ch.alignment == dieing.alignment) {
-					if (null == null) {
+					{
 						if (ch.fieldOfView == null) {
 							ch.fieldOfView = new boolean[Dungeon.level.length()];
 							Dungeon.level.updateFieldOfView(ch, ch.fieldOfView);

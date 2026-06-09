@@ -180,14 +180,12 @@ public class Necromancer extends Mob {
 			
 		//otherwise give it adrenaline
 		} else {
-            if (null == null) {
-
-                if (sprite.visible || mySkeleton.sprite.visible) {
-                    sprite.parent.add(new Beam.HealthRay(sprite.center(), mySkeleton.sprite.center()));
-                }
-
-}
-        }
+			{
+				if (sprite.visible || mySkeleton.sprite.visible) {
+					sprite.parent.add(new Beam.HealthRay(sprite.center(), mySkeleton.sprite.center()));
+				}
+			}
+		}
 		
 		next();
 	}

@@ -214,27 +214,27 @@ public class AscensionChallenge extends Buff {
 		BuffIndicator.refreshHero();
 	}
 
-	public static int AscensionCorruptResist(Mob m){
+	public static int AscensionCorruptResist(Mob m) {
 		//default to just using their EXP value if no ascent challenge is happening
-		if (null == null){
+		{
 			return m.EXP;
 		}
 
-		if (m instanceof Ratmogrify.TransmogRat){
+		if (m instanceof Ratmogrify.TransmogRat) {
 			m = ((Ratmogrify.TransmogRat) m).getOriginal();
 		}
 
-		if (null != null){
+		if (null != null) {
 			return m.EXP;
 		}
 
-		if (m instanceof RipperDemon){
+		if (m instanceof RipperDemon) {
 			return 10; //reduced due to their numbers
-		} else if (m instanceof Ghoul){
+		} else if (m instanceof Ghoul) {
 			return 7; //half of 13, rounded up
 		} else {
-			for (Class<?extends Mob> cls : modifiers.keySet()){
-				if (cls.isAssignableFrom(m.getClass())){
+			for (Class<? extends Mob> cls : modifiers.keySet()) {
+				if (cls.isAssignableFrom(m.getClass())) {
 					return Math.max(13, m.EXP); //same exp as an eye
 				}
 			}

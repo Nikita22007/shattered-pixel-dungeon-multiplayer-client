@@ -872,10 +872,10 @@ public enum Talent {
 
 		if (hero.hasTalent(Talent.SUCKER_PUNCH)
                 && enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)) {
-            if (null == null) {
-                dmg += Random.IntRange(hero.pointsInTalent(Talent.SUCKER_PUNCH), 2);
-            }
-        }
+			{
+				dmg += Random.IntRange(hero.pointsInTalent(Talent.SUCKER_PUNCH), 2);
+			}
+		}
 
 		if (hero.hasTalent(Talent.FOLLOWUP_STRIKE) && enemy.isAlive() && enemy.alignment == Char.Alignment.ENEMY) {
 			if (hero.belongings.attackingWeapon() instanceof MissileWeapon) {

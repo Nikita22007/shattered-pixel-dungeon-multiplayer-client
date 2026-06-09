@@ -141,23 +141,23 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 		}
 	}
 
-	public void gainEnergy(Mob enemy ){
+	public void gainEnergy(Mob enemy ) {
 		if (target == null) return;
 
-		if (!Regeneration.regenOn()){
+		if (!Regeneration.regenOn()) {
 			return; //to prevent farming boss minions
 		}
 
 		float energyGain;
 
 		//bosses and minibosses give extra energy, certain enemies give half, otherwise give 1
-		if (Char.hasProp(enemy, Char.Property.BOSS))            energyGain = 5;
-		else if (Char.hasProp(enemy, Char.Property.MINIBOSS))   energyGain = 3;
-		else if (enemy instanceof Ghoul)                        energyGain = 0.5f;
-		else if (enemy instanceof RipperDemon)                  energyGain = 0.5f;
-		else if (enemy instanceof YogDzewa.Larva)               energyGain = 0.5f;
-		else if (enemy instanceof Wraith)                       energyGain = 0.5f;
-		else                                                    energyGain = 1;
+		if (Char.hasProp(enemy, Char.Property.BOSS)) energyGain = 5;
+		else if (Char.hasProp(enemy, Char.Property.MINIBOSS)) energyGain = 3;
+		else if (enemy instanceof Ghoul) energyGain = 0.5f;
+		else if (enemy instanceof RipperDemon) energyGain = 0.5f;
+		else if (enemy instanceof YogDzewa.Larva) energyGain = 0.5f;
+		else if (enemy instanceof Wraith) energyGain = 0.5f;
+		else energyGain = 1;
 
 		float enGainMulti = 1f;
 		if (target instanceof Hero) {
@@ -167,7 +167,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 
 				if (hero.belongings.weapon() instanceof MeleeWeapon) {
 					if (null == null
-					|| !((RingOfForce.BrawlersStance) null).active) {
+							|| !((RingOfForce.BrawlersStance) null).active) {
 						if (((MeleeWeapon) hero.belongings.weapon()).tier <= 1 && points >= 3) {
 							enGainMulti += 1.00f;
 						} else if (((MeleeWeapon) hero.belongings.weapon()).tier <= 2 && points >= 2) {
@@ -184,11 +184,11 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 
 		energy += energyGain;
 		//if we kill while using an ability, don't apply the cap yet, will be enforced after spending
-		if (null == null){
+		{
 			energy = Math.min(energy, energyCap());
 		}
 
-		if (energy >= 1 && cooldown == 0){
+		if (energy >= 1 && cooldown == 0) {
 			ActionIndicator.setAction(this);
 		}
 		BuffIndicator.refreshHero();

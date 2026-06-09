@@ -96,10 +96,10 @@ public class GuidingLight extends TargetedClericSpell {
 
 				onSpellCast(tome, hero);
 				if (hero.subClass == HeroSubClass.PRIEST) {
-                    if (null == null) {
-                        ActionIndicator.refresh();
-                    }
-                }
+					{
+						ActionIndicator.refresh();
+					}
+				}
 
 			}
 		});

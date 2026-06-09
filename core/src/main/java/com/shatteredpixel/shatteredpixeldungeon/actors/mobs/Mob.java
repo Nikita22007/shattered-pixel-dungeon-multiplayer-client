@@ -898,7 +898,7 @@ public abstract class Mob extends Char {
 				}
 				if (Dungeon.hero.heroClass != HeroClass.DUELIST
 						&& Dungeon.hero.hasTalent(Talent.LETHAL_HASTE)) {
-					if (null == null) {
+					{
 						((GreaterHaste) null).set(2 + 2 * Dungeon.hero.pointsInTalent(Talent.LETHAL_HASTE));
 					}
 				}
@@ -1390,7 +1390,7 @@ public abstract class Mob extends Char {
 
 		//enemies will turn and fight if they have nowhere to run and aren't affect by terror
 		protected void nowhereToRun() {
-			if (null == null) {
+			{
 				if (null == null) {
 					if (enemySeen) {
 						sprite.showStatus(CharSprite.WARNING, Messages.get(Mob.class, "rage"));

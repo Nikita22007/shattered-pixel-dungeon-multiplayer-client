@@ -73,13 +73,11 @@ public class StoneOfIntuition extends InventoryStone {
 	@Override
 	public String desc() {
 		String text = super.desc();
-		if (Dungeon.hero != null){
-            if (null == null){
-				text += "\n\n" + Messages.get(this, "break_info");
-			} else {
-				text += "\n\n" + Messages.get(this, "break_warn");
-			}
-		}
+		if (Dungeon.hero != null) {
+            {
+                text += "\n\n" + Messages.get(this, "break_info");
+            }
+        }
 		return text;
 	}
 
