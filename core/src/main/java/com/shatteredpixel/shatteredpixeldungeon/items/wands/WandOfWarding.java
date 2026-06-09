@@ -400,11 +400,6 @@ public class WandOfWarding extends Wand {
 		}
 
 		@Override
-		protected boolean getFurther(int target) {
-			return false;
-		}
-
-		@Override
 		public CharSprite sprite() {
 			WardSprite sprite = (WardSprite) super.sprite();
 			sprite.linkVisuals(this);

@@ -66,11 +66,6 @@ public class RotLasher extends Mob {
     }
 
     @Override
-    protected boolean getFurther(int target) {
-        return false;
-    }
-
-    @Override
     public int damageRoll() {
         return Random.NormalIntRange(10, 20);
     }

@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Blacksmith;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -173,11 +172,6 @@ public class GnollGeomancer extends Mob {
 	@Override
 	public boolean heroShouldInteract() {
 		if (super.heroShouldInteract()) return true;
-		return false;
-	}
-
-	@Override
-	protected boolean getFurther(int target) {
 		return false;
 	}
 

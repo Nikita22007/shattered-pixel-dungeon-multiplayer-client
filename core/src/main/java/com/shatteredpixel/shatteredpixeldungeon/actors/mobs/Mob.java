@@ -440,20 +440,6 @@ public abstract class Mob extends Char {
         return true;
     }
 
-    protected boolean getFurther(int target) {
-        if (rooted || target == pos) {
-            return false;
-        }
-
-        int step = Dungeon.flee(this, target, Dungeon.level.passable, fieldOfView, true);
-        if (step != -1) {
-            move(step);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     @Override
     public void updateSpriteState() {
         super.updateSpriteState();
@@ -1062,12 +1048,7 @@ public abstract class Mob extends Char {
             }
 
             int oldPos = pos;
-            if (target != -1 && getFurther(target)) {
-
-                spend(1 / speed());
-                return moveSprite(oldPos, pos);
-
-            } else {
+            {
 
                 spend(TICK);
                 nowhereToRun();

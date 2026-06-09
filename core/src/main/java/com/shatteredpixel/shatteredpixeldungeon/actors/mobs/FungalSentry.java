@@ -56,11 +56,6 @@ public class FungalSentry extends Mob {
 	}
 
 	@Override
-	protected boolean getFurther(int target) {
-		return false;
-	}
-
-	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange(5, 10);
 	}
