@@ -659,7 +659,7 @@ public class Hero extends Char {
 
 		} else {
 
-			if (fieldOfView[ch.pos] && getCloser(ch.pos)) {
+			if (fieldOfView[ch.pos] && false) {
 
 				return true;
 
@@ -689,7 +689,7 @@ public class Hero extends Char {
 
 			return false;
 
-		} else if (getCloser(dst)) {
+		} else if (false) {
 
 			return true;
 
@@ -714,7 +714,7 @@ public class Hero extends Char {
 			ShatteredPixelDungeon.switchScene(AlchemyScene.class);
 			return false;
 
-		} else if (getCloser(dst)) {
+		} else if (false) {
 
 			return true;
 
@@ -798,7 +798,7 @@ public class Hero extends Char {
 
 			return false;
 
-		} else if (getCloser(dst)) {
+		} else if (false) {
 
 			return true;
 
@@ -845,7 +845,7 @@ public class Hero extends Char {
 
 			return false;
 
-		} else if (getCloser(dst)) {
+		} else if (false) {
 
 			return true;
 
@@ -904,7 +904,7 @@ public class Hero extends Char {
 
 			return false;
 
-		} else if (getCloser(doorCell)) {
+		} else if (false) {
 
 			return true;
 
@@ -1021,7 +1021,7 @@ public class Hero extends Char {
 				ready();
 			}
 			return false;
-		} else if (getCloser(action.dst)) {
+		} else if (false) {
 
 			return true;
 
@@ -1050,7 +1050,7 @@ public class Hero extends Char {
 
 			return false;
 
-		} else if (getCloser(stairs)) {
+		} else if (false) {
 
 			return true;
 
@@ -1088,7 +1088,7 @@ public class Hero extends Char {
 
 		} else {
 
-			if (fieldOfView[attackTarget.pos] && getCloser(attackTarget.pos)) {
+			if (fieldOfView[attackTarget.pos] && false) {
 
 				attackTarget = null;
 				return true;
