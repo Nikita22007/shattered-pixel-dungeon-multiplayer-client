@@ -157,7 +157,7 @@ public class Ghoul extends Mob {
 				timesDowned++;
 				Actor.remove(this);
 				Dungeon.level.mobs.remove( this );
-				Buff.append(nearby, GhoulLifeLink.class).set(timesDowned*5, this);
+				((GhoulLifeLink) null).set(timesDowned*5, this);
 				((GhoulSprite)sprite).crumple();
 				return;
 			}

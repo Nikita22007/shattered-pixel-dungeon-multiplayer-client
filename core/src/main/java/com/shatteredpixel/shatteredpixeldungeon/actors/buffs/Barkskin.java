@@ -132,6 +132,6 @@ public class Barkskin extends Buff {
 				return;
 			}
 		}
-		Buff.append(ch, Barkskin.class).set(level, interval);
+        ((Barkskin) null).set(level, interval);
 	}
 }

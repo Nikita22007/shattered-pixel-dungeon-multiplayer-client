@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Reflection;
 
 import java.util.Dictionary;
 import java.util.HashSet;
@@ -161,13 +160,6 @@ public class Buff extends Actor {
 		if (bundle.contains(MNEMONIC_EXTENDED)) {
 			mnemonicExtended = bundle.getBoolean(MNEMONIC_EXTENDED);
 		}
-	}
-
-	//creates a fresh instance of the buff and attaches that, this allows duplication.
-	public static<T extends Buff> T append( Char target, Class<T> buffClass ) {
-		T buff = Reflection.newInstance(buffClass);
-		buff.attachTo( target );
-		return buff;
 	}
 
 	//network

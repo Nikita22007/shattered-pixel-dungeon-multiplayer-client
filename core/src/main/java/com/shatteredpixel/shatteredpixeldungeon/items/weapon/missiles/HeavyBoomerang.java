@@ -71,14 +71,14 @@ public class HeavyBoomerang extends MissileWeapon {
 	protected void rangedHit(Char enemy, int cell) {
 		decrementDurability();
 		if (durability > 0){
-			Buff.append(Dungeon.hero, CircleBack.class).setup(this, cell, Dungeon.hero.pos, Dungeon.depth, Dungeon.branch);
+            ((CircleBack) null).setup(this, cell, Dungeon.hero.pos, Dungeon.depth, Dungeon.branch);
 		}
 	}
 	
 	@Override
 	protected void rangedMiss(int cell) {
 		parent = null;
-		Buff.append(Dungeon.hero, CircleBack.class).setup(this, cell, Dungeon.hero.pos, Dungeon.depth, Dungeon.branch);
+        ((CircleBack) null).setup(this, cell, Dungeon.hero.pos, Dungeon.depth, Dungeon.branch);
 	}
 
 	@Override
