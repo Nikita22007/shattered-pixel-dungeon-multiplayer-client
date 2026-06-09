@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
@@ -126,9 +125,8 @@ public class WndResurrect extends Window {
 		hide();
 
 		Statistics.ankhsUsed++;
-		Catalog.countUse(Ankh.class);
 
-		ankh.detach(Dungeon.hero.belongings.backpack);
+        ankh.detach(Dungeon.hero.belongings.backpack);
 
 		if (btnItem1.item() != null){
 			btnItem1.item().keptThoughLostInvent = true;

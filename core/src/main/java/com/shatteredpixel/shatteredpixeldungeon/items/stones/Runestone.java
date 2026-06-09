@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public abstract class Runestone extends Item {
@@ -53,8 +52,7 @@ public abstract class Runestone extends Item {
 			if (!anonymous) super.onThrow( cell );
 		} else {
 			if (!anonymous) {
-				Catalog.countUse(getClass());
-				Talent.onRunestoneUsed(curUser, cell, getClass());
+                Talent.onRunestoneUsed(curUser, cell, getClass());
 			}
 			activate(cell);
 			Invisibility.dispel();

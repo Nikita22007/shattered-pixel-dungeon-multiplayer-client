@@ -370,12 +370,13 @@ public abstract class Char extends Actor {
 	//This is relevant because we call isAlive during drawing, which has both performance
 	//and thread coordination implications
 	public boolean deathMarked = false;
-	
+
+	@Contract(pure = true)
 	public boolean isAlive() {
 		return HP > 0 || deathMarked;
 	}
 
-	public boolean isActive() {
+	public boolean isActive() { //todo sent this
 		return isAlive();
 	}
 

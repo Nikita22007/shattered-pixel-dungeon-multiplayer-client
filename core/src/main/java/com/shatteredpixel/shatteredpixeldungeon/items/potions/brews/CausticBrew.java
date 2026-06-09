@@ -30,7 +30,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfToxicGas;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.GooBlob;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.BArray;
 import com.watabou.noosa.audio.Sample;
@@ -79,8 +78,7 @@ public class CausticBrew extends Brew {
 
 		@Override
 		public Item brew(ArrayList<Item> ingredients) {
-			Catalog.countUse(GooBlob.class);
-			return super.brew(ingredients);
+            return super.brew(ingredients);
 		}
 	}
 }

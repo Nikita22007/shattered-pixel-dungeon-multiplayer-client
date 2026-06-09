@@ -170,10 +170,7 @@ public class Ghoul extends Mob {
 		return super.isAlive() || beingLifeLinked;
 	}
 
-	@Override
-	public boolean isActive() {
-		return !beingLifeLinked && isAlive();
-	}
+
 
 	@Override
 	protected synchronized void onRemove() {

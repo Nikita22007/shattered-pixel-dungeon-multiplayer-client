@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.VialOfBlood;
@@ -113,7 +112,7 @@ public class Waterskin extends Item {
                 int dropsToConsume = (int) Math.ceil(dropsNeeded - 0.01f);
                 dropsToConsume = (int) GameMath.gate(1, dropsToConsume, volume);
 
-                if (Dewdrop.consumeDew(dropsToConsume, hero, true)) {
+				if (true) {
                     volume -= dropsToConsume;
                     Catalog.countUses(Dewdrop.class, dropsToConsume);
 

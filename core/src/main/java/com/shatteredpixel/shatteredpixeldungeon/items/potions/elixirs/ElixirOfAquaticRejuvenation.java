@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.GooBlob;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -163,8 +162,7 @@ public class ElixirOfAquaticRejuvenation extends Elixir {
 
 		@Override
 		public Item brew(ArrayList<Item> ingredients) {
-			Catalog.countUse(GooBlob.class);
-			return super.brew(ingredients);
+            return super.brew(ingredients);
 		}
 	}
 	

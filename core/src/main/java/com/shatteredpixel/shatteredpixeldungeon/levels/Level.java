@@ -1095,8 +1095,9 @@ public abstract class Level implements Bundlable {
 
 	public float levelExplorePercent( int depth ){
 		return 0;
-	}
-	
+	} //todo send it?
+
+	@Contract(pure = true)
 	public int distance( int a, int b ) {
 		int ax = a % width();
 		int ay = a / width();
@@ -1104,11 +1105,13 @@ public abstract class Level implements Bundlable {
 		int by = b / width();
 		return Math.max( Math.abs( ax - bx ), Math.abs( ay - by ) );
 	}
-	
+
+	@Contract(pure = true)
 	public boolean adjacent( int a, int b ) {
 		return distance( a, b ) == 1;
 	}
-	
+
+	@Contract(pure = true)
 	//uses pythagorean theorum for true distance, as if there was no movement grid
 	public float trueDistance(int a, int b){
 		int ax = a % width();
@@ -1119,11 +1122,13 @@ public abstract class Level implements Bundlable {
 	}
 
 	//usually just if a cell is solid, but other cases exist too
+	@Contract(pure = true)
 	public boolean invalidHeroPos( int tile ){
 		return !passable[tile] && !avoid[tile];
 	}
 
 	//returns true if the input is a valid tile within the level
+	@Contract(pure = true)
 	public boolean insideMap( int tile ){
 				//top and bottom row and beyond
 		return !((tile < width || tile >= length - width) ||
@@ -1131,14 +1136,16 @@ public abstract class Level implements Bundlable {
 				(tile % width == 0 || tile % width == width-1));
 	}
 
+	@Contract(pure = true)
 	public Point cellToPoint( int cell ){
 		return new Point(cell % width(), cell / width());
 	}
 
+	@Contract(pure = true)
 	public int pointToCell( Point p ){
 		return p.x + p.y*width();
 	}
-	
+
 	public String tileName( int tile ) {
 		
 		switch (tile) {

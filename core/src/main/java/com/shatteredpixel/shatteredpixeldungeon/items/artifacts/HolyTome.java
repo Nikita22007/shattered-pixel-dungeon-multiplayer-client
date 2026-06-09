@@ -31,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.GuidingLight;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -172,8 +171,7 @@ public class HolyTome extends Artifact {
 
 		if (exp >= (level() + 1) * 50 && level() < levelCap) {
 			upgrade();
-			Catalog.countUse(HolyTome.class);
-			exp -= level() * 50;
+            exp -= level() * 50;
 			GLog.p(Messages.get(this, "levelup"));
 
 		}

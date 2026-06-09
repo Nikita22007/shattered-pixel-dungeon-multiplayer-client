@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.trinkets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Bundle;
 
@@ -124,9 +123,7 @@ public abstract class Trinket extends Item {
 			ingredients.get(0).quantity(0);
 			result.upgrade();
 
-			Catalog.countUse(result.getClass());
-
-			return result;
+            return result;
 		}
 
 		@Override

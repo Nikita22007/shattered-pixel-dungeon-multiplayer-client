@@ -31,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.quest.MetalShard;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Bestiary;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -185,8 +184,7 @@ public class ReclaimTrap extends TargetedSpell {
 
 		@Override
 		public Item brew(ArrayList<Item> ingredients) {
-			Catalog.countUse(MetalShard.class);
-			return super.brew(ingredients);
+            return super.brew(ingredients);
 		}
 	}
 

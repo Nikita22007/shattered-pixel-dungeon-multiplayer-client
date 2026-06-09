@@ -32,7 +32,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
@@ -198,8 +197,7 @@ public class PotionOfDragonsBreath extends ExoticPotion {
 										curUser.spendAndNext(1f);
 
 										if (!anonymous) {
-											Catalog.countUse(PotionOfDragonsBreath.class);
-											if (Random.Float() < talentChance) {
+                                            if (Random.Float() < talentChance) {
 												Talent.onPotionUsed(curUser, curUser.pos, talentFactor);
 											}
 										}

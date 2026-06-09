@@ -39,7 +39,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.food.MeatPie;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Pasty;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.PhantomMeat;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -234,8 +233,7 @@ public class HornOfPlenty extends Artifact {
 			int upgrades = storedFoodEnergy / (int)Hunger.HUNGRY;
 			upgrades = Math.min(upgrades, 10 - level());
 			upgrade(upgrades);
-			Catalog.countUse(HornOfPlenty.class);
-			storedFoodEnergy -= upgrades * Hunger.HUNGRY;
+            storedFoodEnergy -= upgrades * Hunger.HUNGRY;
 			if (level() == 10){
 				storedFoodEnergy = 0;
 				GLog.p( Messages.get(this, "maxlevel") );

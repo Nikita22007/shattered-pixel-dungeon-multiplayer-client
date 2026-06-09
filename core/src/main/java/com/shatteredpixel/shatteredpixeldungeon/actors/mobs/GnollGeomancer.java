@@ -202,74 +202,12 @@ public class GnollGeomancer extends Mob {
 			Dungeon.hero.sprite.attack(pos, new Callback() {
 				@Override
 				public void call() {
-					//does its own special damage calculation that's only influenced by pickaxe level and augment
-					//we pretend the geomancer is the owner here so that properties like hero str or or other equipment do not factor in
-					int dmg = p.damageRoll(GnollGeomancer.this);
 
-					boolean wasSleeping = state == SLEEPING;
-
-					//ensure we don't do enough damage to break the armor at the start
-					if (wasSleeping) dmg = Math.min(dmg, 15);
-
-					dmg = Math.min(dmg, ((RockArmor) null).shielding());
-
-					sprite.bloodBurstA(Dungeon.hero.sprite.center(), dmg);
-					sprite.flash();
-
-					hits++;
-					if (hits == 1) {
-						GLog.w(Messages.get(GnollGeomancer.this, "warning"));
-					}
-					if (hits == 3) {
-						GLog.n(Messages.get(GnollGeomancer.this, "alert"));
-						wasSleeping = false;
-						spend(TICK);
-						sprite.idle();
-
-						carveRockAndDash();
-
-						state = HUNTING;
-						enemy = Dungeon.hero;
-						BossHealthBar.assignBoss(GnollGeomancer.this);
-
-						for (Mob m : Dungeon.level.mobs) {
-							if (m instanceof GnollGuard) {
-								m.aggro(Dungeon.hero);
-								if (!((GnollGuard) m).hasSapper()) {
-									m.beckon(pos);
-								}
-							} else if (m instanceof GnollSapper) {
-								m.aggro(Dungeon.hero);
-							}
-						}
-					}
-
-					if (wasSleeping) {
-						state = SLEEPING;
-						alerted = false;
-					}
-
-					{
-						Splash.around(sprite, 0x555555, 30);
-						sprite.idle();
-					}
-
-					Sample.INSTANCE.play(Assets.Sounds.MINE, 1f, Random.Float(0.85f, 1.15f));
-					Invisibility.dispel(Dungeon.hero);
-					Dungeon.hero.spendAndNext(p.delayFactor(GnollGeomancer.this));
 				}
 			});
 
 			return false;
 		}
-	}
-
-	private boolean inFinalBracket = false;
-
-	@Override
-	public boolean isAlive() {
-		//cannot die until final HP bracket, regardless of incoming dmg
-		return super.isAlive() || !inFinalBracket;
 	}
 
 	public void linkSapper(GnollSapper sapper) {

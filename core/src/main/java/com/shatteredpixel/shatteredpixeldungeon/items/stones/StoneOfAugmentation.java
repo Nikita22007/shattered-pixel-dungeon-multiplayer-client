@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfEnchantment;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
@@ -64,8 +63,7 @@ public class StoneOfAugmentation extends InventoryStone {
 		ScrollOfUpgrade.upgrade(curUser);
 		if (!anonymous) {
 			curItem.detach(curUser.belongings.backpack);
-			Catalog.countUse(getClass());
-			Talent.onRunestoneUsed(curUser, curUser.pos, getClass());
+            Talent.onRunestoneUsed(curUser, curUser.pos, getClass());
 		}
 	}
 	
@@ -76,8 +74,7 @@ public class StoneOfAugmentation extends InventoryStone {
 		ScrollOfUpgrade.upgrade(curUser);
 		if (!anonymous) {
 			curItem.detach(curUser.belongings.backpack);
-			Catalog.countUse(getClass());
-			Talent.onRunestoneUsed(curUser, curUser.pos, getClass());
+            Talent.onRunestoneUsed(curUser, curUser.pos, getClass());
 		}
 	}
 	

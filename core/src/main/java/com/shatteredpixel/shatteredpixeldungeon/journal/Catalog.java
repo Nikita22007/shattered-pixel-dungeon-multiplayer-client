@@ -175,19 +175,6 @@ public enum Catalog {
 		}
 	}
 
-	public static int useCount(Class<?> cls){
-		for (Catalog cat : values()) {
-			if (cat.useCount.containsKey(cls)) {
-				return cat.useCount.get(cls);
-			}
-		}
-		return 0;
-	}
-
-	public static void countUse(Class<?> cls){
-		countUses(cls, 1);
-	}
-
 	public static void countUses(Class<?> cls, int uses){
 		for (Catalog cat : values()) {
 			if (cat.useCount.containsKey(cls) && cat.useCount.get(cls) != Integer.MAX_VALUE) {

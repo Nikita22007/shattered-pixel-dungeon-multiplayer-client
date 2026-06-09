@@ -35,7 +35,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
 
@@ -122,8 +121,7 @@ public class CurseInfusion extends InventorySpell {
 
 		@Override
 		public Item brew(ArrayList<Item> ingredients) {
-			Catalog.countUse(MetalShard.class);
-			return super.brew(ingredients);
+            return super.brew(ingredients);
 		}
 	}
 }

@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.AlchemyScene;
@@ -220,8 +219,7 @@ public class TrinketCatalyst extends Item {
 
 						if (cata != null) {
 							cata.detach(Dungeon.hero.belongings.backpack);
-							Catalog.countUse(cata.getClass());
-							result.identify();
+                            result.identify();
 							if (ShatteredPixelDungeon.scene() instanceof AlchemyScene) {
 								((AlchemyScene) ShatteredPixelDungeon.scene()).craftItem(null, result);
 							} else {

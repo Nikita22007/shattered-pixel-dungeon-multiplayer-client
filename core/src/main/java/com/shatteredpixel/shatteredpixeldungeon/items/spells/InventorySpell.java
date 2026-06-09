@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
@@ -96,8 +95,7 @@ public abstract class InventorySpell extends Spell {
 					Sample.INSTANCE.play(Assets.Sounds.READ);
 					Invisibility.dispel();
 
-					Catalog.countUse(curItem.getClass());
-					if (Random.Float() < ((Spell) curItem).talentChance) {
+                    if (Random.Float() < ((Spell) curItem).talentChance) {
 						Talent.onScrollUsed(curUser, curUser.pos, ((Spell) curItem).talentFactor, curItem.getClass());
 					}
 				}
