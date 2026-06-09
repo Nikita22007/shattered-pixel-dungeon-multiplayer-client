@@ -54,12 +54,6 @@ public class Buff extends Actor {
 	//whether a buff should persist through revive effects or similar (e.g. transmogrify)
 	public boolean revivePersists = false;
 	
-	protected HashSet<Class> resistances = new HashSet<>();
-	
-	public HashSet<Class> resistances() {
-		return new HashSet<>(resistances);
-	}
-	
 	protected HashSet<Class> immunities = new HashSet<>();
 	
 	public HashSet<Class> immunities() {
