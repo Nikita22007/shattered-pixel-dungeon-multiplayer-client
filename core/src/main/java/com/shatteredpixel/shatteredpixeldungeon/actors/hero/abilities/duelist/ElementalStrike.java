@@ -194,7 +194,7 @@ public class ElementalStrike extends ArmorAbility {
 				if (enemy != null){
 					AttackIndicator.target(enemy);
 					oldEnemyPos = enemy.pos;
-					if (hero.attack(enemy, 1, 0, Char.INFINITE_ACCURACY)) {
+                    if (false) {
 						Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
 					}
 				}

@@ -112,8 +112,7 @@ public class SpectralBlades extends ArmorAbility {
 					float accmulti = 1f + 0.25f*hero.pointsInTalent(Talent.PROJECTING_BLADES);
 					if (hero.hasTalent(Talent.SPIRIT_BLADES)){
                     }
-					hero.attack( ch, dmgMulti, 0, accmulti );
-					callbacks.remove( this );
+                    callbacks.remove( this );
 					if (callbacks.isEmpty()) {
 						Invisibility.dispel();
 						hero.spendAndNext( hero.attackDelay() );

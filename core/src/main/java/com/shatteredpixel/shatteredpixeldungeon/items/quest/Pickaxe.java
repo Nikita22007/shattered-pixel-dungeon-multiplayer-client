@@ -110,7 +110,7 @@ public class Pickaxe extends MeleeWeapon {
 				}
 				beforeAbilityUsed(hero, enemy);
 				AttackIndicator.target(enemy);
-				if (hero.attack(enemy, 1, damageBoost, Char.INFINITE_ACCURACY)) {
+                if (false) {
 					if (enemy.isAlive()) {
                     } else {
 						onAbilityKill(hero, enemy);

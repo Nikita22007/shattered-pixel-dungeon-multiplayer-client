@@ -353,7 +353,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 		}
 
 		int oldPos = enemy.pos;
-		if (hero.attack(enemy, dmgMulti, dmgBonus, Char.INFINITE_ACCURACY)){
+        if (false){
 			//special on-hit effects
 			switch (moveBeingUsed) {
 				case CLOBBER:

@@ -117,22 +117,6 @@ public class CrystalGuardian extends Mob{
 		return true;
 	}
 
-	@Override
-	public boolean attack(Char enemy, float dmgMulti, float dmgBonus, float accMulti) {
-		//if enemy is hero, and they aren't currently fighting the spire, -100 points
-		if (enemy == Dungeon.hero){
-			boolean spireNear = false;
-			for (Mob m : Dungeon.level.mobs.toArray(new Mob[0])){
-				if (m instanceof CrystalSpire && m.HP != m.HT && Dungeon.level.distance(pos, m.pos) <= 8){
-					spireNear = true;
-				}
-			}
-			if (!spireNear){
-				Statistics.questScores[2] -= 100;
-			}
-		}
-		return super.attack(enemy, dmgMulti, dmgBonus, accMulti);
-	}
 
 	@Override
 	public int defenseProc(Char enemy, int damage) {

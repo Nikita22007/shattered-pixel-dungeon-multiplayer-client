@@ -84,8 +84,7 @@ public class Whip extends MeleeWeapon {
 				beforeAbilityUsed(hero, finalClosest);
 				for (Char ch : targets) {
 					//ability does no extra damage
-					hero.attack(ch, 1, 0, Char.INFINITE_ACCURACY);
-					if (!ch.isAlive()){
+                    if (!ch.isAlive()){
 						onAbilityKill(hero, ch);
 					}
 				}

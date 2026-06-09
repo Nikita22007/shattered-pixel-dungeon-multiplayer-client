@@ -113,7 +113,7 @@ public class Sai extends MeleeWeapon {
 					buff.detach();
 				}
 
-				boolean hit = hero.attack(enemy, 1f + multiPerHit*recentHits, boostPerHit*recentHits, Char.INFINITE_ACCURACY);
+                boolean hit = false;
 				if (hit && !enemy.isAlive()){
 					wep.onAbilityKill(hero, enemy);
 				}

@@ -185,18 +185,6 @@ public class CorpseDust extends Item {
 
 		private int atkCount = 0;
 
-		@Override
-		public boolean attack(Char enemy, float dmgMulti, float dmgBonus, float accMulti) {
-			if (enemy == Dungeon.hero){
-				atkCount++;
-				//first attack from each wraith is free, max of -200 point penalty per wraith
-				if (atkCount == 2 || atkCount == 3){
-					Statistics.questScores[1] -= 100;
-				}
-			}
-			return super.attack(enemy, dmgMulti, dmgBonus, accMulti);
-		}
-
 		private static final String ATK_COUNT = "atk_count";
 
 		@Override

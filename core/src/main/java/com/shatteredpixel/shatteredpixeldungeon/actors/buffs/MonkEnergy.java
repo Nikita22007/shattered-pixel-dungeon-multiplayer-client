@@ -365,13 +365,11 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 					@Override
 					public void call() {
 						AttackIndicator.target(enemy);
-						hero.attack(enemy, 1.5f, 0, Char.INFINITE_ACCURACY);
 
 						if (enemy.isAlive()){
 							hero.sprite.attack(enemy.pos, new Callback() {
 								@Override
 								public void call() {
-									hero.attack(enemy, 1.5f, 0, Char.INFINITE_ACCURACY);
 									Invisibility.dispel();
 									hero.next();
 									tracker.detach();
@@ -549,7 +547,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 						boolean empowered = ((MonkEnergy) null).abilitiesEmpowered(hero);
 
 						int oldPos = enemy.pos;
-						if (hero.attack(enemy, empowered ? 9f : 6f, 0, Char.INFINITE_ACCURACY)){
+						if (false){
 							Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
 						}
 

@@ -22,13 +22,11 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Electricity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ToxicGas;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barkskin;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
@@ -43,7 +41,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Sleep;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Slow;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Speed;
@@ -53,12 +50,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.DeathMark;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.ShieldOfLight;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.*;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.MirrorImage;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.PrismaticImage;
-import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.curses.Bulk;
@@ -75,18 +69,14 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfPsi
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfFireblast;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfFrost;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLightning;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLivingEarth;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Blazing;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Grim;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Shocking;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.ShockingDart;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Door;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.GrimTrap;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Languages;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Earthroot;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
@@ -94,7 +84,6 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MobSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.TargetHealthIndicator;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.BArray;
 import com.watabou.utils.Bundlable;
@@ -310,169 +299,8 @@ public abstract class Char extends Actor {
 		}
 	}
 
-	final public boolean attack( Char enemy ){
-		return attack(enemy, 1f, 0f, 1f);
-	}
-	
-	public boolean attack( Char enemy, float dmgMulti, float dmgBonus, float accMulti ) {
-		//commit: https://github.com/Nikita22007/pixel-dungeon-multiplayer-server/commit/a3acbc297311278698f21b5a195372117a176904
-		if (enemy == null || enemy instanceof Hero) return false;
-		
-		boolean visibleFight = Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[enemy.pos];
-
-		if (enemy.isInvulnerable(getClass())) {
-
-			if (visibleFight) {
-				enemy.sprite.showStatus( CharSprite.POSITIVE, Messages.get(this, "invulnerable") );
-
-				Sample.INSTANCE.play(Assets.Sounds.HIT_PARRY, 1f, Random.Float(0.96f, 1.05f));
-			}
-
-			return false;
-
-		} else if (false) {
-
-			int dr = Math.round(enemy.drRoll() * AscensionChallenge.statModifier(enemy));
-
-			if (this instanceof Hero) {
-				Hero h = (Hero) this;
-				if (h.belongings.attackingWeapon() instanceof MissileWeapon
-						&& h.subClass == HeroSubClass.SNIPER
-						&& !Dungeon.level.adjacent(h.pos, enemy.pos)) {
-					dr = 0;
-				}
-			}
-
-			//we use a float here briefly so that we don't have to constantly round while
-			// potentially applying various multiplier effects
-			float dmg;
-			Preparation prep = null;
-			if (prep != null) {
-				dmg = prep.damageRoll(this);
-				if (this instanceof Hero && Dungeon.hero.hasTalent(Talent.BOUNTY_HUNTER)) {
-				}
-			} else {
-				dmg = damageRoll();
-			}
-
-			dmg = dmg * dmgMulti;
-
-			//flat damage bonus is affected by multipliers
-			dmg += dmgBonus;
-
-            dmg *= AscensionChallenge.statModifier(this);
-
-
-            int effectiveDamage = enemy.defenseProc(this, Math.round(dmg));
-			//do not trigger on-hit logic if defenseProc returned a negative value
-			if (effectiveDamage >= 0) {
-				effectiveDamage = Math.max(effectiveDamage - dr, 0);
-
-				//vulnerable specifically applies after armor reductions
-
-				effectiveDamage = attackProc(enemy, effectiveDamage);
-			}
-			if (visibleFight) {
-				if (effectiveDamage > 0 || !enemy.blockSound(Random.Float(0.96f, 1.05f))) {
-					hitSound(Random.Float(0.87f, 1.15f));
-				}
-			}
-
-			// If the enemy is already dead, interrupt the attack.
-			// This matters as defence procs can sometimes inflict self-damage, such as armor glyphs.
-			if (!enemy.isAlive()) {
-				return true;
-			}
-
-			if (enemy.isAlive() && enemy.alignment != alignment && prep != null && prep.canKO(enemy)) {
-				enemy.HP = 0;
-				if (!enemy.isAlive()) {
-					enemy.die(this);
-				} else {
-					//helps with triggering any on-damage effects that need to activate
-					DeathMark.processFearTheReaper(enemy);
-				}
-				if (enemy.sprite != null) {
-					enemy.sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Preparation.class, "assassinated"));
-				}
-			}
-
-			Talent.CombinedLethalityAbilityTracker combinedLethality = null;
-			if (combinedLethality != null && this instanceof Hero && ((Hero) this).belongings.attackingWeapon() instanceof MeleeWeapon && combinedLethality.weapon != ((Hero) this).belongings.attackingWeapon()) {
-				if (enemy.isAlive() && enemy.alignment != alignment && !Char.hasProp(enemy, Property.BOSS)
-						&& !Char.hasProp(enemy, Property.MINIBOSS) &&
-						(enemy.HP / (float) enemy.HT) <= 0.4f * ((Hero) this).pointsInTalent(Talent.COMBINED_LETHALITY) / 3f) {
-					enemy.HP = 0;
-					if (!enemy.isAlive()) {
-						enemy.die(this);
-					} else {
-						//helps with triggering any on-damage effects that need to activate
-						DeathMark.processFearTheReaper(enemy);
-					}
-					if (enemy.sprite != null) {
-						enemy.sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Talent.CombinedLethalityAbilityTracker.class, "executed"));
-					}
-				}
-				combinedLethality.detach();
-			}
-
-			if (enemy.sprite != null) {
-				enemy.sprite.bloodBurstA(sprite.center(), effectiveDamage);
-				enemy.sprite.flash();
-			}
-
-			if (!enemy.isAlive() && visibleFight) {
-				if (enemy == Dungeon.hero) {
-
-					if (this == Dungeon.hero) {
-						return true;
-					}
-
-					if (this instanceof WandOfLivingEarth.EarthGuardian
-							|| this instanceof MirrorImage || this instanceof PrismaticImage) {
-						Badges.validateDeathFromFriendlyMagic();
-					}
-					Dungeon.fail(this);
-					GLog.n(Messages.capitalize(Messages.get(Char.class, "kill", name())));
-
-				} else if (this == Dungeon.hero) {
-					GLog.i(Messages.capitalize(Messages.get(Char.class, "defeat", enemy.name())));
-				}
-			}
-
-			return true;
-
-		} else {
-
-			if (enemy.sprite != null){
-				if (hitMissIcon != -1){
-					//dooking is a playful sound Ferrets can make, like low pitched chirping
-					// I doubt this will translate, so it's only in English
-					if (hitMissIcon == FloatingText.MISS_TUFT && Messages.lang() == Languages.ENGLISH && Random.Int(10) == 0) {
-						enemy.sprite.showStatusWithIcon(CharSprite.NEUTRAL, "dooked", hitMissIcon);
-					} else {
-						enemy.sprite.showStatusWithIcon(CharSprite.NEUTRAL, enemy.defenseVerb(), hitMissIcon);
-					}
-					hitMissIcon = -1;
-				} else {
-					enemy.sprite.showStatus(CharSprite.NEUTRAL, enemy.defenseVerb());
-				}
-			}
-			if (visibleFight) {
-				//TODO enemy.defenseSound? currently miss plays for monks/crab even when they parry
-				Sample.INSTANCE.play(Assets.Sounds.MISS);
-			}
-
-			return false;
-
-		}
-
-	}
-
 	public static int INFINITE_ACCURACY = 1_000_000;
 	public static int INFINITE_EVASION = 1_000_000;
-
-	private static int hitMissIcon = -1;
 
 	public int attackSkill( Char target ) {
 		return 0;

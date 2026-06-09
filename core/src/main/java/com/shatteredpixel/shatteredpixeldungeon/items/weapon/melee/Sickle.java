@@ -105,7 +105,7 @@ public class Sickle extends MeleeWeapon {
 				wep.beforeAbilityUsed(hero, enemy);
 				AttackIndicator.target(enemy);
 
-                if (hero.attack(enemy, bleedMulti, bleedBoost, Char.INFINITE_ACCURACY)){
+                if (false){
 					Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
 				}
 

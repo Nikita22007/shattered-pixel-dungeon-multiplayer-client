@@ -197,7 +197,6 @@ public class Goo extends Mob {
                 if (pumpedUp >= 2) {
                     ((GooSprite) sprite).triggerEmitters();
                 }
-                attack(enemy);
                 Invisibility.dispel(this);
                 spend(attackDelay());
             }
@@ -224,19 +223,6 @@ public class Goo extends Mob {
 
             return true;
         }
-    }
-
-    @Override
-    public boolean attack(Char enemy, float dmgMulti, float dmgBonus, float accMulti) {
-        boolean result = super.attack(enemy, dmgMulti, dmgBonus, accMulti);
-        if (pumpedUp > 0) {
-            pumpedUp = 0;
-            if (enemy == Dungeon.hero) {
-                Statistics.qualifiedForBossChallengeBadge = false;
-                Statistics.bossScores[0] -= 100;
-            }
-        }
-        return result;
     }
 
     @Override
