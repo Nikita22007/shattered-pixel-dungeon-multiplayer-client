@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.*;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -719,7 +718,6 @@ public class GameScene extends PixelScene {
 	public synchronized void onPause() {
 		try {
 			if (!Dungeon.hero.ready) waitForActorThread(500, false);
-			Dungeon.saveAll();
 			Badges.saveGlobal();
 			Journal.saveGlobal();
 		} catch (IOException e) {

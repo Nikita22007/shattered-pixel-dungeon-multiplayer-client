@@ -111,8 +111,7 @@ public class WndGame extends Window {
 			@Override
 			protected void onClick() {
 				try {
-					Dungeon.saveAll();
-					Client.disconnectWithoutSwitch();
+                    Client.disconnectWithoutSwitch();
 				} catch (IOException e) {
 					ShatteredPixelDungeon.reportException(e);
 				}

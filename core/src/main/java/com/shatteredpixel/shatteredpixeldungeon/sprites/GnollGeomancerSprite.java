@@ -52,8 +52,8 @@ public class GnollGeomancerSprite extends MobSprite {
 			setupArmor();
 		}
 		if (ch != null) {
-            if (null != null != isStatue) {
-                isStatue = !isStatue;
+            if (isStatue) {
+                isStatue = false;
                 updateAnims();
             }
         }
@@ -141,8 +141,8 @@ public class GnollGeomancerSprite extends MobSprite {
 	public void idle() {
 		super.idle();
 		if (ch != null) {
-            if (null != null != isStatue) {
-                isStatue = !isStatue;
+            if (isStatue) {
+                isStatue = false;
                 updateAnims();
             }
         }

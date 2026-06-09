@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.keys;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -51,8 +50,7 @@ public class WornKey extends Key {
 	public boolean doPickUp(Hero hero, int pos) {
 		if(!SPDSettings.supportNagged()){
 			try {
-				Dungeon.saveAll();
-				Game.runOnRenderThread(new Callback() {
+                Game.runOnRenderThread(new Callback() {
 					@Override
 					public void call() {
 						ShatteredPixelDungeon.scene().add(new WndSupportPrompt());
