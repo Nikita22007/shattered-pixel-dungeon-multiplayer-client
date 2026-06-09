@@ -65,36 +65,6 @@ public class Amulet extends Item {
 		}
 	}
 	
-	@Override
-	public boolean doPickUp(Hero hero, int pos) {
-		if (super.doPickUp( hero, pos )) {
-			
-			if (!Statistics.amuletObtained) {
-				Statistics.amuletObtained = true;
-				hero.spend(-hero.cooldown());
-
-				//delay with an actor here so pickup behaviour can fully process.
-				Actor.add(new Actor(){
-
-					{
-						actPriority = VFX_PRIO;
-					}
-
-					@Override
-					protected boolean act() {
-						Actor.remove(this);
-						showAmuletScene( true );
-						return false;
-					}
-				});
-			}
-			
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
 	private void showAmuletScene( boolean showText ) {
 		AmuletScene.noText = !showText;
 		Game.switchScene( AmuletScene.class, new Game.SceneChangeCallback() {

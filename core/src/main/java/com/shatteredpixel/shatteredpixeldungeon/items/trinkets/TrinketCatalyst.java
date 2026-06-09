@@ -69,18 +69,6 @@ public class TrinketCatalyst extends Item {
 		return false;
 	}
 
-	@Override
-	public boolean doPickUp(Hero hero, int pos) {
-		if (super.doPickUp(hero, pos)){
-			if (!Document.ADVENTURERS_GUIDE.isPageRead(Document.GUIDE_ALCHEMY)){
-				GameScene.flashForDocument(Document.ADVENTURERS_GUIDE, Document.GUIDE_ALCHEMY);
-			}
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	private ArrayList<Trinket> rolledTrinkets = new ArrayList<>();
 
 	public boolean hasRolledTrinkets(){

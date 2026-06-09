@@ -81,15 +81,6 @@ public class CeremonialCandle extends Item {
 		checkCandles();
 	}
 
-	@Override
-	public boolean doPickUp(Hero hero, int pos) {
-		if (super.doPickUp(hero, pos)){
-			aflame = false;
-			return true;
-		}
-		return false;
-	}
-
 	public boolean aflame = false;
 
 	public static String AFLAME = "aflame";

@@ -499,28 +499,6 @@ public class TimekeepersHourglass extends Artifact {
 		}
 
 		@Override
-		public boolean doPickUp(Hero hero, int pos) {
-			Catalog.setSeen(getClass());
-			Statistics.itemTypesDiscovered.add(getClass());
-			TimekeepersHourglass hourglass = hero.belongings.getItem( TimekeepersHourglass.class );
-			if (hourglass != null && !hourglass.cursed) {
-				hourglass.upgrade();
-				Catalog.countUses(hourglass.getClass(), 2);
-				Sample.INSTANCE.play( Assets.Sounds.DEWDROP );
-				if (hourglass.level() == hourglass.levelCap)
-					GLog.p( Messages.get(this, "maxlevel") );
-				else
-					GLog.i( Messages.get(this, "levelup") );
-				GameScene.pickUp(this, pos);
-				hero.spendAndNext(pickupDelay());
-				return true;
-			} else {
-				GLog.w( Messages.get(this, "no_hourglass") );
-				return false;
-			}
-		}
-
-		@Override
 		public int value() {
 			return 30;
 		}

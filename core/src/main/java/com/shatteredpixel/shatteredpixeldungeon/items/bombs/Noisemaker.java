@@ -49,15 +49,6 @@ public class Noisemaker extends Bomb {
 		return new NoisemakerFuse();
 	}
 
-	@Override
-	public boolean doPickUp(Hero hero, int pos) {
-		//cannot pickup after first trigger
-		if (fuse instanceof NoisemakerFuse && ((NoisemakerFuse) fuse).triggered){
-			return false;
-		}
-		return super.doPickUp(hero, pos);
-	}
-
 	//does not instantly explode
 	public static class NoisemakerFuse extends Fuse {
 

@@ -46,23 +46,4 @@ public class WornKey extends Key {
 		this.depth = depth;
 	}
 
-	@Override
-	public boolean doPickUp(Hero hero, int pos) {
-		if(!SPDSettings.supportNagged()){
-			try {
-                Game.runOnRenderThread(new Callback() {
-					@Override
-					public void call() {
-						ShatteredPixelDungeon.scene().add(new WndSupportPrompt());
-					}
-				});
-			} catch (IOException e) {
-				ShatteredPixelDungeon.reportException(e);
-			}
-			
-		}
-		
-		return super.doPickUp(hero, pos);
-	}
-
 }

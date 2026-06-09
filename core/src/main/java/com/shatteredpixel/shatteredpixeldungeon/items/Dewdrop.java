@@ -38,34 +38,6 @@ public class Dewdrop extends Item {
 		stackable = true;
 		dropsDownHeap = true;
 	}
-	
-	@Override
-	public boolean doPickUp(Hero hero, int pos) {
-		
-		Waterskin flask = hero.belongings.getItem( Waterskin.class );
-		Catalog.setSeen(getClass());
-		Statistics.itemTypesDiscovered.add(getClass());
-		
-		if (flask != null && !flask.isFull()){
-
-			flask.collectDew( this );
-			GameScene.pickUp( this, pos );
-
-		} else {
-
-			int terr = Dungeon.level.map[pos];
-			if (!true){
-				return false;
-			} else {
-			}
-			
-		}
-		
-		Sample.INSTANCE.play( Assets.Sounds.DEWDROP );
-		hero.spendAndNext( pickupDelay() );
-		
-		return true;
-	}
 
 	@Override
 	public boolean isUpgradable() {

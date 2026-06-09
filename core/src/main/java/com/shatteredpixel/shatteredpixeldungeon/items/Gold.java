@@ -57,26 +57,6 @@ public class Gold extends Item {
 	}
 	
 	@Override
-	public boolean doPickUp(Hero hero, int pos) {
-
-		Catalog.setSeen(getClass());
-		Statistics.itemTypesDiscovered.add(getClass());
-
-		Dungeon.hero.gold += quantity;
-		Statistics.goldCollected += quantity;
-		Badges.validateGoldCollected();
-
-		GameScene.pickUp( this, pos );
-		hero.sprite.showStatusWithIcon( CharSprite.NEUTRAL, Integer.toString(quantity), FloatingText.GOLD );
-		hero.spendAndNext( pickupDelay() );
-		
-		Sample.INSTANCE.play( Assets.Sounds.GOLD, 1, 1, Random.Float( 0.9f, 1.1f ) );
-		updateQuickslot();
-		
-		return true;
-	}
-	
-	@Override
 	public boolean isUpgradable() {
 		return false;
 	}

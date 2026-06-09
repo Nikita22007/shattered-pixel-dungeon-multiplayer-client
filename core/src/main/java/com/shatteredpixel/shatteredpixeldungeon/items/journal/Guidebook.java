@@ -43,31 +43,6 @@ public class Guidebook extends Item {
 	}
 
 	@Override
-	public final boolean doPickUp(Hero hero, int pos) {
-		Document.ADVENTURERS_GUIDE.findPage(Document.GUIDE_INTRO);
-		Document.ADVENTURERS_GUIDE.findPage(Document.GUIDE_EXAMINING);
-		Document.ADVENTURERS_GUIDE.findPage(Document.GUIDE_SURPRISE_ATKS);
-		Document.ADVENTURERS_GUIDE.findPage(Document.GUIDE_IDING);
-		Document.ADVENTURERS_GUIDE.findPage(Document.GUIDE_FOOD);
-		Document.ADVENTURERS_GUIDE.findPage(Document.GUIDE_ALCHEMY);
-		Document.ADVENTURERS_GUIDE.findPage(Document.GUIDE_DIEING);
-
-		GameScene.pickUpJournal(this, pos);
-		//we do this here so the pickup message appears before the tutorial text
-		GameLog.wipe();
-		GLog.i( Messages.capitalize(Messages.get(Hero.class, "you_now_have", name())) );
-		if (SPDSettings.interfaceSize() == 0){
-			GLog.p(Messages.get(GameScene.class, "tutorial_guidebook_mobile"));
-		} else {
-			GLog.p(Messages.get(GameScene.class, "tutorial_guidebook_desktop", KeyBindings.getKeyName(KeyBindings.getFirstKeyForAction(SPDAction.JOURNAL, ControllerHandler.isControllerConnected()))));
-		}
-		GameScene.flashForDocument(Document.ADVENTURERS_GUIDE, Document.GUIDE_INTRO);
-		Sample.INSTANCE.play( Assets.Sounds.ITEM );
-		hero.spendAndNext( pickupDelay() );
-		return true;
-	}
-
-	@Override
 	public boolean isUpgradable() {
 		return false;
 	}

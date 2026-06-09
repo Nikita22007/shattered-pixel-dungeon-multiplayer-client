@@ -124,16 +124,6 @@ public class Bomb extends Item {
 		super.onThrow( cell );
 	}
 
-	@Override
-	public boolean doPickUp(Hero hero, int pos) {
-		if (fuse != null) {
-			GLog.w( Messages.get(this, "snuff_fuse") );
-			fuse.snuff();
-			fuse = null;
-		}
-		return super.doPickUp(hero, pos);
-	}
-
 	public void explode(int cell){
 		//We're blowing up, so no need for a fuse anymore.
 		if (fuse != null) {
@@ -332,19 +322,6 @@ public class Bomb extends Item {
 		{
 			image = ItemSpriteSheet.DBL_BOMB;
 			stackable = false;
-		}
-
-		@Override
-		public boolean doPickUp(Hero hero, int pos) {
-			Bomb bomb = new Bomb();
-			bomb.quantity(2);
-			if (bomb.doPickUp(hero, pos)) {
-				//isaaaaac.... (don't bother doing this when not in english)
-				if (SPDSettings.language() == Languages.ENGLISH)
-					hero.sprite.showStatus(CharSprite.NEUTRAL, "1+1 free!");
-				return true;
-			}
-			return false;
 		}
 	}
 	

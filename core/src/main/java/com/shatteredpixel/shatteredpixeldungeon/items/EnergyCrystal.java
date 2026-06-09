@@ -54,26 +54,6 @@ public class EnergyCrystal extends Item {
 	}
 
 	@Override
-	public boolean doPickUp(Hero hero, int pos) {
-
-		Catalog.setSeen(getClass());
-		Statistics.itemTypesDiscovered.add(getClass());
-
-		Dungeon.energy += quantity;
-		//TODO track energy collected maybe? We do already track recipes crafted though..
-
-		GameScene.pickUp( this, pos );
-		hero.sprite.showStatusWithIcon( 0x44CCFF, Integer.toString(quantity), FloatingText.ENERGY );
-		hero.spendAndNext( pickupDelay() );
-
-		Sample.INSTANCE.play( Assets.Sounds.ITEM );
-
-		updateQuickslot();
-
-		return true;
-	}
-
-	@Override
 	public boolean isUpgradable() {
 		return false;
 	}
