@@ -211,7 +211,7 @@ public class MasterThievesArmband extends Artifact {
 	
 	@Override
 	public void charge(Hero target, float amount) {
-        if (cursed || null != null) return;
+        if (cursed || false) return;
 		if (charge < chargeCap) {
 			partialCharge += 0.1f * amount;
 			while (partialCharge >= 1f) {
@@ -262,7 +262,7 @@ public class MasterThievesArmband extends Artifact {
 		}
 
 		public void gainCharge(float levelPortion) {
-            if (cursed || null != null) return;
+            if (cursed || false) return;
 
 			if (charge < chargeCap){
 				float chargeGain = 3f * levelPortion;

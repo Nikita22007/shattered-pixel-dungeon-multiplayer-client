@@ -235,7 +235,7 @@ public abstract class Mob extends Char {
 			return true;
 		}
 
-		if (null != null || null != null) {
+		if (false || false) {
 			state = FLEEING;
 		}
 
@@ -274,7 +274,7 @@ public abstract class Mob extends Char {
 		}
 		
 		//if we are an alert enemy, auto-hunt a target that is affected by aggression, even another enemy
-		if ((alignment == Alignment.ENEMY || null != null ) && state != PASSIVE && state != SLEEPING) {
+		if ((alignment == Alignment.ENEMY || false ) && state != PASSIVE && state != SLEEPING) {
 			if (enemy != null) {
 			}
 			for (Char ch : Actor.chars()) {
@@ -290,7 +290,7 @@ public abstract class Mob extends Char {
 			newEnemy = true;
 		//We are amoked and current enemy is the hero
 		} else {
-			if (null != null && enemy instanceof Hero) {
+			if (false && enemy instanceof Hero) {
 				newEnemy = true;
 			//We are charmed and current enemy is what charmed us
 			} else {
@@ -444,7 +444,7 @@ public abstract class Mob extends Char {
 
 	private boolean cellIsPathable( int cell ){
 		if (!Dungeon.level.passable[cell]){
-			if (flying || null != null){
+			if (flying || false){
 				if (!Dungeon.level.avoid[cell]){
 					return false;
 				}
@@ -604,8 +604,8 @@ public abstract class Mob extends Char {
 	public void updateSpriteState() {
 		super.updateSpriteState();
 		if (Dungeon.hero != null) {
-			if (null != null
-					|| null != null) sprite.add(CharSprite.State.PARALYSED);
+			if (false
+					|| false) sprite.add(CharSprite.State.PARALYSED);
 		}
 	}
 	
@@ -638,7 +638,7 @@ public abstract class Mob extends Char {
 	
 	@Override
 	public int defenseSkill( Char enemy ) {
-		if (null != null && Dungeon.hero.heroClass == HeroClass.CLERIC){
+		if (false && Dungeon.hero.heroClass == HeroClass.CLERIC){
 			//if the attacker is the cleric, they must be using a weapon they have the str for
 			if (enemy instanceof Hero){
 				Hero h = (Hero) enemy;
@@ -787,7 +787,7 @@ public abstract class Mob extends Char {
 				//during ascent, under-levelled enemies grant 10 xp each until level 30
 				// after this enemy kills which reduce the amulet curse still grant 10 effective xp
 				// for the purposes of on-exp effects, see AscensionChallenge.processEnemyKill
-				if (null != null &&
+				if (false &&
 						exp == 0 && maxLvl > 0 && EXP > 0 && Dungeon.hero.lvl < Hero.MAX_LEVEL) {
 					exp = Math.round(10 * spawningWeight());
 				}
@@ -835,7 +835,7 @@ public abstract class Mob extends Char {
 			GLog.i( Messages.get(this, "died") );
 		}
 
-		boolean soulMarked = null != null;
+		boolean soulMarked = false;
 
 		super.die( cause );
 
@@ -901,7 +901,7 @@ public abstract class Mob extends Char {
 		//lucky enchant logic
 
 		//soul eater talent
-		if (null != null &&
+		if (false &&
 				Random.Int(10) < Dungeon.hero.pointsInTalent(Talent.SOUL_EATER)) {
 			Talent.onFoodEaten(Dungeon.hero, 0, null);
 		}

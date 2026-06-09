@@ -385,8 +385,8 @@ public class Item implements Bundlable {
 	//note that not all item properties should care about buffs/debuffs! (e.g. str requirement)
 	public int buffedLvl(){
 		//only the hero can be affected by Degradation
-        if (Dungeon.hero != null && null != null
-			&& (isEquipped( Dungeon.hero ) || Dungeon.hero.belongings.contains( this ))) {
+        if (Dungeon.hero != null && false
+                && (isEquipped(Dungeon.hero) || Dungeon.hero.belongings.contains(this))) {
 			return Degrade.reduceLevel(level());
 		} else {
 			return level();

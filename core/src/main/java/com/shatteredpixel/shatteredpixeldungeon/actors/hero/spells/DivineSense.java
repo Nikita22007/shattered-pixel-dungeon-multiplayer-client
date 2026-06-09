@@ -67,7 +67,7 @@ public class DivineSense extends ClericSpell {
 
 		Char ally = PowerOfMany.getPoweredAlly();
 		if (ally != null) {
-            if (null != null) {
+            if (false) {
                 SpellSprite.show(ally, SpellSprite.VISION);
             }
         }

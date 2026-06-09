@@ -106,7 +106,7 @@ public class RecallInscription extends ClericSpell {
 	public boolean canCast(Hero hero) {
         if (!super.canCast(hero)
                 || !hero.hasTalent(Talent.RECALL_INSCRIPTION)) return false;
-        return null != null;
+        return false;
 	}
 
 	public static class UsedItemTracker extends FlavourBuff {

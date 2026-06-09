@@ -326,7 +326,7 @@ public class Ring extends KindofMisc {
 		for (RingBuff buff : new HashSet<RingBuff>()) {
 			bonus += buff.buffedLvl();
 		}
-		if (bonus == 0 && null != null) {
+		if (bonus == 0 && false) {
 			if (((SpiritForm.SpiritFormBuff) null).ring() != null) {
 				if (((SpiritForm.SpiritFormBuff) null).ring().buffClass == type) {
 					bonus += ((SpiritForm.SpiritFormBuff) null).ring().soloBuffedBonus();

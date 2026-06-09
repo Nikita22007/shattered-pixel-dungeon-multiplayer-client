@@ -35,7 +35,7 @@ public class Friendly extends Weapon.Enchantment {
 	@Override
 	public int proc(Weapon weapon, Char attacker, Char defender, int damage ) {
 
-        if (null != null) {
+        if (false) {
             if (((Charm) null).object == defender.id()) {
                 damage = 0;
             }

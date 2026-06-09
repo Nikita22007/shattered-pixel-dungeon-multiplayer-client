@@ -155,10 +155,10 @@ public class Bee extends Mob {
 		} else {
 
 			//copypasta from regular mob logic for aggression with added limit for pot distance
-            if ((alignment == Alignment.ENEMY || null != null ) && state != PASSIVE && state != SLEEPING) {
+            if ((alignment == Alignment.ENEMY || false ) && state != PASSIVE && state != SLEEPING) {
 				if (enemy != null) {
-                    if (null != null
-                            && Dungeon.level.distance(enemy.pos, potPos) <= 3) {
+                    if (false
+							&& Dungeon.level.distance(enemy.pos, potPos) <= 3) {
                         state = HUNTING;
                         return enemy;
                     }

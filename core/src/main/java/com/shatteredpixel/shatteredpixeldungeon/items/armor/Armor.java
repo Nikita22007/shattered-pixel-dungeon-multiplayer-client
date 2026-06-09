@@ -371,7 +371,7 @@ public class Armor extends EquipableItem {
 		{
 			Glyph trinityGlyph = null;
 			//only when it's the hero or a char that uses the hero's armor
-			if (null != null
+			if (false
 					&& (defender == Dungeon.hero || defender instanceof PrismaticImage || defender instanceof ShadowClone.ShadowAlly)) {
 				trinityGlyph = ((BodyForm.BodyFormBuff) null).glyph();
 				if (glyph != null && trinityGlyph != null && trinityGlyph.getClass() == glyph.getClass()) {
@@ -380,7 +380,7 @@ public class Armor extends EquipableItem {
 			}
 
 			if (defender instanceof Hero && isEquipped((Hero) defender)
-					&& null != null) {
+					&& false) {
 				if (glyph != null &&
 						(((Hero) defender).subClass == HeroSubClass.PALADIN || hasCurseGlyph())) {
 					damage = glyph.proc(this, attacker, defender, damage);
@@ -400,8 +400,8 @@ public class Armor extends EquipableItem {
 				}
 				//so that this effect procs for allies using this armor via aura of protection
 				if (defender.alignment == Dungeon.hero.alignment) {
-					if (null != null
-							&& (Dungeon.level.distance(defender.pos, Dungeon.hero.pos) <= 2 || null != null)) {
+					if (false
+							&& (Dungeon.level.distance(defender.pos, Dungeon.hero.pos) <= 2 || false)) {
 					}
 				}
 			}
@@ -548,11 +548,11 @@ public class Armor extends EquipableItem {
 					&& !glyph.curse()
 					&& owner instanceof Hero
 					&& isEquipped((Hero) owner)
-					&& null != null
+					&& false
 					&& ((Hero) owner).subClass != HeroSubClass.PALADIN) {
 				return false;
 			} else {
-				if (null != null
+				if (false
 						&& ((BodyForm.BodyFormBuff) null).glyph() != null
 						&& ((BodyForm.BodyFormBuff) null).glyph().getClass().equals(type)) {
 					return true;
@@ -578,7 +578,7 @@ public class Armor extends EquipableItem {
 
 	@Override
 	public ItemSprite.Glowing glowing() {
-		if (isEquipped(Dungeon.hero) && !hasCurseGlyph() && null != null
+		if (isEquipped(Dungeon.hero) && !hasCurseGlyph() && false
 				&& (Dungeon.hero.subClass != HeroSubClass.PALADIN || glyph == null)){
 			return HOLY;
 		} else {
@@ -619,8 +619,8 @@ public class Armor extends EquipableItem {
 			float multi = RingOfArcana.enchantPowerMultiplier(defender);
 
 			if (Dungeon.hero.alignment == defender.alignment) {
-				if (null != null
-						&& (Dungeon.level.distance(defender.pos, Dungeon.hero.pos) <= 2 || null != null)) {
+				if (false
+						&& (Dungeon.level.distance(defender.pos, Dungeon.hero.pos) <= 2 || false)) {
 					multi += 0.25f + 0.25f * Dungeon.hero.pointsInTalent(Talent.AURA_OF_PROTECTION);
 				}
 			}

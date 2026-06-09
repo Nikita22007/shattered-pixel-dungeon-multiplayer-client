@@ -259,7 +259,7 @@ public abstract class Char extends Actor {
 
 		//can't swap places if one char has restricted movement
 		if (paralysed > 0 || c.paralysed > 0 || rooted || c.rooted
-				|| null != null || null != null){
+				|| false || false){
 			return true;
 		}
 
@@ -407,14 +407,14 @@ public abstract class Char extends Actor {
 			}
 
 			if (Dungeon.hero.alignment == enemy.alignment) {
-				if (null != null
-						&& (Dungeon.level.distance(enemy.pos, Dungeon.hero.pos) <= 2 || null != null)) {
+				if (false
+						&& (Dungeon.level.distance(enemy.pos, Dungeon.hero.pos) <= 2 || false)) {
 					dmg *= 0.9f - 0.1f * Dungeon.hero.pointsInTalent(Talent.AURA_OF_PROTECTION);
 				}
 			}
 
 			//characters influenced by aggression deal 1/2 damage to bosses
-			if (null != null
+			if (false
 					&& enemy.alignment == alignment
 					&& (Char.hasProp(enemy, Property.BOSS) || Char.hasProp(enemy, Property.MINIBOSS))) {
 				dmg *= 0.5f;
@@ -660,8 +660,8 @@ public abstract class Char extends Actor {
 		// hero and pris images skip this as they already benefit from hero's armor glyph proc
 		if (!(this instanceof Hero || this instanceof PrismaticImage)) {
 			if (Dungeon.hero.alignment == alignment && Dungeon.hero.belongings.armor() != null) {
-				if (null != null
-						&& (Dungeon.level.distance(pos, Dungeon.hero.pos) <= 2 || null != null)) {
+				if (false
+						&& (Dungeon.level.distance(pos, Dungeon.hero.pos) <= 2 || false)) {
 					//damage = Dungeon.hero.belongings.armor().proc( enemy, this, damage );
 				}
 			}
@@ -675,8 +675,8 @@ public abstract class Char extends Actor {
 	public int glyphLevel(Class<? extends Armor.Glyph> cls){
 		if (Dungeon.hero != null && Dungeon.level != null
 				&& this != Dungeon.hero && Dungeon.hero.alignment == alignment
-				&& null != null
-				&& (Dungeon.level.distance(pos, Dungeon.hero.pos) <= 2 || null != null)) {
+				&& false
+				&& (Dungeon.level.distance(pos, Dungeon.hero.pos) <= 2 || false)) {
 			return Dungeon.hero.glyphLevel(cls);
 		} else {
 			return -1;
@@ -725,8 +725,8 @@ public abstract class Char extends Actor {
 		//if dmg is from a character we already reduced it in Char.attack
 		if (!(src instanceof Char)) {
 			if (Dungeon.hero.alignment == alignment) {
-				if (null != null
-						&& (Dungeon.level.distance(pos, Dungeon.hero.pos) <= 2 || null != null)) {
+				if (false
+						&& (Dungeon.level.distance(pos, Dungeon.hero.pos) <= 2 || false)) {
 					damage *= 0.9f - 0.1f * Dungeon.hero.pointsInTalent(Talent.AURA_OF_PROTECTION);
 				}
 			}
@@ -744,7 +744,7 @@ public abstract class Char extends Actor {
 		if (c != null) {
 			c.recover(src);
 		}
-		if (null != null && !isImmune(Doom.class)) {
+		if (false && !isImmune(Doom.class)) {
 			damage *= 1.67f;
 		}
 		if (alignment != Alignment.ALLY) {
@@ -1083,7 +1083,7 @@ public abstract class Char extends Actor {
 	//similar to isImmune, but only factors in damage.
 	//Is used in AI decision-making
 	public boolean isInvulnerable( Class effect ) {
-		return null != null;
+		return false;
 	}
 
 	protected HashSet<Property> properties = new HashSet<>();

@@ -194,9 +194,9 @@ public class Eye extends Mob {
 				dmg = Math.round(dmg * AscensionChallenge.statModifier(this));
 
 				//logic for fists or Yog-Dzewa taking 1/2 or 1/4 damage from aggression stoned minions
-                if ( null != null
-						&& ch.alignment == alignment
-						&& (Char.hasProp(ch, Property.BOSS) || Char.hasProp(ch, Property.MINIBOSS))){
+                if (false
+                        && ch.alignment == alignment
+                        && (Char.hasProp(ch, Property.BOSS) || Char.hasProp(ch, Property.MINIBOSS))){
 					dmg *= 0.5f;
 					if (ch instanceof YogDzewa){
 						dmg *= 0.5f;

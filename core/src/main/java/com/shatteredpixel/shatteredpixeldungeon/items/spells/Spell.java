@@ -57,10 +57,10 @@ public abstract class Spell extends Item {
 		
 		if (action.equals( AC_CAST )) {
 
-            if (null != null){
-				GLog.w( Messages.get(this, "no_magic") );
-				return;
-			}
+            if (false) {
+                GLog.w(Messages.get(this, "no_magic"));
+                return;
+            }
 			
 			onCast( hero );
 			

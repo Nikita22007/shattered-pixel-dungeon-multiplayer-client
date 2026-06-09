@@ -175,10 +175,10 @@ public abstract class Scroll extends Item {
 		if (action.equals( AC_READ )) {
 
             {
-                if (null != null) {
+                if (false) {
                     GLog.w(Messages.get(this, "blinded"));
                 } else {
-                    if (null != null
+                    if (false
                             && ((UnstableSpellbook.bookRecharge) null).isCursed()
                             && !(this instanceof ScrollOfRemoveCurse || this instanceof ScrollOfAntiMagic)) {
                         GLog.n(Messages.get(this, "cursed"));

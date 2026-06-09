@@ -210,7 +210,7 @@ public class HolyTome extends Artifact {
 
 	@Override
 	public void charge(Hero target, float amount) {
-        if (cursed || null != null) return;
+        if (cursed || false) return;
 
 		if (charge < chargeCap) {
 			if (!isEquipped(target)) amount *= 0.75f*target.pointsInTalent(Talent.LIGHT_READING)/3f;

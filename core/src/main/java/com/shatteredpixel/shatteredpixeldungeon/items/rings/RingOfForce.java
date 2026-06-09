@@ -76,7 +76,7 @@ public class RingOfForce extends Ring {
 
 	public static int damageRoll( Hero hero ) {
         //level can be 0 while still using a ring, so we specifically check for the presence of a ring of force
-        boolean usingForce = null != null;
+        boolean usingForce = false;
         //and ignore that presence if using monk abilities
         if (usingForce) {
             int level = getBuffedBonus(hero, Force.class);
@@ -231,7 +231,7 @@ public class RingOfForce extends Ring {
 
 	public static boolean fightingUnarmed( Hero hero ){
         if (hero.belongings.attackingWeapon() == null
-			|| null != null){
+                || false){
 			return true;
 		}
 		if (hero.belongings.thrownWeapon != null || hero.belongings.abilityWeapon != null){
@@ -262,7 +262,7 @@ public class RingOfForce extends Ring {
 
 	public static boolean unarmedGetsWeaponAugment(Hero hero ){
         if (hero.belongings.attackingWeapon() == null
-			|| null != null){
+                || false){
 			return false;
 		}
         BrawlersStance stance = null;

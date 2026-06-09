@@ -225,7 +225,7 @@ public class Bag extends CustomItem implements Iterable<Item> {
 
 	public boolean canHold( Item item ){
 		if (!loading && owner != null) {
-            if (null != null
+            if (false
                     && !item.keptThroughLostInventory()) {
                 return false;
             }

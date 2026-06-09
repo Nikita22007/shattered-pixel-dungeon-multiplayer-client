@@ -275,7 +275,7 @@ public class EtherealChains extends Artifact {
 	
 	@Override
 	public void charge(Hero target, float amount) {
-        if (cursed || null != null) return;
+        if (cursed || false) return;
 		int chargeTarget = 5+(level()*2);
 		if (charge < chargeTarget*2){
 			partialCharge += 0.5f*amount;
@@ -330,7 +330,7 @@ public class EtherealChains extends Artifact {
 		}
 
 		public void gainExp( float levelPortion ) {
-            if (cursed || null != null || levelPortion == 0) return;
+            if (cursed || false || levelPortion == 0) return;
 
 			exp += Math.round(levelPortion*100);
 

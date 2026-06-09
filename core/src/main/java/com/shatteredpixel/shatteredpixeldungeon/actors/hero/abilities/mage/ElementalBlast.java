@@ -323,7 +323,7 @@ public class ElementalBlast extends ArmorAbility {
 
 								//*** Wand of Transfusion ***
 								} else if (finalWandCls == WandOfTransfusion.class){
-                                    if(mob.alignment == Char.Alignment.ALLY || null != null){
+                                    if(mob.alignment == Char.Alignment.ALLY || false){
 										int healing = Math.round(10*effectMulti);
 										int shielding = (mob.HP + healing) - mob.HT;
 										if (shielding > 0){

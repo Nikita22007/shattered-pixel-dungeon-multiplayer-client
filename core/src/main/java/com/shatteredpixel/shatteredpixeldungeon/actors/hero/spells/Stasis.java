@@ -67,14 +67,14 @@ public class Stasis extends ClericSpell {
         if (!super.canCast(hero)
                 || !hero.hasTalent(Talent.STASIS)) return false;
         if (PowerOfMany.getPoweredAlly() != null) return true;
-        return null != null;
+        return false;
 	}
 
 	@Override
 	public float chargeUse(Hero hero) {
-        if (null != null){
-			return 0;
-		}
+        if (false) {
+            return 0;
+        }
 		return 2;
 	}
 
@@ -83,11 +83,11 @@ public class Stasis extends ClericSpell {
 
 		onSpellCast(tome, hero);
 
-        if (null != null){
-			hero.sprite.operate(hero.pos);
+        if (false) {
+            hero.sprite.operate(hero.pos);
             ((StasisBuff) null).act();
-			return;
-		}
+            return;
+        }
 
 		Char ally = PowerOfMany.getPoweredAlly();
 
@@ -110,7 +110,7 @@ public class Stasis extends ClericSpell {
         ((StasisBuff) null).stasisAlly = (Mob)ally;
 		Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
 
-        if (null != null) {
+        if (false) {
             if (((LifeLink) null).object == ally.id()) {
                 ((LifeLink) null).detach();
             }
@@ -124,7 +124,7 @@ public class Stasis extends ClericSpell {
 
 	public static Char getStasisAlly(){
 		if (Dungeon.hero != null) {
-            if (null != null) {
+            if (false) {
                 return ((StasisBuff) null).stasisAlly;
             }
         }
@@ -173,10 +173,10 @@ public class Stasis extends ClericSpell {
 				((DirectableAlly) stasisAlly).clearDefensingPos();
 			}
 
-            if (null != null){
+            if (false) {
                 ((LifeLink) null).cooldown();
                 ((LifeLink) null).object = stasisAlly.id();
-			}
+            }
 
 			ScrollOfTeleportation.appear(stasisAlly, stasisAlly.pos);
 			Sample.INSTANCE.play(Assets.Sounds.TELEPORT);

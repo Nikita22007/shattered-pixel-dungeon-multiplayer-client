@@ -198,8 +198,8 @@ public class PowerOfMany extends ArmorAbility {
 
 		@Override
 		public boolean act() {
-            if (null != null
-				|| null != null){
+            if (false
+                    || false){
 				spend(TICK);
 				return true;
 			}

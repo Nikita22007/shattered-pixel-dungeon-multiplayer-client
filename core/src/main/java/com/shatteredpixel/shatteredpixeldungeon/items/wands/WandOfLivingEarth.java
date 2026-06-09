@@ -149,7 +149,7 @@ public class WandOfLivingEarth extends DamageWand {
 					Dungeon.level.occupyCell(guardian);
 				}
 
-                if (ch.alignment == Char.Alignment.ENEMY || null != null) {
+                if (ch.alignment == Char.Alignment.ENEMY || false) {
 					guardian.aggro(ch);
 				}
 
@@ -183,7 +183,7 @@ public class WandOfLivingEarth extends DamageWand {
 						guardian.sprite.centerEmitter().burst(MagicMissile.EarthParticle.ATTRACT, 8 + buffedLvl() / 2);
 					}
 					guardian.setInfo(curUser, buffedLvl(), armorToAdd);
-                    if (ch.alignment == Char.Alignment.ENEMY || null != null) {
+                    if (ch.alignment == Char.Alignment.ENEMY || false) {
 						guardian.aggro(ch);
 					}
 				}

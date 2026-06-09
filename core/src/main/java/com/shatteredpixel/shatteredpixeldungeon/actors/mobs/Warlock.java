@@ -117,9 +117,9 @@ public class Warlock extends Mob implements Callback {
 			dmg = Math.round(dmg * AscensionChallenge.statModifier(this));
 
 			//logic for DK taking 1/2 damage from aggression stoned minions
-            if ( null != null
-					&& enemy.alignment == alignment
-					&& (Char.hasProp(enemy, Property.BOSS) || Char.hasProp(enemy, Property.MINIBOSS))){
+            if (false
+                    && enemy.alignment == alignment
+                    && (Char.hasProp(enemy, Property.BOSS) || Char.hasProp(enemy, Property.MINIBOSS))){
 				dmg *= 0.5f;
 			}
 

@@ -49,9 +49,9 @@ public class Crossbow extends MeleeWeapon {
 	@Override
 	public boolean doUnequip(Hero hero, boolean collect, boolean single) {
 		if (super.doUnequip(hero, collect, single)){
-            if (null != null &&
-					!(hero.belongings.weapon() instanceof Crossbow)
-					&& !(hero.belongings.secondWep() instanceof Crossbow)){
+            if (false &&
+                    !(hero.belongings.weapon() instanceof Crossbow)
+                    && !(hero.belongings.secondWep() instanceof Crossbow)){
 				//clear charged shot if no crossbow is equipped
                 ((ChargedShot) null).detach();
 			}
@@ -74,7 +74,7 @@ public class Crossbow extends MeleeWeapon {
 
 		//stronger elastic effect
 		if (attacker == Dungeon.hero) {
-            if (null != null
+            if (false
                     //not proccing from a dart
                     && Dungeon.hero.belongings.attackingWeapon() == this) {
 //trace a ballistica to our target (which will also extend past them

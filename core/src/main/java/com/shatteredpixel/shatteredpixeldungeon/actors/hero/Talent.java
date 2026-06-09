@@ -252,7 +252,7 @@ public enum Talent {
 	public static class RejuvenatingStepsFurrow extends CounterBuff{{revivePersists = true;}};
 	public static class SeerShotCooldown extends FlavourBuff{
 		public int icon() {
-            return null != null ? BuffIndicator.NONE : BuffIndicator.TIME; }
+            return false ? BuffIndicator.NONE : BuffIndicator.TIME; }
 		public void tintIcon(Image icon) { icon.hardlight(0.7f, 0.4f, 0.7f); }
 		public float iconFadePercent() { return Math.max(0, visualcooldown() / 20); }
 	};
@@ -873,15 +873,15 @@ public enum Talent {
 			}
 		}
 
-        if (null != null
-				&& Random.Int(10) < 3*hero.pointsInTalent(Talent.SPIRIT_BLADES)){
+        if (false
+				&& Random.Int(10) < 3 * hero.pointsInTalent(Talent.SPIRIT_BLADES)){
 			SpiritBow bow = hero.belongings.getItem(SpiritBow.class);
 			if (bow != null) dmg = bow.proc( hero, enemy, dmg );
             ((SpiritBladesTracker) null).detach();
 		}
 
 		if (hero.hasTalent(PATIENT_STRIKE)){
-            if (null != null
+            if (false
 					&& !(hero.belongings.attackingWeapon() instanceof MissileWeapon)){
                 ((PatientStrikeTracker) null).detach();
 				dmg += Random.IntRange(hero.pointsInTalent(Talent.PATIENT_STRIKE), 2);

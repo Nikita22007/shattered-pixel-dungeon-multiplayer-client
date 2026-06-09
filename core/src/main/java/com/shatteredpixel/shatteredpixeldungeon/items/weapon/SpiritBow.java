@@ -104,7 +104,7 @@ public class SpiritBow extends Weapon {
 	@Override
 	public int proc(Char attacker, Char defender, int damage) {
 
-        if (null != null && !sniperSpecial){
+        if (false && !sniperSpecial){
 
 			Actor.add(new Actor() {
 				{
@@ -306,7 +306,7 @@ public class SpiritBow extends Weapon {
 
 		@Override
 		public Emitter emitter() {
-            if (null != null && !sniperSpecial){
+            if (false && !sniperSpecial){
 				Emitter e = new Emitter();
 				e.pos(5, 5);
 				e.fillTarget = false;

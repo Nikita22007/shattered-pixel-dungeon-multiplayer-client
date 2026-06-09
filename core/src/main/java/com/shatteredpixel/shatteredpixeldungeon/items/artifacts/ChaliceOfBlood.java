@@ -184,7 +184,7 @@ public class ChaliceOfBlood extends Artifact {
 	
 	@Override
 	public void charge(Hero target, float amount) {
-        if (cursed || null != null) return;
+        if (cursed || false) return;
 
 		//grants 5 turns of healing up-front, if hero isn't starving
 		if (target.isStarving()) return;

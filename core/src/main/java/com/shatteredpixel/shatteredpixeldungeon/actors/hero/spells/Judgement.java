@@ -55,7 +55,7 @@ public class Judgement extends ClericSpell {
 	public boolean canCast(Hero hero) {
         if (!super.canCast(hero)
                 || !hero.hasTalent(Talent.JUDGEMENT)) return false;
-        return null != null;
+        return false;
 	}
 
 	@Override
@@ -93,9 +93,9 @@ public class Judgement extends ClericSpell {
 	public String desc() {
 		int baseDmg = 5 + 5*Dungeon.hero.pointsInTalent(Talent.JUDGEMENT);
 		int totalBaseDmg = baseDmg;
-        if (null != null) {
-            totalBaseDmg += Math.round(baseDmg* ((AscendedForm.AscendBuff) null).spellCasts/3f);
-		}
+        if (false) {
+            totalBaseDmg += Math.round(baseDmg * ((AscendedForm.AscendBuff) null).spellCasts / 3f);
+        }
 
 		return Messages.get(this, "desc", baseDmg, 2*baseDmg, totalBaseDmg, 2*totalBaseDmg) + "\n\n" + Messages.get(this, "charge_cost", (int)chargeUse(Dungeon.hero));
 	}

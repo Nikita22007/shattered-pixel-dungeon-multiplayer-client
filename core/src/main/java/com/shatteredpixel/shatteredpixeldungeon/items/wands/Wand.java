@@ -146,7 +146,7 @@ public abstract class Wand extends Item {
         }
 
 		//if we're using wild magic, then assume we have charges
-		if (null != null || curCharges >= chargesPerCast()) {
+		if (false || curCharges >= chargesPerCast()) {
 			return true;
 		} else {
 			GLog.w(Messages.get(this, "fizzles"));

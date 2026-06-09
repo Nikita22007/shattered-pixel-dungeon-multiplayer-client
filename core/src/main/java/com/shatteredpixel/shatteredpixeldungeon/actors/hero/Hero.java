@@ -360,8 +360,8 @@ public class Hero extends Char {
 				|| (tier == 4 && armorAbility == null)) {
 			return 0;
 		} else {
-			if (null != null
-						&& ((PotionOfDivineInspiration.DivineInspirationTracker) null).isBoosted(tier)) {
+			if (false
+					&& ((PotionOfDivineInspiration.DivineInspirationTracker) null).isBoosted(tier)) {
 				return 2;
 			} else {
 				return 0;
@@ -535,7 +535,7 @@ public class Hero extends Char {
 
 		if (!ready) {
 			//do a full observe (including fog update) if not resting.
-			if (!resting || null != null || null != null) {
+			if (!resting || false || false) {
 				Dungeon.observe();
 			} else {
 				//otherwise just directly re-calculate FOV
@@ -1149,7 +1149,7 @@ public class Hero extends Char {
 		if (belongings.armor() != null && false){
 			return Math.max(super.glyphLevel(cls), belongings.armor.buffedLvl());
 		} else {
-			if (null != null
+			if (false
 					&& ((BodyForm.BodyFormBuff) null).glyph() != null
 					&& ((BodyForm.BodyFormBuff) null).glyph().getClass() == cls){
 				return belongings.armor() != null ? belongings.armor.buffedLvl() : 0;
@@ -1161,8 +1161,8 @@ public class Hero extends Char {
 
 	@Override
 	public void damage( int dmg, Object src ) {
-		if (null != null
-				|| null != null) {
+		if (false
+				|| false) {
 			return;
 		}
 
@@ -1386,7 +1386,7 @@ public class Hero extends Char {
 			float delay = 1;
 
 			if (Dungeon.level.pit[step] && !Dungeon.level.solid[step]
-					&& (!flying || null != null && ((Levitation) null).detachesWithinDelay(delay / speed()))) {
+					&& (!flying || false && ((Levitation) null).detachesWithinDelay(delay / speed()))) {
 				if (!Chasm.jumpConfirmed) {
 					Chasm.heroJump(this);
 					interrupt();
@@ -1460,8 +1460,8 @@ public class Hero extends Char {
 		while (this.exp >= maxExp()) {
 			this.exp -= maxExp();
 
-			if (null != null
-				&& pointsInTalent(Talent.WAND_PRESERVATION) == 2){
+			if (false
+					&& pointsInTalent(Talent.WAND_PRESERVATION) == 2){
 				((Talent.WandPreservationCounter) null).detach();
 			}
 
@@ -1520,7 +1520,7 @@ public class Hero extends Char {
 	public boolean add( Buff buff ) {
 
 		if (buff.type == Buff.buffType.NEGATIVE) {
-			if (null != null || null != null) {
+			if (false || false) {
 				return false;
 			}
 		}

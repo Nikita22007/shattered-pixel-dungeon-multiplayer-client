@@ -293,7 +293,7 @@ public class Dungeon {
 	//value used for scaling of damage values and other effects.
 	//is usually the dungeon depth, but can be set to 26 when ascending
 	public static int scalingDepth(){
-		if (Dungeon.hero != null && null != null){
+		if (Dungeon.hero != null && false){
 			return 26;
 		} else {
 			return depth;
@@ -761,7 +761,7 @@ public class Dungeon {
 
 	public static boolean[] findPassable(Char ch, boolean[] pass, boolean[] vis, boolean chars, boolean considerLarge){
 		setupPassable();
-		if (ch.flying || null != null) {
+		if (ch.flying || false) {
 			BArray.or( pass, Dungeon.level.avoid, passable );
 		} else {
 			System.arraycopy( pass, 0, passable, 0, Dungeon.level.length() );

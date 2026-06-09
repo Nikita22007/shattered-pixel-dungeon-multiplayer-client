@@ -97,7 +97,7 @@ public class TalismanOfForesight extends Artifact {
 	
 	@Override
 	public void charge(Hero target, float amount) {
-        if (cursed || null != null) return;
+        if (cursed || false) return;
 		if (charge < chargeCap){
 			partialCharge += 2*amount;
 			while (partialCharge >= 1f){

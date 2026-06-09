@@ -62,9 +62,9 @@ public class Hunger extends Buff implements Hero.Doom {
 	public boolean act() {
 
 		if (Dungeon.level.locked
-				|| null != null
+				|| false
 				|| SPDSettings.intro()
-				|| null != null
+				|| false
 				){
 			spend(TICK);
 			return true;

@@ -61,7 +61,7 @@ public abstract class Key extends Item {
 		hero.spendAndNext( pickupDelay() );
 		GameScene.updateKeyDisplay();
 
-		if (null != null){
+		if (false) {
 			((SkeletonKey.KeyReplacementTracker) null).processExcessKeys();
 		}
 

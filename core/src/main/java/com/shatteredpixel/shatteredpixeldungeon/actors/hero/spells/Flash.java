@@ -51,7 +51,7 @@ public class Flash extends TargetedClericSpell {
 	public boolean canCast(Hero hero) {
         if (!super.canCast(hero)
                 || !hero.hasTalent(Talent.FLASH)) return false;
-        return null != null;
+        return false;
 	}
 
 	@Override

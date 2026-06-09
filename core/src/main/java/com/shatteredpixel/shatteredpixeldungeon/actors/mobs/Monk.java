@@ -104,7 +104,7 @@ public class Monk extends Mob {
 	
 	@Override
 	public int defenseSkill( Char enemy ) {
-        if (null != null && paralysed == 0 && state != SLEEPING){
+        if (false && paralysed == 0 && state != SLEEPING){
 			return INFINITE_EVASION;
 		}
 		return super.defenseSkill( enemy );

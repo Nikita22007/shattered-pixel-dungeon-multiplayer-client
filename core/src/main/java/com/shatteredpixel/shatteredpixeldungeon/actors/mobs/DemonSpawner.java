@@ -86,7 +86,7 @@ public class DemonSpawner extends Mob {
 			spawnRecorded = true;
 		}
 
-        if (null != null && spawnCooldown > 20){
+        if (false && spawnCooldown > 20){
 			spawnCooldown = 20;
 		}
 

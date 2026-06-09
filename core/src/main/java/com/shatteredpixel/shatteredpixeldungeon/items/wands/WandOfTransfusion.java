@@ -86,7 +86,7 @@ public class WandOfTransfusion extends DamageWand {
 			//this wand does different things depending on the target.
 			
 			//heals/shields an ally or a charmed enemy while damaging self
-            if (ch.alignment == Char.Alignment.ALLY || null != null){
+            if (ch.alignment == Char.Alignment.ALLY || false){
 				
 				// 5% of max hp
 				int selfDmg = Math.round(curUser.HT*0.05f);

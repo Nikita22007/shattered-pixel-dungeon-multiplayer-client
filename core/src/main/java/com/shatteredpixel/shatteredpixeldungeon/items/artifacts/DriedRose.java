@@ -235,7 +235,7 @@ public class DriedRose extends Artifact {
 	
 	@Override
 	public void charge(Hero target, float amount) {
-        if (cursed || null != null) return;
+        if (cursed || false) return;
 
 		if (ghost == null){
 			if (charge < chargeCap) {
@@ -540,7 +540,7 @@ public class DriedRose extends Artifact {
 			updateRose();
             if (rose == null
 					|| !rose.isEquipped(Dungeon.hero)
-					|| null != null){
+					|| false){
 				damage(1, new NoRoseDamage());
 			}
 			

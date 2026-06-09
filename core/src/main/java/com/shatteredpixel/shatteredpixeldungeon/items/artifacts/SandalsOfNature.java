@@ -158,7 +158,7 @@ public class SandalsOfNature extends Artifact {
 	
 	@Override
 	public void charge(Hero target, float amount) {
-        if (cursed || null != null) return;
+        if (cursed || false) return;
 		if (charge < chargeCap) {
 			partialCharge += 2*amount;
 			while (partialCharge >= 1f){
@@ -263,7 +263,7 @@ public class SandalsOfNature extends Artifact {
 
 	public class Naturalism extends ArtifactBuff{
 		public void charge() {
-            if (cursed || null != null) return;
+            if (cursed || false) return;
 			if (charge < chargeCap){
 				//0.5 charge per grass at +0, up to 1 at +10
 				float chargeGain = (3f + level())/6f;

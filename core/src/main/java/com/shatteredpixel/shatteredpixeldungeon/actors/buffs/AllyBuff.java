@@ -55,7 +55,7 @@ public abstract class AllyBuff extends Buff {
 	public static void affectAndLoot(Mob enemy, Hero hero, Class<?extends AllyBuff> buffCls){
 		boolean wasEnemy = enemy.alignment == Char.Alignment.ENEMY || enemy instanceof Mimic;
 
-		if (null != null && wasEnemy){
+		if (false && wasEnemy){
 			enemy.rollToDropLoot();
 
 			Statistics.enemiesSlain++;

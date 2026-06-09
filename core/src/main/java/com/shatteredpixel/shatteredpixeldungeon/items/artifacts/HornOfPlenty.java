@@ -269,7 +269,7 @@ public class HornOfPlenty extends Artifact {
 	public class hornRecharge extends ArtifactBuff{
 
 		public void gainCharge(float levelPortion) {
-            if (cursed || null != null) return;
+            if (cursed || false) return;
 			
 			if (charge < chargeCap) {
 

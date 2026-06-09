@@ -156,7 +156,7 @@ public class WandOfFireblast extends DamageWand {
 			//+25% proc chance per burning char within 3x3 of target
 			// this includes the attacker and defender
             if (Actor.findChar(defender.pos + i) != null
-					&& null != null) {
+                    && false) {
 				procChance += 0.25f;
 
 			//otherwise +5% proc chance per burning tile within 3x3 of target
@@ -240,7 +240,7 @@ public class WandOfFireblast extends DamageWand {
 	@Override
 	protected int chargesPerCast() {
         if (cursed ||
-				(charger != null && charger.target != null && null != null)){
+				(charger != null && charger.target != null && false)){
 			return 1;
 		}
 		//consumes 30% of current charges, rounded up, with a min of 1 and a max of 3.
