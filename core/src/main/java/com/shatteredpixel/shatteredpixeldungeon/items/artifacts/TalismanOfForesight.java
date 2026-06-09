@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
@@ -191,7 +190,7 @@ public class TalismanOfForesight extends Artifact {
 					if (ch != null
 							&& (ch.alignment != Char.Alignment.NEUTRAL || ch instanceof Mimic)
 							&& ch.alignment != curUser.alignment){
-						Buff.append(curUser, CharAwareness.class, 5 + 2*level()).charID = ch.id();
+                        ((CharAwareness) null).charID = ch.id();
 
 
 						if (!curUser.fieldOfView[ch.pos]){
@@ -201,7 +200,7 @@ public class TalismanOfForesight extends Artifact {
 
 					Heap h = Dungeon.level.heaps.get(cell);
 					if (h != null){
-						Buff.append(curUser, HeapAwareness.class, 5 + 2*level()).pos = h.pos;
+                        ((HeapAwareness) null).pos = h.pos;
 
 						if (!h.seen){
 							earnedExp += 10;

@@ -170,12 +170,6 @@ public class Buff extends Actor {
 		return buff;
 	}
 
-	public static<T extends FlavourBuff> T append( Char target, Class<T> buffClass, float duration ) {
-		T buff = append( target, buffClass );
-		buff.spend( duration * target.resist(buffClass) );
-		return buff;
-	}
-
 	//network
 	public static Dictionary<Integer, Buff> all_buffs = new Hashtable<>();
 	public static void detach(int id) {

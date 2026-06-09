@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.levels.traps;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -55,7 +54,7 @@ public class PitfallTrap extends Trap {
 			return;
 		}
 
-		DelayedPit p = Buff.append(Dungeon.hero, DelayedPit.class, 1);
+        DelayedPit p = null;
 		p.depth = Dungeon.depth;
 		p.branch = Dungeon.branch;
 

@@ -207,7 +207,7 @@ public abstract class Wand extends Item {
 	protected static void wandProc(Char target, int wandLevel, int chargesUsed){
 		if (Dungeon.hero.hasTalent(Talent.ARCANE_VISION)) {
 			int dur = 5 + 5*Dungeon.hero.pointsInTalent(Talent.ARCANE_VISION);
-			Buff.append(Dungeon.hero, TalismanOfForesight.CharAwareness.class, dur).charID = target.id();
+			((TalismanOfForesight.CharAwareness) null).charID = target.id();
 		}
 
 		if (target != Dungeon.hero &&
