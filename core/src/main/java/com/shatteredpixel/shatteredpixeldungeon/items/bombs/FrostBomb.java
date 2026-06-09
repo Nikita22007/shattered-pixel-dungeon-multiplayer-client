@@ -26,8 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Freezing;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.BArray;
@@ -53,8 +51,7 @@ public class FrostBomb extends Bomb {
 				GameScene.add(Blob.seed(i, 10, Freezing.class));
 				Char ch = Actor.findChar(i);
 				if (ch != null){
-					Buff.affect(ch, Frost.class, 2f);
-				}
+                }
 			}
 		}
 	}

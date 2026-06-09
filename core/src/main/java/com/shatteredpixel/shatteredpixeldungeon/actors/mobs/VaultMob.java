@@ -2,7 +2,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.watabou.utils.Bundle;
@@ -136,7 +135,7 @@ public class VaultMob extends Mob {
 			spend(TICK);
 			//hero must know if they are detected
 			if (!Dungeon.level.heroFOV[pos]){
-				Buff.affect(Dungeon.hero, TalismanOfForesight.CharAwareness.class, 1f).charID = id();
+                ((TalismanOfForesight.CharAwareness) null).charID = id();
 			}
 			return true;
 		}
@@ -183,7 +182,7 @@ public class VaultMob extends Mob {
 				sprite.showInvestigate();
 				//hero must know if they are detected
 				if (!Dungeon.level.heroFOV[pos]){
-					Buff.affect(Dungeon.hero, TalismanOfForesight.CharAwareness.class, 1f).charID = id();
+                    ((TalismanOfForesight.CharAwareness) null).charID = id();
 				}
 			}
 		}

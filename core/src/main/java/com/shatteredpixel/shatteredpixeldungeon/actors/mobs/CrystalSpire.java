@@ -28,9 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Blacksmith;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
@@ -361,8 +359,7 @@ public class CrystalSpire extends Mob {
 									ch.damage(ch.HT, new SpireSpike());
 								}
 								if (ch instanceof CrystalWisp) {
-									Buff.affect(ch, Blindness.class, 5f);
-								}
+                                }
 							}
 						}
 						Bestiary.skipCountingEncounters = false;
@@ -420,8 +417,7 @@ public class CrystalSpire extends Mob {
 
 										//delays sleeping guardians that happen to be near to the crystal
 										if (PathFinder.distance[ch.pos] < 20){
-											Buff.affect(ch, Paralysis.class, 20-PathFinder.distance[ch.pos]);
-										}
+                                        }
 
 									} else if (((CrystalGuardian) ch).state != ((CrystalGuardian) ch).HUNTING && ((CrystalGuardian) ch).target != pos){
 										((CrystalGuardian) ch).beckon(pos);
@@ -431,8 +427,8 @@ public class CrystalSpire extends Mob {
 
 										//speeds up already woken guardians that aren't very close
 										if (PathFinder.distance[ch.pos] > 8){
-											Buff.affect(ch, Haste.class, Math.round((PathFinder.distance[ch.pos]-8)/2f));
-										}
+                                            Math.round((PathFinder.distance[ch.pos] - 8) / 2f);
+                                        }
 									}
 								}
 							}

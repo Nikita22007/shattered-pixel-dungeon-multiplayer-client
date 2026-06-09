@@ -131,8 +131,7 @@ public class HolyLance extends TargetedClericSpell {
 									enemy.sprite.burst(0xFFFFFFFF, 10);
 									hero.spendAndNext(1f);
 									onSpellCast(tome, hero);
-									FlavourBuff.affect(hero, LanceCooldown.class, 30f);
-								}
+                                }
 							});
 		} else {
 			((MissileSprite) hero.sprite.parent.recycle(MissileSprite.class)).
@@ -145,8 +144,7 @@ public class HolyLance extends TargetedClericSpell {
 									Splash.at(target, 0xFFFFFFFF, 10);
 									hero.spendAndNext(1f);
 									onSpellCast(tome, hero);
-									FlavourBuff.affect(hero, LanceCooldown.class, 30f);
-								}
+                                }
 							});
 		}
 

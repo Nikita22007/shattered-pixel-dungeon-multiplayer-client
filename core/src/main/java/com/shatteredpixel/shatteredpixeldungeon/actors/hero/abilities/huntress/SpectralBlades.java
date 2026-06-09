@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -112,8 +111,7 @@ public class SpectralBlades extends ArmorAbility {
 					float dmgMulti = ch == enemy ? 1f : 0.5f;
 					float accmulti = 1f + 0.25f*hero.pointsInTalent(Talent.PROJECTING_BLADES);
 					if (hero.hasTalent(Talent.SPIRIT_BLADES)){
-						Buff.affect(hero, Talent.SpiritBladesTracker.class, 0f);
-					}
+                    }
 					hero.attack( ch, dmgMulti, 0, accmulti );
 					callbacks.remove( this );
 					if (callbacks.isEmpty()) {

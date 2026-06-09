@@ -288,7 +288,6 @@ public class Combo extends Buff implements ActionIndicator.Action {
 			parryUsed = true;
 			comboTime = 5f;
 			Invisibility.dispel();
-			Buff.affect(target, ParryTracker.class, Actor.TICK);
 			((Hero)target).spendAndNext(Actor.TICK);
 			Dungeon.hero.busy();
 		} else {

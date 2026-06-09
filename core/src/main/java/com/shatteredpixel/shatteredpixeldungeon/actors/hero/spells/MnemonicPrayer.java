@@ -141,7 +141,8 @@ public class MnemonicPrayer extends TargetedClericSpell {
 				}
 
 				//should consider some buffs that may be OP here, e.g. invuln
-				if (b instanceof FlavourBuff)           Buff.affect(ch, (Class<?extends FlavourBuff>)b.getClass(), extension);
+				if (b instanceof FlavourBuff) {
+                }
 				else if (b instanceof AdrenalineSurge)  ((AdrenalineSurge) b).delay(extension);
 				else if (b instanceof ArcaneArmor)      ((ArcaneArmor) b).delay(extension);
 				else if (b instanceof ArtifactRecharge) ((ArtifactRecharge) b).extend(extension);
@@ -174,7 +175,8 @@ public class MnemonicPrayer extends TargetedClericSpell {
 				}
 
 				//this might need a nerf of aggression vs bosses. (perhaps nerf the extension?)
-				if (b instanceof FlavourBuff)       Buff.affect(ch, (Class<?extends FlavourBuff>)b.getClass(), extension);
+				if (b instanceof FlavourBuff) {
+                }
 				else if (b instanceof Bleeding)     ((Bleeding) b).extend( extension );
 				else if (b instanceof Burning)      ((Burning) b).extend( extension );
 				else if (b instanceof Corrosion)    ((Corrosion) b).extend( extension );

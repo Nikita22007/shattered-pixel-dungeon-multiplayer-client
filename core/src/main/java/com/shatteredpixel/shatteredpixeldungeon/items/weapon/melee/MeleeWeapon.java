@@ -212,7 +212,8 @@ public class MeleeWeapon extends Weapon {
 		if (hero.hasTalent(Talent.COMBINED_LETHALITY)) {
 			Talent.CombinedLethalityAbilityTracker tracker = hero.buff(Talent.CombinedLethalityAbilityTracker.class);
 			if (tracker == null || tracker.weapon == this || tracker.weapon == null){
-				Buff.affect(hero, Talent.CombinedLethalityAbilityTracker.class, hero.cooldown()).weapon = this;
+                hero.cooldown();
+                ((Talent.CombinedLethalityAbilityTracker) null).weapon = this;
 			} else {
 				//we triggered the talent, so remove the tracker
 				tracker.detach();

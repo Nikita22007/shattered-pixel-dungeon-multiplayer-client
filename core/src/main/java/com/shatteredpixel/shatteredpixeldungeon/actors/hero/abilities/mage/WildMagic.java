@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -117,9 +116,7 @@ public class WildMagic extends ArmorAbility {
 
 		Random.shuffle(wands);
 
-		Buff.affect(hero, WildMagicTracker.class, 0f);
-
-		armor.charge -= chargeUse(hero);
+        armor.charge -= chargeUse(hero);
 		armor.updateQuickslot();
 
 		zapWand(wands, hero, target);

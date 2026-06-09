@@ -95,7 +95,7 @@ public class Succubus extends Mob {
 				Sample.INSTANCE.play( Assets.Sounds.CHARMS );
 			}
 		} else if (Random.Int( 3 ) == 0) {
-			Charm c = Buff.affect( enemy, Charm.class, Charm.DURATION/2f );
+            Charm c = null;
 			c.object = id();
 			c.ignoreNextHit = true; //so that the -5 duration from succubus hit is ignored
 			if (Dungeon.level.heroFOV[enemy.pos]) {

@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bless;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -57,8 +56,8 @@ public class HolyDart extends TippedDart {
 		}
 
 		if (attacker.alignment == defender.alignment){
-			Buff.affect(defender, Bless.class, Math.round(Bless.DURATION));
-		}
+            Math.round(Bless.DURATION);
+        }
 
 		if (Char.hasProp(defender, Char.Property.UNDEAD) || Char.hasProp(defender, Char.Property.DEMONIC)){
 			defender.sprite.emitter().start( ShadowParticle.UP, 0.05f, 10+buffedLvl() );
@@ -66,8 +65,8 @@ public class HolyDart extends TippedDart {
 			defender.damage(Random.NormalIntRange(10 + Dungeon.scalingDepth()/3, 20 + Dungeon.scalingDepth()/3), this);
 		//also do not bless enemies if processing charged shot
 		} else if (!processingChargedShot){
-			Buff.affect(defender, Bless.class, Math.round(Bless.DURATION));
-		}
+            Math.round(Bless.DURATION);
+        }
 		
 		return super.proc(attacker, defender, damage);
 	}

@@ -167,8 +167,7 @@ public class Challenge extends ArmorAbility {
 			if (toFreeze != targetCh && toFreeze.alignment != Char.Alignment.ALLY && !(toFreeze instanceof NPC)
 				&& (!bossTarget || !(Char.hasProp(targetCh, Char.Property.BOSS) || Char.hasProp(targetCh, Char.Property.BOSS_MINION)))) {
 				Actor.delayChar(toFreeze, DuelParticipant.DURATION);
-				Buff.affect(toFreeze, SpectatorFreeze.class, DuelParticipant.DURATION);
-			}
+            }
 		}
 
 		Buff.affect(targetCh, DuelParticipant.class);
@@ -282,8 +281,7 @@ public class Challenge extends ArmorAbility {
 					GameScene.flash(0x80FFFFFF);
 
 					if (Dungeon.hero.hasTalent(Talent.ELIMINATION_MATCH)){
-						Buff.affect(target, EliminationMatchTracker.class, 3);
-					}
+                    }
 				}
 			}
 

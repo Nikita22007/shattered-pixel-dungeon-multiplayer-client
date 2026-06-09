@@ -36,8 +36,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Regrowth;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ToxicGas;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hex;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GoldenMimic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
@@ -137,10 +135,12 @@ public class CursedWand {
 				Char target = Actor.findChar(targetPos);
 				if (Random.Int(2) == 0) {
 					if (target != null) Buff.affect(target, Burning.class).reignite(target);
-					if (!positiveOnly) Buff.affect(user, Frost.class, Frost.DURATION);
+					if (!positiveOnly) {
+                    }
 				} else {
 					if (!positiveOnly)Buff.affect(user, Burning.class).reignite(user);
-					if (target != null) Buff.affect(target, Frost.class, Frost.DURATION);
+					if (target != null) {
+                    }
 				}
 				tryForWandProc(target, origin);
 				return true;
@@ -306,8 +306,7 @@ public class CursedWand {
 				if (positiveOnly){
 					ch = Actor.findChar( targetPos );
 					if (ch != null){
-						Buff.affect(ch, Hex.class, Hex.DURATION);
-					}
+                    }
 					return true;
 				}
 				if (user instanceof Hero) {

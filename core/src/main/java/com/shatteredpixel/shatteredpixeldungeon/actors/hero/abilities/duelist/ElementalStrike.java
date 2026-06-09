@@ -30,18 +30,14 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Electricity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Freezing;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hex;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
@@ -229,7 +225,7 @@ public class ElementalStrike extends ArmorAbility {
 
 		if (hero.hasTalent(Talent.DIRECTED_POWER)){
 			float enchBoost = 0.30f * targetsHit * hero.pointsInTalent(Talent.DIRECTED_POWER);
-			Buff.affect(hero, DirectedPowerTracker.class, 0f).enchBoost = enchBoost;
+            ((DirectedPowerTracker) null).enchBoost = enchBoost;
 		}
 
 		float powerMulti = 1f + 0.30f*Dungeon.hero.pointsInTalent(Talent.STRIKING_FORCE);
@@ -382,8 +378,8 @@ public class ElementalStrike extends ArmorAbility {
 		//*** Blooming ***
 		} else if (ench instanceof Blooming){
 			for (Char ch : affected){
-				Buff.affect(ch, Roots.class, Math.round(6f*powerMulti));
-			}
+                Math.round(6f * powerMulti);
+            }
 
 		//*** Elastic ***
 		} else if (ench instanceof Elastic){
@@ -468,8 +464,7 @@ public class ElementalStrike extends ArmorAbility {
 			for (Char ch : affected){
 				if (Random.Float() < 0.2f*powerMulti){
 					//TODO totally should add a bit of dialogue here
-					Buff.affect(ch, Amok.class, 6f);
-				}
+                }
 			}
 
 		//*** Displacing ***
@@ -493,8 +488,7 @@ public class ElementalStrike extends ArmorAbility {
 		} else if (ench instanceof Dazzling){
 			for (Char ch : affected){
 				if (Random.Float() < 0.5f*powerMulti){
-					Buff.affect(ch, Blindness.class, 6f);
-				}
+                }
 			}
 
 		//*** Explosive ***
@@ -514,8 +508,7 @@ public class ElementalStrike extends ArmorAbility {
 		} else if (ench instanceof Wayward){
 			for (Char ch : affected){
 				if (Random.Float() < 0.5f*powerMulti){
-					Buff.affect(ch, Hex.class, 6f);
-				}
+                }
 			}
 
 		//*** Polarized ***
@@ -530,7 +523,7 @@ public class ElementalStrike extends ArmorAbility {
 		} else if (ench instanceof Friendly){
 			for (Char ch : affected){
 				if (Random.Float() < 0.5f*powerMulti){
-					Buff.affect(ch, Charm.class, 6f).object = hero.id();
+                    ((Charm) null).object = hero.id();
 				}
 			}
 		}

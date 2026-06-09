@@ -22,8 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.FlameParticle;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
@@ -68,9 +66,8 @@ public class Torch extends Item {
 			
 			detach( hero.belongings.backpack );
 			Catalog.countUse(getClass());
-			
-			Buff.affect(hero, Light.class, Light.DURATION);
-			Sample.INSTANCE.play(Assets.Sounds.BURNING);
+
+            Sample.INSTANCE.play(Assets.Sounds.BURNING);
 			
 			Emitter emitter = hero.sprite.centerEmitter();
 			emitter.start( FlameParticle.FACTORY, 0.2f, 3 );

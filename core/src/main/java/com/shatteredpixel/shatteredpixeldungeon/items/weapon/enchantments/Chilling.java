@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
@@ -54,8 +53,7 @@ public class Chilling extends Weapon.Enchantment {
 			}
 
 			if (durationToAdd > 0) {
-				Buff.affect(defender, Chill.class, durationToAdd);
-			}
+            }
 			Splash.at( defender.sprite.center(), 0xFFB2D6FF, 5);
 
 		}

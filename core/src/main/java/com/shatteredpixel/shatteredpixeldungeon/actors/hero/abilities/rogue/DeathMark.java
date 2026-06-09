@@ -88,7 +88,7 @@ public class DeathMark extends ArmorAbility {
 		}
 
 		if (ch != null){
-			Buff.affect(ch, DeathMarkTracker.class, DeathMarkTracker.DURATION).setInitialHP(ch.HP);
+			((DeathMarkTracker) null).setInitialHP(ch.HP);
 		}
 
 		armor.charge -= chargeUse( hero );
@@ -100,7 +100,6 @@ public class DeathMark extends ArmorAbility {
 		if (hero.buff(DoubleMarkTracker.class) != null){
 			hero.buff(DoubleMarkTracker.class).detach();
 		} else if (hero.hasTalent(Talent.DOUBLE_MARK)) {
-			Buff.affect(hero, DoubleMarkTracker.class, 0.01f);
 		}
 
 	}

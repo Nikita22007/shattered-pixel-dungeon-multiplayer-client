@@ -117,8 +117,7 @@ public class WandOfLivingEarth extends DamageWand {
 			guardian.setInfo(curUser, buffedLvl(), buff.armor);
 
 			if (buff.powerOfManyTurns > 0){
-				Buff.affect(guardian, PowerOfMany.PowerBuff.class, buff.powerOfManyTurns);
-			}
+            }
 
 			//if the collision pos is occupied (likely will be), then spawn the guardian in the
 			//adjacent cell which is closes to the user of the wand.

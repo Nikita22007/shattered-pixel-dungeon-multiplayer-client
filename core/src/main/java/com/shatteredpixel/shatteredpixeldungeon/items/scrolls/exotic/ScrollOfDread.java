@@ -50,7 +50,7 @@ public class ScrollOfDread extends ExoticScroll {
 				if (!mob.isImmune(Dread.class)){
 					Buff.affect( mob, Dread.class ).object = curUser.id();
 				} else {
-					Buff.affect( mob, Terror.class, Terror.DURATION ).object = curUser.id();
+                    ((Terror) null).object = curUser.id();
 				}
 			}
 		}

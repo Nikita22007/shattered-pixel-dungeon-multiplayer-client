@@ -350,7 +350,6 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 				}
 
 				if (Buff.affect(hero, MonkEnergy.class).abilitiesEmpowered(hero)){
-					Buff.affect(hero, FlurryEmpowerTracker.class, 0f);
 				}
 
 				UnarmedAbilityTracker tracker = Buff.affect(hero, UnarmedAbilityTracker.class);
@@ -381,7 +380,6 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 									if (hero.buff(FlurryEmpowerTracker.class) != null){
 										hero.buff(FlurryEmpowerTracker.class).detach();
 									}
-									Buff.affect(hero, FlurryCooldownTracker.class, 0f);
 								}
 							});
 						} else {
@@ -392,7 +390,6 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 							if (hero.buff(FlurryEmpowerTracker.class) != null){
 								hero.buff(FlurryEmpowerTracker.class).detach();
 							}
-							Buff.affect(hero, FlurryCooldownTracker.class, 0f);
 						}
 					}
 				});
@@ -572,7 +569,6 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 							WandOfBlastWave.throwChar(enemy, trajectory, 6, true, false, hero);
 
 							if (trajectory.dist > 0 && enemy.isActive()) {
-								Buff.affect(enemy, Paralysis.class, Math.min( 6, trajectory.dist));
 							}
 						}
 						Invisibility.dispel();
@@ -593,7 +589,6 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 									WandOfBlastWave.throwChar(ch, trajectory, 6, true, false, hero);
 
 									if (trajectory.dist > 0 && enemy.isActive()) {
-										Buff.affect(ch, Paralysis.class, Math.min( 6, trajectory.dist));
 									}
 								}
 							}
@@ -634,7 +629,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 					if (toHeal > 0) {
 						Buff.affect(hero, Healing.class).setHeal(toHeal, 0, 1);
 					}
-					Buff.affect(hero, MeditateResistance.class, hero.cooldown());
+					hero.cooldown();
 				}
 
 				Actor.addDelayed(new Actor() {
@@ -645,7 +640,6 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 
 					@Override
 					protected boolean act() {
-						Buff.affect(hero, Recharging.class, 8f);
 						Buff.affect(hero, ArtifactRecharge.class).extend(8f).ignoreHornOfPlenty = false;
 						Actor.remove(this);
 						return true;

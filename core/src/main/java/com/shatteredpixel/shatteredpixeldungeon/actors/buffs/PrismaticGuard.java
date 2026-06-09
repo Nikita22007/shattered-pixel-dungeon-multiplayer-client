@@ -76,8 +76,7 @@ public class PrismaticGuard extends Buff {
 				PrismaticImage pris = new PrismaticImage();
 				pris.duplicate(hero, (int)Math.floor(HP) );
 				if (powerOfManyTurns > 0){
-					Buff.affect(pris, PowerOfMany.PowerBuff.class, powerOfManyTurns);
-				}
+                }
 				pris.state = pris.HUNTING;
 				GameScene.add(pris, 1);
 				ScrollOfTeleportation.appear(pris, bestPos);

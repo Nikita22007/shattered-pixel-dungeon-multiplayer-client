@@ -163,8 +163,7 @@ public class PowerOfMany extends ArmorAbility {
 				ScrollOfTeleportation.appear(ch, ch.pos);
 			}
 
-			Buff.affect(ch, PowerBuff.class, 100f);
-			Buff.affect(ch, Barrier.class).setShield(25);
+            Buff.affect(ch, Barrier.class).setShield(25);
 
 			armor.charge -= chargeUse;
 			armor.updateQuickslot();

@@ -141,7 +141,7 @@ public class Pasty extends Food {
 				}
 
 				if (target != null){
-					Buff.affect(target, Charm.class, 5f).object = hero.id();
+                    ((Charm) null).object = hero.id();
 				}
 				hero.sprite.emitter().burst(RainbowParticle.BURST, 15);
 				break;

@@ -210,8 +210,7 @@ public class Feint extends ArmorAbility {
 				if (enemy instanceof Mob) {
 					((Mob) enemy).clearEnemy();
 				}
-				Buff.affect(enemy, FeintConfusion.class, 1);
-				if (enemy.sprite != null) enemy.sprite.showLost();
+                if (enemy.sprite != null) enemy.sprite.showLost();
 				if (Dungeon.hero.hasTalent(Talent.FEIGNED_RETREAT)) {
                     Dungeon.hero.pointsInTalent(Talent.FEIGNED_RETREAT);
                 }

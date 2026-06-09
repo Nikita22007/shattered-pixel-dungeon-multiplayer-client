@@ -401,7 +401,6 @@ public abstract class Char extends Actor {
 			if (prep != null){
 				dmg = prep.damageRoll(this);
 				if (this instanceof Hero && Dungeon.hero.hasTalent(Talent.BOUNTY_HUNTER)) {
-					Buff.affect(Dungeon.hero, Talent.BountyHunterTracker.class, 0.0f);
 				}
 			} else {
 				dmg = damageRoll();

@@ -22,9 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.food;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barkskin;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
@@ -51,8 +49,7 @@ public class PhantomMeat extends Food {
 	public static void effect(Hero hero){
 
 		Barkskin.conditionallyAppend( hero, hero.HT / 4, 1 );
-		Buff.affect( hero, Invisibility.class, Invisibility.DURATION );
-		hero.HP = Math.min( hero.HP + hero.HT / 4, hero.HT );
+        hero.HP = Math.min( hero.HP + hero.HT / 4, hero.HT );
 		hero.sprite.showStatusWithIcon( CharSprite.POSITIVE, Integer.toString(hero.HT / 4), FloatingText.HEALING );
 		PotionOfHealing.cure(hero);
 

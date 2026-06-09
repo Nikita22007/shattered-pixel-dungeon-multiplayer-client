@@ -92,8 +92,7 @@ public class SuperNovaTracker extends Buff {
 			if (!harmsAllies) {
 				for (Char ch : Actor.chars()) {
 					if (ch.alignment == Char.Alignment.ALLY) {
-						Buff.affect(ch, NovaBombImmune.class, 0f);
-					}
+                    }
 				}
 			}
 

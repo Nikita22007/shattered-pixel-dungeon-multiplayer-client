@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
@@ -87,7 +86,7 @@ public class ScrollOfSirensSong extends ExoticScroll {
 
 				for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
 					if (Dungeon.level.heroFOV[mob.pos] && mob != target && mob.alignment != Char.Alignment.ALLY) {
-						Buff.affect( mob, Charm.class, Charm.DURATION ).object = curUser.id();
+                        ((Charm) null).object = curUser.id();
 						mob.sprite.centerEmitter().start( Speck.factory( Speck.HEART ), 0.2f, 5 );
 					}
 				}
@@ -97,7 +96,7 @@ public class ScrollOfSirensSong extends ExoticScroll {
 						AllyBuff.affectAndLoot(target, curUser, Enthralled.class);
 
 					} else {
-						Buff.affect( target, Charm.class, Charm.DURATION ).object = curUser.id();
+                        ((Charm) null).object = curUser.id();
 
 					}
 					target.sprite.centerEmitter().burst( Speck.factory( Speck.HEART ), 10 );

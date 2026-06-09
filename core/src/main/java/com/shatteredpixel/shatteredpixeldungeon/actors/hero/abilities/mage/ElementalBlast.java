@@ -35,10 +35,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corrosion;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
@@ -278,8 +275,7 @@ public class ElementalBlast extends ArmorAbility {
 								//*** Wand of Lightning ***
 								if (finalWandCls == WandOfLightning.class){
 									if (mob.isAlive() && mob.alignment != Char.Alignment.ALLY) {
-										Buff.affect( mob, Paralysis.class, effectMulti*Paralysis.DURATION/2 );
-									}
+                                    }
 
 								//*** Wand of Fireblast ***
 								} else if (finalWandCls == WandOfFireblast.class){
@@ -311,8 +307,7 @@ public class ElementalBlast extends ArmorAbility {
 								//*** Wand of Frost ***
 								} else if (finalWandCls == WandOfFrost.class){
 									if (mob.isAlive() && mob.alignment != Char.Alignment.ALLY) {
-										Buff.affect( mob, Frost.class, effectMulti*Frost.DURATION );
-									}
+                                    }
 
 								//*** Wand of Prismatic Light ***
 								} else if (finalWandCls == WandOfPrismaticLight.class){
@@ -350,7 +345,7 @@ public class ElementalBlast extends ArmorAbility {
 										}
 									} else {
 										if (!mob.properties().contains(Char.Property.UNDEAD)) {
-											Charm charm = Buff.affect(mob, Charm.class, effectMulti*Charm.DURATION/2f);
+                                            Charm charm = null;
 											charm.object = hero.id();
 											charm.ignoreHeroAllies = true;
 											mob.sprite.centerEmitter().start(Speck.factory(Speck.HEART), 0.2f, 3);
@@ -381,8 +376,7 @@ public class ElementalBlast extends ArmorAbility {
 						//### Self-Effects ###
 						//*** Wand of Magic Missile ***
 						if (finalWandCls == WandOfMagicMissile.class) {
-							Buff.affect(hero, Recharging.class, effectMulti* Recharging.DURATION / 2f);
-							SpellSprite.show( hero, SpellSprite.CHARGE );
+                            SpellSprite.show( hero, SpellSprite.CHARGE );
 
 						//*** Wand of Living Earth ***
 						} else if (finalWandCls == WandOfLivingEarth.class && charsHit > 0){
