@@ -265,8 +265,8 @@ public class ElementalBlast extends ArmorAbility {
 									* damageFactors.get(finalWandCls));
 
 							if (mob != null && damage > 0 && mob.alignment != Char.Alignment.ALLY){
-								mob.damage(damage, Reflection.newInstance(finalWandCls));
-								charsHit++;
+                                Reflection.newInstance(finalWandCls);
+                                charsHit++;
 							}
 
 							//### Other Char Effects ###
@@ -350,8 +350,8 @@ public class ElementalBlast extends ArmorAbility {
 											mob.sprite.centerEmitter().start(Speck.factory(Speck.HEART), 0.2f, 3);
 										} else {
 											damage = Math.round(Hero.heroDamageIntRange(15, 25) * effectMulti);
-											mob.damage(damage, Reflection.newInstance(finalWandCls));
-											mob.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10);
+                                            Reflection.newInstance(finalWandCls);
+                                            mob.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10);
 										}
 									}
 									charsHit++;

@@ -344,17 +344,11 @@ public class Dungeon {
 		}
 
 		Light light = null;
-		hero.viewDistance = light == null ? level.viewDistance : Math.max(Light.DISTANCE, level.viewDistance);
+		hero.viewDistance = level.viewDistance;
 
 		hero.curAction = hero.lastAction = null;
 
 		observe();
-		try {
-		} catch (IOException e) {
-			ShatteredPixelDungeon.reportException(e);
-			/*This only catches IO errors. Yes, this means things can go wrong, and they can go wrong catastrophically.
-			But when they do the user will get a nice 'report this issue' dialogue, and I can fix the bug.*/
-		}
 	}
 
 	public static void dropToChasm( Item item ) {
@@ -506,10 +500,6 @@ public class Dungeon {
 
 	//default to recomputing based on max hero vision, in case vision just shrank/grew
 	public static void observe(){
-		observe( 0 );
-	}
-
-	public static void observe( int unused ) {
 
 		if (level == null) {
 			return;

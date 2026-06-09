@@ -407,99 +407,94 @@ public class WandOfRegrowth extends Wand {
 
 	}
 
-	public static class Lotus extends NPC {
+    public static class Lotus extends NPC {
 
-		{
-			alignment = Alignment.NEUTRAL;
-			properties.add(Property.IMMOVABLE);
-			properties.add(Property.STATIC);
+        {
+            alignment = Alignment.NEUTRAL;
+            properties.add(Property.IMMOVABLE);
+            properties.add(Property.STATIC);
 
-			spriteClass = LotusSprite.class;
+            spriteClass = LotusSprite.class;
 
-			viewDistance = 1;
-		}
+            viewDistance = 1;
+        }
 
-		private int wandLvl = 0;
+        private int wandLvl = 0;
 
-		private void setLevel( int lvl ){
-			wandLvl = lvl;
-			HP = HT = 25 + 3*lvl;
-		}
+        private void setLevel(int lvl) {
+            wandLvl = lvl;
+            HP = HT = 25 + 3 * lvl;
+        }
 
-		public boolean inRange(int pos){
-			return Dungeon.level.trueDistance(this.pos, pos) <= wandLvl;
-		}
+        public boolean inRange(int pos) {
+            return Dungeon.level.trueDistance(this.pos, pos) <= wandLvl;
+        }
 
-		public float seedPreservation(){
-			return Math.min( 1f, 0.40f + 0.04f*wandLvl );
-		}
+        public float seedPreservation() {
+            return Math.min(1f, 0.40f + 0.04f * wandLvl);
+        }
 
-		@Override
-		public boolean canInteract(Char c) {
-			return false;
-		}
+        @Override
+        public boolean canInteract(Char c) {
+            return false;
+        }
 
-		@Override
-		protected boolean act() {
-			super.act();
+        @Override
+        protected boolean act() {
+            super.act();
 
-			if (--HP <= 0){
-				destroy();
-				sprite.die();
-			}
+            if (--HP <= 0) {
+                destroy();
+                sprite.die();
+            }
 
-			return true;
-		}
+            return true;
+        }
 
-		@Override
-		public void damage( int dmg, Object src ) {
-			//do nothing
-		}
+        @Override
+        public boolean add(Buff buff) {
+            return false;
+        }
 
-		@Override
-		public boolean add( Buff buff ) {
-			return false;
-		}
+        @Override
+        public void destroy() {
+            super.destroy();
+            Dungeon.observe();
+            GameScene.updateFog(pos, viewDistance + 1);
+        }
 
-		@Override
-		public void destroy() {
-			super.destroy();
-			Dungeon.observe();
-			GameScene.updateFog(pos, viewDistance+1);
-		}
+        @Override
+        public boolean isInvulnerable(Class effect) {
+            return true;
+        }
 
-		@Override
-		public boolean isInvulnerable(Class effect) {
-			return true;
-		}
+        {
+            immunities.add(Doom.class);
+        }
 
-		{
-			immunities.add( Doom.class );
-		}
+        @Override
+        public String description() {
+            String desc = Messages.get(this, "desc");
+            if (Actor.chars().contains(this)) {
+                int preservation = Math.round(seedPreservation() * 100);
+                desc += "\n\n" + Messages.get(this, "wand_info", wandLvl, preservation, preservation);
+            }
+            return desc;
+        }
 
-		@Override
-		public String description() {
-			String desc = Messages.get(this, "desc");
-			if (Actor.chars().contains(this)) {
-				int preservation = Math.round(seedPreservation()*100);
-				desc += "\n\n" + Messages.get(this, "wand_info", wandLvl, preservation, preservation);
-			}
-			return desc;
-		}
+        private static final String WAND_LVL = "wand_lvl";
 
-		private static final String WAND_LVL = "wand_lvl";
+        @Override
+        public void storeInBundle(Bundle bundle) {
+            super.storeInBundle(bundle);
+            bundle.put(WAND_LVL, wandLvl);
+        }
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(WAND_LVL, wandLvl);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			wandLvl = bundle.getInt(WAND_LVL);
-		}
-	}
+        @Override
+        public void restoreFromBundle(Bundle bundle) {
+            super.restoreFromBundle(bundle);
+            wandLvl = bundle.getInt(WAND_LVL);
+        }
+    }
 
 }

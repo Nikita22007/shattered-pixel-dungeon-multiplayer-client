@@ -96,16 +96,14 @@ public class Sunray extends TargetedClericSpell {
 
 			if (Char.hasProp(ch, Char.Property.UNDEAD) || Char.hasProp(ch, Char.Property.DEMONIC)){
 				if (hero.pointsInTalent(Talent.SUNRAY) == 2) {
-					ch.damage(12, Sunray.this);
-				} else {
-					ch.damage(8, Sunray.this);
-				}
+                } else {
+                }
 			} else {
 				if (hero.pointsInTalent(Talent.SUNRAY) == 2) {
-					ch.damage(Random.NormalIntRange(6, 12), Sunray.this);
-				} else {
-					ch.damage(Random.NormalIntRange(4, 8), Sunray.this);
-				}
+                    Random.NormalIntRange(6, 12);
+                } else {
+                    Random.NormalIntRange(4, 8);
+                }
 			}
 
 			if (ch.isAlive()) {

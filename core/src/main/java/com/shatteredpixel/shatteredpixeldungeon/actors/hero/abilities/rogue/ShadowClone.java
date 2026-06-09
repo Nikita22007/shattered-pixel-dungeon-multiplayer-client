@@ -140,190 +140,181 @@ public class ShadowClone extends ArmorAbility {
 		return null;
 	}
 
-	public static class ShadowAlly extends DirectableAlly {
+    public static class ShadowAlly extends DirectableAlly {
 
-		{
-			spriteClass = ShadowSprite.class;
+        {
+            spriteClass = ShadowSprite.class;
 
-			HP = HT = 80;
+            HP = HT = 80;
 
-			immunities.add(AllyBuff.class);
+            immunities.add(AllyBuff.class);
 
-			properties.add(Property.INORGANIC);
-		}
+            properties.add(Property.INORGANIC);
+        }
 
-		public ShadowAlly(){
-			super();
-		}
+        public ShadowAlly() {
+            super();
+        }
 
-		public ShadowAlly( int heroLevel ){
-			super();
-			int hpBonus = 15 + 5*heroLevel;
-			hpBonus = Math.round(0.1f * Dungeon.hero.pointsInTalent(Talent.PERFECT_COPY) * hpBonus);
-			if (hpBonus > 0){
-				HT += hpBonus;
-				HP += hpBonus;
-			}
-			defenseSkill = heroLevel + 4; //equal to base hero defense skill
-		}
+        public ShadowAlly(int heroLevel) {
+            super();
+            int hpBonus = 15 + 5 * heroLevel;
+            hpBonus = Math.round(0.1f * Dungeon.hero.pointsInTalent(Talent.PERFECT_COPY) * hpBonus);
+            if (hpBonus > 0) {
+                HT += hpBonus;
+                HP += hpBonus;
+            }
+            defenseSkill = heroLevel + 4; //equal to base hero defense skill
+        }
 
-		@Override
-		protected boolean act() {
-			int oldPos = pos;
-			boolean result = super.act();
-			//partially simulates how the hero switches to idle animation
-			if ((pos == target || oldPos == pos) && sprite.looping()){
-				sprite.idle();
-			}
-			return result;
-		}
+        @Override
+        protected boolean act() {
+            int oldPos = pos;
+            boolean result = super.act();
+            //partially simulates how the hero switches to idle animation
+            if ((pos == target || oldPos == pos) && sprite.looping()) {
+                sprite.idle();
+            }
+            return result;
+        }
 
-		@Override
-		public void defendPos(int cell) {
-			GLog.i(Messages.get(this, "direct_defend"));
-			super.defendPos(cell);
-		}
+        @Override
+        public void defendPos(int cell) {
+            GLog.i(Messages.get(this, "direct_defend"));
+            super.defendPos(cell);
+        }
 
-		@Override
-		public void followHero() {
-			GLog.i(Messages.get(this, "direct_follow"));
-			super.followHero();
-		}
+        @Override
+        public void followHero() {
+            GLog.i(Messages.get(this, "direct_follow"));
+            super.followHero();
+        }
 
-		@Override
-		public void targetChar(Char ch) {
-			GLog.i(Messages.get(this, "direct_attack"));
-			super.targetChar(ch);
-		}
+        @Override
+        public void targetChar(Char ch) {
+            GLog.i(Messages.get(this, "direct_attack"));
+            super.targetChar(ch);
+        }
 
-		@Override
-		public int attackSkill(Char target) {
-			return defenseSkill+5; //equal to base hero attack skill
-		}
+        @Override
+        public int attackSkill(Char target) {
+            return defenseSkill + 5; //equal to base hero attack skill
+        }
 
-		@Override
-		public int damageRoll() {
-			int damage = Random.NormalIntRange(10, 20);
-			int heroDamage = Dungeon.hero.damageRoll();
-			heroDamage /= Dungeon.hero.attackDelay(); //normalize hero damage based on atk speed
-			heroDamage = Math.round(0.08f * Dungeon.hero.pointsInTalent(Talent.SHADOW_BLADE) * heroDamage);
-			if (heroDamage > 0){
-				damage += heroDamage;
-			}
-			return damage;
-		}
+        @Override
+        public int damageRoll() {
+            int damage = Random.NormalIntRange(10, 20);
+            int heroDamage = Dungeon.hero.damageRoll();
+            heroDamage /= Dungeon.hero.attackDelay(); //normalize hero damage based on atk speed
+            heroDamage = Math.round(0.08f * Dungeon.hero.pointsInTalent(Talent.SHADOW_BLADE) * heroDamage);
+            if (heroDamage > 0) {
+                damage += heroDamage;
+            }
+            return damage;
+        }
 
 
+        @Override
+        public int drRoll() {
+            int dr = super.drRoll();
+            int heroRoll = Dungeon.hero.drRoll();
+            heroRoll = Math.round(0.12f * Dungeon.hero.pointsInTalent(Talent.CLONED_ARMOR) * heroRoll);
+            if (heroRoll > 0) {
+                dr += heroRoll;
+            }
+            return dr;
+        }
 
-		@Override
-		public int drRoll() {
-			int dr = super.drRoll();
-			int heroRoll = Dungeon.hero.drRoll();
-			heroRoll = Math.round(0.12f * Dungeon.hero.pointsInTalent(Talent.CLONED_ARMOR) * heroRoll);
-			if (heroRoll > 0){
-				dr += heroRoll;
-			}
-			return dr;
-		}
+        @Override
+        public boolean isImmune(Class effect) {
+            return super.isImmune(effect);
+        }
 
-		@Override
-		public boolean isImmune(Class effect) {
-			return super.isImmune(effect);
-		}
+        @Override
+        public float speed() {
+            float speed = super.speed();
 
-		@Override
-		public void damage(int dmg, Object src) {
+            //moves 2 tiles at a time when returning to the hero
+            if (state == WANDERING
+                    && defendingPos == -1
+                    && Dungeon.level.distance(pos, Dungeon.hero.pos) > 1) {
+                speed *= 2;
+            }
 
-			//TODO improve this when I have proper damage source logic
+            return speed;
+        }
 
-			super.damage(dmg, src);
-		}
+        @Override
+        public boolean canInteract(Char c) {
+            if (super.canInteract(c)) {
+                return true;
+            } else if (Dungeon.level.distance(pos, c.pos) <= Dungeon.hero.pointsInTalent(Talent.PERFECT_COPY)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 
-		@Override
-		public float speed() {
-			float speed = super.speed();
+        @Override
+        public boolean interact(Char c) {
+            if (!Dungeon.hero.hasTalent(Talent.PERFECT_COPY)) {
+                return super.interact(c);
+            }
 
-			//moves 2 tiles at a time when returning to the hero
-			if (state == WANDERING
-					&& defendingPos == -1
-					&& Dungeon.level.distance(pos, Dungeon.hero.pos) > 1){
-				speed *= 2;
-			}
+            //some checks from super.interact
+            if (!Dungeon.level.passable[pos] && !c.flying) {
+                return true;
+            }
 
-			return speed;
-		}
+            if (properties().contains(Property.LARGE) && !Dungeon.level.openSpace[c.pos]
+                    || c.properties().contains(Property.LARGE) && !Dungeon.level.openSpace[pos]) {
+                return true;
+            }
 
-		@Override
-		public boolean canInteract(Char c) {
-			if (super.canInteract(c)){
-				return true;
-			} else if (Dungeon.level.distance(pos, c.pos) <= Dungeon.hero.pointsInTalent(Talent.PERFECT_COPY)) {
-				return true;
-			} else {
-				return false;
-			}
-		}
+            int curPos = pos;
 
-		@Override
-		public boolean interact(Char c) {
-			if (!Dungeon.hero.hasTalent(Talent.PERFECT_COPY)){
-				return super.interact(c);
-			}
+            //warp instantly with the clone
+            PathFinder.buildDistanceMap(c.pos, BArray.or(Dungeon.level.passable, Dungeon.level.avoid, null));
+            if (PathFinder.distance[pos] == Integer.MAX_VALUE) {
+                return true;
+            }
+            appear(this, Dungeon.hero.pos);
+            appear(Dungeon.hero, curPos);
+            Dungeon.observe();
+            GameScene.updateFog();
+            return true;
+        }
 
-			//some checks from super.interact
-			if (!Dungeon.level.passable[pos] && !c.flying){
-				return true;
-			}
+        private static void appear(Char ch, int pos) {
 
-			if (properties().contains(Property.LARGE) && !Dungeon.level.openSpace[c.pos]
-					|| c.properties().contains(Property.LARGE) && !Dungeon.level.openSpace[pos]){
-				return true;
-			}
+            ch.sprite.interruptMotion();
 
-			int curPos = pos;
+            if (Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[ch.pos]) {
+                Sample.INSTANCE.play(Assets.Sounds.PUFF);
+            }
 
-			//warp instantly with the clone
-			PathFinder.buildDistanceMap(c.pos, BArray.or(Dungeon.level.passable, Dungeon.level.avoid, null));
-			if (PathFinder.distance[pos] == Integer.MAX_VALUE){
-				return true;
-			}
-			appear(this, Dungeon.hero.pos);
-			appear(Dungeon.hero, curPos);
-			Dungeon.observe();
-			GameScene.updateFog();
-			return true;
-		}
+            ch.move(pos);
+            if (ch.pos == pos) ch.sprite.place(pos);
 
-		private static void appear( Char ch, int pos ) {
+            if (Dungeon.level.heroFOV[pos] || ch instanceof Hero) {
+                ch.sprite.emitter().burst(SmokeParticle.FACTORY, 10);
+            }
+        }
 
-			ch.sprite.interruptMotion();
+        private static final String DEF_SKILL = "def_skill";
 
-			if (Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[ch.pos]){
-				Sample.INSTANCE.play(Assets.Sounds.PUFF);
-			}
+        @Override
+        public void storeInBundle(Bundle bundle) {
+            super.storeInBundle(bundle);
+            bundle.put(DEF_SKILL, defenseSkill);
+        }
 
-			ch.move( pos );
-			if (ch.pos == pos) ch.sprite.place( pos );
-
-			if (Dungeon.level.heroFOV[pos] || ch instanceof Hero ) {
-				ch.sprite.emitter().burst(SmokeParticle.FACTORY, 10);
-			}
-		}
-
-		private static final String DEF_SKILL = "def_skill";
-
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(DEF_SKILL, defenseSkill);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			defenseSkill = bundle.getInt(DEF_SKILL);
-		}
-	}
+        @Override
+        public void restoreFromBundle(Bundle bundle) {
+            super.restoreFromBundle(bundle);
+            defenseSkill = bundle.getInt(DEF_SKILL);
+        }
+    }
 
 	public static class ShadowSprite extends MobSprite {
 

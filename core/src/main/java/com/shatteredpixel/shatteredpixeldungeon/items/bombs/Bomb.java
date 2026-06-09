@@ -197,8 +197,7 @@ public class Bomb extends Item {
 				dmg -= ch.drRoll();
 
 				if (dmg > 0) {
-					ch.damage(dmg, this);
-				}
+                }
 				
 				if (ch instanceof Hero && !ch.isAlive()) {
 					if (this instanceof ConjuredBomb){

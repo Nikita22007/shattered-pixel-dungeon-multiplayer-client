@@ -131,8 +131,8 @@ public class WandOfFireblast extends DamageWand {
 
 		for ( Char ch : affectedChars ){
 			wandProc(ch, chargesPerCast());
-			ch.damage(damageRoll(), this);
-			if (ch.isAlive()) {
+            damageRoll();
+            if (ch.isAlive()) {
                 ((Burning) null).reignite(ch);
 				switch (chargesPerCast()) {
 					case 1:
@@ -190,7 +190,7 @@ public class WandOfFireblast extends DamageWand {
 					if (ch != null) {
                         if (ch.alignment == Char.Alignment.ENEMY) {
                             //damage of a 2-charge zap
-                            ch.damage(Math.round(powerMulti * Random.NormalIntRange(2 + 2 * buffedLvl(), 8 + 4 * buffedLvl())), this);
+                            Math.round(powerMulti * Random.NormalIntRange(2 + 2 * buffedLvl(), 8 + 4 * buffedLvl()));
                         }
                     }
 				}

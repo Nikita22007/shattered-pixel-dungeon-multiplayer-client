@@ -96,8 +96,7 @@ public class HeroicLeap extends ArmorAbility {
 								int damage = Hero.heroDamageIntRange(hero.pointsInTalent(Talent.BODY_SLAM), 4 * hero.pointsInTalent(Talent.BODY_SLAM));
 								damage += Math.round(hero.drRoll() * 0.25f * hero.pointsInTalent(Talent.BODY_SLAM));
 								damage -= mob.drRoll();
-								mob.damage(damage, hero);
-							}
+                            }
 							if (mob.pos == hero.pos + i && hero.hasTalent(Talent.IMPACT_WAVE)) {
 								Ballistica trajectory = new Ballistica(mob.pos, mob.pos + i, Ballistica.MAGIC_BOLT);
 								int strength = 1 + hero.pointsInTalent(Talent.IMPACT_WAVE);

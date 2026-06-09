@@ -154,122 +154,117 @@ public class Feint extends ArmorAbility {
 		return new Talent[]{Talent.FEIGNED_RETREAT, Talent.EXPOSE_WEAKNESS, Talent.COUNTER_ABILITY, Talent.HEROIC_ENERGY};
 	}
 
-	public static class AfterImage extends Mob {
+    public static class AfterImage extends Mob {
 
-		{
-			spriteClass = AfterImageSprite.class;
-			defenseSkill = 0;
+        {
+            spriteClass = AfterImageSprite.class;
+            defenseSkill = 0;
 
-			properties.add(Property.IMMOVABLE);
+            properties.add(Property.IMMOVABLE);
 
-			alignment = Alignment.ALLY;
-			state = PASSIVE;
+            alignment = Alignment.ALLY;
+            state = PASSIVE;
 
-			HP = HT = 1;
+            HP = HT = 1;
 
-			//fades just before the hero's next action
-			actPriority = Actor.HERO_PRIO+1;
-		}
+            //fades just before the hero's next action
+            actPriority = Actor.HERO_PRIO + 1;
+        }
 
-		@Override
-		public String name() {
-			return ""; //shouldn't be examinable
-		}
+        @Override
+        public String name() {
+            return ""; //shouldn't be examinable
+        }
 
-		@Override
-		public String description() {
-			return ""; //shouldn't be examinable
-		}
+        @Override
+        public String description() {
+            return ""; //shouldn't be examinable
+        }
 
-		@Override
-		public boolean canInteract(Char c) {
-			return false;
-		}
+        @Override
+        public boolean canInteract(Char c) {
+            return false;
+        }
 
-		@Override
-		protected boolean act() {
-			destroy();
-			sprite.die();
-			return true;
-		}
+        @Override
+        protected boolean act() {
+            destroy();
+            sprite.die();
+            return true;
+        }
 
-		public void syncToHero(Hero hero){
-			if (cooldown() != hero.cooldown()){
-				spendConstant(hero.cooldown() - cooldown());
-			}
-		}
+        public void syncToHero(Hero hero) {
+            if (cooldown() != hero.cooldown()) {
+                spendConstant(hero.cooldown() - cooldown());
+            }
+        }
 
-		@Override
-		public void damage( int dmg, Object src ) {
-
-		}
-
-		@Override
-		public int defenseSkill(Char enemy) {
-			if (enemy.alignment == Alignment.ENEMY) {
-				if (enemy instanceof Mob) {
-					((Mob) enemy).clearEnemy();
-				}
+        @Override
+        public int defenseSkill(Char enemy) {
+            if (enemy.alignment == Alignment.ENEMY) {
+                if (enemy instanceof Mob) {
+                    ((Mob) enemy).clearEnemy();
+                }
                 if (enemy.sprite != null) enemy.sprite.showLost();
-				if (Dungeon.hero.hasTalent(Talent.FEIGNED_RETREAT)) {
+                if (Dungeon.hero.hasTalent(Talent.FEIGNED_RETREAT)) {
                     Dungeon.hero.pointsInTalent(Talent.FEIGNED_RETREAT);
                 }
-				if (Dungeon.hero.hasTalent(Talent.EXPOSE_WEAKNESS)) {
+                if (Dungeon.hero.hasTalent(Talent.EXPOSE_WEAKNESS)) {
                     Dungeon.hero.pointsInTalent(Talent.EXPOSE_WEAKNESS);
                     Dungeon.hero.pointsInTalent(Talent.EXPOSE_WEAKNESS);
                 }
-				if (Dungeon.hero.hasTalent(Talent.COUNTER_ABILITY)) {
+                if (Dungeon.hero.hasTalent(Talent.COUNTER_ABILITY)) {
                 }
-			}
-			return 0;
-		}
+            }
+            return 0;
+        }
 
-		@Override
-		public boolean add( Buff buff ) {
-			return false;
-		}
+        @Override
+        public boolean add(Buff buff) {
+            return false;
+        }
 
-		{
-			immunities.addAll(new BlobImmunity().immunities());
-		}
+        {
+            immunities.addAll(new BlobImmunity().immunities());
+        }
 
-		@Override
-		public CharSprite sprite() {
-			CharSprite s = super.sprite();
-			((AfterImageSprite)s).updateArmor();
-			return s;
-		}
+        @Override
+        public CharSprite sprite() {
+            CharSprite s = super.sprite();
+            ((AfterImageSprite) s).updateArmor();
+            return s;
+        }
 
-		public static class FeintConfusion extends FlavourBuff {
+        public static class FeintConfusion extends FlavourBuff {
 
-		}
+        }
 
-		public static class AfterImageSprite extends MirrorSprite {
-			@Override
-			public void updateArmor() {
-				updateArmor(6); //we can assume heroic armor
-			}
+        public static class AfterImageSprite extends MirrorSprite {
+            @Override
+            public void updateArmor() {
+                updateArmor(6); //we can assume heroic armor
+            }
 
-			@Override
-			public void resetColor() {
-				super.resetColor();
-				alpha(0.6f);
-			}
+            @Override
+            public void resetColor() {
+                super.resetColor();
+                alpha(0.6f);
+            }
 
-			@Override
-			public void die() {
-				//don't interrupt current animation to start fading
-				//this ensures the fake attack animation plays
-				if (parent != null) {
-					parent.add( new AlphaTweener( this, 0, 3f ) {
-						@Override
-						protected void onComplete() {
-							AfterImageSprite.this.killAndErase();
-						}
-					} );
-				}
-			}
-		}
+            @Override
+            public void die() {
+                //don't interrupt current animation to start fading
+                //this ensures the fake attack animation plays
+                if (parent != null) {
+                    parent.add(new AlphaTweener(this, 0, 3f) {
+                        @Override
+                        protected void onComplete() {
+                            AfterImageSprite.this.killAndErase();
+                        }
+                    });
+                }
+            }
+        }
 
-	}
+    }
 }

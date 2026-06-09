@@ -78,7 +78,7 @@ public abstract class YogFist extends Mob {
 	private float rangedCooldown;
 	protected boolean canRangedInMelee = true;
 
-	protected void incrementRangedCooldown(){
+	protected void incrementRangedCooldown() {
 		rangedCooldown += Random.NormalFloat(8, 12);
 	}
 
@@ -86,7 +86,7 @@ public abstract class YogFist extends Mob {
 	protected boolean act() {
 		if (paralysed <= 0 && rangedCooldown > 0) rangedCooldown--;
 
-		if (Dungeon.hero.invisible <= 0 && state == WANDERING){
+		if (Dungeon.hero.invisible <= 0 && state == WANDERING) {
 			beckon(Dungeon.hero.pos);
 			state = HUNTING;
 			enemy = Dungeon.hero;
@@ -97,8 +97,8 @@ public abstract class YogFist extends Mob {
 
 	@Override
 	protected boolean canAttack(Char enemy) {
-		if (rangedCooldown <= 0){
-			return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		if (rangedCooldown <= 0) {
+			return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 		} else {
 			return super.canAttack(enemy);
 		}
@@ -106,14 +106,14 @@ public abstract class YogFist extends Mob {
 
 	private boolean invulnWarned = false;
 
-	protected boolean isNearYog(){
-		int yogPos = Dungeon.level.exit() + 3*Dungeon.level.width();
+	protected boolean isNearYog() {
+		int yogPos = Dungeon.level.exit() + 3 * Dungeon.level.width();
 		return Dungeon.level.distance(pos, yogPos) <= 4;
 	}
 
 	@Override
 	public boolean isInvulnerable(Class effect) {
-		if (isNearYog() && !invulnWarned){
+		if (isNearYog() && !invulnWarned) {
 			invulnWarned = true;
 			GLog.w(Messages.get(this, "invuln_warn"));
 		}
@@ -121,17 +121,17 @@ public abstract class YogFist extends Mob {
 	}
 
 	@Override
-	protected boolean doAttack( Char enemy ) {
+	protected boolean doAttack(Char enemy) {
 
-		if (Dungeon.level.adjacent( pos, enemy.pos ) && (!canRangedInMelee || rangedCooldown > 0)) {
+		if (Dungeon.level.adjacent(pos, enemy.pos) && (!canRangedInMelee || rangedCooldown > 0)) {
 
-			return super.doAttack( enemy );
+			return super.doAttack(enemy);
 
 		} else {
 
 			incrementRangedCooldown();
 			if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
-				sprite.zap( enemy.pos );
+				sprite.zap(enemy.pos);
 				return false;
 			} else {
 				zap();
@@ -141,23 +141,10 @@ public abstract class YogFist extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, Object src) {
-		int preHP = HP;
-		super.damage(dmg, src);
-		int dmgTaken = preHP - HP;
-
-        LockedFloor lock = null;
-		if (dmgTaken > 0 && lock != null && !isImmune(src.getClass()) && !isInvulnerable(src.getClass())){
-			if (Dungeon.isChallenged(Challenges.STRONGER_BOSSES))   lock.addTime(dmgTaken/4f);
-			else                                                    lock.addTime(dmgTaken/2f);
-		}
-	}
-
-	@Override
 	public void die(Object cause) {
 		super.die(cause);
-		for ( Char c : Actor.chars() ){
-			if (c instanceof YogDzewa){
+		for (Char c : Actor.chars()) {
+			if (c instanceof YogDzewa) {
 				((YogDzewa) c).processFistDeath();
 			}
 		}
@@ -165,19 +152,19 @@ public abstract class YogFist extends Mob {
 
 	protected abstract void zap();
 
-	public void onZapComplete(){
+	public void onZapComplete() {
 		zap();
 		next();
 	}
 
 	@Override
-	public int attackSkill( Char target ) {
+	public int attackSkill(Char target) {
 		return 36;
 	}
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 18, 36 );
+		return Random.NormalIntRange(18, 36);
 	}
 
 	@Override
@@ -186,7 +173,7 @@ public abstract class YogFist extends Mob {
 	}
 
 	{
-		immunities.add( Sleep.class );
+		immunities.add(Sleep.class);
 	}
 
 	@Override
@@ -221,10 +208,10 @@ public abstract class YogFist extends Mob {
 
 			boolean result = super.act();
 
-			if (Dungeon.level.map[pos] == Terrain.WATER){
-				Level.set( pos, Terrain.EMPTY);
-				GameScene.updateMap( pos );
-				CellEmitter.get( pos ).burst( Speck.factory( Speck.STEAM ), 10 );
+			if (Dungeon.level.map[pos] == Terrain.WATER) {
+				Level.set(pos, Terrain.EMPTY);
+				GameScene.updateMap(pos);
+				CellEmitter.get(pos).burst(Speck.factory(Speck.STEAM), 10);
 			}
 
 			//1.67 evaporated tiles on average
@@ -232,17 +219,17 @@ public abstract class YogFist extends Mob {
 
 			for (int i = 0; i < evaporatedTiles; i++) {
 				int cell = pos + PathFinder.NEIGHBOURS8[Random.Int(8)];
-				if (Dungeon.level.map[cell] == Terrain.WATER){
-					Level.set( cell, Terrain.EMPTY);
-					GameScene.updateMap( cell );
-					CellEmitter.get( cell ).burst( Speck.factory( Speck.STEAM ), 10 );
+				if (Dungeon.level.map[cell] == Terrain.WATER) {
+					Level.set(cell, Terrain.EMPTY);
+					GameScene.updateMap(cell);
+					CellEmitter.get(cell).burst(Speck.factory(Speck.STEAM), 10);
 				}
 			}
 
 			for (int i : PathFinder.NEIGHBOURS9) {
-				int vol = Fire.volumeAt(pos+i, Fire.class);
-				if (vol < 4 && !Dungeon.level.water[pos + i] && !Dungeon.level.solid[pos + i]){
-					GameScene.add( Blob.seed( pos + i, 4 - vol, Fire.class ) );
+				int vol = Fire.volumeAt(pos + i, Fire.class);
+				if (vol < 4 && !Dungeon.level.water[pos + i] && !Dungeon.level.solid[pos + i]) {
+					GameScene.add(Blob.seed(pos + i, 4 - vol, Fire.class));
 				}
 			}
 
@@ -251,21 +238,21 @@ public abstract class YogFist extends Mob {
 
 		@Override
 		protected void zap() {
-			spend( 1f );
+			spend(1f);
 
-			if (Dungeon.level.map[enemy.pos] == Terrain.WATER){
-				Level.set( enemy.pos, Terrain.EMPTY);
-				GameScene.updateMap( enemy.pos );
-				CellEmitter.get( enemy.pos ).burst( Speck.factory( Speck.STEAM ), 10 );
+			if (Dungeon.level.map[enemy.pos] == Terrain.WATER) {
+				Level.set(enemy.pos, Terrain.EMPTY);
+				GameScene.updateMap(enemy.pos);
+				CellEmitter.get(enemy.pos).burst(Speck.factory(Speck.STEAM), 10);
 			} else {
-				((Burning) null).reignite( enemy );
+				((Burning) null).reignite(enemy);
 			}
 
-			for (int i : PathFinder.NEIGHBOURS9){
-				if (!Dungeon.level.water[enemy.pos+i] && !Dungeon.level.solid[enemy.pos+i]){
-					int vol = Fire.volumeAt(enemy.pos+i, Fire.class);
-					if (vol < 4){
-						GameScene.add( Blob.seed( enemy.pos + i, 4 - vol, Fire.class ) );
+			for (int i : PathFinder.NEIGHBOURS9) {
+				if (!Dungeon.level.water[enemy.pos + i] && !Dungeon.level.solid[enemy.pos + i]) {
+					int vol = Fire.volumeAt(enemy.pos + i, Fire.class);
+					if (vol < 4) {
+						GameScene.add(Blob.seed(enemy.pos + i, 4 - vol, Fire.class));
 					}
 				}
 			}
@@ -305,9 +292,9 @@ public abstract class YogFist extends Mob {
 
 			for (int i : PathFinder.NEIGHBOURS9) {
 				int cell = pos + i;
-				if (canSpreadGrass(cell)){
-					Level.set(pos+i, Terrain.GRASS);
-					GameScene.updateMap( pos + i );
+				if (canSpreadGrass(cell)) {
+					Level.set(pos + i, Terrain.GRASS);
+					GameScene.updateMap(pos + i);
 				}
 			}
 
@@ -315,56 +302,37 @@ public abstract class YogFist extends Mob {
 		}
 
 		@Override
-		public void damage(int dmg, Object src) {
-			int grassCells = 0;
-			for (int i : PathFinder.NEIGHBOURS9) {
-				if (Dungeon.level.map[pos+i] == Terrain.FURROWED_GRASS
-				|| Dungeon.level.map[pos+i] == Terrain.HIGH_GRASS){
-					grassCells++;
-				}
-			}
-			if (grassCells > 0) dmg = Math.round(dmg * (6-grassCells)/6f);
-
-			//can be ignited, but takes no damage from burning
-			if (src.getClass() == Burning.class){
-				return;
-			}
-
-			super.damage(dmg, src);
-		}
-
-		@Override
 		protected void zap() {
-			spend( 1f );
+			spend(1f);
 
 			Invisibility.dispel(this);
 			Char enemy = this.enemy;
-			if (hit( this, enemy, true )) {
+			if (hit(this, enemy, true)) {
 
-            } else {
+			} else {
 
-				enemy.sprite.showStatus( CharSprite.NEUTRAL,  enemy.defenseVerb() );
+				enemy.sprite.showStatus(CharSprite.NEUTRAL, enemy.defenseVerb());
 			}
 
-			for (int i : PathFinder.NEIGHBOURS9){
+			for (int i : PathFinder.NEIGHBOURS9) {
 				int cell = enemy.pos + i;
-				if (canSpreadGrass(cell)){
-					if (Random.Int(5) == 0){
+				if (canSpreadGrass(cell)) {
+					if (Random.Int(5) == 0) {
 						Level.set(cell, Terrain.FURROWED_GRASS);
-						GameScene.updateMap( cell );
+						GameScene.updateMap(cell);
 					} else {
 						Level.set(cell, Terrain.GRASS);
-						GameScene.updateMap( cell );
+						GameScene.updateMap(cell);
 					}
-					CellEmitter.get( cell ).burst( LeafParticle.GENERAL, 10 );
+					CellEmitter.get(cell).burst(LeafParticle.GENERAL, 10);
 				}
 			}
 			Dungeon.observe();
 
 		}
 
-		private boolean canSpreadGrass(int cell){
-			int yogPos = Dungeon.level.exit() + Dungeon.level.width()*3;
+		private boolean canSpreadGrass(int cell) {
+			int yogPos = Dungeon.level.exit() + Dungeon.level.width() * 3;
 			return Dungeon.level.distance(cell, yogPos) > 4 && !Dungeon.level.solid[cell]
 					&& !(Dungeon.level.map[cell] == Terrain.FURROWED_GRASS || Dungeon.level.map[cell] == Terrain.HIGH_GRASS);
 		}
@@ -385,48 +353,26 @@ public abstract class YogFist extends Mob {
 			GameScene.add(Blob.seed(pos, 0, ToxicGas.class));
 
 			if (Dungeon.level.water[pos] && HP < HT) {
-				sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(HT/50), FloatingText.HEALING);
-				HP = Math.min(HT, HP + HT/50);
+				sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(HT / 50), FloatingText.HEALING);
+				HP = Math.min(HT, HP + HT / 50);
 			}
 
 			return super.act();
 		}
 
 		@Override
-		public void damage(int dmg, Object src) {
-            if (!isInvulnerable(src.getClass())
-                    && !(src instanceof Bleeding)
-                    && true){
-				dmg = Math.round( dmg * resist( src.getClass() ));
-				if (dmg < 0){
-					return;
-				}
-                Bleeding b = null;
-				if (b == null){
-					b = new Bleeding();
-				}
-				b.announced = false;
-				b.set(dmg*.6f);
-				b.attachTo(this);
-				sprite.showStatus(CharSprite.WARNING, Messages.titleCase(b.name()) + " " + (int)b.level());
-			} else{
-				super.damage(dmg, src);
-			}
-		}
-
-		@Override
 		protected void zap() {
-			spend( 1f );
+			spend(1f);
 			GameScene.add(Blob.seed(enemy.pos, 100, ToxicGas.class));
 		}
 
 		@Override
-		public int attackProc( Char enemy, int damage ) {
-			damage = super.attackProc( enemy, damage );
+		public int attackProc(Char enemy, int damage) {
+			damage = super.attackProc(enemy, damage);
 
-			if (Random.Int( 2 ) == 0) {
-				((Ooze) null).set( Ooze.DURATION );
-				enemy.sprite.burst( 0xFF000000, 5 );
+			if (Random.Int(2) == 0) {
+				((Ooze) null).set(Ooze.DURATION);
+				enemy.sprite.burst(0xFF000000, 5);
 			}
 
 			return damage;
@@ -449,26 +395,13 @@ public abstract class YogFist extends Mob {
 
 		@Override
 		public int damageRoll() {
-			return Random.NormalIntRange( 22, 44 );
-		}
-
-		@Override
-		public void damage(int dmg, Object src) {
-			if (!isInvulnerable(src.getClass()) && !(src instanceof Viscosity.DeferedDamage)){
-				dmg = Math.round( dmg * resist( src.getClass() ));
-				if (dmg >= 0) {
-					((Viscosity.DeferedDamage) null).extend(dmg);
-					sprite.showStatus(CharSprite.WARNING, Messages.get(Viscosity.class, "deferred", dmg));
-				}
-			} else{
-				super.damage(dmg, src);
-			}
+			return Random.NormalIntRange(22, 44);
 		}
 
 		@Override
 		protected void zap() {
-			spend( 1f );
-        }
+			spend(1f);
+		}
 
 	}
 
@@ -488,51 +421,30 @@ public abstract class YogFist extends Mob {
 		}
 
 		//used so resistances can differentiate between melee and magical attacks
-		public static class LightBeam{}
+		public static class LightBeam {
+		}
 
 		@Override
 		protected void zap() {
-			spend( 1f );
+			spend(1f);
 
 			Invisibility.dispel(this);
 			Char enemy = this.enemy;
-			if (hit( this, enemy, true )) {
+			if (hit(this, enemy, true)) {
 
-				enemy.damage( Random.NormalIntRange(10, 20), new LightBeam() );
+				Random.NormalIntRange(10, 20);
 
-                if (!enemy.isAlive() && enemy == Dungeon.hero) {
+				if (!enemy.isAlive() && enemy == Dungeon.hero) {
 					Badges.validateDeathFromEnemyMagic();
-					Dungeon.fail( this );
-					GLog.n( Messages.get(Char.class, "kill", name()) );
+					Dungeon.fail(this);
+					GLog.n(Messages.get(Char.class, "kill", name()));
 				}
 
 			} else {
 
-				enemy.sprite.showStatus( CharSprite.NEUTRAL,  enemy.defenseVerb() );
+				enemy.sprite.showStatus(CharSprite.NEUTRAL, enemy.defenseVerb());
 			}
 
-		}
-
-		@Override
-		public void damage(int dmg, Object src) {
-			int beforeHP = HP;
-			super.damage(dmg, src);
-			if (isAlive() && beforeHP > HT/2 && HP < HT/2){
-				HP = HT/2;
-                int i;
-				do {
-					i = Random.Int(Dungeon.level.length());
-				} while (Dungeon.level.heroFOV[i]
-						|| Dungeon.level.solid[i]
-						|| Actor.findChar(i) != null
-						|| PathFinder.getStep(i, Dungeon.level.exit(), Dungeon.level.passable) == -1);
-				ScrollOfTeleportation.appear(this, i);
-				state = WANDERING;
-				GameScene.flash(0x80FFFFFF);
-				GLog.w( Messages.get( this, "teleport" ));
-			} else if (!isAlive()){
-                GameScene.flash(0x80FFFFFF);
-			}
 		}
 
 	}
@@ -551,64 +463,35 @@ public abstract class YogFist extends Mob {
 		}
 
 		//used so resistances can differentiate between melee and magical attacks
-		public static class DarkBolt{}
+		public static class DarkBolt {
+		}
 
 		@Override
 		protected void zap() {
-			spend( 1f );
+			spend(1f);
 
 			Invisibility.dispel(this);
 			Char enemy = this.enemy;
-			if (hit( this, enemy, true )) {
+			if (hit(this, enemy, true)) {
 
-				enemy.damage( Random.NormalIntRange(10, 20), new DarkBolt() );
+				Random.NormalIntRange(10, 20);
 
-                Light l = null;
-				if (l != null){
+				Light l = null;
+				if (l != null) {
 					l.weaken(50);
 				}
 
 				if (!enemy.isAlive() && enemy == Dungeon.hero) {
 					Badges.validateDeathFromEnemyMagic();
-					Dungeon.fail( this );
-					GLog.n( Messages.get(Char.class, "kill", name()) );
+					Dungeon.fail(this);
+					GLog.n(Messages.get(Char.class, "kill", name()));
 				}
 
 			} else {
 
-				enemy.sprite.showStatus( CharSprite.NEUTRAL,  enemy.defenseVerb() );
+				enemy.sprite.showStatus(CharSprite.NEUTRAL, enemy.defenseVerb());
 			}
 
-		}
-
-		@Override
-		public void damage(int dmg, Object src) {
-			int beforeHP = HP;
-			super.damage(dmg, src);
-			if (isAlive() && beforeHP > HT/2 && HP < HT/2){
-				HP = HT/2;
-                Light l = null;
-				if (l != null){
-					l.detach();
-				}
-				int i;
-				do {
-					i = Random.Int(Dungeon.level.length());
-				} while (Dungeon.level.heroFOV[i]
-						|| Dungeon.level.solid[i]
-						|| Actor.findChar(i) != null
-						|| PathFinder.getStep(i, Dungeon.level.exit(), Dungeon.level.passable) == -1);
-				ScrollOfTeleportation.appear(this, i);
-				state = WANDERING;
-				GameScene.flash(0, false);
-				GLog.w( Messages.get( this, "teleport" ));
-			} else if (!isAlive()){
-                Light l = null;
-				if (l != null){
-					l.detach();
-				}
-				GameScene.flash(0, false);
-			}
 		}
 
 	}

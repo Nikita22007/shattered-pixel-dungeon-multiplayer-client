@@ -81,37 +81,37 @@ public class DemonSpawner extends Mob {
 
 	@Override
 	protected boolean act() {
-		if (!spawnRecorded){
+		if (!spawnRecorded) {
 			Statistics.spawnersAlive++;
 			spawnRecorded = true;
 		}
 
-        if (false) {
-            spawnCooldown = 20;
-        }
+		if (false) {
+			spawnCooldown = 20;
+		}
 
 		spawnCooldown--;
-		if (spawnCooldown <= 0){
+		if (spawnCooldown <= 0) {
 
 			//we don't want spawners to store multiple ripper demons
-			if (spawnCooldown < -20){
+			if (spawnCooldown < -20) {
 				spawnCooldown = -20;
 			}
 
 			ArrayList<Integer> candidates = new ArrayList<>();
 			for (int n : PathFinder.NEIGHBOURS8) {
-				if (Dungeon.level.passable[pos+n] && Actor.findChar( pos+n ) == null) {
-					candidates.add( pos+n );
+				if (Dungeon.level.passable[pos + n] && Actor.findChar(pos + n) == null) {
+					candidates.add(pos + n);
 				}
 			}
 
 			if (!candidates.isEmpty()) {
 				RipperDemon spawn = new RipperDemon();
 
-				spawn.pos = Random.element( candidates );
+				spawn.pos = Random.element(candidates);
 				spawn.state = spawn.HUNTING;
 
-				GameScene.add( spawn, 1 );
+				GameScene.add(spawn, 1);
 				Dungeon.level.occupyCell(spawn);
 
 				if (sprite.visible) {
@@ -119,25 +119,14 @@ public class DemonSpawner extends Mob {
 				}
 
 				spawnCooldown += 60;
-				if (Dungeon.depth > 21){
+				if (Dungeon.depth > 21) {
 					//60/53.33/46.67/40 turns to spawn on floor 21/22/23/24
-					spawnCooldown -= Math.min(20, (Dungeon.depth-21)*6.67);
+					spawnCooldown -= Math.min(20, (Dungeon.depth - 21) * 6.67);
 				}
 			}
 		}
 		alerted = false;
 		return super.act();
-	}
-
-	@Override
-	public void damage(int dmg, Object src) {
-		if (dmg >= 20){
-			//takes 20/21/22/23/24/25/26/27/28/29/30 dmg
-			// at   20/22/25/29/34/40/47/55/64/74/85 incoming dmg
-			dmg = 19 + (int)(Math.sqrt(8*(dmg - 19) + 1) - 1)/2;
-		}
-		spawnCooldown -= dmg;
-		super.damage(dmg, src);
 	}
 
 	@Override
@@ -147,7 +136,7 @@ public class DemonSpawner extends Mob {
 
 	@Override
 	public void die(Object cause) {
-		if (spawnRecorded){
+		if (spawnRecorded) {
 			Statistics.spawnersAlive--;
 			Notes.remove(landmark());
 		}

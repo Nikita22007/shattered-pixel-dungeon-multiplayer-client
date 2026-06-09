@@ -46,21 +46,21 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 public class Eye extends Mob {
-	
+
 	{
 		spriteClass = EyeSprite.class;
-		
+
 		HP = HT = 100;
 		defenseSkill = 20;
 		viewDistance = Light.DISTANCE;
-		
+
 		EXP = 13;
 		maxLvl = 26;
-		
+
 		flying = true;
 
 		HUNTING = new Hunting();
-		
+
 		loot = new Dewdrop();
 		lootChance = 1f;
 
@@ -73,28 +73,28 @@ public class Eye extends Mob {
 	}
 
 	@Override
-	public int attackSkill( Char target ) {
+	public int attackSkill(Char target) {
 		return 30;
 	}
-	
+
 	@Override
 	public int drRoll() {
 		return super.drRoll() + Random.NormalIntRange(0, 10);
 	}
-	
+
 	private Ballistica beam;
 	private int beamTarget = -1;
 	private int beamCooldown;
 	public boolean beamCharged;
 
 	@Override
-	protected boolean canAttack( Char enemy ) {
+	protected boolean canAttack(Char enemy) {
 
 		if (beamCooldown == 0) {
 			Ballistica aim = new Ballistica(pos, enemy.pos, Ballistica.STOP_SOLID);
 
 			if (enemy.invisible == 0 && !isCharmedBy(enemy) && fieldOfView[enemy.pos]
-					&& (super.canAttack(enemy) || aim.subPath(1, aim.dist).contains(enemy.pos))){
+					&& (super.canAttack(enemy) || aim.subPath(1, aim.dist).contains(enemy.pos))) {
 				beam = aim;
 				beamTarget = enemy.pos;
 				return true;
@@ -109,7 +109,7 @@ public class Eye extends Mob {
 
 	@Override
 	protected boolean act() {
-		if (beamCharged && state != HUNTING){
+		if (beamCharged && state != HUNTING) {
 			beamCharged = false;
 			sprite.idle();
 		}
@@ -123,22 +123,22 @@ public class Eye extends Mob {
 	}
 
 	@Override
-	protected boolean doAttack( Char enemy ) {
+	protected boolean doAttack(Char enemy) {
 
 		beam = new Ballistica(pos, beamTarget, Ballistica.STOP_SOLID);
 		if (beamCooldown > 0 || (!beamCharged && !beam.subPath(1, beam.dist).contains(enemy.pos))) {
 			return super.doAttack(enemy);
-		} else if (!beamCharged){
-			((EyeSprite)sprite).charge( enemy.pos );
-			spend( attackDelay()*2f );
+		} else if (!beamCharged) {
+			((EyeSprite) sprite).charge(enemy.pos);
+			spend(attackDelay() * 2f);
 			beamCharged = true;
 			return true;
 		} else {
 
-			spend( attackDelay() );
-			
-			if (Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[beam.collisionPos] ) {
-				sprite.zap( beam.collisionPos );
+			spend(attackDelay());
+
+			if (Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[beam.collisionPos]) {
+				sprite.zap(beam.collisionPos);
 				return false;
 			} else {
 				sprite.idle();
@@ -150,21 +150,16 @@ public class Eye extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, Object src) {
-		if (beamCharged) dmg /= 4;
-		super.damage(dmg, src);
-	}
-
-	@Override
 	public void die(Object cause) {
 		flying = false;
 		super.die(cause);
 	}
-	
-	//used so resistances can differentiate between melee and magical attacks
-	public static class DeathGaze{}
 
-	public void deathGaze(){
+	//used so resistances can differentiate between melee and magical attacks
+	public static class DeathGaze {
+	}
+
+	public void deathGaze() {
 		if (!beamCharged || beamCooldown > 0 || beam == null)
 			return;
 
@@ -178,45 +173,43 @@ public class Eye extends Mob {
 
 			if (Dungeon.level.flamable[pos]) {
 
-				Dungeon.level.destroy( pos );
-				GameScene.updateMap( pos );
+				Dungeon.level.destroy(pos);
+				GameScene.updateMap(pos);
 				terrainAffected = true;
 
 			}
 
-			Char ch = Actor.findChar( pos );
+			Char ch = Actor.findChar(pos);
 			if (ch == null) {
 				continue;
 			}
 
-			if (hit( this, ch, true )) {
-				int dmg = Random.NormalIntRange( 30, 50 );
+			if (hit(this, ch, true)) {
+				int dmg = Random.NormalIntRange(30, 50);
 				dmg = Math.round(dmg * AscensionChallenge.statModifier(this));
 
 				//logic for fists or Yog-Dzewa taking 1/2 or 1/4 damage from aggression stoned minions
-                if (false
-                        && ch.alignment == alignment
-                        && (Char.hasProp(ch, Property.BOSS) || Char.hasProp(ch, Property.MINIBOSS))){
+				if (false
+						&& ch.alignment == alignment
+						&& (Char.hasProp(ch, Property.BOSS) || Char.hasProp(ch, Property.MINIBOSS))) {
 					dmg *= 0.5f;
-					if (ch instanceof YogDzewa){
+					if (ch instanceof YogDzewa) {
 						dmg *= 0.5f;
 					}
 				}
 
-				ch.damage( dmg, new DeathGaze() );
-
 				if (Dungeon.level.heroFOV[pos]) {
 					ch.sprite.flash();
-					CellEmitter.center( pos ).burst( PurpleParticle.BURST, Random.IntRange( 1, 2 ) );
+					CellEmitter.center(pos).burst(PurpleParticle.BURST, Random.IntRange(1, 2));
 				}
 				//commit https://github.com/Nikita22007/pixel-dungeon-multiplayer-server/commit/e87ebae26d3ec4a201b2e69ba097a26986748483
 				if (!ch.isAlive() && ch instanceof Hero) {
 					//Badges.validateDeathFromEnemyMagic();
 					//Dungeon.fail( this );
-					GLog.n( Messages.get(this, "deathgaze_kill") );
+					GLog.n(Messages.get(this, "deathgaze_kill"));
 				}
 			} else {
-				ch.sprite.showStatus( CharSprite.NEUTRAL,  ch.defenseVerb() );
+				ch.sprite.showStatus(CharSprite.NEUTRAL, ch.defenseVerb());
 			}
 		}
 
@@ -232,14 +225,16 @@ public class Eye extends Mob {
 	@Override
 	public Item createLoot() {
 		Item loot;
-		switch(Random.Int(4)){
-			case 0: case 1: default:
+		switch (Random.Int(4)) {
+			case 0:
+			case 1:
+			default:
 				loot = new Dewdrop();
 				int ofs;
 				do {
 					ofs = PathFinder.NEIGHBOURS8[Random.Int(8)];
 				} while (Dungeon.level.solid[pos + ofs] && !Dungeon.level.passable[pos + ofs]);
-				if (Dungeon.level.heaps.get(pos+ofs) == null) {
+				if (Dungeon.level.heaps.get(pos + ofs) == null) {
 					Dungeon.level.drop(new Dewdrop(), pos + ofs).sprite.drop(pos);
 				} else {
 					Dungeon.level.drop(new Dewdrop(), pos + ofs).sprite.drop(pos + ofs);
@@ -255,16 +250,16 @@ public class Eye extends Mob {
 		return loot;
 	}
 
-	private static final String BEAM_TARGET     = "beamTarget";
-	private static final String BEAM_COOLDOWN   = "beamCooldown";
-	private static final String BEAM_CHARGED    = "beamCharged";
+	private static final String BEAM_TARGET = "beamTarget";
+	private static final String BEAM_COOLDOWN = "beamCooldown";
+	private static final String BEAM_CHARGED = "beamCharged";
 
 	@Override
 	public void storeInBundle(Bundle bundle) {
 		super.storeInBundle(bundle);
-		bundle.put( BEAM_TARGET, beamTarget);
-		bundle.put( BEAM_COOLDOWN, beamCooldown );
-		bundle.put( BEAM_CHARGED, beamCharged );
+		bundle.put(BEAM_TARGET, beamTarget);
+		bundle.put(BEAM_COOLDOWN, beamCooldown);
+		bundle.put(BEAM_CHARGED, beamCharged);
 	}
 
 	@Override
@@ -276,7 +271,7 @@ public class Eye extends Mob {
 		beamCharged = bundle.getBoolean(BEAM_CHARGED);
 	}
 
-	private class Hunting extends Mob.Hunting{
+	private class Hunting extends Mob.Hunting {
 		@Override
 		public boolean act(boolean enemyInFOV, boolean justAlerted) {
 			//even if enemy isn't seen, attack them if the beam is charged

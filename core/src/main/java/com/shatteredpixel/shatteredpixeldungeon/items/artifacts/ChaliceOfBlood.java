@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
@@ -148,8 +149,6 @@ public class ChaliceOfBlood extends Artifact {
             Sample.INSTANCE.play(Assets.Sounds.CURSED);
             hero.sprite.emitter().burst(ShadowParticle.CURSE, 4 + (damage / 10));
         }
-
-        hero.damage(damage, this);
 
         if (!hero.isAlive()) {
             Badges.validateDeathFromFriendlyMagic();

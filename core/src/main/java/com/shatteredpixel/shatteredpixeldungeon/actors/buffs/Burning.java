@@ -100,8 +100,7 @@ public class Burning extends Buff implements Hero.Doom {
 				
 				Hero hero = (Hero)target;
 
-				hero.damage( damage, this );
-				burnIncrement++;
+                burnIncrement++;
 
 				//at 4+ turns, there is a (turns-3)/3 chance an item burns
 				if (Random.Int(3) < (burnIncrement - 3)){
@@ -131,8 +130,7 @@ public class Burning extends Buff implements Hero.Doom {
 				}
 				
 			} else {
-				target.damage( damage, this );
-			}
+            }
 
 			if (target instanceof Thief && ((Thief) target).item != null) {
 

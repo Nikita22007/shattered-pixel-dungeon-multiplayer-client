@@ -107,8 +107,7 @@ public class GrimTrap extends Trap {
 								new Callback() {
 									@Override
 									public void call() {
-										finalTarget.damage(finalDmg, GrimTrap.this);
-										if (finalTarget == Dungeon.hero) {
+                                        if (finalTarget == Dungeon.hero) {
 											Sample.INSTANCE.play(Assets.Sounds.CURSED);
 											if (!finalTarget.isAlive()) {
 												Badges.validateDeathFromGrimOrDisintTrap();
@@ -125,8 +124,7 @@ public class GrimTrap extends Trap {
 								});
 						return false;
 					} else {
-						finalTarget.damage(finalDmg, GrimTrap.this);
-						return true;
+                        return true;
 					}
 				} else {
 					CellEmitter.get(pos).burst(ShadowParticle.UP, 10);

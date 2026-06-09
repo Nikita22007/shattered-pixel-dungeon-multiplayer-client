@@ -132,7 +132,7 @@ abstract public class Weapon extends KindOfWeapon {
 				}
 				if (defender.isAlive() && !becameAlly) {
 					int dmg = ((Hero) attacker).subClass == HeroSubClass.PALADIN ? 6 : 2;
-					defender.damage(Math.round(dmg * Enchantment.genericProcChanceMultiplier(attacker)), HolyWeapon.INSTANCE);
+					Math.round(dmg * Enchantment.genericProcChanceMultiplier(attacker));
 				}
 
 			} else {

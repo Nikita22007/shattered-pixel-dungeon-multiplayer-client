@@ -354,16 +354,16 @@ public class ElementalStrike extends ArmorAbility {
 		//*** no enchantment ***
 		if (ench == null) {
 			for (Char ch : affected){
-				ch.damage(Math.round(powerMulti* Hero.heroDamageIntRange(6, 12)), ElementalStrike.this);
-			}
+                Math.round(powerMulti * Hero.heroDamageIntRange(6, 12));
+            }
 
 		//*** Kinetic ***
 		} else if (ench instanceof Kinetic){
 			if (storedKineticDamage > 0) {
 				for (Char ch : affected) {
 					if (ch != primaryTarget) {
-						ch.damage(Math.round(storedKineticDamage * 0.4f * powerMulti), ench);
-					}
+                        Math.round(storedKineticDamage * 0.4f * powerMulti);
+                    }
 				}
 				storedKineticDamage = 0;
 			}
@@ -417,8 +417,8 @@ public class ElementalStrike extends ArmorAbility {
 		} else if (ench instanceof Projecting){
 			for (Char ch : affected){
 				if (ch != primaryTarget) {
-					ch.damage(Math.round(hero.damageRoll() * 0.3f * powerMulti), ench);
-				}
+                    Math.round(hero.damageRoll() * 0.3f * powerMulti);
+                }
 			}
 
 		//*** Unstable ***
@@ -450,8 +450,7 @@ public class ElementalStrike extends ArmorAbility {
 					float hpMissing = 1f - (ch.HP / (float)ch.HT);
 					float chance = 0.06f + 0.24f*hpMissing; //6-30%
 					if (Random.Float() < chance*powerMulti){
-						ch.damage( ch.HP, Grim.class );
-						ch.sprite.emitter().burst( ShadowParticle.UP, 5 );
+                        ch.sprite.emitter().burst( ShadowParticle.UP, 5 );
 					}
 				}
 			}
@@ -512,8 +511,7 @@ public class ElementalStrike extends ArmorAbility {
 		} else if (ench instanceof Polarized){
 			for (Char ch : affected){
 				if (Random.Float() < 0.5f*powerMulti){
-					ch.damage(Hero.heroDamageIntRange(24, 36), ElementalStrike.this);
-				}
+                }
 			}
 
 		//*** Friendly ***

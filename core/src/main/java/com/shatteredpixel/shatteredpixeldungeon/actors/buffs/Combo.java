@@ -388,8 +388,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 							int aoeHit = Math.round(target.damageRoll() * 0.25f * count);
 							aoeHit /= 2;
 							aoeHit -= ch.drRoll();
-							ch.damage(aoeHit, target);
-							ch.sprite.bloodBurstA(target.sprite.center(), aoeHit);
+                            ch.sprite.bloodBurstA(target.sprite.center(), aoeHit);
 							ch.sprite.flash();
 
 							if (!ch.isAlive() && hero.hasTalent(Talent.LETHAL_DEFENSE)) {

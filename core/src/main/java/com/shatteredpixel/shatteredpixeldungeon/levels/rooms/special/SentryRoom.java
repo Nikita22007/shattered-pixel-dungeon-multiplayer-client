@@ -46,83 +46,78 @@ import com.watabou.utils.Random;
 
 public class SentryRoom {
 
-	public static class Sentry extends NPC {
+    public static class Sentry extends NPC {
 
-		{
-			spriteClass = SentrySprite.class;
+        {
+            spriteClass = SentrySprite.class;
 
-			properties.add(Property.IMMOVABLE);
-		}
+            properties.add(Property.IMMOVABLE);
+        }
 
-		private float initialChargeDelay;
-		private float curChargeDelay;
+        private float initialChargeDelay;
+        private float curChargeDelay;
 
-		@Override
-		protected boolean act() {
-			return true;
-		}
+        @Override
+        protected boolean act() {
+            return true;
+        }
 
-		public void onZapComplete(){
-			if (hit(this, Dungeon.hero, true)) {
-				Dungeon.hero.damage(Random.NormalIntRange(2 + Dungeon.depth / 2, 4 + Dungeon.depth), new Eye.DeathGaze());
-				if (!Dungeon.hero.isAlive()) {
-					Badges.validateDeathFromEnemyMagic();
-					Dungeon.fail(this);
-					GLog.n(Messages.capitalize(Messages.get(Char.class, "kill", name())));
-				}
-			} else {
-				Dungeon.hero.sprite.showStatus( CharSprite.NEUTRAL,  Dungeon.hero.defenseVerb() );
-			}
-		}
+        public void onZapComplete() {
+            if (hit(this, Dungeon.hero, true)) {
+                Random.NormalIntRange(2 + Dungeon.depth / 2, 4 + Dungeon.depth);
+                if (!Dungeon.hero.isAlive()) {
+                    Badges.validateDeathFromEnemyMagic();
+                    Dungeon.fail(this);
+                    GLog.n(Messages.capitalize(Messages.get(Char.class, "kill", name())));
+                }
+            } else {
+                Dungeon.hero.sprite.showStatus(CharSprite.NEUTRAL, Dungeon.hero.defenseVerb());
+            }
+        }
 
-		@Override
-		public int attackSkill(Char target) {
-			return 20 + Dungeon.depth * 2;
-		}
+        @Override
+        public int attackSkill(Char target) {
+            return 20 + Dungeon.depth * 2;
+        }
 
-		@Override
-		public int defenseSkill( Char enemy ) {
-			return INFINITE_EVASION;
-		}
+        @Override
+        public int defenseSkill(Char enemy) {
+            return INFINITE_EVASION;
+        }
 
-		@Override
-		public void damage( int dmg, Object src ) {
-			//do nothing
-		}
+        @Override
+        public boolean add(Buff buff) {
+            return false;
+        }
 
-		@Override
-		public boolean add( Buff buff ) {
-			return false;
-		}
+        @Override
+        public boolean reset() {
+            return true;
+        }
 
-		@Override
-		public boolean reset() {
-			return true;
-		}
+        @Override
+        public boolean interact(Char c) {
+            return true;
+        }
 
-		@Override
-		public boolean interact(Char c) {
-			return true;
-		}
+        private static final String INITIAL_DELAY = "initial_delay";
+        private static final String CUR_DELAY = "cur_delay";
+        private static final String ROOM = "room";
 
-		private static final String INITIAL_DELAY = "initial_delay";
-		private static final String CUR_DELAY = "cur_delay";
-		private static final String ROOM = "room";
+        @Override
+        public void storeInBundle(Bundle bundle) {
+            super.storeInBundle(bundle);
+            bundle.put(INITIAL_DELAY, initialChargeDelay);
+            bundle.put(CUR_DELAY, curChargeDelay);
+        }
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(INITIAL_DELAY, initialChargeDelay);
-			bundle.put(CUR_DELAY, curChargeDelay);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			initialChargeDelay = bundle.getFloat(INITIAL_DELAY);
-			curChargeDelay = bundle.getFloat(CUR_DELAY);
-		}
-	}
+        @Override
+        public void restoreFromBundle(Bundle bundle) {
+            super.restoreFromBundle(bundle);
+            initialChargeDelay = bundle.getFloat(INITIAL_DELAY);
+            curChargeDelay = bundle.getFloat(CUR_DELAY);
+        }
+    }
 
 	public static class SentrySprite extends MobSprite {
 

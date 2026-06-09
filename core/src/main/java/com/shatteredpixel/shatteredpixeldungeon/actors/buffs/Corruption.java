@@ -54,8 +54,8 @@ public class Corruption extends AllyBuff {
 		int damage = (int)buildToDamage;
 		buildToDamage -= damage;
 
-		if (damage > 0)
-			target.damage(damage, this);
+		if (damage > 0) {
+        }
 
 		spend(TICK);
 

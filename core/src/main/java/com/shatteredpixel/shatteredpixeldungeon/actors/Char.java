@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Electricity;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.StormCloud;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ToxicGas;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
@@ -38,17 +37,14 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corrosion;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LifeLink;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Sleep;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Slow;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Speed;
@@ -64,20 +60,16 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.*;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.MirrorImage;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.PrismaticImage;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
-import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.curses.Bulk;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.AntiMagic;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Brimstone;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Flow;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Obfuscation;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Potential;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Swiftness;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Viscosity;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
-import com.shatteredpixel.shatteredpixeldungeon.items.quest.Pickaxe;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfElements;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
@@ -97,7 +89,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Shoc
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Door;
-import com.shatteredpixel.shatteredpixeldungeon.levels.traps.GeyserTrap;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.GnollRockfallTrap;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.GrimTrap;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Languages;
@@ -398,15 +389,12 @@ public abstract class Char extends Actor {
 				return true;
 			}
 
-			enemy.damage(effectiveDamage, this);
-
 			if (enemy.isAlive() && enemy.alignment != alignment && prep != null && prep.canKO(enemy)) {
 				enemy.HP = 0;
 				if (!enemy.isAlive()) {
 					enemy.die(this);
 				} else {
 					//helps with triggering any on-damage effects that need to activate
-					enemy.damage(-1, this);
 					DeathMark.processFearTheReaper(enemy);
 				}
 				if (enemy.sprite != null) {
@@ -424,7 +412,6 @@ public abstract class Char extends Actor {
 						enemy.die(this);
 					} else {
 						//helps with triggering any on-damage effects that need to activate
-						enemy.damage(-1, this);
 						DeathMark.processFearTheReaper(enemy);
 					}
 					if (enemy.sprite != null) {
@@ -652,155 +639,6 @@ public abstract class Char extends Actor {
 	
 	public int shielding(){
 		return shielding;
-	}
-	
-	public void damage( int dmg, Object src ) {
-
-		if (!isAlive() || dmg < 0) {
-			return;
-		}
-
-		if (isInvulnerable(src.getClass())) {
-			sprite.showStatus(CharSprite.POSITIVE, Messages.get(this, "invulnerable"));
-			return;
-		}
-
-		if (!(src instanceof LifeLink || src instanceof Hunger)) {
-		}
-
-		//temporarily assign to a float to avoid rounding a bunch
-		float damage = dmg;
-
-		//if dmg is from a character we already reduced it in Char.attack
-		if (!(src instanceof Char)) {
-			if (Dungeon.hero.alignment == alignment) {
-			}
-		}
-
-		Terror t = null;
-		if (t != null) {
-			t.recover();
-		}
-		Dread d = null;
-		if (d != null) {
-			d.recover();
-		}
-		Charm c = null;
-		if (c != null) {
-			c.recover(src);
-		}
-		if (alignment != Alignment.ALLY) {
-		}
-
-		Class<?> srcClass = src.getClass();
-		if (isImmune(srcClass)) {
-			damage = 0;
-		} else {
-			damage *= resist(srcClass);
-		}
-
-		dmg = Math.round(damage);
-
-		//we ceil these specifically to favor the player vs. champ dmg reduction
-		// most important vs. giant champions in the earlygame
-		for (ChampionEnemy buff : new HashSet<ChampionEnemy>()) {
-			dmg = (int) Math.ceil(dmg * buff.damageTakenFactor());
-		}
-
-		//TODO improve this when I have proper damage source logic
-		if (AntiMagic.RESISTS.contains(src.getClass())) {
-			dmg -= AntiMagic.drRoll(this, glyphLevel(AntiMagic.class));
-			if (dmg < 0) dmg = 0;
-		}
-
-		BrokenSeal.WarriorShield shield = null;
-		if (!(src instanceof Hunger)
-				&& dmg > 0
-				//either HP is already half or below (ignoring shield)
-				// or the hit will reduce it to half or below
-				&& (HP <= HT / 2 || HP + shielding() - dmg <= HT / 2)
-				&& shield != null && !shield.coolingDown()) {
-			sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(((BrokenSeal.WarriorShield) null).maxShield()), FloatingText.SHIELDING);
-			shield.activate();
-		}
-
-		int shielded = dmg;
-		dmg = ShieldBuff.processDamage(this, dmg, src);
-		shielded -= dmg;
-		HP -= dmg;
-
-		if (HP > 0) {
-		}
-
-		if (HP < 0 && src instanceof Char && alignment == Alignment.ENEMY) {
-		}
-
-		if (sprite != null) {
-			//defaults to normal damage icon if no other ones apply
-			int icon = FloatingText.PHYS_DMG;
-			if (NO_ARMOR_PHYSICAL_SOURCES.contains(src.getClass())) icon = FloatingText.PHYS_DMG_NO_BLOCK;
-			if (AntiMagic.RESISTS.contains(src.getClass())) icon = FloatingText.MAGIC_DMG;
-			if (src instanceof Pickaxe) icon = FloatingText.PICK_DMG;
-
-			//special case for sniper when using ranged attacks
-			if (src == Dungeon.hero
-					&& Dungeon.hero.subClass == HeroSubClass.SNIPER
-					&& !Dungeon.level.adjacent(Dungeon.hero.pos, pos)
-					&& Dungeon.hero.belongings.attackingWeapon() instanceof MissileWeapon) {
-				icon = FloatingText.PHYS_DMG_NO_BLOCK;
-			}
-
-			//special case for monk using unarmed abilities
-			if (src == Dungeon.hero) {
-			}
-
-			if (src instanceof Hunger) icon = FloatingText.HUNGER;
-			if (src instanceof Burning) icon = FloatingText.BURNING;
-			if (src instanceof Chill || src instanceof Frost) icon = FloatingText.FROST;
-			if (src instanceof GeyserTrap || src instanceof StormCloud) icon = FloatingText.WATER;
-			if (src instanceof Burning) icon = FloatingText.BURNING;
-			if (src instanceof Electricity) icon = FloatingText.SHOCKING;
-			if (src instanceof Bleeding) icon = FloatingText.BLEEDING;
-			if (src instanceof ToxicGas) icon = FloatingText.TOXIC;
-			if (src instanceof Corrosion) icon = FloatingText.CORROSION;
-			if (src instanceof Poison) icon = FloatingText.POISON;
-			if (src instanceof Ooze) icon = FloatingText.OOZE;
-			if (src instanceof Viscosity.DeferedDamage) icon = FloatingText.DEFERRED;
-			if (src instanceof Corruption) icon = FloatingText.CORRUPTION;
-			if (src instanceof AscensionChallenge) icon = FloatingText.AMULET;
-
-			if ((icon == FloatingText.PHYS_DMG || icon == FloatingText.PHYS_DMG_NO_BLOCK) && hitMissIcon != -1) {
-				if (icon == FloatingText.PHYS_DMG_NO_BLOCK) hitMissIcon += 18; //extra row
-				icon = hitMissIcon;
-			}
-			hitMissIcon = -1;
-
-			sprite.showStatusWithIcon(CharSprite.NEGATIVE, Integer.toString(dmg + shielded), icon);
-		}
-
-		if (HP < 0) HP = 0;
-
-		if (!isAlive()) {
-			die(src);
-		} else {
-			if (HP == 0) {
-			}
-		}
-	}
-
-	//these are misc. sources of physical damage which do not apply armor, they get a different icon
-	private static HashSet<Class> NO_ARMOR_PHYSICAL_SOURCES = new HashSet<>();
-	{
-		NO_ARMOR_PHYSICAL_SOURCES.add(CrystalSpire.SpireSpike.class);
-		NO_ARMOR_PHYSICAL_SOURCES.add(GnollGeomancer.Boulder.class);
-		NO_ARMOR_PHYSICAL_SOURCES.add(GnollGeomancer.GnollRockFall.class);
-		NO_ARMOR_PHYSICAL_SOURCES.add(GnollRockfallTrap.class);
-		NO_ARMOR_PHYSICAL_SOURCES.add(LifeLink.class);
-		NO_ARMOR_PHYSICAL_SOURCES.add(Chasm.class);
-		NO_ARMOR_PHYSICAL_SOURCES.add(WandOfBlastWave.Knockback.class);
-		NO_ARMOR_PHYSICAL_SOURCES.add(Heap.class); //damage from wraiths attempting to spawn from heaps
-		NO_ARMOR_PHYSICAL_SOURCES.add(Necromancer.SummoningBlockDamage.class);
-		NO_ARMOR_PHYSICAL_SOURCES.add(DriedRose.GhostHero.NoRoseDamage.class);
 	}
 	
 	public void destroy() {

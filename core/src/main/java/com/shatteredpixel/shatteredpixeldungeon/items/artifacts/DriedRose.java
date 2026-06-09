@@ -471,20 +471,20 @@ public class DriedRose extends Artifact {
 			spriteClass = GhostSprite.class;
 
 			flying = true;
-			
+
 			state = HUNTING;
-			
+
 			properties.add(Property.UNDEAD);
 			properties.add(Property.INORGANIC);
 		}
-		
+
 		private DriedRose rose = null;
-		
-		public GhostHero(){
+
+		public GhostHero() {
 			super();
 		}
 
-		public GhostHero(DriedRose rose){
+		public GhostHero(DriedRose rose) {
 			super();
 			this.rose = rose;
 			updateRose();
@@ -509,7 +509,7 @@ public class DriedRose extends Artifact {
 			super.targetChar(ch);
 		}
 
-		private void updateRose(){
+		private void updateRose() {
 			if (rose == null) {
 				rose = Dungeon.hero.belongings.getItem(DriedRose.class);
 				if (rose != null) {
@@ -517,79 +517,79 @@ public class DriedRose extends Artifact {
 					rose.ghostID = id();
 				}
 			}
-			
+
 			//same dodge as the hero
-			defenseSkill = (Dungeon.hero.lvl+4);
+			defenseSkill = (Dungeon.hero.lvl + 4);
 			if (rose == null) return;
-			HT = 20 + 8*rose.level();
+			HT = 20 + 8 * rose.level();
 		}
 
-		public Weapon weapon(){
-			if (rose != null)   return rose.weapon;
-			else                return null;
+		public Weapon weapon() {
+			if (rose != null) return rose.weapon;
+			else return null;
 		}
 
-		public Armor armor(){
-			if (rose != null)   return rose.armor;
-			else                return null;
+		public Armor armor() {
+			if (rose != null) return rose.armor;
+			else return null;
 		}
 
 		@Override
 		protected boolean act() {
 			updateRose();
-            if (rose == null
+			if (rose == null
 					|| !rose.isEquipped(Dungeon.hero)
-					|| false){
-				damage(1, new NoRoseDamage());
+					|| false) {
 			}
-			
+
 			if (!isAlive()) {
 				return true;
 			}
 			return super.act();
 		}
 
-		public static class NoRoseDamage{}
+		public static class NoRoseDamage {
+		}
 
 		@Override
 		public int attackSkill(Char target) {
-			
+
 			//same accuracy as the hero.
 			int acc = Dungeon.hero.lvl + 9;
-			
-			if (weapon() != null){
-				acc *= weapon().accuracyFactor( this, target );
+
+			if (weapon() != null) {
+				acc *= weapon().accuracyFactor(this, target);
 			}
-			
+
 			return acc;
 		}
-		
+
 		@Override
 		public float attackDelay() {
 			float delay = super.attackDelay();
-			if (weapon() != null){
+			if (weapon() != null) {
 				delay *= weapon().delayFactor(this);
 			}
 			return delay;
 		}
-		
+
 		@Override
 		protected boolean canAttack(Char enemy) {
 			return super.canAttack(enemy) || (weapon() != null && weapon().canReach(this, enemy.pos));
 		}
-		
+
 		@Override
 		public int damageRoll() {
 			int dmg = 0;
-			if (weapon() != null){
+			if (weapon() != null) {
 				dmg += weapon().damageRoll(this);
 			} else {
 				dmg += Random.NormalIntRange(0, 5);
 			}
-			
+
 			return dmg;
 		}
-		
+
 		@Override
 		public int attackProc(Char enemy, int damage) {
 			damage = super.attackProc(enemy, damage);
@@ -604,23 +604,15 @@ public class DriedRose extends Artifact {
 
 			return damage;
 		}
-		
+
 		@Override
 		public int defenseProc(Char enemy, int damage) {
 			if (armor() != null) {
-				damage = armor().proc( enemy, this, damage );
+				damage = armor().proc(enemy, this, damage);
 			}
 			return super.defenseProc(enemy, damage);
 		}
-		
-		@Override
-		public void damage(int dmg, Object src) {
-			super.damage( dmg, src );
-			
-			//for the rose status indicator
-			Item.updateQuickslot();
-		}
-		
+
 		@Override
 		public float speed() {
 			float speed = super.speed();
@@ -628,39 +620,39 @@ public class DriedRose extends Artifact {
 			//moves 2 tiles at a time when returning to the hero
 			if (state == WANDERING
 					&& defendingPos == -1
-					&& Dungeon.level.distance(pos, Dungeon.hero.pos) > 1){
+					&& Dungeon.level.distance(pos, Dungeon.hero.pos) > 1) {
 				speed *= 2;
 			}
-			
+
 			return speed;
 		}
-		
+
 		@Override
 		public int defenseSkill(Char enemy) {
 			int defense = super.defenseSkill(enemy);
 
-			if (defense != 0 && armor() != null ){
-				defense = Math.round(armor().evasionFactor( this, defense ));
+			if (defense != 0 && armor() != null) {
+				defense = Math.round(armor().evasionFactor(this, defense));
 			}
-			
+
 			return defense;
 		}
-		
+
 		@Override
 		public int drRoll() {
 			int dr = super.drRoll();
-			if (armor() != null){
-				dr += Random.NormalIntRange( armor().DRMin(), armor().DRMax());
+			if (armor() != null) {
+				dr += Random.NormalIntRange(armor().DRMin(), armor().DRMax());
 			}
-			if (weapon() != null){
-				dr += Random.NormalIntRange( 0, weapon().defenseFactor( this ));
+			if (weapon() != null) {
+				dr += Random.NormalIntRange(0, weapon().defenseFactor(this));
 			}
 			return dr;
 		}
 
 		@Override
 		public int glyphLevel(Class<? extends Armor.Glyph> cls) {
-			if (armor() != null && armor().hasGlyph(cls, this)){
+			if (armor() != null && armor().hasGlyph(cls, this)) {
 				return Math.max(super.glyphLevel(cls), armor().buffedLvl());
 			} else {
 				return super.glyphLevel(cls);
@@ -670,12 +662,12 @@ public class DriedRose extends Artifact {
 		@Override
 		public boolean interact(Char c) {
 			updateRose();
-			if (c instanceof Hero && rose != null && !rose.talkedTo){
+			if (c instanceof Hero && rose != null && !rose.talkedTo) {
 				rose.talkedTo = true;
 				Game.runOnRenderThread(new Callback() {
 					@Override
 					public void call() {
-						GameScene.show(new WndQuest(GhostHero.this, Messages.get(GhostHero.this, "introduce") ));
+						GameScene.show(new WndQuest(GhostHero.this, Messages.get(GhostHero.this, "introduce")));
 					}
 				});
 				return true;
@@ -702,87 +694,88 @@ public class DriedRose extends Artifact {
 			}
 			super.destroy();
 		}
-		
+
 		public void sayAppeared() {
-            {
-                int depth = (Dungeon.depth - 1) / 5;
+			{
+				int depth = (Dungeon.depth - 1) / 5;
 
-                //only some lines are said on the first floor of a depth
-                int variant = Dungeon.depth % 5 == 1 ? Random.IntRange(1, 3) : Random.IntRange(1, 6);
+				//only some lines are said on the first floor of a depth
+				int variant = Dungeon.depth % 5 == 1 ? Random.IntRange(1, 3) : Random.IntRange(1, 6);
 
-                switch (depth) {
-                    case 0:
-                        yell(Messages.get(this, "dialogue_sewers_" + variant));
-                        break;
-                    case 1:
-                        yell(Messages.get(this, "dialogue_prison_" + variant));
-                        break;
-                    case 2:
-                        yell(Messages.get(this, "dialogue_caves_" + variant));
-                        break;
-                    case 3:
-                        yell(Messages.get(this, "dialogue_city_" + variant));
-                        break;
-                    case 4:
-                    default:
-                        yell(Messages.get(this, "dialogue_halls_" + variant));
-                        break;
-                }
-            }
-            if (ShatteredPixelDungeon.scene() instanceof GameScene) {
-                Sample.INSTANCE.play(Assets.Sounds.GHOST);
-            }
-        }
-		
-		public void sayBoss(){
+				switch (depth) {
+					case 0:
+						yell(Messages.get(this, "dialogue_sewers_" + variant));
+						break;
+					case 1:
+						yell(Messages.get(this, "dialogue_prison_" + variant));
+						break;
+					case 2:
+						yell(Messages.get(this, "dialogue_caves_" + variant));
+						break;
+					case 3:
+						yell(Messages.get(this, "dialogue_city_" + variant));
+						break;
+					case 4:
+					default:
+						yell(Messages.get(this, "dialogue_halls_" + variant));
+						break;
+				}
+			}
+			if (ShatteredPixelDungeon.scene() instanceof GameScene) {
+				Sample.INSTANCE.play(Assets.Sounds.GHOST);
+			}
+		}
+
+		public void sayBoss() {
 			int depth = (Dungeon.depth - 1) / 5;
-			
-			switch(depth){
+
+			switch (depth) {
 				case 0:
-					yell( Messages.get( this, "seen_goo_" + Random.IntRange(1, 3) ));
+					yell(Messages.get(this, "seen_goo_" + Random.IntRange(1, 3)));
 					break;
 				case 1:
-					yell( Messages.get( this, "seen_tengu_" + Random.IntRange(1, 3) ));
+					yell(Messages.get(this, "seen_tengu_" + Random.IntRange(1, 3)));
 					break;
 				case 2:
-					yell( Messages.get( this, "seen_dm300_" + Random.IntRange(1, 3) ));
+					yell(Messages.get(this, "seen_dm300_" + Random.IntRange(1, 3)));
 					break;
 				case 3:
-					yell( Messages.get( this, "seen_king_" + Random.IntRange(1, 3) ));
+					yell(Messages.get(this, "seen_king_" + Random.IntRange(1, 3)));
 					break;
-				case 4: default:
-					yell( Messages.get( this, "seen_yog_" + Random.IntRange(1, 3) ));
+				case 4:
+				default:
+					yell(Messages.get(this, "seen_yog_" + Random.IntRange(1, 3)));
 					break;
 			}
-			Sample.INSTANCE.play( Assets.Sounds.GHOST );
+			Sample.INSTANCE.play(Assets.Sounds.GHOST);
 		}
-		
-		public void sayDefeated(){
-			if (BossHealthBar.isAssigned()){
-				yell( Messages.get( this, "defeated_by_boss_" + Random.IntRange(1, 3) ));
+
+		public void sayDefeated() {
+			if (BossHealthBar.isAssigned()) {
+				yell(Messages.get(this, "defeated_by_boss_" + Random.IntRange(1, 3)));
 			} else {
-				yell( Messages.get( this, "defeated_by_enemy_" + Random.IntRange(1, 3) ));
+				yell(Messages.get(this, "defeated_by_enemy_" + Random.IntRange(1, 3)));
 			}
-			Sample.INSTANCE.play( Assets.Sounds.GHOST );
+			Sample.INSTANCE.play(Assets.Sounds.GHOST);
 		}
-		
-		public void sayHeroKilled(){
-			yell( Messages.get( this, "player_killed_" + Random.IntRange(1, 3) ));
+
+		public void sayHeroKilled() {
+			yell(Messages.get(this, "player_killed_" + Random.IntRange(1, 3)));
 			GLog.newLine();
-			Sample.INSTANCE.play( Assets.Sounds.GHOST );
+			Sample.INSTANCE.play(Assets.Sounds.GHOST);
 		}
-		
-		public void sayAnhk(){
-			yell( Messages.get( this, "blessed_ankh_" + Random.IntRange(1, 3) ));
-			Sample.INSTANCE.play( Assets.Sounds.GHOST );
+
+		public void sayAnhk() {
+			yell(Messages.get(this, "blessed_ankh_" + Random.IntRange(1, 3)));
+			Sample.INSTANCE.play(Assets.Sounds.GHOST);
 		}
-		
+
 		{
-			immunities.add( CorrosiveGas.class );
-			immunities.add( Burning.class );
-			immunities.add( ScrollOfRetribution.class );
-			immunities.add( ScrollOfPsionicBlast.class );
-			immunities.add( AllyBuff.class );
+			immunities.add(CorrosiveGas.class);
+			immunities.add(Burning.class);
+			immunities.add(ScrollOfRetribution.class);
+			immunities.add(ScrollOfPsionicBlast.class);
+			immunities.add(AllyBuff.class);
 		}
 
 	}

@@ -96,8 +96,7 @@ public class WornDartTrap extends Trap {
 									@Override
 									public void call() {
 										int dmg = Random.NormalIntRange(4, 8) - finalTarget.drRoll();
-										finalTarget.damage(dmg, WornDartTrap.this);
-										if (finalTarget instanceof Hero && !finalTarget.isAlive()){
+                                        if (finalTarget instanceof Hero && !finalTarget.isAlive()){
 											Dungeon.fail( WornDartTrap.this  );
 											GLog.n(Messages.get(WornDartTrap.class, "ondeath"));
 											if (reclaimed) Badges.validateDeathFromFriendlyMagic();
@@ -110,8 +109,9 @@ public class WornDartTrap extends Trap {
 								});
 						return false;
 					} else {
-						finalTarget.damage(Random.NormalIntRange(4, 8) - finalTarget.drRoll(), WornDartTrap.this);
-						return true;
+                        Random.NormalIntRange(4, 8);
+                        finalTarget.drRoll();
+                        return true;
 					}
 				} else {
 					return true;

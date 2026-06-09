@@ -82,9 +82,8 @@ public class GnollRockfallTrap extends RockfallTrap {
 
 				//deals notably less damage than a regular rockfall trap, but ignores armor
 				int damage = Random.NormalIntRange(6, 12);
-				ch.damage( Math.max(damage, 0) , this);
 
-				//guards take full paralysis, otherwise just a little
+                //guards take full paralysis, otherwise just a little
 
                 if (!ch.isAlive() && ch == Dungeon.hero){
 					Dungeon.fail( this );

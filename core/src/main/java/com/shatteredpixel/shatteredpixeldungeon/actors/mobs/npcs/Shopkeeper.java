@@ -79,36 +79,31 @@ public class Shopkeeper extends NPC {
 	@Override
 	protected boolean act() {
 
-		if (turnsSinceHarmed >= 0){
-			turnsSinceHarmed ++;
+		if (turnsSinceHarmed >= 0) {
+			turnsSinceHarmed++;
 		}
 
-		sprite.turnTo( pos, Dungeon.hero.pos );
-		spend( TICK );
+		sprite.turnTo(pos, Dungeon.hero.pos);
+		spend(TICK);
 		return super.act();
 	}
-	
+
 	@Override
-	public void damage( int dmg, Object src ) {
-		processHarm();
-	}
-	
-	@Override
-	public boolean add( Buff buff ) {
-		if (buff.type == Buff.buffType.NEGATIVE){
+	public boolean add(Buff buff) {
+		if (buff.type == Buff.buffType.NEGATIVE) {
 			processHarm();
 		}
 		return false;
 	}
 
-	public void processHarm(){
+	public void processHarm() {
 
 		//do nothing if the shopkeeper is out of the hero's FOV
-		if (!Dungeon.level.heroFOV[pos]){
+		if (!Dungeon.level.heroFOV[pos]) {
 			return;
 		}
 
-		if (turnsSinceHarmed == -1){
+		if (turnsSinceHarmed == -1) {
 			turnsSinceHarmed = 0;
 			yell(Messages.get(this, "warn"));
 
@@ -122,16 +117,16 @@ public class Shopkeeper extends NPC {
 				protected boolean act() {
 					//cleanses all harmful blobs in the shop
 					ArrayList<Blob> blobs = new ArrayList<>();
-					for (Class c : new BlobImmunity().immunities()){
+					for (Class c : new BlobImmunity().immunities()) {
 						Blob b = Dungeon.level.blobs.get(c);
-						if (b != null && b.volume > 0){
+						if (b != null && b.volume > 0) {
 							blobs.add(b);
 						}
 					}
 
-					PathFinder.buildDistanceMap( pos, BArray.not( Dungeon.level.solid, null ), 4 );
+					PathFinder.buildDistanceMap(pos, BArray.not(Dungeon.level.solid, null), 4);
 
-					for (int i=0; i < Dungeon.level.length(); i++) {
+					for (int i = 0; i < Dungeon.level.length(); i++) {
 						if (PathFinder.distance[i] < Integer.MAX_VALUE) {
 
 							boolean affected = false;
@@ -143,7 +138,7 @@ public class Shopkeeper extends NPC {
 							}
 
 							if (affected && Dungeon.level.heroFOV[i]) {
-								CellEmitter.get( i ).burst( Speck.factory( Speck.DISCOVER ), 2 );
+								CellEmitter.get(i).burst(Speck.factory(Speck.DISCOVER), 2);
 							}
 
 						}
@@ -153,17 +148,17 @@ public class Shopkeeper extends NPC {
 				}
 			});
 
-		//There is a 1 turn buffer before more damage/debuffs make the shopkeeper flee
-		//This is mainly to prevent stacked effects from causing an instant flee
+			//There is a 1 turn buffer before more damage/debuffs make the shopkeeper flee
+			//This is mainly to prevent stacked effects from causing an instant flee
 		} else if (turnsSinceHarmed >= 1) {
 			flee();
 		}
 	}
-	
+
 	public void flee() {
 		destroy();
 
-		Notes.remove( landmark() );
+		Notes.remove(landmark());
 		GLog.newLine();
 		GLog.n(Messages.get(this, "flee"));
 
@@ -172,11 +167,11 @@ public class Shopkeeper extends NPC {
 			CellEmitter.get(pos).burst(ElmoParticle.FACTORY, 6);
 		}
 	}
-	
+
 	@Override
 	public void destroy() {
 		super.destroy();
-		for (Heap heap: Dungeon.level.heaps.valueList()) {
+		for (Heap heap : Dungeon.level.heaps.valueList()) {
 			if (heap.type == Heap.Type.FOR_SALE) {
 				if (ShatteredPixelDungeon.scene() instanceof GameScene) {
 					CellEmitter.get(heap.pos).burst(ElmoParticle.FACTORY, 4);
@@ -184,32 +179,32 @@ public class Shopkeeper extends NPC {
 				if (heap.size() == 1) {
 					heap.destroy();
 				} else {
-					heap.items.remove(heap.size()-1);
+					heap.items.remove(heap.size() - 1);
 					heap.type = Heap.Type.HEAP;
 				}
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean reset() {
 		return true;
 	}
 
 	//shopkeepers are greedy!
-	public static int sellPrice(Item item){
+	public static int sellPrice(Item item) {
 		return item.value() * 5 * (Dungeon.depth / 5 + 1);
 	}
-	
+
 	public static WndBag sell() {
-		return GameScene.selectItem( itemSelector );
+		return GameScene.selectItem(itemSelector);
 	}
 
-	public static boolean canSell(Item item){
-		if (item.value() <= 0)                                              return false;
-		if (item.unique && !item.stackable)                                 return false;
-		if (item instanceof Armor && ((Armor) item).checkSeal() != null)    return false;
-		if (item.isEquipped(Dungeon.hero) && item.cursed)                   return false;
+	public static boolean canSell(Item item) {
+		if (item.value() <= 0) return false;
+		if (item.unique && !item.stackable) return false;
+		if (item instanceof Armor && ((Armor) item).checkSeal() != null) return false;
+		if (item.isEquipped(Dungeon.hero) && item.cursed) return false;
 		return true;
 	}
 
@@ -225,10 +220,10 @@ public class Shopkeeper extends NPC {
 		}
 
 		@Override
-		public void onSelect( Item item ) {
+		public void onSelect(Item item) {
 			if (item != null) {
 				WndBag parentWnd = sell();
-				GameScene.show( new WndTradeItem( item, parentWnd ) );
+				GameScene.show(new WndTradeItem(item, parentWnd));
 			}
 		}
 	};
@@ -241,34 +236,34 @@ public class Shopkeeper extends NPC {
 		Game.runOnRenderThread(new Callback() {
 			@Override
 			public void call() {
-				String[] options = new String[2+ buybackItems.size()];
+				String[] options = new String[2 + buybackItems.size()];
 				int maxLen = PixelScene.landscape() ? 30 : 25;
 				int i = 0;
 				options[i++] = Messages.get(Shopkeeper.this, "sell");
 				options[i++] = Messages.get(Shopkeeper.this, "talk");
-				for (Item item : buybackItems){
+				for (Item item : buybackItems) {
 					options[i] = Messages.get(Heap.class, "for_sale", item.value(), Messages.titleCase(item.title()));
-					if (options[i].length() > maxLen) options[i] = options[i].substring(0, maxLen-3) + "...";
+					if (options[i].length() > maxLen) options[i] = options[i].substring(0, maxLen - 3) + "...";
 					i++;
 				}
 				CurrencyIndicator.showGold = true;
-				GameScene.show(new WndOptions(sprite(), Messages.titleCase(name()), description(), options){
+				GameScene.show(new WndOptions(sprite(), Messages.titleCase(name()), description(), options) {
 					@Override
 					protected void onSelect(int index) {
 						super.onSelect(index);
-						if (index == 0){
+						if (index == 0) {
 							sell();
-						} else if (index == 1){
+						} else if (index == 1) {
 							GameScene.show(new WndTitledMessage(sprite(), Messages.titleCase(name()), chatText()));
-						} else if (index > 1){
+						} else if (index > 1) {
 							GLog.i(Messages.get(Shopkeeper.this, "buyback"));
-							Item returned = buybackItems.remove(index-2);
+							Item returned = buybackItems.remove(index - 2);
 							Dungeon.hero.gold -= returned.value();
 							Statistics.goldCollected -= returned.value();
-							if (returned instanceof MissileWeapon && returned.isUpgradable()){
+							if (returned instanceof MissileWeapon && returned.isUpgradable()) {
 								//Buff.affect(Dungeon.hero, MissileWeapon.UpgradedSetTracker.class).levelThresholds.put(((MissileWeapon) returned).setID, returned.level());
 							}
-							if (!returned.doPickUp(Dungeon.hero)){
+							if (!returned.doPickUp(Dungeon.hero)) {
 								Dungeon.level.drop(returned, Dungeon.hero.pos);
 							}
 						}
@@ -276,8 +271,8 @@ public class Shopkeeper extends NPC {
 
 					@Override
 					protected boolean enabled(int index) {
-						if (index > 1){
-							return Dungeon.hero.gold >= buybackItems.get(index-2).value();
+						if (index > 1) {
+							return Dungeon.hero.gold >= buybackItems.get(index - 2).value();
 						} else {
 							return super.enabled(index);
 						}
@@ -290,8 +285,8 @@ public class Shopkeeper extends NPC {
 
 					@Override
 					protected Image getIcon(int index) {
-						if (index > 1){
-							return new ItemSprite(buybackItems.get(index-2));
+						if (index > 1) {
+							return new ItemSprite(buybackItems.get(index - 2));
 						}
 						return null;
 					}
@@ -308,18 +303,18 @@ public class Shopkeeper extends NPC {
 	}
 
 	public String chatText() {
-        switch (Dungeon.depth) {
-            case 6:
-            default:
-                return Messages.get(this, "talk_prison_intro") + "\n\n" + Messages.get(this, "talk_prison_" + Dungeon.hero.heroClass.name());
-            case 11:
-                return Messages.get(this, "talk_caves");
-            case 16:
-                return Messages.get(this, "talk_city");
-            case 20:
-                return Messages.get(this, "talk_halls");
-        }
-    }
+		switch (Dungeon.depth) {
+			case 6:
+			default:
+				return Messages.get(this, "talk_prison_intro") + "\n\n" + Messages.get(this, "talk_prison_" + Dungeon.hero.heroClass.name());
+			case 11:
+				return Messages.get(this, "talk_caves");
+			case 16:
+				return Messages.get(this, "talk_city");
+			case 20:
+				return Messages.get(this, "talk_halls");
+		}
+	}
 
 	public static String BUYBACK_ITEMS = "buyback_items";
 
@@ -336,8 +331,8 @@ public class Shopkeeper extends NPC {
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		buybackItems.clear();
-		if (bundle.contains(BUYBACK_ITEMS)){
-			for (Bundlable i : bundle.getCollection(BUYBACK_ITEMS)){
+		if (bundle.contains(BUYBACK_ITEMS)) {
+			for (Bundlable i : bundle.getCollection(BUYBACK_ITEMS)) {
 				buybackItems.add((Item) i);
 			}
 		}
