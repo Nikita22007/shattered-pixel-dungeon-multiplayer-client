@@ -932,60 +932,10 @@ public abstract class Level implements Bundlable {
 				|| findMob(result) != null);
 		return result;
 	}
-	
-	public void occupyCell( Char ch ){
-		if (!ch.isImmune(Web.class) && Blob.volumeAt(ch.pos, Web.class) > 0){
-			blobs.get(Web.class).clear(ch.pos);
-			Web.affectChar( ch );
-		}
 
-		if (!ch.flying){
+	@Contract(pure = true)
+	public  final void occupyCell( Char ch ){
 
-			//we call act here instead of detach in case the debuffs haven't managed to deal dmg once yet
-			if (map[ch.pos] == Terrain.WATER){
-				if (ch.buff(Burning.class) != null){
-					ch.buff(Burning.class).act();
-				}
-				if (ch.buff(Ooze.class) != null){
-					ch.buff(Ooze.class).act();
-				}
-			}
-
-			if ( (map[ch.pos] == Terrain.GRASS || map[ch.pos] == Terrain.EMBERS)
-					&& ch instanceof Hero && Dungeon.hero.hasTalent(Talent.REJUVENATING_STEPS)
-					&& ch.buff(Talent.RejuvenatingStepsCooldown.class) == null){
-
-				if (!Regeneration.regenOn()){
-					set(ch.pos, Terrain.FURROWED_GRASS);
-				} else if (ch.buff(Talent.RejuvenatingStepsFurrow.class) != null && ch.buff(Talent.RejuvenatingStepsFurrow.class).count() >= 200) {
-					set(ch.pos, Terrain.FURROWED_GRASS);
-				} else {
-					set(ch.pos, Terrain.HIGH_GRASS);
-					Buff.count(ch, Talent.RejuvenatingStepsFurrow.class, 3 - Dungeon.hero.pointsInTalent(Talent.REJUVENATING_STEPS));
-				}
-				GameScene.updateMap(ch.pos);
-				Buff.affect(ch, Talent.RejuvenatingStepsCooldown.class, 15f - 5f*Dungeon.hero.pointsInTalent(Talent.REJUVENATING_STEPS));
-			}
-			
-			if (pit[ch.pos]){
-				if (ch == Dungeon.hero) {
-					Chasm.heroFall(ch.pos);
-				} else if (ch instanceof Mob) {
-					Chasm.mobFall( (Mob)ch );
-				}
-				return;
-			}
-			
-			//characters which are not the hero or a sheep 'soft' press cells
-		} else {
-			if (map[ch.pos] == Terrain.DOOR){
-				Door.enter( ch.pos );
-			}
-		}
-
-		if (ch.isAlive() && ch instanceof Piranha && !water[ch.pos]){
-			((Piranha) ch).dieOnLand();
-		}
 	}
 	
 	//public method for forcing the hard press of a cell. e.g. when an item lands on it
