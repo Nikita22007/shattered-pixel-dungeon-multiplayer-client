@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.StenchGas;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Ghost;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.FetidRatSprite;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
@@ -60,8 +59,7 @@ public class FetidRat extends Rat {
 	public void die( Object cause ) {
 		super.die( cause );
 
-		Ghost.Quest.process();
-	}
+    }
 
 	protected class Wandering extends Mob.Wandering{
 		@Override

@@ -21,29 +21,12 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.FetidRat;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GnollTrickster;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GreatCrab;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.GhostSprite;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndQuest;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndSadGhost;
-import com.watabou.noosa.Game;
-import com.watabou.noosa.audio.Music;
-import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
-import com.watabou.utils.Callback;
 
 public class Ghost extends NPC {
 
@@ -71,20 +54,12 @@ public class Ghost extends NPC {
         }
     }
 
-    @Override
-    public Notes.Landmark landmark() {
-        return Notes.Landmark.GHOST;
-    }
 
     @Override
     protected boolean act() {
         return super.act();
     }
 
-    @Override
-    public int defenseSkill(Char enemy) {
-        return INFINITE_EVASION;
-    }
 
     @Override
     public float speed() {
@@ -108,222 +83,7 @@ public class Ghost extends NPC {
 
     @Override
     public boolean interact(Char c) {
-        sprite.turnTo(pos, c.pos);
-
-        Sample.INSTANCE.play(Assets.Sounds.GHOST);
-
-        if (c != Dungeon.hero) {
-            return super.interact(c);
-        }
-
-        if (Quest.given) {
-            if (Quest.weapon != null) {
-                if (Quest.processed) {
-                    Game.runOnRenderThread(new Callback() {
-                        @Override
-                        public void call() {
-                            GameScene.show(new WndSadGhost(Ghost.this, Quest.type));
-                        }
-                    });
-                } else {
-                    Game.runOnRenderThread(new Callback() {
-                        @Override
-                        public void call() {
-                            switch (Quest.type) {
-                                case 1:
-                                default:
-                                    GameScene.show(new WndQuest(Ghost.this, Messages.get(Ghost.this, "rat_2")));
-                                    break;
-                                case 2:
-                                    GameScene.show(new WndQuest(Ghost.this, Messages.get(Ghost.this, "gnoll_2")));
-                                    break;
-                                case 3:
-                                    GameScene.show(new WndQuest(Ghost.this, Messages.get(Ghost.this, "crab_2")));
-                                    break;
-                            }
-                        }
-                    });
-
-                }
-            }
-        } else {
-            Mob questBoss;
-            String txt_quest;
-
-            switch (Quest.type) {
-                case 1:
-                default:
-                    questBoss = new FetidRat();
-                    txt_quest = Messages.get(this, "rat_1", Messages.titleCase(Dungeon.hero.name()));
-                    break;
-                case 2:
-                    questBoss = new GnollTrickster();
-                    txt_quest = Messages.get(this, "gnoll_1", Messages.titleCase(Dungeon.hero.name()));
-                    break;
-                case 3:
-                    questBoss = new GreatCrab();
-                    txt_quest = Messages.get(this, "crab_1", Messages.titleCase(Dungeon.hero.name()));
-                    break;
-            }
-
-            questBoss.pos = Dungeon.level.randomRespawnCell(this);
-
-            if (questBoss.pos != -1) {
-                GameScene.add(questBoss);
-                Quest.given = true;
-                Game.runOnRenderThread(new Callback() {
-                    @Override
-                    public void call() {
-                        GameScene.show(new WndQuest(Ghost.this, txt_quest) {
-                            @Override
-                            public void hide() {
-                                super.hide();
-                                Music.INSTANCE.fadeOut(1f, new Callback() {
-                                    @Override
-                                    public void call() {
-                                        if (Dungeon.level != null) {
-                                            Dungeon.level.playLevelMusic();
-                                        }
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
-            }
-
-        }
-
         return true;
     }
 
-    public static class Quest {
-
-        private static boolean spawned;
-
-        private static int type;
-
-        private static boolean given;
-        private static boolean processed;
-
-        private static int depth;
-
-        public static Weapon weapon;
-        public static Armor armor;
-        public static Weapon.Enchantment enchant;
-        public static Armor.Glyph glyph;
-
-        public static void reset() {
-            spawned = false;
-
-            weapon = null;
-            armor = null;
-            enchant = null;
-            glyph = null;
-        }
-
-        private static final String NODE = "sadGhost";
-
-        private static final String SPAWNED = "spawned";
-        private static final String TYPE = "type";
-        private static final String GIVEN = "given";
-        private static final String PROCESSED = "processed";
-        private static final String DEPTH = "depth";
-        private static final String WEAPON = "weapon";
-        private static final String ARMOR = "armor";
-        private static final String ENCHANT = "enchant";
-        private static final String GLYPH = "glyph";
-
-        public static void storeInBundle(Bundle bundle) {
-
-            Bundle node = new Bundle();
-
-            node.put(SPAWNED, spawned);
-
-            if (spawned) {
-
-                node.put(TYPE, type);
-
-                node.put(GIVEN, given);
-                node.put(DEPTH, depth);
-                node.put(PROCESSED, processed);
-
-                node.put(WEAPON, weapon);
-                node.put(ARMOR, armor);
-
-                if (enchant != null) {
-                    node.put(ENCHANT, enchant);
-                    node.put(GLYPH, glyph);
-                }
-            }
-
-            bundle.put(NODE, node);
-        }
-
-        public static void restoreFromBundle(Bundle bundle) {
-
-            Bundle node = bundle.getBundle(NODE);
-
-            if (!node.isNull() && (spawned = node.getBoolean(SPAWNED))) {
-
-                type = node.getInt(TYPE);
-                given = node.getBoolean(GIVEN);
-                processed = node.getBoolean(PROCESSED);
-
-                depth = node.getInt(DEPTH);
-
-                weapon = (Weapon) node.get(WEAPON);
-                armor = (Armor) node.get(ARMOR);
-
-                if (node.contains(ENCHANT)) {
-                    enchant = (Weapon.Enchantment) node.get(ENCHANT);
-                    glyph = (Armor.Glyph) node.get(GLYPH);
-                }
-            } else {
-                reset();
-            }
-        }
-
-        public static void process() {
-            if (spawned && given && !processed && (depth == Dungeon.depth)) {
-                GLog.n(Messages.get(Ghost.class, "find_me"));
-                Sample.INSTANCE.play(Assets.Sounds.GHOST);
-                processed = true;
-                Statistics.questScores[0] += 1000;
-
-                Game.runOnRenderThread(new Callback() {
-                    @Override
-                    public void call() {
-                        Music.INSTANCE.fadeOut(1f, new Callback() {
-                            @Override
-                            public void call() {
-                                if (Dungeon.level != null) {
-                                    Dungeon.level.playLevelMusic();
-                                }
-                            }
-                        });
-                    }
-                });
-            }
-        }
-
-        public static boolean active() {
-            return spawned && given && !processed && depth == Dungeon.depth;
-        }
-
-        public static void complete() {
-            weapon = null;
-            armor = null;
-
-            Notes.remove(Notes.Landmark.GHOST);
-        }
-
-        public static boolean processed() {
-            return spawned && processed;
-        }
-
-        public static boolean completed() {
-            return processed() && weapon == null && armor == null;
-        }
-    }
 }
