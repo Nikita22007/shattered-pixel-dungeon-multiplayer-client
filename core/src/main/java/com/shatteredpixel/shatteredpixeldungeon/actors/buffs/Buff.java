@@ -146,22 +146,6 @@ public class Buff extends Actor {
 		return cooldown()+1f;
 	}
 
-	private static final String MNEMONIC_EXTENDED    = "mnemonic_extended";
-
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		if (mnemonicExtended) bundle.put(MNEMONIC_EXTENDED, mnemonicExtended);
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		if (bundle.contains(MNEMONIC_EXTENDED)) {
-			mnemonicExtended = bundle.getBoolean(MNEMONIC_EXTENDED);
-		}
-	}
-
 	//network
 	public static Dictionary<Integer, Buff> all_buffs = new Hashtable<>();
 	public static void detach(int id) {
