@@ -30,7 +30,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
@@ -182,8 +181,7 @@ public class PotionOfDragonsBreath extends ExoticPotion {
 											if (ch != null) {
 												
 												Buff.affect( ch, Burning.class ).reignite( ch );
-												Buff.prolong(ch, Cripple.class, 5f);
-											}
+                                            }
 										}
 
 										//ignite cells that share a side with an adjacent cell, are flammable, and are further from the source pos

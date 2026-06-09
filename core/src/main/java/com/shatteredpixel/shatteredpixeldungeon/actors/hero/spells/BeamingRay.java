@@ -138,7 +138,8 @@ public class BeamingRay extends TargetedClericSpell {
 					new Beam.SunRay(hero.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(telePos)));
 
 			if (ally.buff(LifeLink.class) != null){
-				Buff.prolong(Dungeon.hero, LifeLink.class, ally.buff(LifeLink.class).cooldown()).object = ally.id();
+                ally.buff(LifeLink.class).cooldown();
+                ((LifeLink) null).object = ally.id();
 			}
 		} else {
 			hero.sprite.parent.add(
@@ -164,14 +165,13 @@ public class BeamingRay extends TargetedClericSpell {
 			} else if (ally instanceof Mob) {
 				((Mob) ally).aggro(chTarget);
 			}
-			FlavourBuff.prolong(ally, BeamingRayBoost.class, BeamingRayBoost.DURATION).object = chTarget.id();
+            ((BeamingRayBoost) null).object = chTarget.id();
 		} else {
 			if (ally instanceof DirectableAlly) {
 				((DirectableAlly) ally).clearDefensingPos();
 			}
 			//just the buff with no target
-			FlavourBuff.prolong(ally, BeamingRayBoost.class, BeamingRayBoost.DURATION);
-		}
+        }
 
 		hero.spendAndNext(Actor.TICK);
 		Dungeon.observe();

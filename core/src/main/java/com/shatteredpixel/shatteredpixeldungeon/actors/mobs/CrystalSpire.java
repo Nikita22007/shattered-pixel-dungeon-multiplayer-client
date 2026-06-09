@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Haste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
@@ -129,8 +128,7 @@ public class CrystalSpire extends Mob {
 					//guardians are hit harder by the attack
 					if (ch instanceof CrystalGuardian) {
 						dmg += 12; //18-27 damage
-						Buff.prolong(ch, Cripple.class, 30f);
-					} else if (ch == Dungeon.hero){
+                    } else if (ch == Dungeon.hero){
 						Statistics.questScores[2] -= 100;
 					}
 					ch.damage(dmg, new SpireSpike());

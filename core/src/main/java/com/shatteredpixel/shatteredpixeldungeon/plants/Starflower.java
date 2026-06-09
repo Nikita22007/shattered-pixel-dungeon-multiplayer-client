@@ -23,9 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.plants;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bless;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
@@ -43,13 +40,11 @@ public class Starflower extends Plant {
 	public void activate( Char ch ) {
 
 		if (ch != null) {
-			Buff.prolong(ch, Bless.class, Bless.DURATION);
-			if (Dungeon.level.heroFOV[ch.pos]){
+            if (Dungeon.level.heroFOV[ch.pos]){
 				new Flare(6, 32).color(0xFFFF00, true).show(ch.sprite, 2f);
 			}
 			if (ch instanceof Hero && ((Hero) ch).subClass == HeroSubClass.WARDEN){
-				Buff.prolong(ch, Recharging.class, Recharging.DURATION);
-				SpellSprite.show( ch, SpellSprite.CHARGE );
+                SpellSprite.show( ch, SpellSprite.CHARGE );
 			}
 		}
 

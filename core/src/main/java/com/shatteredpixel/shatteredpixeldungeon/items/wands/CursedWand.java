@@ -38,7 +38,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hex;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GoldenMimic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
@@ -264,8 +263,7 @@ public class CursedWand {
 			//no shock if positive only
 			case 3:
 				if (!positiveOnly) new ShockingTrap().set( user.pos ).activate();
-				Buff.prolong(user, Recharging.class, Recharging.DURATION);
-				ScrollOfRecharging.charge(user);
+                ScrollOfRecharging.charge(user);
 				SpellSprite.show(user, SpellSprite.CHARGE);
 				return true;
 		}

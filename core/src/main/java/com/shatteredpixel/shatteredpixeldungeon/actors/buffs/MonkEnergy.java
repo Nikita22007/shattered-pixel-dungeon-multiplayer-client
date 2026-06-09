@@ -206,7 +206,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 				&& abil.energyCost() >= 5-((Hero) target).pointsInTalent(Talent.COMBINED_ENERGY)) {
 			Talent.CombinedEnergyAbilityTracker tracker = target.buff(Talent.CombinedEnergyAbilityTracker.class);
 			if (tracker == null || !tracker.wepAbilUsed){
-				Buff.prolong(target, Talent.CombinedEnergyAbilityTracker.class, 5f).monkAbilused = true;
+				((Talent.CombinedEnergyAbilityTracker) null).monkAbilused = true;
 			} else {
 				tracker.monkAbilused = true;
 				processCombinedEnergy(tracker);

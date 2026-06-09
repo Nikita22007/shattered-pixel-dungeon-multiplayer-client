@@ -26,10 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GnollGeomancer;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GnollGuard;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
@@ -81,17 +78,15 @@ public class GnollRockfallTrap extends RockfallTrap {
 
 			if (ch != null && ch.isAlive() && !(ch instanceof GnollGeomancer)){
 				if (ch instanceof Mob){
-					Buff.prolong(ch, Trap.HazardAssistTracker.class, HazardAssistTracker.DURATION);
-				}
+                }
 
 				//deals notably less damage than a regular rockfall trap, but ignores armor
 				int damage = Random.NormalIntRange(6, 12);
 				ch.damage( Math.max(damage, 0) , this);
 
 				//guards take full paralysis, otherwise just a little
-				Buff.prolong(ch, Paralysis.class, ch instanceof GnollGuard ? 10 : 3);
 
-				if (!ch.isAlive() && ch == Dungeon.hero){
+                if (!ch.isAlive() && ch == Dungeon.hero){
 					Dungeon.fail( this );
 					GLog.n( Messages.get(this, "ondeath") );
 					if (reclaimed) Badges.validateDeathFromFriendlyMagic();

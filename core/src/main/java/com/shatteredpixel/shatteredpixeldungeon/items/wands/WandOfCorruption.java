@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.wands;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
@@ -243,8 +242,8 @@ public class WandOfCorruption extends Wand {
 
 			float powerMulti = Math.max(1f, procChance);
 
-			Buff.prolong( defender, Amok.class, Math.round((4+level*2) * powerMulti));
-		}
+            Math.round((4 + level * 2) * powerMulti);
+        }
 	}
 
 	@Override

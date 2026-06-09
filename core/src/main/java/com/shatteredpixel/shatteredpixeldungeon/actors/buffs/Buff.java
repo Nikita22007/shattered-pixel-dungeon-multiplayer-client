@@ -189,12 +189,7 @@ public class Buff extends Actor {
 	public static<T extends FlavourBuff> T affect( Char target, Class<T> buffClass, float duration ) {
 		return null;
 	}
-
-	//postpones an already active buff, or creates & attaches a new buff and delays that.
-	public static<T extends FlavourBuff> T prolong( Char target, Class<T> buffClass, float duration ) {
-		return null;
-	}
-
+    
 	//network
 	public static Dictionary<Integer, Buff> all_buffs = new Hashtable<>();
 	public static void detach(int id) {

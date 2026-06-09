@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Combo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
@@ -54,9 +53,8 @@ public class Endure extends ArmorAbility {
 		if (hero.buff(EndureTracker.class) != null){
 			hero.buff(EndureTracker.class).detach();
 		}
-		Buff.prolong(hero, EndureTracker.class, 12f);
 
-		Combo combo = hero.buff(Combo.class);
+        Combo combo = hero.buff(Combo.class);
 		if (combo != null){
 			combo.addTime(3f);
 		}

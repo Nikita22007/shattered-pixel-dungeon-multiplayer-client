@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
@@ -40,7 +39,6 @@ public class Wayward extends Weapon.Enchantment {
 
 		if (attacker.buff(WaywardBuff.class) != null){
 		} else if (Random.Float() < procChance){
-			Buff.prolong(attacker, WaywardBuff.class, WaywardBuff.DURATION);
 		}
 
 		return damage;

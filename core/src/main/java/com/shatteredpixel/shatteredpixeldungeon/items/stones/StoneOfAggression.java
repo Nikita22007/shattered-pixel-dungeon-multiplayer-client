@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -47,10 +46,8 @@ public class StoneOfAggression extends Runestone {
 		
 		if (ch != null) {
 			if (Char.hasProp(ch, Char.Property.BOSS) || Char.hasProp(ch, Char.Property.MINIBOSS)) {
-				Buff.prolong(ch, Aggression.class, Aggression.DURATION / 4f);
-			} else {
-				Buff.prolong(ch, Aggression.class, Aggression.DURATION);
-			}
+            } else {
+            }
 		}
 
 		CellEmitter.center(cell).start( Speck.factory( Speck.SCREAM ), 0.3f, 3 );

@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LifeLink;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -75,7 +74,7 @@ public class LifeLinkSpell extends ClericSpell {
 			hero.sprite.parent.add(
 					new Beam.HealthRay(hero.sprite.center(), ally.sprite.center()));
 
-			Buff.prolong(hero, LifeLink.class, duration).object = ally.id();
+            ((LifeLink) null).object = ally.id();
 		} else {
 			ally = Stasis.getStasisAlly();
 			hero.sprite.operate(hero.pos);
@@ -83,10 +82,9 @@ public class LifeLinkSpell extends ClericSpell {
 					new Beam.HealthRay(DungeonTilemap.tileCenterToWorld(hero.pos), hero.sprite.center()));
 		}
 
-		Buff.prolong(ally, LifeLink.class, duration).object = hero.id();
-		Buff.prolong(ally, LifeLinkSpellBuff.class, duration);
+        ((LifeLink) null).object = hero.id();
 
-		if (ally == Stasis.getStasisAlly()){
+        if (ally == Stasis.getStasisAlly()){
 			ally.buff(LifeLink.class).clearTime();
 			ally.buff(LifeLinkSpellBuff.class).clearTime();
 		}

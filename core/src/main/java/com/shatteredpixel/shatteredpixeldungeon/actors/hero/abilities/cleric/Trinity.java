@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -129,7 +128,8 @@ public class Trinity extends ArmorAbility {
 								GLog.w(Messages.get(Trinity.class, "no_duplicate"));
 								hide();
 							} else {
-								Buff.prolong(Dungeon.hero, BodyForm.BodyFormBuff.class, BodyForm.duration()).setEffect(bodyForm);
+                                BodyForm.duration();
+                                ((BodyForm.BodyFormBuff) null).setEffect(bodyForm);
 								Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
 								Weapon w = new WornShortsword();
 								if (Dungeon.hero.belongings.weapon() != null) {
@@ -163,7 +163,8 @@ public class Trinity extends ArmorAbility {
 								GLog.w(Messages.get(Trinity.class, "no_duplicate"));
 								hide();
 							} else {
-								Buff.prolong(Dungeon.hero, BodyForm.BodyFormBuff.class, BodyForm.duration()).setEffect(bodyForm);
+                                BodyForm.duration();
+                                ((BodyForm.BodyFormBuff) null).setEffect(bodyForm);
 								Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
 								Armor a = new ClothArmor();
 								if (Dungeon.hero.belongings.armor() != null) {
@@ -243,7 +244,7 @@ public class Trinity extends ArmorAbility {
 						Invisibility.dispel();
 						//Rings and the Chalice specifically get their passive effects for 20 turns
 						if (spiritForm instanceof Ring || spiritForm instanceof ChaliceOfBlood) {
-							Buff.prolong(Dungeon.hero, SpiritForm.SpiritFormBuff.class, SpiritForm.SpiritFormBuff.DURATION).setEffect(spiritForm);
+                            ((SpiritForm.SpiritFormBuff) null).setEffect(spiritForm);
 							Dungeon.hero.spendAndNext(1f);
 						} else {
 							SpiritForm.applyActiveArtifactEffect(armor, (Artifact) spiritForm);

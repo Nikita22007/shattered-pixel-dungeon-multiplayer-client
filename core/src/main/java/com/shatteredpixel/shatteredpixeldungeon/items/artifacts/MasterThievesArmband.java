@@ -26,10 +26,8 @@ import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -177,11 +175,8 @@ public class MasterThievesArmband extends Artifact {
 								Buff.affect(ch, StolenTracker.class).setItemStolen(false);
 							}
 
-							Buff.prolong(ch, Blindness.class, debuffDuration);
-							Buff.prolong(ch, Cripple.class, debuffDuration);
 
-
-							charge--;
+                            charge--;
 							exp += 3;
 							Talent.onArtifactUsed(Dungeon.hero);
 							while (exp >= (10 + Math.round(3.33f * level())) && level() < levelCap) {

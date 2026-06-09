@@ -718,8 +718,7 @@ public class GnollGeomancer extends Mob {
 							}
 
 							if (ch.isAlive()){
-								Buff.prolong( ch, Paralysis.class, ch instanceof GnollGuard ? 10 : 3 );
-							} else if (!ch.isAlive() && ch == Dungeon.hero) {
+                            } else if (!ch.isAlive() && ch == Dungeon.hero) {
 								Badges.validateDeathFromEnemyMagic();
 								Dungeon.fail( source.getClass() );
 								GLog.n( Messages.get( GnollGeomancer.class, "rock_kill") );
@@ -821,8 +820,7 @@ public class GnollGeomancer extends Mob {
 				Statistics.questScores[2] -= 100;
 			}
 			if (ch.isAlive()) {
-				Buff.prolong(ch, Paralysis.class, ch instanceof GnollGuard ? 10 : 3);
-			} else if (ch == Dungeon.hero){
+            } else if (ch == Dungeon.hero){
 				Dungeon.fail( target );
 				GLog.n( Messages.get( GnollGeomancer.class, "rockfall_kill") );
 			}

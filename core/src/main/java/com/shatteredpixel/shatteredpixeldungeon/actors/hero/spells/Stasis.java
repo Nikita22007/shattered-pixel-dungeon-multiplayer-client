@@ -105,7 +105,8 @@ public class Stasis extends ClericSpell {
 		}
 		ally.clearTime();
 
-		Buff.prolong(hero, StasisBuff.class, 30 + 30*hero.pointsInTalent(Talent.STASIS)).stasisAlly = (Mob)ally;
+        hero.pointsInTalent(Talent.STASIS);
+        ((StasisBuff) null).stasisAlly = (Mob)ally;
 		Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
 
 		if (hero.buff(LifeLink.class) != null && hero.buff(LifeLink.class).object == ally.id()){
@@ -168,7 +169,8 @@ public class Stasis extends ClericSpell {
 			}
 
 			if (stasisAlly.buff(LifeLink.class) != null){
-				Buff.prolong(Dungeon.hero, LifeLink.class, stasisAlly.buff(LifeLink.class).cooldown()).object = stasisAlly.id();
+                stasisAlly.buff(LifeLink.class).cooldown();
+                ((LifeLink) null).object = stasisAlly.id();
 			}
 
 			ScrollOfTeleportation.appear(stasisAlly, stasisAlly.pos);

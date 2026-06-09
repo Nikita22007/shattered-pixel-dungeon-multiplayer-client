@@ -24,9 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Weakness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -66,15 +63,12 @@ public class ScrollOfPsionicBlast extends ExoticScroll {
 			//resistant enemies take 50% current HP at full health, scaling to 75% at 1/2 HP, and 100% at 1/3 hp
 			mob.damage(Math.round(mob.HT/2f + mob.HP/2f), this);
 			if (mob.isAlive()) {
-				Buff.prolong(mob, Blindness.class, Blindness.DURATION);
-			}
+            }
 		}
 		
 		curUser.damage(Math.max(0, Math.round(curUser.HT*(0.5f * (float)Math.pow(0.9, targets.size())))), this);
 		if (curUser.isAlive()) {
-			Buff.prolong(curUser, Blindness.class, Blindness.DURATION);
-			Buff.prolong(curUser, Weakness.class, Weakness.DURATION*5f);
-			Dungeon.observe();
+            Dungeon.observe();
 			readAnimation();
 		} else {
 			Badges.validateDeathFromFriendlyMagic();

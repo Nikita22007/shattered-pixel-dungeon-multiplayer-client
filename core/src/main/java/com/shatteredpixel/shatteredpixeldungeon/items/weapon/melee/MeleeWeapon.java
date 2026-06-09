@@ -196,8 +196,8 @@ public class MeleeWeapon extends Weapon {
 	protected void afterAbilityUsed( Hero hero ){
 		hero.belongings.abilityWeapon = null;
 		if (hero.hasTalent(Talent.PRECISE_ASSAULT)){
-			Buff.prolong(hero, Talent.PreciseAssaultTracker.class, hero.cooldown()+4f);
-		}
+            hero.cooldown();
+        }
 		if (hero.hasTalent(Talent.VARIED_CHARGE)){
 			Talent.VariedChargeTracker tracker = hero.buff(Talent.VariedChargeTracker.class);
 			if (tracker == null || tracker.weapon == getClass() || tracker.weapon == null){
@@ -221,7 +221,7 @@ public class MeleeWeapon extends Weapon {
 		if (hero.hasTalent(Talent.COMBINED_ENERGY)){
 			Talent.CombinedEnergyAbilityTracker tracker = hero.buff(Talent.CombinedEnergyAbilityTracker.class);
 			if (tracker == null || !tracker.monkAbilused){
-				Buff.prolong(hero, Talent.CombinedEnergyAbilityTracker.class, 5f).wepAbilUsed = true;
+                ((Talent.CombinedEnergyAbilityTracker) null).wepAbilUsed = true;
 			} else {
 				tracker.wepAbilUsed = true;
 				Buff.affect(hero, MonkEnergy.class).processCombinedEnergy(tracker);

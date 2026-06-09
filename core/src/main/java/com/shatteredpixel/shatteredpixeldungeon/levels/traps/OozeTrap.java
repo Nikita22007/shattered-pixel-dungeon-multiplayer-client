@@ -47,8 +47,7 @@ public class OozeTrap extends Trap {
 				if (ch != null && !ch.flying){
 					Buff.affect(ch, Ooze.class).set( Ooze.DURATION );
 					if (ch instanceof Mob){
-						Buff.prolong(ch, Trap.HazardAssistTracker.class, HazardAssistTracker.DURATION);
-					}
+                    }
 				}
 			}
 		}

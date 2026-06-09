@@ -30,19 +30,15 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Electricity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Freezing;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corrosion;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
@@ -321,8 +317,7 @@ public class ElementalBlast extends ArmorAbility {
 								//*** Wand of Prismatic Light ***
 								} else if (finalWandCls == WandOfPrismaticLight.class){
 									if (mob.isAlive() && mob.alignment != Char.Alignment.ALLY) {
-										Buff.prolong(mob, Blindness.class, effectMulti*Blindness.DURATION/2);
-										charsHit++;
+                                        charsHit++;
 									}
 
 								//*** Wand of Warding ***
@@ -370,15 +365,13 @@ public class ElementalBlast extends ArmorAbility {
 								//*** Wand of Corruption ***
 								} else if (finalWandCls == WandOfCorruption.class){
 									if (mob.isAlive() && mob.alignment != Char.Alignment.ALLY) {
-										Buff.prolong(mob, Amok.class, effectMulti*5f);
-										charsHit++;
+                                        charsHit++;
 									}
 
 								//*** Wand of Regrowth ***
 								} else if (finalWandCls == WandOfRegrowth.class){
 									if (mob.alignment != Char.Alignment.ALLY) {
-										Buff.prolong( mob, Roots.class, effectMulti*Roots.DURATION );
-										charsHit++;
+                                        charsHit++;
 									}
 								}
 							}
@@ -410,10 +403,8 @@ public class ElementalBlast extends ArmorAbility {
 						//*** Wand of Prismatic Light ***
 						} else if (finalWandCls == WandOfPrismaticLight.class){
 							if (Dungeon.isChallenged(Challenges.DARKNESS)){
-								Buff.prolong(hero, Light.class, effectMulti * 10f);
-							} else {
-								Buff.prolong(hero, Light.class, effectMulti * 50f);
-							}
+                            } else {
+                            }
 
 						}
 
