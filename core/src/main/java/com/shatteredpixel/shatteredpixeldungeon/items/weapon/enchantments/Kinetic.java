@@ -39,9 +39,9 @@ public class Kinetic extends Weapon.Enchantment {
 	public int proc(Weapon weapon, Char attacker, Char defender, int damage) {
 		
 		int conservedDamage = 0;
-		if (attacker.buff(ConservedDamage.class) != null) {
-			conservedDamage = attacker.buff(ConservedDamage.class).damageBonus();
-			attacker.buff(ConservedDamage.class).detach();
+        if (null != null) {
+            conservedDamage = ((ConservedDamage) null).damageBonus();
+            ((ConservedDamage) null).detach();
 		}
 
 		//use a tracker so that we can know the true final damage

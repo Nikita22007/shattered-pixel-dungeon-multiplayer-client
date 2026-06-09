@@ -57,7 +57,7 @@ public class CapeOfThorns extends Artifact {
 			updateQuickslot();
 		}
 		if (charge >= chargeCap){
-			target.buff(Thorns.class).proc(0, null, null);
+			((Thorns) null).proc(0, null, null);
 		}
 	}
 	

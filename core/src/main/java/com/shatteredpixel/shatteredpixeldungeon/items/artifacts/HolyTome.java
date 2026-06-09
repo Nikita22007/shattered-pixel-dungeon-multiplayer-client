@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -69,11 +68,12 @@ public class HolyTome extends Artifact {
 	@Override
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = super.actions( hero );
-		if ((isEquipped( hero ) || hero.hasTalent(Talent.LIGHT_READING))
-				&& !cursed
-				&& hero.buff(MagicImmune.class) == null) {
-			actions.add(AC_CAST);
-		}
+		if ((isEquipped(hero) || hero.hasTalent(Talent.LIGHT_READING))
+                && !cursed) {
+            if (null == null) {
+                actions.add(AC_CAST);
+            }
+        }
 		return actions;
 	}
 
@@ -82,7 +82,7 @@ public class HolyTome extends Artifact {
 
 		super.execute(hero, action);
 
-		if (hero.buff(MagicImmune.class) != null) return;
+        if (null != null) return;
 
 		if (action.equals(AC_CAST)) {
 
@@ -144,10 +144,11 @@ public class HolyTome extends Artifact {
 	}
 
 	public boolean canCast( Hero hero, ClericSpell spell ){
-		return (isEquipped(hero) || (Dungeon.hero.hasTalent(Talent.LIGHT_READING) && hero.belongings.contains(this)))
-				&& hero.buff(MagicImmune.class) == null
-				&& charge >= spell.chargeUse(hero)
-				&& spell.canCast(hero);
+        if ((!isEquipped(hero) && (!Dungeon.hero.hasTalent(Talent.LIGHT_READING) || !hero.belongings.contains(this))))
+            return false;
+        return null == null
+                && charge >= spell.chargeUse(hero)
+                && spell.canCast(hero);
 	}
 
 	public void spendCharge( float chargesSpent ){
@@ -210,7 +211,7 @@ public class HolyTome extends Artifact {
 
 	@Override
 	public void charge(Hero target, float amount) {
-		if (cursed || target.buff(MagicImmune.class) != null) return;
+        if (cursed || null != null) return;
 
 		if (charge < chargeCap) {
 			if (!isEquipped(target)) amount *= 0.75f*target.pointsInTalent(Talent.LIGHT_READING)/3f;
@@ -286,7 +287,7 @@ public class HolyTome extends Artifact {
 
 		@Override
 		public boolean act() {
-			if (charge < chargeCap && !cursed && target.buff(MagicImmune.class) == null) {
+            if (charge < chargeCap && !cursed && null == null) {
 				if (Regeneration.regenOn()) {
 					float missing = (chargeCap - charge);
 					if (level() > 7) missing += 5*(level() - 7)/3f;

@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BlobImmunity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -309,7 +308,7 @@ public class Shopkeeper extends NPC {
 	}
 
 	public String chatText(){
-		if (Dungeon.hero.buff(AscensionChallenge.class) != null){
+        if (null != null){
 			return Messages.get(this, "talk_ascent");
 		}
 		switch (Dungeon.depth){

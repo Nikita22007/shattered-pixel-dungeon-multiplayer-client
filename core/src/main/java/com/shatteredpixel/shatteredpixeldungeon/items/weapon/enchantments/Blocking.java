@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HoldFast;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
@@ -98,9 +97,11 @@ public class Blocking extends Weapon.Enchantment {
 		public void fx(boolean on) {
 			if (on) {
 				target.sprite.add(CharSprite.State.SHIELDED);
-			} else if (target.buff(Barrier.class) == null) {
-				target.sprite.remove(CharSprite.State.SHIELDED);
-			}
+			} else {
+                if (null == null) {
+                    target.sprite.remove(CharSprite.State.SHIELDED);
+                }
+            }
 		}
 
 		@Override

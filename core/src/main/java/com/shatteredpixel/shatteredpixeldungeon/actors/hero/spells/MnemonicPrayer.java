@@ -102,13 +102,15 @@ public class MnemonicPrayer extends TargetedClericSpell {
 		affectChar(ch, extension);
 
 		Char ally = PowerOfMany.getPoweredAlly();
-		if (ally != null && ally.buff(LifeLinkSpell.LifeLinkSpellBuff.class) != null){
-			if (ch == hero){
-				affectChar(ally, extension); //if cast on hero, duplicate to ally
-			} else if (ch == ally){
-				affectChar(hero, extension); //if cast on ally, duplicate to hero
-			}
-		}
+		if (ally != null) {
+            if (null != null) {
+                if (ch == hero) {
+                    affectChar(ally, extension); //if cast on hero, duplicate to ally
+                } else if (ch == ally) {
+                    affectChar(hero, extension); //if cast on ally, duplicate to hero
+                }
+            }
+        }
 
 		if (ch == hero){
 			hero.sprite.operate(ch.pos);

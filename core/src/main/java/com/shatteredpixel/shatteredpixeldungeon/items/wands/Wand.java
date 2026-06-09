@@ -31,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Degrade;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ScrollEmpower;
@@ -39,7 +38,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage.WildMagic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.GuidingLight;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
@@ -138,7 +136,7 @@ public abstract class Wand extends Item {
 
 	//not affected by enchantment proc chance changers
 	public static float procChanceMultiplier( Char attacker ){
-		if (attacker.buff(Talent.EmpoweredStrikeTracker.class) != null){
+		if (null != null){
 			return 1f + ((Hero)attacker).pointsInTalent(Talent.EMPOWERED_STRIKE)/2f;
 		}
 		return 1f;
@@ -146,13 +144,15 @@ public abstract class Wand extends Item {
 
 	public boolean tryToZap( Hero owner, int target ){
 
-		if (owner.buff(WildMagic.WildMagicTracker.class) == null && owner.buff(MagicImmune.class) != null){
-			GLog.w( Messages.get(this, "no_magic") );
-			return false;
+		if (null == null) {
+			if (null != null) {
+				GLog.w(Messages.get(this, "no_magic"));
+				return false;
+			}
 		}
 
 		//if we're using wild magic, then assume we have charges
-		if ( owner.buff(WildMagic.WildMagicTracker.class) != null || curCharges >= chargesPerCast()){
+		if ( null != null || curCharges >= chargesPerCast()){
 			return true;
 		} else {
 			GLog.w(Messages.get(this, "fizzles"));
@@ -216,15 +216,18 @@ public abstract class Wand extends Item {
 				Random.Float() > (Math.pow(0.92f, (wandLevel*chargesUsed)+1) - 0.07f)){
 		}
 
-		if (Dungeon.hero.subClass == HeroSubClass.PRIEST && target.buff(GuidingLight.Illuminated.class) != null) {
-			target.buff(GuidingLight.Illuminated.class).detach();
-			target.damage(Dungeon.hero.lvl+5, GuidingLight.INSTANCE);
+		if (Dungeon.hero.subClass == HeroSubClass.PRIEST) {
+			if (null != null) {
+				((GuidingLight.Illuminated) null).detach();
+				target.damage(Dungeon.hero.lvl + 5, GuidingLight.INSTANCE);
+			}
 		}
 
 		if (target.alignment != Char.Alignment.ALLY
 				&& Dungeon.hero.heroClass != HeroClass.CLERIC
-				&& Dungeon.hero.hasTalent(Talent.SEARING_LIGHT)
-				&& Dungeon.hero.buff(Talent.SearingLightCooldown.class) == null){
+				&& Dungeon.hero.hasTalent(Talent.SEARING_LIGHT)) {
+			if (null == null) {
+			}
 		}
 
 		if (target.alignment != Char.Alignment.ALLY
@@ -385,12 +388,13 @@ public abstract class Wand extends Item {
 
 			//inside staff, still need to apply degradation
 			if (charger.target == Dungeon.hero
-					&& !Dungeon.hero.belongings.contains(this)
-					&& Dungeon.hero.buff( Degrade.class ) != null){
-				lvl = Degrade.reduceLevel(lvl);
+					&& !Dungeon.hero.belongings.contains(this)) {
+				if (null != null) {
+					lvl = Degrade.reduceLevel(lvl);
+				}
 			}
 
-			if (charger.target.buff(ScrollEmpower.class) != null){
+			if (null != null){
 				lvl += 2;
 			}
 
@@ -398,7 +402,7 @@ public abstract class Wand extends Item {
 				lvl += ((Hero)charger.target).pointsInTalent(Talent.DESPERATE_POWER);
 			}
 
-			if (charger.target.buff(WildMagic.WildMagicTracker.class) != null){
+			if (null != null){
 				int bonus = 4 + ((Hero)charger.target).pointsInTalent(Talent.WILD_POWER);
 				if (Random.Int(2) == 0) bonus++;
 				bonus /= 2; // +2/+2.5/+3/+3.5/+4 at 0/1/2/3/4 talent points
@@ -409,7 +413,7 @@ public abstract class Wand extends Item {
 				}
 			}
 
-			WandOfMagicMissile.MagicCharge buff = charger.target.buff(WandOfMagicMissile.MagicCharge.class);
+			WandOfMagicMissile.MagicCharge buff = null;
 			if (buff != null && buff.level() > lvl){
 				return buff.level();
 			}
@@ -481,14 +485,14 @@ public abstract class Wand extends Item {
 
 		//remove magic charge at a higher priority, if we are benefiting from it are and not the
 		//wand that just applied it
-		WandOfMagicMissile.MagicCharge buff = curUser.buff(WandOfMagicMissile.MagicCharge.class);
+		WandOfMagicMissile.MagicCharge buff = null;
 		if (buff != null
 				&& buff.wandJustApplied() != this
 				&& buff.level() == buffedLvl()
 				&& buffedLvl() > super.buffedLvl()){
 			buff.detach();
 		} else {
-			ScrollEmpower empower = curUser.buff(ScrollEmpower.class);
+			ScrollEmpower empower = null;
 			if (empower != null){
 				empower.use();
 			}
@@ -671,7 +675,7 @@ public abstract class Wand extends Item {
 				if (target == curUser.pos || cell == curUser.pos) {
 					if (target == curUser.pos && curUser.hasTalent(Talent.SHIELD_BATTERY)){
 
-						if (curUser.buff(MagicImmune.class) != null){
+						if (null != null){
 							GLog.w( Messages.get(Wand.class, "no_magic") );
 							return;
 						}
@@ -811,8 +815,9 @@ public abstract class Wand extends Item {
 		
 		@Override
 		public boolean act() {
-			if (curCharges < maxCharges && target.buff(MagicImmune.class) == null)
-				recharge();
+			if (curCharges < maxCharges) {
+				if (null == null) recharge();
+			}
 			
 			while (partialCharge >= 1 && curCharges < maxCharges) {
 				partialCharge--;

@@ -95,9 +95,11 @@ public class GuidingLight extends TargetedClericSpell {
 				hero.next();
 
 				onSpellCast(tome, hero);
-				if (hero.subClass == HeroSubClass.PRIEST && hero.buff(GuidingLightPriestCooldown.class) == null) {
-                    ActionIndicator.refresh();
-				}
+				if (hero.subClass == HeroSubClass.PRIEST) {
+                    if (null == null) {
+                        ActionIndicator.refresh();
+                    }
+                }
 
 			}
 		});
@@ -105,8 +107,8 @@ public class GuidingLight extends TargetedClericSpell {
 
 	@Override
 	public float chargeUse(Hero hero) {
-		if (hero.subClass == HeroSubClass.PRIEST
-			&& hero.buff(GuidingLightPriestCooldown.class) == null){
+        if (hero.subClass == HeroSubClass.PRIEST
+			&& null == null){
 			return 0;
 		} else {
 			return 1;

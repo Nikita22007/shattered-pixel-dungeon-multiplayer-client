@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
@@ -69,11 +68,12 @@ public class MasterThievesArmband extends Artifact {
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
 		if (isEquipped(hero)
-				&& charge > 0
-				&& hero.buff(MagicImmune.class) == null
-				&& !cursed) {
-			actions.add(AC_STEAL);
-		}
+                && charge > 0) {
+            if (null == null
+                    && !cursed) {
+                actions.add(AC_STEAL);
+            }
+        }
 		return actions;
 	}
 
@@ -81,7 +81,7 @@ public class MasterThievesArmband extends Artifact {
 	public void execute(Hero hero, String action) {
 		super.execute(hero, action);
 
-		if (hero.buff(MagicImmune.class) != null) return;
+        if (null != null) return;
 
 		if (action.equals(AC_STEAL)){
 
@@ -148,9 +148,11 @@ public class MasterThievesArmband extends Artifact {
 
 							if (Dungeon.hero.lvl > ((Mob) ch).maxLvl + 2) {
 								lootChance = 0;
-							} else if (ch.buff(StolenTracker.class) != null){
-								lootChance = 0;
-							}
+							} else {
+                                if (null != null){
+                                    lootChance = 0;
+                                }
+                            }
 
 							if (lootChance == 0){
 								GLog.w(Messages.get(MasterThievesArmband.class, "no_steal"));
@@ -214,7 +216,7 @@ public class MasterThievesArmband extends Artifact {
 	
 	@Override
 	public void charge(Hero target, float amount) {
-		if (cursed || target.buff(MagicImmune.class) != null) return;
+        if (cursed || null != null) return;
 		if (charge < chargeCap) {
 			partialCharge += 0.1f * amount;
 			while (partialCharge >= 1f) {
@@ -265,7 +267,7 @@ public class MasterThievesArmband extends Artifact {
 		}
 
 		public void gainCharge(float levelPortion) {
-			if (cursed || target.buff(MagicImmune.class) != null) return;
+            if (cursed || null != null) return;
 
 			if (charge < chargeCap){
 				float chargeGain = 3f * levelPortion;

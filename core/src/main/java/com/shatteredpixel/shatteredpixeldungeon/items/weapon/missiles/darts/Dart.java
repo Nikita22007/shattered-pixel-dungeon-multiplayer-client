@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
@@ -88,7 +87,7 @@ public class Dart extends MissileWeapon {
 	@Override
 	public int min(int lvl) {
 		if (bow != null){
-			if (!(this instanceof TippedDart) && Dungeon.hero.buff(Crossbow.ChargedShot.class) != null){
+            if (!(this instanceof TippedDart) && null != null){
 				return bow.dartMin()            //crossbow dart damage
 						+ 4 + bow.buffedLvl()   //ability increases base dmg by 50%, scaling by 50%
 						+ lvl;                  //another +1 per level (ring of sharpshooting)
@@ -105,7 +104,7 @@ public class Dart extends MissileWeapon {
 	@Override
 	public int max(int lvl) {
 		if (bow != null){
-			if (!(this instanceof TippedDart) && Dungeon.hero.buff(Crossbow.ChargedShot.class) != null){
+            if (!(this instanceof TippedDart) && null != null){
 				return bow.dartMax()            //crossbow dart damage
 						+ 4 + bow.buffedLvl()   //ability increases base dmg by 50%, scaling by 50%
 						+ 2*lvl;                //another +2 per level (ring of sharpshooting)
@@ -135,7 +134,8 @@ public class Dart extends MissileWeapon {
 	}
 
 	public boolean crossbowHasEnchant( Char owner ){
-		return bow != null && bow.enchantment != null && owner.buff(MagicImmune.class) == null;
+        if (bow == null || bow.enchantment == null) return false;
+        return null == null;
 	}
 	
 	@Override
@@ -150,7 +150,7 @@ public class Dart extends MissileWeapon {
 	@Override
 	public float accuracyFactor(Char owner, Char target) {
 		//don't update xbow here, as dart is the active weapon atm
-		if (bow != null && owner.buff(Crossbow.ChargedShot.class) != null){
+        if (bow != null && null != null){
 			return Char.INFINITE_ACCURACY;
 		} else {
 			return super.accuracyFactor(owner, target);
@@ -189,28 +189,33 @@ public class Dart extends MissileWeapon {
 	protected void processChargedShot( Char target, int dmg ){
 		//don't update xbow here, as dart may be the active weapon atm
 		processingChargedShot = true;
-		if (chargedShotPos != -1 && bow != null && Dungeon.hero.buff(Crossbow.ChargedShot.class) != null) {
-			PathFinder.buildDistanceMap(chargedShotPos, Dungeon.level.passable, 3);
-			//necessary to clone as some on-hit effects use Pathfinder
-			int[] distance = PathFinder.distance.clone();
-			for (Char ch : Actor.chars()){
-				if (ch == target){
-					Actor.add(new Actor() {
-						{ actPriority = VFX_PRIO; }
-						@Override
-						protected boolean act() {
-							if (!ch.isAlive()){
-								bow.onAbilityKill(Dungeon.hero, ch);
-							}
-							Actor.remove(this);
-							return true;
-						}
-					});
-				} else if (distance[ch.pos] != Integer.MAX_VALUE){
-					proc(Dungeon.hero, ch, dmg);
-				}
-			}
-		}
+		if (chargedShotPos != -1 && bow != null) {
+            if (null != null) {
+                PathFinder.buildDistanceMap(chargedShotPos, Dungeon.level.passable, 3);
+//necessary to clone as some on-hit effects use Pathfinder
+                int[] distance = PathFinder.distance.clone();
+                for (Char ch : Actor.chars()) {
+                    if (ch == target) {
+                        Actor.add(new Actor() {
+                            {
+                                actPriority = VFX_PRIO;
+                            }
+
+                            @Override
+                            protected boolean act() {
+                                if (!ch.isAlive()) {
+                                    bow.onAbilityKill(Dungeon.hero, ch);
+                                }
+                                Actor.remove(this);
+                                return true;
+                            }
+                        });
+                    } else if (distance[ch.pos] != Integer.MAX_VALUE) {
+                        proc(Dungeon.hero, ch, dmg);
+                    }
+                }
+            }
+        }
 		chargedShotPos = -1;
 		processingChargedShot = false;
 	}
@@ -218,8 +223,8 @@ public class Dart extends MissileWeapon {
 	@Override
 	protected void decrementDurability() {
 		super.decrementDurability();
-		if (Dungeon.hero.buff(Crossbow.ChargedShot.class) != null) {
-			Dungeon.hero.buff(Crossbow.ChargedShot.class).detach();
+        if (null != null) {
+            ((Crossbow.ChargedShot) null).detach();
 		}
 	}
 

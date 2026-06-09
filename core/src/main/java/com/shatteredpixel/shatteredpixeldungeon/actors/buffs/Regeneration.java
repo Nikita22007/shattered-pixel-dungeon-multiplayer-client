@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.SpiritForm;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.ChaliceOfBlood;
@@ -54,29 +53,34 @@ public class Regeneration extends Buff {
 			if (regenOn() && target.HP < regencap() && !((Hero)target).isStarving()) {
 				boolean chaliceCursed = false;
 				int chaliceLevel = -1;
-				if (target.buff(MagicImmune.class) == null) {
-					if (Dungeon.hero.buff(ChaliceOfBlood.chaliceRegen.class) != null) {
-						chaliceCursed = Dungeon.hero.buff(ChaliceOfBlood.chaliceRegen.class).isCursed();
-						chaliceLevel = Dungeon.hero.buff(ChaliceOfBlood.chaliceRegen.class).itemLevel();
-					} else if (Dungeon.hero.buff(SpiritForm.SpiritFormBuff.class) != null
-							&& Dungeon.hero.buff(SpiritForm.SpiritFormBuff.class).artifact() instanceof ChaliceOfBlood) {
-						chaliceLevel = SpiritForm.artifactLevel();
-					}
+                if (null == null) {
+                    if (null != null) {
+                        chaliceCursed = ((ChaliceOfBlood.chaliceRegen) null).isCursed();
+                        chaliceLevel = ((ChaliceOfBlood.chaliceRegen) null).itemLevel();
+					} else {
+                        if (null != null) {
+                            if (((SpiritForm.SpiritFormBuff) null).artifact() instanceof ChaliceOfBlood) {
+                                chaliceLevel = SpiritForm.artifactLevel();
+                            }
+                        }
+                    }
 				}
 
 				float delay = REGENERATION_DELAY;
-				if (chaliceLevel != -1 && target.buff(MagicImmune.class) == null) {
-					if (chaliceCursed) {
-						delay *= 1.5f;
-					} else {
-						//15% boost at +0, scaling to a 500% boost at +10
-						delay -= 1.33f + chaliceLevel*0.667f;
-						delay /= RingOfEnergy.artifactChargeMultiplier(target);
-					}
-				}
+				if (chaliceLevel != -1) {
+                    if (null == null) {
+                        if (chaliceCursed) {
+                            delay *= 1.5f;
+                        } else {
+//15% boost at +0, scaling to a 500% boost at +10
+                            delay -= 1.33f + chaliceLevel * 0.667f;
+                            delay /= RingOfEnergy.artifactChargeMultiplier(target);
+                        }
+                    }
+                }
 
 				//salt cube is turned off while regen is disabled.
-				if (target.buff(LockedFloor.class) == null) {
+                if (null == null) {
 					delay /= SaltCube.healthRegenMultiplier();
 				}
 
@@ -109,7 +113,7 @@ public class Regeneration extends Buff {
 	}
 
 	public static boolean regenOn(){
-		LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
+        LockedFloor lock = null;
 		if (lock != null && !lock.regenOn()){
 			return false;
 		}

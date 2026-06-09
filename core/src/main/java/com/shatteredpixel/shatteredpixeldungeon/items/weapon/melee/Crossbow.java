@@ -49,11 +49,11 @@ public class Crossbow extends MeleeWeapon {
 	@Override
 	public boolean doUnequip(Hero hero, boolean collect, boolean single) {
 		if (super.doUnequip(hero, collect, single)){
-			if (hero.buff(ChargedShot.class) != null &&
+            if (null != null &&
 					!(hero.belongings.weapon() instanceof Crossbow)
 					&& !(hero.belongings.secondWep() instanceof Crossbow)){
 				//clear charged shot if no crossbow is equipped
-				hero.buff(ChargedShot.class).detach();
+                ((ChargedShot) null).detach();
 			}
 			return true;
 		} else {
@@ -63,7 +63,7 @@ public class Crossbow extends MeleeWeapon {
 
 	@Override
 	public float accuracyFactor(Char owner, Char target) {
-		if (owner.buff(Crossbow.ChargedShot.class) != null){
+        if (null != null){
 			Actor.add(new Actor() {
 				{ actPriority = VFX_PRIO; }
 				@Override
@@ -86,23 +86,24 @@ public class Crossbow extends MeleeWeapon {
 		int dmg = super.proc(attacker, defender, damage);
 
 		//stronger elastic effect
-		if (attacker == Dungeon.hero
-				&& Dungeon.hero.buff(ChargedShot.class) != null
-				//not proccing from a dart
-				&& Dungeon.hero.belongings.attackingWeapon() == this){
-			//trace a ballistica to our target (which will also extend past them
-			Ballistica trajectory = new Ballistica(attacker.pos, defender.pos, Ballistica.STOP_TARGET);
-			//trim it to just be the part that goes past them
-			trajectory = new Ballistica(trajectory.collisionPos, trajectory.path.get(trajectory.path.size()-1), Ballistica.PROJECTILE);
-			//knock them back along that ballistica
-			WandOfBlastWave.throwChar(defender,
-					trajectory,
-					4,
-					true,
-					true,
-					this);
-			attacker.buff(Crossbow.ChargedShot.class).detach();
-		}
+		if (attacker == Dungeon.hero) {
+            if (null != null
+                    //not proccing from a dart
+                    && Dungeon.hero.belongings.attackingWeapon() == this) {
+//trace a ballistica to our target (which will also extend past them
+                Ballistica trajectory = new Ballistica(attacker.pos, defender.pos, Ballistica.STOP_TARGET);
+//trim it to just be the part that goes past them
+                trajectory = new Ballistica(trajectory.collisionPos, trajectory.path.get(trajectory.path.size() - 1), Ballistica.PROJECTILE);
+//knock them back along that ballistica
+                WandOfBlastWave.throwChar(defender,
+                        trajectory,
+                        4,
+                        true,
+                        true,
+                        this);
+                ((ChargedShot) null).detach();
+            }
+        }
 		return dmg;
 	}
 
@@ -140,7 +141,7 @@ public class Crossbow extends MeleeWeapon {
 
 	@Override
 	protected void duelistAbility(Hero hero, Integer target) {
-		if (hero.buff(ChargedShot.class) != null){
+        if (null != null){
 			GLog.w(Messages.get(this, "ability_cant_use"));
 			return;
 		}

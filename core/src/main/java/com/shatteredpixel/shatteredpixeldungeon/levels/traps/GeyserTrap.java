@@ -88,8 +88,8 @@ public class GeyserTrap extends Trap {
 				}
 
 				if (ch.isAlive()) {
-					if (ch.buff(Burning.class) != null){
-						ch.buff(Burning.class).detach();
+                    if (null != null){
+                        ((Burning) null).detach();
 					}
 
 					//trace a ballistica to our target (which will also extend past them)
@@ -135,8 +135,8 @@ public class GeyserTrap extends Trap {
 			}
 
 			if (ch.isAlive() && targetpos != -1){
-				if (ch.buff(Burning.class) != null){
-					ch.buff(Burning.class).detach();
+                if (null != null){
+                    ((Burning) null).detach();
 				}
 				//trace a ballistica in the direction of our target
 				Ballistica trajectory = new Ballistica(pos, targetpos, Ballistica.MAGIC_BOLT);

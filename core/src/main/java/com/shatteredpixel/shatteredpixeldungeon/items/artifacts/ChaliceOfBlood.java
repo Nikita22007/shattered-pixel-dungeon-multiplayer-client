@@ -25,10 +25,8 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyWard;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -61,12 +59,12 @@ public class ChaliceOfBlood extends Artifact {
 	@Override
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = super.actions( hero );
-		if (isEquipped( hero )
-				&& level() < levelCap
-				&& !cursed
-				&& !hero.isInvulnerable(getClass())
-				&& hero.buff(MagicImmune.class) == null)
-			actions.add(AC_PRICK);
+		if (isEquipped(hero)
+                && level() < levelCap
+                && !cursed
+                && !hero.isInvulnerable(getClass())) {
+            if (null == null) actions.add(AC_PRICK);
+        }
 		return actions;
 	}
 
@@ -126,16 +124,18 @@ public class ChaliceOfBlood extends Artifact {
 		int damage = Random.NormalIntRange(minPrickDmg(), maxPrickDmg());
 
 		//need to process on-hit effects manually
-		Earthroot.Armor armor = hero.buff(Earthroot.Armor.class);
+        Earthroot.Armor armor = null;
 		if (armor != null) {
 			damage = armor.absorb(damage);
 		}
 
-		if (hero.buff(MagicImmune.class) != null && hero.buff(HolyWard.HolyArmBuff.class) != null){
-			damage -= hero.subClass == HeroSubClass.PALADIN ? 3 : 1;
-		}
+        if (null != null) {
+            if (null != null) {
+                damage -= hero.subClass == HeroSubClass.PALADIN ? 3 : 1;
+            }
+        }
 
-		WandOfLivingEarth.RockArmor rockArmor = hero.buff(WandOfLivingEarth.RockArmor.class);
+        WandOfLivingEarth.RockArmor rockArmor = null;
 		if (rockArmor != null) {
 			damage = rockArmor.absorb(damage);
 		}
@@ -188,7 +188,7 @@ public class ChaliceOfBlood extends Artifact {
 	
 	@Override
 	public void charge(Hero target, float amount) {
-		if (cursed || target.buff(MagicImmune.class) != null) return;
+        if (cursed || null != null) return;
 
 		//grants 5 turns of healing up-front, if hero isn't starving
 		if (target.isStarving()) return;

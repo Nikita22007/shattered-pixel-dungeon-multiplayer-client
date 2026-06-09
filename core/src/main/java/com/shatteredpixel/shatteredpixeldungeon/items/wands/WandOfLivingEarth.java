@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
@@ -87,7 +86,7 @@ public class WandOfLivingEarth extends DamageWand {
 			guardian = (EarthGuardian)Stasis.getStasisAlly();
 		}
 
-		RockArmor buff = curUser.buff(RockArmor.class);
+        RockArmor buff = null;
 		//only grant armor if we are shooting at an enemy, a hiding mimic, or the guardian
 		if ((guardian == null || ch != guardian) && (ch == null
 				|| ch.alignment == Char.Alignment.ALLY
@@ -150,7 +149,7 @@ public class WandOfLivingEarth extends DamageWand {
 					Dungeon.level.occupyCell(guardian);
 				}
 
-				if (ch.alignment == Char.Alignment.ENEMY || ch.buff(Amok.class) != null) {
+                if (ch.alignment == Char.Alignment.ENEMY || null != null) {
 					guardian.aggro(ch);
 				}
 
@@ -184,7 +183,7 @@ public class WandOfLivingEarth extends DamageWand {
 						guardian.sprite.centerEmitter().burst(MagicMissile.EarthParticle.ATTRACT, 8 + buffedLvl() / 2);
 					}
 					guardian.setInfo(curUser, buffedLvl(), armorToAdd);
-					if (ch.alignment == Char.Alignment.ENEMY || ch.buff(Amok.class) != null) {
+                    if (ch.alignment == Char.Alignment.ENEMY || null != null) {
 						guardian.aggro(ch);
 					}
 				}
@@ -464,8 +463,8 @@ public class WandOfLivingEarth extends DamageWand {
 			public boolean act(boolean enemyInFOV, boolean justAlerted) {
 				if (!enemyInFOV){
 					((RockArmor) null).addArmor(wandLevel, HP);
-					if (buff(PowerOfMany.PowerBuff.class) != null){
-						((RockArmor) null).powerOfManyTurns = buff(PowerOfMany.PowerBuff.class).cooldown()+1;
+                    if (null != null){
+                        ((RockArmor) null).powerOfManyTurns = ((PowerOfMany.PowerBuff) null).cooldown()+1;
 					}
 					Dungeon.hero.sprite.centerEmitter().burst(MagicMissile.EarthParticle.ATTRACT, 8 + wandLevel/2);
 					destroy();

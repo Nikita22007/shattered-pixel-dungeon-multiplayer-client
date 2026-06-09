@@ -73,10 +73,11 @@ public class TelekineticGrab extends TargetedSpell {
 
 		float totalpickupTime = 0;
 
-		if (ch != null && ch.buff(PinCushion.class) != null){
+        if (ch != null && null != null){
 
-			while (ch.buff(PinCushion.class) != null) {
-				Item item = ch.buff(PinCushion.class).grabOne();
+			while (true) {
+                if (!(null != null)) break;
+                Item item = ((PinCushion) null).grabOne();
 
 				if (item.doPickUp(hero, ch.pos)) {
 					totalpickupTime += item.pickupDelay();

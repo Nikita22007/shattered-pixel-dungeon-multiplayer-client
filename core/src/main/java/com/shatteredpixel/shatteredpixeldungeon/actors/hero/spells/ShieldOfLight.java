@@ -89,10 +89,12 @@ public class ShieldOfLight extends TargetedClericSpell {
 		hero.sprite.emitter().start(Speck.factory(Speck.LIGHT), 0.15f, 6);
 
 		Char ally = PowerOfMany.getPoweredAlly();
-		if (ally != null && ally.buff(LifeLinkSpell.LifeLinkSpellBuff.class) != null){
-            ((ShieldOfLightTracker) null).object = ch.id();
-			ally.sprite.emitter().start(Speck.factory(Speck.LIGHT), 0.15f, 6);
-		}
+		if (ally != null) {
+            if (null != null) {
+                ((ShieldOfLightTracker) null).object = ch.id();
+                ally.sprite.emitter().start(Speck.factory(Speck.LIGHT), 0.15f, 6);
+            }
+        }
 
 		onSpellCast(tome, hero);
 

@@ -50,9 +50,9 @@ public class Unstable extends Weapon.Enchantment {
 	public int proc( Weapon weapon, Char attacker, Char defender, int damage ) {
 		
 		int conservedDamage = 0;
-		if (attacker.buff(Kinetic.ConservedDamage.class) != null) {
-			conservedDamage = attacker.buff(Kinetic.ConservedDamage.class).damageBonus();
-			attacker.buff(Kinetic.ConservedDamage.class).detach();
+        if (null != null) {
+            conservedDamage = ((Kinetic.ConservedDamage) null).damageBonus();
+            ((Kinetic.ConservedDamage) null).detach();
 		}
 		
 		damage = Reflection.newInstance(Random.oneOf(randomEnchants)).proc( weapon, attacker, defender, damage );

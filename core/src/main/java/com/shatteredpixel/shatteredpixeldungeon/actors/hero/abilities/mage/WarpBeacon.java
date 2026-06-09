@@ -62,7 +62,7 @@ public class WarpBeacon extends ArmorAbility {
 
 	@Override
 	public String targetingPrompt() {
-		if (Dungeon.hero.buff(WarpBeaconTracker.class) == null
+        if (null == null
 				&& Dungeon.hero.hasTalent(Talent.REMOTE_BEACON)){
 			return Messages.get(this, "prompt");
 		}
@@ -80,8 +80,8 @@ public class WarpBeacon extends ArmorAbility {
 			return;
 		}
 
-		if (hero.buff(WarpBeaconTracker.class) != null){
-			final WarpBeaconTracker tracker = hero.buff(WarpBeaconTracker.class);
+        if (null != null){
+            final WarpBeaconTracker tracker = null;
 
 			GameScene.show( new WndOptions(
 					new Image(hero.sprite),
@@ -186,7 +186,7 @@ public class WarpBeacon extends ArmorAbility {
 						}
 
 					} else if (index == 1){
-						hero.buff(WarpBeaconTracker.class).detach();
+                        ((WarpBeaconTracker) null).detach();
 					}
 				}
 			} );

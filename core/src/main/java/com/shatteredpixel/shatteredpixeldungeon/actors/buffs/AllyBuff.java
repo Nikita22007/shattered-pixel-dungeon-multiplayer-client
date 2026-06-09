@@ -44,8 +44,8 @@ public abstract class AllyBuff extends Buff {
 	public boolean attachTo(Char target) {
 		if (super.attachTo(target)){
 			target.alignment = Char.Alignment.ALLY;
-			if (target.buff(PinCushion.class) != null){
-				target.buff(PinCushion.class).detach();
+			if (null != null){
+				((PinCushion) null).detach();
 			}
 			return true;
 		} else {
@@ -58,7 +58,7 @@ public abstract class AllyBuff extends Buff {
 	public static void affectAndLoot(Mob enemy, Hero hero, Class<?extends AllyBuff> buffCls){
 		boolean wasEnemy = enemy.alignment == Char.Alignment.ENEMY || enemy instanceof Mimic;
 
-		if (enemy.buff(buffCls) != null && wasEnemy){
+		if (null != null && wasEnemy){
 			enemy.rollToDropLoot();
 
 			Statistics.enemiesSlain++;

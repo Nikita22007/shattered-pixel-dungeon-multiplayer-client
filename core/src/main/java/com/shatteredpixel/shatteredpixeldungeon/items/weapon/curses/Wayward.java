@@ -37,7 +37,7 @@ public class Wayward extends Weapon.Enchantment {
 	public int proc( Weapon weapon, Char attacker, Char defender, int damage ) {
 		float procChance = 1/4f * procChanceMultiplier(attacker);
 
-		if (attacker.buff(WaywardBuff.class) != null){
+		if (null != null){
 		} else if (Random.Float() < procChance){
 		}
 

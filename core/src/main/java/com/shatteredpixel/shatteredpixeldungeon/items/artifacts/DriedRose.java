@@ -29,26 +29,17 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.CorrosiveGas;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.Stasis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Wraith;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.DirectableAlly;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Ghost;
-import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShaftParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfPsionicBlast;
@@ -119,13 +110,14 @@ public class DriedRose extends Artifact {
 		if (!Ghost.Quest.completed()){
 			return actions;
 		}
-		if (isEquipped( hero )
-				&& charge == chargeCap
-				&& !cursed
-				&& hero.buff(MagicImmune.class) == null
-				&& ghostID == 0) {
-			actions.add(AC_SUMMON);
-		}
+		if (isEquipped(hero)
+                && charge == chargeCap
+                && !cursed) {
+            if (null == null
+                    && ghostID == 0) {
+                actions.add(AC_SUMMON);
+            }
+        }
 		if (ghostID != 0){
 			actions.add(AC_DIRECT);
 		}
@@ -243,7 +235,7 @@ public class DriedRose extends Artifact {
 	
 	@Override
 	public void charge(Hero target, float amount) {
-		if (cursed || target.buff(MagicImmune.class) != null) return;
+        if (cursed || null != null) return;
 
 		if (ghost == null){
 			if (charge < chargeCap) {
@@ -345,30 +337,32 @@ public class DriedRose extends Artifact {
 			}
 			
 			//rose does not charge while ghost hero is alive
-			if (ghost != null && !cursed && target.buff(MagicImmune.class) == null){
-				
-				//heals to full over 500 turns
-				if (ghost.HP < ghost.HT && Regeneration.regenOn()) {
-					partialCharge += (ghost.HT / 500f) * RingOfEnergy.artifactChargeMultiplier(target);
-					updateQuickslot();
-					
-					while (partialCharge > 1) {
-						ghost.HP++;
-						partialCharge--;
-						if (ghost.HP == ghost.HT){
-							partialCharge = 0;
-						}
-					}
-				} else {
-					partialCharge = 0;
-				}
-				
-				return true;
-			}
-			
-			if (charge < chargeCap
+			if (ghost != null && !cursed) {
+                if (null == null) {
+
+//heals to full over 500 turns
+                    if (ghost.HP < ghost.HT && Regeneration.regenOn()) {
+                        partialCharge += (ghost.HT / 500f) * RingOfEnergy.artifactChargeMultiplier(target);
+                        updateQuickslot();
+
+                        while (partialCharge > 1) {
+                            ghost.HP++;
+                            partialCharge--;
+                            if (ghost.HP == ghost.HT) {
+                                partialCharge = 0;
+                            }
+                        }
+                    } else {
+                        partialCharge = 0;
+                    }
+
+                    return true;
+                }
+            }
+
+            if (charge < chargeCap
 					&& !cursed
-					&& target.buff(MagicImmune.class) == null
+					&& null == null
 					&& Regeneration.regenOn()) {
 				//500 turns to a full charge
 				partialCharge += (1/5f * RingOfEnergy.artifactChargeMultiplier(target));
@@ -545,9 +539,9 @@ public class DriedRose extends Artifact {
 		@Override
 		protected boolean act() {
 			updateRose();
-			if (rose == null
+            if (rose == null
 					|| !rose.isEquipped(Dungeon.hero)
-					|| Dungeon.hero.buff(MagicImmune.class) != null){
+					|| null != null){
 				damage(1, new NoRoseDamage());
 			}
 			
@@ -712,7 +706,7 @@ public class DriedRose extends Artifact {
 		}
 		
 		public void sayAppeared(){
-			if (Dungeon.hero.buff(AscensionChallenge.class) != null){
+            if (null != null){
 				yell( Messages.get( this, "dialogue_ascension_" + Random.IntRange(1, 6) ));
 
 			} else {

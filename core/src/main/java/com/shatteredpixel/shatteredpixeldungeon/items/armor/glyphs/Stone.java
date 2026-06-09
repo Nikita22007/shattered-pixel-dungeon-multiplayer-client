@@ -24,10 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bless;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Daze;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hex;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
@@ -49,9 +46,9 @@ public class Stone extends Armor.Glyph {
 
 		//FIXME this is duplicated here because these apply in hit(), not in attack/defenseskill
 		// the true solution is probably to refactor accuracy/evasion code a little bit
-		if (attacker.buff(Bless.class) != null) accuracy *= 1.25f;
-		if (attacker.buff(  Hex.class) != null) accuracy *= 0.8f;
-		if (attacker.buff( Daze.class) != null) accuracy *= 0.5f;
+        if (null != null) accuracy *= 1.25f;
+        if (null != null) accuracy *= 0.8f;
+        if (null != null) accuracy *= 0.5f;
 		for (ChampionEnemy buff : attacker.buffs(ChampionEnemy.class)){
 			accuracy *= buff.evasionAndAccuracyFactor();
 		}
@@ -63,9 +60,9 @@ public class Stone extends Armor.Glyph {
 			accuracy *= 1.01f + 0.02f*Dungeon.hero.pointsInTalent(Talent.BLESS);
 		}
 
-		if (defender.buff(Bless.class) != null) evasion *= 1.25f;
-		if (defender.buff(  Hex.class) != null) evasion *= 0.8f;
-		if (defender.buff( Daze.class) != null) evasion *= 0.5f;
+        if (null != null) evasion *= 1.25f;
+        if (null != null) evasion *= 0.8f;
+        if (null != null) evasion *= 0.5f;
 		for (ChampionEnemy buff : defender.buffs(ChampionEnemy.class)){
 			evasion *= buff.evasionAndAccuracyFactor();
 		}

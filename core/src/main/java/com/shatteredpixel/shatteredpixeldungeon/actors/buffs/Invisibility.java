@@ -90,28 +90,28 @@ public class Invisibility extends FlavourBuff {
 		for ( Buff invis : ch.buffs( Invisibility.class )){
 			invis.detach();
 		}
-		CloakOfShadows.cloakStealth cloakBuff = ch.buff( CloakOfShadows.cloakStealth.class );
+        CloakOfShadows.cloakStealth cloakBuff = null;
 		if (cloakBuff != null) {
 			cloakBuff.dispel();
 		}
 
 		//these aren't forms of invisibility, but do dispel at the same time as it.
-		TimekeepersHourglass.timeFreeze timeFreeze = ch.buff( TimekeepersHourglass.timeFreeze.class );
+        TimekeepersHourglass.timeFreeze timeFreeze = null;
 		if (timeFreeze != null) {
 			timeFreeze.detach();
 		}
 
-		Preparation prep = ch.buff( Preparation.class );
+        Preparation prep = null;
 		if (prep != null){
 			prep.detach();
 		}
 
-		Swiftthistle.TimeBubble bubble =  ch.buff( Swiftthistle.TimeBubble.class );
+        Swiftthistle.TimeBubble bubble = null;
 		if (bubble != null){
 			bubble.detach();
 		}
 
-		RoundShield.GuardTracker guard = ch.buff(RoundShield.GuardTracker.class);
+        RoundShield.GuardTracker guard = null;
 		if (guard != null && guard.hasBlocked){
 			guard.detach();
 		}

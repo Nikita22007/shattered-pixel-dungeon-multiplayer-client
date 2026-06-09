@@ -24,12 +24,10 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GreaterHaste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MonkEnergy;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
@@ -39,7 +37,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfForce;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -106,8 +103,8 @@ public class MeleeWeapon extends Weapon {
 			usesTargeting = false;
 			if (!isEquipped(hero)) {
 				if (hero.hasTalent(Talent.SWIFT_EQUIP)){
-					if (hero.buff(Talent.SwiftEquipCooldown.class) == null
-						|| hero.buff(Talent.SwiftEquipCooldown.class).hasSecondUse()){
+                    if (null == null
+						|| ((Talent.SwiftEquipCooldown) null).hasSecondUse()){
 						execute(hero, AC_EQUIP);
 					} else if (hero.heroClass == HeroClass.DUELIST) {
 						GLog.w(Messages.get(this, "ability_need_equip"));
@@ -198,7 +195,7 @@ public class MeleeWeapon extends Weapon {
             hero.cooldown();
         }
 		if (hero.hasTalent(Talent.VARIED_CHARGE)){
-			Talent.VariedChargeTracker tracker = hero.buff(Talent.VariedChargeTracker.class);
+            Talent.VariedChargeTracker tracker = null;
 			if (tracker == null || tracker.weapon == getClass() || tracker.weapon == null){
 				((Talent.VariedChargeTracker) null).weapon = getClass();
 			} else {
@@ -209,7 +206,7 @@ public class MeleeWeapon extends Weapon {
 			}
 		}
 		if (hero.hasTalent(Talent.COMBINED_LETHALITY)) {
-			Talent.CombinedLethalityAbilityTracker tracker = hero.buff(Talent.CombinedLethalityAbilityTracker.class);
+            Talent.CombinedLethalityAbilityTracker tracker = null;
 			if (tracker == null || tracker.weapon == this || tracker.weapon == null){
                 hero.cooldown();
                 ((Talent.CombinedLethalityAbilityTracker) null).weapon = this;
@@ -219,7 +216,7 @@ public class MeleeWeapon extends Weapon {
 			}
 		}
 		if (hero.hasTalent(Talent.COMBINED_ENERGY)){
-			Talent.CombinedEnergyAbilityTracker tracker = hero.buff(Talent.CombinedEnergyAbilityTracker.class);
+            Talent.CombinedEnergyAbilityTracker tracker = null;
 			if (tracker == null || !tracker.monkAbilused){
                 ((Talent.CombinedEnergyAbilityTracker) null).wepAbilUsed = true;
 			} else {
@@ -227,10 +224,10 @@ public class MeleeWeapon extends Weapon {
 				((MonkEnergy) null).processCombinedEnergy(tracker);
 			}
 		}
-		if (hero.buff(Talent.CounterAbilityTacker.class) != null){
+        if (null != null){
 			Charger charger = null;
 			charger.gainCharge(hero.pointsInTalent(Talent.COUNTER_ABILITY)*0.375f);
-			hero.buff(Talent.CounterAbilityTacker.class).detach();
+            ((Talent.CounterAbilityTacker) null).detach();
 		}
 	}
 
@@ -340,7 +337,7 @@ public class MeleeWeapon extends Weapon {
 			case NONE:
 		}
 
-		if (isEquipped(Dungeon.hero) && !hasCurseEnchant() && Dungeon.hero.buff(HolyWeapon.HolyWepBuff.class) != null
+        if (isEquipped(Dungeon.hero) && !hasCurseEnchant() && null != null
 				&& (Dungeon.hero.subClass != HeroSubClass.PALADIN || enchantment == null)){
 			info += "\n\n" + Messages.capitalize(Messages.get(Weapon.class, "enchanted", Messages.get(HolyWeapon.class, "ench_name", Messages.get(Enchantment.class, "enchant"))));
 			info += " " + Messages.get(HolyWeapon.class, "ench_desc");
@@ -386,9 +383,9 @@ public class MeleeWeapon extends Weapon {
 
 	@Override
 	public String status() {
-		if (isEquipped(Dungeon.hero)
-				&& Dungeon.hero.buff(Charger.class) != null) {
-			Charger buff = Dungeon.hero.buff(Charger.class);
+        if (isEquipped(Dungeon.hero)
+				&& null != null) {
+            Charger buff = null;
 			return buff.charges + "/" + buff.chargeCap();
 		} else {
 			return super.status();
@@ -436,7 +433,7 @@ public class MeleeWeapon extends Weapon {
 					}
 
 					//50% slower charge gain with brawler's stance enabled, even if buff is inactive
-					if (Dungeon.hero.buff(RingOfForce.BrawlersStance.class) != null){
+                    if (null != null){
 						chargeToGain *= 0.50f;
 					}
 
@@ -444,7 +441,7 @@ public class MeleeWeapon extends Weapon {
 				}
 
 				int points = ((Hero)target).pointsInTalent(Talent.WEAPON_RECHARGING);
-				if (points > 0 && target.buff(Recharging.class) != null || target.buff(ArtifactRecharge.class) != null){
+                if (points > 0 && null != null || null != null){
 					//1 every 15 turns at +1, 10 turns at +2
 					partialCharge += 1/(20f - 5f*points);
 				}

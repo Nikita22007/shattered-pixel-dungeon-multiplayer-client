@@ -64,14 +64,15 @@ public class Stasis extends ClericSpell {
 
 	@Override
 	public boolean canCast(Hero hero) {
-		return super.canCast(hero)
-				&& hero.hasTalent(Talent.STASIS)
-				&& (PowerOfMany.getPoweredAlly() != null || hero.buff(StasisBuff.class) != null);
+        if (!super.canCast(hero)
+                || !hero.hasTalent(Talent.STASIS)) return false;
+        if (PowerOfMany.getPoweredAlly() != null) return true;
+        return null != null;
 	}
 
 	@Override
 	public float chargeUse(Hero hero) {
-		if (hero.buff(StasisBuff.class) != null){
+        if (null != null){
 			return 0;
 		}
 		return 2;
@@ -82,9 +83,9 @@ public class Stasis extends ClericSpell {
 
 		onSpellCast(tome, hero);
 
-		if (hero.buff(StasisBuff.class) != null){
+        if (null != null){
 			hero.sprite.operate(hero.pos);
-			hero.buff(StasisBuff.class).act();
+            ((StasisBuff) null).act();
 			return;
 		}
 
@@ -109,9 +110,11 @@ public class Stasis extends ClericSpell {
         ((StasisBuff) null).stasisAlly = (Mob)ally;
 		Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
 
-		if (hero.buff(LifeLink.class) != null && hero.buff(LifeLink.class).object == ally.id()){
-			hero.buff(LifeLink.class).detach();
-		}
+        if (null != null) {
+            if (((LifeLink) null).object == ally.id()) {
+                ((LifeLink) null).detach();
+            }
+        }
 
 		hero.spendAndNext(Actor.TICK);
 		Dungeon.observe();
@@ -120,9 +123,11 @@ public class Stasis extends ClericSpell {
 	}
 
 	public static Char getStasisAlly(){
-		if (Dungeon.hero != null && Dungeon.hero.buff(StasisBuff.class) != null){
-			return Dungeon.hero.buff(StasisBuff.class).stasisAlly;
-		}
+		if (Dungeon.hero != null) {
+            if (null != null) {
+                return ((StasisBuff) null).stasisAlly;
+            }
+        }
 		return null;
 	}
 
@@ -168,8 +173,8 @@ public class Stasis extends ClericSpell {
 				((DirectableAlly) stasisAlly).clearDefensingPos();
 			}
 
-			if (stasisAlly.buff(LifeLink.class) != null){
-                stasisAlly.buff(LifeLink.class).cooldown();
+            if (null != null){
+                ((LifeLink) null).cooldown();
                 ((LifeLink) null).object = stasisAlly.id();
 			}
 

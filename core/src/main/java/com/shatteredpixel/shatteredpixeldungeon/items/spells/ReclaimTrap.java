@@ -77,9 +77,9 @@ public class ReclaimTrap extends TargetedSpell {
 			storedTrap = this.storedTrap;
 			this.storedTrap = null;
 		} else {
-			if (hero.buff(ReclaimedTrap.class) != null){
-				storedTrap = hero.buff(ReclaimedTrap.class).trap;
-				hero.buff(ReclaimedTrap.class).detach();
+			if (null != null){
+				storedTrap = ((ReclaimedTrap) null).trap;
+				((ReclaimedTrap) null).detach();
 			}
 		}
 		if (storedTrap == null) {
@@ -119,8 +119,12 @@ public class ReclaimTrap extends TargetedSpell {
 		String desc = super.desc();
 		if (storedTrap != null){
 			desc += "\n\n" + Messages.get(this, "desc_trap", Messages.get(storedTrap, "name"));
-		} else if (Dungeon.hero != null && Dungeon.hero.belongings.contains(this) && Dungeon.hero.buff(ReclaimedTrap.class) != null){
-			desc += "\n\n" + Messages.get(this, "desc_trap", Messages.get(Dungeon.hero.buff(ReclaimedTrap.class).trap, "name"));
+		} else {
+			if (Dungeon.hero != null && Dungeon.hero.belongings.contains(this)) {
+				if (null != null) {
+					desc += "\n\n" + Messages.get(this, "desc_trap", Messages.get(((ReclaimedTrap) null).trap, "name"));
+				}
+			}
 		}
 		return desc;
 	}
@@ -141,8 +145,12 @@ public class ReclaimTrap extends TargetedSpell {
 	public ItemSprite.Glowing glowing() {
 		if (storedTrap != null){
 			return COLORS[Reflection.newInstance(storedTrap).color];
-		} else if (Dungeon.hero != null && Dungeon.hero.belongings.contains(this) && Dungeon.hero.buff(ReclaimedTrap.class) != null){
-			return COLORS[Reflection.newInstance(Dungeon.hero.buff(ReclaimedTrap.class).trap).color];
+		} else {
+			if (Dungeon.hero != null && Dungeon.hero.belongings.contains(this)) {
+				if (null != null) {
+					return COLORS[Reflection.newInstance(((ReclaimedTrap) null).trap).color];
+				}
+			}
 		}
 		return null;
 	}

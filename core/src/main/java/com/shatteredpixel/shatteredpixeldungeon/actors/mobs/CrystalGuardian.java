@@ -70,8 +70,8 @@ public class CrystalGuardian extends Mob{
 	@Override
 	protected boolean act() {
 		if (recovering){
-			if (buff(PinCushion.class) != null){
-				buff(PinCushion.class).detach();
+            if (null != null){
+                ((PinCushion) null).detach();
 			}
 			throwItems();
 			HP = Math.min(HT, HP+5);

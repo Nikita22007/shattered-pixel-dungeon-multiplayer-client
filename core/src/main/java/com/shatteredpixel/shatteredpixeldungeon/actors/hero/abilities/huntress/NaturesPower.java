@@ -43,7 +43,7 @@ public class NaturesPower extends ArmorAbility {
 	@Override
 	protected void activate(ClassArmor armor, Hero hero, Integer target) {
 
-        hero.buff(naturesPowerTracker.class).extensionsLeft = 2;
+        ((naturesPowerTracker) null).extensionsLeft = 2;
 		hero.sprite.operate(hero.pos);
 		Sample.INSTANCE.play(Assets.Sounds.CHARGEUP);
 		hero.sprite.emitter().burst(LeafParticle.GENERAL, 10);

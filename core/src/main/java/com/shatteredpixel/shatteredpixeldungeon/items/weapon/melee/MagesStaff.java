@@ -169,7 +169,7 @@ public class MagesStaff extends MeleeWeapon {
 			ArtifactRecharge.chargeArtifacts(hero, hero.pointsInTalent(Talent.MYSTICAL_CHARGE)/2f);
 		}
 
-		Talent.EmpoweredStrikeTracker empoweredStrike = attacker.buff(Talent.EmpoweredStrikeTracker.class);
+        Talent.EmpoweredStrikeTracker empoweredStrike = null;
 		if (empoweredStrike != null){
 			damage = Math.round( damage * (1f + Dungeon.hero.pointsInTalent(Talent.EMPOWERED_STRIKE)/6f));
 		}
@@ -445,8 +445,8 @@ public class MagesStaff extends MeleeWeapon {
 						bodyText += "\n\n" + Messages.get(MagesStaff.class, "imbue_cursed");
 					}
 
-					if (Dungeon.hero.hasTalent(Talent.WAND_PRESERVATION)
-						&& Dungeon.hero.buff(Talent.WandPreservationCounter.class) == null){
+                    if (Dungeon.hero.hasTalent(Talent.WAND_PRESERVATION)
+						&& null == null){
 						bodyText += "\n\n" + Messages.get(MagesStaff.class, "imbue_talent");
 					} else {
 						bodyText += "\n\n" + Messages.get(MagesStaff.class, "imbue_lost");

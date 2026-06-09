@@ -86,7 +86,7 @@ public class WandOfTransfusion extends DamageWand {
 			//this wand does different things depending on the target.
 			
 			//heals/shields an ally or a charmed enemy while damaging self
-			if (ch.alignment == Char.Alignment.ALLY || ch.buff(Charm.class) != null){
+            if (ch.alignment == Char.Alignment.ALLY || null != null){
 				
 				// 5% of max hp
 				int selfDmg = Math.round(curUser.HT*0.05f);
@@ -158,15 +158,17 @@ public class WandOfTransfusion extends DamageWand {
 
 	@Override
 	public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
-		if (defender.buff(Charm.class) != null && defender.buff(Charm.class).object == attacker.id()){
-			//grants a free use of the staff and shields self
-			freeCharge = true;
-			int shieldToGive = Math.round((2*(5 + buffedLvl()))*procChanceMultiplier(attacker));
-            ((Barrier) null).setShield(shieldToGive);
-			attacker.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(shieldToGive), FloatingText.SHIELDING);
-			GLog.p( Messages.get(this, "charged") );
-			attacker.sprite.emitter().burst(BloodParticle.BURST, 20);
-		}
+        if (null != null) {
+            if (((Charm) null).object == attacker.id()) {
+//grants a free use of the staff and shields self
+                freeCharge = true;
+                int shieldToGive = Math.round((2 * (5 + buffedLvl())) * procChanceMultiplier(attacker));
+                ((Barrier) null).setShield(shieldToGive);
+                attacker.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(shieldToGive), FloatingText.SHIELDING);
+                GLog.p(Messages.get(this, "charged"));
+                attacker.sprite.emitter().burst(BloodParticle.BURST, 20);
+            }
+        }
 	}
 
 	@Override

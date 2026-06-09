@@ -84,13 +84,15 @@ public class BlessSpell extends TargetedClericSpell {
 		}
 
 		Char ally = PowerOfMany.getPoweredAlly();
-		if (ally != null && ally.buff(LifeLinkSpell.LifeLinkSpellBuff.class) != null){
-			if (ch == hero){
-				affectChar(hero, ally); //if cast on hero, duplicate to ally
-			} else if (ally == ch) {
-				affectChar(hero, hero); //if cast on ally, duplicate to hero
-			}
-		}
+		if (ally != null) {
+            if (null != null) {
+                if (ch == hero) {
+                    affectChar(hero, ally); //if cast on hero, duplicate to ally
+                } else if (ally == ch) {
+                    affectChar(hero, hero); //if cast on ally, duplicate to hero
+                }
+            }
+        }
 
 		onSpellCast(tome, hero);
 	}

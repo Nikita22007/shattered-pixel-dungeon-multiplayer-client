@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Doom;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage.WildMagic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.Dewdrop;
@@ -270,8 +269,8 @@ public class WandOfRegrowth extends Wand {
 
 	@Override
 	protected int chargesPerCast() {
-		if (cursed ||
-				(charger != null && charger.target != null && charger.target.buff(WildMagic.WildMagicTracker.class) != null)){
+        if (cursed ||
+				(charger != null && charger.target != null && null != null)){
 			return 1;
 		}
 		//consumes 30% of current charges, rounded up, with a min of 1 and a max of 3.

@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Degrade;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.TormentedSpirit;
@@ -65,7 +64,7 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 
 			new Flare( 6, 32 ).show( curUser.sprite, 2f );
 
-			if (curUser.buff(Degrade.class) != null) {
+            if (null != null) {
             }
 
 			detach(curUser.belongings.backpack);
@@ -82,9 +81,12 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 	}
 
 	public static boolean uncursable( Item item ){
-		if (item.isEquipped(Dungeon.hero) && Dungeon.hero.buff(Degrade.class) != null) {
-			return true;
-		} if ((item instanceof EquipableItem || item instanceof Wand) && ((!item.isIdentified() && !item.cursedKnown) || item.cursed)){
+		if (item.isEquipped(Dungeon.hero)) {
+            if (null != null) {
+                return true;
+            }
+        }
+        if ((item instanceof EquipableItem || item instanceof Wand) && ((!item.isIdentified() && !item.cursedKnown) || item.cursed)){
 			return true;
 		} else if (item instanceof Weapon){
 			return ((Weapon)item).hasCurseEnchant();
@@ -101,7 +103,7 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 
 		boolean procced = uncurse( curUser, item );
 
-		if (curUser.buff(Degrade.class) != null) {
+        if (null != null) {
             procced = true;
 		}
 

@@ -83,7 +83,7 @@ public class Monk extends Mob {
 	@Override
 	protected boolean act() {
 		boolean result = super.act();
-		if (buff(Focus.class) == null && state == HUNTING && focusCooldown <= 0) {
+        if (null == null && state == HUNTING && focusCooldown <= 0) {
         }
 		return result;
 	}
@@ -104,7 +104,7 @@ public class Monk extends Mob {
 	
 	@Override
 	public int defenseSkill( Char enemy ) {
-		if (buff(Focus.class) != null && paralysed == 0 && state != SLEEPING){
+        if (null != null && paralysed == 0 && state != SLEEPING){
 			return INFINITE_EVASION;
 		}
 		return super.defenseSkill( enemy );
@@ -112,7 +112,7 @@ public class Monk extends Mob {
 	
 	@Override
 	public String defenseVerb() {
-		Focus f = buff(Focus.class);
+        Focus f = null;
 		if (f == null) {
 			return super.defenseVerb();
 		} else {

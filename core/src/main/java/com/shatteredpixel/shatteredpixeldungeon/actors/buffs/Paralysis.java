@@ -50,7 +50,7 @@ public class Paralysis extends FlavourBuff {
 	
 	public void processDamage( int damage ){
 		if (target == null) return;
-		ParalysisResist resist = target.buff(ParalysisResist.class);
+        ParalysisResist resist = null;
 		if (resist == null){
             resist = null;
 		}
@@ -96,7 +96,7 @@ public class Paralysis extends FlavourBuff {
 		
 		@Override
 		public boolean act() {
-			if (target.buff(Paralysis.class) == null) {
+            if (null == null) {
 				damage -= Math.ceil(damage / 10f);
 				if (damage <= 0) detach();
 			}

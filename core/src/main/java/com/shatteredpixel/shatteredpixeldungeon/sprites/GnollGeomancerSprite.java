@@ -51,10 +51,12 @@ public class GnollGeomancerSprite extends MobSprite {
 		if (ch instanceof GnollGeomancer && ((GnollGeomancer) ch).hasSapper()){
 			setupArmor();
 		}
-		if (ch != null && (ch.buff(GnollGeomancer.RockArmor.class) != null != isStatue)){
-			isStatue = !isStatue;
-			updateAnims();
-		}
+		if (ch != null) {
+            if (null != null != isStatue) {
+                isStatue = !isStatue;
+                updateAnims();
+            }
+        }
 	}
 
 	private void updateAnims(){
@@ -138,10 +140,12 @@ public class GnollGeomancerSprite extends MobSprite {
 	@Override
 	public void idle() {
 		super.idle();
-		if (ch != null && ch.buff(GnollGeomancer.RockArmor.class) != null != isStatue){
-			isStatue = !isStatue;
-			updateAnims();
-		}
+		if (ch != null) {
+            if (null != null != isStatue) {
+                isStatue = !isStatue;
+                updateAnims();
+            }
+        }
 	}
 
 	@Override

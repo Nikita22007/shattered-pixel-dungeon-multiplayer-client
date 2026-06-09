@@ -165,15 +165,16 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 			if (hero.hasTalent(Talent.UNENCUMBERED_SPIRIT)) {
 				int points = hero.pointsInTalent(Talent.UNENCUMBERED_SPIRIT);
 
-				if (hero.belongings.weapon() instanceof MeleeWeapon
-						&& (hero.buff(RingOfForce.BrawlersStance.class) == null
-						|| !hero.buff(RingOfForce.BrawlersStance.class).active)){
-					if (((MeleeWeapon) hero.belongings.weapon()).tier <= 1 && points >= 3){
-						enGainMulti += 1.00f;
-					} else if (((MeleeWeapon) hero.belongings.weapon()).tier <= 2 && points >= 2){
-						enGainMulti += 0.75f;
-					} else if (((MeleeWeapon) hero.belongings.weapon()).tier <= 3 && points >= 1){
-						enGainMulti += 0.50f;
+				if (hero.belongings.weapon() instanceof MeleeWeapon) {
+					if (null == null
+					|| !((RingOfForce.BrawlersStance) null).active) {
+						if (((MeleeWeapon) hero.belongings.weapon()).tier <= 1 && points >= 3) {
+							enGainMulti += 1.00f;
+						} else if (((MeleeWeapon) hero.belongings.weapon()).tier <= 2 && points >= 2) {
+							enGainMulti += 0.75f;
+						} else if (((MeleeWeapon) hero.belongings.weapon()).tier <= 3 && points >= 1) {
+							enGainMulti += 0.50f;
+						}
 					}
 				}
 
@@ -183,7 +184,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 
 		energy += energyGain;
 		//if we kill while using an ability, don't apply the cap yet, will be enforced after spending
-		if (target.buff(MonkAbility.UnarmedAbilityTracker.class) == null){
+		if (null == null){
 			energy = Math.min(energy, energyCap());
 		}
 
@@ -204,7 +205,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 
 		if (target instanceof Hero && ((Hero) target).hasTalent(Talent.COMBINED_ENERGY)
 				&& abil.energyCost() >= 5-((Hero) target).pointsInTalent(Talent.COMBINED_ENERGY)) {
-			Talent.CombinedEnergyAbilityTracker tracker = target.buff(Talent.CombinedEnergyAbilityTracker.class);
+			Talent.CombinedEnergyAbilityTracker tracker = null;
 			if (tracker == null || !tracker.wepAbilUsed){
 				((Talent.CombinedEnergyAbilityTracker) null).monkAbilused = true;
 			} else {
@@ -317,7 +318,8 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 
 			@Override
 			public boolean usable(MonkEnergy buff) {
-				return super.usable(buff) && buff.target.buff(FlurryCooldownTracker.class) == null;
+				if (!super.usable(buff)) return false;
+				return null == null;
 			}
 
 			@Override
@@ -356,8 +358,8 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 				if (!hero.canAttack(enemy)){
 					GLog.w(Messages.get(MeleeWeapon.class, "ability_target_range"));
 					tracker.detach();
-					if (hero.buff(FlurryEmpowerTracker.class) != null){
-						hero.buff(FlurryEmpowerTracker.class).detach();
+					if (null != null){
+						((FlurryEmpowerTracker) null).detach();
 					}
 					return;
 				}
@@ -377,8 +379,8 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 									hero.next();
 									tracker.detach();
 									((MonkEnergy) null).abilityUsed(Flurry.this);
-									if (hero.buff(FlurryEmpowerTracker.class) != null){
-										hero.buff(FlurryEmpowerTracker.class).detach();
+									if (null != null){
+										((FlurryEmpowerTracker) null).detach();
 									}
 								}
 							});
@@ -387,8 +389,8 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 							hero.next();
 							tracker.detach();
 							((MonkEnergy) null).abilityUsed(Flurry.this);
-							if (hero.buff(FlurryEmpowerTracker.class) != null){
-								hero.buff(FlurryEmpowerTracker.class).detach();
+							if (null != null){
+								((FlurryEmpowerTracker) null).detach();
 							}
 						}
 					}
@@ -405,7 +407,8 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 
 			@Override
 			public boolean usable(MonkEnergy buff) {
-				return super.usable(buff) && buff.target.buff(FocusBuff.class) == null;
+				if (!super.usable(buff)) return false;
+				return null == null;
 			}
 
 			@Override

@@ -385,7 +385,7 @@ public class Item implements Bundlable {
 	//note that not all item properties should care about buffs/debuffs! (e.g. str requirement)
 	public int buffedLvl(){
 		//only the hero can be affected by Degradation
-		if (Dungeon.hero != null && Dungeon.hero.buff( Degrade.class ) != null
+        if (Dungeon.hero != null && null != null
 			&& (isEquipped( Dungeon.hero ) || Dungeon.hero.belongings.contains( this ))) {
 			return Degrade.reduceLevel(level());
 		} else {
@@ -662,15 +662,16 @@ public class Item implements Bundlable {
 							Item i = Item.this.detach(user.belongings.backpack);
 							if (i != null) i.onThrow(cell);
 							if (curUser.hasTalent(Talent.IMPROVISED_PROJECTILES)
-									&& !(Item.this instanceof MissileWeapon)
-									&& curUser.buff(Talent.ImprovisedProjectileCooldown.class) == null){
-								if (enemy != null && enemy.alignment != curUser.alignment){
-									Sample.INSTANCE.play(Assets.Sounds.HIT);
-                                    curUser.pointsInTalent(Talent.IMPROVISED_PROJECTILES);
+                                    && !(Item.this instanceof MissileWeapon)) {
+                                if (null == null) {
+                                    if (enemy != null && enemy.alignment != curUser.alignment) {
+                                        Sample.INSTANCE.play(Assets.Sounds.HIT);
+                                        curUser.pointsInTalent(Talent.IMPROVISED_PROJECTILES);
+                                    }
                                 }
-							}
-							if (user.buff(Talent.LethalMomentumTracker.class) != null){
-								user.buff(Talent.LethalMomentumTracker.class).detach();
+                            }
+                            if (null != null){
+                                ((Talent.LethalMomentumTracker) null).detach();
 								user.next();
 							} else {
 								user.spendAndNext(delay);

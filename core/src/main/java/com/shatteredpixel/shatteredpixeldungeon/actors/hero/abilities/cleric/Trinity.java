@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
@@ -193,7 +192,7 @@ public class Trinity extends ArmorAbility {
 				add(btnBody);
 				top = (int)btnBody.bottom();
 
-				btnBody.enable(Dungeon.hero.buff(MagicImmune.class) == null && armor.charge >= trinityChargeUsePerEffect(bodyForm.getClass()));
+                btnBody.enable(null == null && armor.charge >= trinityChargeUsePerEffect(bodyForm.getClass()));
 			}
 
 			if (mindForm != null){
@@ -223,9 +222,11 @@ public class Trinity extends ArmorAbility {
 				top = (int)btnMind.bottom();
 
 				btnMind.enable(armor.charge >= trinityChargeUsePerEffect(mindForm.getClass()));
-				if (mindForm instanceof Wand && Dungeon.hero.buff(MagicImmune.class) != null){
-					btnMind.enable(false);
-				}
+				if (mindForm instanceof Wand) {
+                    if (null != null) {
+                        btnMind.enable(false);
+                    }
+                }
 			}
 
 			if (spiritForm != null){
@@ -269,7 +270,7 @@ public class Trinity extends ArmorAbility {
 				add(btnSpirit);
 				top = (int)btnSpirit.bottom();
 
-				btnSpirit.enable(Dungeon.hero.buff(MagicImmune.class) == null && armor.charge >= trinityChargeUsePerEffect(spiritForm.getClass()));
+                btnSpirit.enable(null == null && armor.charge >= trinityChargeUsePerEffect(spiritForm.getClass()));
 			}
 
 			resize(width, top);

@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage.WildMagic;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
@@ -156,8 +155,8 @@ public class WandOfFireblast extends DamageWand {
 
 			//+25% proc chance per burning char within 3x3 of target
 			// this includes the attacker and defender
-			if (Actor.findChar(defender.pos + i) != null
-					&& Actor.findChar(defender.pos + i).buff(Burning.class) != null) {
+            if (Actor.findChar(defender.pos + i) != null
+					&& null != null) {
 				procChance += 0.25f;
 
 			//otherwise +5% proc chance per burning tile within 3x3 of target
@@ -189,8 +188,8 @@ public class WandOfFireblast extends DamageWand {
 
 					Char ch = Actor.findChar(defender.pos + i);
 					if (ch != null) {
-						if (ch.buff(Burning.class) != null) {
-							ch.buff(Burning.class).detach();
+                        if (null != null) {
+                            ((Burning) null).detach();
 						}
 						if (ch.alignment == Char.Alignment.ENEMY) {
 							//damage of a 2-charge zap
@@ -243,8 +242,8 @@ public class WandOfFireblast extends DamageWand {
 
 	@Override
 	protected int chargesPerCast() {
-		if (cursed ||
-				(charger != null && charger.target != null && charger.target.buff(WildMagic.WildMagicTracker.class) != null)){
+        if (cursed ||
+				(charger != null && charger.target != null && null != null)){
 			return 1;
 		}
 		//consumes 30% of current charges, rounded up, with a min of 1 and a max of 3.

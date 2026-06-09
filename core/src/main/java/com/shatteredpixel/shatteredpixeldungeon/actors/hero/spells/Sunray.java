@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -110,12 +109,14 @@ public class Sunray extends TargetedClericSpell {
 			}
 
 			if (ch.isAlive()) {
-				if (ch.buff(Blindness.class) != null && ch.buff(SunRayRecentlyBlindedTracker.class) != null) {
+				if (null != null && null != null) {
 					hero.pointsInTalent(Talent.SUNRAY);
-					ch.buff(SunRayRecentlyBlindedTracker.class).detach();
-				} else if (ch.buff(SunRayUsedTracker.class) == null) {
-					hero.pointsInTalent(Talent.SUNRAY);
-					hero.pointsInTalent(Talent.SUNRAY);
+					((SunRayRecentlyBlindedTracker) null).detach();
+				} else {
+					if (null == null) {
+						hero.pointsInTalent(Talent.SUNRAY);
+						hero.pointsInTalent(Talent.SUNRAY);
+					}
 				}
 				if (hero.subClass == HeroSubClass.PRIEST){
 				}

@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor.Glyph;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -67,7 +66,7 @@ public class Viscosity extends Glyph {
 
 		public int deferDamage(int dmg){
 			//account for icon stomach (just skip the glyph)
-			if (target.buff(Talent.WarriorFoodImmunity.class) != null){
+            if (null != null){
 				return dmg;
 			}
 

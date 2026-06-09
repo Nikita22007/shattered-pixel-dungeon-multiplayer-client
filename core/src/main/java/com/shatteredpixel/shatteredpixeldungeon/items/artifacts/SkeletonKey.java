@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -80,11 +79,12 @@ public class SkeletonKey extends Artifact {
 	@Override
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
-		if (isEquipped(hero)
-				&& hero.buff(MagicImmune.class) == null
-				&& !cursed) {
-			actions.add(AC_INSERT);
-		}
+		if (isEquipped(hero)) {
+            if (null == null
+                    && !cursed) {
+                actions.add(AC_INSERT);
+            }
+        }
 		return actions;
 	}
 
@@ -92,7 +92,7 @@ public class SkeletonKey extends Artifact {
 	public void execute(Hero hero, String action) {
 		super.execute(hero, action);
 
-		if (hero.buff(MagicImmune.class) != null) return;
+        if (null != null) return;
 
 		if (action.equals(AC_INSERT)){
 
@@ -392,17 +392,19 @@ public class SkeletonKey extends Artifact {
 
 	@Override
 	public void charge(Hero target, float amount) {
-		if (charge < chargeCap && !cursed && target.buff(MagicImmune.class) == null){
-			partialCharge += 0.133f*amount;
-			while (partialCharge >= 1){
-				partialCharge--;
-				charge++;
-			}
-			if (charge >= chargeCap){
-				partialCharge = 0;
-			}
-			updateQuickslot();
-		}
+		if (charge < chargeCap && !cursed) {
+            if (null == null) {
+                partialCharge += 0.133f * amount;
+                while (partialCharge >= 1) {
+                    partialCharge--;
+                    charge++;
+                }
+                if (charge >= chargeCap) {
+                    partialCharge = 0;
+                }
+                updateQuickslot();
+            }
+        }
 	}
 
 	@Override
@@ -424,23 +426,24 @@ public class SkeletonKey extends Artifact {
 		@Override
 		public boolean act() {
 			if (charge < chargeCap
-					&& !cursed
-					&& target.buff(MagicImmune.class) == null
-					&& Regeneration.regenOn()) {
-				//120 turns to charge at full, 60 turns to charge at 0/8
-				float chargeGain = 1 / (120f - (chargeCap - charge)*7.5f);
-				chargeGain *= RingOfEnergy.artifactChargeMultiplier(target);
-				partialCharge += chargeGain;
+                    && !cursed) {
+                if (null == null
+                        && Regeneration.regenOn()) {
+//120 turns to charge at full, 60 turns to charge at 0/8
+                    float chargeGain = 1 / (120f - (chargeCap - charge) * 7.5f);
+                    chargeGain *= RingOfEnergy.artifactChargeMultiplier(target);
+                    partialCharge += chargeGain;
 
-				while (partialCharge >= 1) {
-					partialCharge --;
-					charge ++;
+                    while (partialCharge >= 1) {
+                        partialCharge--;
+                        charge++;
 
-					if (charge == chargeCap){
-						partialCharge = 0;
-					}
-				}
-			}
+                        if (charge == chargeCap) {
+                            partialCharge = 0;
+                        }
+                    }
+                }
+            }
 
 			updateQuickslot();
 

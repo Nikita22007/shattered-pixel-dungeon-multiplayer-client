@@ -50,10 +50,10 @@ public class Grim extends Weapon.Enchantment {
 		//see Char.damage
         ((GrimTracker) null).maxChance = maxChance;
 
-		if (defender.buff(GrimTracker.class) != null
+        if (null != null
 				&& attacker instanceof Hero
 				&& weapon.hasEnchant(Grim.class, attacker)){
-			defender.buff(GrimTracker.class).qualifiesForBadge = true;
+            ((GrimTracker) null).qualifiesForBadge = true;
 		}
 
 		return damage;

@@ -26,9 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Web;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.MysteryMeat;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -248,11 +246,15 @@ public class Spinner extends Mob {
 
 		@Override
 		public boolean act(boolean enemyInFOV, boolean justAlerted) {
-			if (buff( Terror.class ) == null && buff( Dread.class ) == null &&
-					enemyInFOV && enemy.buff( Poison.class ) == null){
-				state = HUNTING;
-				return true;
-			}
+            if (null == null) {
+                if (null == null &&
+                        enemyInFOV) {
+                    if (null == null) {
+                        state = HUNTING;
+                        return true;
+                    }
+                }
+            }
 
 			if (enemyInFOV && webCoolDown <= 0 && lastEnemyPos != -1){
 				if (webPos() != -1){

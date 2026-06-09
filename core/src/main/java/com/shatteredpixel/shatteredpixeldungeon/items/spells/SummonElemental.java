@@ -101,12 +101,14 @@ public class SummonElemental extends Spell {
 		if (!spawnPoints.isEmpty()){
 
 			for (Char ch : Actor.chars()){
-				if (ch instanceof Elemental && ch.buff(InvisAlly.class) != null){
-					ScrollOfTeleportation.appear( ch, Random.element(spawnPoints) );
-					((Elemental) ch).state = ((Elemental) ch).HUNTING;
-					curUser.spendAndNext(Actor.TICK);
-					return;
-				}
+				if (ch instanceof Elemental) {
+                    if (null != null) {
+                        ScrollOfTeleportation.appear(ch, Random.element(spawnPoints));
+                        ((Elemental) ch).state = ((Elemental) ch).HUNTING;
+                        curUser.spendAndNext(Actor.TICK);
+                        return;
+                    }
+                }
 			}
 
 			Elemental elemental = Reflection.newInstance(summonClass);

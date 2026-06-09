@@ -73,12 +73,12 @@ public class WandOfFrost extends DamageWand {
 
 			int damage = damageRoll();
 
-			if (ch.buff(Frost.class) != null){
+            if (null != null){
 				return; //do nothing, can't affect a frozen target
 			}
-			if (ch.buff(Chill.class) != null){
+            if (null != null){
 				//6.67% less damage per turn of chill remaining, to a max of 10 turns (50% dmg)
-				float chillturns = Math.min(10, ch.buff(Chill.class).cooldown());
+                float chillturns = Math.min(10, ((Chill) null).cooldown());
 				damage = (int)Math.round(damage * Math.pow(0.9333f, chillturns));
 			} else {
 				ch.sprite.burst( 0xFF99CCFF, buffedLvl() / 2 + 2 );
@@ -114,7 +114,7 @@ public class WandOfFrost extends DamageWand {
 
 	@Override
 	public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
-		Chill chill = defender.buff(Chill.class);
+        Chill chill = null;
 
 		if (chill != null) {
 

@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.AmuletScene;
@@ -50,7 +49,7 @@ public class Amulet extends Item {
 	@Override
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = super.actions( hero );
-		if (hero.buff(AscensionChallenge.class) != null){
+        if (null != null){
 			actions.clear();
 		} else {
 			actions.add(AC_END);
@@ -134,7 +133,7 @@ public class Amulet extends Item {
 	public String desc() {
 		String desc = super.desc();
 
-		if (Dungeon.hero == null || Dungeon.hero.buff(AscensionChallenge.class) == null){
+        if (Dungeon.hero == null || null == null){
 			desc += "\n\n" + Messages.get(this, "desc_origins");
 		} else {
 			desc += "\n\n" + Messages.get(this, "desc_ascent");

@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -81,12 +80,13 @@ public class TimekeepersHourglass extends Artifact {
 	@Override
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = super.actions( hero );
-		if (isEquipped( hero )
-				&& !cursed
-				&& hero.buff(MagicImmune.class) == null
-				&& (charge > 0 || activeBuff != null)) {
-			actions.add(AC_ACTIVATE);
-		}
+		if (isEquipped(hero)
+                && !cursed) {
+            if (null == null
+                    && (charge > 0 || activeBuff != null)) {
+                actions.add(AC_ACTIVATE);
+            }
+        }
 		return actions;
 	}
 
@@ -95,7 +95,7 @@ public class TimekeepersHourglass extends Artifact {
 
 		super.execute(hero, action);
 
-		if (hero.buff(MagicImmune.class) != null) return;
+        if (null != null) return;
 
 		if (action.equals(AC_ACTIVATE)){
 
@@ -175,17 +175,19 @@ public class TimekeepersHourglass extends Artifact {
 	
 	@Override
 	public void charge(Hero target, float amount) {
-		if (charge < chargeCap && !cursed && target.buff(MagicImmune.class) == null){
-			partialCharge += 0.25f*amount;
-			while (partialCharge >= 1){
-				partialCharge--;
-				charge++;
-			}
-			if (charge >= chargeCap){
-				partialCharge = 0;
-			}
-			updateQuickslot();
-		}
+		if (charge < chargeCap && !cursed) {
+            if (null == null) {
+                partialCharge += 0.25f * amount;
+                while (partialCharge >= 1) {
+                    partialCharge--;
+                    charge++;
+                }
+                if (charge >= chargeCap) {
+                    partialCharge = 0;
+                }
+                updateQuickslot();
+            }
+        }
 	}
 
 	@Override
@@ -249,9 +251,9 @@ public class TimekeepersHourglass extends Artifact {
 		@Override
 		public boolean act() {
 
-			if (charge < chargeCap
+            if (charge < chargeCap
 					&& !cursed
-					&& target.buff(MagicImmune.class) == null
+					&& null == null
 					&& Regeneration.regenOn()) {
 				//90 turns to charge at full, 60 turns to charge at 0/10
 				float chargeGain = 1 / (90f - (chargeCap - charge)*3f);

@@ -34,9 +34,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BeamingRay;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.ClericSpell;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.LifeLinkSpell;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.Stasis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.DirectableAlly;
@@ -74,15 +72,17 @@ public class PowerOfMany extends ArmorAbility {
 
 		boolean allyExists = ally != null;
 
-		if (Dungeon.hero.buff(PrismaticGuard.class) != null
-				&& Dungeon.hero.buff(PrismaticGuard.class).isEmpowered()){
-			allyExists = true;
-		}
+        if (null != null) {
+            if (((PrismaticGuard) null).isEmpowered()) {
+                allyExists = true;
+            }
+        }
 
-		if (Dungeon.hero.buff(WandOfLivingEarth.RockArmor.class) != null
-				&& Dungeon.hero.buff(WandOfLivingEarth.RockArmor.class).isEmpowered()){
-			allyExists = true;
-		}
+        if (null != null) {
+            if (((WandOfLivingEarth.RockArmor) null).isEmpowered()) {
+                allyExists = true;
+            }
+        }
 
 		if (Stasis.getStasisAlly() != null){
 			allyExists = true;
@@ -108,15 +108,17 @@ public class PowerOfMany extends ArmorAbility {
 
 		boolean allyExists = ally != null;
 
-		if (hero.buff(PrismaticGuard.class) != null
-				&& hero.buff(PrismaticGuard.class).isEmpowered()){
-			allyExists = true;
-		}
+        if (null != null) {
+            if (((PrismaticGuard) null).isEmpowered()) {
+                allyExists = true;
+            }
+        }
 
-		if (hero.buff(WandOfLivingEarth.RockArmor.class) != null
-				&& hero.buff(WandOfLivingEarth.RockArmor.class).isEmpowered()){
-			allyExists = true;
-		}
+        if (null != null) {
+            if (((WandOfLivingEarth.RockArmor) null).isEmpowered()) {
+                allyExists = true;
+            }
+        }
 
 		if (Stasis.getStasisAlly() != null){
 			allyExists = true;
@@ -189,7 +191,7 @@ public class PowerOfMany extends ArmorAbility {
 
 	public static Char getPoweredAlly(){
 		for (Char ch : Actor.chars()){
-			if (ch.buff(PowerBuff.class) != null){
+            if (null != null){
 				return ch;
 			}
 		}
@@ -223,8 +225,8 @@ public class PowerOfMany extends ArmorAbility {
 
 		@Override
 		public boolean act() {
-			if (target.buff(BeamingRay.BeamingRayBoost.class) != null
-				|| target.buff(LifeLinkSpell.LifeLinkSpellBuff.class) != null){
+            if (null != null
+				|| null != null){
 				spend(TICK);
 				return true;
 			}
@@ -265,7 +267,7 @@ public class PowerOfMany extends ArmorAbility {
 
 		@Override
 		protected boolean act() {
-			if (buff(PowerOfMany.PowerBuff.class) == null){
+            if (null == null){
 				die(null);
 				return true;
 			}

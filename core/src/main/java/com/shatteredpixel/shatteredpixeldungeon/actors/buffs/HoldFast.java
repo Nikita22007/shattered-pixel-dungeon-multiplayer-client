@@ -59,7 +59,7 @@ public class HoldFast extends Buff {
 	}
 
 	public static float buffDecayFactor(Char target){
-		HoldFast buff = target.buff(HoldFast.class);
+        HoldFast buff = null;
 		if (buff != null && target.pos == buff.pos && target instanceof Hero){
 			switch (((Hero) target).pointsInTalent(Talent.HOLD_FAST)){
 				case 1:

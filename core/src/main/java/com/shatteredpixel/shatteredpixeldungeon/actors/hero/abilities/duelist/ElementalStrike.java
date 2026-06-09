@@ -232,8 +232,8 @@ public class ElementalStrike extends ArmorAbility {
 
 		//*** Kinetic ***
 		if (ench instanceof Kinetic){
-			if (hero.buff(Kinetic.ConservedDamage.class) != null) {
-				storedKineticDamage = hero.buff(Kinetic.ConservedDamage.class).damageBonus();
+            if (null != null) {
+                storedKineticDamage = ((Kinetic.ConservedDamage) null).damageBonus();
 			}
 
 		//*** Blocking ***
@@ -371,9 +371,11 @@ public class ElementalStrike extends ArmorAbility {
 				storedKineticDamage = 0;
 			}
 			//clear stored damage if there was no primary target
-			if (primaryTarget == null && hero.buff(Kinetic.ConservedDamage.class) != null){
-				hero.buff(Kinetic.ConservedDamage.class).detach();
-			}
+			if (primaryTarget == null) {
+                if (null != null) {
+                    ((Kinetic.ConservedDamage) null).detach();
+                }
+            }
 
 		//*** Blooming ***
 		} else if (ench instanceof Blooming){
@@ -409,11 +411,12 @@ public class ElementalStrike extends ArmorAbility {
 		} else if (ench instanceof Lucky){
 			for (Char ch : affected){
 				if (ch.alignment == Char.Alignment.ENEMY
-						&& Random.Float() < 0.125f*powerMulti
-						&& ch.buff(ElementalStrikeLuckyTracker.class) == null) {
-					Dungeon.level.drop(Lucky.genLoot(), ch.pos).sprite.drop();
-					Lucky.showFlare(ch.sprite);
-				}
+                        && Random.Float() < 0.125f * powerMulti) {
+                    if (null == null) {
+                        Dungeon.level.drop(Lucky.genLoot(), ch.pos).sprite.drop();
+                        Lucky.showFlare(ch.sprite);
+                    }
+                }
 			}
 
 		//*** Projecting ***
@@ -432,17 +435,18 @@ public class ElementalStrike extends ArmorAbility {
 		} else if (ench instanceof Corrupting){
 			for (Char ch : affected){
 				if (ch != primaryTarget
-						&& !ch.isImmune(Corruption.class)
-						&& ch.buff(Corruption.class) == null
-						&& ch instanceof Mob
-						&& ch.isAlive()) {
-					float hpMissing = 1f - (ch.HP / (float)ch.HT);
-					float chance = 0.05f + 0.2f*hpMissing; //5-25%
-					if (Random.Float() < chance*powerMulti){
-						Corruption.corruptionHeal(ch);
-						AllyBuff.affectAndLoot((Mob) ch, hero, Corruption.class);
-					}
-				}
+                        && !ch.isImmune(Corruption.class)) {
+                    if (null == null
+                            && ch instanceof Mob
+                            && ch.isAlive()) {
+                        float hpMissing = 1f - (ch.HP / (float) ch.HT);
+                        float chance = 0.05f + 0.2f * hpMissing; //5-25%
+                        if (Random.Float() < chance * powerMulti) {
+                            Corruption.corruptionHeal(ch);
+                            AllyBuff.affectAndLoot((Mob) ch, hero, Corruption.class);
+                        }
+                    }
+                }
 			}
 
 		//*** Grim ***

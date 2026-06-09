@@ -48,7 +48,7 @@ public class Sword extends MeleeWeapon {
 
 	@Override
 	protected int baseChargeUse(Hero hero, Char target){
-		if (hero.buff(Sword.CleaveTracker.class) != null){
+        if (null != null){
 			return 0;
 		} else {
 			return 1;
@@ -115,15 +115,15 @@ public class Sword extends MeleeWeapon {
 				if (!enemy.isAlive()){
 					hero.next();
 					wep.onAbilityKill(hero, enemy);
-					if (hero.buff(CleaveTracker.class) != null) {
-						hero.buff(CleaveTracker.class).detach();
+                    if (null != null) {
+                        ((CleaveTracker) null).detach();
 					} else {
                         //1 less as attack was instant
                     }
 				} else {
 					hero.spendAndNext(hero.attackDelay());
-					if (hero.buff(CleaveTracker.class) != null) {
-						hero.buff(CleaveTracker.class).detach();
+                    if (null != null) {
+                        ((CleaveTracker) null).detach();
 					}
 				}
 				wep.afterAbilityUsed(hero);

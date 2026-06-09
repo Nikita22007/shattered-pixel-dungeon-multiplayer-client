@@ -68,7 +68,7 @@ public class BeaconOfReturning extends Spell {
 	@Override
 	protected void onCast(final Hero hero) {
 
-		BeaconTracker tracker = hero.buff(BeaconTracker.class);
+        BeaconTracker tracker = null;
 
 		if (tracker == null && returnDepth == -1){
 			setBeacon(hero);
@@ -118,9 +118,9 @@ public class BeaconOfReturning extends Spell {
 		if (returnDepth != -1){
 			Notes.remove(Notes.Landmark.BEACON_LOCATION, returnDepth);
 		}
-		if (hero.buff(BeaconTracker.class) != null){
-			Notes.remove(Notes.Landmark.BEACON_LOCATION,
-					hero.buff(BeaconTracker.class).returnDepth);
+        if (null != null){
+            Notes.remove(Notes.Landmark.BEACON_LOCATION,
+					((BeaconTracker) null).returnDepth);
 		}
 
         BeaconTracker tracker = null;
@@ -142,7 +142,7 @@ public class BeaconOfReturning extends Spell {
 	
 	private void returnBeacon( Hero hero ){
 
-		BeaconTracker tracker = hero.buff(BeaconTracker.class);
+        BeaconTracker tracker = null;
 
 		if (tracker == null){
 			if (returnDepth == -1){
@@ -226,7 +226,7 @@ public class BeaconOfReturning extends Spell {
 	public String desc() {
 		String desc = super.desc();
 		if (Dungeon.hero != null) {
-			BeaconTracker tracker = Dungeon.hero.buff(BeaconTracker.class);
+            BeaconTracker tracker = null;
 			if (tracker != null){
 				desc += "\n\n" + Messages.get(this, "desc_set", tracker.returnDepth);
 			} else if (returnDepth != -1) {

@@ -26,17 +26,13 @@ import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.ShadowClone;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.AuraOfProtection;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BodyForm;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyWard;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.LifeLinkSpell;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.PrismaticImage;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
@@ -198,7 +194,7 @@ public class Armor extends EquipableItem {
 		if (seal != null){
 
 			if (isEquipped(Dungeon.hero)) {
-				BrokenSeal.WarriorShield sealBuff = Dungeon.hero.buff(BrokenSeal.WarriorShield.class);
+				BrokenSeal.WarriorShield sealBuff = null;
 				if (sealBuff != null) sealBuff.setArmor(null);
 			}
 
@@ -230,7 +226,7 @@ public class Armor extends EquipableItem {
 			hero.belongings.armor = null;
 			((HeroSprite)hero.sprite).updateArmor();
 
-			BrokenSeal.WarriorShield sealBuff = hero.buff(BrokenSeal.WarriorShield.class);
+			BrokenSeal.WarriorShield sealBuff = null;
 			if (sealBuff != null) sealBuff.setArmor(null);
 
 			return true;
@@ -295,8 +291,8 @@ public class Armor extends EquipableItem {
 		if (owner instanceof Hero){
 			int aEnc = STRReq() - ((Hero) owner).STR();
 			if (aEnc > 0) evasion /= Math.pow(1.5, aEnc);
-			
-			Momentum momentum = owner.buff(Momentum.class);
+
+			Momentum momentum = null;
 			if (momentum != null){
 				evasion += momentum.evasionBonus(((Hero) owner).lvl, Math.max(0, -aEnc));
 			}
@@ -372,19 +368,19 @@ public class Armor extends EquipableItem {
 	
 	public int proc( Char attacker, Char defender, int damage ) {
 
-		if (defender.buff(MagicImmune.class) == null) {
+		if (null == null) {
 			Glyph trinityGlyph = null;
 			//only when it's the hero or a char that uses the hero's armor
-			if (Dungeon.hero.buff(BodyForm.BodyFormBuff.class) != null
+			if (null != null
 					&& (defender == Dungeon.hero || defender instanceof PrismaticImage || defender instanceof ShadowClone.ShadowAlly)){
-				trinityGlyph = Dungeon.hero.buff(BodyForm.BodyFormBuff.class).glyph();
+				trinityGlyph = ((BodyForm.BodyFormBuff) null).glyph();
 				if (glyph != null && trinityGlyph != null && trinityGlyph.getClass() == glyph.getClass()){
 					trinityGlyph = null;
 				}
 			}
 
 			if (defender instanceof Hero && isEquipped((Hero) defender)
-					&& defender.buff(HolyWard.HolyArmBuff.class) != null){
+					&& null != null){
 				if (glyph != null &&
 						(((Hero) defender).subClass == HeroSubClass.PALADIN || hasCurseGlyph())){
 					damage = glyph.proc( this, attacker, defender, damage );
@@ -403,12 +399,14 @@ public class Armor extends EquipableItem {
 					damage = trinityGlyph.proc( this, attacker, defender, damage );
 				}
 				//so that this effect procs for allies using this armor via aura of protection
-				if (defender.alignment == Dungeon.hero.alignment
-						&& Dungeon.hero.buff(AuraOfProtection.AuraBuff.class) != null
-						&& (Dungeon.level.distance(defender.pos, Dungeon.hero.pos) <= 2 || defender.buff(LifeLinkSpell.LifeLinkSpellBuff.class) != null)
-						&& Dungeon.hero.buff(HolyWard.HolyArmBuff.class) != null) {
-					int blocking = Dungeon.hero.subClass == HeroSubClass.PALADIN ? 3 : 1;
-					damage -= Math.round(blocking * Glyph.genericProcChanceMultiplier(defender));
+				if (defender.alignment == Dungeon.hero.alignment) {
+					if (null != null
+							&& (Dungeon.level.distance(defender.pos, Dungeon.hero.pos) <= 2 || null != null)) {
+						if (null != null) {
+							int blocking = Dungeon.hero.subClass == HeroSubClass.PALADIN ? 3 : 1;
+							damage -= Math.round(blocking * Glyph.genericProcChanceMultiplier(defender));
+						}
+					}
 				}
 			}
 			damage = Math.max(damage, 0);
@@ -549,23 +547,25 @@ public class Armor extends EquipableItem {
 	}
 
 	public boolean hasGlyph(Class<?extends Glyph> type, Char owner) {
-		if (owner.buff(MagicImmune.class) != null) {
+		if (null != null) {
 			return false;
 		} else if (glyph != null
 				&& !glyph.curse()
 				&& owner instanceof Hero
 				&& isEquipped((Hero) owner)
-				&& owner.buff(HolyWard.HolyArmBuff.class) != null
+				&& null != null
 				&& ((Hero) owner).subClass != HeroSubClass.PALADIN){
 			return false;
-		} else if (owner.buff(BodyForm.BodyFormBuff.class) != null
-				&& owner.buff(BodyForm.BodyFormBuff.class).glyph() != null
-				&& owner.buff(BodyForm.BodyFormBuff.class).glyph().getClass().equals(type)){
-			return true;
-		} else if (glyph != null) {
-			return glyph.getClass() == type;
 		} else {
-			return false;
+			if (null != null
+					&& ((BodyForm.BodyFormBuff) null).glyph() != null
+					&& ((BodyForm.BodyFormBuff) null).glyph().getClass().equals(type)){
+				return true;
+			} else if (glyph != null) {
+				return glyph.getClass() == type;
+			} else {
+				return false;
+			}
 		}
 	}
 
@@ -582,7 +582,7 @@ public class Armor extends EquipableItem {
 
 	@Override
 	public ItemSprite.Glowing glowing() {
-		if (isEquipped(Dungeon.hero) && !hasCurseGlyph() && Dungeon.hero.buff(HolyWard.HolyArmBuff.class) != null
+		if (isEquipped(Dungeon.hero) && !hasCurseGlyph() && null != null
 				&& (Dungeon.hero.subClass != HeroSubClass.PALADIN || glyph == null)){
 			return HOLY;
 		} else {
@@ -622,10 +622,11 @@ public class Armor extends EquipableItem {
 		public static float genericProcChanceMultiplier( Char defender ){
 			float multi = RingOfArcana.enchantPowerMultiplier(defender);
 
-			if (Dungeon.hero.alignment == defender.alignment
-					&& Dungeon.hero.buff(AuraOfProtection.AuraBuff.class) != null
-					&& (Dungeon.level.distance(defender.pos, Dungeon.hero.pos) <= 2 || defender.buff(LifeLinkSpell.LifeLinkSpellBuff.class) != null)){
-				multi += 0.25f + 0.25f*Dungeon.hero.pointsInTalent(Talent.AURA_OF_PROTECTION);
+			if (Dungeon.hero.alignment == defender.alignment) {
+				if (null != null
+						&& (Dungeon.level.distance(defender.pos, Dungeon.hero.pos) <= 2 || null != null)) {
+					multi += 0.25f + 0.25f * Dungeon.hero.pointsInTalent(Talent.AURA_OF_PROTECTION);
+				}
 			}
 
 			return multi;

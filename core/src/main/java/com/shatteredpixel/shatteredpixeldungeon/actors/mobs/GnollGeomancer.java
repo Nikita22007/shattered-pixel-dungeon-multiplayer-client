@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Blacksmith;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -131,9 +130,9 @@ public class GnollGeomancer extends Mob {
 
 	@Override
 	public boolean isInvulnerable(Class effect) {
-		return super.isInvulnerable(effect)
-				|| (buff(RockArmor.class) != null && effect != Pickaxe.class)
-				|| hasSapper();
+        if (super.isInvulnerable(effect)) return true;
+        return (null != null && effect != Pickaxe.class)
+                || hasSapper();
 	}
 
 	@Override
@@ -173,7 +172,8 @@ public class GnollGeomancer extends Mob {
 
 	@Override
 	public boolean heroShouldInteract() {
-		return super.heroShouldInteract() || buff(RockArmor.class) != null;
+        if (super.heroShouldInteract()) return true;
+        return null != null;
 	}
 
 	@Override
@@ -190,7 +190,7 @@ public class GnollGeomancer extends Mob {
 
 	@Override
 	public boolean interact(Char c) {
-		if (c != Dungeon.hero || buff(RockArmor.class) == null) {
+        if (c != Dungeon.hero || null == null) {
 			return super.interact(c);
 		} else {
 			final Pickaxe p = Dungeon.hero.belongings.getItem(Pickaxe.class);
@@ -211,7 +211,7 @@ public class GnollGeomancer extends Mob {
 					//ensure we don't do enough damage to break the armor at the start
 					if (wasSleeping) dmg = Math.min(dmg, 15);
 
-					dmg = Math.min(dmg, buff(RockArmor.class).shielding());
+                    dmg = Math.min(dmg, ((RockArmor) null).shielding());
 
 					damage(dmg, p);
 					sprite.bloodBurstA(Dungeon.hero.sprite.center(), dmg);
@@ -249,7 +249,7 @@ public class GnollGeomancer extends Mob {
 						alerted = false;
 					}
 
-					if (buff(RockArmor.class) == null){
+                    if (null == null){
 						Splash.around(sprite, 0x555555, 30);
 						sprite.idle();
 					}
@@ -501,7 +501,7 @@ public class GnollGeomancer extends Mob {
 			return Messages.get(this, "desc_sleeping");
 		} else {
 			String desc = super.description();
-			if (buff(RockArmor.class) != null){
+            if (null != null){
 				if (hasSapper()){
 					desc += "\n\n" + Messages.get(this, "desc_armor_sapper");
 				} else {
@@ -565,11 +565,13 @@ public class GnollGeomancer extends Mob {
 
 				//use abilities more frequently on the enemy's initial approach or if sapper is alive
 				// but only if enemy isn't stunned, to prevent stunlocking
-				if ((Dungeon.level.distance(pos, enemy.pos) > 2 || hasSapper())
-						&& buff(RockArmor.class) != null
-						&& enemy.buff(Paralysis.class) == null){
-					abilityCooldown -= 1f;
-				}
+				if ((Dungeon.level.distance(pos, enemy.pos) > 2 || hasSapper())) {
+                    if (null != null) {
+                        if (null == null) {
+                            abilityCooldown -= 1f;
+                        }
+                    }
+                }
 
 				if (hasSapper()){
 					((GnollSapper)Actor.findById(sapperID)).aggro(enemy);

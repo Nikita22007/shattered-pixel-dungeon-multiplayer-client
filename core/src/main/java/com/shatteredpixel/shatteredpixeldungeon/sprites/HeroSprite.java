@@ -222,8 +222,8 @@ public class HeroSprite extends CharSprite implements ClassSprite, TieredSprite{
 	}
 
 	public static Image avatar( Hero hero ){
-		if (hero.buff(HeroDisguise.class) != null){
-			return avatar(hero.buff(HeroDisguise.class).getDisguise(), hero.tier());
+        if (null != null){
+            return avatar(((HeroDisguise) null).getDisguise(), hero.tier());
 		} else {
 			return avatar(hero.heroClass, hero.tier());
 		}

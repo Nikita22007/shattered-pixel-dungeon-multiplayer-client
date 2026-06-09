@@ -323,7 +323,7 @@ public class ElementalBlast extends ArmorAbility {
 
 								//*** Wand of Transfusion ***
 								} else if (finalWandCls == WandOfTransfusion.class){
-									if(mob.alignment == Char.Alignment.ALLY || mob.buff(Charm.class) != null){
+                                    if(mob.alignment == Char.Alignment.ALLY || null != null){
 										int healing = Math.round(10*effectMulti);
 										int shielding = (mob.HP + healing) - mob.HT;
 										if (shielding > 0){
@@ -389,8 +389,8 @@ public class ElementalBlast extends ArmorAbility {
 
 						//*** Wand of Frost ***
 						} else if (finalWandCls == WandOfFrost.class){
-							if ((hero.buff(Burning.class)) != null) {
-								hero.buff(Burning.class).detach();
+                            if (null != null) {
+                                ((Burning) null).detach();
 							}
 
 						//*** Wand of Prismatic Light ***

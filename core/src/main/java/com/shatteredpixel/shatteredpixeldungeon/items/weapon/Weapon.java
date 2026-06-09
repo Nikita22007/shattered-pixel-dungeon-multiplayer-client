@@ -26,16 +26,13 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Berserk;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.AscendedForm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.ElementalStrike;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BodyForm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.Smite;
-import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
@@ -67,7 +64,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Unstab
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Vampiric;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RunicBlade;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Scimitar;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
@@ -124,17 +120,17 @@ abstract public class Weapon extends KindOfWeapon {
 
 		boolean becameAlly = false;
 		boolean wasAlly = defender.alignment == Char.Alignment.ALLY;
-		if (attacker.buff(MagicImmune.class) == null) {
+		if (null == null) {
 			Enchantment trinityEnchant = null;
-			if (Dungeon.hero.buff(BodyForm.BodyFormBuff.class) != null && this instanceof MeleeWeapon){
-				trinityEnchant = Dungeon.hero.buff(BodyForm.BodyFormBuff.class).enchant();
+			if (null != null && this instanceof MeleeWeapon){
+				trinityEnchant = ((BodyForm.BodyFormBuff) null).enchant();
 				if (enchantment != null && trinityEnchant != null && trinityEnchant.getClass() == enchantment.getClass()){
 					trinityEnchant = null;
 				}
 			}
 
 			if (attacker instanceof Hero && isEquipped((Hero) attacker)
-					&& attacker.buff(HolyWeapon.HolyWepBuff.class) != null){
+					&& null != null){
 				if (enchantment != null &&
 						(((Hero) attacker).subClass == HeroSubClass.PALADIN || hasCurseEnchant())){
 					damage = enchantment.proc(this, attacker, defender, damage);
@@ -163,9 +159,10 @@ abstract public class Weapon extends KindOfWeapon {
 				}
 			}
 
-			if (attacker instanceof Hero && isEquipped((Hero) attacker) &&
-					attacker.buff(Smite.SmiteTracker.class) != null && !becameAlly){
-				defender.damage(Smite.bonusDmg((Hero) attacker, defender), Smite.INSTANCE);
+			if (attacker instanceof Hero && isEquipped((Hero) attacker)) {
+				if (null != null && !becameAlly) {
+					defender.damage(Smite.bonusDmg((Hero) attacker, defender), Smite.INSTANCE);
+				}
 			}
 		}
 		
@@ -279,7 +276,7 @@ abstract public class Weapon extends KindOfWeapon {
 
 		float ACC = this.ACC;
 
-		if (owner.buff(Wayward.WaywardBuff.class) != null && enchantment instanceof Wayward){
+		if (null != null && enchantment instanceof Wayward){
 			ACC /= 5;
 		}
 
@@ -306,7 +303,7 @@ abstract public class Weapon extends KindOfWeapon {
 	protected float speedMultiplier(Char owner ){
 		float multi = RingOfFuror.attackSpeedMultiplier(owner);
 
-		if (owner.buff(Scimitar.SwordDance.class) != null){
+		if (null != null){
 			multi += 0.6f;
 		}
 
@@ -322,8 +319,10 @@ abstract public class Weapon extends KindOfWeapon {
 				return reach;
 			}
 		}
-		if (owner instanceof Hero && owner.buff(AscendedForm.AscendBuff.class) != null){
-			reach += 2;
+		if (owner instanceof Hero) {
+			if (null != null) {
+				reach += 2;
+			}
 		}
 		if (hasEnchant(Projecting.class, owner)){
 			return reach + Math.round(Enchantment.genericProcChanceMultiplier(owner));
@@ -389,7 +388,7 @@ abstract public class Weapon extends KindOfWeapon {
 	
 	@Override
 	public String name() {
-		if (isEquipped(Dungeon.hero) && !hasCurseEnchant() && Dungeon.hero.buff(HolyWeapon.HolyWepBuff.class) != null
+		if (isEquipped(Dungeon.hero) && !hasCurseEnchant() && null != null
 			&& (Dungeon.hero.subClass != HeroSubClass.PALADIN || enchantment == null)){
 				return Messages.get(HolyWeapon.class, "ench_name", super.name());
 			} else {
@@ -452,23 +451,25 @@ abstract public class Weapon extends KindOfWeapon {
 	}
 
 	public boolean hasEnchant(Class<?extends Enchantment> type, Char owner) {
-		if (owner.buff(MagicImmune.class) != null) {
+		if (null != null) {
 			return false;
 		} else if (enchantment != null
 				&& !enchantment.curse()
 				&& owner instanceof Hero
 				&& isEquipped((Hero) owner)
-				&& owner.buff(HolyWeapon.HolyWepBuff.class) != null
+				&& null != null
 				&& ((Hero) owner).subClass != HeroSubClass.PALADIN) {
 			return false;
-		} else if (owner.buff(BodyForm.BodyFormBuff.class) != null
-				&& owner.buff(BodyForm.BodyFormBuff.class).enchant() != null
-				&& owner.buff(BodyForm.BodyFormBuff.class).enchant().getClass().equals(type)){
-			return true;
-		} else if (enchantment != null) {
-			return enchantment.getClass() == type;
 		} else {
-			return false;
+			if (null != null
+					&& ((BodyForm.BodyFormBuff) null).enchant() != null
+					&& ((BodyForm.BodyFormBuff) null).enchant().getClass().equals(type)){
+				return true;
+			} else if (enchantment != null) {
+				return enchantment.getClass() == type;
+			} else {
+				return false;
+			}
 		}
 	}
 	
@@ -485,7 +486,7 @@ abstract public class Weapon extends KindOfWeapon {
 
 	@Override
 	public ItemSprite.Glowing glowing() {
-		if (isEquipped(Dungeon.hero) && !hasCurseEnchant() && Dungeon.hero.buff(HolyWeapon.HolyWepBuff.class) != null
+		if (isEquipped(Dungeon.hero) && !hasCurseEnchant() && null != null
 				&& (Dungeon.hero.subClass != HeroSubClass.PALADIN || enchantment == null)){
 			return HOLY;
 		} else {
@@ -525,30 +526,30 @@ abstract public class Weapon extends KindOfWeapon {
 
 		public static float genericProcChanceMultiplier( Char attacker ){
 			float multi = RingOfArcana.enchantPowerMultiplier(attacker);
-			Berserk rage = attacker.buff(Berserk.class);
+			Berserk rage = null;
 			if (rage != null) {
 				multi = rage.enchantFactor(multi);
 			}
 
-			if (attacker.buff(RunicBlade.RunicSlashTracker.class) != null){
-				multi += attacker.buff(RunicBlade.RunicSlashTracker.class).boost;
-				attacker.buff(RunicBlade.RunicSlashTracker.class).detach();
+			if (null != null){
+				multi += ((RunicBlade.RunicSlashTracker) null).boost;
+				((RunicBlade.RunicSlashTracker) null).detach();
 			}
 
-			if (attacker.buff(Smite.SmiteTracker.class) != null){
+			if (null != null){
 				multi += 3f;
 			}
 
-			if (attacker.buff(ElementalStrike.DirectedPowerTracker.class) != null){
-				multi += attacker.buff(ElementalStrike.DirectedPowerTracker.class).enchBoost;
-				attacker.buff(ElementalStrike.DirectedPowerTracker.class).detach();
+			if (null != null){
+				multi += ((ElementalStrike.DirectedPowerTracker) null).enchBoost;
+				((ElementalStrike.DirectedPowerTracker) null).detach();
 			}
 
-			if (attacker.buff(Talent.SpiritBladesTracker.class) != null
+			if (null != null
 					&& ((Hero)attacker).pointsInTalent(Talent.SPIRIT_BLADES) == 4){
 				multi += 0.1f;
 			}
-			if (attacker.buff(Talent.StrikingWaveTracker.class) != null
+			if (null != null
 					&& ((Hero)attacker).pointsInTalent(Talent.STRIKING_WAVE) == 4){
 				multi += 0.2f;
 			}

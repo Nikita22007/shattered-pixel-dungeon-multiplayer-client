@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.stones;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
@@ -52,9 +51,11 @@ public abstract class InventoryStone extends Runestone {
 	@Override
 	public void execute(Hero hero, String action) {
 		super.execute(hero, action);
-		if (action.equals(AC_USE) && hero.buff(MagicImmune.class) == null){
-			activate(curUser.pos);
-		}
+		if (action.equals(AC_USE)) {
+            if (null == null) {
+                activate(curUser.pos);
+            }
+        }
 	}
 	
 	@Override

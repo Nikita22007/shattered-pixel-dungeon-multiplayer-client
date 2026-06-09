@@ -25,9 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAggression;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.BeeSprite;
 import com.watabou.utils.Bundle;
@@ -155,27 +153,29 @@ public class Bee extends Mob {
 		} else {
 
 			//copypasta from regular mob logic for aggression with added limit for pot distance
-			if ((alignment == Alignment.ENEMY || buff(Amok.class) != null ) && state != PASSIVE && state != SLEEPING) {
-				if (enemy != null
-						&& enemy.buff(StoneOfAggression.Aggression.class) != null
-						&& Dungeon.level.distance(enemy.pos, potPos) <= 3){
-					state = HUNTING;
-					return enemy;
-				}
+            if ((alignment == Alignment.ENEMY || null != null ) && state != PASSIVE && state != SLEEPING) {
+				if (enemy != null) {
+                    if (null != null
+                            && Dungeon.level.distance(enemy.pos, potPos) <= 3) {
+                        state = HUNTING;
+                        return enemy;
+                    }
+                }
 				for (Char ch : Actor.chars()) {
-					if (ch != this && fieldOfView[ch.pos] && Dungeon.level.distance(ch.pos, potPos) <= 3
-							&& ch.buff(StoneOfAggression.Aggression.class) != null) {
-						state = HUNTING;
-						return ch;
-					}
+					if (ch != this && fieldOfView[ch.pos] && Dungeon.level.distance(ch.pos, potPos) <= 3) {
+                        if (null != null) {
+                            state = HUNTING;
+                            return ch;
+                        }
+                    }
 				}
 			}
 			
 			//try to find a new enemy in these circumstances
-			if (enemy == null || !enemy.isAlive() || !Actor.chars().contains(enemy) || state == WANDERING
+            if (enemy == null || !enemy.isAlive() || !Actor.chars().contains(enemy) || state == WANDERING
 					|| Dungeon.level.distance(enemy.pos, potPos) > 3
 					|| (alignment == Alignment.ALLY && enemy.alignment == Alignment.ALLY)
-					|| (buff( Amok.class ) == null && enemy.isInvulnerable(getClass()))){
+					|| (null == null && enemy.isInvulnerable(getClass()))){
 				
 				//target closest potential enemy near the pot
 				Char closest = null;

@@ -107,7 +107,7 @@ public class Sai extends MeleeWeapon {
 				AttackIndicator.target(enemy);
 
 				int recentHits = 0;
-				ComboStrikeTracker buff = hero.buff(ComboStrikeTracker.class);
+                ComboStrikeTracker buff = null;
 				if (buff != null){
 					recentHits = buff.hits;
 					buff.detach();

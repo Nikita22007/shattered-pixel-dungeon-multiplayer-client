@@ -282,7 +282,7 @@ public class Berserk extends ShieldBuff implements ActionIndicator.Action {
 
 	@Override
 	public void doAction() {
-		WarriorShield shield = target.buff(WarriorShield.class);
+        WarriorShield shield = null;
 		if (shield != null && shield.maxShield() > 0) {
 			startBerserking();
 			ActionIndicator.clearAction(this);

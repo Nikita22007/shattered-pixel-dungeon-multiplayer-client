@@ -26,8 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.EnhancedRings;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.SpiritForm;
@@ -305,19 +303,19 @@ public class Ring extends KindofMisc {
 	@Override
 	public int buffedLvl() {
 		int lvl = super.buffedLvl();
-		if (Dungeon.hero.buff(EnhancedRings.class) != null){
+		if (null != null){
 			lvl++;
 		}
 		return lvl;
 	}
 
 	public static int getBonus(Char target, Class<?extends RingBuff> type){
-		if (target.buff(MagicImmune.class) != null) return 0;
+		if (null != null) return 0;
 		int bonus = 0;
 		for (RingBuff buff : target.buffs(type)) {
 			bonus += buff.level();
 		}
-		SpiritForm.SpiritFormBuff spiritForm = target.buff(SpiritForm.SpiritFormBuff.class);
+		SpiritForm.SpiritFormBuff spiritForm = null;
 		if (bonus == 0
 				&& spiritForm != null
 				&& spiritForm.ring() != null
@@ -328,16 +326,17 @@ public class Ring extends KindofMisc {
 	}
 
 	public static int getBuffedBonus(Char target, Class<?extends RingBuff> type){
-		if (target.buff(MagicImmune.class) != null) return 0;
+		if (null != null) return 0;
 		int bonus = 0;
 		for (RingBuff buff : target.buffs(type)) {
 			bonus += buff.buffedLvl();
 		}
-		if (bonus == 0
-				&& target.buff(SpiritForm.SpiritFormBuff.class) != null
-				&& target.buff(SpiritForm.SpiritFormBuff.class).ring() != null
-				&& target.buff(SpiritForm.SpiritFormBuff.class).ring().buffClass == type){
-			bonus += target.buff(SpiritForm.SpiritFormBuff.class).ring().soloBuffedBonus();
+		if (bonus == 0 && null != null) {
+			if (((SpiritForm.SpiritFormBuff) null).ring() != null) {
+				if (((SpiritForm.SpiritFormBuff) null).ring().buffClass == type) {
+					bonus += ((SpiritForm.SpiritFormBuff) null).ring().soloBuffedBonus();
+				}
+			}
 		}
 		return bonus;
 	}

@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
@@ -65,7 +64,7 @@ public class Flail extends MeleeWeapon {
 
 	@Override
 	public float accuracyFactor(Char owner, Char target) {
-		SpinAbilityTracker spin = owner.buff(SpinAbilityTracker.class);
+        SpinAbilityTracker spin = null;
 		if (spin != null && spinBoost == 0) {
 			Actor.add(new Actor() {
 				{ actPriority = VFX_PRIO; }
@@ -94,7 +93,7 @@ public class Flail extends MeleeWeapon {
 
 	@Override
 	protected int baseChargeUse(Hero hero, Char target){
-		if (Dungeon.hero.buff(SpinAbilityTracker.class) != null){
+        if (null != null){
 			return 0;
 		} else {
 			return 1;
@@ -104,7 +103,7 @@ public class Flail extends MeleeWeapon {
 	@Override
 	protected void duelistAbility(Hero hero, Integer target) {
 
-		SpinAbilityTracker spin = hero.buff(SpinAbilityTracker.class);
+        SpinAbilityTracker spin = null;
 		if (spin != null && spin.spins >= 3){
 			GLog.w(Messages.get(this, "spin_warn"));
 			return;

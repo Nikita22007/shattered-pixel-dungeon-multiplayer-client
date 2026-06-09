@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BlobImmunity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Doom;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -76,7 +75,7 @@ public class Challenge extends ArmorAbility {
 	@Override
 	public float chargeUse( Hero hero ) {
 		float chargeUse = super.chargeUse(hero);
-		if (hero.buff(EliminationMatchTracker.class) != null){
+        if (null != null){
 			//reduced charge use by 16%/30%/41%/50%
 			chargeUse *= Math.pow(0.84, hero.pointsInTalent(Talent.ELIMINATION_MATCH));
 		}
@@ -95,7 +94,7 @@ public class Challenge extends ArmorAbility {
 			return;
 		}
 
-		if (hero.buff(DuelParticipant.class) != null){
+        if (null != null){
 			GLog.w(Messages.get(this, "already_dueling"));
 			return;
 		}
@@ -184,8 +183,8 @@ public class Challenge extends ArmorAbility {
 
 		hero.next();
 
-		if (hero.buff(EliminationMatchTracker.class) != null){
-			hero.buff(EliminationMatchTracker.class).detach();
+        if (null != null){
+            ((EliminationMatchTracker) null).detach();
 		}
 	}
 
@@ -231,9 +230,11 @@ public class Challenge extends ArmorAbility {
 			} else {
 				Char other = null;
 				for (Char ch : Actor.chars()){
-					if (ch != target && ch.buff(DuelParticipant.class) != null){
-						other = ch;
-					}
+					if (ch != target) {
+                        if (null != null) {
+                            other = ch;
+                        }
+                    }
 				}
 
 				if (other == null
@@ -255,7 +256,7 @@ public class Challenge extends ArmorAbility {
 					Sample.INSTANCE.play(Assets.Sounds.BOSS);
 
 					if (Dungeon.hero.hasTalent(Talent.INVIGORATING_VICTORY)){
-						DuelParticipant heroBuff = Dungeon.hero.buff(DuelParticipant.class);
+                        DuelParticipant heroBuff = null;
 
 						int hpToHeal = 0;
 						if (heroBuff != null){
@@ -284,11 +285,11 @@ public class Challenge extends ArmorAbility {
 			}
 
 			for (Char ch : Actor.chars()) {
-				if (ch.buff(SpectatorFreeze.class) != null) {
-					ch.buff(SpectatorFreeze.class).detach();
+                if (null != null) {
+                    ((SpectatorFreeze) null).detach();
 				}
-				if (ch.buff(DuelParticipant.class) != null && ch != target) {
-					ch.buff(DuelParticipant.class).detach();
+                if (null != null && ch != target) {
+                    ((DuelParticipant) null).detach();
 				}
 			}
 		}
@@ -325,7 +326,7 @@ public class Challenge extends ArmorAbility {
 				target.sprite.add(CharSprite.State.PARALYSED);
 			} else {
 				//allies can't be spectator frozen, so just check doom
-				if (target.buff(Doom.class) == null) target.sprite.remove(CharSprite.State.DARKENED);
+                if (null == null) target.sprite.remove(CharSprite.State.DARKENED);
 				if (target.paralysed == 0) target.sprite.remove(CharSprite.State.PARALYSED);
 			}
 		}

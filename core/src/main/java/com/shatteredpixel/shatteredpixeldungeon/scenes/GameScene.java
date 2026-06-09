@@ -624,8 +624,8 @@ public class GameScene extends PixelScene {
 				}
 			}
 
-			if (Dungeon.hero.buff(AscensionChallenge.class) != null){
-				Dungeon.hero.buff(AscensionChallenge.class).saySwitch();
+			if (null != null){
+				((AscensionChallenge) null).saySwitch();
 			}
 			InterlevelScene.mode = InterlevelScene.Mode.NONE;
 

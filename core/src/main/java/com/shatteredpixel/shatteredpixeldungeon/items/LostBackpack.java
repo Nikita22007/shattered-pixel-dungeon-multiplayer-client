@@ -46,8 +46,8 @@ public class LostBackpack extends Item {
 
 	@Override
 	public boolean doPickUp(Hero hero, int pos) {
-		if (hero.buff(LostInventory.class) != null){
-			hero.buff(LostInventory.class).detach();
+        if (null != null){
+            ((LostInventory) null).detach();
 		}
 
 		MagicalHolster holster = hero.belongings.getItem(MagicalHolster.class);

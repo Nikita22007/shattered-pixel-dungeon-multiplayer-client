@@ -74,29 +74,37 @@ public abstract class ClericSpell {
 
 	public void onSpellCast(HolyTome tome, Hero hero){
 		Invisibility.dispel();
-		if (hero.hasTalent(Talent.SATIATED_SPELLS) && hero.buff(Talent.SatiatedSpellsTracker.class) != null){
-			int amount = 1 + 2*hero.pointsInTalent(Talent.SATIATED_SPELLS);
-            ((Barrier) null).setShield(amount);
-			Char ally = PowerOfMany.getPoweredAlly();
-			if (ally != null && ally.buff(LifeLinkSpell.LifeLinkSpellBuff.class) != null){
+		if (hero.hasTalent(Talent.SATIATED_SPELLS)) {
+            if (null != null) {
+                int amount = 1 + 2 * hero.pointsInTalent(Talent.SATIATED_SPELLS);
                 ((Barrier) null).setShield(amount);
-			}
-			hero.buff(Talent.SatiatedSpellsTracker.class).detach();
-		}
+                Char ally = PowerOfMany.getPoweredAlly();
+                if (ally != null) {
+                    if (null != null) {
+                        ((Barrier) null).setShield(amount);
+                    }
+                }
+                ((Talent.SatiatedSpellsTracker) null).detach();
+            }
+        }
 		tome.spendCharge(chargeUse(hero));
 		Talent.onArtifactUsed(hero);
 		if (hero.subClass == HeroSubClass.PALADIN){
-			if (this != HolyWeapon.INSTANCE && hero.buff(HolyWeapon.HolyWepBuff.class) != null){
-				hero.buff(HolyWeapon.HolyWepBuff.class).extend(10*chargeUse(hero));
-			}
-			if (this != HolyWard.INSTANCE && hero.buff(HolyWard.HolyArmBuff.class) != null){
-				hero.buff(HolyWard.HolyArmBuff.class).extend(10*chargeUse(hero));
-			}
+			if (this != HolyWeapon.INSTANCE) {
+                if (null != null) {
+                    ((HolyWeapon.HolyWepBuff) null).extend(10 * chargeUse(hero));
+                }
+            }
+			if (this != HolyWard.INSTANCE) {
+                if (null != null) {
+                    ((HolyWard.HolyArmBuff) null).extend(10 * chargeUse(hero));
+                }
+            }
 		}
 
-		if (hero.buff(AscendedForm.AscendBuff.class) != null){
-			hero.buff(AscendedForm.AscendBuff.class).spellCasts++;
-			hero.buff(AscendedForm.AscendBuff.class).incShield((int)(10*chargeUse(hero)));
+        if (null != null){
+            ((AscendedForm.AscendBuff) null).spellCasts++;
+            ((AscendedForm.AscendBuff) null).incShield((int)(10*chargeUse(hero)));
 		}
 	}
 

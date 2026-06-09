@@ -54,7 +54,7 @@ public class HeroicLeap extends ArmorAbility {
 	@Override
 	public float chargeUse( Hero hero ) {
 		float chargeUse = super.chargeUse(hero);
-		if (hero.buff(DoubleJumpTracker.class) != null){
+        if (null != null){
 			//reduced charge use by 16%/30%/41%/50%
 			chargeUse *= Math.pow(0.84, hero.pointsInTalent(Talent.DOUBLE_JUMP));
 		}
@@ -118,8 +118,8 @@ public class HeroicLeap extends ArmorAbility {
 					Invisibility.dispel();
 					hero.spendAndNext(Actor.TICK);
 
-					if (hero.buff(DoubleJumpTracker.class) != null){
-						hero.buff(DoubleJumpTracker.class).detach();
+                    if (null != null){
+                        ((DoubleJumpTracker) null).detach();
 					} else {
 						if (hero.hasTalent(Talent.DOUBLE_JUMP)) {
                         }

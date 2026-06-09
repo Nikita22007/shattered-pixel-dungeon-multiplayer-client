@@ -32,7 +32,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.SpiritHawk;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.DivineSense;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.Stasis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.*;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Blacksmith;
@@ -382,23 +381,23 @@ public abstract class Level implements Bundlable {
 	public static void beforeTransition(){
 
 		//time freeze effects need to resolve their pressed cells before transitioning
-		TimekeepersHourglass.timeFreeze timeFreeze = Dungeon.hero.buff(TimekeepersHourglass.timeFreeze.class);
+		TimekeepersHourglass.timeFreeze timeFreeze = null;
 		if (timeFreeze != null) timeFreeze.disarmPresses();
-		Swiftthistle.TimeBubble timeBubble = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
+		Swiftthistle.TimeBubble timeBubble = null;
 		if (timeBubble != null) timeBubble.disarmPresses();
 
 		//iron stomach and challenge arena do not persist between floors
-		Talent.WarriorFoodImmunity foodImmune = Dungeon.hero.buff(Talent.WarriorFoodImmunity.class);
+		Talent.WarriorFoodImmunity foodImmune = null;
 		if (foodImmune != null) foodImmune.detach();
-		ScrollOfChallenge.ChallengeArena arena = Dungeon.hero.buff(ScrollOfChallenge.ChallengeArena.class);
+		ScrollOfChallenge.ChallengeArena arena = null;
 		if (arena != null) arena.detach();
 		//awareness also doesn't, honestly it's weird that it's a buff
-		Awareness awareness = Dungeon.hero.buff(Awareness.class);
+		Awareness awareness = null;
 		if (awareness != null) awareness.detach();
 
 		Char ally = Stasis.getStasisAlly();
 		if (Char.hasProp(ally, Char.Property.IMMOVABLE)){
-			Dungeon.hero.buff(Stasis.StasisBuff.class).act();
+			((Stasis.StasisBuff) null).act();
 			GLog.w(Messages.get(Stasis.StasisBuff.class, "left_behind"));
 		}
 
@@ -421,8 +420,8 @@ public abstract class Level implements Bundlable {
 	public void unseal(){
 		if (locked) {
 			locked = false;
-			if (Dungeon.hero.buff(LockedFloor.class) != null){
-				Dungeon.hero.buff(LockedFloor.class).detach();
+			if (null != null){
+				((LockedFloor) null).detach();
 			}
 		}
 	}
@@ -946,8 +945,8 @@ public abstract class Level implements Bundlable {
 		if (true) return;
 		int cx = c.pos % width();
 		int cy = c.pos / width();
-		
-		boolean sighted = c.buff( Blindness.class ) == null && c.buff( Shadows.class ) == null
+
+		boolean sighted = null == null && null == null
 						&& c.isAlive();
 		if (sighted) {
 			boolean[] blocking = null;
@@ -1009,7 +1008,7 @@ public abstract class Level implements Bundlable {
 			for (Buff b : c.buffs( MindVision.class )) {
 				sense = Math.max( ((MindVision)b).distance, sense );
 			}
-			if (c.buff(MagicalSight.class) != null){
+			if (null != null){
 				sense = Math.max( MagicalSight.DISTANCE, sense );
 			}
 		}
@@ -1060,7 +1059,7 @@ public abstract class Level implements Bundlable {
 			}
 
 			Dungeon.hero.mindVisionEnemies.clear();
-			if (c.buff( MindVision.class ) != null) {
+			if (null != null) {
 				for (Mob mob : mobs) {
 					if (mob instanceof Mimic && mob.alignment == Char.Alignment.NEUTRAL&& ((Mimic) mob).stealthy()){
 						continue;
@@ -1075,7 +1074,7 @@ public abstract class Level implements Bundlable {
 				if (((Hero) c).hasTalent(Talent.HEIGHTENED_SENSES)){
 					mindVisRange = 1+((Hero) c).pointsInTalent(Talent.HEIGHTENED_SENSES);
 				}
-				if (c.buff(DivineSense.DivineSenseTracker.class) != null){
+				if (null != null){
 					if (((Hero) c).heroClass == HeroClass.CLERIC){
 						mindVisRange = 4+4*((Hero) c).pointsInTalent(Talent.DIVINE_SENSE);
 					} else {
@@ -1086,8 +1085,10 @@ public abstract class Level implements Bundlable {
 
 				//power of many's life link spell allows allies to get divine sense
 				Char ally = PowerOfMany.getPoweredAlly();
-				if (ally != null && ally.buff(DivineSense.DivineSenseTracker.class) == null){
-					ally = null;
+				if (ally != null) {
+					if (null == null) {
+						ally = null;
+					}
 				}
 
 				if (mindVisRange >= 1) {
@@ -1104,8 +1105,8 @@ public abstract class Level implements Bundlable {
 					}
 				}
 			}
-			
-			if (c.buff( Awareness.class ) != null) {
+
+			if (null != null) {
 				for (Heap heap : heaps.valueList()) {
 					int p = heap.pos;
 					for (int i : PathFinder.NEIGHBOURS9) heroMindFov[p+i] = true;
@@ -1130,7 +1131,7 @@ public abstract class Level implements Bundlable {
 				if (m instanceof WandOfWarding.Ward
 						|| m instanceof WandOfRegrowth.Lotus
 						|| m instanceof SpiritHawk.HawkAlly
-						|| m.buff(PowerOfMany.PowerBuff.class) != null){
+						|| null != null){
 					if (m.fieldOfView == null || m.fieldOfView.length != length()){
 						m.fieldOfView = new boolean[length()];
 						Dungeon.level.updateFieldOfView( m, m.fieldOfView );

@@ -165,7 +165,7 @@ public class WandOfCorruption extends Wand {
 			}
 			
 			//cannot re-corrupt or doom an enemy, so give them a major debuff instead
-			if(enemy.buff(Corruption.class) != null || enemy.buff(Doom.class) != null){
+            if(null != null || null != null){
 				corruptingPower = enemyResist - 0.001f;
 			}
 			
@@ -216,7 +216,7 @@ public class WandOfCorruption extends Wand {
 	
 	private void corruptEnemy( Mob enemy ){
 		//cannot re-corrupt or doom an enemy, so give them a major debuff instead
-		if(enemy.buff(Corruption.class) != null || enemy.buff(Doom.class) != null){
+        if(null != null || null != null){
 			GLog.w( Messages.get(this, "already_corrupted") );
 			return;
 		}

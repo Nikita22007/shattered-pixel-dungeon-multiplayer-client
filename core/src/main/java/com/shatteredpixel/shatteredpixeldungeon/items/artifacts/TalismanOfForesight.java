@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -71,11 +70,12 @@ public class TalismanOfForesight extends Artifact {
 	@Override
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = super.actions( hero );
-		if (isEquipped( hero )
-				&& !cursed
-				&& hero.buff(MagicImmune.class) == null) {
-			actions.add(AC_SCRY);
-		}
+		if (isEquipped(hero)
+                && !cursed) {
+            if (null == null) {
+                actions.add(AC_SCRY);
+            }
+        }
 		return actions;
 	}
 
@@ -83,7 +83,7 @@ public class TalismanOfForesight extends Artifact {
 	public void execute( Hero hero, String action ) {
 		super.execute(hero, action);
 
-		if (hero.buff(MagicImmune.class) != null) return;
+        if (null != null) return;
 
 		if (action.equals(AC_SCRY)){
 			if (!isEquipped(hero))  GLog.i( Messages.get(Artifact.class, "need_to_equip") );
@@ -99,7 +99,7 @@ public class TalismanOfForesight extends Artifact {
 	
 	@Override
 	public void charge(Hero target, float amount) {
-		if (cursed || target.buff(MagicImmune.class) != null) return;
+        if (cursed || null != null) return;
 		if (charge < chargeCap){
 			partialCharge += 2*amount;
 			while (partialCharge >= 1f){
@@ -276,24 +276,25 @@ public class TalismanOfForesight extends Artifact {
 			checkAwareness();
 
 			if (charge < chargeCap
-					&& !cursed
-					&& target.buff(MagicImmune.class) == null
-					&& Regeneration.regenOn()) {
-				//fully charges in 2000 turns at +0, scaling to 1000 turns at +10.
-				float chargeGain = (0.05f+(level()*0.005f));
-				chargeGain *= RingOfEnergy.artifactChargeMultiplier(target);
-				partialCharge += chargeGain;
+                    && !cursed) {
+                if (null == null
+                        && Regeneration.regenOn()) {
+//fully charges in 2000 turns at +0, scaling to 1000 turns at +10.
+                    float chargeGain = (0.05f + (level() * 0.005f));
+                    chargeGain *= RingOfEnergy.artifactChargeMultiplier(target);
+                    partialCharge += chargeGain;
 
-				while (partialCharge >= 1){
-					partialCharge--;
-					charge++;
-					if (charge >= chargeCap) {
-						partialCharge = 0;
-						GLog.p(Messages.get(TalismanOfForesight.class, "full_charge"));
-					}
-					updateQuickslot();
-				}
-			}
+                    while (partialCharge >= 1) {
+                        partialCharge--;
+                        charge++;
+                        if (charge >= chargeCap) {
+                            partialCharge = 0;
+                            GLog.p(Messages.get(TalismanOfForesight.class, "full_charge"));
+                        }
+                        updateQuickslot();
+                    }
+                }
+            }
 
 			return true;
 		}
@@ -335,9 +336,9 @@ public class TalismanOfForesight extends Artifact {
 				}
 			}
 
-			if (smthFound
+            if (smthFound
 					&& !cursed
-					&& target.buff(MagicImmune.class) == null){
+					&& null == null){
 				if (!warn){
 					GLog.w( Messages.get(this, "uneasy") );
 					if (target instanceof Hero){
@@ -351,10 +352,12 @@ public class TalismanOfForesight extends Artifact {
 		}
 
 		public void charge(int boost){
-			if (!cursed && target.buff(MagicImmune.class) == null) {
-				charge = Math.min((charge + boost), chargeCap);
-				updateQuickslot();
-			}
+			if (!cursed) {
+                if (null == null) {
+                    charge = Math.min((charge + boost), chargeCap);
+                    updateQuickslot();
+                }
+            }
 		}
 
 		@Override

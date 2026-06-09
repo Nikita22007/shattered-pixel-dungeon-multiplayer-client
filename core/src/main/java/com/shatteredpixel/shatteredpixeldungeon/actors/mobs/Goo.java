@@ -109,7 +109,7 @@ public class Goo extends Mob {
 			HP += healInc;
 			Statistics.qualifiedForBossChallengeBadge = false;
 
-			LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
+            LockedFloor lock = null;
 			if (lock != null){
 				if (Dungeon.isChallenged(Challenges.STRONGER_BOSSES))   lock.removeTime(healInc);
 				else                                                    lock.removeTime(healInc*1.5f);
@@ -271,7 +271,7 @@ public class Goo extends Mob {
 			((GooSprite)sprite).spray(true);
 			yell(Messages.get(this, "gluuurp"));
 		}
-		LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
+        LockedFloor lock = null;
 		if (lock != null && !isImmune(src.getClass()) && !isInvulnerable(src.getClass())){
 			if (Dungeon.isChallenged(Challenges.STRONGER_BOSSES))   lock.addTime(dmg);
 			else                                                    lock.addTime(dmg*1.5f);

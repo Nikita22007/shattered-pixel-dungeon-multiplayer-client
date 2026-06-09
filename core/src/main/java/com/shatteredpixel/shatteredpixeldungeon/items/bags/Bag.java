@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.bags;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -225,10 +224,12 @@ public class Bag extends CustomItem implements Iterable<Item> {
 	}
 
 	public boolean canHold( Item item ){
-		if (!loading && owner != null && owner.buff(LostInventory.class) != null
-			&& !item.keptThroughLostInventory()){
-			return false;
-		}
+		if (!loading && owner != null) {
+            if (null != null
+                    && !item.keptThroughLostInventory()) {
+                return false;
+            }
+        }
 
 		if (items.contains(item) || item instanceof Bag || items.size() < capacity()){
 			return true;

@@ -112,8 +112,8 @@ public class PrismaticGuard extends Buff {
 
 	public void set( PrismaticImage img){
 		this.HP = img.HP;
-		if (img.buff(PowerOfMany.PowerBuff.class) != null){
-			powerOfManyTurns = img.buff(PowerOfMany.PowerBuff.class).cooldown()+1;
+        if (null != null){
+            powerOfManyTurns = ((PowerOfMany.PowerBuff) null).cooldown()+1;
 		} else {
 			powerOfManyTurns = 0;
 		}

@@ -66,9 +66,11 @@ public class DivineSense extends ClericSpell {
 		hero.next();
 
 		Char ally = PowerOfMany.getPoweredAlly();
-		if (ally != null && ally.buff(LifeLinkSpell.LifeLinkSpellBuff.class) != null){
-            SpellSprite.show(ally, SpellSprite.VISION);
-		}
+		if (ally != null) {
+            if (null != null) {
+                SpellSprite.show(ally, SpellSprite.VISION);
+            }
+        }
 
 		onSpellCast(tome, hero);
 	}

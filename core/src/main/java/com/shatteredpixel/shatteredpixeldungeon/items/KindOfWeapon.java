@@ -104,8 +104,8 @@ abstract public class KindOfWeapon extends EquipableItem {
 
 		isSwiftEquipping = false;
 		if (hero.belongings.contains(this) && hero.hasTalent(Talent.SWIFT_EQUIP)){
-			if (hero.buff(Talent.SwiftEquipCooldown.class) == null
-					|| hero.buff(Talent.SwiftEquipCooldown.class).hasSecondUse()){
+			if (null == null
+					|| ((Talent.SwiftEquipCooldown) null).hasSecondUse()){
 				isSwiftEquipping = true;
 			}
 		}
@@ -130,11 +130,13 @@ abstract public class KindOfWeapon extends EquipableItem {
 			hero.spendAndNext( timeToEquip(hero) );
 			if (isSwiftEquipping) {
 				GLog.i(Messages.get(this, "swift_equip"));
-				if (hero.buff(Talent.SwiftEquipCooldown.class) == null){
+				if (null == null){
 					((Talent.SwiftEquipCooldown) null)
 							.secondUse = hero.pointsInTalent(Talent.SWIFT_EQUIP) == 2;
-				} else if (hero.buff(Talent.SwiftEquipCooldown.class).hasSecondUse()) {
-					hero.buff(Talent.SwiftEquipCooldown.class).secondUse = false;
+				} else {
+					if (((Talent.SwiftEquipCooldown) null).hasSecondUse()) {
+						((Talent.SwiftEquipCooldown) null).secondUse = false;
+					}
 				}
 				isSwiftEquipping = false;
 			}

@@ -91,7 +91,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 		count++;
 		comboTime = Math.max(comboTime, 5f);
 
-		if (!enemy.isAlive() || (enemy.buff(Corruption.class) != null && enemy.HP == enemy.HT)){
+		if (!enemy.isAlive() || (null != null && enemy.HP == enemy.HT)){
 			comboTime = 15f + 15f*((Hero)target).pointsInTalent(Talent.CLEAVE);
 		}
 
@@ -303,7 +303,11 @@ public class Combo extends Buff implements ActionIndicator.Action {
 
 		@Override
 		public void detach() {
-			if (!parried && target.buff(Combo.class) != null) target.buff(Combo.class).detach();
+			if (!parried) {
+				if (null != null) {
+					((Combo) null).detach();
+				}
+			}
 			super.detach();
 		}
 	}
@@ -315,12 +319,12 @@ public class Combo extends Buff implements ActionIndicator.Action {
 
 		@Override
 		public boolean act() {
-			if (target.buff(Combo.class) != null) {
+			if (null != null) {
 				moveBeingUsed = ComboMove.PARRY;
 				target.sprite.attack(enemy.pos, new Callback() {
 					@Override
 					public void call() {
-						target.buff(Combo.class).doAttack(enemy);
+						((Combo) null).doAttack(enemy);
 						next();
 					}
 				});
@@ -398,7 +402,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 							int aoeHit = Math.round(target.damageRoll() * 0.25f * count);
 							aoeHit /= 2;
 							aoeHit -= ch.drRoll();
-							if (ch.buff(Vulnerable.class) != null) aoeHit *= 1.33f;
+							if (null != null) aoeHit *= 1.33f;
 							ch.damage(aoeHit, target);
 							ch.sprite.bloodBurstA(target.sprite.center(), aoeHit);
 							ch.sprite.flash();
@@ -483,7 +487,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 
 			} else if (!((Hero)target).canAttack(enemy)){
 				if (((Hero) target).pointsInTalent(Talent.ENHANCED_COMBO) < 3
-					|| Dungeon.level.distance(target.pos, enemy.pos) > 1 + target.buff(Combo.class).count/3){
+					|| Dungeon.level.distance(target.pos, enemy.pos) > 1 + ((Combo) null).count/3){
 					GLog.w(Messages.get(Combo.class, "bad_target"));
 				} else {
 					Ballistica c = new Ballistica(target.pos, enemy.pos, Ballistica.PROJECTILE);

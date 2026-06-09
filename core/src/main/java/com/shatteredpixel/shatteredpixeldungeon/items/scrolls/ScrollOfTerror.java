@@ -51,7 +51,7 @@ public class ScrollOfTerror extends Scroll {
 			if (mob.alignment != Char.Alignment.ALLY && Dungeon.level.heroFOV[mob.pos]) {
                 ((Terror) null).object = curUser.id();
 
-				if (mob.buff(Terror.class) != null){
+                if (null != null){
 					count++;
 					affected = mob;
 				}

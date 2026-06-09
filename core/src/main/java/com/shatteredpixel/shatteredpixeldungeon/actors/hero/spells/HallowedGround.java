@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
@@ -110,13 +109,15 @@ public class HallowedGround extends TargetedClericSpell {
 		}
 
 		Char ally = PowerOfMany.getPoweredAlly();
-		if (ally != null && ally.buff(LifeLinkSpell.LifeLinkSpellBuff.class) != null){
-			if (affected.contains(hero) && !affected.contains(ally)){
-				affected.add(ally);
-			} else if (!affected.contains(hero) && affected.contains(ally)){
-				affected.add(hero);
-			}
-		}
+		if (ally != null) {
+            if (null != null) {
+                if (affected.contains(hero) && !affected.contains(ally)) {
+                    affected.add(ally);
+                } else if (!affected.contains(hero) && affected.contains(ally)) {
+                    affected.add(hero);
+                }
+            }
+        }
 
 		for (Char ch : affected){
 			affectChar(ch);
@@ -167,7 +168,11 @@ public class HallowedGround extends TargetedClericSpell {
 					ch.HP++;
 					ch.sprite.showStatusWithIcon( CharSprite.POSITIVE, "1", FloatingText.HEALING );
 				}
-			} else if (!ch.flying && ch.buff(Roots.class) == null){
+			} else {
+                if (!ch.flying) {
+                    if (null == null) {
+                    }
+                }
             }
 		}
 

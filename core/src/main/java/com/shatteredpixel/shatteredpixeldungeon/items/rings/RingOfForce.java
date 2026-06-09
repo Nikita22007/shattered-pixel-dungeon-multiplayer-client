@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.rings;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MonkEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.SpiritForm;
@@ -58,10 +57,12 @@ public class RingOfForce extends Ring {
 	@Override
 	public boolean doUnequip(Hero hero, boolean collect, boolean single) {
 		if (super.doUnequip(hero, collect, single)){
-			if (hero.buff(BrawlersStance.class) != null && hero.buff(Force.class) == null){
-				//clear brawler's stance if no ring of force is equipped
-				hero.buff(BrawlersStance.class).active = false;
-			}
+            if (null != null) {
+                if (null == null) {
+//clear brawler's stance if no ring of force is equipped
+                    ((BrawlersStance) null).active = false;
+                }
+            }
 			return true;
 		} else {
 			return false;
@@ -81,24 +82,27 @@ public class RingOfForce extends Ring {
 
 	public static int damageRoll( Hero hero ){
 		//level can be 0 while still using a ring, so we specifically check for the presence of a ring of force
-		boolean usingForce = hero.buff(Force.class) != null;
-		if (hero.buff(SpiritForm.SpiritFormBuff.class) != null && hero.buff(SpiritForm.SpiritFormBuff.class).ring() instanceof RingOfForce){
-			usingForce = true;
-		}
+        boolean usingForce = null != null;
+        if (null != null) {
+            if (((SpiritForm.SpiritFormBuff) null).ring() instanceof RingOfForce) {
+                usingForce = true;
+            }
+        }
 		//and ignore that presence if using monk abilities
-		if (hero.buff(MonkEnergy.MonkAbility.UnarmedAbilityTracker.class) != null){
+        if (null != null){
 			usingForce = false;
 		}
 		if (usingForce) {
 			int level = getBuffedBonus(hero, Force.class);
 			float tier = tier(hero.STR());
 			int dmg = Hero.heroDamageIntRange(min(level, tier), max(level, tier));
-			if (hero.buff(BrawlersStance.class) != null
-				&& hero.buff(BrawlersStance.class).active){
-				// 3+tier base dmg, roughly +60%->45% dmg at T1->5
-				// lvl*((4+2*tier)/8) scaling, +50% dmg
-				dmg += Math.round(3+tier+(level*((4+2*tier)/8f)));
-			}
+            if (null != null) {
+                if (((BrawlersStance) null).active) {
+// 3+tier base dmg, roughly +60%->45% dmg at T1->5
+// lvl*((4+2*tier)/8) scaling, +50% dmg
+                    dmg += Math.round(3 + tier + (level * ((4 + 2 * tier) / 8f)));
+                }
+            }
 			return dmg;
 		} else {
 			//attack without any ring of force influence
@@ -211,11 +215,11 @@ public class RingOfForce extends Ring {
 	@Override
 	public void execute(Hero hero, String action) {
 		if (action.equals(AC_ABILITY)){
-			if (hero.buff(BrawlersStance.class) != null){
-				if (!hero.buff(BrawlersStance.class).active){
-					hero.buff(BrawlersStance.class).reset();
+            if (null != null){
+                if (!((BrawlersStance) null).active){
+                    ((BrawlersStance) null).reset();
 				} else {
-					hero.buff(BrawlersStance.class).active = false;
+                    ((BrawlersStance) null).active = false;
 				}
 				BuffIndicator.refreshHero();
 				AttackIndicator.updateState();
@@ -254,17 +258,17 @@ public class RingOfForce extends Ring {
 	}
 
 	public static boolean fightingUnarmed( Hero hero ){
-		if (hero.belongings.attackingWeapon() == null
-			|| hero.buff(MonkEnergy.MonkAbility.UnarmedAbilityTracker.class) != null){
+        if (hero.belongings.attackingWeapon() == null
+			|| null != null){
 			return true;
 		}
 		if (hero.belongings.thrownWeapon != null || hero.belongings.abilityWeapon != null){
 			return false;
 		}
-		BrawlersStance stance = hero.buff(BrawlersStance.class);
+        BrawlersStance stance = null;
 		if (stance != null && stance.active){
 			//clear the buff if no ring of force is equipped
-			if (hero.buff(RingOfForce.Force.class) == null){
+            if (null == null){
 				stance.active = false;
 				AttackIndicator.updateState();
 				return false;
@@ -279,10 +283,10 @@ public class RingOfForce extends Ring {
 		if (hero.belongings.attackingWeapon() == null){
 			return false;
 		}
-		if (hero.buff(MonkEnergy.MonkAbility.UnarmedAbilityTracker.class) != null){
-			return hero.buff(MonkEnergy.MonkAbility.FlurryEmpowerTracker.class) != null;
+        if (null != null){
+            return null != null;
 		}
-		BrawlersStance stance = hero.buff(BrawlersStance.class);
+        BrawlersStance stance = null;
 		if (stance != null && stance.active){
 			return true;
 		}
@@ -290,11 +294,11 @@ public class RingOfForce extends Ring {
 	}
 
 	public static boolean unarmedGetsWeaponAugment(Hero hero ){
-		if (hero.belongings.attackingWeapon() == null
-			|| hero.buff(MonkEnergy.MonkAbility.UnarmedAbilityTracker.class) != null){
+        if (hero.belongings.attackingWeapon() == null
+			|| null != null){
 			return false;
 		}
-		BrawlersStance stance = hero.buff(BrawlersStance.class);
+        BrawlersStance stance = null;
 		if (stance != null && stance.active){
 			return true;
 		}

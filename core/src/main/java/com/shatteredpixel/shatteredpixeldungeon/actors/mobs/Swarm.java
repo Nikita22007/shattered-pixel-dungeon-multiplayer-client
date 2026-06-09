@@ -128,10 +128,10 @@ public class Swarm extends Mob {
 		Swarm clone = new Swarm();
 		clone.generation = generation + 1;
 		clone.EXP = 0;
-		if (buff( Burning.class ) != null) {
+        if (null != null) {
             ((Burning) null).reignite( clone );
 		}
-		if (buff( Poison.class ) != null) {
+        if (null != null) {
             ((Poison) null).set(2);
 		}
 		for (Buff b : buffs()){

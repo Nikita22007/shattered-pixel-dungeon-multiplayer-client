@@ -137,8 +137,8 @@ public class MirrorImage extends NPC {
 	@Override
 	public int attackProc( Char enemy, int damage ) {
 		damage = super.attackProc( enemy, damage );
-		
-		MirrorInvis buff = buff(MirrorInvis.class);
+
+        MirrorInvis buff = null;
 		if (buff != null){
 			buff.detach();
 		}
@@ -155,12 +155,13 @@ public class MirrorImage extends NPC {
 		} else {
 			//hero benefits from holy weapon and body form when unarmed, so do mirror images
 			boolean wasEnemy = enemy.alignment == Alignment.ENEMY;
-			if (hero.buff(BodyForm.BodyFormBuff.class) != null
-					&& hero.buff(BodyForm.BodyFormBuff.class).enchant() != null){
-				damage = hero.buff(BodyForm.BodyFormBuff.class).enchant().proc(new WornShortsword(), this, enemy, damage);
-			}
+            if (null != null) {
+                if (((BodyForm.BodyFormBuff) null).enchant() != null) {
+                    damage = ((BodyForm.BodyFormBuff) null).enchant().proc(new WornShortsword(), this, enemy, damage);
+                }
+            }
 			if (!wasEnemy || enemy.alignment == Alignment.ENEMY) {
-				if (hero.buff(HolyWeapon.HolyWepBuff.class) != null) {
+                if (null != null) {
 					int dmg = hero.subClass == HeroSubClass.PALADIN ? 6 : 2;
 					enemy.damage(Math.round(dmg * Weapon.Enchantment.genericProcChanceMultiplier(this)), HolyWeapon.INSTANCE);
 				}

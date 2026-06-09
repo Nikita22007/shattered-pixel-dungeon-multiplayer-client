@@ -42,8 +42,8 @@ public class Flash extends TargetedClericSpell {
 
 	@Override
 	public float chargeUse(Hero hero) {
-		if (hero.buff(AscendedForm.AscendBuff.class) != null){
-			return 2 + hero.buff(AscendedForm.AscendBuff.class).flashCasts;
+        if (null != null){
+            return 2 + ((AscendedForm.AscendBuff) null).flashCasts;
 		} else {
 			return 2;
 		}
@@ -51,9 +51,9 @@ public class Flash extends TargetedClericSpell {
 
 	@Override
 	public boolean canCast(Hero hero) {
-		return super.canCast(hero)
-				&& hero.hasTalent(Talent.FLASH)
-				&& hero.buff(AscendedForm.AscendBuff.class) != null;
+        if (!super.canCast(hero)
+                || !hero.hasTalent(Talent.FLASH)) return false;
+        return null != null;
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class Flash extends TargetedClericSpell {
 		if (ScrollOfTeleportation.teleportToLocation(hero, target)){
 			hero.spendAndNext( 1f );
 			onSpellCast(tome, hero);
-			hero.buff(AscendedForm.AscendBuff.class).flashCasts++;
+            ((AscendedForm.AscendBuff) null).flashCasts++;
 		}
 
 	}

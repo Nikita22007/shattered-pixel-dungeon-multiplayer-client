@@ -44,7 +44,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Viscosity;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Sickle;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.GeyserTrap;
@@ -147,7 +146,7 @@ public abstract class YogFist extends Mob {
 		super.damage(dmg, src);
 		int dmgTaken = preHP - HP;
 
-		LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
+        LockedFloor lock = null;
 		if (dmgTaken > 0 && lock != null && !isImmune(src.getClass()) && !isInvulnerable(src.getClass())){
 			if (Dungeon.isChallenged(Challenges.STRONGER_BOSSES))   lock.addTime(dmgTaken/4f);
 			else                                                    lock.addTime(dmgTaken/2f);
@@ -398,14 +397,14 @@ public abstract class YogFist extends Mob {
 
 		@Override
 		public void damage(int dmg, Object src) {
-			if (!isInvulnerable(src.getClass())
+            if (!isInvulnerable(src.getClass())
 					&& !(src instanceof Bleeding)
-					&& buff(Sickle.HarvestBleedTracker.class) == null){
+					&& null == null){
 				dmg = Math.round( dmg * resist( src.getClass() ));
 				if (dmg < 0){
 					return;
 				}
-				Bleeding b = buff(Bleeding.class);
+                Bleeding b = null;
 				if (b == null){
 					b = new Bleeding();
 				}
@@ -567,7 +566,7 @@ public abstract class YogFist extends Mob {
 
 				enemy.damage( Random.NormalIntRange(10, 20), new DarkBolt() );
 
-				Light l = enemy.buff(Light.class);
+                Light l = null;
 				if (l != null){
 					l.weaken(50);
 				}
@@ -591,7 +590,7 @@ public abstract class YogFist extends Mob {
 			super.damage(dmg, src);
 			if (isAlive() && beforeHP > HT/2 && HP < HT/2){
 				HP = HT/2;
-				Light l = Dungeon.hero.buff(Light.class);
+                Light l = null;
 				if (l != null){
 					l.detach();
 				}
@@ -607,7 +606,7 @@ public abstract class YogFist extends Mob {
 				GameScene.flash(0, false);
 				GLog.w( Messages.get( this, "teleport" ));
 			} else if (!isAlive()){
-				Light l = Dungeon.hero.buff(Light.class);
+                Light l = null;
 				if (l != null){
 					l.detach();
 				}

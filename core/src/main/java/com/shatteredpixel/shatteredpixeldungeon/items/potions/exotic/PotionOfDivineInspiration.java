@@ -66,7 +66,7 @@ public class PotionOfDivineInspiration extends ExoticPotion {
 		boolean[] enabled = new boolean[5];
 		enabled[1] = enabled[2] = enabled[3] = enabled[4] = true;
 
-		DivineInspirationTracker tracker = hero.buff(DivineInspirationTracker.class);
+        DivineInspirationTracker tracker = null;
 
 		if (tracker != null){
 			boolean allBoosted = true;

@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
@@ -87,7 +86,7 @@ public class DemonSpawner extends Mob {
 			spawnRecorded = true;
 		}
 
-		if (Dungeon.hero.buff(AscensionChallenge.class) != null && spawnCooldown > 20){
+        if (null != null && spawnCooldown > 20){
 			spawnCooldown = 20;
 		}
 

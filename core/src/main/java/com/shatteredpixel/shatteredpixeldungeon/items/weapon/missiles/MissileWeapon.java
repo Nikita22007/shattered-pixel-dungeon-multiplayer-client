@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PinCushion;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RevealedArea;
@@ -198,8 +197,12 @@ abstract public class MissileWeapon extends Weapon {
 	@Override
 	public float accuracyFactor(Char owner, Char target) {
 		float accFactor = super.accuracyFactor(owner, target);
-		if (owner instanceof Hero && owner.buff(Momentum.class) != null && owner.buff(Momentum.class).freerunning()){
-			accFactor *= 1f + 0.2f*((Hero) owner).pointsInTalent(Talent.PROJECTILE_MOMENTUM);
+		if (owner instanceof Hero) {
+			if (null != null) {
+				if (((Momentum) null).freerunning()) {
+					accFactor *= 1f + 0.2f * ((Hero) owner).pointsInTalent(Talent.PROJECTILE_MOMENTUM);
+				}
+			}
 		}
 
 		accFactor *= adjacentAccFactor(owner, target);
@@ -233,13 +236,14 @@ abstract public class MissileWeapon extends Weapon {
 
 			//metamorphed seer shot logic
 			if (curUser.hasTalent(Talent.SEER_SHOT)
-					&& curUser.heroClass != HeroClass.HUNTRESS
-					&& curUser.buff(Talent.SeerShotCooldown.class) == null){
-				if (Actor.findChar(cell) == null) {
-					curUser.pointsInTalent(Talent.SEER_SHOT);
-					RevealedArea a = null;
-					a.depth = Dungeon.depth;
-					a.pos = cell;
+					&& curUser.heroClass != HeroClass.HUNTRESS) {
+				if (null == null) {
+					if (Actor.findChar(cell) == null) {
+						curUser.pointsInTalent(Talent.SEER_SHOT);
+						RevealedArea a = null;
+						a.depth = Dungeon.depth;
+						a.pos = cell;
+					}
 				}
 			}
 
@@ -262,8 +266,10 @@ abstract public class MissileWeapon extends Weapon {
 				//do nothing
 			} else {
 				SpiritBow bow = Dungeon.hero.belongings.getItem(SpiritBow.class);
-				if (bow != null && bow.enchantment != null && Dungeon.hero.buff(MagicImmune.class) == null) {
-					damage = bow.enchantment.proc(this, attacker, defender, damage);
+				if (bow != null && bow.enchantment != null) {
+					if (null == null) {
+						damage = bow.enchantment.proc(this, attacker, defender, damage);
+					}
 				}
 			}
 		}
@@ -394,8 +400,10 @@ abstract public class MissileWeapon extends Weapon {
 			if (exStr > 0) {
 				damage += Hero.heroDamageIntRange( 0, exStr );
 			}
-			if (owner.buff(Momentum.class) != null && owner.buff(Momentum.class).freerunning()) {
-				damage = Math.round(damage * (1f + 0.15f * ((Hero) owner).pointsInTalent(Talent.PROJECTILE_MOMENTUM)));
+			if (null != null) {
+				if (((Momentum) null).freerunning()) {
+					damage = Math.round(damage * (1f + 0.15f * ((Hero) owner).pointsInTalent(Talent.PROJECTILE_MOMENTUM)));
+				}
 			}
 		}
 		

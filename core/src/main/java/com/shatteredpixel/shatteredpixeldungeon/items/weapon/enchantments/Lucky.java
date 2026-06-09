@@ -53,8 +53,8 @@ public class Lucky extends Weapon.Enchantment {
 		} else {
 			//in rare cases where we attack many times at once (e.g. gladiator fury)
 			// make sure that failed luck procs override prior succeeded ones
-			if (defender.buff(LuckProc.class) != null){
-				defender.buff(LuckProc.class).detach();
+            if (null != null){
+                ((LuckProc) null).detach();
 			}
 		}
 		

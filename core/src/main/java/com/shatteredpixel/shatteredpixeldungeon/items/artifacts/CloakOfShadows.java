@@ -25,7 +25,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -69,12 +68,13 @@ public class CloakOfShadows extends Artifact {
 	@Override
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = super.actions( hero );
-		if ((isEquipped( hero ) || hero.hasTalent(Talent.LIGHT_CLOAK))
-				&& !cursed
-				&& hero.buff(MagicImmune.class) == null
-				&& (charge > 0 || activeBuff != null)) {
-			actions.add(AC_STEALTH);
-		}
+		if ((isEquipped(hero) || hero.hasTalent(Talent.LIGHT_CLOAK))
+                && !cursed) {
+            if (null == null
+                    && (charge > 0 || activeBuff != null)) {
+                actions.add(AC_STEALTH);
+            }
+        }
 		return actions;
 	}
 
@@ -83,7 +83,7 @@ public class CloakOfShadows extends Artifact {
 
 		super.execute(hero, action);
 
-		if (hero.buff(MagicImmune.class) != null) return;
+        if (null != null) return;
 
 		if (action.equals( AC_STEALTH )) {
 
@@ -103,9 +103,11 @@ public class CloakOfShadows extends Artifact {
 			} else {
 				activeBuff.detach();
 				activeBuff = null;
-				if (hero.invisible <= 0 && hero.buff(Preparation.class) != null){
-					hero.buff(Preparation.class).detach();
-				}
+				if (hero.invisible <= 0) {
+                    if (null != null) {
+                        ((Preparation) null).detach();
+                    }
+                }
 				hero.sprite.operate( hero.pos );
 			}
 
@@ -175,7 +177,7 @@ public class CloakOfShadows extends Artifact {
 	
 	@Override
 	public void charge(Hero target, float amount) {
-		if (cursed || target.buff(MagicImmune.class) != null) return;
+        if (cursed || null != null) return;
 
 		if (charge < chargeCap) {
 			if (!isEquipped(target)) amount *= 0.75f*target.pointsInTalent(Talent.LIGHT_CLOAK)/3f;
@@ -229,7 +231,7 @@ public class CloakOfShadows extends Artifact {
 	public class cloakRecharge extends ArtifactBuff{
 		@Override
 		public boolean act() {
-			if (charge < chargeCap && !cursed && target.buff(MagicImmune.class) == null) {
+            if (charge < chargeCap && !cursed && null == null) {
 				if (activeBuff == null && Regeneration.regenOn()) {
 					float missing = (chargeCap - charge);
 					if (level() > 7) missing += 5*(level() - 7)/3f;

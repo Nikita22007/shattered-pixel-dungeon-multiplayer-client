@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -75,7 +74,7 @@ public class HornOfPlenty extends Artifact {
 	@Override
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = super.actions( hero );
-		if (hero.buff(MagicImmune.class) != null) return actions;
+        if (null != null) return actions;
 		if (isEquipped( hero ) && charge > 0) {
 			actions.add(AC_SNACK);
 			actions.add(AC_EAT);
@@ -91,7 +90,7 @@ public class HornOfPlenty extends Artifact {
 
 		super.execute(hero, action);
 
-		if (hero.buff(MagicImmune.class) != null) return;
+        if (null != null) return;
 
 		if (action.equals(AC_EAT) || action.equals(AC_SNACK)){
 
@@ -172,25 +171,27 @@ public class HornOfPlenty extends Artifact {
 	
 	@Override
 	public void charge(Hero target, float amount) {
-		if (charge < chargeCap && !cursed && target.buff(MagicImmune.class) == null){
-			partialCharge += 0.25f*amount;
-			while (partialCharge >= 1){
-				partialCharge--;
-				charge++;
-				
-				if (charge == chargeCap){
-					GLog.p( Messages.get(HornOfPlenty.class, "full") );
-					partialCharge = 0;
-				}
+		if (charge < chargeCap && !cursed) {
+            if (null == null) {
+                partialCharge += 0.25f * amount;
+                while (partialCharge >= 1) {
+                    partialCharge--;
+                    charge++;
 
-				if (charge >= 8)        image = ItemSpriteSheet.ARTIFACT_HORN4;
-				else if (charge >= 5)   image = ItemSpriteSheet.ARTIFACT_HORN3;
-				else if (charge >= 2)   image = ItemSpriteSheet.ARTIFACT_HORN2;
-				else                    image = ItemSpriteSheet.ARTIFACT_HORN1;
+                    if (charge == chargeCap) {
+                        GLog.p(Messages.get(HornOfPlenty.class, "full"));
+                        partialCharge = 0;
+                    }
 
-				updateQuickslot();
-			}
-		}
+                    if (charge >= 8) image = ItemSpriteSheet.ARTIFACT_HORN4;
+                    else if (charge >= 5) image = ItemSpriteSheet.ARTIFACT_HORN3;
+                    else if (charge >= 2) image = ItemSpriteSheet.ARTIFACT_HORN2;
+                    else image = ItemSpriteSheet.ARTIFACT_HORN1;
+
+                    updateQuickslot();
+                }
+            }
+        }
 	}
 	
 	@Override
@@ -271,7 +272,7 @@ public class HornOfPlenty extends Artifact {
 	public class hornRecharge extends ArtifactBuff{
 
 		public void gainCharge(float levelPortion) {
-			if (cursed || target.buff(MagicImmune.class) != null) return;
+            if (cursed || null != null) return;
 			
 			if (charge < chargeCap) {
 

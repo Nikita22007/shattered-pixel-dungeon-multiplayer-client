@@ -50,11 +50,11 @@ public class Endure extends ArmorAbility {
 	@Override
 	protected void activate(ClassArmor armor, Hero hero, Integer target) {
 
-		if (hero.buff(EndureTracker.class) != null){
-			hero.buff(EndureTracker.class).detach();
+        if (null != null){
+            ((EndureTracker) null).detach();
 		}
 
-        Combo combo = hero.buff(Combo.class);
+        Combo combo = null;
 		if (combo != null){
 			combo.addTime(3f);
 		}

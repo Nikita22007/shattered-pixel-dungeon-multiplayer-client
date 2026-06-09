@@ -236,8 +236,8 @@ public class WildMagic extends ArmorAbility {
 			});
 			hero.next();
 		} else {
-			if (hero.buff(WildMagicTracker.class) != null) {
-				hero.buff(WildMagicTracker.class).detach();
+            if (null != null) {
+                ((WildMagicTracker) null).detach();
 			}
 			Item.updateQuickslot();
 			Invisibility.dispel();

@@ -127,8 +127,8 @@ public class Chasm implements Hero.Doom {
 	public static void heroLand() {
 		
 		Hero hero = Dungeon.hero;
-		
-		ElixirOfFeatherFall.FeatherBuff b = hero.buff(ElixirOfFeatherFall.FeatherBuff.class);
+
+        ElixirOfFeatherFall.FeatherBuff b = null;
 		
 		if (b != null){
 			hero.sprite.emitter().burst( Speck.factory( Speck.JET ), 20);

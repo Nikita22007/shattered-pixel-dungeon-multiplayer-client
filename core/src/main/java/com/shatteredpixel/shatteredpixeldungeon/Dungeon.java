@@ -293,7 +293,7 @@ public class Dungeon {
 	//value used for scaling of damage values and other effects.
 	//is usually the dungeon depth, but can be set to 26 when ascending
 	public static int scalingDepth(){
-		if (Dungeon.hero != null && Dungeon.hero.buff(AscensionChallenge.class) != null){
+		if (Dungeon.hero != null && null != null){
 			return 26;
 		} else {
 			return depth;
@@ -326,8 +326,8 @@ public class Dungeon {
 		Dungeon.level = level;
 		hero.pos = pos;
 
-		if (hero.buff(AscensionChallenge.class) != null){
-			hero.buff(AscensionChallenge.class).onLevelSwitch();
+		if (null != null){
+			((AscensionChallenge) null).onLevelSwitch();
 		}
 
 		Mob.restoreAllies( level, pos );
@@ -347,8 +347,8 @@ public class Dungeon {
 				}
 			}
 		}
-		
-		Light light = hero.buff( Light.class );
+
+		Light light = null;
 		hero.viewDistance = light == null ? level.viewDistance : Math.max( Light.DISTANCE, level.viewDistance );
 		
 		hero.curAction = hero.lastAction = null;
@@ -765,7 +765,7 @@ public class Dungeon {
 
 	public static boolean[] findPassable(Char ch, boolean[] pass, boolean[] vis, boolean chars, boolean considerLarge){
 		setupPassable();
-		if (ch.flying || ch.buff( Amok.class ) != null) {
+		if (ch.flying || null != null) {
 			BArray.or( pass, Dungeon.level.avoid, passable );
 		} else {
 			System.arraycopy( pass, 0, passable, 0, Dungeon.level.length() );
@@ -809,7 +809,7 @@ public class Dungeon {
 		passable[ch.pos] = true;
 
 		//chars affected by terror have a shorter lookahead and can't approach the fear source
-		boolean canApproachFromPos = ch.buff(Terror.class) == null && ch.buff(Dread.class) == null;
+		boolean canApproachFromPos = null == null && null == null;
 		int step = PathFinder.getStepBack( ch.pos, from, canApproachFromPos ? 8 : 4, passable, canApproachFromPos );
 
 		//only consider chars impassable if our retreat step runs into them

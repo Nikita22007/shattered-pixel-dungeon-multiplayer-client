@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Adrenaline;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Beam;
@@ -180,12 +179,14 @@ public class Necromancer extends Mob {
 			}
 			
 		//otherwise give it adrenaline
-		} else if (mySkeleton.buff(Adrenaline.class) == null) {
+		} else {
+            if (null == null) {
 
-			if (sprite.visible || mySkeleton.sprite.visible) {
-				sprite.parent.add(new Beam.HealthRay(sprite.center(), mySkeleton.sprite.center()));
-			}
+                if (sprite.visible || mySkeleton.sprite.visible) {
+                    sprite.parent.add(new Beam.HealthRay(sprite.center(), mySkeleton.sprite.center()));
+                }
 
+}
         }
 		
 		next();
@@ -359,7 +360,7 @@ public class Necromancer extends Mob {
 				} else {
 					
 					//zap skeleton
-					if (mySkeleton.HP < mySkeleton.HT || mySkeleton.buff(Adrenaline.class) == null) {
+                    if (mySkeleton.HP < mySkeleton.HT || null == null) {
 						if (sprite != null && sprite.visible){
 							sprite.zap(mySkeleton.pos);
 							return false;

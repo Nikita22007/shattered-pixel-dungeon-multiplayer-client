@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.SaltCube;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -63,9 +62,9 @@ public class Hunger extends Buff implements Hero.Doom {
 	public boolean act() {
 
 		if (Dungeon.level.locked
-				|| target.buff(WellFed.class) != null
+				|| null != null
 				|| SPDSettings.intro()
-				|| target.buff(ScrollOfChallenge.ChallengeArena.class) != null
+				|| null != null
 				){
 			spend(TICK);
 			return true;
@@ -87,7 +86,7 @@ public class Hunger extends Buff implements Hero.Doom {
 			} else {
 
 				float hungerDelay = 1f;
-				if (target.buff(Shadows.class) != null){
+				if (null != null){
 					hungerDelay *= 1.5f;
 				}
 				hungerDelay /= SaltCube.hungerGainMultiplier();
@@ -135,10 +134,12 @@ public class Hunger extends Buff implements Hero.Doom {
 
 	public void affectHunger(float energy, boolean overrideLimits ) {
 		if (target == null) {detach(); return;}
-		if (energy < 0 && target.buff(WellFed.class) != null){
-			target.buff(WellFed.class).left += energy;
-			BuffIndicator.refreshHero();
-			return;
+		if (energy < 0) {
+			if (null != null) {
+				((WellFed) null).left += energy;
+				BuffIndicator.refreshHero();
+				return;
+			}
 		}
 
 		float oldLevel = level;

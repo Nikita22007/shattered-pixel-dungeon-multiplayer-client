@@ -78,14 +78,14 @@ public class Skeleton extends Mob {
 				//all sources of DR are 2x effective vs. bone explosion
 				//this does not consume extra uses of rock armor and earthroot armor
 
-				WandOfLivingEarth.RockArmor rockArmor = ch.buff(WandOfLivingEarth.RockArmor.class);
+                WandOfLivingEarth.RockArmor rockArmor = null;
 				if (rockArmor != null) {
 					int preDmg = damage;
 					damage = rockArmor.absorb(damage);
 					damage *= Math.round(damage/(float)preDmg); //apply the % reduction twice
 				}
 
-				Earthroot.Armor armor = ch.buff( Earthroot.Armor.class );
+                Earthroot.Armor armor = null;
 				if (damage > 0 && armor != null) {
 					int preDmg = damage;
 					damage = armor.absorb( damage );

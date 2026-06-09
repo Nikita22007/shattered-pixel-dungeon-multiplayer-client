@@ -52,10 +52,10 @@ public class DivineIntervention extends ClericSpell {
 
 	@Override
 	public boolean canCast(Hero hero) {
-		return super.canCast(hero)
-				&& hero.hasTalent(Talent.DIVINE_INTERVENTION)
-				&& hero.buff(AscendedForm.AscendBuff.class) != null
-				&& !hero.buff(AscendedForm.AscendBuff.class).divineInverventionCast;
+        if (!super.canCast(hero)
+                || !hero.hasTalent(Talent.DIVINE_INTERVENTION)
+                || null == null) return false;
+        return !((AscendedForm.AscendBuff) null).divineInverventionCast;
 	}
 
 	@Override
@@ -75,11 +75,11 @@ public class DivineIntervention extends ClericSpell {
 		onSpellCast(tome, hero);
 
 		//we apply buffs here so that the 5 charge cost and shield boost do not stack
-		hero.buff(AscendedForm.AscendBuff.class).setShield(100 + 50*hero.pointsInTalent(Talent.DIVINE_INTERVENTION));
+        ((AscendedForm.AscendBuff) null).setShield(100 + 50*hero.pointsInTalent(Talent.DIVINE_INTERVENTION));
 		new Flare(6, 32).color(0xFFFF00, true).show(hero.sprite, 2f);
 
-		hero.buff(AscendedForm.AscendBuff.class).divineInverventionCast = true;
-		hero.buff(AscendedForm.AscendBuff.class).extend(2+hero.pointsInTalent(Talent.DIVINE_INTERVENTION));
+        ((AscendedForm.AscendBuff) null).divineInverventionCast = true;
+        ((AscendedForm.AscendBuff) null).extend(2+hero.pointsInTalent(Talent.DIVINE_INTERVENTION));
 
 	}
 
@@ -99,7 +99,7 @@ public class DivineIntervention extends ClericSpell {
 		@Override
 		public boolean act() {
 
-			if (Dungeon.hero == null || Dungeon.hero.buff(AscendedForm.AscendBuff.class) == null){
+            if (Dungeon.hero == null || null == null){
 				detach();
 			}
 
@@ -109,7 +109,7 @@ public class DivineIntervention extends ClericSpell {
 
 		@Override
 		public int shielding() {
-			if (Dungeon.hero == null || Dungeon.hero.buff(AscendedForm.AscendBuff.class) == null){
+            if (Dungeon.hero == null || null == null){
 				return 0;
 			}
 			return super.shielding();

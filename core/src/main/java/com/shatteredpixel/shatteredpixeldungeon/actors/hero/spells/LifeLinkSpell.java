@@ -85,8 +85,8 @@ public class LifeLinkSpell extends ClericSpell {
         ((LifeLink) null).object = hero.id();
 
         if (ally == Stasis.getStasisAlly()){
-			ally.buff(LifeLink.class).clearTime();
-			ally.buff(LifeLinkSpellBuff.class).clearTime();
+            ((LifeLink) null).clearTime();
+            ((LifeLinkSpellBuff) null).clearTime();
 		}
 
 		hero.spendAndNext(Actor.TICK);
