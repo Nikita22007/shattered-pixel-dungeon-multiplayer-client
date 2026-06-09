@@ -42,7 +42,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesi
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfChallenge;
-import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.DimensionalSundial;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.EyeOfNewt;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfRegrowth;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfWarding;
@@ -97,8 +96,6 @@ public abstract class Level implements Bundlable {
 	protected int width = 32;
 	protected int height = 32;
 	protected int length =  height * width;
-	
-	protected static final float TIME_TO_RESPAWN	= 50;
 
 	public int version;
 	
@@ -231,7 +228,6 @@ public abstract class Level implements Bundlable {
 				mobs.remove( mob );
 			}
 		}
-		createMobs();
 	}
 
 	public void playLevelMusic(){
@@ -261,7 +257,6 @@ public abstract class Level implements Bundlable {
 		bundle.put( BLOBS, blobs.values() );
 		bundle.put( FEELING, feeling );
 		bundle.put( "mobs_to_spawn", mobsToSpawn.toArray(new Class[0]));
-		bundle.put( "respawner", respawner );
 	}
 	
 	public int tunnelTile() {
@@ -299,20 +294,8 @@ public abstract class Level implements Bundlable {
 	abstract protected boolean build();
 	
 	private ArrayList<Class<?extends Mob>> mobsToSpawn = new ArrayList<>();
-	
-	public Mob createMob() {
-		if (mobsToSpawn == null || mobsToSpawn.isEmpty()) {
-			mobsToSpawn = MobSpawner.getMobRotation(Dungeon.depth);
-		}
 
-		Mob m = Reflection.newInstance(mobsToSpawn.remove(0));
-		ChampionEnemy.rollForChampion(m);
-		return m;
-	}
-
-	abstract protected void createMobs();
-
-	abstract protected void createItems();
+    abstract protected void createItems();
 
 	public int entrance(){
 		LevelTransition l = getTransition(null);
@@ -495,39 +478,6 @@ public abstract class Level implements Bundlable {
 			}
 		}
 		return null;
-	}
-
-	private MobSpawner respawner;
-
-	public Actor addRespawner() {
-		if (respawner == null){
-			respawner = new MobSpawner();
-			Actor.addDelayed(respawner, respawnCooldown());
-		} else {
-			Actor.add(respawner);
-			if (respawner.cooldown() > respawnCooldown()){
-				respawner.resetCooldown();
-			}
-		}
-		return respawner;
-	}
-
-	public float respawnCooldown(){
-		float cooldown;
-		if (Statistics.amuletObtained){
-			if (Dungeon.depth == 1){
-				//very fast spawns on floor 1! 0/2/4/6/8/10/12, etc.
-				cooldown = (Dungeon.level.mobCount()) * (TIME_TO_RESPAWN / 25f);
-			} else {
-				//respawn time is 5/5/10/15/20/25/25, etc.
-				cooldown = Math.round(GameMath.gate( TIME_TO_RESPAWN/10f, Dungeon.level.mobCount() * (TIME_TO_RESPAWN / 10f), TIME_TO_RESPAWN / 2f));
-			}
-		} else if (Dungeon.level.feeling == Feeling.DARK){
-			cooldown = 2*TIME_TO_RESPAWN/3f;
-		} else {
-			cooldown = TIME_TO_RESPAWN;
-		}
-		return cooldown / DimensionalSundial.spawnMultiplierAtCurrentTime();
 	}
 
 	public int randomRespawnCell( Char ch ) {

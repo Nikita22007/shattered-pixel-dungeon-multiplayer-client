@@ -39,11 +39,6 @@ public class SewerLevel extends RegularLevel {
 	}
 
 	@Override
-	protected void createMobs() {
-
-	}
-
-	@Override
 	protected void createItems() {
 
 	}

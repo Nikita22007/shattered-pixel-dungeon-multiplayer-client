@@ -73,20 +73,6 @@ public class SummoningTrap extends Trap {
 
 		ArrayList<Mob> mobs = new ArrayList<>();
 
-		for (Integer point : respawnPoints) {
-			Mob mob = Dungeon.level.createMob();
-			while (Char.hasProp(mob, Char.Property.LARGE) && !Dungeon.level.openSpace[point]){
-				mob = Dungeon.level.createMob();
-			}
-			if (mob != null) {
-				if (mob.state != mob.PASSIVE) {
-					mob.state = mob.WANDERING;
-				}
-				mob.pos = point;
-				GameScene.add(mob, DELAY);
-				mobs.add(mob);
-			}
-		}
 
 		//important to process the visuals and pressing of cells last, so spawned mobs have a chance to occupy cells first
 		Trap t;
