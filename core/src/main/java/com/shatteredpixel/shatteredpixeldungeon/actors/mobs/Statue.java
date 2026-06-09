@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.RatSkull;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon.Enchantment;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Grim;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -179,10 +178,6 @@ public class Statue extends Mob {
 			desc += "\n\n" + Messages.get(this, "desc_weapon", weapon.name());
 		}
 		return desc;
-	}
-
-	public static Statue random() {
-		return random(true);
 	}
 
 	public static Statue random(boolean useDecks) {

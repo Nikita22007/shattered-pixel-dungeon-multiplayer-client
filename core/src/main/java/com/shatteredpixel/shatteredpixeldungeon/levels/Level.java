@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.*;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.*;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
@@ -45,7 +44,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.DimensionalSundial;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.EyeOfNewt;
-import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.TrinketCatalyst;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfRegrowth;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfWarding;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.HeavyBoomerang;
@@ -581,42 +579,6 @@ public abstract class Level implements Bundlable {
 		} while (!passable[cell]
 				|| (Char.hasProp(ch, Char.Property.LARGE) && !openSpace[cell]));
 		return cell;
-	}
-	
-	public void addItemToSpawn( Item item ) {
-		if (item != null) {
-			itemsToSpawn.add( item );
-		}
-	}
-
-	public Item findPrizeItem(){ return findPrizeItem(null); }
-
-	public Item findPrizeItem(Class<?extends Item> match){
-		if (itemsToSpawn.size() == 0)
-			return null;
-
-		if (match == null){
-			//if we have a trinket catalyst, always return that first
-			for (Item item : itemsToSpawn){
-				if (item instanceof TrinketCatalyst){
-					itemsToSpawn.remove(item);
-					return item;
-				}
-			}
-
-			Item item = Random.element(itemsToSpawn);
-			itemsToSpawn.remove(item);
-			return item;
-		}
-
-		for (Item item : itemsToSpawn){
-			if (match.isInstance(item)){
-				itemsToSpawn.remove( item );
-				return item;
-			}
-		}
-
-		return null;
 	}
 
 	public void buildFlagMaps() {

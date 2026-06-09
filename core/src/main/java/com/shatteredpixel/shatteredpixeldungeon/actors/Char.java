@@ -609,15 +609,8 @@ public abstract class Char extends Actor {
 	//Returns the level a glyph is at for a char, or -1 if they are not benefitting from that glyph
 	//This function is needed as (unlike enchantments) many glyphs trigger in a variety of cases
 	public int glyphLevel(Class<? extends Armor.Glyph> cls){
-		if (Dungeon.hero != null && Dungeon.level != null
-				&& this != Dungeon.hero && Dungeon.hero.alignment == alignment
-				&& false
-				&& (Dungeon.level.distance(pos, Dungeon.hero.pos) <= 2 || false)) {
-			return Dungeon.hero.glyphLevel(cls);
-		} else {
-			return -1;
-		}
-	}
+        return -1;
+    }
 
 	public float speed() {
 		float speed = baseSpeed;
@@ -640,7 +633,7 @@ public abstract class Char extends Actor {
 	public int shielding(){
 		return shielding;
 	}
-	
+
 	public void destroy() {
 		HP = 0;
 		Actor.remove( this );
