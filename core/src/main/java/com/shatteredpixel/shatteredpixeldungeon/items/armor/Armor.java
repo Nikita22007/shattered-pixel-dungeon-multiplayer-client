@@ -31,9 +31,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.ShadowClone;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BodyForm;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.PrismaticImage;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
@@ -61,13 +59,11 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Thorns;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Viscosity;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfArcana;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ParchmentScrap;
-import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
@@ -365,60 +361,7 @@ public class Armor extends EquipableItem {
 
 		return super.upgrade();
 	}
-	
-	public int proc( Char attacker, Char defender, int damage ) {
 
-		{
-			Glyph trinityGlyph = null;
-			//only when it's the hero or a char that uses the hero's armor
-
-			if (defender instanceof Hero && isEquipped((Hero) defender)
-					&& false) {
-				if (glyph != null &&
-						(((Hero) defender).subClass == HeroSubClass.PALADIN || hasCurseGlyph())) {
-					damage = glyph.proc(this, attacker, defender, damage);
-				}
-				if (trinityGlyph != null) {
-					damage = trinityGlyph.proc(this, attacker, defender, damage);
-				}
-				int blocking = ((Hero) defender).subClass == HeroSubClass.PALADIN ? 3 : 1;
-				damage -= Math.round(blocking * Glyph.genericProcChanceMultiplier(defender));
-
-			} else {
-				if (glyph != null) {
-					damage = glyph.proc(this, attacker, defender, damage);
-				}
-				if (trinityGlyph != null) {
-					damage = trinityGlyph.proc(this, attacker, defender, damage);
-				}
-				//so that this effect procs for allies using this armor via aura of protection
-				if (defender.alignment == Dungeon.hero.alignment) {
-				}
-			}
-			damage = Math.max(damage, 0);
-		}
-
-		if (!levelKnown && defender == Dungeon.hero) {
-			float uses = Math.min(availableUsesToID, Talent.itemIDSpeedFactor(Dungeon.hero, this));
-			availableUsesToID -= uses;
-			usesLeftToID -= uses;
-			if (usesLeftToID <= 0) {
-				if (ShardOfOblivion.passiveIDDisabled()) {
-					if (usesLeftToID > -1) {
-						GLog.p(Messages.get(ShardOfOblivion.class, "identify_ready"), name());
-					}
-					setIDReady();
-				} else {
-					identify();
-					GLog.p(Messages.get(Armor.class, "identify"));
-					Badges.validateItemLevelAquired(this);
-				}
-			}
-		}
-
-		return damage;
-	}
-	
 	@Override
 	public void onHeroGainExp(float levelPercent, Hero hero) {
 		levelPercent *= Talent.itemIDSpeedFactor(hero, this);
@@ -598,8 +541,6 @@ public class Armor extends EquipableItem {
 				AntiEntropy.class, Corrosion.class, Displacement.class, Metabolism.class,
 				Multiplicity.class, Stench.class, Overgrowth.class, Bulk.class
 		};
-		
-		public abstract int proc( Armor armor, Char attacker, Char defender, int damage );
 
 		protected float procChanceMultiplier( Char defender ){
 			return genericProcChanceMultiplier( defender );
