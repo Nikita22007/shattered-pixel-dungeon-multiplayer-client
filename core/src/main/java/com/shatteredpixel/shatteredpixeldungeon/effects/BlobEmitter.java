@@ -25,8 +25,12 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.watabou.noosa.particles.Emitter;
+import com.shatteredpixel.shatteredpixeldungeon.network.actions.emitters.EmitterParser;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Random;
 import com.watabou.utils.RectF;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class BlobEmitter extends Emitter {
 	
@@ -67,6 +71,14 @@ public class BlobEmitter extends Emitter {
 					factory.emit(this, index, x, y);
 				}
 			}
+		}
+	}
+
+	public void update(JSONObject emitterInfo) {
+		try {
+			EmitterParser.configure(this, emitterInfo);
+		} catch (JSONException e) {
+			GLog.n("incorrect blob emitter: " + e.getMessage());
 		}
 	}
 }

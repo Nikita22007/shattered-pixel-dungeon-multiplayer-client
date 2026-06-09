@@ -8,6 +8,7 @@ import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.network.ParticleFactoryDeserializer;
 import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.network.actions.emitters.EmitterAnchorParser;
+import com.shatteredpixel.shatteredpixeldungeon.network.actions.emitters.EmitterParser;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 
 import com.watabou.noosa.ColorBlock;
@@ -193,24 +194,11 @@ public class CustomItem extends Item {
         }
 
         try {
-            Emitter.Factory factory = ParticleFactoryDeserializer.deserialize(emitterAction.getJSONObject("factory"));
-            if (factory == null) {
-                GLog.n("incorrect item emitter factory: " + emitterAction.getJSONObject("factory").optString("factory_type"));
-                return super.emitter();
-            }
-
             Emitter emitter = new Emitter();
-            if (!EmitterAnchorParser.apply(emitter, emitterAction.getJSONObject("anchor"))) {
-                GLog.n("incorrect item emitter anchor");
-                return super.emitter();
+            if (EmitterParser.configure(emitter, emitterAction)) {
+                return emitter;
             }
-            emitter.fillTarget = emitterAction.optBoolean("fill_target", emitter.fillTarget);
-            emitter.start(
-                    factory,
-                    (float) emitterAction.getDouble("interval"),
-                    emitterAction.getInt("quantity")
-            );
-            return emitter;
+            return super.emitter();
         } catch (JSONException e) {
             GLog.n("incorrect item emitter: " + e.getMessage());
             return super.emitter();

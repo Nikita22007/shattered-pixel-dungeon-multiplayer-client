@@ -231,7 +231,11 @@ public abstract class Actor implements Bundlable {
 		for (Blob blob : Dungeon.level.blobs.values()) {
 			add( blob );
 		}
-		
+
+		for (Blob blob : Dungeon.level.blobsList) {
+			add( blob );
+		}
+
 		current = null;
 	}
 

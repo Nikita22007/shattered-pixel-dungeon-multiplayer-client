@@ -266,6 +266,11 @@ public class GameScene extends PixelScene {
 			addBlobSprite( blob );
 		}
 
+		for (Blob blob : Dungeon.level.blobsList) {
+			blob.emitter = null;
+			addBlobSprite( blob );
+		}
+
 
 		fog = new FogOfWar( Dungeon.level.width(), Dungeon.level.height() );
 		add( fog );
@@ -1164,6 +1169,9 @@ public class GameScene extends PixelScene {
 			emitter.revive();
 			return emitter;
 		} else {
+			if (DeviceCompat.isDebug()) {
+				throw new RuntimeException("Can't create emitter: scene is null");
+			}
 			return null;
 		}
 	}

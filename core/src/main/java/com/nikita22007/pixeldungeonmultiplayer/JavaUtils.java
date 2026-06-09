@@ -1,6 +1,7 @@
 package com.nikita22007.pixeldungeonmultiplayer;
 
 import com.badlogic.gdx.utils.Base64Coder;
+import org.jetbrains.annotations.Contract;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +39,19 @@ public class JavaUtils {
 
     public static Integer[] JSONArrayToIntegerClassArray(JSONArray arr) throws JSONException {
         Integer[] ints = new Integer[arr.length()];
+        for (int i = 0; i < ints.length; i++)
+        {
+            ints[i] = arr.getInt(i);
+        }
+        return ints;
+    }
+
+    @Contract("null->null; !null -> new")
+    public static int[] JSONArrayToIntArray(JSONArray arr) throws JSONException {
+        if (arr == null) {
+            return null;
+        }
+        int[] ints = new int[arr.length()];
         for (int i = 0; i < ints.length; i++)
         {
             ints[i] = arr.getInt(i);
