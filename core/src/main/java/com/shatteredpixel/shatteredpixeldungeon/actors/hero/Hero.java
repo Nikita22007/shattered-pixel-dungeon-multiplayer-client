@@ -441,7 +441,7 @@ public class Hero extends Char {
 			speed *= (2f + 0.25f * pointsInTalent(Talent.GROWING_POWER));
 		}
 
-		speed = AscensionChallenge.modifyHeroSpeed(speed);
+        speed = speed;
 
 		return speed;
 

@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SparkParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
@@ -96,7 +95,7 @@ public class DM100 extends Mob implements Callback {
 			Invisibility.dispel(this);
             if (false) {
 				int dmg = Random.NormalIntRange(3, 10);
-				dmg = Math.round(dmg * AscensionChallenge.statModifier(this));
+                dmg = Math.round(dmg * (float) 1);
 
                 if (enemy.sprite.visible) {
 					enemy.sprite.centerEmitter().burst(SparkParticle.FACTORY, 3);

@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
@@ -116,7 +115,7 @@ public abstract class Mob extends Char {
         if (firstAdded) {
             //modify health for ascension challenge if applicable, only on first add
             float percent = HP / (float) HT;
-            HT = Math.round(HT * AscensionChallenge.statModifier(this));
+            HT = Math.round(HT * (float) 1);
             HP = Math.round(HT * percent);
             firstAdded = false;
         }
@@ -479,7 +478,8 @@ public abstract class Mob extends Char {
 
     @Override
     public float speed() {
-        return super.speed() * AscensionChallenge.enemySpeedModifier(this);
+
+        return super.speed() * (float) 1;
     }
 
     public final boolean surprisedBy(Char enemy) {
@@ -531,8 +531,6 @@ public abstract class Mob extends Char {
                 Statistics.qualifiedForNoKilling = false;
                 Bestiary.setSeen(getClass());
                 Bestiary.countEncounter(getClass());
-
-                AscensionChallenge.processEnemyKill(this);
 
                 int exp = Dungeon.hero.lvl <= maxLvl ? EXP : 0;
 

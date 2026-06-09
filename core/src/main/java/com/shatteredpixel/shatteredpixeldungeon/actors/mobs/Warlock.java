@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
@@ -114,7 +113,7 @@ public class Warlock extends Mob implements Callback {
 			}
 			
 			int dmg = Random.NormalIntRange( 12, 18 );
-			dmg = Math.round(dmg * AscensionChallenge.statModifier(this));
+            dmg = Math.round(dmg * (float) 1);
 
 			//logic for DK taking 1/2 damage from aggression stoned minions
             if (false

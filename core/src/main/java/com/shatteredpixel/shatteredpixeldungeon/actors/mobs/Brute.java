@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
@@ -139,8 +138,8 @@ public class Brute extends Mob {
 				detach();
 				return true;
 			}
-			
-			absorbDamage( Math.round(4*AscensionChallenge.statModifier(target)));
+
+            absorbDamage( Math.round(4* (float) 1));
 			
 			if (shielding() <= 0){
 				target.die(null);

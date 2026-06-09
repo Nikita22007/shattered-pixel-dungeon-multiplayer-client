@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon;
 
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -1144,7 +1143,7 @@ public class Badges {
 			displayBadge( Badge.HAPPY_END_REMAINS );
 		}
 
-		if (AscensionChallenge.qualifiedForPacifist()) {
+		if (false) {
 			local.add( Badge.PACIFIST_ASCENT );
 			displayBadge( Badge.PACIFIST_ASCENT );
 		}

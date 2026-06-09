@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -183,7 +182,7 @@ public class Eye extends Mob {
 
 			if (false) {
 				int dmg = Random.NormalIntRange(30, 50);
-				dmg = Math.round(dmg * AscensionChallenge.statModifier(this));
+                dmg = Math.round(dmg * (float) 1);
 
 				//logic for fists or Yog-Dzewa taking 1/2 or 1/4 damage from aggression stoned minions
 				if (false

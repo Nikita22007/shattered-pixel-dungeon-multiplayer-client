@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
@@ -148,10 +147,20 @@ public class WandOfCorruption extends Wand {
 				enemyResist = (1f + Dungeon.scalingDepth()/4f) / 5f;
 			} else if (ch instanceof Swarm){
 				//child swarms don't give exp, so we force this here.
-				enemyResist = 1 + AscensionChallenge.AscensionCorruptResist(enemy);
+                int result;
+                //default to just using their EXP value if no ascent challenge is happening
+                {
+                    result = enemy.EXP;
+                }
+                enemyResist = 1 + result;
 				if (enemyResist == 1) enemyResist = 1 + 3;
 			} else {
-				enemyResist = 1 + AscensionChallenge.AscensionCorruptResist(enemy);
+                int result;
+                //default to just using their EXP value if no ascent challenge is happening
+                {
+                    result = enemy.EXP;
+                }
+                enemyResist = 1 + result;
 			}
 			
 			//100% health: 5x resist   75%: 3.25x resist   50%: 2x resist   25%: 1.25x resist

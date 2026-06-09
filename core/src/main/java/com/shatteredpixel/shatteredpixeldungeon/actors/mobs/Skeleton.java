@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -73,7 +72,7 @@ public class Skeleton extends Mob {
 			Char ch = findChar( pos + PathFinder.NEIGHBOURS8[i] );
 			if (ch != null && ch.isAlive()) {
 				int damage = Math.round(Random.NormalIntRange(6, 12));
-				damage = Math.round( damage * AscensionChallenge.statModifier(this));
+                damage = Math.round( damage * (float) 1);
 
 				//all sources of DR are 2x effective vs. bone explosion
 				//this does not consume extra uses of rock armor and earthroot armor

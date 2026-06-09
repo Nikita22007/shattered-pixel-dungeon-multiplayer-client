@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -119,7 +118,7 @@ public abstract class Shaman extends Mob {
 			}
 			
 			int dmg = Random.NormalIntRange( 6, 15 );
-			dmg = Math.round(dmg * AscensionChallenge.statModifier(this));
+            dmg = Math.round(dmg * (float) 1);
 
             if (!enemy.isAlive() && enemy == Dungeon.hero) {
 				Badges.validateDeathFromEnemyMagic();
