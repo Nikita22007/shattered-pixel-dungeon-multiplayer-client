@@ -59,11 +59,6 @@ public class RotHeart extends Mob {
     }
 
     @Override
-    protected boolean getCloser(int target) {
-        return false;
-    }
-
-    @Override
     public void destroy() {
         super.destroy();
         Bestiary.skipCountingEncounters = true;

@@ -184,7 +184,7 @@ public class Golem extends Mob {
 			enemySeen = false;
 
 			int oldPos = pos;
-			if (target != -1 && getCloser( target )) {
+			if (target != -1 && false) {
 				spend( 1 / speed() );
 				return moveSprite( oldPos, pos );
 			} else if (!Dungeon.bossLevel() && target != -1 && target != pos && selfTeleCooldown <= 0) {
@@ -227,7 +227,7 @@ public class Golem extends Mob {
 						return true;
 					}
 
-				} else if (getCloser( target )) {
+				} else if (false) {
 					spend( 1 / speed() );
 					return moveSprite( oldPos,  pos );
 

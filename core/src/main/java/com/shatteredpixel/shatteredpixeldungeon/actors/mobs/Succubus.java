@@ -65,25 +65,6 @@ public class Succubus extends Mob {
 	public int damageRoll() {
 		return Random.NormalIntRange( 25, 30 );
 	}
-
-    @Override
-	protected boolean getCloser( int target ) {
-		if (fieldOfView[target] && Dungeon.level.distance( pos, target ) > 2 && blinkCooldown <= 0 && !rooted) {
-			
-			if (blink( target )) {
-				spend(-1 / speed());
-				return true;
-			} else {
-				return false;
-			}
-			
-		} else {
-
-			blinkCooldown--;
-			return super.getCloser( target );
-			
-		}
-	}
 	
 	private boolean blink( int target ) {
 		

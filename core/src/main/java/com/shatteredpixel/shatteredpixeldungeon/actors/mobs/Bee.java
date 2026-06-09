@@ -188,22 +188,6 @@ public class Bee extends Mob {
 			
 		}
 	}
-
-	@Override
-	protected boolean getCloser(int target) {
-        if (alignment == Alignment.ALLY && enemy == null && new HashSet<AllyBuff>().isEmpty()) {
-			target = Dungeon.hero.pos;
-		} else if (enemy != null && Actor.findById(potHolder) == enemy) {
-			target = enemy.pos;
-		} else if (potPos != -1 && (state == WANDERING || Dungeon.level.distance(target, potPos) > 3)) {
-			if (!Dungeon.level.insideMap(potPos)){
-				potPos = -1;
-			} else {
-				this.target = target = potPos;
-			}
-		}
-		return super.getCloser( target );
-	}
 	
 	@Override
 	public String description() {

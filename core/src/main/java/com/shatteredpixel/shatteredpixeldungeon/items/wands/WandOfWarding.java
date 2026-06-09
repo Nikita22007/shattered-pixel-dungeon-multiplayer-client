@@ -400,11 +400,6 @@ public class WandOfWarding extends Wand {
 		}
 
 		@Override
-		protected boolean getCloser(int target) {
-			return false;
-		}
-
-		@Override
 		protected boolean getFurther(int target) {
 			return false;
 		}

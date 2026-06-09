@@ -66,11 +66,6 @@ public class RotLasher extends Mob {
     }
 
     @Override
-    protected boolean getCloser(int target) {
-        return false;
-    }
-
-    @Override
     protected boolean getFurther(int target) {
         return false;
     }

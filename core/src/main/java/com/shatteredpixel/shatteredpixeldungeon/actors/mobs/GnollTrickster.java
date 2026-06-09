@@ -66,16 +66,6 @@ public class GnollTrickster extends Gnoll {
 	}
 
 	@Override
-	protected boolean getCloser( int target ) {
-		combo = 0; //if he's moving, he isn't attacking, reset combo.
-		if (state == HUNTING) {
-			return enemySeen && getFurther( target );
-		} else {
-			return super.getCloser( target );
-		}
-	}
-
-	@Override
 	public void aggro(Char ch) {
 		//cannot be aggroed to something it can't see
 		//skip this check if FOV isn't initialized

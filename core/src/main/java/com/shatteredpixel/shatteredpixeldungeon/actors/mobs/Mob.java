@@ -440,130 +440,6 @@ public abstract class Mob extends Char {
         return true;
     }
 
-    protected boolean getCloser(int target) {
-
-        if (rooted || target == pos || !Dungeon.level.insideMap(target)) {
-            return false;
-        }
-
-        int step = -1;
-
-        if (Dungeon.level.adjacent(pos, target)) {
-
-            path = null;
-
-            if (cellIsPathable(target)) {
-                step = target;
-            }
-
-        } else {
-
-            boolean newPath = false;
-            float longFactor = state == WANDERING ? 2f : 1.33f;
-            //scrap the current path if it's empty, no longer connects to the current location
-            //or if it's quite inefficient and checking again may result in a much better path
-            //mobs are much more tolerant of inefficient paths if wandering
-            if (path == null || path.isEmpty()
-                    || !Dungeon.level.adjacent(pos, path.getFirst())
-                    || path.size() > longFactor * Dungeon.level.distance(pos, target))
-                newPath = true;
-            else if (path.getLast() != target) {
-                //if the new target is adjacent to the end of the path, adjust for that
-                //rather than scrapping the whole path.
-                if (Dungeon.level.adjacent(target, path.getLast())) {
-                    int last = path.removeLast();
-
-                    if (path.isEmpty()) {
-
-                        //shorten for a closer one
-                        if (Dungeon.level.adjacent(target, pos)) {
-                            path.add(target);
-                            //extend the path for a further target
-                        } else {
-                            path.add(last);
-                            path.add(target);
-                        }
-
-                    } else {
-                        //if the new target is simply 1 earlier in the path shorten the path
-                        if (path.getLast() == target) {
-
-                            //if the new target is closer/same, need to modify end of path
-                        } else if (Dungeon.level.adjacent(target, path.getLast())) {
-                            path.add(target);
-
-                            //if the new target is further away, need to extend the path
-                        } else {
-                            path.add(last);
-                            path.add(target);
-                        }
-                    }
-
-                } else {
-                    newPath = true;
-                }
-
-            }
-
-            //checks if the next cell along the current path can be stepped into
-            if (!newPath) {
-                int nextCell = path.removeFirst();
-                if (!cellIsPathable(nextCell)) {
-
-                    newPath = true;
-                    //If the next cell on the path can't be moved into, see if there is another cell that could replace it
-                    if (!path.isEmpty()) {
-                        for (int i : PathFinder.NEIGHBOURS8) {
-                            if (Dungeon.level.adjacent(pos, nextCell + i) && Dungeon.level.adjacent(nextCell + i, path.getFirst())) {
-                                if (cellIsPathable(nextCell + i)) {
-                                    path.addFirst(nextCell + i);
-                                    newPath = false;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    path.addFirst(nextCell);
-                }
-            }
-
-            //generate a new path
-            if (newPath) {
-                //If we aren't hunting, always take a full path
-                PathFinder.Path full = Dungeon.findPath(this, target, Dungeon.level.passable, fieldOfView, true);
-                if (state != HUNTING) {
-                    path = full;
-                } else {
-                    //otherwise, check if other characters are forcing us to take a very slow route
-                    // and don't try to go around them yet in response, basically assume their blockage is temporary
-                    PathFinder.Path ignoreChars = Dungeon.findPath(this, target, Dungeon.level.passable, fieldOfView, false);
-                    if (ignoreChars != null && (full == null || full.size() > 2 * ignoreChars.size())) {
-                        //check if first cell of shorter path is valid. If it is, use new shorter path. Otherwise do nothing and wait.
-                        path = ignoreChars;
-                        if (!cellIsPathable(ignoreChars.getFirst())) {
-                            return false;
-                        }
-                    } else {
-                        path = full;
-                    }
-                }
-            }
-
-            if (path != null) {
-                step = path.removeFirst();
-            } else {
-                return false;
-            }
-        }
-        if (step != -1) {
-            move(step);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     protected boolean getFurther(int target) {
         if (rooted || target == pos) {
             return false;
@@ -1029,7 +905,7 @@ public abstract class Mob extends Char {
             enemySeen = false;
 
             int oldPos = pos;
-            if (target != -1 && getCloser(target)) {
+            if (target != -1 && false) {
                 spend(1 / speed());
                 return moveSprite(oldPos, pos);
             } else {
@@ -1081,7 +957,7 @@ public abstract class Mob extends Char {
                 }
 
                 int oldPos = pos;
-                if (target != -1 && getCloser(target)) {
+                if (target != -1 && false) {
 
                     spend(1 / speed());
                     return moveSprite(oldPos, pos);

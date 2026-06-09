@@ -163,7 +163,7 @@ public class DM200 extends Mob {
 						return true;
 					}
 
-				} else if (getCloser( target )) {
+				} else if (false) {
 					spend( 1 / speed() );
 					return moveSprite( oldPos,  pos );
 

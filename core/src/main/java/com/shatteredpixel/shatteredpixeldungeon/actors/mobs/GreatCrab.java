@@ -60,19 +60,6 @@ public class GreatCrab extends Crab {
     private int moving = 0;
 
     @Override
-    protected boolean getCloser(int target) {
-        //this is used so that the crab remains slower, but still detects the player at the expected rate.
-        moving++;
-        if (moving < 3) {
-            return super.getCloser(target);
-        } else {
-            moving = 0;
-            return true;
-        }
-
-    }
-
-    @Override
     public int defenseSkill(Char enemy) {
         //crab blocks all melee attacks from its current target
         if (enemySeen

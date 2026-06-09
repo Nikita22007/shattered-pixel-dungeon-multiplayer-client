@@ -209,15 +209,6 @@ public class Goo extends Mob {
     }
 
     @Override
-    protected boolean getCloser(int target) {
-        if (pumpedUp != 0) {
-            pumpedUp = 0;
-            sprite.idle();
-        }
-        return super.getCloser(target);
-    }
-
-    @Override
     protected boolean getFurther(int target) {
         if (pumpedUp != 0) {
             pumpedUp = 0;

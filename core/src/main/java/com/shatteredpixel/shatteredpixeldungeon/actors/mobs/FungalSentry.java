@@ -56,11 +56,6 @@ public class FungalSentry extends Mob {
 	}
 
 	@Override
-	protected boolean getCloser(int target) {
-		return false;
-	}
-
-	@Override
 	protected boolean getFurther(int target) {
 		return false;
 	}
@@ -89,7 +84,7 @@ public class FungalSentry extends Mob {
 		immunities.add( Poison.class );
 	}
 
-	private class Waiting extends Mob.Wandering{
+	private class Waiting extends Wandering{
 
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
