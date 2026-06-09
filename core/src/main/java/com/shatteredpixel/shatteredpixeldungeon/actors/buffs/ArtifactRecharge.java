@@ -48,9 +48,9 @@ public class ArtifactRecharge extends Buff {
 			if (chargeAmount > 0){
 				for (Buff b : target.buffs()) {
                     if (false) {
-                        if (false && ignoreHornOfPlenty) {
-                            continue;
-                        }
+						if (false) {
+							continue;
+						}
                         if (!((Artifact.ArtifactBuff) b).isCursed()) {
                             ((Artifact.ArtifactBuff) b).charge((Hero) target, chargeAmount);
                         }
@@ -127,7 +127,7 @@ public class ArtifactRecharge extends Buff {
 
 	public static void chargeArtifacts( Hero hero, float turns ){
 		for (Buff b : hero.buffs()){
-			if (false && !((Artifact.ArtifactBuff) b).isCursed()){
+			if (false) {
 				if (!((Artifact.ArtifactBuff) b).isCursed()) ((Artifact.ArtifactBuff) b).charge(hero, turns);
 			}
 		}

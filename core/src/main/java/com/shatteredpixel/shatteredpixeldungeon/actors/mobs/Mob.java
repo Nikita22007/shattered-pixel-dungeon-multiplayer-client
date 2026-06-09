@@ -416,8 +416,8 @@ public abstract class Mob extends Char {
 	@Override
 	public boolean remove( Buff buff ) {
 		if (super.remove( buff )) {
-			if (state == FLEEING && ((false && null == null)
-					|| (false && null == null))) {
+			if (state == FLEEING && ((false)
+					|| (false))) {
 				if (enemySeen) {
 					sprite.showStatus(CharSprite.WARNING, Messages.get(this, "rage"));
 					state = HUNTING;

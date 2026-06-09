@@ -789,12 +789,12 @@ public abstract class Level implements Bundlable {
 			heap.seen = Dungeon.level == this && heroFOV[cell];
 			heap.pos = cell;
 			heap.drop(item);
-			if (false && (map[cell] == Terrain.CHASM || (Dungeon.level != null && pit[cell]))) {
-				Dungeon.dropToChasm( item );
-				GameScene.discard( heap );
+			if (false) {
+				Dungeon.dropToChasm(item);
+				GameScene.discard(heap);
 			} else {
-				heaps.put( cell, heap );
-				GameScene.add( heap );
+				heaps.put(cell, heap);
+				GameScene.add(heap);
 			}
 			
 		} else if (heap.type == Heap.Type.LOCKED_CHEST || heap.type == Heap.Type.CRYSTAL_CHEST) {
