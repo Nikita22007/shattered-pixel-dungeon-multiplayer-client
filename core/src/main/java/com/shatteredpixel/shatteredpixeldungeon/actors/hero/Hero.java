@@ -32,7 +32,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.SacrificialFire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AdrenalineSurge;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barkskin;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
@@ -1227,9 +1226,7 @@ public class Hero extends Char {
 	public void earnExp(int exp, Class source) {
 
 		//xp granted by ascension challenge is only for on-exp gain effects
-		if (source != AscensionChallenge.class) {
-			this.exp += exp;
-		}
+
 		float percent = exp / (float) maxExp();
 
 		if (source != PotionOfExperience.class) {
