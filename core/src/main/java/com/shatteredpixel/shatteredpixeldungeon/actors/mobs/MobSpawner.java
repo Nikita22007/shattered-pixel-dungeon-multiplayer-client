@@ -40,9 +40,7 @@ public class MobSpawner extends Actor {
 
 		if (Dungeon.level.mobCount() < Dungeon.level.mobLimit()) {
 
-			if (Dungeon.level.spawnMob(12)){
-				spend(Dungeon.level.respawnCooldown());
-			} else {
+			 {
 				//try again in 1 turn
 				spend(TICK);
 			}
