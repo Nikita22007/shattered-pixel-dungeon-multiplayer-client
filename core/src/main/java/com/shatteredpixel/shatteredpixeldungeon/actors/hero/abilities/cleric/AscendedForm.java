@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -49,7 +48,7 @@ public class AscendedForm extends ArmorAbility {
 	@Override
 	protected void activate(ClassArmor armor, Hero hero, Integer target) {
 
-		Buff.affect(hero, AscendBuff.class).reset();
+        ((AscendBuff) null).reset();
 		hero.sprite.operate(hero.pos);
 		Sample.INSTANCE.play(Assets.Sounds.CHARGEUP);
 		new Flare(6, 48).color(0xFFFF00, true).show(hero.sprite, 2f);

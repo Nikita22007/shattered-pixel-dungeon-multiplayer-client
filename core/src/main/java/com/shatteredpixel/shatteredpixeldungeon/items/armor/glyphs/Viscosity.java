@@ -46,7 +46,7 @@ public class Viscosity extends Glyph {
 	public int proc( Armor armor, Char attacker, Char defender, int damage ) {
 
 		//we use a tracker so that this glyph can apply after armor
-		Buff.affect(defender, ViscosityTracker.class).level = armor.buffedLvl();
+        ((ViscosityTracker) null).level = armor.buffedLvl();
 
 		return damage;
 		
@@ -85,7 +85,7 @@ public class Viscosity extends Glyph {
 			}
 
 			if (amount > 0){
-				DeferedDamage deferred = Buff.affect( target, DeferedDamage.class );
+                DeferedDamage deferred = null;
 				deferred.extend( amount );
 
 				target.sprite.showStatus( CharSprite.WARNING, Messages.get(Viscosity.class, "deferred", amount) );

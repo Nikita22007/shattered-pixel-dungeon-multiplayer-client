@@ -123,7 +123,7 @@ public class BeaconOfReturning extends Spell {
 					hero.buff(BeaconTracker.class).returnDepth);
 		}
 
-		BeaconTracker tracker = Buff.affect(hero, BeaconTracker.class);
+        BeaconTracker tracker = null;
 		tracker.returnDepth = Dungeon.depth;
 		tracker.returnBranch = Dungeon.branch;
 		tracker.returnPos = hero.pos;

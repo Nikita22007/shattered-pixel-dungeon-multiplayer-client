@@ -176,11 +176,6 @@ public class Buff extends Actor {
 		return buff;
 	}
 
-	//same as append, but prevents duplication.
-	public static<T extends Buff> T affect( Char target, Class<T> buffClass ) {
-		return  null;
-	}
-
 	//network
 	public static Dictionary<Integer, Buff> all_buffs = new Hashtable<>();
 	public static void detach(int id) {

@@ -103,7 +103,7 @@ public class PotionOfDivineInspiration extends ExoticPotion {
 				super.onSelect(index);
 
 				if (index != -1){
-					Buff.affect(curUser, DivineInspirationTracker.class).setBoosted(index+1);
+                    ((DivineInspirationTracker) null).setBoosted(index+1);
 
 					if (!identifiedByUse) {
 						curItem.detach(curUser.belongings.backpack);

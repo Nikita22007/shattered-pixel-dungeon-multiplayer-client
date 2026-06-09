@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Healing;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -105,7 +104,7 @@ public class Dewdrop extends Item {
 		if (heal > 0 || shield > 0) {
 
 			if (heal > 0 && quantity > 1 && VialOfBlood.delayBurstHealing()){
-				Healing healing = Buff.affect(hero, Healing.class);
+                Healing healing = null;
 				healing.setHeal(heal, 0, VialOfBlood.maxHealPerTurn());
 				healing.applyVialEffect();
 			} else {
@@ -116,7 +115,7 @@ public class Dewdrop extends Item {
 			}
 
 			if (shield > 0) {
-				Buff.affect(hero, Barrier.class).incShield(shield);
+                ((Barrier) null).incShield(shield);
 				hero.sprite.showStatusWithIcon( CharSprite.POSITIVE, Integer.toString(shield), FloatingText.SHIELDING );
 			}
 

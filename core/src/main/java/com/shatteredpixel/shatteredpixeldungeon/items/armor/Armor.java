@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -64,18 +63,15 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Stone;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Swiftness;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Thorns;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Viscosity;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfArcana;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ParchmentScrap;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
@@ -179,7 +175,7 @@ public class Armor extends EquipableItem {
 
 	@Override
 	public void activate(Char ch) {
-		if (seal != null) Buff.affect(ch, BrokenSeal.WarriorShield.class).setArmor(this);
+		if (seal != null) ((BrokenSeal.WarriorShield) null).setArmor(this);
 	}
 
 	public void affixSeal(BrokenSeal seal){
@@ -194,7 +190,7 @@ public class Armor extends EquipableItem {
 			inscribe(seal.getGlyph());
 		}
 		if (isEquipped(Dungeon.hero)){
-			Buff.affect(Dungeon.hero, BrokenSeal.WarriorShield.class).setArmor(this);
+			((BrokenSeal.WarriorShield) null).setArmor(this);
 		}
 	}
 

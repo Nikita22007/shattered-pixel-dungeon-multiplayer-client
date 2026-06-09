@@ -31,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Electricity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Freezing;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corrosion;
@@ -280,13 +279,13 @@ public class ElementalBlast extends ArmorAbility {
 								//*** Wand of Fireblast ***
 								} else if (finalWandCls == WandOfFireblast.class){
 									if (mob.isAlive() && mob.alignment != Char.Alignment.ALLY) {
-										Buff.affect( mob, Burning.class ).reignite( mob );
+										((Burning) null).reignite( mob );
 									}
 
 								//*** Wand of Corrosion ***
 								} else if (finalWandCls == WandOfCorrosion.class){
 									if (mob.isAlive() && mob.alignment != Char.Alignment.ALLY) {
-										Buff.affect( mob, Corrosion.class ).set(4, Math.round(6*effectMulti));
+										((Corrosion) null).set(4, Math.round(6*effectMulti));
 										charsHit++;
 									}
 
@@ -329,7 +328,7 @@ public class ElementalBlast extends ArmorAbility {
 										int shielding = (mob.HP + healing) - mob.HT;
 										if (shielding > 0){
 											healing -= shielding;
-											Buff.affect(mob, Barrier.class).setShield(shielding);
+											((Barrier) null).setShield(shielding);
 										} else {
 											shielding = 0;
 										}
@@ -406,7 +405,7 @@ public class ElementalBlast extends ArmorAbility {
 						if (charsHit > 0 && hero.hasTalent(Talent.REACTIVE_BARRIER)){
 							int shielding = Math.round(charsHit*2.5f*hero.pointsInTalent(Talent.REACTIVE_BARRIER));
 							hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(shielding), FloatingText.SHIELDING);
-							Buff.affect(hero, Barrier.class).setShield(shielding);
+							((Barrier) null).setShield(shielding);
 						}
 
 						hero.spendAndNext(Actor.TICK);

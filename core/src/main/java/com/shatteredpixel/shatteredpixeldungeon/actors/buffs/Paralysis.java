@@ -52,7 +52,7 @@ public class Paralysis extends FlavourBuff {
 		if (target == null) return;
 		ParalysisResist resist = target.buff(ParalysisResist.class);
 		if (resist == null){
-			resist = Buff.affect(target, ParalysisResist.class);
+            resist = null;
 		}
 		resist.damage += damage;
 		if (Random.NormalIntRange(0, resist.damage) >= Random.NormalIntRange(0, target.HP)){

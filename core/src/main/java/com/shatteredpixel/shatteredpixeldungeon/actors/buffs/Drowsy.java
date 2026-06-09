@@ -52,9 +52,8 @@ public class Drowsy extends FlavourBuff {
 
 	@Override
 	public boolean act(){
-		Buff.affect(target, MagicalSleep.class);
 
-		return super.act();
+        return super.act();
 	}
 
 }

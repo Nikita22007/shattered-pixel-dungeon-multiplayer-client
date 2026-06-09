@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -165,7 +164,7 @@ public class Pasty extends Food {
 			case NEW_YEARS:
 				//shields for 10% of max hp, min of 5
 				int toShield = Math.max(5, hero.HT/10);
-				Buff.affect(hero, Barrier.class).setShield(toShield);
+                ((Barrier) null).setShield(toShield);
 				hero.sprite.showStatusWithIcon( CharSprite.POSITIVE, Integer.toString(toShield), FloatingText.SHIELDING );
 				break;
 		}

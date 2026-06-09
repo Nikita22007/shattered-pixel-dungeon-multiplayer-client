@@ -49,7 +49,7 @@ public class Lucky extends Weapon.Enchantment {
 
 			//default is -5: 80% common, 20% uncommon, 0% rare
 			//ring level increases by 1 for each 20% above 100% proc rate
-			Buff.affect(defender, LuckProc.class).ringLevel = -10 + Math.round(5*powerMulti);
+            ((LuckProc) null).ringLevel = -10 + Math.round(5*powerMulti);
 		} else {
 			//in rare cases where we attack many times at once (e.g. gladiator fury)
 			// make sure that failed luck procs override prior succeeded ones

@@ -170,9 +170,7 @@ public class Challenge extends ArmorAbility {
             }
 		}
 
-		Buff.affect(targetCh, DuelParticipant.class);
-		Buff.affect(hero, DuelParticipant.class);
-		if (targetCh instanceof Mob){
+        if (targetCh instanceof Mob){
 			((Mob) targetCh).aggro(hero);
 		}
 

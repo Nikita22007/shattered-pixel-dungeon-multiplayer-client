@@ -47,12 +47,10 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HeroDisguise;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Levitation;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MindVision;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MonkEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.TimeStasis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
@@ -409,8 +407,6 @@ public class Hero extends Char {
 		for (Buff b : buffs()){
 			if (!b.revivePersists) b.detach();
 		}
-		Buff.affect( this, Regeneration.class );
-		Buff.affect( this, Hunger.class );
 	}
 	//We need this for status pane
 	public int tier = 1;
@@ -432,11 +428,11 @@ public class Hero extends Char {
 		belongings.thrownWeapon = null;
 
 		if (hit && subClass == HeroSubClass.GLADIATOR && wasEnemy){
-			Buff.affect( this, Combo.class ).hit( enemy );
+			((Combo) null).hit( enemy );
 		}
 
 		if (hit && heroClass == HeroClass.DUELIST && wasEnemy){
-			Buff.affect( this, Sai.ComboStrikeTracker.class).addHit();
+			((Sai.ComboStrikeTracker) null).addHit();
 		}
 
 		attackTarget = null;
@@ -1145,7 +1141,7 @@ public class Hero extends Char {
 					&& buff(Talent.AggressiveBarrierCooldown.class) == null
 					&& (HP / (float)HT) <= 0.5f){
 				int shieldAmt = 1 + 2*pointsInTalent(Talent.AGGRESSIVE_BARRIER);
-				Buff.affect(this, Barrier.class).setShield(shieldAmt);
+				((Barrier) null).setShield(shieldAmt);
 				sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(shieldAmt), FloatingText.SHIELDING);
 
 			}
@@ -1467,7 +1463,7 @@ public class Hero extends Char {
 			}
 
 			if (subClass == HeroSubClass.FREERUNNER){
-				Buff.affect(this, Momentum.class).gainStack();
+				((Momentum) null).gainStack();
 			}
 			
 			sprite.move(pos, step);
@@ -1602,7 +1598,7 @@ public class Hero extends Char {
 	}
 	
 	public boolean isStarving() {
-		return Buff.affect(this, Hunger.class).isStarving();
+		return ((Hunger) null).isStarving();
 	}
 	
 	@Override
@@ -1849,11 +1845,11 @@ public class Hero extends Char {
 		spend( attackDelay() );
 
 		if (hit && subClass == HeroSubClass.GLADIATOR && wasEnemy){
-			Buff.affect( this, Combo.class ).hit(attackTarget);
+			((Combo) null).hit(attackTarget);
 		}
 
 		if (hit && heroClass == HeroClass.DUELIST && wasEnemy){
-			Buff.affect( this, Sai.ComboStrikeTracker.class).addHit();
+			((Sai.ComboStrikeTracker) null).addHit();
 		}
 
 		curAction = null;
@@ -1881,7 +1877,7 @@ public class Hero extends Char {
 			if (skele != null && skele.isCursed() && Random.Int(6) != 0){
 				GLog.n(Messages.get(this, "key_distracted"));
 				spendAndNext(2*Key.TIME_TO_UNLOCK);
-				Buff.affect(this, Hunger.class).affectHunger(-4);
+				((Hunger) null).affectHunger(-4);
 			} else if (Dungeon.level.distance(pos, doorCell) <= 1) {
 				boolean hasKey = true;
 				if (door == Terrain.LOCKED_DOOR) {
@@ -1931,7 +1927,7 @@ public class Hero extends Char {
 					&& Random.Int(6) != 0){
 				GLog.n(Messages.get(this, "key_distracted"));
 				spend(2*Key.TIME_TO_UNLOCK);
-				Buff.affect(this, Hunger.class).affectHunger(-4);
+				((Hunger) null).affectHunger(-4);
 			} else if (Dungeon.level.distance(pos, heap.pos) <= 1){
 				boolean hasKey = true;
 				if (heap.type == Type.SKELETON || heap.type == Type.REMAINS) {
@@ -1979,7 +1975,6 @@ public class Hero extends Char {
 
 		MagicalHolster holster = belongings.getItem(MagicalHolster.class);
 
-		Buff.affect(this, LostInventory.class);
 		//lost inventory is dropped in interlevelscene
 
 		//activate items that persist after lost inventory

@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.armor.curses;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
@@ -47,8 +46,8 @@ public class Metabolism extends Glyph {
 			int healing = Math.min((int)Hunger.STARVING/100, defender.HT - defender.HP);
 
 			if (healing > 0) {
-				
-				Hunger hunger = Buff.affect(defender, Hunger.class);
+
+                Hunger hunger = null;
 				
 				if (!hunger.isStarving()) {
 					

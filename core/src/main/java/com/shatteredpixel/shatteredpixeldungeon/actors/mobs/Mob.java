@@ -750,7 +750,7 @@ public abstract class Mob extends Char {
 				restoration = Math.round(restoration * 0.4f*Dungeon.hero.pointsInTalent(Talent.SOUL_SIPHON)/3f);
 			}
 			if (restoration > 0) {
-				Buff.affect(Dungeon.hero, Hunger.class).affectHunger(restoration*Dungeon.hero.pointsInTalent(Talent.SOUL_EATER)/3f);
+				((Hunger) null).affectHunger(restoration*Dungeon.hero.pointsInTalent(Talent.SOUL_EATER)/3f);
 
 				if (Dungeon.hero.HP < Dungeon.hero.HT) {
 					int heal = (int)Math.ceil(restoration * 0.4f);
@@ -866,7 +866,7 @@ public abstract class Mob extends Char {
 				Dungeon.hero.earnExp(exp, getClass());
 
 				if (Dungeon.hero.subClass == HeroSubClass.MONK){
-					Buff.affect(Dungeon.hero, MonkEnergy.class).gainEnergy(this);
+					((MonkEnergy) null).gainEnergy(this);
 				}
 			}
 		}
@@ -896,7 +896,7 @@ public abstract class Mob extends Char {
 				if (Dungeon.hero.heroClass != HeroClass.DUELIST
 						&& Dungeon.hero.hasTalent(Talent.LETHAL_HASTE)
 						&& Dungeon.hero.buff(Talent.LethalHasteCooldown.class) == null){
-					Buff.affect(Dungeon.hero, GreaterHaste.class).set(2 + 2*Dungeon.hero.pointsInTalent(Talent.LETHAL_HASTE));
+					((GreaterHaste) null).set(2 + 2*Dungeon.hero.pointsInTalent(Talent.LETHAL_HASTE));
 				}
 			}
 
@@ -915,7 +915,6 @@ public abstract class Mob extends Char {
 				&& Random.Float() < (0.4f*Dungeon.hero.pointsInTalent(Talent.NECROMANCERS_MINIONS)/3f)){
 			Wraith w = Wraith.spawnAt(pos, Wraith.class);
 			if (w != null) {
-				Buff.affect(w, Corruption.class);
 				if (Dungeon.level.heroFOV[pos]) {
 					CellEmitter.get(pos).burst(ShadowParticle.CURSE, 6);
 					Sample.INSTANCE.play(Assets.Sounds.CURSED);

@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRemoveCurse;
@@ -159,8 +158,7 @@ public class SpectralNecromancer extends Necromancer {
 
 		for (Buff b : buffs()){
 			if (b.revivePersists) {
-				Buff.affect(wraith, b.getClass());
-			}
+            }
 		}
 		wraithIDs.add(wraith.id());
 	}

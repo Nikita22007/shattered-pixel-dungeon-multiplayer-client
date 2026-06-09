@@ -226,8 +226,7 @@ public class WandOfCorruption extends Wand {
 
 			AllyBuff.affectAndLoot(enemy, curUser, Corruption.class);
 		} else {
-			Buff.affect(enemy, Doom.class);
-		}
+        }
 	}
 
 	@Override

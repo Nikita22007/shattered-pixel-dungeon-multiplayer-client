@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -67,7 +66,7 @@ public class DivineIntervention extends ClericSpell {
 
 		for (Char ch : Actor.chars()){
 			if (ch.alignment == Char.Alignment.ALLY && ch != hero){
-				Buff.affect(ch, DivineShield.class).setShield(100 + 50*hero.pointsInTalent(Talent.DIVINE_INTERVENTION));
+                ((DivineShield) null).setShield(100 + 50*hero.pointsInTalent(Talent.DIVINE_INTERVENTION));
 				new Flare(6, 32).color(0xFFFF00, true).show(ch.sprite, 2f);
 			}
 		}

@@ -23,8 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -208,8 +206,7 @@ public class SpiritForm extends ClericSpell {
 				Wraith w = Wraith.spawnAt(Random.element(spawnPoints), Wraith.class);
 
 				w.HP = w.HT = 20 + 8*artifactLevel();
-				Buff.affect(w, Corruption.class);
-			}
+            }
 			Talent.onArtifactUsed(Dungeon.hero);
 			Dungeon.hero.spendAndNext(1f);
 
@@ -243,7 +240,7 @@ public class SpiritForm extends ClericSpell {
 			GameScene.selectCell(((TalismanOfForesight) effect).scry);
 
 		} else if (effect instanceof TimekeepersHourglass){
-			Buff.affect(Dungeon.hero, Swiftthistle.TimeBubble.class).reset(artifactLevel());
+            ((Swiftthistle.TimeBubble) null).reset(artifactLevel());
 			Dungeon.hero.spendAndNext(1f);
 
 		} else if (effect instanceof UnstableSpellbook){

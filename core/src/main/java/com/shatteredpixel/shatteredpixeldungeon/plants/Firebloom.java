@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FireImbue;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
@@ -46,7 +45,7 @@ public class Firebloom extends Plant {
 	public void activate( Char ch ) {
 		
 		if (ch instanceof Hero && ((Hero) ch).subClass == HeroSubClass.WARDEN){
-			Buff.affect(ch, FireImbue.class).set( FireImbue.DURATION*0.3f );
+            ((FireImbue) null).set( FireImbue.DURATION*0.3f );
 		}
 
 		if (ch instanceof Mob){

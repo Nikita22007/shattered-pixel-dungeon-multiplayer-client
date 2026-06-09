@@ -56,7 +56,7 @@ public class ScrollOfChallenge extends ExoticScroll {
 			mob.beckon( curUser.pos );
 		}
 
-		Buff.affect(curUser, ChallengeArena.class).setup(curUser.pos);
+        ((ChallengeArena) null).setup(curUser.pos);
 
 		identify();
 		

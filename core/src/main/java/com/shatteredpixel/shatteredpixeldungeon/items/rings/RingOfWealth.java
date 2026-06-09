@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.rings;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
@@ -115,13 +114,13 @@ public class RingOfWealth extends Ring {
 
 		CounterBuff triesToDrop = target.buff(TriesToDropTracker.class);
 		if (triesToDrop == null){
-			triesToDrop = Buff.affect(target, TriesToDropTracker.class);
+            triesToDrop = null;
 			triesToDrop.countUp( Random.NormalIntRange(0, 20) );
 		}
 
 		CounterBuff dropsToEquip = target.buff(DropsToEquipTracker.class);
 		if (dropsToEquip == null){
-			dropsToEquip = Buff.affect(target, DropsToEquipTracker.class);
+            dropsToEquip = null;
 			dropsToEquip.countUp( Random.NormalIntRange(5, 10) );
 		}
 

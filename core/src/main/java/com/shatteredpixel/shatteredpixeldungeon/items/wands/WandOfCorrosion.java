@@ -22,12 +22,10 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.wands;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.CorrosiveGas;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
@@ -93,8 +91,8 @@ public class WandOfCorrosion extends Wand {
 		if (Random.Float() < procChance) {
 
 			float powerMulti = Math.max(1f, procChance);
-			
-			Buff.affect( defender, Ooze.class ).set( Ooze.DURATION * powerMulti );
+
+            ((Ooze) null).set( Ooze.DURATION * powerMulti );
 			CellEmitter.center(defender.pos).burst( CorrosionParticle.SPLASH, 5 );
 			
 		}

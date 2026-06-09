@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.armor.curses;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
@@ -44,7 +43,7 @@ public class Corrosion extends Armor.Glyph {
 			for (int i : PathFinder.NEIGHBOURS9){
 				Splash.at(pos+i, 0x000000, 5);
 				if (Actor.findChar(pos+i) != null)
-					Buff.affect(Actor.findChar(pos+i), Ooze.class).set( Ooze.DURATION/2 );
+                    ((Ooze) null).set( Ooze.DURATION/2 );
 			}
 		}
 

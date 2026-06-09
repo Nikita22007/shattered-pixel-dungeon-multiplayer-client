@@ -160,7 +160,7 @@ public class UnstableSpellbook extends Artifact {
 		if (charge > 0 && !scrolls.contains(scroll.getClass())) {
 			final Scroll fScroll = scroll;
 
-			final ExploitHandler handler = Buff.affect(hero, ExploitHandler.class);
+            final ExploitHandler handler = null;
 			handler.scroll = scroll;
 
 			GameScene.show(new WndOptions(new ItemSprite(this),

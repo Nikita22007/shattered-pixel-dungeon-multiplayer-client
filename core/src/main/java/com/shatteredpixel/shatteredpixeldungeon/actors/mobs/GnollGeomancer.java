@@ -289,7 +289,7 @@ public class GnollGeomancer extends Mob {
 			BossHealthBar.bleed(newBracket <= 0);
 
 			carveRockAndDash();
-			Buff.affect(this, RockArmor.class).setShield(25);
+            ((RockArmor) null).setShield(25);
 		}
 	}
 

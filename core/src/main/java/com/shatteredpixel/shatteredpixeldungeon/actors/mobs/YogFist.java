@@ -31,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.StormCloud;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ToxicGas;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
@@ -260,7 +259,7 @@ public abstract class YogFist extends Mob {
 				GameScene.updateMap( enemy.pos );
 				CellEmitter.get( enemy.pos ).burst( Speck.factory( Speck.STEAM ), 10 );
 			} else {
-				Buff.affect( enemy, Burning.class ).reignite( enemy );
+				((Burning) null).reignite( enemy );
 			}
 
 			for (int i : PathFinder.NEIGHBOURS9){
@@ -430,7 +429,7 @@ public abstract class YogFist extends Mob {
 			damage = super.attackProc( enemy, damage );
 
 			if (Random.Int( 2 ) == 0) {
-				Buff.affect( enemy, Ooze.class ).set( Ooze.DURATION );
+				((Ooze) null).set( Ooze.DURATION );
 				enemy.sprite.burst( 0xFF000000, 5 );
 			}
 
@@ -462,7 +461,7 @@ public abstract class YogFist extends Mob {
 			if (!isInvulnerable(src.getClass()) && !(src instanceof Viscosity.DeferedDamage)){
 				dmg = Math.round( dmg * resist( src.getClass() ));
 				if (dmg >= 0) {
-					Buff.affect(this, Viscosity.DeferedDamage.class).extend(dmg);
+					((Viscosity.DeferedDamage) null).extend(dmg);
 					sprite.showStatus(CharSprite.WARNING, Messages.get(Viscosity.class, "deferred", dmg));
 				}
 			} else{

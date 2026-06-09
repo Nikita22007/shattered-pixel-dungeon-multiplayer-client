@@ -49,8 +49,7 @@ public class Regeneration extends Buff {
 			//if other trinkets ever get buffs like this should probably make the buff attaching
 			// behaviour more like wands/rings/artifacts
 			if (ChaoticCenser.averageTurnsUntilGas() != -1){
-				Buff.affect(Dungeon.hero, ChaoticCenser.CenserGasTracker.class);
-			}
+            }
 
 			if (regenOn() && target.HP < regencap() && !((Hero)target).isStarving()) {
 				boolean chaliceCursed = false;

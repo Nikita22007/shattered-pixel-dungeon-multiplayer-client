@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
@@ -101,7 +100,7 @@ public class Brute extends Mob {
 	}
 	
 	protected void triggerEnrage(){
-		rage = Buff.affect(this, BruteRage.class);
+        rage = null;
 		rage.setShield(HT/2 + 4);
 		sprite.showStatusWithIcon( CharSprite.POSITIVE, Integer.toString(HT/2), FloatingText.SHIELDING );
 		if (Dungeon.level.heroFOV[pos]) {

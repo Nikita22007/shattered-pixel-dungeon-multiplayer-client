@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FireImbue;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.FlameParticle;
@@ -38,7 +37,7 @@ public class ElixirOfDragonsBlood extends Elixir {
 	
 	@Override
 	public void apply(Hero hero) {
-		Buff.affect(hero, FireImbue.class).set(FireImbue.DURATION);
+        ((FireImbue) null).set(FireImbue.DURATION);
 		Sample.INSTANCE.play( Assets.Sounds.BURNING );
 		hero.sprite.emitter().burst(FlameParticle.FACTORY, 10);
 	}

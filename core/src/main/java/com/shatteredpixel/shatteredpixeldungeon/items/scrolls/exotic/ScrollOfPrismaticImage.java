@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PrismaticGuard;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.Stasis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
@@ -60,7 +59,7 @@ public class ScrollOfPrismaticImage extends ExoticScroll {
 		}
 		
 		if (!found) {
-			Buff.affect(curUser, PrismaticGuard.class).set( PrismaticGuard.maxHP( curUser ) );
+            ((PrismaticGuard) null).set( PrismaticGuard.maxHP( curUser ) );
 		}
 
 		identify();

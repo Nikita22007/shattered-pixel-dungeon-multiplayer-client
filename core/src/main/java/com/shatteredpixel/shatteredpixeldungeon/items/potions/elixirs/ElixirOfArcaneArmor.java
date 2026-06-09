@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArcaneArmor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfEarthenArmor;
@@ -40,7 +39,7 @@ public class ElixirOfArcaneArmor extends Elixir {
 	
 	@Override
 	public void apply(Hero hero) {
-		Buff.affect(hero, ArcaneArmor.class).set(5 + hero.lvl/2, 80);
+        ((ArcaneArmor) null).set(5 + hero.lvl/2, 80);
 	}
 	
 	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe.SimpleRecipe {

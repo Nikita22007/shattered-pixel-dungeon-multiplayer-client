@@ -157,7 +157,7 @@ public class SkeletonKey extends Artifact {
 						curUser.sprite.operate(target, new Callback() {
 							@Override
 							public void call() {
-								Buff.affect(curUser, KeyReplacementTracker.class).processIronLockOpened();
+                                ((KeyReplacementTracker) null).processIronLockOpened();
 								Level.set(target, Terrain.DOOR);
 								GameScene.updateMap(target);
 								charge -= 1;
@@ -195,7 +195,7 @@ public class SkeletonKey extends Artifact {
 						curUser.sprite.operate(target, new Callback() {
 							@Override
 							public void call() {
-								Buff.affect(curUser, KeyReplacementTracker.class).processCrystalLockOpened();
+                                ((KeyReplacementTracker) null).processCrystalLockOpened();
 								Level.set(target, Terrain.EMPTY);
 								GameScene.updateMap(target);
 								charge -= 5;
@@ -287,7 +287,7 @@ public class SkeletonKey extends Artifact {
 						curUser.sprite.operate(target, new Callback() {
 							@Override
 							public void call() {
-								Buff.affect(curUser, KeyReplacementTracker.class).processGoldLockOpened();
+                                ((KeyReplacementTracker) null).processGoldLockOpened();
 								Dungeon.level.heaps.get(target).open(curUser);
 								charge -= 2;
 								gainExp(2 + 2);
@@ -308,7 +308,7 @@ public class SkeletonKey extends Artifact {
 						curUser.sprite.operate(target, new Callback() {
 							@Override
 							public void call() {
-								Buff.affect(curUser, KeyReplacementTracker.class).processCrystalLockOpened();
+                                ((KeyReplacementTracker) null).processCrystalLockOpened();
 								Dungeon.level.heaps.get(target).open(curUser);
 								charge -= 5;
 								gainExp(2 + 5);

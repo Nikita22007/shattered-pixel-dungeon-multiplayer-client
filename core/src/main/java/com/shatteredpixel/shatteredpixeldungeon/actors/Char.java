@@ -295,7 +295,7 @@ public abstract class Char extends Actor {
 
 		if (c == Dungeon.hero){
 			if (Dungeon.hero.subClass == HeroSubClass.FREERUNNER){
-				Buff.affect(Dungeon.hero, Momentum.class).gainStack();
+				((Momentum) null).gainStack();
 			}
 
 			Dungeon.hero.busy();
@@ -956,7 +956,7 @@ public abstract class Char extends Actor {
 				dmgToAdd -= ((Char) src).buff(Kinetic.KineticTracker.class).conservedDamage;
 				dmgToAdd = Math.round(dmgToAdd * Weapon.Enchantment.genericProcChanceMultiplier((Char) src));
 				if (dmgToAdd > 0) {
-					Buff.affect((Char) src, Kinetic.ConservedDamage.class).setBonus(dmgToAdd);
+					((Kinetic.ConservedDamage) null).setBonus(dmgToAdd);
 				}
 				((Char) src).buff(Kinetic.KineticTracker.class).detach();
 			}

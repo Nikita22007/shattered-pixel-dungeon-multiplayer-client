@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.remains;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
@@ -38,7 +37,7 @@ public class SealShard extends RemainsItem {
 
 	@Override
 	protected void doEffect(Hero hero) {
-		Buff.affect(hero, Barrier.class).incShield(Math.round(hero.HT/5f));
+        ((Barrier) null).incShield(Math.round(hero.HT/5f));
 		hero.sprite.showStatusWithIcon( CharSprite.POSITIVE, Integer.toString(Math.round(hero.HT/5f)), FloatingText.SHIELDING );
 		Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
 	}

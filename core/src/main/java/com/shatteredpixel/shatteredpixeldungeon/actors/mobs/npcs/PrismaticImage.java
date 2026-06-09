@@ -27,14 +27,12 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.CorrosiveGas;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ToxicGas;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PrismaticGuard;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAccuracy;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEvasion;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
@@ -240,7 +238,7 @@ public class PrismaticImage extends NPC {
 		@Override
 		public boolean act(boolean enemyInFOV, boolean justAlerted) {
 			if (!enemyInFOV){
-				Buff.affect(hero, PrismaticGuard.class).set( PrismaticImage.this );
+                ((PrismaticGuard) null).set( PrismaticImage.this );
 				destroy();
 				CellEmitter.get(pos).start( Speck.factory(Speck.LIGHT), 0.2f, 3 );
 				sprite.die();

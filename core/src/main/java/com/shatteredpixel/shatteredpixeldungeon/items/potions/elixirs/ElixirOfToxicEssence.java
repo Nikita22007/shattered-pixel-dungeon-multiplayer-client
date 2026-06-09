@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs;
 
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ToxicImbue;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.PoisonParticle;
@@ -36,7 +35,7 @@ public class ElixirOfToxicEssence extends Elixir {
 	
 	@Override
 	public void apply(Hero hero) {
-		Buff.affect(hero, ToxicImbue.class).set(ToxicImbue.DURATION);
+        ((ToxicImbue) null).set(ToxicImbue.DURATION);
 		hero.sprite.emitter().burst(PoisonParticle.SPLASH, 10);
 	}
 	

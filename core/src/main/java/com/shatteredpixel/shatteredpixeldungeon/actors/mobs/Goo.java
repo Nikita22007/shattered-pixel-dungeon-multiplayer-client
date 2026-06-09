@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
@@ -155,7 +154,7 @@ public class Goo extends Mob {
 	public int attackProc( Char enemy, int damage ) {
 		damage = super.attackProc( enemy, damage );
 		if (Random.Int( 3 ) == 0) {
-			Buff.affect( enemy, Ooze.class ).set( Ooze.DURATION );
+            ((Ooze) null).set( Ooze.DURATION );
 			enemy.sprite.burst( 0x000000, 5 );
 		}
 

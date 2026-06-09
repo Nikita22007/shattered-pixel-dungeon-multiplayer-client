@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ToxicGas;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.FungalSentrySprite;
@@ -82,7 +81,7 @@ public class FungalSentry extends Mob {
 
 	@Override
 	public int attackProc(Char enemy, int damage) {
-		Buff.affect(enemy, Poison.class).extend(6);
+        ((Poison) null).extend(6);
 		return super.attackProc(enemy, damage);
 	}
 

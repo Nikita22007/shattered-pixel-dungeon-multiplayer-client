@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.food;
 
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WellFed;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -40,7 +39,7 @@ public class MeatPie extends Food {
 	@Override
 	protected void satisfy(Hero hero) {
 		super.satisfy( hero );
-		Buff.affect(hero, WellFed.class).reset();
+        ((WellFed) null).reset();
 	}
 	
 	@Override

@@ -34,7 +34,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ParalyticGas;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Regrowth;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ToxicGas;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GoldenMimic;
@@ -55,7 +54,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMirrorImag
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfMetamorphosis;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfSirensSong;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.WondrousResin;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
@@ -134,11 +132,11 @@ public class CursedWand {
 			case 0: default:
 				Char target = Actor.findChar(targetPos);
 				if (Random.Int(2) == 0) {
-					if (target != null) Buff.affect(target, Burning.class).reignite(target);
+					if (target != null) ((Burning) null).reignite(target);
 					if (!positiveOnly) {
                     }
 				} else {
-					if (!positiveOnly)Buff.affect(user, Burning.class).reignite(user);
+					if (!positiveOnly) ((Burning) null).reignite(user);
 					if (target != null) {
                     }
 				}
@@ -404,7 +402,6 @@ public class CursedWand {
 				GameScene.add(mimic);
 
 				if (positiveOnly){
-					Buff.affect(mimic, ScrollOfSirensSong.Enthralled.class);
 				} else {
 					Item reward;
 					do {

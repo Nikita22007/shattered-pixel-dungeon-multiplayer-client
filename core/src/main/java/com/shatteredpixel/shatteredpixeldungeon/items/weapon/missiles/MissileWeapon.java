@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PinCushion;
@@ -304,7 +303,7 @@ abstract public class MissileWeapon extends Weapon {
 		if (durability > 0 && !spawnedForEffect){
 			//attempt to stick the missile weapon to the enemy, just drop it if we can't.
 			if (sticky && enemy != null && enemy.isActive() && enemy.alignment != Char.Alignment.ALLY){
-				PinCushion p = Buff.affect(enemy, PinCushion.class);
+				PinCushion p = null;
 				if (p.target == enemy){
 					p.stick(this);
 					return;

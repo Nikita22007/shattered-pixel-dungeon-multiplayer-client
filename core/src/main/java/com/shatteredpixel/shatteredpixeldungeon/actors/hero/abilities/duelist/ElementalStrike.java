@@ -240,7 +240,7 @@ public class ElementalStrike extends ArmorAbility {
 		} else if (ench instanceof Blocking){
 			if (targetsHit > 0){
 				int shield = Math.round(Math.round(6f*targetsHit*powerMulti));
-				Buff.affect(hero, Barrier.class).setShield(Math.round(6f*targetsHit*powerMulti));
+				((Barrier) null).setShield(Math.round(6f*targetsHit*powerMulti));
 				hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(shield), FloatingText.SHIELDING);
 			}
 
@@ -257,7 +257,7 @@ public class ElementalStrike extends ArmorAbility {
 
 		//*** Sacrificial ***
 		} else if (ench instanceof Sacrificial){
-			Buff.affect(hero, Bleeding.class).set(10 * powerMulti);
+			((Bleeding) null).set(10 * powerMulti);
 		}
 
 	}
@@ -312,7 +312,7 @@ public class ElementalStrike extends ArmorAbility {
 			// each hero level is worth 20 normal uses, but just 5 if no enemies are present
 			// cap of 40/10 uses
 			int highGrassType = Terrain.HIGH_GRASS;
-			if (Buff.affect(Dungeon.hero, ElementalStrikeFurrowCounter.class).count() >= 40){
+			if (((ElementalStrikeFurrowCounter) null).count() >= 40){
 				highGrassType = Terrain.FURROWED_GRASS;
 			} else {
 				if (Dungeon.hero.visibleEnemies() == 0 && targetsHit == 0) {
@@ -413,7 +413,6 @@ public class ElementalStrike extends ArmorAbility {
 						&& ch.buff(ElementalStrikeLuckyTracker.class) == null) {
 					Dungeon.level.drop(Lucky.genLoot(), ch.pos).sprite.drop();
 					Lucky.showFlare(ch.sprite);
-					Buff.affect(ch, ElementalStrikeLuckyTracker.class);
 				}
 			}
 
@@ -501,7 +500,7 @@ public class ElementalStrike extends ArmorAbility {
 		//*** Sacrificial ***
 		} else if (ench instanceof Sacrificial){
 			for (Char ch : affected){
-				Buff.affect(ch, Bleeding.class).set(12f*powerMulti);
+				((Bleeding) null).set(12f*powerMulti);
 			}
 
 		//*** Wayward ***

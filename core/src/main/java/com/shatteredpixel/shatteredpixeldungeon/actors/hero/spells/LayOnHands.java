@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
@@ -108,11 +107,11 @@ public class LayOnHands extends TargetedClericSpell {
 		int totalHeal = 10 + 5*hero.pointsInTalent(Talent.LAY_ON_HANDS);
 		int totalBarrier = 0;
 		if (ch == hero){
-			Barrier barrier = Buff.affect(ch, Barrier.class);
+            Barrier barrier = null;
 			totalBarrier = totalHeal;
 			totalBarrier = Math.min(3*totalHeal - barrier.shielding(), totalBarrier);
 			totalBarrier = Math.max(0, totalBarrier);
-			Buff.affect(ch, Barrier.class).incShield(totalBarrier);
+            ((Barrier) null).incShield(totalBarrier);
 			ch.sprite.showStatusWithIcon( CharSprite.POSITIVE, Integer.toString(totalBarrier), FloatingText.SHIELDING );
 		} else {
 			if (ch.HT - ch.HP < totalHeal){
@@ -122,7 +121,7 @@ public class LayOnHands extends TargetedClericSpell {
 					ch.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(totalHeal - totalBarrier), FloatingText.HEALING);
 				}
 				if (totalBarrier > 0) {
-					Barrier barrier = Buff.affect(ch, Barrier.class);
+                    Barrier barrier = null;
 					totalBarrier = Math.min(3 * totalHeal - barrier.shielding(), totalBarrier);
 					totalBarrier = Math.max(0, totalBarrier);
 					if (totalBarrier > 0) {

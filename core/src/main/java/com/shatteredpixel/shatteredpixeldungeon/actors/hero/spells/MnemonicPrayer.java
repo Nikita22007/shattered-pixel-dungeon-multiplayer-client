@@ -167,8 +167,6 @@ public class MnemonicPrayer extends TargetedClericSpell {
 			Sample.INSTANCE.play(Assets.Sounds.DEBUFF);
 			ch.sprite.emitter().start(Speck.factory(Speck.DOWN), 0.15f, 4);
 
-			Buff.affect(ch, GuidingLight.Illuminated.class);
-
 			for (Buff b : ch.buffs()){
 				if (b.type != Buff.buffType.NEGATIVE || b.mnemonicExtended){
 					continue;

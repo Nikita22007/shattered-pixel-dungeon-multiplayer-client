@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage.WildMagic;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -135,7 +134,7 @@ public class WandOfFireblast extends DamageWand {
 			wandProc(ch, chargesPerCast());
 			ch.damage(damageRoll(), this);
 			if (ch.isAlive()) {
-				Buff.affect(ch, Burning.class).reignite(ch);
+                ((Burning) null).reignite(ch);
 				switch (chargesPerCast()) {
 					case 1:
 						break; //no effects

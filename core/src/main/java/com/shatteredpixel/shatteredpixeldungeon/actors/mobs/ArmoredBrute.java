@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -51,7 +50,7 @@ public class ArmoredBrute extends Brute {
 	
 	@Override
 	protected void triggerEnrage () {
-		Buff.affect(this, ArmoredRage.class).setShield(HT/2 + 1);
+        ((ArmoredRage) null).setShield(HT/2 + 1);
 		sprite.showStatusWithIcon( CharSprite.POSITIVE, Integer.toString(HT/2), FloatingText.SHIELDING );
 		if (Dungeon.level.heroFOV[pos]) {
 			sprite.showStatus( CharSprite.WARNING, Messages.get(this, "enraged") );

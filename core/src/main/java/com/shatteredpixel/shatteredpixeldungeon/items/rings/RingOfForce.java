@@ -178,8 +178,7 @@ public class RingOfForce extends Ring {
 	public void activate(Char ch) {
 		super.activate(ch);
 		if (ch instanceof Hero && ((Hero) ch).heroClass == HeroClass.DUELIST){
-			Buff.affect(ch, MeleeWeapon.Charger.class);
-		}
+        }
 	}
 
 	@Override
@@ -225,7 +224,7 @@ public class RingOfForce extends Ring {
 				GLog.w(Messages.get(MeleeWeapon.class, "ability_need_equip"));
 
 			} else {
-				Buff.affect(hero, BrawlersStance.class).reset();
+                ((BrawlersStance) null).reset();
 				AttackIndicator.updateState();
 				hero.sprite.operate(hero.pos);
 			}

@@ -46,7 +46,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
-import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
@@ -215,7 +214,7 @@ public enum Talent {
 		public boolean act() {
 			//barrier every 2/1 turns, to a max of 3/5
 			if (((Hero)target).hasTalent(Talent.PROTECTIVE_SHADOWS) && target.invisible > 0){
-				Barrier barrier = Buff.affect(target, Barrier.class);
+				Barrier barrier = null;
 				if (barrier.shielding() < 1 + 2*((Hero)target).pointsInTalent(Talent.PROTECTIVE_SHADOWS)) {
 					barrierInc += 0.5f * ((Hero) target).pointsInTalent(Talent.PROTECTIVE_SHADOWS);
 				}
@@ -491,7 +490,6 @@ public enum Talent {
 	public static void onTalentUpgraded( Hero hero, Talent talent ){
 		//for metamorphosis
 		if (talent == IRON_WILL && hero.heroClass != HeroClass.WARRIOR){
-			Buff.affect(hero, BrokenSeal.WarriorShield.class);
 		}
 
 		if (talent == VETERANS_INTUITION && hero.pointsInTalent(VETERANS_INTUITION) == 2){
@@ -522,7 +520,6 @@ public enum Talent {
 		}
 
 		if (talent == PROTECTIVE_SHADOWS && hero.invisible > 0){
-			Buff.affect(hero, Talent.ProtectiveShadowsTracker.class);
 		}
 
 		if (talent == LIGHT_CLOAK && hero.heroClass == HeroClass.ROGUE){
@@ -591,7 +588,7 @@ public enum Talent {
 		}
 		if (hero.hasTalent(EMPOWERING_MEAL)){
 			//2/3 bonus wand damage for next 3 zaps
-			Buff.affect( hero, WandEmpower.class).set(1 + hero.pointsInTalent(EMPOWERING_MEAL), 3);
+			((WandEmpower) null).set(1 + hero.pointsInTalent(EMPOWERING_MEAL), 3);
 			ScrollOfRecharging.charge( hero );
 		}
 		int wandChargeTurns = 0;
@@ -610,25 +607,24 @@ public enum Talent {
         }
 		if (hero.hasTalent(STRENGTHENING_MEAL)){
 			//3 bonus physical damage for next 2/3 attacks
-			Buff.affect( hero, PhysicalEmpower.class).set(3, 1 + hero.pointsInTalent(STRENGTHENING_MEAL));
+			((PhysicalEmpower) null).set(3, 1 + hero.pointsInTalent(STRENGTHENING_MEAL));
 		}
 		if (hero.hasTalent(FOCUSED_MEAL)){
 			if (hero.heroClass == HeroClass.DUELIST){
 				//0.67/1 charge for the duelist
-				Buff.affect( hero, MeleeWeapon.Charger.class ).gainCharge((hero.pointsInTalent(FOCUSED_MEAL)+1)/3f);
+				((MeleeWeapon.Charger) null).gainCharge((hero.pointsInTalent(FOCUSED_MEAL)+1)/3f);
 				ScrollOfRecharging.charge( hero );
 			} else {
 				// lvl/3 / lvl/2 bonus dmg on next hit for other classes
-				Buff.affect( hero, PhysicalEmpower.class).set(Math.round(hero.lvl / (4f - hero.pointsInTalent(FOCUSED_MEAL))), 1);
+				((PhysicalEmpower) null).set(Math.round(hero.lvl / (4f - hero.pointsInTalent(FOCUSED_MEAL))), 1);
 			}
 		}
 		if (hero.hasTalent(SATIATED_SPELLS)){
 			if (hero.heroClass == HeroClass.CLERIC) {
-				Buff.affect(hero, SatiatedSpellsTracker.class);
 			} else {
 				//3/5 shielding, delayed up to 10 turns
 				int amount = 1 + 2*hero.pointsInTalent(SATIATED_SPELLS);
-				Barrier b = Buff.affect(hero, Barrier.class);
+				Barrier b = null;
 				if (b.shielding() <= amount){
 					b.setShield(amount);
 					b.delay(Math.max(10-b.cooldown(), 0));
@@ -656,7 +652,7 @@ public enum Talent {
 			SpellSprite.show(hero, SpellSprite.CHARGE);
 		}
 		if (artifactChargeTurns > 0){
-			ArtifactRecharge buff = Buff.affect( hero, ArtifactRecharge.class);
+			ArtifactRecharge buff = null;
 			if (buff.left() < artifactChargeTurns){
 				buff.set(artifactChargeTurns).ignoreHornOfPlenty = foodSource instanceof HornOfPlenty;
 			}
@@ -702,7 +698,7 @@ public enum Talent {
 			// 6.5/10% of max HP
 			int shieldToGive = Math.round( factor * hero.HT * (0.030f + 0.035f*hero.pointsInTalent(LIQUID_WILLPOWER)));
 			hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(shieldToGive), FloatingText.SHIELDING);
-			Buff.affect(hero, Barrier.class).setShield(shieldToGive);
+			((Barrier) null).setShield(shieldToGive);
 		}
 		if (hero.hasTalent(LIQUID_NATURE)){
 			ArrayList<Integer> grassCells = new ArrayList<>();
@@ -751,7 +747,7 @@ public enum Talent {
 	public static void onScrollUsed( Hero hero, int pos, float factor, Class<?extends Item> cls ){
 		if (hero.hasTalent(INSCRIBED_POWER)){
 			// 2/3 empowered wand zaps
-			Buff.affect(hero, ScrollEmpower.class).reset((int) (factor * (1 + hero.pointsInTalent(INSCRIBED_POWER))));
+			((ScrollEmpower) null).reset((int) (factor * (1 + hero.pointsInTalent(INSCRIBED_POWER))));
 		}
 		if (hero.hasTalent(INSCRIBED_STEALTH)){
 			// 3/5 turns of stealth
@@ -874,7 +870,6 @@ public enum Talent {
 				&& enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)
 				&& enemy.buff(SuckerPunchTracker.class) == null){
 			dmg += Random.IntRange(hero.pointsInTalent(Talent.SUCKER_PUNCH) , 2);
-			Buff.affect(enemy, SuckerPunchTracker.class);
 		}
 
 		if (hero.hasTalent(Talent.FOLLOWUP_STRIKE) && enemy.isAlive() && enemy.alignment == Char.Alignment.ENEMY) {

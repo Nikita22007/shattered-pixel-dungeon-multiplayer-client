@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.plants;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ToxicImbue;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -43,13 +42,13 @@ public class Sorrowmoss extends Plant {
 	@Override
 	public void activate( Char ch ) {
 		if (ch instanceof Hero && ((Hero) ch).subClass == HeroSubClass.WARDEN){
-			Buff.affect(ch, ToxicImbue.class).set(ToxicImbue.DURATION*0.3f);
+            ((ToxicImbue) null).set(ToxicImbue.DURATION*0.3f);
 		}
 		
 		if (ch != null) {
 			if (ch instanceof Mob){
             }
-			Buff.affect( ch, Poison.class ).set( 5 + Math.round(2*Dungeon.scalingDepth() / 3f) );
+            ((Poison) null).set( 5 + Math.round(2*Dungeon.scalingDepth() / 3f) );
 		}
 		
 		if (Dungeon.level.heroFOV[pos]) {

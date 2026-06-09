@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LifeLink;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -126,8 +125,7 @@ public class BeamingRay extends TargetedClericSpell {
 		if (Actor.findChar(target) != null && Actor.findChar(target).alignment == Char.Alignment.ENEMY){
 			chTarget = Actor.findChar(target);
 			if (hero.subClass == HeroSubClass.PRIEST){
-				Buff.affect(chTarget, GuidingLight.Illuminated.class);
-			}
+            }
 		}
 
 		if (ally == Stasis.getStasisAlly()){

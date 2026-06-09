@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -112,8 +111,7 @@ public class SummonElemental extends Spell {
 
 			Elemental elemental = Reflection.newInstance(summonClass);
 			GameScene.add( elemental );
-			Buff.affect(elemental, InvisAlly.class);
-			elemental.setSummonedALly();
+            elemental.setSummonedALly();
 			elemental.HP = elemental.HT;
 			ScrollOfTeleportation.appear( elemental, Random.element(spawnPoints) );
 			Invisibility.dispel(curUser);

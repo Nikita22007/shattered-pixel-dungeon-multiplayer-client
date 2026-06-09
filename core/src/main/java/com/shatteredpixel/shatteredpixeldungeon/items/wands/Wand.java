@@ -225,7 +225,6 @@ public abstract class Wand extends Item {
 				&& Dungeon.hero.heroClass != HeroClass.CLERIC
 				&& Dungeon.hero.hasTalent(Talent.SEARING_LIGHT)
 				&& Dungeon.hero.buff(Talent.SearingLightCooldown.class) == null){
-			Buff.affect(target, GuidingLight.Illuminated.class);
 		}
 
 		if (target.alignment != Char.Alignment.ALLY
@@ -473,7 +472,7 @@ public abstract class Wand extends Item {
 		if (charger != null && charger.target instanceof Hero && !Dungeon.hero.belongings.contains(this)){
 			if (Dungeon.hero.hasTalent(Talent.EXCESS_CHARGE) && curCharges >= maxCharges){
 				int shieldToGive = Math.round(buffedLvl()*0.67f*Dungeon.hero.pointsInTalent(Talent.EXCESS_CHARGE));
-				Buff.affect(Dungeon.hero, Barrier.class).setShield(shieldToGive);
+				((Barrier) null).setShield(shieldToGive);
 				Dungeon.hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(shieldToGive), FloatingText.SHIELDING);
 			}
 		}
@@ -684,7 +683,7 @@ public abstract class Wand extends Item {
 
 						float shield = curUser.HT * (0.04f*curWand.curCharges);
 						if (curUser.pointsInTalent(Talent.SHIELD_BATTERY) == 2) shield *= 1.5f;
-						Buff.affect(curUser, Barrier.class).setShield(Math.round(shield));
+						((Barrier) null).setShield(Math.round(shield));
 						curUser.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(Math.round(shield)), FloatingText.SHIELDING);
 						curWand.curCharges = 0;
 						curUser.sprite.operate(curUser.pos);
@@ -720,7 +719,7 @@ public abstract class Wand extends Item {
 						if (curUser.heroClass == HeroClass.MAGE && !curUser.belongings.contains(curWand)){
 							//grants 3/5 shielding
 							int shieldToGive = 1 + 2 * Dungeon.hero.pointsInTalent(Talent.BACKUP_BARRIER);
-							Buff.affect(Dungeon.hero, Barrier.class).setShield(shieldToGive);
+							((Barrier) null).setShield(shieldToGive);
 							Dungeon.hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(shieldToGive), FloatingText.SHIELDING);
 
 						//metamorphed. Triggers if wand is highest level hero has
@@ -734,7 +733,7 @@ public abstract class Wand extends Item {
 							if (highest){
 								//grants 3/5 shielding
 								int shieldToGive = 1 + 2 * Dungeon.hero.pointsInTalent(Talent.BACKUP_BARRIER);
-								Buff.affect(Dungeon.hero, Barrier.class).setShield(shieldToGive);
+								((Barrier) null).setShield(shieldToGive);
 								Dungeon.hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(shieldToGive), FloatingText.SHIELDING);
 							}
 						}

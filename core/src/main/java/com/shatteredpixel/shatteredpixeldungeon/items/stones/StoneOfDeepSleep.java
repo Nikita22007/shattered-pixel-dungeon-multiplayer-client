@@ -24,8 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.stones;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicalSleep;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -46,8 +44,7 @@ public class StoneOfDeepSleep extends Runestone {
 
 			if (c instanceof Mob){
 
-				Buff.affect(c, MagicalSleep.class);
-				c.sprite.centerEmitter().start( Speck.factory( Speck.NOTE ), 0.3f, 5 );
+                c.sprite.centerEmitter().start( Speck.factory( Speck.NOTE ), 0.3f, 5 );
 
 			}
 

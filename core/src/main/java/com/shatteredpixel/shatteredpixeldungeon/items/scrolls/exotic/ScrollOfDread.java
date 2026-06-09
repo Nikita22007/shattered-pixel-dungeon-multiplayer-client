@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
@@ -48,7 +47,7 @@ public class ScrollOfDread extends ExoticScroll {
 		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
 			if (mob.alignment != Char.Alignment.ALLY && Dungeon.level.heroFOV[mob.pos]) {
 				if (!mob.isImmune(Dread.class)){
-					Buff.affect( mob, Dread.class ).object = curUser.id();
+                    ((Dread) null).object = curUser.id();
 				} else {
                     ((Terror) null).object = curUser.id();
 				}

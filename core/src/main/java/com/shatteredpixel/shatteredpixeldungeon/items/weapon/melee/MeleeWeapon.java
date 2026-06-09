@@ -67,7 +67,6 @@ public class MeleeWeapon extends Weapon {
 	public void activate(Char ch) {
 		super.activate(ch);
 		if (ch instanceof Hero && ((Hero) ch).heroClass == HeroClass.DUELIST){
-			Buff.affect(ch, Charger.class);
 		}
 	}
 
@@ -120,7 +119,7 @@ public class MeleeWeapon extends Weapon {
 				//do nothing
 			} else if (STRReq() > hero.STR()){
 				GLog.w(Messages.get(this, "ability_low_str"));
-			} else if ((Buff.affect(hero, Charger.class).charges + Buff.affect(hero, Charger.class).partialCharge) < abilityChargeUse(hero, null)) {
+			} else if ((((Charger) null).charges + ((Charger) null).partialCharge) < abilityChargeUse(hero, null)) {
 				GLog.w(Messages.get(this, "ability_no_charge"));
 			} else {
 
@@ -174,7 +173,7 @@ public class MeleeWeapon extends Weapon {
 
 	protected void beforeAbilityUsed(Hero hero, Char target){
 		hero.belongings.abilityWeapon = this;
-		Charger charger = Buff.affect(hero, Charger.class);
+		Charger charger = null;
 
 		charger.partialCharge -= abilityChargeUse(hero, target);
 		while (charger.partialCharge < 0 && charger.charges > 0) {
@@ -186,7 +185,7 @@ public class MeleeWeapon extends Weapon {
 				&& hero.hasTalent(Talent.AGGRESSIVE_BARRIER)
 				&& (hero.HP / (float)hero.HT) <= 0.5f){
 			int shieldAmt = 1 + 2*hero.pointsInTalent(Talent.AGGRESSIVE_BARRIER);
-			Buff.affect(hero, Barrier.class).setShield(shieldAmt);
+			((Barrier) null).setShield(shieldAmt);
 			hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(shieldAmt), FloatingText.SHIELDING);
 		}
 
@@ -201,10 +200,10 @@ public class MeleeWeapon extends Weapon {
 		if (hero.hasTalent(Talent.VARIED_CHARGE)){
 			Talent.VariedChargeTracker tracker = hero.buff(Talent.VariedChargeTracker.class);
 			if (tracker == null || tracker.weapon == getClass() || tracker.weapon == null){
-				Buff.affect(hero, Talent.VariedChargeTracker.class).weapon = getClass();
+				((Talent.VariedChargeTracker) null).weapon = getClass();
 			} else {
 				tracker.detach();
-				Charger charger = Buff.affect(hero, Charger.class);
+				Charger charger = null;
 				charger.gainCharge(hero.pointsInTalent(Talent.VARIED_CHARGE) / 6f);
 				ScrollOfRecharging.charge(hero);
 			}
@@ -225,11 +224,11 @@ public class MeleeWeapon extends Weapon {
                 ((Talent.CombinedEnergyAbilityTracker) null).wepAbilUsed = true;
 			} else {
 				tracker.wepAbilUsed = true;
-				Buff.affect(hero, MonkEnergy.class).processCombinedEnergy(tracker);
+				((MonkEnergy) null).processCombinedEnergy(tracker);
 			}
 		}
 		if (hero.buff(Talent.CounterAbilityTacker.class) != null){
-			Charger charger = Buff.affect(hero, Charger.class);
+			Charger charger = null;
 			charger.gainCharge(hero.pointsInTalent(Talent.COUNTER_ABILITY)*0.375f);
 			hero.buff(Talent.CounterAbilityTacker.class).detach();
 		}
@@ -238,7 +237,7 @@ public class MeleeWeapon extends Weapon {
 	public static void onAbilityKill( Hero hero, Char killed ){
 		if (killed.alignment == Char.Alignment.ENEMY && hero.hasTalent(Talent.LETHAL_HASTE)){
 			//effectively 3/5 turns of greater haste
-			Buff.affect(hero, GreaterHaste.class).set(2 + 2*hero.pointsInTalent(Talent.LETHAL_HASTE));
+			((GreaterHaste) null).set(2 + 2*hero.pointsInTalent(Talent.LETHAL_HASTE));
 		}
 	}
 

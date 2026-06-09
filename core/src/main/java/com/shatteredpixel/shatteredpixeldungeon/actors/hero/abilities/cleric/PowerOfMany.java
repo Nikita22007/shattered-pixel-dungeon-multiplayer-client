@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PrismaticGuard;
@@ -163,7 +162,7 @@ public class PowerOfMany extends ArmorAbility {
 				ScrollOfTeleportation.appear(ch, ch.pos);
 			}
 
-            Buff.affect(ch, Barrier.class).setShield(25);
+            ((Barrier) null).setShield(25);
 
 			armor.charge -= chargeUse;
 			armor.updateQuickslot();

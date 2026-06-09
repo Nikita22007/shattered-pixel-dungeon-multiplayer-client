@@ -84,8 +84,7 @@ public class Monk extends Mob {
 	protected boolean act() {
 		boolean result = super.act();
 		if (buff(Focus.class) == null && state == HUNTING && focusCooldown <= 0) {
-			Buff.affect( this, Focus.class );
-		}
+        }
 		return result;
 	}
 	

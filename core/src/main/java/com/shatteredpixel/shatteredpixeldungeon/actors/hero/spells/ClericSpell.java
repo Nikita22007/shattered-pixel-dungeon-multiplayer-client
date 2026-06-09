@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
@@ -77,10 +76,10 @@ public abstract class ClericSpell {
 		Invisibility.dispel();
 		if (hero.hasTalent(Talent.SATIATED_SPELLS) && hero.buff(Talent.SatiatedSpellsTracker.class) != null){
 			int amount = 1 + 2*hero.pointsInTalent(Talent.SATIATED_SPELLS);
-			Buff.affect(hero, Barrier.class).setShield(amount);
+            ((Barrier) null).setShield(amount);
 			Char ally = PowerOfMany.getPoweredAlly();
 			if (ally != null && ally.buff(LifeLinkSpell.LifeLinkSpellBuff.class) != null){
-				Buff.affect(ally, Barrier.class).setShield(amount);
+                ((Barrier) null).setShield(amount);
 			}
 			hero.buff(Talent.SatiatedSpellsTracker.class).detach();
 		}

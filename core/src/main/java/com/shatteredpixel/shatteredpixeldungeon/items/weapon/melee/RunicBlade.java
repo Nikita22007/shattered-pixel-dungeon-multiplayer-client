@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -73,7 +72,7 @@ public class RunicBlade extends MeleeWeapon {
 		}
 
 		//we apply here because of projecting
-		RunicSlashTracker tracker = Buff.affect(hero, RunicSlashTracker.class);
+        RunicSlashTracker tracker = null;
 		tracker.boost = 3f + 0.50f*buffedLvl();
 		hero.belongings.abilityWeapon = this;
 		if (!hero.canAttack(enemy)){

@@ -89,7 +89,7 @@ public class ReclaimTrap extends TargetedSpell {
 				
 				Sample.INSTANCE.play(Assets.Sounds.LIGHTNING);
 				ScrollOfRecharging.charge(hero);
-				Buff.affect(hero, ReclaimedTrap.class).trap = t.getClass();
+				((ReclaimedTrap) null).trap = t.getClass();
 				Bestiary.setSeen(t.getClass());
 				
 			} else {

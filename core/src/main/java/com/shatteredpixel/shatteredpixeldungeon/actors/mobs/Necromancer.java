@@ -246,7 +246,6 @@ public class Necromancer extends Mob {
 
 		for (Buff b : buffs()){
 			if (b.revivePersists) {
-				Buff.affect(mySkeleton, b.getClass());
 			}
 		}
 	}

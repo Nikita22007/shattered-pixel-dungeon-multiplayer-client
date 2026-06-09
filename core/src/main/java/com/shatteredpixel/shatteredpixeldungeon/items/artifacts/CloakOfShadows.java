@@ -25,7 +25,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
@@ -305,11 +304,9 @@ public class CloakOfShadows extends Artifact {
 			if (super.attachTo( target )) {
 				target.invisible++;
 				if (target instanceof Hero && ((Hero) target).subClass == HeroSubClass.ASSASSIN){
-					Buff.affect(target, Preparation.class);
-				}
+                }
 				if (target instanceof Hero && ((Hero) target).hasTalent(Talent.PROTECTIVE_SHADOWS)){
-					Buff.affect(target, Talent.ProtectiveShadowsTracker.class);
-				}
+                }
 				return true;
 			} else {
 				return false;

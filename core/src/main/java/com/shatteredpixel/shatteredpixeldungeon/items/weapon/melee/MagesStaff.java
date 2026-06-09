@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -224,7 +223,7 @@ public class MagesStaff extends MeleeWeapon {
 		int oldStaffcharges = this.wand != null ? this.wand.curCharges : 0;
 
 		if (owner instanceof Hero && Dungeon.hero.hasTalent(Talent.WAND_PRESERVATION)){
-			Talent.WandPreservationCounter counter = Buff.affect(Dungeon.hero, Talent.WandPreservationCounter.class);
+            Talent.WandPreservationCounter counter = null;
 			if (counter.count() == 0){
 				counter.countUp(1);
 				this.wand.level(0);

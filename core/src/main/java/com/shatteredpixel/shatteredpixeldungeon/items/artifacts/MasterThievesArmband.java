@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
@@ -159,7 +158,7 @@ public class MasterThievesArmband extends Artifact {
 								Item loot = ((Mob) ch).createLoot();
 								if (Challenges.isItemBlocked(loot)){
 									GLog.i(Messages.get(MasterThievesArmband.class, "failed_steal"));
-									Buff.affect(ch, StolenTracker.class).setItemStolen(false);
+                                    ((StolenTracker) null).setItemStolen(false);
 								} else {
 									if (loot.doPickUp(curUser)) {
 										//item collection happens instantly
@@ -168,11 +167,11 @@ public class MasterThievesArmband extends Artifact {
 										Dungeon.level.drop(loot, curUser.pos).sprite.drop();
 									}
 									GLog.i(Messages.get(MasterThievesArmband.class, "stole_item", loot.name()));
-									Buff.affect(ch, StolenTracker.class).setItemStolen(true);
+                                    ((StolenTracker) null).setItemStolen(true);
 								}
 							} else {
 								GLog.i(Messages.get(MasterThievesArmband.class, "failed_steal"));
-								Buff.affect(ch, StolenTracker.class).setItemStolen(false);
+                                ((StolenTracker) null).setItemStolen(false);
 							}
 
 

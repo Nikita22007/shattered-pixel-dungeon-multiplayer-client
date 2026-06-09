@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.watabou.utils.Random;
@@ -45,7 +44,7 @@ public class Thorns extends Armor.Glyph {
 
 			float powerMulti = Math.max(1f, procChance);
 
-			Buff.affect( attacker, Bleeding.class).set( Math.round((4 + level)*powerMulti) );
+            ((Bleeding) null).set( Math.round((4 + level)*powerMulti) );
 
 		}
 

@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -100,7 +99,7 @@ public class BlessSpell extends TargetedClericSpell {
 		new Flare(6, 32).color(0xFFFF00, true).show(ch.sprite, 2f);
 		if (ch == hero){
             hero.pointsInTalent(Talent.BLESS);
-            Buff.affect(ch, Barrier.class).setShield(5 + 5*hero.pointsInTalent(Talent.BLESS));
+            ((Barrier) null).setShield(5 + 5*hero.pointsInTalent(Talent.BLESS));
 			ch.sprite.showStatusWithIcon( CharSprite.POSITIVE, Integer.toString(5 + 5*hero.pointsInTalent(Talent.BLESS)), FloatingText.SHIELDING );
 		} else {
             hero.pointsInTalent(Talent.BLESS);
@@ -113,7 +112,7 @@ public class BlessSpell extends TargetedClericSpell {
 					ch.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(totalHeal - barrier), FloatingText.HEALING);
 				}
 				if (barrier > 0) {
-					Buff.affect(ch, Barrier.class).setShield(barrier);
+                    ((Barrier) null).setShield(barrier);
 					ch.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(barrier), FloatingText.SHIELDING);
 				}
 			} else {
@@ -123,8 +122,7 @@ public class BlessSpell extends TargetedClericSpell {
 		}
 
 		if (ch.alignment != Char.Alignment.ALLY && hero.subClass == HeroSubClass.PRIEST){
-			Buff.affect(ch, GuidingLight.Illuminated.class);
-		}
+        }
 	}
 
 	public String desc(){

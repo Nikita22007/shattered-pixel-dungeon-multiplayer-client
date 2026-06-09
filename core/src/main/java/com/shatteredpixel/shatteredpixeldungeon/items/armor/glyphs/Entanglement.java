@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.EarthParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
@@ -48,7 +47,7 @@ public class Entanglement extends Glyph {
 
 			float powerMulti = Math.max(1f, procChance);
 
-			Buff.affect( defender, Earthroot.Armor.class ).level( Math.round((5 + 2 * level)*powerMulti) );
+            ((Earthroot.Armor) null).level( Math.round((5 + 2 * level)*powerMulti) );
 			CellEmitter.bottom( defender.pos ).start( EarthParticle.FACTORY, 0.05f, 8 );
 			if (defender == Dungeon.hero) PixelScene.shake( 1, 0.4f );
 			

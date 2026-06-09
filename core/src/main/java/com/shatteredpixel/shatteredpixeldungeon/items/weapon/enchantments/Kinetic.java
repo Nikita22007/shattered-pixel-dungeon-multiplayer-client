@@ -45,7 +45,7 @@ public class Kinetic extends Weapon.Enchantment {
 		}
 
 		//use a tracker so that we can know the true final damage
-		Buff.affect(attacker, KineticTracker.class).conservedDamage = conservedDamage;
+        ((KineticTracker) null).conservedDamage = conservedDamage;
 		
 		return damage + conservedDamage;
 	}

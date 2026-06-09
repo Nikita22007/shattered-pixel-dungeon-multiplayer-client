@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.levels.traps;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Wound;
 
@@ -47,7 +46,7 @@ public class GrippingTrap extends Trap {
 			if (c instanceof Mob) {
             }
 			int damage = Math.max( 0,  (2 + scalingDepth()/2) - c.drRoll()/2 );
-			Buff.affect( c, Bleeding.class ).set( damage );
+            ((Bleeding) null).set( damage );
             Wound.hit( c );
 		} else {
 			Wound.hit( pos );

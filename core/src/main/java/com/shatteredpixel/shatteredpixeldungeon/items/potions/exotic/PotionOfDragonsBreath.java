@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -179,8 +178,8 @@ public class PotionOfDragonsBreath extends ExoticPotion {
 											
 											Char ch = Actor.findChar( cell );
 											if (ch != null) {
-												
-												Buff.affect( ch, Burning.class ).reignite( ch );
+
+                                                ((Burning) null).reignite( ch );
                                             }
 										}
 

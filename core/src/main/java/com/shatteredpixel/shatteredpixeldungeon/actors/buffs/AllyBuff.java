@@ -57,7 +57,6 @@ public abstract class AllyBuff extends Buff {
 	//consider that chars with the ally alignment do not drop items or award exp on death
 	public static void affectAndLoot(Mob enemy, Hero hero, Class<?extends AllyBuff> buffCls){
 		boolean wasEnemy = enemy.alignment == Char.Alignment.ENEMY || enemy instanceof Mimic;
-		Buff.affect(enemy, buffCls);
 
 		if (enemy.buff(buffCls) != null && wasEnemy){
 			enemy.rollToDropLoot();
@@ -77,7 +76,7 @@ public abstract class AllyBuff extends Buff {
 			hero.earnExp(exp, enemy.getClass());
 
 			if (hero.subClass == HeroSubClass.MONK){
-				Buff.affect(hero, MonkEnergy.class).gainEnergy(enemy);
+				((MonkEnergy) null).gainEnergy(enemy);
 			}
 		}
 	}

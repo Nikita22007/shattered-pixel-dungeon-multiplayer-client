@@ -240,7 +240,7 @@ public abstract class Elemental extends Mob {
 		@Override
 		protected void meleeProc( Char enemy, int damage ) {
 			if (Random.Int( 2 ) == 0 && !Dungeon.level.water[enemy.pos]) {
-				Buff.affect( enemy, Burning.class ).reignite( enemy );
+				((Burning) null).reignite( enemy );
 				if (enemy.sprite.visible) Splash.at( enemy.sprite.center(), sprite.blood(), 5);
 			}
 		}
@@ -248,7 +248,7 @@ public abstract class Elemental extends Mob {
 		@Override
 		protected void rangedProc( Char enemy ) {
 			if (!Dungeon.level.water[enemy.pos]) {
-				Buff.affect( enemy, Burning.class ).reignite( enemy, 4f );
+				((Burning) null).reignite( enemy, 4f );
 			}
 			if (enemy.sprite.visible) Splash.at( enemy.sprite.center(), sprite.blood(), 5);
 		}
@@ -367,7 +367,7 @@ public abstract class Elemental extends Mob {
 
 						Char target = Actor.findChar(targetingPos + i);
 						if (target != null && target != this) {
-							Buff.affect(target, Burning.class).reignite(target);
+							((Burning) null).reignite(target);
 							if (target == Dungeon.hero){
 								Statistics.questScores[1] -= 200;
 							}

@@ -283,7 +283,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 		}
 
 		public String desc(){
-			if (Buff.affect(Dungeon.hero, MonkEnergy.class).abilitiesEmpowered(Dungeon.hero)){
+			if (((MonkEnergy) null).abilitiesEmpowered(Dungeon.hero)){
 				return Messages.get(this, "empower_desc");
 			} else {
 				return Messages.get(this, "desc");
@@ -322,7 +322,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 
 			@Override
 			public String desc() {
-				if (Buff.affect(Dungeon.hero, MonkEnergy.class).abilitiesEmpowered(Dungeon.hero)){
+				if (((MonkEnergy) null).abilitiesEmpowered(Dungeon.hero)){
 					//1.5x hero unarmed damage (rounds the result)
 					return Messages.get(this, "empower_desc", 2, Math.round(1.5f*(Dungeon.hero.STR()-8)));
 				} else {
@@ -349,10 +349,10 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 					return;
 				}
 
-				if (Buff.affect(hero, MonkEnergy.class).abilitiesEmpowered(hero)){
+				if (((MonkEnergy) null).abilitiesEmpowered(hero)){
 				}
 
-				UnarmedAbilityTracker tracker = Buff.affect(hero, UnarmedAbilityTracker.class);
+				UnarmedAbilityTracker tracker = null;
 				if (!hero.canAttack(enemy)){
 					GLog.w(Messages.get(MeleeWeapon.class, "ability_target_range"));
 					tracker.detach();
@@ -376,7 +376,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 									Invisibility.dispel();
 									hero.next();
 									tracker.detach();
-									Buff.affect(hero, MonkEnergy.class).abilityUsed(Flurry.this);
+									((MonkEnergy) null).abilityUsed(Flurry.this);
 									if (hero.buff(FlurryEmpowerTracker.class) != null){
 										hero.buff(FlurryEmpowerTracker.class).detach();
 									}
@@ -386,7 +386,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 							Invisibility.dispel();
 							hero.next();
 							tracker.detach();
-							Buff.affect(hero, MonkEnergy.class).abilityUsed(Flurry.this);
+							((MonkEnergy) null).abilityUsed(Flurry.this);
 							if (hero.buff(FlurryEmpowerTracker.class) != null){
 								hero.buff(FlurryEmpowerTracker.class).detach();
 							}
@@ -410,14 +410,13 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 
 			@Override
 			public void doAbility(Hero hero, Integer target) {
-				Buff.affect(hero, FocusBuff.class);
 
-				if (Buff.affect(hero, MonkEnergy.class).abilitiesEmpowered(hero)){
+				if (((MonkEnergy) null).abilitiesEmpowered(hero)){
 					hero.next();
 				} else {
 					hero.spendAndNext(1f);
 				}
-				Buff.affect(hero, MonkEnergy.class).abilityUsed(this);
+				((MonkEnergy) null).abilityUsed(this);
 			}
 
 			public static class FocusBuff extends Buff {
@@ -460,7 +459,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 				}
 
 				int range = 4;
-				if (Buff.affect(hero, MonkEnergy.class).abilitiesEmpowered(hero)){
+				if (((MonkEnergy) null).abilitiesEmpowered(hero)){
 					range += 4;
 				}
 
@@ -503,7 +502,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 					}
 				});
 
-				Buff.affect(hero, MonkEnergy.class).abilityUsed(this);
+				((MonkEnergy) null).abilityUsed(this);
 			}
 		}
 
@@ -516,7 +515,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 
 			@Override
 			public String desc() {
-				if (Buff.affect(Dungeon.hero, MonkEnergy.class).abilitiesEmpowered(Dungeon.hero)){
+				if (((MonkEnergy) null).abilitiesEmpowered(Dungeon.hero)){
 					//9x hero unarmed damage
 					return Messages.get(this, "empower_desc", 9, 9*(Dungeon.hero.STR()-8));
 				} else {
@@ -542,7 +541,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 					return;
 				}
 
-				UnarmedAbilityTracker tracker = Buff.affect(hero, UnarmedAbilityTracker.class);
+				UnarmedAbilityTracker tracker = null;
 				if (!hero.canAttack(enemy)){
 					GLog.w(Messages.get(MeleeWeapon.class, "ability_target_range"));
 					tracker.detach();
@@ -553,7 +552,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 					@Override
 					public void call() {
 						AttackIndicator.target(enemy);
-						boolean empowered = Buff.affect(hero, MonkEnergy.class).abilitiesEmpowered(hero);
+						boolean empowered = ((MonkEnergy) null).abilitiesEmpowered(hero);
 
 						int oldPos = enemy.pos;
 						if (hero.attack(enemy, empowered ? 9f : 6f, 0, Char.INFINITE_ACCURACY)){
@@ -574,7 +573,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 						Invisibility.dispel();
 						hero.spendAndNext(hero.attackDelay());
 						tracker.detach();
-						Buff.affect(hero, MonkEnergy.class).abilityUsed(DragonKick.this);
+						((MonkEnergy) null).abilityUsed(DragonKick.this);
 
 						if (empowered){
 							for (Char ch : Actor.chars()){
@@ -624,10 +623,10 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 				// effects like time freeze from eating the whole action duration
 				for (int i = 0; i < 5; i++) hero.spendConstant(Actor.TICK);
 
-				if (Buff.affect(hero, MonkEnergy.class).abilitiesEmpowered(hero)){
+				if (((MonkEnergy) null).abilitiesEmpowered(hero)){
 					int toHeal = Math.round((hero.HT - hero.HP)/5f);
 					if (toHeal > 0) {
-						Buff.affect(hero, Healing.class).setHeal(toHeal, 0, 1);
+						((Healing) null).setHeal(toHeal, 0, 1);
 					}
 					hero.cooldown();
 				}
@@ -640,7 +639,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 
 					@Override
 					protected boolean act() {
-						Buff.affect(hero, ArtifactRecharge.class).extend(8f).ignoreHornOfPlenty = false;
+						((ArtifactRecharge) null).extend(8f).ignoreHornOfPlenty = false;
 						Actor.remove(this);
 						return true;
 					}
@@ -648,7 +647,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 
 				hero.next();
 				hero.busy();
-				Buff.affect(hero, MonkEnergy.class).abilityUsed(this);
+				((MonkEnergy) null).abilityUsed(this);
 			}
 
 			public static class MeditateResistance extends FlavourBuff{

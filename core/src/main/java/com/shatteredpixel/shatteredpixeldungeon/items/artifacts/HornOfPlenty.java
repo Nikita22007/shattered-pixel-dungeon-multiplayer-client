@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
@@ -105,7 +104,7 @@ public class HornOfPlenty extends Artifact {
 					satietyPerCharge /= 3;
 				}
 
-				Hunger hunger = Buff.affect(Dungeon.hero, Hunger.class);
+                Hunger hunger = null;
 				int chargesToUse = Math.max( 1, hunger.hunger() / satietyPerCharge);
 				if (chargesToUse > charge) chargesToUse = charge;
 
@@ -130,7 +129,7 @@ public class HornOfPlenty extends Artifact {
 			satietyPerCharge /= 3;
 		}
 
-		Buff.affect(hero, Hunger.class).satisfy(satietyPerCharge * chargesToUse);
+        ((Hunger) null).satisfy(satietyPerCharge * chargesToUse);
 
 		Statistics.foodEaten++;
 

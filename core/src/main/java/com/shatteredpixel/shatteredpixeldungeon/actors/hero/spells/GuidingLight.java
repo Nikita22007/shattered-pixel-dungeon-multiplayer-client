@@ -87,9 +87,7 @@ public class GuidingLight extends TargetedClericSpell {
 					Sample.INSTANCE.play(Assets.Sounds.HIT_MAGIC, 1, Random.Float(0.87f, 1.15f));
 					ch.sprite.burst(0xFFFFFF44, 3);
 					if (ch.isAlive()){
-						Buff.affect(ch, Illuminated.class);
-						Buff.affect(ch, WasIlluminatedTracker.class);
-					}
+                    }
 				} else {
 				}
 

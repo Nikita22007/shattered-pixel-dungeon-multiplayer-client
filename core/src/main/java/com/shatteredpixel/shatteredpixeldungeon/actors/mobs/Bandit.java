@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -44,7 +43,7 @@ public class Bandit extends Thief {
 	protected boolean steal( Hero hero ) {
 		if (super.steal( hero )) {
 
-            Buff.affect( hero, Poison.class ).set(Random.IntRange(5, 6) );
+            ((Poison) null).set(Random.IntRange(5, 6) );
             Dungeon.observe();
 			
 			return true;
