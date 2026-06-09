@@ -606,14 +606,6 @@ public class DriedRose extends Artifact {
 		}
 
 		@Override
-		public int defenseProc(Char enemy, int damage) {
-			if (armor() != null) {
-				damage = armor().proc(enemy, this, damage);
-			}
-			return super.defenseProc(enemy, damage);
-		}
-
-		@Override
 		public float speed() {
 			float speed = super.speed();
 

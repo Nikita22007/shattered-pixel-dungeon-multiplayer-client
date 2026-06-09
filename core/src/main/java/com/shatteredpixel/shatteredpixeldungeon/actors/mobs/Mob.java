@@ -49,7 +49,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.Stasis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.DirectableAlly;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Surprise;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -60,10 +59,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ExoticScroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ExoticCrystals;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Bestiary;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
@@ -626,45 +622,6 @@ public abstract class Mob extends Char {
         } else {
             return 0;
         }
-    }
-
-    @Override
-    public int defenseProc(Char enemy, int damage) {
-
-        if (enemy instanceof Hero
-                && ((Hero) enemy).belongings.attackingWeapon() instanceof MissileWeapon) {
-            Statistics.thrownAttacks++;
-            Badges.validateHuntressUnlock();
-        }
-
-        if (surprisedBy(enemy)) {
-            Statistics.sneakAttacks++;
-            Badges.validateRogueUnlock();
-            //TODO this is somewhat messy, it would be nicer to not have to manually handle delays here
-            // playing the strong hit sound might work best as another property of weapon?
-            if (Dungeon.hero.belongings.attackingWeapon() instanceof SpiritBow.SpiritArrow
-                    || Dungeon.hero.belongings.attackingWeapon() instanceof Dart) {
-                Sample.INSTANCE.playDelayed(Assets.Sounds.HIT_STRONG, 0.125f);
-            } else {
-                Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
-            }
-            {
-                Surprise.hit(this);
-            }
-        }
-
-        //if attacked by something else than current target, and that thing is closer, switch targets
-        //or if attacked by target, simply update target position
-        if (state != FLEEING) {
-            if (state != HUNTING) {
-                aggro(enemy);
-                target = enemy.pos;
-            } else {
-                recentlyAttackedBy.add(enemy);
-            }
-        }
-
-        return super.defenseProc(enemy, damage);
     }
 
     @Override

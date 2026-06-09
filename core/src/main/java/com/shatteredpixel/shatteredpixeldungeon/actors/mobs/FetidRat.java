@@ -24,11 +24,9 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.StenchGas;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Ghost;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.FetidRatSprite;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
@@ -74,15 +72,7 @@ public class FetidRat extends Rat {
 		return damage;
 	}
 
-	@Override
-	public int defenseProc( Char enemy, int damage ) {
-
-		GameScene.add(Blob.seed(pos, 20, StenchGas.class));
-
-		return super.defenseProc(enemy, damage);
-	}
-
-	@Override
+    @Override
 	public void die( Object cause ) {
 		super.die( cause );
 

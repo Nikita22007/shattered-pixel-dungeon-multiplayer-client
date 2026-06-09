@@ -80,12 +80,6 @@ public class ArmoredStatue extends Statue {
 	}
 
 	@Override
-	public int defenseProc(Char enemy, int damage) {
-		damage = armor.proc(enemy, this, damage);
-		return super.defenseProc(enemy, damage);
-	}
-
-	@Override
 	public int glyphLevel(Class<? extends Armor.Glyph> cls) {
 		if (armor != null && armor.hasGlyph(cls, this)){
 			return Math.max(super.glyphLevel(cls), armor.buffedLvl());

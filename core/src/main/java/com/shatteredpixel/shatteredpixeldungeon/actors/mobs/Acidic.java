@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -44,15 +43,7 @@ public class Acidic extends Scorpio {
 		return super.attackProc(enemy, damage);
 	}
 
-	@Override
-	public int defenseProc( Char enemy, int damage ) {
-		if (Dungeon.level.adjacent(pos, enemy.pos)){
-            ((Ooze) null).set( Ooze.DURATION );
-		}
-		return super.defenseProc( enemy, damage );
-	}
-
-	@Override
+    @Override
 	public Item createLoot() {
 		return new PotionOfExperience();
 	}

@@ -22,20 +22,15 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.SwarmSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
-
-import java.util.ArrayList;
 
 public class Swarm extends Mob {
 
@@ -83,43 +78,8 @@ public class Swarm extends Mob {
 	public int damageRoll() {
 		return Random.NormalIntRange( 1, 4 );
 	}
-	
-	@Override
-	public int defenseProc( Char enemy, int damage ) {
 
-		if (HP >= damage + 2) {
-			ArrayList<Integer> candidates = new ArrayList<>();
-			
-			int[] neighbours = {pos + 1, pos - 1, pos + Dungeon.level.width(), pos - Dungeon.level.width()};
-			for (int n : neighbours) {
-				if (!Dungeon.level.solid[n]
-						&& Actor.findChar( n ) == null
-						&& (Dungeon.level.passable[n] || Dungeon.level.avoid[n])
-						&& (!properties().contains(Property.LARGE) || Dungeon.level.openSpace[n])) {
-					candidates.add( n );
-				}
-			}
-	
-			if (candidates.size() > 0) {
-				
-				Swarm clone = split();
-				clone.pos = Random.element( candidates );
-				clone.state = clone.HUNTING;
-				GameScene.add( clone, SPLIT_DELAY ); //we add before assigning HP due to ascension
-
-				clone.HP = (HP - damage) / 2;
-				Actor.add( new Pushing( clone, pos, clone.pos ) );
-
-				Dungeon.level.occupyCell(clone);
-				
-				HP -= clone.HP;
-			}
-		}
-		
-		return super.defenseProc(enemy, damage);
-	}
-	
-	@Override
+    @Override
 	public int attackSkill( Char target ) {
 		return 10;
 	}
