@@ -45,7 +45,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.quest.Embers;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.RatSkull;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.CursedWand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Shocking;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -579,13 +578,9 @@ public abstract class Elemental extends Mob {
 
 		@Override
 		protected void rangedProc( Char enemy ) {
-			CursedWand.cursedZap(null, this, new Ballistica(pos, enemy.pos, Ballistica.STOP_TARGET), new Callback() {
-				@Override
-				public void call() {
-					next();
-				}
-			});
-		}
+            new Ballistica(pos, enemy.pos, Ballistica.STOP_TARGET);
+
+        }
 	}
 	
 	public static Class<? extends Elemental> random(){

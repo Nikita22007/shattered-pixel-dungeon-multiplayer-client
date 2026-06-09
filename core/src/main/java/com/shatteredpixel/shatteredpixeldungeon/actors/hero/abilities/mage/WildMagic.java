@@ -32,7 +32,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbili
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.WondrousResin;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.CursedWand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -148,17 +147,9 @@ public class WildMagic extends ArmorAbility {
 								protected void onComplete() {
 									if (alsoCursedZap){
 										WondrousResin.forcePositive = true;
-										CursedWand.cursedZap(cur,
-												hero,
-												new Ballistica(hero.pos, cell, Ballistica.MAGIC_BOLT),
-												new Callback() {
-													@Override
-													public void call() {
-														WondrousResin.forcePositive = false;
-														afterZap(cur, wands, hero, cell);
-													}
-												});
-									} else {
+                                        new Ballistica(hero.pos, cell, Ballistica.MAGIC_BOLT);
+
+                                    } else {
 										afterZap(cur, wands, hero, cell);
 									}
 								}
@@ -166,17 +157,9 @@ public class WildMagic extends ArmorAbility {
 						} else {
 							if (alsoCursedZap){
 								WondrousResin.forcePositive = true;
-								CursedWand.cursedZap(cur,
-										hero,
-										new Ballistica(hero.pos, cell, Ballistica.MAGIC_BOLT),
-										new Callback() {
-											@Override
-											public void call() {
-												WondrousResin.forcePositive = false;
-												afterZap(cur, wands, hero, cell);
-											}
-										});
-							} else {
+                                new Ballistica(hero.pos, cell, Ballistica.MAGIC_BOLT);
+
+                            } else {
 								afterZap(cur, wands, hero, cell);
 							}
 						}
@@ -184,25 +167,9 @@ public class WildMagic extends ArmorAbility {
 				});
 
 			} else {
-				CursedWand.cursedZap(cur,
-						hero,
-						new Ballistica(hero.pos, cell, Ballistica.MAGIC_BOLT),
-						new Callback() {
-							@Override
-							public void call() {
-								if (Game.timeTotal - startTime < 0.33f) {
-									hero.sprite.parent.add(new Delayer(0.33f - (Game.timeTotal - startTime)) {
-										@Override
-										protected void onComplete() {
-											afterZap(cur, wands, hero, cell);
-										}
-									});
-								} else {
-									afterZap(cur, wands, hero, cell);
-								}
-							}
-						});
-			}
+                new Ballistica(hero.pos, cell, Ballistica.MAGIC_BOLT);
+
+            }
 		} else {
 			afterZap(cur, wands, hero, cell);
 		}
