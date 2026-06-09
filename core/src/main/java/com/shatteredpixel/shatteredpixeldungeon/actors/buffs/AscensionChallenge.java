@@ -23,8 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.Statistics;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.Ratmogrify;
@@ -54,11 +52,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Succubus;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Swarm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Thief;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Warlock;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
 import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
-import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
-import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
@@ -188,23 +182,6 @@ public class AscensionChallenge extends Buff {
 		{
 			return m.EXP;
 		}
-
-		if (m instanceof Ratmogrify.TransmogRat) {
-			m = ((Ratmogrify.TransmogRat) m).getOriginal();
-		}
-
-		if (m instanceof RipperDemon) {
-			return 10; //reduced due to their numbers
-		} else if (m instanceof Ghoul) {
-			return 7; //half of 13, rounded up
-		} else {
-			for (Class<? extends Mob> cls : modifiers.keySet()) {
-				if (cls.isAssignableFrom(m.getClass())) {
-					return Math.max(13, m.EXP); //same exp as an eye
-				}
-			}
-		}
-		return m.EXP;
 	}
 
 	{
@@ -215,78 +192,6 @@ public class AscensionChallenge extends Buff {
 	private float damageInc = 0;
 
 	private boolean stacksLowered = false;
-
-	public void onLevelSwitch(){
-		if (Dungeon.depth < Statistics.highestAscent){
-			Statistics.highestAscent = Dungeon.depth;
-			justAscended = true;
-			if (Dungeon.bossLevel()){
-				((Hunger) null).satisfy(Hunger.STARVING);
-				((Healing) null).setHeal(Dungeon.hero.HT, 0, 20);
-			} else {
-				stacks += 2f;
-
-				//doors locked by the hero are reset, to prevent blocking out enemies
-				for (int i = 0; i < Dungeon.level.length(); i++){
-					if (Dungeon.level.map[i] == Terrain.HERO_LKD_DR){
-						Level.set(i, Terrain.DOOR, Dungeon.level);
-					}
-				}
-
-				//clears any existing mobs from the level and adds one initial one
-				//this helps balance difficulty between levels with lots of mobs left, and ones with few
-				for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
-					if (!mob.reset()) {
-						Dungeon.level.mobs.remove( mob );
-					}
-				}
-				Dungeon.level.spawnMob(12);
-
-			}
-		}
-		if (Statistics.highestAscent < 20){
-			for (Mob m : Dungeon.level.mobs.toArray(new Mob[0])){
-				if (m instanceof Shopkeeper){
-					((Shopkeeper) m).flee();
-				}
-			}
-		}
-
-	}
-
-	//messages at boss levels only trigger on first ascent
-	private boolean justAscended = false;
-
-	public void saySwitch(){
-		if (Dungeon.bossLevel()){
-			if (justAscended) {
-				GLog.p(Messages.get(this, "break"));
-				for (Char ch : Actor.chars()){
-					if (ch instanceof DriedRose.GhostHero){
-						((DriedRose.GhostHero) ch).sayAppeared();
-					}
-				}
-			}
-		} else {
-			if (Dungeon.depth == 1){
-				GLog.n(Messages.get(this, "almost"));
-			} else if (stacks >= 8f){
-				GLog.n(Messages.get(this, "damage"));
-			} else if (stacks >= 6f){
-				GLog.n(Messages.get(this, "slow"));
-			} else if (stacks >= 4f){
-				GLog.n(Messages.get(this, "haste"));
-			} else if (stacks >= 2f){
-				GLog.n(Messages.get(this, "beckon"));
-			}
-			if (stacks > 4 && !stacksLowered){
-				GLog.h(Messages.get(this, "weaken_info_no_kills"));
-			} else if (stacks > 8){
-				GLog.h(Messages.get(this, "weaken_info"));
-			}
-		}
-		justAscended = false;
-	}
 
 	@Override
 	public boolean act() {
