@@ -24,8 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.sprites;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DM100;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Lightning;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.audio.Sample;
