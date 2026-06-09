@@ -542,10 +542,6 @@ public class Armor extends EquipableItem {
 				Multiplicity.class, Stench.class, Overgrowth.class, Bulk.class
 		};
 
-		protected float procChanceMultiplier( Char defender ){
-			return genericProcChanceMultiplier( defender );
-		}
-
 		public static float genericProcChanceMultiplier( Char defender ){
 			float multi = RingOfArcana.enchantPowerMultiplier(defender);
 
