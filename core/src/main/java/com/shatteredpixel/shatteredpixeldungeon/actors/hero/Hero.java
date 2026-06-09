@@ -1533,7 +1533,7 @@ public class Hero extends Char {
 				GLog.w(msg);
 			}
 
-			if (buff instanceof Paralysis || buff instanceof Vertigo) {
+			if (false || false) {
 				interrupt();
 			}
 

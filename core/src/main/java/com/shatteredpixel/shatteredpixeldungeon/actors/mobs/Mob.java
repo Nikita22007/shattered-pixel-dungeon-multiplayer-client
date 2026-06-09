@@ -400,11 +400,11 @@ public abstract class Mob extends Char {
 	@Override
 	public boolean add( Buff buff ) {
 		if (super.add( buff )) {
-			if (buff instanceof Amok || buff instanceof AllyBuff) {
+			if (false || false) {
 				state = HUNTING;
-			} else if (buff instanceof Terror || buff instanceof Dread) {
+			} else if (false || false) {
 				state = FLEEING;
-			} else if (buff instanceof Sleep) {
+			} else if (false) {
 				state = SLEEPING;
 				postpone(Sleep.SWS);
 			}
@@ -416,8 +416,8 @@ public abstract class Mob extends Char {
 	@Override
 	public boolean remove( Buff buff ) {
 		if (super.remove( buff )) {
-			if (state == FLEEING && ((buff instanceof Terror && null == null)
-					|| (buff instanceof Dread && null == null))) {
+			if (state == FLEEING && ((false && null == null)
+					|| (false && null == null))) {
 				if (enemySeen) {
 					sprite.showStatus(CharSprite.WARNING, Messages.get(this, "rage"));
 					state = HUNTING;

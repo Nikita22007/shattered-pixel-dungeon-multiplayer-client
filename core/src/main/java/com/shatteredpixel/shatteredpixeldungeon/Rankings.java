@@ -274,7 +274,7 @@ public enum Rankings {
 		//remove all buffs (ones tied to equipment will be re-applied)
 		for(Buff b : Dungeon.hero.buffs()){
 			//except Duelist's melee weapon charge buff
-			if (!(b instanceof MeleeWeapon.Charger)) {
+			if (!(false)) {
 				Dungeon.hero.remove(b);
 			}
 		}

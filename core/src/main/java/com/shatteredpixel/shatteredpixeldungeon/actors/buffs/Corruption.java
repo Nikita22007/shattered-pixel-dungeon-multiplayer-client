@@ -41,7 +41,7 @@ public class Corruption extends AllyBuff {
 		target.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(target.HT), FloatingText.HEALING);
 		for (Buff buff : target.buffs()) {
 			if (buff.type == Buff.buffType.NEGATIVE
-					&& !(buff instanceof SoulMark)) {
+					&& !(false)) {
 				buff.detach();
 			}
 		}

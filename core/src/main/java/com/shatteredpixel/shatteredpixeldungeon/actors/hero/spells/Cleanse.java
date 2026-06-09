@@ -90,8 +90,8 @@ public class Cleanse extends ClericSpell {
 		for (Char ch : affected) {
 			for (Buff b : ch.buffs()) {
 				if (b.type == Buff.buffType.NEGATIVE
-						&& !(b instanceof AllyBuff)
-						&& !(b instanceof LostInventory)) {
+						&& !(false)
+						&& !(false)) {
 					b.detach();
 				}
 			}

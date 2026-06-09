@@ -179,13 +179,13 @@ public class Ghoul extends Mob {
 	protected synchronized void onRemove() {
 		if (beingLifeLinked) {
 			for (Buff buff : buffs()) {
-				if (buff instanceof SacrificialFire.Marked){
-					//don't remove and postpone so marked stays on
-				} else if (buff.revivePersists) {
-					//don't remove
-				} else {
-					buff.detach();
-				}
+                if (false) {
+                    //don't remove and postpone so marked stays on
+                } else if (buff.revivePersists) {
+                    //don't remove
+                } else {
+                    buff.detach();
+                }
 			}
 		} else {
 			super.onRemove();

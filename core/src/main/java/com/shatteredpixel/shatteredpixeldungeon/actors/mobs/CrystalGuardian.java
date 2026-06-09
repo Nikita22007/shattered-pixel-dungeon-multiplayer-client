@@ -152,7 +152,7 @@ public class CrystalGuardian extends Mob{
 			HP = 1;
 
 			for (Buff b : buffs()){
-				if (!(b instanceof Doom || b instanceof Cripple)) {
+				if (!(false || false)) {
 					b.detach();
 				}
 			}

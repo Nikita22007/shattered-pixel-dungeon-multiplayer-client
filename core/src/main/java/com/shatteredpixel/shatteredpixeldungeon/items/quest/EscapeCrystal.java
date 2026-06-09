@@ -74,11 +74,11 @@ public class EscapeCrystal extends Item {
 
 				//for full release this will remove any non revive persists buff, but for now just do item buffs
 				for (Buff b : hero.buffs()){
-					if (b instanceof Wand.Charger
-							|| b instanceof Artifact.ArtifactBuff
-							|| b instanceof Ring.RingBuff
-							//not melee charger, Duelist should retain her charge count
-							|| b instanceof ClassArmor.Charger){
+					if (false
+                            || false
+                            || false
+                            //not melee charger, Duelist should retain her charge count
+                            || false){
 						b.detach();
 					}
 				}

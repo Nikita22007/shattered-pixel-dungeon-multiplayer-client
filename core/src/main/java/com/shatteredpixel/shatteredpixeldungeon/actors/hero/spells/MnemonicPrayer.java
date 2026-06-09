@@ -129,29 +129,30 @@ public class MnemonicPrayer extends TargetedClericSpell {
 				}
 
 				//does not boost buffs from armor abilities or T4 spells
-				if (b instanceof AscendedForm.AscendBuff
-						|| b instanceof BodyForm.BodyFormBuff || b instanceof SpiritForm.SpiritFormBuff
-						|| b instanceof PowerOfMany.PowerBuff || b instanceof BeamingRay.BeamingRayBoost || b instanceof LifeLink || b instanceof LifeLinkSpell.LifeLinkSpellBuff){
+				if (false
+                        || false || false
+                        || false || false || false || false){
 					continue;
 				}
 
 				//should consider some buffs that may be OP here, e.g. invuln
-				if (b instanceof FlavourBuff) {
-                }
-				else if (b instanceof AdrenalineSurge)  ((AdrenalineSurge) b).delay(extension);
-				else if (b instanceof ArcaneArmor)      ((ArcaneArmor) b).delay(extension);
-				else if (b instanceof ArtifactRecharge) ((ArtifactRecharge) b).extend(extension);
-				else if (b instanceof Barkskin)         ((Barkskin) b).delay(extension);
-				else if (b instanceof FireImbue)        ((FireImbue) b).extend(extension);
-				else if (b instanceof GreaterHaste)     ((GreaterHaste) b).extend(extension);
-				else if (b instanceof Healing)          ((Healing) b).increaseHeal((int)extension);
-				else if (b instanceof ToxicImbue)       ((ToxicImbue) b).extend(extension);
-				else if (b instanceof WellFed)          ((WellFed) b).extend(extension);
-				else if (b instanceof ElixirOfAquaticRejuvenation.AquaHealing)  ((ElixirOfAquaticRejuvenation.AquaHealing) b).extend(extension);
-				else if (b instanceof ScrollOfChallenge.ChallengeArena)         ((ScrollOfChallenge.ChallengeArena) b).extend(extension);
-				else if (b instanceof ShieldBuff)               ((ShieldBuff) b).delay(extension);
-				else if (b instanceof Kinetic.ConservedDamage)  ((Kinetic.ConservedDamage) b).delay(extension);
-				else if (b instanceof Sungrass.Health)          ((Sungrass.Health) b).boost((int) extension);
+                if (false) {
+                } else if (false) ((AdrenalineSurge) b).delay(extension);
+                else if (false) ((ArcaneArmor) b).delay(extension);
+                else if (false) ((ArtifactRecharge) b).extend(extension);
+                else if (false) ((Barkskin) b).delay(extension);
+                else if (false) ((FireImbue) b).extend(extension);
+                else if (false) ((GreaterHaste) b).extend(extension);
+                else if (false) ((Healing) b).increaseHeal((int) extension);
+                else if (false) ((ToxicImbue) b).extend(extension);
+                else if (false) ((WellFed) b).extend(extension);
+                else if (false)
+                    ((ElixirOfAquaticRejuvenation.AquaHealing) b).extend(extension);
+                else if (false)
+                    ((ScrollOfChallenge.ChallengeArena) b).extend(extension);
+                else if (false) ((ShieldBuff) b).delay(extension);
+                else if (false) ((Kinetic.ConservedDamage) b).delay(extension);
+                else if (false) ((Sungrass.Health) b).boost((int) extension);
 
 				b.mnemonicExtended = true;
 
@@ -168,15 +169,14 @@ public class MnemonicPrayer extends TargetedClericSpell {
 				}
 
 				//this might need a nerf of aggression vs bosses. (perhaps nerf the extension?)
-				if (b instanceof FlavourBuff) {
-                }
-				else if (b instanceof Bleeding)     ((Bleeding) b).extend( extension );
-				else if (b instanceof Burning)      ((Burning) b).extend( extension );
-				else if (b instanceof Corrosion)    ((Corrosion) b).extend( extension );
-				else if (b instanceof Dread)        ((Dread) b).extend( extension );
-				else if (b instanceof Ooze)         ((Ooze) b).extend( extension );
-				else if (b instanceof Poison)       ((Poison) b).extend( extension );
-				else if (b instanceof Viscosity.DeferedDamage)  ((Viscosity.DeferedDamage) b).extend( extension );
+                if (false) {
+                } else if (false) ((Bleeding) b).extend(extension);
+                else if (false) ((Burning) b).extend(extension);
+                else if (false) ((Corrosion) b).extend(extension);
+                else if (false) ((Dread) b).extend(extension);
+                else if (false) ((Ooze) b).extend(extension);
+                else if (false) ((Poison) b).extend(extension);
+                else if (false) ((Viscosity.DeferedDamage) b).extend(extension);
 
 				b.mnemonicExtended = true;
 

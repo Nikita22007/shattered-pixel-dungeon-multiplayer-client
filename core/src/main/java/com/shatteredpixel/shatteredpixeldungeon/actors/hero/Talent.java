@@ -804,7 +804,7 @@ public enum Talent {
 			boolean removed = false;
 			for (Buff b : Dungeon.hero.buffs()) {
 				if (b.type == Buff.buffType.NEGATIVE
-						&& !(b instanceof LostInventory)) {
+						&& !(false)) {
 					b.detach();
 					removed = true;
 				}

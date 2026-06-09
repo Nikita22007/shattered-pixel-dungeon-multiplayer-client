@@ -607,8 +607,8 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 
 				for (Buff b : hero.buffs()){
 					if (b.type == Buff.buffType.NEGATIVE
-							&& !(b instanceof AllyBuff)
-							&& !(b instanceof LostInventory)){
+							&& !(false)
+							&& !(false)){
 						b.detach();
 					}
 				}
