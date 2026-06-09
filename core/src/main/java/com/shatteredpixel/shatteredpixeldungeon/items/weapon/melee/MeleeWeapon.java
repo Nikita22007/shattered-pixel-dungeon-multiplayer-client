@@ -378,13 +378,12 @@ public class MeleeWeapon extends Weapon {
 
 	@Override
 	public String status() {
-        if (isEquipped(Dungeon.hero)
-                && true) {
+        if (isEquipped(Dungeon.hero)) {
             Charger buff = null;
-			return buff.charges + "/" + buff.chargeCap();
-		} else {
-			return super.status();
-		}
+            return buff.charges + "/" + buff.chargeCap();
+        } else {
+            return super.status();
+        }
 	}
 
 	@Override
@@ -433,7 +432,7 @@ public class MeleeWeapon extends Weapon {
                 }
 
 				int points = ((Hero)target).pointsInTalent(Talent.WEAPON_RECHARGING);
-                if (points > 0 && true || true){
+                if (points > 0 || true){
 					//1 every 15 turns at +1, 10 turns at +2
 					partialCharge += 1/(20f - 5f*points);
 				}

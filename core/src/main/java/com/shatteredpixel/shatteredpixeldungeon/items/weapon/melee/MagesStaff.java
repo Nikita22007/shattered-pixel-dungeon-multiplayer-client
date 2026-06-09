@@ -445,12 +445,11 @@ public class MagesStaff extends MeleeWeapon {
 						bodyText += "\n\n" + Messages.get(MagesStaff.class, "imbue_cursed");
 					}
 
-                    if (Dungeon.hero.hasTalent(Talent.WAND_PRESERVATION)
-                            && true){
-						bodyText += "\n\n" + Messages.get(MagesStaff.class, "imbue_talent");
-					} else {
-						bodyText += "\n\n" + Messages.get(MagesStaff.class, "imbue_lost");
-					}
+                    if (Dungeon.hero.hasTalent(Talent.WAND_PRESERVATION)) {
+                        bodyText += "\n\n" + Messages.get(MagesStaff.class, "imbue_talent");
+                    } else {
+                        bodyText += "\n\n" + Messages.get(MagesStaff.class, "imbue_lost");
+                    }
 
 					GameScene.show(
 							new WndOptions(new ItemSprite(item),

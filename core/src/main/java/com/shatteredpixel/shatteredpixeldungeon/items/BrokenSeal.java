@@ -320,19 +320,19 @@ public class BrokenSeal extends Item {
 			}
 
 			if (shielding() > 0){
-                if (Dungeon.hero.visibleEnemies() == 0 && true){
-					turnsSinceEnemies += HoldFast.buffDecayFactor(target);
-					if (turnsSinceEnemies >= 5){
-						if (cooldown > 0) {
-							float percentLeft = shielding() / (float)initialShield;
-							//max of 50% cooldown refund
-							cooldown = Math.max(0, (int)(cooldown - COOLDOWN_START * (percentLeft / 2f)));
-						}
-						decShield(shielding());
-					}
-				} else {
-					turnsSinceEnemies = 0;
-				}
+                if (Dungeon.hero.visibleEnemies() == 0) {
+                    turnsSinceEnemies += HoldFast.buffDecayFactor(target);
+                    if (turnsSinceEnemies >= 5) {
+                        if (cooldown > 0) {
+                            float percentLeft = shielding() / (float) initialShield;
+                            //max of 50% cooldown refund
+                            cooldown = Math.max(0, (int) (cooldown - COOLDOWN_START * (percentLeft / 2f)));
+                        }
+                        decShield(shielding());
+                    }
+                } else {
+                    turnsSinceEnemies = 0;
+                }
 			}
 			
 			if (shielding() <= 0 && maxShield() <= 0 && cooldown == 0){

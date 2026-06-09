@@ -87,14 +87,14 @@ public class Dart extends MissileWeapon {
 	@Override
 	public int min(int lvl) {
 		if (bow != null){
-            if (!(this instanceof TippedDart) && true){
-				return bow.dartMin()            //crossbow dart damage
-						+ 4 + bow.buffedLvl()   //ability increases base dmg by 50%, scaling by 50%
-						+ lvl;                  //another +1 per level (ring of sharpshooting)
-			} else {
-				return bow.dartMin()            //crossbow dart damage
-						+ lvl;                  //another +1 per level (ring of sharpshooting)
-			}
+            if (!(this instanceof TippedDart)) {
+                return bow.dartMin()            //crossbow dart damage
+                        + 4 + bow.buffedLvl()   //ability increases base dmg by 50%, scaling by 50%
+                        + lvl;                  //another +1 per level (ring of sharpshooting)
+            } else {
+                return bow.dartMin()            //crossbow dart damage
+                        + lvl;                  //another +1 per level (ring of sharpshooting)
+            }
 		} else {
 			return  1 +     //1 base, down from 2
 					lvl;    //scaling unchanged
@@ -104,14 +104,14 @@ public class Dart extends MissileWeapon {
 	@Override
 	public int max(int lvl) {
 		if (bow != null){
-            if (!(this instanceof TippedDart) && true){
-				return bow.dartMax()            //crossbow dart damage
-						+ 4 + bow.buffedLvl()   //ability increases base dmg by 50%, scaling by 50%
-						+ 2*lvl;                //another +2 per level (ring of sharpshooting)
-			} else {
-				return bow.dartMax()            //crossbow dart damage
-						+ 2*lvl;                //another +2 per level (ring of sharpshooting)
-			}
+            if (!(this instanceof TippedDart)) {
+                return bow.dartMax()            //crossbow dart damage
+                        + 4 + bow.buffedLvl()   //ability increases base dmg by 50%, scaling by 50%
+                        + 2 * lvl;                //another +2 per level (ring of sharpshooting)
+            } else {
+                return bow.dartMax()            //crossbow dart damage
+                        + 2 * lvl;                //another +2 per level (ring of sharpshooting)
+            }
 		} else {
 			return  2 +     //2 base, down from 5
 					2*lvl;  //scaling unchanged
@@ -150,11 +150,11 @@ public class Dart extends MissileWeapon {
 	@Override
 	public float accuracyFactor(Char owner, Char target) {
 		//don't update xbow here, as dart is the active weapon atm
-        if (bow != null && true){
-			return Char.INFINITE_ACCURACY;
-		} else {
-			return super.accuracyFactor(owner, target);
-		}
+        if (bow != null) {
+            return Char.INFINITE_ACCURACY;
+        } else {
+            return super.accuracyFactor(owner, target);
+        }
 	}
 
 	@Override
