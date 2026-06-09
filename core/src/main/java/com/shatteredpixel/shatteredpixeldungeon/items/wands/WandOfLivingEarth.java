@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.Stasis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
@@ -397,13 +396,7 @@ public class WandOfLivingEarth extends DamageWand {
 			return 2*defenseSkill + 5;
 		}
 
-		@Override
-		public int attackProc(Char enemy, int damage) {
-			if (enemy instanceof Mob) ((Mob)enemy).aggro(this);
-			return super.attackProc(enemy, damage);
-		}
-
-		@Override
+        @Override
 		public int damageRoll() {
 			return Random.NormalIntRange(2, 4 + Dungeon.scalingDepth()/2);
 		}

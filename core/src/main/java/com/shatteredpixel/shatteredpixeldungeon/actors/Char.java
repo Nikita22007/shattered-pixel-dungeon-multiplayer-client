@@ -31,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barkskin;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corrosion;
@@ -319,16 +318,6 @@ public abstract class Char extends Actor {
 	
 	public int damageRoll() {
 		return 1;
-	}
-	
-	//TODO it would be nice to have a pre-armor and post-armor proc.
-	// atm attack is always post-armor and defence is already pre-armor
-	
-	public int attackProc( Char enemy, int damage ) {
-		for (ChampionEnemy buff : new HashSet<ChampionEnemy>()){
-			buff.onAttackProc( enemy );
-		}
-		return damage;
 	}
 
 	//Returns the level a glyph is at for a char, or -1 if they are not benefitting from that glyph

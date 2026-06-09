@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.CorrosiveGas;
@@ -30,19 +29,11 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BodyForm;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAccuracy;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEvasion;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MirrorSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
 
 public class MirrorImage extends NPC {
@@ -134,33 +125,6 @@ public class MirrorImage extends NPC {
 	}
 
 
-	@Override
-	public int attackProc( Char enemy, int damage ) {
-		damage = super.attackProc( enemy, damage );
-
-        MirrorInvis buff = null;
-		if (buff != null){
-			buff.detach();
-		}
-		
-		if (enemy instanceof Mob) {
-			((Mob)enemy).aggro( this );
-		}
-		if (hero.belongings.weapon() != null){
-			if (!enemy.isAlive() && enemy == Dungeon.hero){
-				Dungeon.fail(this);
-				GLog.n( Messages.capitalize(Messages.get(Char.class, "kill", name())) );
-			}
-			return damage;
-		} else {
-            //hero benefits from holy weapon and body form when unarmed, so do mirror images
-            boolean wasEnemy = enemy.alignment == Alignment.ENEMY;
-            if (!wasEnemy || enemy.alignment == Alignment.ENEMY) {
-            }
-            return damage;
-        }
-	}
-	
 	@Override
 	public CharSprite sprite() {
 		CharSprite s = super.sprite();

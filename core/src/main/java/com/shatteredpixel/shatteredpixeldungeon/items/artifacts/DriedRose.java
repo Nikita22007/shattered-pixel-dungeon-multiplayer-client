@@ -591,21 +591,6 @@ public class DriedRose extends Artifact {
 		}
 
 		@Override
-		public int attackProc(Char enemy, int damage) {
-			damage = super.attackProc(enemy, damage);
-
-			if (weapon() != null) {
-				damage = weapon().proc(this, enemy, damage);
-				if (!enemy.isAlive() && enemy == Dungeon.hero) {
-					Dungeon.fail(this);
-					GLog.n(Messages.capitalize(Messages.get(Char.class, "kill", name())));
-				}
-			}
-
-			return damage;
-		}
-
-		@Override
 		public float speed() {
 			float speed = super.speed();
 

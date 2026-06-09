@@ -183,25 +183,6 @@ public class SpiritHawk extends ArmorAbility {
 		}
 
 		@Override
-		public int attackProc(Char enemy, int damage) {
-			damage = super.attackProc( enemy, damage );
-			switch (Dungeon.hero.pointsInTalent(Talent.GO_FOR_THE_EYES)){
-				case 1:
-                    break;
-				case 2:
-                    break;
-				case 3:
-                    break;
-				case 4:
-                    break;
-				default:
-					//do nothing
-			}
-
-			return damage;
-		}
-
-		@Override
 		protected boolean act() {
 			if (timeRemaining <= 0){
 				die(null);

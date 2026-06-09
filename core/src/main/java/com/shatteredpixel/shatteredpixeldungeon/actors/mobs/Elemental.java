@@ -156,16 +156,8 @@ public abstract class Elemental extends Mob {
 			}
 		}
 	}
-	
-	@Override
-	public int attackProc( Char enemy, int damage ) {
-		damage = super.attackProc( enemy, damage );
-		meleeProc( enemy, damage );
-		
-		return damage;
-	}
-	
-	protected void zap() {
+
+    protected void zap() {
 		spend( 1f );
 
 		Invisibility.dispel(this);

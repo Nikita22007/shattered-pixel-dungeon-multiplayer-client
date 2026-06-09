@@ -22,22 +22,15 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Ghost;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.GnollTricksterSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
-import com.watabou.utils.Random;
 
 public class GnollTrickster extends Gnoll {
 
@@ -70,36 +63,6 @@ public class GnollTrickster extends Gnoll {
 	protected boolean canAttack( Char enemy ) {
 		return !Dungeon.level.adjacent( pos, enemy.pos )
 				&& (super.canAttack(enemy) || new Ballistica( pos, enemy.pos, Ballistica.PROJECTILE).collisionPos == enemy.pos);
-	}
-
-	@Override
-	public int attackProc( Char enemy, int damage ) {
-		damage = super.attackProc( enemy, damage );
-
-		if (combo >= 1){
-			//score loss is on-hit instead of on-attack as it's tied to combo
-			Statistics.questScores[0] -= 50;
-		}
-
-		//The gnoll's attacks get more severe the more the player lets it hit them
-		combo++;
-		int effect = Random.Int(4)+combo;
-
-		if (effect > 2) {
-
-			if (effect >= 6) {
-
-				if (Dungeon.level.flamable[enemy.pos]) {
-					GameScene.add(Blob.seed(enemy.pos, 4, Fire.class));
-				}
-				((Burning) null).reignite(enemy);
-
-			} else {
-				((Poison) null).set((effect - 2));
-			}
-
-		}
-		return damage;
 	}
 
 	@Override

@@ -196,17 +196,7 @@ public class PrismaticImage extends NPC {
 		return super.speed();
 	}
 
-	@Override
-	public int attackProc( Char enemy, int damage ) {
-		
-		if (enemy instanceof Mob) {
-			((Mob)enemy).aggro( this );
-		}
-		
-		return super.attackProc( enemy, damage );
-	}
-	
-	@Override
+    @Override
 	public CharSprite sprite() {
 		CharSprite s = super.sprite();
 		

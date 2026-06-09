@@ -22,10 +22,8 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.StenchGas;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Ghost;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.FetidRatSprite;
 import com.watabou.utils.PathFinder;
@@ -56,20 +54,6 @@ public class FetidRat extends Rat {
 	@Override
 	public int drRoll() {
 		return super.drRoll() + Random.NormalIntRange(0, 2);
-	}
-
-	@Override
-	public int attackProc( Char enemy, int damage ) {
-		damage = super.attackProc( enemy, damage );
-		if (Random.Int(3) == 0) {
-            ((Ooze) null).set( Ooze.DURATION );
-			//score loss is on-hit instead of on-attack because it's tied to ooze
-			if (enemy == Dungeon.hero && !Dungeon.level.water[enemy.pos]){
-				Statistics.questScores[0] -= 50;
-			}
-		}
-
-		return damage;
 	}
 
     @Override

@@ -121,19 +121,7 @@ public class Thief extends Mob {
 		return super.drRoll() + Random.NormalIntRange(0, 3);
 	}
 
-	@Override
-	public int attackProc( Char enemy, int damage ) {
-		damage = super.attackProc( enemy, damage );
-		
-		if (alignment == Alignment.ENEMY && item == null
-				&& enemy instanceof Hero && steal( (Hero)enemy )) {
-			state = FLEEING;
-		}
-
-		return damage;
-	}
-
-	protected boolean steal( Hero hero ) {
+    protected boolean steal( Hero hero ) {
 
 		Item toSteal = hero.belongings.randomUnequipped();
 

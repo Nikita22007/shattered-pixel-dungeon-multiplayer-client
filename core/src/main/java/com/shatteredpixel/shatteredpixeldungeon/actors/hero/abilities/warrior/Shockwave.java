@@ -121,7 +121,7 @@ public class Shockwave extends ArmorAbility {
 								if (Random.Int(10) < 3*hero.pointsInTalent(Talent.STRIKING_WAVE)){
 									boolean wasEnemy = ch.alignment == Char.Alignment.ENEMY
 											|| (ch instanceof Mimic && ch.alignment == Char.Alignment.NEUTRAL);
-									damage = hero.attackProc(ch, damage);
+
                                     if (hero.subClass == HeroSubClass.GLADIATOR && wasEnemy){
                                         ((Combo) null).hit( ch );
 									}

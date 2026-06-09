@@ -32,7 +32,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Sleep;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
@@ -357,18 +356,6 @@ public abstract class YogFist extends Mob {
 		protected void zap() {
 			spend(1f);
 			GameScene.add(Blob.seed(enemy.pos, 100, ToxicGas.class));
-		}
-
-		@Override
-		public int attackProc(Char enemy, int damage) {
-			damage = super.attackProc(enemy, damage);
-
-			if (Random.Int(2) == 0) {
-				((Ooze) null).set(Ooze.DURATION);
-				enemy.sprite.burst(0xFF000000, 5);
-			}
-
-			return damage;
 		}
 
 		{

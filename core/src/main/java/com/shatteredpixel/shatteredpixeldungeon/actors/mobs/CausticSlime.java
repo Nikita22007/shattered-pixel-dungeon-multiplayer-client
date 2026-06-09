@@ -22,8 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.GooBlob;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CausticSlimeSprite;
 import com.watabou.utils.PathFinder;
@@ -36,18 +34,8 @@ public class CausticSlime extends Slime {
 		
 		properties.add(Property.ACIDIC);
 	}
-	
-	@Override
-	public int attackProc( Char enemy, int damage ) {
-		if (Random.Int( 2 ) == 0) {
-            ((Ooze) null).set( Ooze.DURATION );
-			enemy.sprite.burst( 0x000000, 5 );
-		}
-		
-		return super.attackProc( enemy, damage );
-	}
-	
-	@Override
+
+    @Override
 	public void rollToDropLoot() {
 		if (Dungeon.hero.lvl > maxLvl + 2) return;
 		

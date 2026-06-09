@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LockedFloor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.WornKey;
@@ -37,7 +36,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.quest.GooBlob;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.GooSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BossHealthBar;
@@ -148,21 +146,6 @@ public class Goo extends Mob {
         } else {
             return super.canAttack(enemy);
         }
-    }
-
-    @Override
-    public int attackProc(Char enemy, int damage) {
-        damage = super.attackProc(enemy, damage);
-        if (Random.Int(3) == 0) {
-            ((Ooze) null).set(Ooze.DURATION);
-            enemy.sprite.burst(0x000000, 5);
-        }
-
-        if (pumpedUp > 0) {
-            PixelScene.shake(3, 0.2f);
-        }
-
-        return damage;
     }
 
     @Override

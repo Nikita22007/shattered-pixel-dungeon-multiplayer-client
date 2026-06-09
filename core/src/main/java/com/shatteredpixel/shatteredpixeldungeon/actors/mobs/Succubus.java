@@ -21,15 +21,11 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
-import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
@@ -37,9 +33,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.SuccubusSprite;
-import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
@@ -71,27 +65,8 @@ public class Succubus extends Mob {
 	public int damageRoll() {
 		return Random.NormalIntRange( 25, 30 );
 	}
-	
-	@Override
-	public int attackProc( Char enemy, int damage ) {
-        damage = super.attackProc(enemy, damage);
 
-        {
-            if (Random.Int(3) == 0) {
-                Charm c = null;
-                c.object = id();
-                c.ignoreNextHit = true; //so that the -5 duration from succubus hit is ignored
-                if (Dungeon.level.heroFOV[enemy.pos]) {
-                    enemy.sprite.centerEmitter().start(Speck.factory(Speck.HEART), 0.2f, 5);
-                    Sample.INSTANCE.play(Assets.Sounds.CHARMS);
-                }
-            }
-        }
-
-        return damage;
-    }
-	
-	@Override
+    @Override
 	protected boolean getCloser( int target ) {
 		if (fieldOfView[target] && Dungeon.level.distance( pos, target ) > 2 && blinkCooldown <= 0 && !rooted) {
 			

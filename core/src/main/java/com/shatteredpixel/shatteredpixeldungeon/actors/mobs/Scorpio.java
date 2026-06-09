@@ -72,17 +72,8 @@ public class Scorpio extends Mob {
 		return !Dungeon.level.adjacent( pos, enemy.pos )
 				&& (super.canAttack(enemy) || new Ballistica( pos, enemy.pos, Ballistica.PROJECTILE).collisionPos == enemy.pos);
 	}
-	
-	@Override
-	public int attackProc( Char enemy, int damage ) {
-		damage = super.attackProc( enemy, damage );
-		if (Random.Int( 2 ) == 0) {
-        }
-		
-		return damage;
-	}
-	
-	@Override
+
+    @Override
 	protected boolean getCloser( int target ) {
 		if (state == HUNTING) {
 			return enemySeen && getFurther( target );

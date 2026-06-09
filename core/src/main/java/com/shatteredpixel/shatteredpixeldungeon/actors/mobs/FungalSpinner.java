@@ -21,14 +21,10 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Regrowth;
-import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.FungalSpinnerSprite;
-import com.watabou.utils.PathFinder;
 
 public class FungalSpinner extends Spinner {
 
@@ -45,11 +41,6 @@ public class FungalSpinner extends Spinner {
     @Override
     protected void applyWebToCell(int cell) {
         GameScene.add(Blob.seed(cell, 40, Regrowth.class));
-    }
-
-    @Override
-    public int attackProc(Char enemy, int damage) {
-        return damage; //does not apply poison
     }
 
     {

@@ -22,10 +22,8 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ToxicGas;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
@@ -61,12 +59,6 @@ public class RotLasher extends Mob {
         return super.act();
     }
 
-
-    @Override
-    public int attackProc(Char enemy, int damage) {
-        damage = super.attackProc(enemy, damage);
-        return super.attackProc(enemy, damage);
-    }
 
     @Override
     public boolean reset() {

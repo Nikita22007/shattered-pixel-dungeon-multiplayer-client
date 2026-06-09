@@ -25,8 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Web;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.MysteryMeat;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -113,22 +111,7 @@ public class Spinner extends Mob {
 		return result;
 	}
 
-	@Override
-	public int attackProc(Char enemy, int damage) {
-		damage = super.attackProc( enemy, damage );
-		if (Random.Int(2) == 0) {
-			int duration = Random.IntRange(7, 8);
-			//we only use half the ascension modifier here as total poison dmg doesn't scale linearly
-			duration = Math.round(duration * (AscensionChallenge.statModifier(this)/2f + 0.5f));
-            ((Poison) null).set(duration);
-			webCoolDown = 0;
-			state = FLEEING;
-		}
-
-		return damage;
-	}
-	
-	private boolean shotWebVisually = false;
+    private boolean shotWebVisually = false;
 
 	public int webPos(){
 
