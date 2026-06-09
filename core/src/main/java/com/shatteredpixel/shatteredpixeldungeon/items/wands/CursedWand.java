@@ -59,7 +59,6 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.CursingTrap;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.ShockingTrap;
-import com.shatteredpixel.shatteredpixeldungeon.levels.traps.SummoningTrap;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Languages;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -342,7 +341,6 @@ public class CursedWand {
 				if (positiveOnly && user == Dungeon.hero){
 					ScrollOfMirrorImage.spawnImages(Dungeon.hero, 2);
 				} else {
-					new SummoningTrap().set(targetPos).activate();
 				}
 				return true;
 		}
