@@ -239,21 +239,6 @@ public class PowerOfMany extends ArmorAbility {
 		}
 
 		@Override
-		protected boolean act() {
-			{
-				die(null);
-				return true;
-			}
-			int oldPos = pos;
-			boolean result = super.act();
-			//partially simulates how the hero switches to idle animation
-			if ((pos == target || oldPos == pos) && sprite.looping()) {
-				sprite.idle();
-			}
-			return result;
-		}
-
-		@Override
 		public void defendPos(int cell) {
 			GLog.i(Messages.get(this, "direct_defend"));
 			super.defendPos(cell);

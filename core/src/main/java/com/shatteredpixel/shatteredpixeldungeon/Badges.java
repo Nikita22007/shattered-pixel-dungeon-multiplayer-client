@@ -323,25 +323,6 @@ public class Badges {
 		}
 	}
 
-	public static void saveGlobal(){
-		saveGlobal(false);
-	}
-
-	public static void saveGlobal(boolean force) {
-		if (saveNeeded || force) {
-			
-			Bundle bundle = new Bundle();
-			store( bundle, global );
-			
-			try {
-				FileUtils.bundleToFile(BADGES_FILE, bundle);
-				saveNeeded = false;
-			} catch (IOException e) {
-				ShatteredPixelDungeon.reportException(e);
-			}
-		}
-	}
-
 	public static int totalUnlocked(boolean global){
 		if (global) return Badges.global.size();
 		else        return Badges.local.size();

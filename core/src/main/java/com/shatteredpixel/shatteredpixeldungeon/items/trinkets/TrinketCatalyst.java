@@ -113,11 +113,7 @@ public class TrinketCatalyst extends Item {
 			ingredients.get(0).quantity(0);
 
 			ShatteredPixelDungeon.scene().addToFront(new WndTrinket(newCata));
-			try {
-                //do a save here as pausing alch scene doesn't otherwise save
-            } catch (IOException e) {
-				throw new RuntimeException(e);
-			}
+
 			return null;
 		}
 
@@ -219,10 +215,6 @@ public class TrinketCatalyst extends Item {
 								Statistics.itemsCrafted++;
 								Badges.validateItemsCrafted();
 
-								try {
-                                } catch (IOException e) {
-									ShatteredPixelDungeon.reportException(e);
-								}
 							}
 						}
 					}

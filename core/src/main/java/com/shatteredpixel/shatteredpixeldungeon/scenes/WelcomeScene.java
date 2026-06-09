@@ -289,8 +289,6 @@ public class WelcomeScene extends PixelScene {
 			}
 			Dungeon.daily = Dungeon.dailyReplay = false;
 
-			Badges.saveGlobal(true);
-
         }
 
 		SPDSettings.version(ShatteredPixelDungeon.versionCode);

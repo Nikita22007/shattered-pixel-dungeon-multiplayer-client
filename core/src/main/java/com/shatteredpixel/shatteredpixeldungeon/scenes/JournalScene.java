@@ -236,9 +236,7 @@ public class JournalScene extends PixelScene {
 	@Override
 	public void destroy() {
 
-		Badges.saveGlobal();
-
-		super.destroy();
+        super.destroy();
 	}
 
 	@Override

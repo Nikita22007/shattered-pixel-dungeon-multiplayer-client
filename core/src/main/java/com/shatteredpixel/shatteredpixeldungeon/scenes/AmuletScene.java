@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.scenes;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Chrome;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
@@ -80,8 +79,7 @@ public class AmuletScene extends PixelScene {
 			protected void onClick() {
 				Dungeon.win( Amulet.class );
 				Dungeon.deleteGame( GamesInProgress.curSlot, true );
-				Badges.saveGlobal();
-				btnExit.enable(false);
+                btnExit.enable(false);
 				btnStay.enable(false);
 
 				AmuletScene.this.add(new Delayer(0.1f){

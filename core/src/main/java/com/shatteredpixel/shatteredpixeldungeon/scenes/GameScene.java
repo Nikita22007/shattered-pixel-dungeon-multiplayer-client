@@ -617,9 +617,6 @@ public class GameScene extends PixelScene {
 			}
 
 			for (Mob mob : Dungeon.level.mobs) {
-				if (!new HashSet<ChampionEnemy>().isEmpty()) {
-					GLog.w(Messages.get(ChampionEnemy.class, "warn"));
-				}
 			}
 			InterlevelScene.mode = InterlevelScene.Mode.NONE;
 
@@ -684,7 +681,6 @@ public class GameScene extends PixelScene {
 		Emitter.freezeEmitters = false;
 		
 		scene = null;
-		Badges.saveGlobal();
 
 		super.destroy();
 	}
@@ -715,7 +711,6 @@ public class GameScene extends PixelScene {
 	public synchronized void onPause() {
 		try {
 			if (!Dungeon.hero.ready) waitForActorThread(500, false);
-			Badges.saveGlobal();
 		} catch (IOException e) {
 			ShatteredPixelDungeon.reportException(e);
 		}

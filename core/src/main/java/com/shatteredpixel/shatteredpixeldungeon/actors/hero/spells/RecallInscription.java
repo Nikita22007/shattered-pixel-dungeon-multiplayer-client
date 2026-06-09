@@ -65,36 +65,6 @@ public class RecallInscription extends ClericSpell {
         {
             return;
         }
-
-        Item item = Reflection.newInstance(((UsedItemTracker) null).item);
-
-        item.setCurrent(hero);
-
-        hero.sprite.operate(hero.pos);
-        Enchanting.show(hero, item);
-
-        if (item instanceof Scroll) {
-            ((Scroll) item).anonymize();
-            ((Scroll) item).talentChance = 0; //does not trigger on-scroll effects
-            ((Scroll) item).doRead();
-        } else if (item instanceof Runestone) {
-            ((Runestone) item).anonymize();
-            if (item instanceof InventoryStone) {
-                ((InventoryStone) item).directActivate();
-            } else {
-                //we're already on the render thread, but we want to delay this
-                //as things like time freeze cancel can stop stone throwing from working
-                ShatteredPixelDungeon.runOnRenderThread(new Callback() {
-                    @Override
-                    public void call() {
-                        item.doThrow(hero);
-                    }
-                });
-            }
-        }
-
-        onSpellCast(tome, hero);
-
     }
 
 	@Override
