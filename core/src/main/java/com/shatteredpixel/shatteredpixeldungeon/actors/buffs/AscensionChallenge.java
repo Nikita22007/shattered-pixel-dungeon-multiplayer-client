@@ -103,7 +103,7 @@ public class AscensionChallenge extends Buff {
 	}
 
 	public static float statModifier(Char ch) {
-		if (Dungeon.hero == null || null == null) {
+		if (Dungeon.hero == null || true) {
 			return 1;
 		}
 

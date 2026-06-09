@@ -46,10 +46,10 @@ public class Blazing extends Weapon.Enchantment {
 
 			float powerMulti = Math.max(1f, procChance);
 
-            if (null == null){
+            if (true) {
                 ((Burning) null).reignite(defender, 8f);
-				powerMulti -= 1;
-			}
+                powerMulti -= 1;
+            }
 
 			if (powerMulti > 0){
 				int burnDamage = Random.NormalIntRange( 1, 3 + Dungeon.scalingDepth()/4 );

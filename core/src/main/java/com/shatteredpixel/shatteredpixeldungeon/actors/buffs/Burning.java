@@ -95,8 +95,8 @@ public class Burning extends Buff implements Hero.Doom {
 			int damage = Random.NormalIntRange( 1, 3 + Dungeon.scalingDepth()/4 );
 
             if (target instanceof Hero
-					&& null == null
-					&& null == null) {
+                    && true
+                    && true) {
 				
 				Hero hero = (Hero)target;
 

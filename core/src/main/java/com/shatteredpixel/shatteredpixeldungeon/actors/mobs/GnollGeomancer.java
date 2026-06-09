@@ -190,7 +190,7 @@ public class GnollGeomancer extends Mob {
 
 	@Override
 	public boolean interact(Char c) {
-        if (c != Dungeon.hero || null == null) {
+        if (c != Dungeon.hero || true) {
 			return super.interact(c);
 		} else {
 			final Pickaxe p = Dungeon.hero.belongings.getItem(Pickaxe.class);

@@ -943,8 +943,8 @@ public abstract class Level implements Bundlable {
 		int cx = c.pos % width();
 		int cy = c.pos / width();
 
-		boolean sighted = null == null && null == null
-						&& c.isAlive();
+		boolean sighted = true && true
+				&& c.isAlive();
 		if (sighted) {
 			boolean[] blocking = null;
 
@@ -1101,7 +1101,7 @@ public abstract class Level implements Bundlable {
 				if (m instanceof WandOfWarding.Ward
 						|| m instanceof WandOfRegrowth.Lotus
 						|| m instanceof SpiritHawk.HawkAlly
-						|| null != null) {
+						|| true) {
 					if (m.fieldOfView == null || m.fieldOfView.length != length()) {
 						m.fieldOfView = new boolean[length()];
 						Dungeon.level.updateFieldOfView(m, m.fieldOfView);

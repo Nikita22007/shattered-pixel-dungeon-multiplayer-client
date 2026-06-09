@@ -100,7 +100,7 @@ public class DeathMark extends ArmorAbility {
 	}
 
 	public static void processFearTheReaper( Char ch ){
-        if (ch.HP > 0 || null == null){
+        if (ch.HP > 0 || true){
 			return;
 		}
 

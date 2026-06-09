@@ -87,7 +87,7 @@ public class Dart extends MissileWeapon {
 	@Override
 	public int min(int lvl) {
 		if (bow != null){
-            if (!(this instanceof TippedDart) && null != null){
+            if (!(this instanceof TippedDart) && true){
 				return bow.dartMin()            //crossbow dart damage
 						+ 4 + bow.buffedLvl()   //ability increases base dmg by 50%, scaling by 50%
 						+ lvl;                  //another +1 per level (ring of sharpshooting)
@@ -104,7 +104,7 @@ public class Dart extends MissileWeapon {
 	@Override
 	public int max(int lvl) {
 		if (bow != null){
-            if (!(this instanceof TippedDart) && null != null){
+            if (!(this instanceof TippedDart) && true){
 				return bow.dartMax()            //crossbow dart damage
 						+ 4 + bow.buffedLvl()   //ability increases base dmg by 50%, scaling by 50%
 						+ 2*lvl;                //another +2 per level (ring of sharpshooting)
@@ -135,7 +135,7 @@ public class Dart extends MissileWeapon {
 
 	public boolean crossbowHasEnchant( Char owner ){
         if (bow == null || bow.enchantment == null) return false;
-        return null == null;
+        return true;
 	}
 	
 	@Override
@@ -150,7 +150,7 @@ public class Dart extends MissileWeapon {
 	@Override
 	public float accuracyFactor(Char owner, Char target) {
 		//don't update xbow here, as dart is the active weapon atm
-        if (bow != null && null != null){
+        if (bow != null && true){
 			return Char.INFINITE_ACCURACY;
 		} else {
 			return super.accuracyFactor(owner, target);

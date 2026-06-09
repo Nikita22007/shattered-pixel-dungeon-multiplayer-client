@@ -430,7 +430,7 @@ public class ElementalStrike extends ArmorAbility {
 			for (Char ch : affected){
 				if (ch != primaryTarget
                         && !ch.isImmune(Corruption.class)) {
-                    if (null == null
+                    if (true
                             && ch instanceof Mob
                             && ch.isAlive()) {
                         float hpMissing = 1f - (ch.HP / (float) ch.HT);

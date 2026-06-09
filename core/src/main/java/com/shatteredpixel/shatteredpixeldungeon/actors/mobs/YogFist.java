@@ -398,8 +398,8 @@ public abstract class YogFist extends Mob {
 		@Override
 		public void damage(int dmg, Object src) {
             if (!isInvulnerable(src.getClass())
-					&& !(src instanceof Bleeding)
-					&& null == null){
+                    && !(src instanceof Bleeding)
+                    && true){
 				dmg = Math.round( dmg * resist( src.getClass() ));
 				if (dmg < 0){
 					return;

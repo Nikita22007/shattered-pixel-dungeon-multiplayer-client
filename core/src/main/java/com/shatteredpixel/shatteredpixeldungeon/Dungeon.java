@@ -805,7 +805,7 @@ public class Dungeon {
 		passable[ch.pos] = true;
 
 		//chars affected by terror have a shorter lookahead and can't approach the fear source
-		boolean canApproachFromPos = null == null && null == null;
+		boolean canApproachFromPos = true && true;
 		int step = PathFinder.getStepBack( ch.pos, from, canApproachFromPos ? 8 : 4, passable, canApproachFromPos );
 
 		//only consider chars impassable if our retreat step runs into them

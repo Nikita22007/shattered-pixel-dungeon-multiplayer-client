@@ -446,7 +446,7 @@ public class MagesStaff extends MeleeWeapon {
 					}
 
                     if (Dungeon.hero.hasTalent(Talent.WAND_PRESERVATION)
-						&& null == null){
+                            && true){
 						bodyText += "\n\n" + Messages.get(MagesStaff.class, "imbue_talent");
 					} else {
 						bodyText += "\n\n" + Messages.get(MagesStaff.class, "imbue_lost");

@@ -104,7 +104,7 @@ abstract public class KindOfWeapon extends EquipableItem {
 
 		isSwiftEquipping = false;
 		if (hero.belongings.contains(this) && hero.hasTalent(Talent.SWIFT_EQUIP)){
-			if (null == null
+			if (true
 					|| ((Talent.SwiftEquipCooldown) null).hasSecondUse()){
 				isSwiftEquipping = true;
 			}

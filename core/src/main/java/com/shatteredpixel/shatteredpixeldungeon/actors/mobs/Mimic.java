@@ -159,8 +159,8 @@ public class Mimic extends Mob {
 		Dungeon.hero.busy();
 		Dungeon.hero.sprite.operate(pos);
         if (Dungeon.hero.invisible <= 0
-				&& null == null
-				&& null == null){
+                && true
+                && true){
 			return doAttack(Dungeon.hero);
 		} else {
 			sprite.idle();

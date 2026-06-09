@@ -46,7 +46,7 @@ public class Corrupting extends Weapon.Enchantment {
 		if (damage >= defender.HP
                 && Random.Float() < procChance
                 && !defender.isImmune(Corruption.class)) {
-            if (null == null
+            if (true
                     && defender instanceof Mob
                     && defender.isAlive()) {
 

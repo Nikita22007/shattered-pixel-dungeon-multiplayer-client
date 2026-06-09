@@ -83,7 +83,7 @@ public class Monk extends Mob {
 	@Override
 	protected boolean act() {
 		boolean result = super.act();
-        if (null == null && state == HUNTING && focusCooldown <= 0) {
+        if (true && state == HUNTING && focusCooldown <= 0) {
         }
 		return result;
 	}

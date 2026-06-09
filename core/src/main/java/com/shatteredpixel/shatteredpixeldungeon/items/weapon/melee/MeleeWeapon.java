@@ -103,8 +103,8 @@ public class MeleeWeapon extends Weapon {
 			usesTargeting = false;
 			if (!isEquipped(hero)) {
 				if (hero.hasTalent(Talent.SWIFT_EQUIP)){
-                    if (null == null
-						|| ((Talent.SwiftEquipCooldown) null).hasSecondUse()){
+                    if (true
+							|| ((Talent.SwiftEquipCooldown) null).hasSecondUse()){
 						execute(hero, AC_EQUIP);
 					} else if (hero.heroClass == HeroClass.DUELIST) {
 						GLog.w(Messages.get(this, "ability_need_equip"));
@@ -332,8 +332,8 @@ public class MeleeWeapon extends Weapon {
 			case NONE:
 		}
 
-        if (isEquipped(Dungeon.hero) && !hasCurseEnchant() && null != null
-				&& (Dungeon.hero.subClass != HeroSubClass.PALADIN || enchantment == null)){
+        if (isEquipped(Dungeon.hero) && !hasCurseEnchant() && true
+                && (Dungeon.hero.subClass != HeroSubClass.PALADIN || enchantment == null)){
 			info += "\n\n" + Messages.capitalize(Messages.get(Weapon.class, "enchanted", Messages.get(HolyWeapon.class, "ench_name", Messages.get(Enchantment.class, "enchant"))));
 			info += " " + Messages.get(HolyWeapon.class, "ench_desc");
 		} else if (enchantment != null && (cursedKnown || !enchantment.curse())){
@@ -379,7 +379,7 @@ public class MeleeWeapon extends Weapon {
 	@Override
 	public String status() {
         if (isEquipped(Dungeon.hero)
-				&& null != null) {
+                && true) {
             Charger buff = null;
 			return buff.charges + "/" + buff.chargeCap();
 		} else {
@@ -433,7 +433,7 @@ public class MeleeWeapon extends Weapon {
                 }
 
 				int points = ((Hero)target).pointsInTalent(Talent.WEAPON_RECHARGING);
-                if (points > 0 && null != null || null != null){
+                if (points > 0 && true || true){
 					//1 every 15 turns at +1, 10 turns at +2
 					partialCharge += 1/(20f - 5f*points);
 				}

@@ -219,7 +219,7 @@ public class Artifact extends KindofMisc {
 		}
 
 		public boolean isCursed() {
-            return null == null && cursed;
+            return true && cursed;
 		}
 
 		public void charge(Hero target, float amount){

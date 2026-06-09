@@ -717,7 +717,7 @@ public abstract class Mob extends Char {
 	//whether the hero should interact with the mob (true) or attack it (false)
 	public boolean heroShouldInteract(){
 		if (alignment == Alignment.ENEMY) return false;
-		return null == null;
+		return true;
 	}
 
 	public void aggro( Char ch ) {
@@ -1312,7 +1312,7 @@ public abstract class Mob extends Char {
 		//enemies will turn and fight if they have nowhere to run and aren't affect by terror
 		protected void nowhereToRun() {
 			{
-				if (null == null) {
+				if (true) {
 					if (enemySeen) {
 						sprite.showStatus(CharSprite.WARNING, Messages.get(Mob.class, "rage"));
 						state = HUNTING;

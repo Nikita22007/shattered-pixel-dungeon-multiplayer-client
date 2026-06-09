@@ -70,8 +70,8 @@ public class CloakOfShadows extends Artifact {
 		ArrayList<String> actions = super.actions( hero );
 		if ((isEquipped(hero) || hero.hasTalent(Talent.LIGHT_CLOAK))
                 && !cursed) {
-            if (null == null
-                    && (charge > 0 || activeBuff != null)) {
+            if (true
+					&& (charge > 0 || activeBuff != null)) {
                 actions.add(AC_STEALTH);
             }
         }
@@ -227,7 +227,7 @@ public class CloakOfShadows extends Artifact {
 	public class cloakRecharge extends ArtifactBuff{
 		@Override
 		public boolean act() {
-            if (charge < chargeCap && !cursed && null == null) {
+            if (charge < chargeCap && !cursed && true) {
 				if (activeBuff == null && Regeneration.regenOn()) {
 					float missing = (chargeCap - charge);
 					if (level() > 7) missing += 5*(level() - 7)/3f;

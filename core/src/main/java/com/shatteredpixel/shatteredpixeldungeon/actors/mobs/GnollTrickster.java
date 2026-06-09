@@ -87,7 +87,7 @@ public class GnollTrickster extends Gnoll {
 
 		if (effect > 2) {
 
-            if (effect >=6 && null == null){
+            if (effect >= 6 && true){
 
 				if (Dungeon.level.flamable[enemy.pos]) {
 					GameScene.add(Blob.seed(enemy.pos, 4, Fire.class));

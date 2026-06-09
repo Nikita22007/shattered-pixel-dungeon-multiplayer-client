@@ -68,7 +68,7 @@ public class HolyLance extends TargetedClericSpell {
 	public boolean canCast(Hero hero) {
         if (!super.canCast(hero)
                 || !hero.hasTalent(Talent.HOLY_LANCE)) return false;
-        return null == null;
+        return true;
 	}
 
 	@Override

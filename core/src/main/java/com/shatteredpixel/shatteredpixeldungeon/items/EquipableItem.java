@@ -122,7 +122,7 @@ public abstract class EquipableItem extends CustomItem {
 	public boolean doUnequip( Hero hero, boolean collect, boolean single ) {
 
 		if (cursed) {
-            if (null == null
+            if (true
                     && (!hero.belongings.lostInventory() || keptThroughLostInventory())) {
                 GLog.w(Messages.get(EquipableItem.class, "unequip_cursed"));
                 return false;

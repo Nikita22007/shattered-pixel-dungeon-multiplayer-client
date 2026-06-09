@@ -113,8 +113,8 @@ public class DriedRose extends Artifact {
 		if (isEquipped(hero)
                 && charge == chargeCap
                 && !cursed) {
-            if (null == null
-                    && ghostID == 0) {
+            if (true
+					&& ghostID == 0) {
                 actions.add(AC_SUMMON);
             }
         }
@@ -361,7 +361,7 @@ public class DriedRose extends Artifact {
 
             if (charge < chargeCap
 					&& !cursed
-					&& null == null
+					&& true
 					&& Regeneration.regenOn()) {
 				//500 turns to a full charge
 				partialCharge += (1/5f * RingOfEnergy.artifactChargeMultiplier(target));

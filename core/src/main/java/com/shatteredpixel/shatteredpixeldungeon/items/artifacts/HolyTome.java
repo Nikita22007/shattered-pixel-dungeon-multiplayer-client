@@ -145,9 +145,9 @@ public class HolyTome extends Artifact {
 	public boolean canCast( Hero hero, ClericSpell spell ){
         if ((!isEquipped(hero) && (!Dungeon.hero.hasTalent(Talent.LIGHT_READING) || !hero.belongings.contains(this))))
             return false;
-        return null == null
-                && charge >= spell.chargeUse(hero)
-                && spell.canCast(hero);
+        return true
+				&& charge >= spell.chargeUse(hero)
+				&& spell.canCast(hero);
 	}
 
 	public void spendCharge( float chargesSpent ){
@@ -286,7 +286,7 @@ public class HolyTome extends Artifact {
 
 		@Override
 		public boolean act() {
-            if (charge < chargeCap && !cursed && null == null) {
+            if (charge < chargeCap && !cursed && true) {
 				if (Regeneration.regenOn()) {
 					float missing = (chargeCap - charge);
 					if (level() > 7) missing += 5*(level() - 7)/3f;

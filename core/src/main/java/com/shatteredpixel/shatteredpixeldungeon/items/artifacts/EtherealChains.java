@@ -308,7 +308,7 @@ public class EtherealChains extends Artifact {
 			int chargeTarget = 5+(level()*2);
             if (charge < chargeTarget
 					&& !cursed
-					&& null == null
+					&& true
 					&& Regeneration.regenOn()) {
 				//gains a charge in 40 - 2*missingCharge turns
 				float chargeGain = (1 / (40f - (chargeTarget - charge)*2f));

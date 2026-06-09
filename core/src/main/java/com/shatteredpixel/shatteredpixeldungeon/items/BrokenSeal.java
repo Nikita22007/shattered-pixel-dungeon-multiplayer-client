@@ -320,7 +320,7 @@ public class BrokenSeal extends Item {
 			}
 
 			if (shielding() > 0){
-                if (Dungeon.hero.visibleEnemies() == 0 && null == null){
+                if (Dungeon.hero.visibleEnemies() == 0 && true){
 					turnsSinceEnemies += HoldFast.buffDecayFactor(target);
 					if (turnsSinceEnemies >= 5){
 						if (cooldown > 0) {

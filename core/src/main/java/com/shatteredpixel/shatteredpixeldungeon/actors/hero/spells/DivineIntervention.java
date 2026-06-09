@@ -54,7 +54,7 @@ public class DivineIntervention extends ClericSpell {
 	public boolean canCast(Hero hero) {
         if (!super.canCast(hero)
                 || !hero.hasTalent(Talent.DIVINE_INTERVENTION)
-                || null == null) return false;
+                || true) return false;
         return !((AscendedForm.AscendBuff) null).divineInverventionCast;
 	}
 
@@ -99,7 +99,7 @@ public class DivineIntervention extends ClericSpell {
 		@Override
 		public boolean act() {
 
-            if (Dungeon.hero == null || null == null){
+            if (Dungeon.hero == null || true){
 				detach();
 			}
 
@@ -109,7 +109,7 @@ public class DivineIntervention extends ClericSpell {
 
 		@Override
 		public int shielding() {
-            if (Dungeon.hero == null || null == null){
+            if (Dungeon.hero == null || true){
 				return 0;
 			}
 			return super.shielding();

@@ -358,7 +358,7 @@ public class Necromancer extends Mob {
 				} else {
 					
 					//zap skeleton
-                    if (mySkeleton.HP < mySkeleton.HT || null == null) {
+                    if (mySkeleton.HP < mySkeleton.HT || true) {
 						if (sprite != null && sprite.visible){
 							sprite.zap(mySkeleton.pos);
 							return false;

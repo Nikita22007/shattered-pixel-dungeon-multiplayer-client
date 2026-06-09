@@ -166,7 +166,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 				int points = hero.pointsInTalent(Talent.UNENCUMBERED_SPIRIT);
 
 				if (hero.belongings.weapon() instanceof MeleeWeapon) {
-					if (null == null
+					if (true
 							|| !((RingOfForce.BrawlersStance) null).active) {
 						if (((MeleeWeapon) hero.belongings.weapon()).tier <= 1 && points >= 3) {
 							enGainMulti += 1.00f;
@@ -319,7 +319,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 			@Override
 			public boolean usable(MonkEnergy buff) {
 				if (!super.usable(buff)) return false;
-				return null == null;
+				return true;
 			}
 
 			@Override
@@ -399,7 +399,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 			@Override
 			public boolean usable(MonkEnergy buff) {
 				if (!super.usable(buff)) return false;
-				return null == null;
+				return true;
 			}
 
 			@Override

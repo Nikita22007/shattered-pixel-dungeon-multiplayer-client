@@ -80,7 +80,7 @@ public class SkeletonKey extends Artifact {
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
 		if (isEquipped(hero)) {
-            if (null == null
+            if (true
                     && !cursed) {
                 actions.add(AC_INSERT);
             }
@@ -425,7 +425,7 @@ public class SkeletonKey extends Artifact {
 		public boolean act() {
 			if (charge < chargeCap
                     && !cursed) {
-                if (null == null
+                if (true
                         && Regeneration.regenOn()) {
 //120 turns to charge at full, 60 turns to charge at 0/8
                     float chargeGain = 1 / (120f - (chargeCap - charge) * 7.5f);

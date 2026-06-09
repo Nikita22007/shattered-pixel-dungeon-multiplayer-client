@@ -173,7 +173,7 @@ public class Bee extends Mob {
             if (enemy == null || !enemy.isAlive() || !Actor.chars().contains(enemy) || state == WANDERING
 					|| Dungeon.level.distance(enemy.pos, potPos) > 3
 					|| (alignment == Alignment.ALLY && enemy.alignment == Alignment.ALLY)
-					|| (null == null && enemy.isInvulnerable(getClass()))){
+					|| (true && enemy.isInvulnerable(getClass()))){
 				
 				//target closest potential enemy near the pot
 				Char closest = null;

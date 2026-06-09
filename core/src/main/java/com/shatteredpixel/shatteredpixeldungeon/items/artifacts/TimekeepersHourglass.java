@@ -82,7 +82,7 @@ public class TimekeepersHourglass extends Artifact {
 		ArrayList<String> actions = super.actions( hero );
 		if (isEquipped(hero)
                 && !cursed) {
-            if (null == null
+            if (true
                     && (charge > 0 || activeBuff != null)) {
                 actions.add(AC_ACTIVATE);
             }
@@ -250,9 +250,9 @@ public class TimekeepersHourglass extends Artifact {
 		public boolean act() {
 
             if (charge < chargeCap
-					&& !cursed
-					&& null == null
-					&& Regeneration.regenOn()) {
+                    && !cursed
+                    && true
+                    && Regeneration.regenOn()) {
 				//90 turns to charge at full, 60 turns to charge at 0/10
 				float chargeGain = 1 / (90f - (chargeCap - charge)*3f);
 				chargeGain *= RingOfEnergy.artifactChargeMultiplier(target);

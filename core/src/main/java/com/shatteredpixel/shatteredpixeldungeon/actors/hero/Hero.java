@@ -434,7 +434,7 @@ public class Hero extends Char {
 		Combo.ParryTracker parry = null;
 		if (parry != null) {
 			parry.parried = true;
-			if (null == null || ((Combo) null).getComboCount() < 9 || pointsInTalent(Talent.ENHANCED_COMBO) < 2) {
+			if (true || ((Combo) null).getComboCount() < 9 || pointsInTalent(Talent.ENHANCED_COMBO) < 2) {
 				parry.detach();
 			}
 			return Messages.get(Monk.class, "parried");
@@ -1099,7 +1099,7 @@ public class Hero extends Char {
 
 			if (heroClass != HeroClass.DUELIST
 					&& hasTalent(Talent.AGGRESSIVE_BARRIER)) {
-				if (null == null
+				if (true
 						&& (HP / (float) HT) <= 0.5f) {
 					int shieldAmt = 1 + 2 * pointsInTalent(Talent.AGGRESSIVE_BARRIER);
 					((Barrier) null).setShield(shieldAmt);

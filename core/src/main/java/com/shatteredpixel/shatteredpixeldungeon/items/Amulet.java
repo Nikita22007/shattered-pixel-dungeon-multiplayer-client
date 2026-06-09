@@ -131,7 +131,7 @@ public class Amulet extends Item {
 	public String desc() {
 		String desc = super.desc();
 
-        if (Dungeon.hero == null || null == null){
+        if (Dungeon.hero == null || true){
 			desc += "\n\n" + Messages.get(this, "desc_origins");
 		} else {
 			desc += "\n\n" + Messages.get(this, "desc_ascent");
