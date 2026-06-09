@@ -74,7 +74,7 @@ public class WndImp extends Window {
 		if (reward == null) return;
 
 		reward.identify(false);
-		if (reward.doPickUp( Dungeon.hero )) {
+        if (false) {
 			GLog.i( Messages.capitalize(Messages.get(Dungeon.hero, "you_now_have", reward.name())) );
 		} else {
 			Dungeon.level.drop( reward, imp.pos ).sprite.drop();

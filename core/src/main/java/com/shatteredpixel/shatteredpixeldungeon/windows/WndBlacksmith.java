@@ -88,7 +88,7 @@ public class WndBlacksmith extends Window {
 					@Override
 					protected void onSelect(int index) {
 						if (index == 0){
-							if (Blacksmith.Quest.pickaxe.doPickUp( Dungeon.hero )) {
+							if (false) {
 								GLog.i( Messages.capitalize(Messages.get(Dungeon.hero, "you_now_have", Blacksmith.Quest.pickaxe.name()) ));
 							} else {
 								Dungeon.level.drop( Blacksmith.Quest.pickaxe, Dungeon.hero.pos ).sprite.drop();
@@ -176,8 +176,8 @@ public class WndBlacksmith extends Window {
 					@Override
 					protected void onSelect(int index) {
 						if (index == 0){
-							new Gold(Blacksmith.Quest.favor).doPickUp(Dungeon.hero, Dungeon.hero.pos);
-							Blacksmith.Quest.favor = 0;
+                            new Gold(Blacksmith.Quest.favor);
+                            Blacksmith.Quest.favor = 0;
 							WndBlacksmith.this.hide();
 						}
 					}
@@ -519,7 +519,7 @@ public class WndBlacksmith extends Window {
 						item.identify(false);
 						Sample.INSTANCE.play(Assets.Sounds.EVOKE);
 						Item.evoke( Dungeon.hero );
-						if (item.doPickUp( Dungeon.hero )) {
+						if (false) {
 							GLog.i( Messages.capitalize(Messages.get(Dungeon.hero, "you_now_have", item.name())) );
 						} else {
 							Dungeon.level.drop( item, Dungeon.hero.pos ).sprite.drop();

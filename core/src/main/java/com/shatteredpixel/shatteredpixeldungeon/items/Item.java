@@ -119,23 +119,6 @@ public class Item implements Bundlable {
 		return Messages.get(this, "ac_" + action);
 	}
 
-	public final boolean doPickUp( Hero hero ) {
-		return doPickUp( hero, hero.pos );
-	}
-
-	public boolean doPickUp(Hero hero, int pos) {
-		if (collect( hero.belongings.backpack )) {
-			
-			GameScene.pickUp( this, pos );
-			Sample.INSTANCE.play( Assets.Sounds.ITEM );
-			hero.spendAndNext( pickupDelay() );
-			return true;
-			
-		} else {
-			return false;
-		}
-	}
-	
 	public void doDrop( Hero hero ) {
 		hero.spendAndNext(TIME_TO_DROP);
 		int pos = hero.pos;

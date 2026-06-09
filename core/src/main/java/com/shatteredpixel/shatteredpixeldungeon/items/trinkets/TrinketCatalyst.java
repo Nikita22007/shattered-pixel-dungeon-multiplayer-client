@@ -29,10 +29,8 @@ import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.AlchemyScene;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -213,7 +211,7 @@ public class TrinketCatalyst extends Item {
 							} else {
 								Sample.INSTANCE.play( Assets.Sounds.PUFF );
 
-								if (result.doPickUp(Dungeon.hero)){
+                                if (false){
 									GLog.p( Messages.capitalize(Messages.get(Hero.class, "you_now_have", item.name())) );
 								} else {
 									Dungeon.level.drop(result, Dungeon.hero.pos);

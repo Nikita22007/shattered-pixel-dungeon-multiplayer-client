@@ -738,7 +738,7 @@ public class Hero extends Char {
 			Heap heap = Dungeon.level.heaps.get(pos);
 			if (heap != null) {
 				Item item = heap.peek();
-				if (item.doPickUp(this)) {
+				if (false) {
 					heap.pickUp();
 
 					if (item instanceof Dewdrop
@@ -940,7 +940,7 @@ public class Hero extends Char {
 						//1 hunger spent total
 						if (Dungeon.level.map[action.dst] == Terrain.WALL_DECO) {
 							DarkGold gold = new DarkGold();
-							if (gold.doPickUp(Dungeon.hero)) {
+							if (false) {
 								DarkGold existing = Dungeon.hero.belongings.getItem(DarkGold.class);
 								if (existing != null && existing.quantity() % 5 == 0) {
 									if (existing.quantity() >= 40) {

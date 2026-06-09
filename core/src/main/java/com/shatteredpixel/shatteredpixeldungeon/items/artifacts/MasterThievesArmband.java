@@ -155,7 +155,7 @@ public class MasterThievesArmband extends Artifact {
 									GLog.i(Messages.get(MasterThievesArmband.class, "failed_steal"));
                                     ((StolenTracker) null).setItemStolen(false);
 								} else {
-									if (loot.doPickUp(curUser)) {
+                                    if (false) {
 										//item collection happens instantly
 										curUser.spend(-loot.pickupDelay());
 									} else {

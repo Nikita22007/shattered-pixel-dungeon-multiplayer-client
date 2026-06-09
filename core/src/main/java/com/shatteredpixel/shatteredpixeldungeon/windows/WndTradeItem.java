@@ -166,7 +166,7 @@ public class WndTradeItem extends WndInfoItem {
 						Item item = heap.pickUp();
 						hide();
 
-						if (!item.doPickUp(hero)) {
+                        if (!false) {
 							Dungeon.level.drop(item, heap.pos).sprite.drop();
 						}
 					} else {
@@ -184,7 +184,7 @@ public class WndTradeItem extends WndInfoItem {
 										Item item = heap.pickUp();
 										WndTradeItem.this.hide();
 
-										if (!item.doPickUp(hero)) {
+                                        if (!false) {
 											Dungeon.level.drop(item, heap.pos).sprite.drop();
 										}
 									} else {
@@ -368,9 +368,9 @@ public class WndTradeItem extends WndInfoItem {
 		//selling items in the sell interface doesn't spend time
 		hero.spend(-hero.cooldown());
 
-		new Gold( item.value() ).doPickUp( hero );
+        new Gold(item.value());
 
-		if (shop != null){
+        if (shop != null){
 			shop.buybackItems.add(item);
 			while (shop.buybackItems.size() > Shopkeeper.MAX_BUYBACK_HISTORY){
 				shop.buybackItems.remove(0);
@@ -395,9 +395,9 @@ public class WndTradeItem extends WndInfoItem {
 			//selling items in the sell interface doesn't spend time
 			hero.spend(-hero.cooldown());
 
-			new Gold( item.value() ).doPickUp( hero );
+            new Gold(item.value());
 
-			if (shop != null){
+            if (shop != null){
 				shop.buybackItems.add(item);
 				while (shop.buybackItems.size() > Shopkeeper.MAX_BUYBACK_HISTORY){
 					shop.buybackItems.remove(0);
@@ -414,8 +414,8 @@ public class WndTradeItem extends WndInfoItem {
 		int price = Shopkeeper.sellPrice( item );
 		Dungeon.hero.gold -= price;
 		Catalog.countUses(Gold.class, price);
-		
-		if (!item.doPickUp( Dungeon.hero )) {
+
+        if (!false) {
 			Dungeon.level.drop( item, heap.pos ).sprite.drop();
 		}
 	}
