@@ -31,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.PurpleParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Dewdrop;
-import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -239,10 +238,10 @@ public class Eye extends Mob {
 				}
 				break;
 			case 2:
-				loot = Generator.randomUsingDefaults(Generator.Category.SEED);
+                loot = null;
 				break;
 			case 3:
-				loot = Generator.randomUsingDefaults(Generator.Category.STONE);
+                loot = null;
 				break;
 		}
 		return loot;

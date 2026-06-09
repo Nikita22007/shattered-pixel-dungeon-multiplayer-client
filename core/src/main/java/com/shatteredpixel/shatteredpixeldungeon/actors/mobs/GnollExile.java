@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.GnollExileSprite;
@@ -102,9 +101,9 @@ public class GnollExile extends Gnoll {
 
 		//drops 2 or 3 random items
 		ArrayList<Item> items = new ArrayList<>();
-		items.add(Generator.randomUsingDefaults());
-		items.add(Generator.randomUsingDefaults());
-		if (Random.Int(2) == 0) items.add(Generator.randomUsingDefaults());
+        items.add(null);
+        items.add(null);
+		if (Random.Int(2) == 0) items.add(null);
 
 		for (Item item : items){
 			int ofs;

@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.AlchemyScene;
@@ -160,7 +159,7 @@ public class TrinketCatalyst extends Item {
 
 			//roll new trinkets if trinkets were not already rolled
 			while (cata.rolledTrinkets.size() < NUM_TRINKETS){
-				cata.rolledTrinkets.add((Trinket) Generator.random(Generator.Category.TRINKET));
+                cata.rolledTrinkets.add((Trinket) null);
 			}
 
 			for (int i = 0; i < NUM_TRINKETS; i++){
@@ -198,7 +197,7 @@ public class TrinketCatalyst extends Item {
 
 						Item result = item;
 						if (result instanceof RandomTrinket){
-							result = Generator.random(Generator.Category.TRINKET);
+                            result = null;
 						}
 
 						TrinketCatalyst cata = Dungeon.hero.belongings.getItem(TrinketCatalyst.class);

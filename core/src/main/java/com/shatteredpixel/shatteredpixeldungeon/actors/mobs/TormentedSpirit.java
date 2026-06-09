@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShaftParticle;
-import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
@@ -60,10 +59,10 @@ public class TormentedSpirit extends Wraith {
 		//50/50 between weapon or armor, always uncursed & enchanted, 50% chance to be +1 if level 0
 		Item prize;
 		if (Random.Int(2) == 0){
-			prize = Generator.randomWeapon(true);
+			prize = null;
 			((Weapon)prize).enchant();
 		} else {
-			prize = Generator.randomArmor();
+            prize = null;
 			((Armor) prize).inscribe();
 		}
 		prize.cursed = false;

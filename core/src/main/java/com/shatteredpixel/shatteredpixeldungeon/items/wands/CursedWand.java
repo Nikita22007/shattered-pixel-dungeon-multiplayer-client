@@ -199,7 +199,7 @@ public class CursedWand {
 						&& !Dungeon.level.pit[pos]
 						&& Dungeon.level.traps.get(pos) == null
 						&& !Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
-					Dungeon.level.plant((Plant.Seed) Generator.randomUsingDefaults(Generator.Category.SEED), pos);
+					Dungeon.level.plant((Plant.Seed) null, pos);
 					tryForWandProc(Actor.findChar(pos), origin);
 				} else {
 					return cursedEffect(origin, user, targetPos);
@@ -402,8 +402,9 @@ public class CursedWand {
 				} else {
 					Item reward;
 					do {
-						reward = Generator.randomUsingDefaults(Random.oneOf(Generator.Category.WEAPON, Generator.Category.ARMOR,
-								Generator.Category.RING, Generator.Category.WAND));
+						Random.oneOf(Generator.Category.WEAPON, Generator.Category.ARMOR,
+								Generator.Category.RING, Generator.Category.WAND);
+						reward = null;
 					} while (reward.level() < 1);
 					mimic.items.add(reward);
 				}
@@ -467,8 +468,9 @@ public class CursedWand {
 				origin.detach(Dungeon.hero.belongings.backpack);
 				Item result;
 				do {
-					result = Generator.randomUsingDefaults(Random.oneOf(Generator.Category.WEAPON, Generator.Category.ARMOR,
-							Generator.Category.RING, Generator.Category.ARTIFACT));
+					Random.oneOf(Generator.Category.WEAPON, Generator.Category.ARMOR,
+							Generator.Category.RING, Generator.Category.ARTIFACT);
+					result = null;
 				} while (result.cursed);
 				if (result.isUpgradable()) result.upgrade();
 				result.cursed = result.cursedKnown = true;

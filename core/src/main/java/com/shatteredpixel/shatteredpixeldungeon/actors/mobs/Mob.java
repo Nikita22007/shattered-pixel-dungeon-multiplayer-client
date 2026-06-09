@@ -664,21 +664,23 @@ public abstract class Mob extends Char {
         Item item;
         if (loot instanceof Generator.Category) {
 
-            item = Generator.randomUsingDefaults((Generator.Category) loot);
+            item = null;
 
         } else if (loot instanceof Class<?>) {
 
             if (ExoticPotion.regToExo.containsKey(loot)) {
                 if (Random.Float() < ExoticCrystals.consumableExoticChance()) {
-                    return Generator.random(ExoticPotion.regToExo.get(loot));
+                    ExoticPotion.regToExo.get(loot);
+                    return null;
                 }
             } else if (ExoticScroll.regToExo.containsKey(loot)) {
                 if (Random.Float() < ExoticCrystals.consumableExoticChance()) {
-                    return Generator.random(ExoticScroll.regToExo.get(loot));
+                    ExoticScroll.regToExo.get(loot);
+                    return null;
                 }
             }
 
-            item = Generator.random((Class<? extends Item>) loot);
+            item = null;
 
         } else {
 

@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Transmuting;
-import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.brews.Brew;
@@ -65,19 +64,19 @@ public class Recycle extends InventorySpell {
 		Item result;
 		do {
 			if (item instanceof Potion) {
-				result = Generator.randomUsingDefaults(Generator.Category.POTION);
+                result = null;
 				if (item instanceof ExoticPotion){
 					result = Reflection.newInstance(ExoticPotion.regToExo.get(result.getClass()));
 				}
 			} else if (item instanceof Scroll) {
-				result = Generator.randomUsingDefaults(Generator.Category.SCROLL);
+                result = null;
 				if (item instanceof ExoticScroll){
 					result = Reflection.newInstance(ExoticScroll.regToExo.get(result.getClass()));
 				}
 			} else if (item instanceof Plant.Seed) {
-				result = Generator.randomUsingDefaults(Generator.Category.SEED);
+                result = null;
 			} else if (item instanceof Runestone) {
-				result = Generator.randomUsingDefaults(Generator.Category.STONE);
+                result = null;
 			} else {
 				result = TippedDart.randomTipped(1);
 			}

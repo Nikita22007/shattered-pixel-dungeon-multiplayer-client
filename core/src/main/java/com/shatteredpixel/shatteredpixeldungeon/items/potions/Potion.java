@@ -514,8 +514,8 @@ public class Potion extends Item {
 			
 			if ( (seeds.size() == 2 && Random.Int(4) == 0)
 					|| (seeds.size() == 3 && Random.Int(2) == 0)) {
-				
-				result = (Potion) Generator.randomUsingDefaults( Generator.Category.POTION );
+
+                result = (Potion) null;
 				
 			} else {
 				result = Reflection.newInstance(types.get(Random.element(ingredients).getClass()));
@@ -529,7 +529,7 @@ public class Potion extends Item {
 			while (result instanceof PotionOfHealing
 					&& Random.Int(10) < Dungeon.LimitedDrops.COOKING_HP.count) {
 
-				result = (Potion) Generator.randomUsingDefaults(Generator.Category.POTION);
+                result = (Potion) null;
 			}
 			
 			if (result instanceof PotionOfHealing) {

@@ -153,7 +153,7 @@ public class Warlock extends Mob implements Callback {
 		} else {
 			Item i;
 			do {
-				i = Generator.randomUsingDefaults(Generator.Category.POTION);
+                i = null;
 			} while (i instanceof PotionOfHealing);
 			return i;
 		}

@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
@@ -50,7 +49,7 @@ public class ArmoredStatue extends Statue {
 	public void createWeapon(boolean useDecks) {
 		super.createWeapon(useDecks);
 
-		armor = Generator.randomArmor();
+        armor = null;
 		armor.cursed = false;
 		armor.inscribe(Armor.Glyph.random());
 	}

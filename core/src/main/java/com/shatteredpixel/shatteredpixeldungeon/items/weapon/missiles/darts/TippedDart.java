@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PinCushion;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfRegrowth;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -237,7 +236,7 @@ public abstract class TippedDart extends Dart {
 	public static TippedDart randomTipped( int quantity ){
 		Plant.Seed s;
 		do{
-			s = (Plant.Seed) Generator.randomUsingDefaults(Generator.Category.SEED);
+            s = (Plant.Seed) null;
 		} while (!types.containsKey(s.getClass()));
 		
 		return getTipped(s, quantity );

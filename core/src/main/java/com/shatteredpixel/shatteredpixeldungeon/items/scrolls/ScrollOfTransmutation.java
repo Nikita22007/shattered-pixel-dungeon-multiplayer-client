@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.scrolls;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Transmuting;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
@@ -177,7 +176,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 			if (a == null){
 				//if no artifacts are left, generate a random ring with shared ID/curse state
 				//artifact and ring levels are not exactly equivalent, give the ring up to +2
-				Item result = Generator.randomUsingDefaults(Generator.Category.RING);
+				Item result = null;
 				result.levelKnown = item.levelKnown;
 				result.cursed = item.cursed;
 				result.cursedKnown = item.cursedKnown;
@@ -207,7 +206,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 		} else {
 			Wand n;
 			do {
-				n = (Wand) Generator.randomUsingDefaults(Generator.Category.WAND);
+				n = (Wand) null;
 			} while (Challenges.isItemBlocked(n) || n.getClass() == wandClass);
 			n.cursed = false;
 			n.level(0);
@@ -229,15 +228,8 @@ public class ScrollOfTransmutation extends InventoryScroll {
 	
 	private static Weapon changeWeapon( Weapon w ) {
 		Weapon n;
-		Generator.Category c;
-		if (w instanceof MeleeWeapon) {
-			c = Generator.wepTiers[((MeleeWeapon)w).tier - 1];
-		} else {
-			c = Generator.misTiers[((MissileWeapon)w).tier - 1];
-		}
-		
 		do {
-			n = (Weapon)Generator.randomUsingDefaults(c);
+			n = (Weapon) null;
 		} while (Challenges.isItemBlocked(n) || n.getClass() == w.getClass());
 
 		n.level(0);
@@ -272,7 +264,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 	private static Ring changeRing( Ring r ) {
 		Ring n;
 		do {
-			n = (Ring)Generator.randomUsingDefaults( Generator.Category.RING );
+			n = (Ring) null;
 		} while (Challenges.isItemBlocked(n) || n.getClass() == r.getClass());
 		
 		n.level(0);
@@ -294,7 +286,8 @@ public class ScrollOfTransmutation extends InventoryScroll {
 	private static Artifact changeArtifact( Artifact a ) {
 		Artifact n;
 		do {
-			n = Generator.randomArtifact();
+
+			n = null;
 		} while ( n != null && (Challenges.isItemBlocked(n) || n.getClass() == a.getClass()));
 		
 		if (n != null){
@@ -321,7 +314,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 	private static Trinket changeTrinket( Trinket t ){
 		Trinket n;
 		do {
-			n = (Trinket)Generator.random(Generator.Category.TRINKET);
+			n = (Trinket) null;
 		} while ( Challenges.isItemBlocked(n) || n.getClass() == t.getClass());
 
 		n.level(t.trueLevel());
@@ -335,7 +328,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 	private static Wand changeWand( Wand w ) {
 		Wand n;
 		do {
-			n = (Wand)Generator.randomUsingDefaults( Generator.Category.WAND );
+			n = (Wand) null;
 		} while ( Challenges.isItemBlocked(n) || n.getClass() == w.getClass());
 		
 		n.level( 0 );
@@ -359,7 +352,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 		Plant.Seed n;
 		
 		do {
-			n = (Plant.Seed)Generator.randomUsingDefaults( Generator.Category.SEED );
+			n = (Plant.Seed) null;
 		} while (n.getClass() == s.getClass());
 		
 		return n;
@@ -369,7 +362,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 		Runestone n;
 		
 		do {
-			n = (Runestone) Generator.randomUsingDefaults( Generator.Category.STONE );
+			n = (Runestone) null;
 		} while (n.getClass() == r.getClass());
 		
 		return n;

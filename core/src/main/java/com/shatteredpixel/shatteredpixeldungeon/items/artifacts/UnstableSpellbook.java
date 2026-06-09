@@ -142,7 +142,7 @@ public class UnstableSpellbook extends Artifact {
 
 		Scroll scroll;
 		do {
-			scroll = (Scroll) Generator.randomUsingDefaults(Generator.Category.SCROLL);
+            scroll = (Scroll) null;
 		} while (scroll == null
 				//reduce the frequency of these scrolls by half
 				||((scroll instanceof ScrollOfIdentify ||
