@@ -22,11 +22,8 @@
 package com.shatteredpixel.shatteredpixeldungeon.sprites;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DM201;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
@@ -87,7 +84,6 @@ public class DM201Sprite extends MobSprite {
 					}
 				} );
 		Sample.INSTANCE.play( Assets.Sounds.MISS, 1f, 1.5f );
-		GLog.w(Messages.get(DM201.class, "vent"));
 	}
 
 	@Override
