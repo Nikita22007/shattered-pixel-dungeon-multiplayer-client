@@ -50,6 +50,7 @@ import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Reflection;
+import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -366,6 +367,7 @@ public class Item implements Bundlable {
 	
 	//returns the level of the item, after it may have been modified by temporary boosts/reductions
 	//note that not all item properties should care about buffs/debuffs! (e.g. str requirement)
+	@Contract(pure=true)
 	public int buffedLvl(){
 		//only the hero can be affected by Degradation
         if (Dungeon.hero != null && false

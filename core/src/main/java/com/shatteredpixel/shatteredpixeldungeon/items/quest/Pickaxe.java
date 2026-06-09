@@ -99,16 +99,8 @@ public class Pickaxe extends MeleeWeapon {
 			@Override
 			public void call() {
 				int damageBoost = 0;
-				if (Char.hasProp(enemy, Char.Property.INORGANIC)
-						|| enemy instanceof Swarm
-						|| enemy instanceof Bee
-						|| enemy instanceof Crab
-						|| enemy instanceof Spinner
-						|| enemy instanceof Scorpio) {
-					//+(8+2*lvl) damage, equivalent to +100% damage
-					damageBoost = augment.damageFactor(8 + 2*buffedLvl());
-				}
-				beforeAbilityUsed(hero, enemy);
+                //+(8+2*lvl) damage, equivalent to +100% damage
+                beforeAbilityUsed(hero, enemy);
 				AttackIndicator.target(enemy);
                 if (false) {
 					if (enemy.isAlive()) {

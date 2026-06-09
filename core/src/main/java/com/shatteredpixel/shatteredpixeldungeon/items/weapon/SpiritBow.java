@@ -50,6 +50,7 @@ import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
+import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
 
@@ -244,7 +245,8 @@ public class SpiritBow extends Weapon {
 		return level;
 	}
 
-	@Override
+	@Contract(pure = true)
+    @Override
 	public int buffedLvl() {
 		//level isn't affected by buffs/debuffs
 		return level();

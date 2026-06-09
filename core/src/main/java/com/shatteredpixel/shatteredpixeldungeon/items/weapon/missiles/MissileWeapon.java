@@ -43,6 +43,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
+import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
 
@@ -109,7 +110,8 @@ abstract public class MissileWeapon extends Weapon {
 	}
 
 	//use the parent item if this has been thrown from a parent
-	public int buffedLvl(){
+	@Contract(pure = true)
+    public int buffedLvl(){
 		if (parent != null) {
 			return parent.buffedLvl();
 		} else {

@@ -31,6 +31,7 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
+import org.jetbrains.annotations.Contract;
 
 public class Artifact extends KindofMisc {
 
@@ -123,7 +124,8 @@ public class Artifact extends KindofMisc {
 		return visiblyUpgraded();
 	}
 
-	@Override
+	@Contract(pure = true)
+    @Override
 	public int buffedLvl() {
 		//level isn't affected by buffs/debuffs
 		return level();

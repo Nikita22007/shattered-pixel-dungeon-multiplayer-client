@@ -65,6 +65,7 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
+import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -371,7 +372,8 @@ public abstract class Wand extends Item {
 		return this;
 	}
 
-	@Override
+	@Contract(pure = true)
+    @Override
 	public int buffedLvl() {
 		int lvl = super.buffedLvl();
 

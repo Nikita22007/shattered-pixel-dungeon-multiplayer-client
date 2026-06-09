@@ -67,6 +67,7 @@ import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
+import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -90,6 +91,7 @@ abstract public class Weapon extends KindOfWeapon {
 			delayFactor = dly;
 		}
 
+		@Contract(pure = true)
 		public int damageFactor(int dmg){
 			return Math.round(dmg * damageFactor);
 		}

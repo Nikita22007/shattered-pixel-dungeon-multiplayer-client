@@ -53,6 +53,7 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.Visual;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
+import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
 
@@ -264,6 +265,7 @@ public class MeleeWeapon extends Weapon {
 	}
 
 	private static boolean evaluatingTwinUpgrades = false;
+	@Contract(pure = true)
 	@Override
 	public int buffedLvl() {
 		if (!evaluatingTwinUpgrades && Dungeon.hero != null && isEquipped(Dungeon.hero) && Dungeon.hero.hasTalent(Talent.TWIN_UPGRADES)){
