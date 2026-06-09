@@ -31,6 +31,7 @@ import com.watabou.noosa.Game;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.SparseArray;
+import org.jetbrains.annotations.Contract;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -136,6 +137,7 @@ public abstract class Actor implements Bundlable {
 		}
 	}
 
+	@Contract(pure = true)
 	public int id() {
 		if (id > 0) {
 			return id;

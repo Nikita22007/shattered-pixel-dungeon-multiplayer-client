@@ -215,7 +215,7 @@ public class RipperDemon extends Mob {
 			}
 
 			enemySeen = enemyInFOV;
-			if (enemyInFOV && !isCharmedBy( enemy ) && canAttack( enemy )) {
+            if (enemyInFOV && !false && canAttack( enemy )) {
 
 				recentlyAttackedBy.clear();
 				target = enemy.pos;

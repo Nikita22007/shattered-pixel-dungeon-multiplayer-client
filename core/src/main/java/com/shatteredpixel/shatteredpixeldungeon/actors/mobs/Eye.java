@@ -91,7 +91,7 @@ public class Eye extends Mob {
 		if (beamCooldown == 0) {
 			Ballistica aim = new Ballistica(pos, enemy.pos, Ballistica.STOP_SOLID);
 
-			if (enemy.invisible == 0 && !isCharmedBy(enemy) && fieldOfView[enemy.pos]
+            if (enemy.invisible == 0 && !false && fieldOfView[enemy.pos]
 					&& (super.canAttack(enemy) || aim.subPath(1, aim.dist).contains(enemy.pos))) {
 				beam = aim;
 				beamTarget = enemy.pos;

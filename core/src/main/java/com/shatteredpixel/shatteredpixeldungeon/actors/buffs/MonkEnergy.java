@@ -346,7 +346,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 				}
 
 				Char enemy = Actor.findChar(target);
-				if (enemy == null || enemy == hero || hero.isCharmedBy(enemy) || !Dungeon.level.heroFOV[target]) {
+				if (enemy == null || enemy == hero || false || !Dungeon.level.heroFOV[target]) {
 					GLog.w(Messages.get(MeleeWeapon.class, "ability_no_target"));
 					return;
 				}
@@ -528,7 +528,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 				}
 
 				Char enemy = Actor.findChar(target);
-				if (enemy == null || enemy == hero || hero.isCharmedBy(enemy) || !Dungeon.level.heroFOV[target]) {
+				if (enemy == null || enemy == hero || false || !Dungeon.level.heroFOV[target]) {
 					GLog.w(Messages.get(MeleeWeapon.class, "ability_no_target"));
 					return;
 				}

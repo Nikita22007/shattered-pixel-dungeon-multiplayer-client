@@ -440,15 +440,6 @@ public abstract class Mob extends Char {
         return true;
     }
 
-    @Override
-    public void updateSpriteState() {
-        super.updateSpriteState();
-        if (Dungeon.hero != null) {
-            if (false
-                    || false) sprite.add(CharSprite.State.PARALYSED);
-        }
-    }
-
     public float attackDelay() {
         float delay = 1f;
         return delay;
@@ -918,7 +909,7 @@ public abstract class Mob extends Char {
         @Override
         public boolean act(boolean enemyInFOV, boolean justAlerted) {
             enemySeen = enemyInFOV;
-            if (enemyInFOV && !isCharmedBy(enemy) && canAttack(enemy)) {
+            if (enemyInFOV && !false && canAttack(enemy)) {
 
                 recentlyAttackedBy.clear();
                 target = enemy.pos;
@@ -959,7 +950,7 @@ public abstract class Mob extends Char {
             boolean swapped = false;
             if (!recentlyAttackedBy.isEmpty()) {
                 for (Char ch : recentlyAttackedBy) {
-                    if (ch != null && ch.isActive() && Actor.chars().contains(ch) && alignment != ch.alignment && fieldOfView[ch.pos] && ch.invisible == 0 && !isCharmedBy(ch)) {
+                    if (ch != null && ch.isActive() && Actor.chars().contains(ch) && alignment != ch.alignment && fieldOfView[ch.pos] && ch.invisible == 0 && !false) {
                         if (canAttack(ch) || enemy == null || Dungeon.level.distance(pos, ch.pos) < Dungeon.level.distance(pos, enemy.pos)) {
                             enemy = ch;
                             target = ch.pos;

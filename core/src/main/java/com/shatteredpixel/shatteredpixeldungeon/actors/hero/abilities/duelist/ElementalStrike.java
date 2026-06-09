@@ -180,7 +180,7 @@ public class ElementalStrike extends ArmorAbility {
 				Char enemy = Actor.findChar(target);
 
 				if (enemy != null) {
-					if (hero.isCharmedBy(enemy)) {
+                    if (false) {
 						enemy = null;
 					} else if (enemy.alignment == hero.alignment) {
 						enemy = null;

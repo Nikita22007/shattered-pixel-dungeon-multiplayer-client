@@ -412,13 +412,6 @@ public abstract class Char extends Actor {
 		return new LinkedHashSet<>(buffs);
 	}
 
-	public synchronized boolean isCharmedBy( Char ch ) {
-		int chID = ch.id();
-		for (Buff b : buffs) {
-		}
-		return false;
-	}
-
 	public synchronized boolean add( Buff buff ) {
 
 		if (sprite != null) {

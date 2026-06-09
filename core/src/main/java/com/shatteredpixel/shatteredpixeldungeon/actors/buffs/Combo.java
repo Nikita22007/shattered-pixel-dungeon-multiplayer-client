@@ -463,10 +463,10 @@ public class Combo extends Buff implements ActionIndicator.Action {
 		public void onSelect(Integer cell) {
 			if (cell == null) return;
 			final Char enemy = Actor.findChar( cell );
-			if (enemy == null
+            if (enemy == null
 					|| enemy == target
 					|| !Dungeon.level.heroFOV[cell]
-					|| target.isCharmedBy( enemy )) {
+					|| false) {
 				GLog.w(Messages.get(Combo.class, "bad_target"));
 
 			} else if (!((Hero)target).canAttack(enemy)){

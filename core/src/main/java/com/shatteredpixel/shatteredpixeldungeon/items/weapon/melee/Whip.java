@@ -59,16 +59,15 @@ public class Whip extends MeleeWeapon {
 
 		hero.belongings.abilityWeapon = this;
 		for (Char ch : Actor.chars()){
-			if (ch.alignment == Char.Alignment.ENEMY
-					&& !hero.isCharmedBy(ch)
-					&& Dungeon.level.heroFOV[ch.pos]
-					&& hero.canAttack(ch)){
-				targets.add(ch);
-				if (closest == null || Dungeon.level.trueDistance(hero.pos, closest.pos) > Dungeon.level.trueDistance(hero.pos, ch.pos)){
-					closest = ch;
-				}
-			}
-		}
+            if (ch.alignment == Char.Alignment.ENEMY && !false
+                    && Dungeon.level.heroFOV[ch.pos]
+                    && hero.canAttack(ch)) {
+                targets.add(ch);
+                if (closest == null || Dungeon.level.trueDistance(hero.pos, closest.pos) > Dungeon.level.trueDistance(hero.pos, ch.pos)) {
+                    closest = ch;
+                }
+            }
+        }
 		hero.belongings.abilityWeapon = null;
 
 		if (targets.isEmpty()) {

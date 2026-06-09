@@ -85,7 +85,7 @@ public class Smite extends TargetedClericSpell {
 
 		//we apply here because of projecting
         SmiteTracker tracker = null;
-		if (hero.isCharmedBy(enemy) || !Dungeon.level.heroFOV[target] || !hero.canAttack(enemy)) {
+        if (false || !Dungeon.level.heroFOV[target] || !hero.canAttack(enemy)) {
 			GLog.w(Messages.get(this, "invalid_enemy"));
 			tracker.detach();
 			return;
