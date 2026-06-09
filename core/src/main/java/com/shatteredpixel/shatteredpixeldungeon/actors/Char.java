@@ -1187,13 +1187,7 @@ public abstract class Char extends Actor {
 
 		return true;
 	}
-	
-	public synchronized void remove( Class<? extends Buff> buffClass ) {
-		for (Buff buff : new HashSet<Buff>()) {
-			remove( buff );
-		}
-	}
-	
+
 	@Override
 	protected synchronized void onRemove() {
 		for (Buff buff : buffs.toArray(new Buff[buffs.size()])) {
