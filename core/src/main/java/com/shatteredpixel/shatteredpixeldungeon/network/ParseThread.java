@@ -1980,4 +1980,5 @@ public class ParseThread implements Callable<String> {
     public static boolean isConnectedToOldServer(){
         return isOldServer;
     }
+
 }

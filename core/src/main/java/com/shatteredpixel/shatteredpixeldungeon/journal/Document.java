@@ -73,6 +73,30 @@ public enum Document {
 		return false;
 	}
 
+	public static void updatePageState(String docName, String page, int state) {
+		try {
+			Document doc = valueOf(docName);
+			if (doc.pagesStates.containsKey(page)) {
+				doc.pagesStates.put(page, state);
+				Journal.saveNeeded = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void reset() {
+		for (Document doc : values()) {
+			for (String page : doc.pageNames()) {
+				int defaultState = NOT_FOUND;
+				if (doc == INTROS && "Dungeon".equals(page)) {
+					defaultState = READ;
+				}
+				doc.pagesStates.put(page, defaultState);
+			}
+		}
+	}
+
 	public boolean findPage( int pageIdx ) {
 		return findPage( pagesStates.keySet().toArray(new String[0])[pageIdx] );
 	}

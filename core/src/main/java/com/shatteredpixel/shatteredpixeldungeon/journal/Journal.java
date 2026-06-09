@@ -52,6 +52,11 @@ public class Journal {
 		
 		loaded = true;
 	}
+
+	public static void forceReload() {
+		loaded = false;
+		loadGlobal();
+	}
 	
 	//package-private
 	static boolean saveNeeded = false;
@@ -61,6 +66,9 @@ public class Journal {
 	}
 
 	public static void saveGlobal(boolean force){
+		if (com.shatteredpixel.shatteredpixeldungeon.network.ParseThread.getActiveThread() != null) {
+			return;
+		}
 		if (!force && !saveNeeded){
 			return;
 		}
