@@ -190,10 +190,6 @@ public class Statue extends Mob {
 		}
 		return desc;
 	}
-	
-	{
-		resistances.add(Grim.class);
-	}
 
 	public static Statue random(){
 		return random( true );

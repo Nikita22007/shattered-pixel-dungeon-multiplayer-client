@@ -276,12 +276,6 @@ public class Eye extends Mob {
 		beamCharged = bundle.getBoolean(BEAM_CHARGED);
 	}
 
-	{
-		resistances.add( WandOfDisintegration.class );
-		resistances.add( DeathGaze.class );
-		resistances.add( DisintegrationTrap.class );
-	}
-
 	private class Hunting extends Mob.Hunting{
 		@Override
 		public boolean act(boolean enemyInFOV, boolean justAlerted) {

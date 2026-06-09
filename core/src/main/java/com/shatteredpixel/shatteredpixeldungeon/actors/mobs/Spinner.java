@@ -212,10 +212,6 @@ public class Spinner extends Mob {
 	private int right(int direction){
 		return direction == 7 ? 0 : direction+1;
 	}
-
-	{
-		resistances.add(Poison.class);
-	}
 	
 	{
 		immunities.add(Web.class);

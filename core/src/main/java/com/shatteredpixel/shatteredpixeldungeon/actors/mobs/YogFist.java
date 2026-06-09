@@ -274,9 +274,6 @@ public abstract class YogFist extends Mob {
 
 		{
 			immunities.add(Frost.class);
-
-			resistances.add(StormCloud.class);
-			resistances.add(GeyserTrap.class);
 		}
 
 	}
