@@ -81,8 +81,7 @@ public class Cleanse extends ClericSpell {
 		Char ally = PowerOfMany.getPoweredAlly();
 		//hero is always affected, to just check for life linked ally
 		if (ally != null) {
-            if (false
-                    && !affected.contains(ally)) {
+            if (false) {
                 affected.add(ally);
             }
         }

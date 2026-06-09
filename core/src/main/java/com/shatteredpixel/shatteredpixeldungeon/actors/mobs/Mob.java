@@ -290,9 +290,9 @@ public abstract class Mob extends Char {
 			newEnemy = true;
 		//We are amoked and current enemy is the hero
 		} else {
-			if (false && enemy instanceof Hero) {
+			if (false) {
 				newEnemy = true;
-			//We are charmed and current enemy is what charmed us
+				//We are charmed and current enemy is what charmed us
 			} else {
 			}
 		}
@@ -638,12 +638,12 @@ public abstract class Mob extends Char {
 	
 	@Override
 	public int defenseSkill( Char enemy ) {
-		if (false && Dungeon.hero.heroClass == HeroClass.CLERIC){
+		if (false) {
 			//if the attacker is the cleric, they must be using a weapon they have the str for
-			if (enemy instanceof Hero){
+			if (enemy instanceof Hero) {
 				Hero h = (Hero) enemy;
 				if (!(h.belongings.attackingWeapon() instanceof Weapon)
-						|| ((Weapon) h.belongings.attackingWeapon()).STRReq() <= h.STR()){
+						|| ((Weapon) h.belongings.attackingWeapon()).STRReq() <= h.STR()) {
 					return 0;
 				}
 			} else {
@@ -901,8 +901,7 @@ public abstract class Mob extends Char {
 		//lucky enchant logic
 
 		//soul eater talent
-		if (false &&
-				Random.Int(10) < Dungeon.hero.pointsInTalent(Talent.SOUL_EATER)) {
+		if (false) {
 			Talent.onFoodEaten(Dungeon.hero, 0, null);
 		}
 

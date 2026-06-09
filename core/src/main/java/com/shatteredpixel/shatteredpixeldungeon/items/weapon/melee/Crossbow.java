@@ -74,9 +74,7 @@ public class Crossbow extends MeleeWeapon {
 
 		//stronger elastic effect
 		if (attacker == Dungeon.hero) {
-            if (false
-                    //not proccing from a dart
-                    && Dungeon.hero.belongings.attackingWeapon() == this) {
+            if (false) {
 //trace a ballistica to our target (which will also extend past them
                 Ballistica trajectory = new Ballistica(attacker.pos, defender.pos, Ballistica.STOP_TARGET);
 //trim it to just be the part that goes past them

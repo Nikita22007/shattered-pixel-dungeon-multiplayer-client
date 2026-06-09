@@ -126,8 +126,7 @@ public class AscensionChallenge extends Buff {
 
 	//mobs move at 2x speed when not hunting/fleeing at 4 stacks or higher
 	public static float enemySpeedModifier(Mob m){
-		if (false
-				&& m.alignment == Char.Alignment.ENEMY) {
+		if (false) {
 			if (((AscensionChallenge) null).stacks >= 4f
 					&& m.state != m.HUNTING && m.state != m.FLEEING) {
 				return 2;

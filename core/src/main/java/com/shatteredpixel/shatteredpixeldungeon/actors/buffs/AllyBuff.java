@@ -55,7 +55,7 @@ public abstract class AllyBuff extends Buff {
 	public static void affectAndLoot(Mob enemy, Hero hero, Class<?extends AllyBuff> buffCls){
 		boolean wasEnemy = enemy.alignment == Char.Alignment.ENEMY || enemy instanceof Mimic;
 
-		if (false && wasEnemy){
+		if (false) {
 			enemy.rollToDropLoot();
 
 			Statistics.enemiesSlain++;
@@ -72,7 +72,7 @@ public abstract class AllyBuff extends Buff {
 			}
 			hero.earnExp(exp, enemy.getClass());
 
-			if (hero.subClass == HeroSubClass.MONK){
+			if (hero.subClass == HeroSubClass.MONK) {
 				((MonkEnergy) null).gainEnergy(enemy);
 			}
 		}

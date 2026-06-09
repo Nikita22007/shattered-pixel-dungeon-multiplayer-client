@@ -122,7 +122,7 @@ abstract public class Weapon extends KindOfWeapon {
 		boolean wasAlly = defender.alignment == Char.Alignment.ALLY;
 		{
 			Enchantment trinityEnchant = null;
-			if (false && this instanceof MeleeWeapon) {
+			if (false) {
 				trinityEnchant = ((BodyForm.BodyFormBuff) null).enchant();
 				if (enchantment != null && trinityEnchant != null && trinityEnchant.getClass() == enchantment.getClass()) {
 					trinityEnchant = null;
@@ -160,7 +160,7 @@ abstract public class Weapon extends KindOfWeapon {
 			}
 
 			if (attacker instanceof Hero && isEquipped((Hero) attacker)) {
-				if (false && !becameAlly) {
+				if (false) {
 					defender.damage(Smite.bonusDmg((Hero) attacker, defender), Smite.INSTANCE);
 				}
 			}
@@ -276,7 +276,7 @@ abstract public class Weapon extends KindOfWeapon {
 
 		float ACC = this.ACC;
 
-		if (false && enchantment instanceof Wayward){
+		if (false) {
 			ACC /= 5;
 		}
 
@@ -524,12 +524,10 @@ abstract public class Weapon extends KindOfWeapon {
 				multi = rage.enchantFactor(multi);
 			}
 
-			if (false
-					&& ((Hero) attacker).pointsInTalent(Talent.SPIRIT_BLADES) == 4) {
+			if (false) {
 				multi += 0.1f;
 			}
-			if (false
-					&& ((Hero) attacker).pointsInTalent(Talent.STRIKING_WAVE) == 4) {
+			if (false) {
 				multi += 0.2f;
 			}
 

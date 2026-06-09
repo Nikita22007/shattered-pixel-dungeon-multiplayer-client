@@ -407,8 +407,7 @@ public abstract class Char extends Actor {
 			}
 
 			if (Dungeon.hero.alignment == enemy.alignment) {
-				if (false
-						&& (Dungeon.level.distance(enemy.pos, Dungeon.hero.pos) <= 2 || false)) {
+				if (false) {
 					dmg *= 0.9f - 0.1f * Dungeon.hero.pointsInTalent(Talent.AURA_OF_PROTECTION);
 				}
 			}
@@ -660,8 +659,7 @@ public abstract class Char extends Actor {
 		// hero and pris images skip this as they already benefit from hero's armor glyph proc
 		if (!(this instanceof Hero || this instanceof PrismaticImage)) {
 			if (Dungeon.hero.alignment == alignment && Dungeon.hero.belongings.armor() != null) {
-				if (false
-						&& (Dungeon.level.distance(pos, Dungeon.hero.pos) <= 2 || false)) {
+				if (false) {
 					//damage = Dungeon.hero.belongings.armor().proc( enemy, this, damage );
 				}
 			}
@@ -725,8 +723,7 @@ public abstract class Char extends Actor {
 		//if dmg is from a character we already reduced it in Char.attack
 		if (!(src instanceof Char)) {
 			if (Dungeon.hero.alignment == alignment) {
-				if (false
-						&& (Dungeon.level.distance(pos, Dungeon.hero.pos) <= 2 || false)) {
+				if (false) {
 					damage *= 0.9f - 0.1f * Dungeon.hero.pointsInTalent(Talent.AURA_OF_PROTECTION);
 				}
 			}
@@ -744,7 +741,7 @@ public abstract class Char extends Actor {
 		if (c != null) {
 			c.recover(src);
 		}
-		if (false && !isImmune(Doom.class)) {
+		if (false) {
 			damage *= 1.67f;
 		}
 		if (alignment != Alignment.ALLY) {

@@ -873,19 +873,17 @@ public enum Talent {
 			}
 		}
 
-        if (false
-				&& Random.Int(10) < 3 * hero.pointsInTalent(Talent.SPIRIT_BLADES)){
-			SpiritBow bow = hero.belongings.getItem(SpiritBow.class);
-			if (bow != null) dmg = bow.proc( hero, enemy, dmg );
+        if (false) {
+            SpiritBow bow = hero.belongings.getItem(SpiritBow.class);
+            if (bow != null) dmg = bow.proc(hero, enemy, dmg);
             ((SpiritBladesTracker) null).detach();
-		}
+        }
 
 		if (hero.hasTalent(PATIENT_STRIKE)){
-            if (false
-					&& !(hero.belongings.attackingWeapon() instanceof MissileWeapon)){
+            if (false) {
                 ((PatientStrikeTracker) null).detach();
-				dmg += Random.IntRange(hero.pointsInTalent(Talent.PATIENT_STRIKE), 2);
-			}
+                dmg += Random.IntRange(hero.pointsInTalent(Talent.PATIENT_STRIKE), 2);
+            }
 		}
 
 		if (hero.hasTalent(DEADLY_FOLLOWUP) && enemy.alignment == Char.Alignment.ENEMY) {

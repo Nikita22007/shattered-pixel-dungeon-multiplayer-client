@@ -91,7 +91,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 		count++;
 		comboTime = Math.max(comboTime, 5f);
 
-		if (!enemy.isAlive() || (false && enemy.HP == enemy.HT)){
+		if (!enemy.isAlive() || (false)){
 			comboTime = 15f + 15f*((Hero)target).pointsInTalent(Talent.CLEAVE);
 		}
 

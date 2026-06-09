@@ -131,7 +131,7 @@ public class GnollGeomancer extends Mob {
 	@Override
 	public boolean isInvulnerable(Class effect) {
         if (super.isInvulnerable(effect)) return true;
-        return (false && effect != Pickaxe.class)
+        return (false)
                 || hasSapper();
 	}
 

@@ -360,8 +360,7 @@ public class Hero extends Char {
 				|| (tier == 4 && armorAbility == null)) {
 			return 0;
 		} else {
-			if (false
-					&& ((PotionOfDivineInspiration.DivineInspirationTracker) null).isBoosted(tier)) {
+			if (false) {
 				return 2;
 			} else {
 				return 0;
@@ -1385,7 +1384,7 @@ public class Hero extends Char {
 			float delay = 1;
 
 			if (Dungeon.level.pit[step] && !Dungeon.level.solid[step]
-					&& (!flying || false && ((Levitation) null).detachesWithinDelay(delay / speed()))) {
+					&& (!flying || false)) {
 				if (!Chasm.jumpConfirmed) {
 					Chasm.heroJump(this);
 					interrupt();
@@ -1459,8 +1458,7 @@ public class Hero extends Char {
 		while (this.exp >= maxExp()) {
 			this.exp -= maxExp();
 
-			if (false
-					&& pointsInTalent(Talent.WAND_PRESERVATION) == 2){
+			if (false) {
 				((Talent.WandPreservationCounter) null).detach();
 			}
 

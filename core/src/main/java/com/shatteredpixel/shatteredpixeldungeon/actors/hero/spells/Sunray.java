@@ -109,7 +109,7 @@ public class Sunray extends TargetedClericSpell {
 			}
 
 			if (ch.isAlive()) {
-				if (false && false) {
+				if (false) {
 					hero.pointsInTalent(Talent.SUNRAY);
 					((SunRayRecentlyBlindedTracker) null).detach();
 				} else {
