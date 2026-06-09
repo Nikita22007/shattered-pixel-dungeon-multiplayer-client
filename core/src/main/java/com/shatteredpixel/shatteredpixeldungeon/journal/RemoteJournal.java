@@ -1,5 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.journal;
 
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.nikita22007.multiplayer.utils.text.LocalizedString;
 import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.network.text.LocalizedStringParser;
@@ -94,6 +96,7 @@ public class RemoteJournal {
 		public final int headerSize;
 		public final boolean headerCenter;
 		public final int order;
+		public final ArrayList<RemoteRecipe> recipes = new ArrayList<>();
 
 		Entry(@NotNull JSONObject obj) throws JSONException {
 			kind = JsonStringHelper.optString(obj, "kind", "item");
@@ -108,6 +111,34 @@ public class RemoteJournal {
 			headerSize = obj.optInt("header_size", 7);
 			headerCenter = obj.optBoolean("header_center", false);
 			order = obj.optInt("order", 0);
+
+			JSONArray recipesArray = obj.optJSONArray("recipes");
+			if (recipesArray != null) {
+				for (int i = 0; i < recipesArray.length(); i++) {
+					if (recipesArray.isNull(i)) {
+						recipes.add(null);
+					} else {
+						recipes.add(new RemoteRecipe(recipesArray.getJSONObject(i)));
+					}
+				}
+			}
+		}
+	}
+
+	public static class RemoteRecipe {
+		public final ArrayList<Item> ingredients = new ArrayList<>();
+		public final Item output;
+		public final int cost;
+
+		RemoteRecipe(JSONObject obj) throws JSONException {
+			JSONArray ingrArray = obj.optJSONArray("ingredients");
+			if (ingrArray != null) {
+				for (int i = 0; i < ingrArray.length(); i++) {
+					ingredients.add(ingrArray.isNull(i) ? null : CustomItem.createItem(ingrArray.getJSONObject(i)));
+				}
+			}
+			output = obj.has("output") && !obj.isNull("output") ? CustomItem.createItem(obj.getJSONObject("output")) : null;
+			cost = obj.optInt("cost", 0);
 		}
 	}
 

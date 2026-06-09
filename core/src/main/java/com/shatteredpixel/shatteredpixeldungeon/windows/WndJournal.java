@@ -43,9 +43,12 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.ScrollPane;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ScrollingGridPane;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ScrollingListPane;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
+import com.shatteredpixel.shatteredpixeldungeon.ui.QuickRecipe;
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.watabou.input.KeyBindings;
 import com.watabou.input.KeyEvent;
 import com.watabou.noosa.BitmapText;
+import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.PointerArea;
@@ -297,6 +300,7 @@ public class WndJournal extends WndTabbed {
 		private RenderedTextBlock body;
 
 		private ScrollPane list;
+		private ArrayList<QuickRecipe> recipes = new ArrayList<>();
 
 		@Override
 		protected void createChildren() {
@@ -400,6 +404,14 @@ public class WndJournal extends WndTabbed {
 				return;
 			}
 
+			for (QuickRecipe r : recipes){
+				if (r != null) {
+					r.killAndErase();
+					r.destroy();
+				}
+			}
+			recipes.clear();
+
 			Component content = list.content();
 
 			content.clear();
@@ -415,7 +427,64 @@ public class WndJournal extends WndTabbed {
 			body.setPos(0, title.bottom());
 			content.add(body);
 
-			content.setSize(width(), body.bottom());
+			ArrayList<QuickRecipe> toAdd = new ArrayList<>();
+			for (RemoteJournal.RemoteRecipe rr : page.recipes) {
+				if (rr == null) {
+					toAdd.add(null);
+				} else {
+					toAdd.add(new QuickRecipe(rr.ingredients, rr.output, rr.cost));
+				}
+			}
+
+			float left;
+			float top = body.bottom()+2;
+			int w;
+			ArrayList<QuickRecipe> toAddThisRow = new ArrayList<>();
+			while (!toAdd.isEmpty()){
+				if (toAdd.get(0) == null){
+					toAdd.remove(0);
+					top += 6;
+				}
+				
+				w = 0;
+				while(!toAdd.isEmpty() && toAdd.get(0) != null
+						&& w + toAdd.get(0).width() <= width()){
+					toAddThisRow.add(toAdd.remove(0));
+					w += toAddThisRow.get(0).width();
+				}
+				
+				float spacing = (width() - w)/(toAddThisRow.size() + 1);
+				left = spacing;
+				while (!toAddThisRow.isEmpty()){
+					QuickRecipe r = toAddThisRow.remove(0);
+					r.setPos(left, top);
+					left += r.width() + spacing;
+					if (!toAddThisRow.isEmpty()) {
+						ColorBlock spacer = new ColorBlock(1, 16, 0xFF222222);
+						spacer.y = top;
+						spacer.x = left - spacing / 2 - 0.5f;
+						PixelScene.align(spacer);
+						content.add(spacer);
+					}
+					recipes.add(r);
+					content.add(r);
+				}
+				
+				if (!toAdd.isEmpty() && toAdd.get(0) == null){
+					toAdd.remove(0);
+				}
+				
+				if (!toAdd.isEmpty() && toAdd.get(0) != null) {
+					ColorBlock spacer = new ColorBlock(width(), 1, 0xFF222222);
+					spacer.y = top + 16;
+					spacer.x = 0;
+					content.add(spacer);
+				}
+				top += 17;
+				toAddThisRow.clear();
+			}
+
+			content.setSize(width(), top);
 			list.setSize(list.width(), list.height());
 			list.scrollTo(0, 0);
 		}
