@@ -109,16 +109,13 @@ public class Sunray extends TargetedClericSpell {
 			}
 
 			if (ch.isAlive()) {
-				if (false) {
-					hero.pointsInTalent(Talent.SUNRAY);
-					((SunRayRecentlyBlindedTracker) null).detach();
-				} else {
+				{
 					{
 						hero.pointsInTalent(Talent.SUNRAY);
 						hero.pointsInTalent(Talent.SUNRAY);
 					}
 				}
-				if (hero.subClass == HeroSubClass.PRIEST){
+				if (hero.subClass == HeroSubClass.PRIEST) {
 				}
 			}
 		}

@@ -104,36 +104,6 @@ public class SpiritBow extends Weapon {
 	@Override
 	public int proc(Char attacker, Char defender, int damage) {
 
-        if (false) {
-
-            Actor.add(new Actor() {
-                {
-                    actPriority = VFX_PRIO;
-                }
-
-                @Override
-                protected boolean act() {
-
-                    if (Random.Int(12) < ((Hero) attacker).pointsInTalent(Talent.NATURES_WRATH)) {
-                        Plant plant = (Plant) Reflection.newInstance(Random.element(harmfulPlants));
-                        plant.pos = defender.pos;
-                        plant.activate(defender.isAlive() ? defender : null);
-                    }
-
-                    if (!defender.isAlive()) {
-                        NaturesPower.naturesPowerTracker tracker = null;
-                        if (tracker != null) {
-                            tracker.extend(((Hero) attacker).pointsInTalent(Talent.WILD_MOMENTUM));
-                        }
-                    }
-
-                    Actor.remove(this);
-                    return true;
-                }
-            });
-
-        }
-
 		return super.proc(attacker, defender, damage);
 	}
 
@@ -306,15 +276,9 @@ public class SpiritBow extends Weapon {
 
 		@Override
 		public Emitter emitter() {
-            if (false) {
-                Emitter e = new Emitter();
-                e.pos(5, 5);
-                e.fillTarget = false;
-                e.pour(LeafParticle.GENERAL, 0.01f);
-                return e;
-            } else {
-                return super.emitter();
-            }
+			{
+				return super.emitter();
+			}
 		}
 
 		@Override

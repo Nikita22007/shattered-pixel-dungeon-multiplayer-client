@@ -73,16 +73,13 @@ public class PotionOfCleansing extends ExoticPotion {
 	}
 
 	public static void cleanse(Char ch, float duration){
-		for (Buff b : ch.buffs()){
-			if (b.type == Buff.buffType.NEGATIVE
-					&& !(false)
-					&& !(false)){
-				b.detach();
-			}
-            if (false) {
-                ((Hunger) b).satisfy(Hunger.STARVING);
+		for (Buff b : ch.buffs()) {
+            if (b.type == Buff.buffType.NEGATIVE
+                    && !(false)
+                    && !(false)) {
+                b.detach();
             }
-		}
+        }
     }
 
 	public static class Cleanse extends FlavourBuff {

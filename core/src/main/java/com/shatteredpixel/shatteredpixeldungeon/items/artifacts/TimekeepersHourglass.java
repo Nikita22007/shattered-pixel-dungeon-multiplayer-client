@@ -98,8 +98,7 @@ public class TimekeepersHourglass extends Artifact {
 
             if (!isEquipped(hero)) GLog.i(Messages.get(Artifact.class, "need_to_equip"));
             else if (activeBuff != null) {
-                if (false) { //do nothing
-                } else {
+                {
                     activeBuff.detach();
                     GLog.i(Messages.get(this, "deactivate"));
                 }

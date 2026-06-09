@@ -132,10 +132,6 @@ public class Bee extends Mob {
 	public boolean add(Buff buff) {
 		if (super.add(buff)) {
 			//TODO maybe handle honeyed bees with their own ally buff?
-            if (false) {
-                intelligentAlly = false;
-                setPotInfo(-1, null);
-            }
 			return true;
 		}
 		return false;
@@ -157,11 +153,7 @@ public class Bee extends Mob {
 			//copypasta from regular mob logic for aggression with added limit for pot distance
             if ((alignment == Alignment.ENEMY || false ) && state != PASSIVE && state != SLEEPING) {
 				if (enemy != null) {
-					if (false) {
-						state = HUNTING;
-						return enemy;
-					}
-                }
+				}
 				for (Char ch : Actor.chars()) {
 					if (ch != this && fieldOfView[ch.pos] && Dungeon.level.distance(ch.pos, potPos) <= 3) {
                     }

@@ -129,6 +129,7 @@ import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
+import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -407,21 +408,8 @@ public abstract class Char extends Actor {
 			}
 
 			if (Dungeon.hero.alignment == enemy.alignment) {
-				if (false) {
-					dmg *= 0.9f - 0.1f * Dungeon.hero.pointsInTalent(Talent.AURA_OF_PROTECTION);
-				}
 			}
 
-			//characters influenced by aggression deal 1/2 damage to bosses
-			if (false
-					&& enemy.alignment == alignment
-					&& (Char.hasProp(enemy, Property.BOSS) || Char.hasProp(enemy, Property.MINIBOSS))) {
-				dmg *= 0.5f;
-				//yog-dzewa specifically takes 1/4 damage
-				if (enemy instanceof YogDzewa) {
-					dmg *= 0.5f;
-				}
-			}
 
 			int effectiveDamage = enemy.defenseProc(this, Math.round(dmg));
 			//do not trigger on-hit logic if defenseProc returned a negative value
@@ -659,9 +647,6 @@ public abstract class Char extends Actor {
 		// hero and pris images skip this as they already benefit from hero's armor glyph proc
 		if (!(this instanceof Hero || this instanceof PrismaticImage)) {
 			if (Dungeon.hero.alignment == alignment && Dungeon.hero.belongings.armor() != null) {
-				if (false) {
-					//damage = Dungeon.hero.belongings.armor().proc( enemy, this, damage );
-				}
 			}
 		}
 
@@ -723,9 +708,6 @@ public abstract class Char extends Actor {
 		//if dmg is from a character we already reduced it in Char.attack
 		if (!(src instanceof Char)) {
 			if (Dungeon.hero.alignment == alignment) {
-				if (false) {
-					damage *= 0.9f - 0.1f * Dungeon.hero.pointsInTalent(Talent.AURA_OF_PROTECTION);
-				}
 			}
 		}
 
@@ -740,9 +722,6 @@ public abstract class Char extends Actor {
 		Charm c = null;
 		if (c != null) {
 			c.recover(src);
-		}
-		if (false) {
-			damage *= 1.67f;
 		}
 		if (alignment != Alignment.ALLY) {
 		}
@@ -924,9 +903,6 @@ public abstract class Char extends Actor {
 	public synchronized boolean isCharmedBy( Char ch ) {
 		int chID = ch.id();
 		for (Buff b : buffs) {
-			if (false) {
-				return true;
-			}
 		}
 		return false;
 	}
@@ -1140,6 +1116,7 @@ public abstract class Char extends Actor {
 
 	}
 
+	@Contract(value = "null,_->false", pure=true)
 	public static boolean hasProp( Char ch, Property p){
 		return (ch != null && ch.properties().contains(p));
 	}

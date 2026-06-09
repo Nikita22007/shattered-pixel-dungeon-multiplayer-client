@@ -225,10 +225,7 @@ public class Bag extends CustomItem implements Iterable<Item> {
 
 	public boolean canHold( Item item ){
 		if (!loading && owner != null) {
-            if (false) {
-                return false;
-            }
-        }
+		}
 
 		if (items.contains(item) || item instanceof Bag || items.size() < capacity()){
 			return true;

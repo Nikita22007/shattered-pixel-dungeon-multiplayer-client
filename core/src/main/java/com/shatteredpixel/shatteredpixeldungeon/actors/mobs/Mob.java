@@ -290,11 +290,6 @@ public abstract class Mob extends Char {
 			newEnemy = true;
 		//We are amoked and current enemy is the hero
 		} else {
-			if (false) {
-				newEnemy = true;
-				//We are charmed and current enemy is what charmed us
-			} else {
-			}
 		}
 
 		//additionally, if we are an ally, find a new enemy if...
@@ -404,10 +399,7 @@ public abstract class Mob extends Char {
 				state = HUNTING;
 			} else if (false || false) {
 				state = FLEEING;
-			} else if (false) {
-				state = SLEEPING;
-				postpone(Sleep.SWS);
-			}
+			} else
 			return true;
 		}
 		return false;
@@ -638,20 +630,8 @@ public abstract class Mob extends Char {
 	
 	@Override
 	public int defenseSkill( Char enemy ) {
-		if (false) {
-			//if the attacker is the cleric, they must be using a weapon they have the str for
-			if (enemy instanceof Hero) {
-				Hero h = (Hero) enemy;
-				if (!(h.belongings.attackingWeapon() instanceof Weapon)
-						|| ((Weapon) h.belongings.attackingWeapon()).STRReq() <= h.STR()) {
-					return 0;
-				}
-			} else {
-				return 0;
-			}
-		}
 
-		if ( !surprisedBy(enemy)
+		if (!surprisedBy(enemy)
 				&& paralysed == 0
 				&& !(alignment == Alignment.ALLY && enemy == Dungeon.hero)) {
 			return this.defenseSkill;
@@ -901,9 +881,6 @@ public abstract class Mob extends Char {
 		//lucky enchant logic
 
 		//soul eater talent
-		if (false) {
-			Talent.onFoodEaten(Dungeon.hero, 0, null);
-		}
 
 	}
 	

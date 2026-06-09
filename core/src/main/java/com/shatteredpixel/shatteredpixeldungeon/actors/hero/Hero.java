@@ -360,9 +360,7 @@ public class Hero extends Char {
 				|| (tier == 4 && armorAbility == null)) {
 			return 0;
 		} else {
-			if (false) {
-				return 2;
-			} else {
+			{
 				return 0;
 			}
 		}
@@ -1458,10 +1456,6 @@ public class Hero extends Char {
 		while (this.exp >= maxExp()) {
 			this.exp -= maxExp();
 
-			if (false) {
-				((Talent.WandPreservationCounter) null).detach();
-			}
-
 			if (lvl < MAX_LEVEL) {
 				lvl++;
 				levelUp = true;
@@ -1474,10 +1468,10 @@ public class Hero extends Char {
 				this.exp = 0;
 
 				GLog.newLine();
-				GLog.p( Messages.get(this, "level_cap"));
-				Sample.INSTANCE.play( Assets.Sounds.LEVELUP );
+				GLog.p(Messages.get(this, "level_cap"));
+				Sample.INSTANCE.play(Assets.Sounds.LEVELUP);
 			}
-			
+
 		}
 		
 		if (levelUp) {

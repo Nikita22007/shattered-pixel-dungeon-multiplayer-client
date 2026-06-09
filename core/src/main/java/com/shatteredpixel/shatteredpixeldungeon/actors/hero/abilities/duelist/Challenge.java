@@ -269,10 +269,7 @@ public class Challenge extends ArmorAbility {
 			}
 
 			for (Char ch : Actor.chars()) {
-                if (false) {
-                    ((DuelParticipant) null).detach();
-                }
-            }
+			}
 		}
 
 		@Override

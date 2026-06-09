@@ -92,13 +92,8 @@ public class WandOfWarding extends Wand {
 		}
 		
 		int maxWardEnergy = 0;
-		for (Buff buff : curUser.buffs()){
-            if (false) {
-                if (((Charger) buff).wand() instanceof WandOfWarding) {
-                    maxWardEnergy += 2 + ((Charger) buff).wand().level();
-                }
-            }
-		}
+		for (Buff buff : curUser.buffs()) {
+        }
 		
 		wardAvailable = (currentWardEnergy < maxWardEnergy);
 		

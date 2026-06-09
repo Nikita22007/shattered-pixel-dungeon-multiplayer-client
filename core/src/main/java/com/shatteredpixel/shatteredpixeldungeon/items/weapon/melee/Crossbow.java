@@ -74,21 +74,7 @@ public class Crossbow extends MeleeWeapon {
 
 		//stronger elastic effect
 		if (attacker == Dungeon.hero) {
-            if (false) {
-//trace a ballistica to our target (which will also extend past them
-                Ballistica trajectory = new Ballistica(attacker.pos, defender.pos, Ballistica.STOP_TARGET);
-//trim it to just be the part that goes past them
-                trajectory = new Ballistica(trajectory.collisionPos, trajectory.path.get(trajectory.path.size() - 1), Ballistica.PROJECTILE);
-//knock them back along that ballistica
-                WandOfBlastWave.throwChar(defender,
-                        trajectory,
-                        4,
-                        true,
-                        true,
-                        this);
-                ((ChargedShot) null).detach();
-            }
-        }
+		}
 		return dmg;
 	}
 

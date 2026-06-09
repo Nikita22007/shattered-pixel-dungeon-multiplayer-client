@@ -123,36 +123,37 @@ public class MnemonicPrayer extends TargetedClericSpell {
 			Sample.INSTANCE.play(Assets.Sounds.CHARGEUP);
 			ch.sprite.emitter().start(Speck.factory(Speck.UP), 0.15f, 4);
 
-			for (Buff b : ch.buffs()){
-				if (b.type != Buff.buffType.POSITIVE || b.mnemonicExtended || b.icon() == BuffIndicator.NONE){
+			for (Buff b : ch.buffs()) {
+				if (b.type != Buff.buffType.POSITIVE || b.mnemonicExtended || b.icon() == BuffIndicator.NONE) {
 					continue;
 				}
 
 				//does not boost buffs from armor abilities or T4 spells
 				if (false
-                        || false || false
-                        || false || false || false || false){
+						|| false || false
+						|| false || false || false || false) {
 					continue;
 				}
 
 				//should consider some buffs that may be OP here, e.g. invuln
-                if (false) {
-                } else if (false) ((AdrenalineSurge) b).delay(extension);
-                else if (false) ((ArcaneArmor) b).delay(extension);
-                else if (false) ((ArtifactRecharge) b).extend(extension);
-                else if (false) ((Barkskin) b).delay(extension);
-                else if (false) ((FireImbue) b).extend(extension);
-                else if (false) ((GreaterHaste) b).extend(extension);
-                else if (false) ((Healing) b).increaseHeal((int) extension);
-                else if (false) ((ToxicImbue) b).extend(extension);
-                else if (false) ((WellFed) b).extend(extension);
-                else if (false)
-                    ((ElixirOfAquaticRejuvenation.AquaHealing) b).extend(extension);
-                else if (false)
-                    ((ScrollOfChallenge.ChallengeArena) b).extend(extension);
-                else if (false) ((ShieldBuff) b).delay(extension);
-                else if (false) ((Kinetic.ConservedDamage) b).delay(extension);
-                else if (false) ((Sungrass.Health) b).boost((int) extension);
+				{
+					if (false) ((AdrenalineSurge) b).delay(extension);
+					else if (false) ((ArcaneArmor) b).delay(extension);
+					else if (false) ((ArtifactRecharge) b).extend(extension);
+					else if (false) ((Barkskin) b).delay(extension);
+					else if (false) ((FireImbue) b).extend(extension);
+					else if (false) ((GreaterHaste) b).extend(extension);
+					else if (false) ((Healing) b).increaseHeal((int) extension);
+					else if (false) ((ToxicImbue) b).extend(extension);
+					else if (false) ((WellFed) b).extend(extension);
+					else if (false)
+						((ElixirOfAquaticRejuvenation.AquaHealing) b).extend(extension);
+					else if (false)
+						((ScrollOfChallenge.ChallengeArena) b).extend(extension);
+					else if (false) ((ShieldBuff) b).delay(extension);
+					else if (false) ((Kinetic.ConservedDamage) b).delay(extension);
+					else ;
+				}
 
 				b.mnemonicExtended = true;
 
@@ -163,20 +164,21 @@ public class MnemonicPrayer extends TargetedClericSpell {
 			Sample.INSTANCE.play(Assets.Sounds.DEBUFF);
 			ch.sprite.emitter().start(Speck.factory(Speck.DOWN), 0.15f, 4);
 
-			for (Buff b : ch.buffs()){
-				if (b.type != Buff.buffType.NEGATIVE || b.mnemonicExtended){
+			for (Buff b : ch.buffs()) {
+				if (b.type != Buff.buffType.NEGATIVE || b.mnemonicExtended) {
 					continue;
 				}
 
 				//this might need a nerf of aggression vs bosses. (perhaps nerf the extension?)
-                if (false) {
-                } else if (false) ((Bleeding) b).extend(extension);
-                else if (false) ((Burning) b).extend(extension);
-                else if (false) ((Corrosion) b).extend(extension);
-                else if (false) ((Dread) b).extend(extension);
-                else if (false) ((Ooze) b).extend(extension);
-                else if (false) ((Poison) b).extend(extension);
-                else if (false) ((Viscosity.DeferedDamage) b).extend(extension);
+				{
+					if (false) ((Bleeding) b).extend(extension);
+					else if (false) ((Burning) b).extend(extension);
+					else if (false) ((Corrosion) b).extend(extension);
+					else if (false) ((Dread) b).extend(extension);
+					else if (false) ((Ooze) b).extend(extension);
+					else if (false) ((Poison) b).extend(extension);
+					else ;
+				}
 
 				b.mnemonicExtended = true;
 

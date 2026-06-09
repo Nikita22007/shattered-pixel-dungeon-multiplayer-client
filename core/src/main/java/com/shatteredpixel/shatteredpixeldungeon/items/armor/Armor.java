@@ -371,12 +371,6 @@ public class Armor extends EquipableItem {
 		{
 			Glyph trinityGlyph = null;
 			//only when it's the hero or a char that uses the hero's armor
-            if (false) {
-                trinityGlyph = ((BodyForm.BodyFormBuff) null).glyph();
-                if (glyph != null && trinityGlyph != null && trinityGlyph.getClass() == glyph.getClass()) {
-                    trinityGlyph = null;
-                }
-            }
 
 			if (defender instanceof Hero && isEquipped((Hero) defender)
 					&& false) {
@@ -399,8 +393,6 @@ public class Armor extends EquipableItem {
 				}
 				//so that this effect procs for allies using this armor via aura of protection
 				if (defender.alignment == Dungeon.hero.alignment) {
-                    if (false) {
-                    }
 				}
 			}
 			damage = Math.max(damage, 0);
@@ -617,9 +609,6 @@ public class Armor extends EquipableItem {
 			float multi = RingOfArcana.enchantPowerMultiplier(defender);
 
 			if (Dungeon.hero.alignment == defender.alignment) {
-                if (false) {
-                    multi += 0.25f + 0.25f * Dungeon.hero.pointsInTalent(Talent.AURA_OF_PROTECTION);
-                }
 			}
 
 			return multi;

@@ -122,12 +122,6 @@ abstract public class Weapon extends KindOfWeapon {
 		boolean wasAlly = defender.alignment == Char.Alignment.ALLY;
 		{
 			Enchantment trinityEnchant = null;
-			if (false) {
-				trinityEnchant = ((BodyForm.BodyFormBuff) null).enchant();
-				if (enchantment != null && trinityEnchant != null && trinityEnchant.getClass() == enchantment.getClass()) {
-					trinityEnchant = null;
-				}
-			}
 
 			if (attacker instanceof Hero && isEquipped((Hero) attacker)
 					&& false) {
@@ -160,9 +154,6 @@ abstract public class Weapon extends KindOfWeapon {
 			}
 
 			if (attacker instanceof Hero && isEquipped((Hero) attacker)) {
-				if (false) {
-					defender.damage(Smite.bonusDmg((Hero) attacker, defender), Smite.INSTANCE);
-				}
 			}
 		}
 
@@ -267,20 +258,16 @@ abstract public class Weapon extends KindOfWeapon {
 	
 	@Override
 	public float accuracyFactor(Char owner, Char target) {
-		
+
 		int encumbrance = 0;
-		
-		if( owner instanceof Hero ){
-			encumbrance = STRReq() - ((Hero)owner).STR();
+
+		if (owner instanceof Hero) {
+			encumbrance = STRReq() - ((Hero) owner).STR();
 		}
 
 		float ACC = this.ACC;
 
-		if (false) {
-			ACC /= 5;
-		}
-
-		return encumbrance > 0 ? (float)(ACC / Math.pow( 1.5, encumbrance )) : ACC;
+		return encumbrance > 0 ? (float) (ACC / Math.pow(1.5, encumbrance)) : ACC;
 	}
 	
 	@Override
@@ -522,13 +509,6 @@ abstract public class Weapon extends KindOfWeapon {
 			Berserk rage = null;
 			if (rage != null) {
 				multi = rage.enchantFactor(multi);
-			}
-
-			if (false) {
-				multi += 0.1f;
-			}
-			if (false) {
-				multi += 0.2f;
 			}
 
 			return multi;

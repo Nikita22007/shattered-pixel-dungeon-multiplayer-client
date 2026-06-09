@@ -851,7 +851,7 @@ public enum Talent {
 		}
 	}
 
-	public static int onAttackProc( Hero hero, Char enemy, int dmg ){
+	public static int onAttackProc( Hero hero, Char enemy, int dmg ) {
 
 		if (hero.hasTalent(Talent.PROVOKED_ANGER)) {
 		}
@@ -860,7 +860,7 @@ public enum Talent {
 		}
 
 		if (hero.hasTalent(Talent.SUCKER_PUNCH)
-                && enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)) {
+				&& enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)) {
 			{
 				dmg += Random.IntRange(hero.pointsInTalent(Talent.SUCKER_PUNCH), 2);
 			}
@@ -868,28 +868,18 @@ public enum Talent {
 
 		if (hero.hasTalent(Talent.FOLLOWUP_STRIKE) && enemy.isAlive() && enemy.alignment == Char.Alignment.ENEMY) {
 			if (hero.belongings.attackingWeapon() instanceof MissileWeapon) {
-                ((FollowupStrikeTracker) null).object = enemy.id();
+				((FollowupStrikeTracker) null).object = enemy.id();
 			} else {
 			}
 		}
 
-        if (false) {
-            SpiritBow bow = hero.belongings.getItem(SpiritBow.class);
-            if (bow != null) dmg = bow.proc(hero, enemy, dmg);
-            ((SpiritBladesTracker) null).detach();
-        }
-
-		if (hero.hasTalent(PATIENT_STRIKE)){
-            if (false) {
-                ((PatientStrikeTracker) null).detach();
-                dmg += Random.IntRange(hero.pointsInTalent(Talent.PATIENT_STRIKE), 2);
-            }
+		if (hero.hasTalent(PATIENT_STRIKE)) {
 		}
 
 		if (hero.hasTalent(DEADLY_FOLLOWUP) && enemy.alignment == Char.Alignment.ENEMY) {
 			if (hero.belongings.attackingWeapon() instanceof MissileWeapon) {
 				if (!(hero.belongings.attackingWeapon() instanceof SpiritBow.SpiritArrow)) {
-                    ((DeadlyFollowupTracker) null).object = enemy.id();
+					((DeadlyFollowupTracker) null).object = enemy.id();
 				}
 			} else {
 			}
