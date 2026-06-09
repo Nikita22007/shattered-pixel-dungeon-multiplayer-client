@@ -124,7 +124,6 @@ public enum Bestiary {
 		for (Bestiary cat : values()) {
 			if (cat.seen.containsKey(cls) && !cat.seen.get(cls)) {
 				cat.seen.put(cls, true);
-				Journal.saveNeeded = true;
 			}
 		}
 		Badges.validateCatalogBadges();
@@ -138,7 +137,6 @@ public enum Bestiary {
 			}
 			cat.seen.put(cls, isSeen);
 			cat.encounterCount.put(cls, count);
-			Journal.saveNeeded = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -180,7 +178,6 @@ public enum Bestiary {
 				if (cat.encounterCount.get(cls) < -1_000_000_000){ //to catch cases of overflow
 					cat.encounterCount.put(cls, Integer.MAX_VALUE);
 				}
-				Journal.saveNeeded = true;
 			}
 		}
 	}

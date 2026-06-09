@@ -42,7 +42,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportat
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Bestiary;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Journal;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.RegularLevel;
@@ -687,8 +686,7 @@ public class GameScene extends PixelScene {
 		
 		scene = null;
 		Badges.saveGlobal();
-		Journal.saveGlobal();
-		
+
 		super.destroy();
 	}
 	
@@ -719,7 +717,6 @@ public class GameScene extends PixelScene {
 		try {
 			if (!Dungeon.hero.ready) waitForActorThread(500, false);
 			Badges.saveGlobal();
-			Journal.saveGlobal();
 		} catch (IOException e) {
 			ShatteredPixelDungeon.reportException(e);
 		}

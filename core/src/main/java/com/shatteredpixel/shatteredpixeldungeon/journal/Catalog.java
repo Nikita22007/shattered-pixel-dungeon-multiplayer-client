@@ -151,8 +151,7 @@ public enum Catalog {
 		for (Catalog cat : values()) {
 			if (cat.seen.containsKey(cls) && !cat.seen.get(cls)) {
 				cat.seen.put(cls, true);
-				Journal.saveNeeded = true;
-			}
+            }
 		}
 		Badges.validateCatalogBadges();
 	}
@@ -162,8 +161,7 @@ public enum Catalog {
 			Catalog cat = valueOf(catalogName);
 			cat.seen.put(cls, isSeen);
 			cat.useCount.put(cls, count);
-			Journal.saveNeeded = true;
-		} catch (Exception e) {
+        } catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -182,8 +180,7 @@ public enum Catalog {
 				if (cat.useCount.get(cls) < -1_000_000_000){ //to catch cases of overflow
 					cat.useCount.put(cls, Integer.MAX_VALUE);
 				}
-				Journal.saveNeeded = true;
-			}
+            }
 		}
 	}
 

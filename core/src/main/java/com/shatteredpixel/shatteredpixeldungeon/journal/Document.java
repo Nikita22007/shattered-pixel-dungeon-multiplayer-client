@@ -66,8 +66,7 @@ public enum Document {
 	public boolean findPage( String page ) {
 		if (pagesStates.containsKey(page) && pagesStates.get(page) == NOT_FOUND){
 			pagesStates.put(page, FOUND);
-			Journal.saveNeeded = true;
-			Badges.validateCatalogBadges();
+            Badges.validateCatalogBadges();
 			return true;
 		}
 		return false;
@@ -78,8 +77,7 @@ public enum Document {
 			Document doc = valueOf(docName);
 			if (doc.pagesStates.containsKey(page)) {
 				doc.pagesStates.put(page, state);
-				Journal.saveNeeded = true;
-			}
+            }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -104,8 +102,7 @@ public enum Document {
 	public boolean deletePage( String page ){
 		if (pagesStates.containsKey(page) && pagesStates.get(page) != NOT_FOUND){
 			pagesStates.put(page, NOT_FOUND);
-			Journal.saveNeeded = true;
-			return true;
+            return true;
 		}
 		return false;
 	}
@@ -117,8 +114,7 @@ public enum Document {
 	public boolean unreadPage( String page ){
 		if (pagesStates.containsKey(page) && pagesStates.get(page) == READ){
 			pagesStates.put(page, FOUND);
-			Journal.saveNeeded = true;
-			return true;
+            return true;
 		}
 		return false;
 	}
@@ -156,8 +152,7 @@ public enum Document {
 	public boolean readPage( String page ) {
 		if (pagesStates.containsKey(page)){
 			pagesStates.put(page, READ);
-			Journal.saveNeeded = true;
-			Badges.validateCatalogBadges();
+            Badges.validateCatalogBadges();
 			return true;
 		}
 		return false;

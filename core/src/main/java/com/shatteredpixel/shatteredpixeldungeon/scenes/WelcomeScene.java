@@ -32,7 +32,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.effects.BannerSprites;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Fireball;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Journal;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.ui.TitleBackground;
@@ -251,7 +250,6 @@ public class WelcomeScene extends PixelScene {
 		if (previousVersion < LATEST_UPDATE){
 
 			Badges.loadGlobal();
-			Journal.loadGlobal();
 
 			//pre-unlock Cleric for those who already have a win
 			if (previousVersion <= ShatteredPixelDungeon.v2_5_4){
@@ -292,9 +290,8 @@ public class WelcomeScene extends PixelScene {
 			Dungeon.daily = Dungeon.dailyReplay = false;
 
 			Badges.saveGlobal(true);
-			Journal.saveGlobal(true);
 
-		}
+        }
 
 		SPDSettings.version(ShatteredPixelDungeon.versionCode);
 	}

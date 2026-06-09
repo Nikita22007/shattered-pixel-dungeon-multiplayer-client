@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.scenes;
 
 import com.shatteredpixel.shatteredpixeldungeon.*;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Journal;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Button;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ExitButton;
@@ -36,7 +35,6 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.IconTitle;
 import com.watabou.noosa.*;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Music;
-import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.RectF;
 
 import java.util.ArrayList;
@@ -51,9 +49,8 @@ public class StartScene extends PixelScene {
 		super.create();
 
 		Badges.loadGlobal();
-		Journal.loadGlobal();
 
-		uiCamera.visible = false;
+        uiCamera.visible = false;
 
 		int w = Camera.main.width;
 		int h = Camera.main.height;
