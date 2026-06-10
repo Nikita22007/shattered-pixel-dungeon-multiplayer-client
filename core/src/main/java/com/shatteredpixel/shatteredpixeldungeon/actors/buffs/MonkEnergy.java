@@ -310,8 +310,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 					return;
 				}
 
-				if (((MonkEnergy) null).abilitiesEmpowered(hero)){
-				}
+
 
 				UnarmedAbilityTracker tracker = null;
 				if (!hero.canAttack(enemy)) {
@@ -571,7 +570,6 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 				if (((MonkEnergy) null).abilitiesEmpowered(hero)){
 					int toHeal = Math.round((hero.HT - hero.HP)/5f);
 					if (toHeal > 0) {
-						((Healing) null).setHeal(toHeal, 0, 1);
 					}
 					hero.cooldown();
 				}
@@ -584,7 +582,6 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 
 					@Override
 					protected boolean act() {
-						((ArtifactRecharge) null).extend(8f).ignoreHornOfPlenty = false;
 						Actor.remove(this);
 						return true;
 					}

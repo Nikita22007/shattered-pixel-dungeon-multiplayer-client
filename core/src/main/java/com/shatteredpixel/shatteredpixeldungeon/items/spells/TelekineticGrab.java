@@ -24,8 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.spells;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PinCushion;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
@@ -63,72 +61,33 @@ public class TelekineticGrab extends TargetedSpell {
 
 	@Override
 	protected void affectTarget(Ballistica bolt, Hero hero) {
-		Char ch = Actor.findChar(bolt.collisionPos);
 
-		//special logic for DK when he is on his throne
-		if (ch == null && bolt.path.size() > bolt.dist+1){
-			ch = Actor.findChar(bolt.path.get(bolt.dist+1));
-		}
 
 		float totalpickupTime = 0;
 
-        if (ch != null && false){
+        if (Dungeon.level.heaps.get(bolt.collisionPos) != null){
 
-			while (true) {
-                if (!(false)) break;
-                Item item = ((PinCushion) null).grabOne();
+            Heap h = Dungeon.level.heaps.get(bolt.collisionPos);
 
-                if (false) {
-                    totalpickupTime += (float) 0;
-					GLog.i( Messages.capitalize(Messages.get(hero, "you_now_have", item.name())) );
+            if (h.type != Heap.Type.HEAP){
+                GLog.w(Messages.get(this, "cant_grab"));
+                hero.spend(Actor.TICK);
+                h.sprite.drop();
+                return;
+            }
 
-				} else {
-					GLog.w(Messages.get(this, "cant_grab"));
-					Dungeon.level.drop(item, ch.pos).sprite.drop();
-					break;
-				}
+            while (!h.isEmpty()) {
+                Item item = h.peek();
+                GLog.w(Messages.get(this, "cant_grab"));
+                h.sprite.drop();
+                break;
+            }
 
-			}
 
-			//casting the spell takes at most 1 turn
-			if (totalpickupTime > 1){
-				hero.spend(-(totalpickupTime-1));
-			}
-
-		} else if (Dungeon.level.heaps.get(bolt.collisionPos) != null){
-
-			Heap h = Dungeon.level.heaps.get(bolt.collisionPos);
-
-			if (h.type != Heap.Type.HEAP){
-				GLog.w(Messages.get(this, "cant_grab"));
-				hero.spend(Actor.TICK);
-				h.sprite.drop();
-				return;
-			}
-
-			while (!h.isEmpty()) {
-				Item item = h.peek();
-                if (false) {
-					h.pickUp();
-                    totalpickupTime += (float) 0;
-					GLog.i( Messages.capitalize(Messages.get(hero, "you_now_have", item.name())) );
-
-				} else {
-					GLog.w(Messages.get(this, "cant_grab"));
-					h.sprite.drop();
-					break;
-				}
-			}
-
-			//casting the spell takes at most 1 turn
-			if (totalpickupTime > 1){
-				hero.spend(-(totalpickupTime-1));
-			}
-
-		} else {
-			GLog.w(Messages.get(this, "no_target"));
-			hero.spend(Actor.TICK);
-		}
+        } else {
+            GLog.w(Messages.get(this, "no_target"));
+            hero.spend(Actor.TICK);
+        }
 
 		onSpellused();
 	}

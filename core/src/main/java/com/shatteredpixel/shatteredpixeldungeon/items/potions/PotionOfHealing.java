@@ -21,12 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.potions;
 
-import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Healing;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
@@ -39,24 +35,12 @@ public class PotionOfHealing extends Potion {
 	}
 
 	public static void heal( Char ch ){
-		if (false){
-			pharmacophobiaProc(Dungeon.hero);
-		} else {
-			//starts out healing 30 hp, equalizes with hero health total at level 11
-            Healing healing = null;
-			healing.setHeal((int) (0.8f * ch.HT + 14), 0.25f, 0);
-			healing.applyVialEffect();
-			if (ch == Dungeon.hero){
-				GLog.p( Messages.get(PotionOfHealing.class, "heal") );
-			}
-		}
-	}
+        //starts out healing 30 hp, equalizes with hero health total at level 11
+        if (ch == Dungeon.hero){
+            GLog.p( Messages.get(PotionOfHealing.class, "heal") );
+        }
+    }
 
-	public static void pharmacophobiaProc( Hero hero ){
-		// harms the hero for ~40% of their max HP in poison
-        ((Poison) null).set(4 + hero.lvl/2);
-	}
-	
 	public static void cure( Char ch ) {
     }
 

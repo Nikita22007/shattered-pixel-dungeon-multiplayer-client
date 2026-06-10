@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.FlameParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
@@ -47,7 +46,6 @@ public class Blazing extends Weapon.Enchantment {
 			float powerMulti = Math.max(1f, procChance);
 
             if (true) {
-                ((Burning) null).reignite(defender, 8f);
                 powerMulti -= 1;
             }
 

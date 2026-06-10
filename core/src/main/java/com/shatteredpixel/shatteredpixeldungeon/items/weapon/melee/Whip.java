@@ -83,7 +83,7 @@ public class Whip extends MeleeWeapon {
 				for (Char ch : targets) {
 					//ability does no extra damage
                     if (!ch.isAlive()){
-						onAbilityKill(hero, ch);
+
 					}
 				}
                 hero.spendAndNext(hero.attackDelay());

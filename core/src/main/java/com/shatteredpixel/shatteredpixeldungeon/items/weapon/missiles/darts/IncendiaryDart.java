@@ -21,13 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public class IncendiaryDart extends TippedDart {
@@ -40,7 +34,6 @@ public class IncendiaryDart extends TippedDart {
 	public int proc( Char attacker, Char defender, int damage ) {
 		//when processing charged shot, only burn enemies
 		if (!processingChargedShot || attacker.alignment != defender.alignment) {
-            ((Burning) null).reignite(defender);
 		}
 		return super.proc( attacker, defender, damage );
 	}

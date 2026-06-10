@@ -105,8 +105,8 @@ public class Sword extends MeleeWeapon {
 
                 if (!enemy.isAlive()) {
                     hero.next();
-                    wep.onAbilityKill(hero, enemy);
-                } else {
+
+				} else {
                     hero.spendAndNext(hero.attackDelay());
                 }
 				wep.afterAbilityUsed(hero);

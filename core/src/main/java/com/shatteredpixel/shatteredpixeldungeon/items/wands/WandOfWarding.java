@@ -44,8 +44,6 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
-import java.util.HashSet;
-
 public class WandOfWarding extends Wand {
 
 	{
@@ -324,7 +322,7 @@ public class WandOfWarding extends Wand {
 			spend( 1f );
 
 			//always hits
-			int dmg = Hero.heroDamageIntRange( 2 + wandLevel, 8 + 4*wandLevel );
+			int dmg = 0;
 			Char enemy = this.enemy;
             if (enemy.isAlive()){
 				Wand.wandProc(enemy, wandLevel, 1);

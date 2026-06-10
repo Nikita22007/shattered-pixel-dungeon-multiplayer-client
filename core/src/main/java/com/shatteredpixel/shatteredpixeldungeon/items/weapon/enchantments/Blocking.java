@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HoldFast;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
@@ -77,7 +76,7 @@ public class Blocking extends Weapon.Enchantment {
 
 		@Override
 		public boolean act() {
-			left -= HoldFast.buffDecayFactor(target);
+			left -= (float) 1;
 			if (left <= 0) {
 				detach();
 			} else {

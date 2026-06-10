@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
@@ -65,7 +64,6 @@ public class DeathMark extends ArmorAbility {
 
 		if (Dungeon.hero.hasTalent(Talent.FEAR_THE_REAPER)) {
 			if (Dungeon.hero.pointsInTalent(Talent.FEAR_THE_REAPER) >= 2) {
-                ((Terror) null).object = Dungeon.hero.id();
 			}
 
             if (Dungeon.hero.pointsInTalent(Talent.FEAR_THE_REAPER) >= 3) {
@@ -76,7 +74,6 @@ public class DeathMark extends ArmorAbility {
 					if (near != ch && near.alignment == Char.Alignment.ENEMY
 							&& PathFinder.distance[near.pos] != Integer.MAX_VALUE) {
 						if (Dungeon.hero.pointsInTalent(Talent.FEAR_THE_REAPER) == 4) {
-                            ((Terror) null).object = Dungeon.hero.id();
 						}
                     }
 				}

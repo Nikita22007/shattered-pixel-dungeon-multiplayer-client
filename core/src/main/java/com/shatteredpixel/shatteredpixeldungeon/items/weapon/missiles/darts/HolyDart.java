@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bless;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
@@ -50,7 +49,7 @@ public class HolyDart extends TippedDart {
 		}
 
 		if (attacker.alignment == defender.alignment){
-            Math.round(Bless.DURATION);
+            Math.round(30f);
         }
 
         //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
@@ -61,7 +60,7 @@ public class HolyDart extends TippedDart {
 			Random.NormalIntRange(10 + Dungeon.depth / 3, 20 + Dungeon.depth / 3);
             //also do not bless enemies if processing charged shot
 		} else if (!processingChargedShot){
-            Math.round(Bless.DURATION);
+            Math.round(30f);
         }
 		
 		return super.proc(attacker, defender, damage);

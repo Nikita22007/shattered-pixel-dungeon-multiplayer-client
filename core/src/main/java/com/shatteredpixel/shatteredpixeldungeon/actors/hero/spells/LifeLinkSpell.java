@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LifeLink;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
@@ -74,7 +73,6 @@ public class LifeLinkSpell extends ClericSpell {
 			hero.sprite.parent.add(
 					new Beam.HealthRay(hero.sprite.center(), ally.sprite.center()));
 
-            ((LifeLink) null).object = ally.id();
 		} else {
 			ally = Stasis.getStasisAlly();
 			hero.sprite.operate(hero.pos);
@@ -82,12 +80,8 @@ public class LifeLinkSpell extends ClericSpell {
 					new Beam.HealthRay(DungeonTilemap.tileCenterToWorld(hero.pos), hero.sprite.center()));
 		}
 
-        ((LifeLink) null).object = hero.id();
 
-        if (ally == Stasis.getStasisAlly()){
-            ((LifeLink) null).clearTime();
-            ((LifeLinkSpellBuff) null).clearTime();
-		}
+
 
 		hero.spendAndNext(Actor.TICK);
 

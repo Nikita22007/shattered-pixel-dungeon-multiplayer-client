@@ -30,9 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Freezing;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
@@ -173,7 +171,6 @@ public class ElementalStrike extends ArmorAbility {
 
 		//*** Sacrificial ***
 		} else if (ench instanceof Sacrificial){
-			((Bleeding) null).set(10 * powerMulti);
 		}
 
 	}
@@ -274,7 +271,7 @@ public class ElementalStrike extends ArmorAbility {
 		//*** no enchantment ***
 		if (ench == null) {
 			for (Char ch : affected){
-                Math.round(powerMulti * Hero.heroDamageIntRange(6, 12));
+				Math.round(powerMulti * 0);
             }
 
 		//*** Kinetic ***
@@ -416,7 +413,6 @@ public class ElementalStrike extends ArmorAbility {
 		//*** Sacrificial ***
 		} else if (ench instanceof Sacrificial){
 			for (Char ch : affected){
-				((Bleeding) null).set(12f*powerMulti);
 			}
 
 		//*** Wayward ***
@@ -437,7 +433,6 @@ public class ElementalStrike extends ArmorAbility {
 		} else if (ench instanceof Friendly){
 			for (Char ch : affected){
 				if (Random.Float() < 0.5f*powerMulti){
-                    ((Charm) null).object = hero.id();
 				}
 			}
 		}

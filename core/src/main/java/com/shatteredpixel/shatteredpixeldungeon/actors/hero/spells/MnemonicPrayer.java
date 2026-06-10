@@ -25,38 +25,14 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AdrenalineSurge;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArcaneArmor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barkskin;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corrosion;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FireImbue;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GreaterHaste;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Healing;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LifeLink;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ToxicImbue;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WellFed;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.AscendedForm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Viscosity;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.ElixirOfAquaticRejuvenation;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfChallenge;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Kinetic;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Sungrass;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
@@ -135,25 +111,6 @@ public class MnemonicPrayer extends TargetedClericSpell {
 					continue;
 				}
 
-				//should consider some buffs that may be OP here, e.g. invuln
-				{
-					if (false) ((AdrenalineSurge) b).delay(extension);
-					else if (false) ((ArcaneArmor) b).delay(extension);
-					else if (false) ((ArtifactRecharge) b).extend(extension);
-					else if (false) ((Barkskin) b).delay(extension);
-					else if (false) ((FireImbue) b).extend(extension);
-					else if (false) ((GreaterHaste) b).extend(extension);
-					else if (false) ((Healing) b).increaseHeal((int) extension);
-					else if (false) ((ToxicImbue) b).extend(extension);
-					else if (false) ((WellFed) b).extend(extension);
-					else if (false)
-						((ElixirOfAquaticRejuvenation.AquaHealing) b).extend(extension);
-					else if (false)
-						((ScrollOfChallenge.ChallengeArena) b).extend(extension);
-					else if (false) ((ShieldBuff) b).delay(extension);
-					else if (false) ((Kinetic.ConservedDamage) b).delay(extension);
-					else ;
-				}
 
 				b.mnemonicExtended = true;
 
@@ -167,17 +124,6 @@ public class MnemonicPrayer extends TargetedClericSpell {
 			for (Buff b : ch.buffs()) {
 				if (b.type != Buff.buffType.NEGATIVE || b.mnemonicExtended) {
 					continue;
-				}
-
-				//this might need a nerf of aggression vs bosses. (perhaps nerf the extension?)
-				{
-					if (false) ((Bleeding) b).extend(extension);
-					else if (false) ((Burning) b).extend(extension);
-					else if (false) ((Corrosion) b).extend(extension);
-					else if (false) ((Dread) b).extend(extension);
-					else if (false) ((Ooze) b).extend(extension);
-					else if (false) ((Poison) b).extend(extension);
-					else ;
 				}
 
 				b.mnemonicExtended = true;

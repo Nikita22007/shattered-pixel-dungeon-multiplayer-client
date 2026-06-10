@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.QuickSlot;
 import com.shatteredpixel.shatteredpixeldungeon.SPDAction;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HoldFast;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -255,7 +254,6 @@ public class Toolbar extends Component {
 						&& Dungeon.hero.handle(Dungeon.hero.pos)){
 						//trigger hold fast and patient strike here, even if the hero didn't specifically wait
 						if (Dungeon.hero.hasTalent(Talent.HOLD_FAST)){
-                            ((HoldFast) null).pos = Dungeon.hero.pos;
 						}
 						if (Dungeon.hero.hasTalent(Talent.PATIENT_STRIKE)){
                             ((Talent.PatientStrikeTracker) null).pos = Dungeon.hero.pos;

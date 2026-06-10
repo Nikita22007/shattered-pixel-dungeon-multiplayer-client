@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -85,20 +84,14 @@ public class ScrollOfSirensSong extends ExoticScroll {
 
 				for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
 					if (Dungeon.level.heroFOV[mob.pos] && mob != target && mob.alignment != Char.Alignment.ALLY) {
-                        ((Charm) null).object = curUser.id();
 						mob.sprite.centerEmitter().start( Speck.factory( Speck.HEART ), 0.2f, 5 );
 					}
 				}
 
 				if (target != null){
-                    if (!false){
-						AllyBuff.affectAndLoot(target, curUser, Enthralled.class);
+                    AllyBuff.affectAndLoot(target, curUser, Enthralled.class);
 
-					} else {
-                        ((Charm) null).object = curUser.id();
-
-					}
-					target.sprite.centerEmitter().burst( Speck.factory( Speck.HEART ), 10 );
+                    target.sprite.centerEmitter().burst( Speck.factory( Speck.HEART ), 10 );
 				} else {
 					GLog.w(Messages.get(ScrollOfSirensSong.class, "no_target"));
 				}

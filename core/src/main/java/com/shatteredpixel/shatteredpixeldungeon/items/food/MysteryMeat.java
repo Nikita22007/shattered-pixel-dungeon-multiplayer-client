@@ -21,9 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.food;
 
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -52,14 +50,12 @@ public class MysteryMeat extends Food {
 		switch (Random.Int( 5 )) {
 			case 0:
 				GLog.w( Messages.get(MysteryMeat.class, "hot") );
-                ((Burning) null).reignite( hero );
 				break;
 			case 1:
 				GLog.w( Messages.get(MysteryMeat.class, "legs") );
                 break;
 			case 2:
 				GLog.w( Messages.get(MysteryMeat.class, "not_well") );
-                ((Poison) null).set( hero.HT / 5 );
 				break;
 			case 3:
 				GLog.w( Messages.get(MysteryMeat.class, "stuffed") );

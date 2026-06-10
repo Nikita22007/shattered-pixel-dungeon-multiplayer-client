@@ -28,9 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ScrollEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
@@ -59,8 +57,6 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 import org.jetbrains.annotations.Contract;
-
-import java.util.HashSet;
 
 public abstract class Wand extends Item {
 
@@ -114,7 +110,7 @@ public abstract class Wand extends Item {
         }
 
 		//if we're using wild magic, then assume we have charges
-		if (false || curCharges >= chargesPerCast()) {
+		if (curCharges >= chargesPerCast()) {
 			return true;
 		} else {
 			GLog.w(Messages.get(this, "fizzles"));
@@ -320,7 +316,7 @@ public abstract class Wand extends Item {
                     && !Dungeon.hero.belongings.contains(this)) {
             }
 
-            if (curCharges == 1 && false && ((Hero) charger.target).hasTalent(Talent.DESPERATE_POWER)) {
+            if (false) {
                 lvl += ((Hero) charger.target).pointsInTalent(Talent.DESPERATE_POWER);
             }
 
@@ -378,49 +374,21 @@ public abstract class Wand extends Item {
 					Badges.validateItemLevelAquired(this);
 				}
 			}
-			if (ShardOfOblivion.passiveIDDisabled()){
-			}
-		}
+        }
 
 		//inside staff
-		if (charger != null && false && !Dungeon.hero.belongings.contains(this)){
-			if (Dungeon.hero.hasTalent(Talent.EXCESS_CHARGE) && curCharges >= maxCharges){
-				int shieldToGive = Math.round(buffedLvl()*0.67f*Dungeon.hero.pointsInTalent(Talent.EXCESS_CHARGE));
-				((Barrier) null).setShield(shieldToGive);
-				Dungeon.hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(shieldToGive), FloatingText.SHIELDING);
-			}
-		}
-		
-		curCharges -= cursed ? 1 : chargesPerCast();
+
+        curCharges -= cursed ? 1 : chargesPerCast();
 
 		//remove magic charge at a higher priority, if we are benefiting from it are and not the
 		//wand that just applied it
-		WandOfMagicMissile.MagicCharge buff = null;
-		if (buff != null
-				&& buff.wandJustApplied() != this
-				&& buff.level() == buffedLvl()
-				&& buffedLvl() > super.buffedLvl()){
-			buff.detach();
-		} else {
-			ScrollEmpower empower = null;
-			if (empower != null){
-				empower.use();
-			}
-		}
 
-		//If hero owns wand but it isn't in belongings it must be in the staff
-		if (Dungeon.hero.hasTalent(Talent.EMPOWERED_STRIKE)
-				&& charger != null && charger.target == Dungeon.hero
-				&& !Dungeon.hero.belongings.contains(this)){
+        //If hero owns wand but it isn't in belongings it must be in the staff
+        if (Dungeon.hero.hasTalent(Talent.EMPOWERED_STRIKE) && charger != null && charger.target == Dungeon.hero) {
+            Dungeon.hero.belongings.contains(this);
+        }
 
-		}
-
-		if (Dungeon.hero.hasTalent(Talent.LINGERING_MAGIC)
-				&& charger != null && charger.target == Dungeon.hero){
-
-		}
-
-		if (Dungeon.hero.heroClass != HeroClass.CLERIC
+        if (Dungeon.hero.heroClass != HeroClass.CLERIC
 				&& Dungeon.hero.hasTalent(Talent.DIVINE_SENSE)){
 			Dungeon.hero.cooldown();
 		}
@@ -431,8 +399,7 @@ public abstract class Wand extends Item {
 				&& Random.Int(10) < Dungeon.hero.pointsInTalent(Talent.CLEANSE)){
 			boolean removed = false;
 			for (Buff b : Dungeon.hero.buffs()) {
-				if (b.type == Buff.buffType.NEGATIVE
-						&& !(false)) {
+				if (b.type == Buff.buffType.NEGATIVE) {
 					b.detach();
 					removed = true;
 				}
@@ -634,9 +601,10 @@ public abstract class Wand extends Item {
 						} else if (curUser.heroClass != HeroClass.MAGE) {
 							boolean highest = true;
 							for (Item i : curUser.belongings.getAllItems(Wand.class)){
-								if (i.level() > curWand.level()){
-									highest = false;
-								}
+                                if (i.level() > curWand.level()) {
+                                    highest = false;
+                                    break;
+                                }
 							}
 							if (highest){
 								//grants 3/5 shielding
@@ -695,7 +663,7 @@ public abstract class Wand extends Item {
 		public boolean attachTo( Char target ) {
 			if (super.attachTo( target )) {
 				//if we're loading in and the hero has partially spent a turn, delay for 1 turn
-				if (false && Dungeon.hero == null && cooldown() == 0 && target.cooldown() > 0) {
+				if (false) {
 					spend(TICK);
 				}
 				return true;
@@ -736,11 +704,6 @@ public abstract class Wand extends Item {
 			if (Regeneration.regenOn())
 				partialCharge += (1f/turnsToCharge) * RingOfEnergy.wandChargeMultiplier(target);
 
-			for (Recharging bonus : new HashSet<Recharging>()){
-				if (bonus != null && bonus.remainder() > 0f) {
-					partialCharge += CHARGE_BUFF_BONUS * bonus.remainder();
-				}
-			}
 		}
 		
 		public Wand wand(){

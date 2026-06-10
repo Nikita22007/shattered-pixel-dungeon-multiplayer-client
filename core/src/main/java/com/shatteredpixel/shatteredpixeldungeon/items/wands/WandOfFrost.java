@@ -26,9 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
@@ -106,32 +103,9 @@ public class WandOfFrost extends DamageWand {
 
 	@Override
 	public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
-        Chill chill = null;
 
-		if (chill != null) {
 
-			//1/9 at 2 turns of chill, scaling to 9/9 at 10 turns
-			float procChance = ((int)Math.floor(chill.cooldown()) - 1)/9f;
-			procChance *= procChanceMultiplier(attacker);
-
-			if (Random.Float() < procChance) {
-
-				float powerMulti = Math.max(1f, procChance);
-
-				//need to delay this through an actor so that the freezing isn't broken by taking damage from the staff hit.
-				new FlavourBuff() {
-					{
-						actPriority = VFX_PRIO;
-					}
-
-					public boolean act() {
-                        Math.round(Frost.DURATION * powerMulti);
-                        return super.act();
-					}
-				}.attachTo(defender);
-			}
-		}
-	}
+    }
 
 	@Override
 	public void staffFx(MagesStaff.StaffParticle particle) {

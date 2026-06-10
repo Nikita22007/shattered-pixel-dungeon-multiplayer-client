@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.blobs;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
 import com.shatteredpixel.shatteredpixeldungeon.effects.BlobEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SnowParticle;
@@ -33,34 +32,6 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 
 public class Freezing extends Blob {
 
-	public static void freeze( int cell ){
-		Char ch = Actor.findChar( cell );
-		if (ch != null && !false) {
-			{
-				Chill chill = null;
-				float turnsToAdd = Dungeon.level.water[cell] ? 5f : 3f;
-				if (chill != null) {
-					float chillToCap = Chill.DURATION - chill.cooldown();
-					chillToCap /= ch.resist(Chill.class); //account for resistance to chill
-					turnsToAdd = Math.min(turnsToAdd, chillToCap);
-				}
-				if (turnsToAdd > 0f) {
-				}
-				if (chill != null
-						&& chill.cooldown() >= Chill.DURATION) {
-					if (!false) {
-					}
-				}
-			}
-		}
-
-		Heap heap = Dungeon.level.heaps.get( cell );
-		if (heap != null) {
-
-
-        }
-	}
-	
 	@Override
 	public void use( BlobEmitter emitter ) {
 		super.use( emitter );

@@ -113,7 +113,7 @@ public class Sai extends MeleeWeapon {
 
                 boolean hit = false;
 				if (hit && !enemy.isAlive()){
-					wep.onAbilityKill(hero, enemy);
+
 				}
 
                 hero.spendAndNext(hero.attackDelay());

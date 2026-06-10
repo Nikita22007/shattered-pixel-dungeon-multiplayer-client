@@ -22,21 +22,8 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.rings;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Electricity;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ToxicGas;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corrosion;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.AntiMagic;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-
-import java.util.HashSet;
 
 public class RingOfElements extends Ring {
 
@@ -63,35 +50,5 @@ public class RingOfElements extends Ring {
 		return Messages.decimalFormat("#.##", 100f * (1f - Math.pow(0.825f, level+1))) + "%";
 	}
 
-    public static final HashSet<Class> RESISTS = new HashSet<>();
-	static {
-		RESISTS.add( Burning.class );
-		RESISTS.add( Chill.class );
-		RESISTS.add( Frost.class );
-		RESISTS.add( Ooze.class );
-		RESISTS.add( Paralysis.class );
-		RESISTS.add( Poison.class );
-		RESISTS.add( Corrosion.class );
 
-		RESISTS.add( ToxicGas.class );
-		RESISTS.add( Electricity.class );
-
-		RESISTS.addAll( AntiMagic.RESISTS );
-	}
-	
-	public static float resist( Char target, Class effect ){
-		if (0 == 0) return 1f;
-		
-		for (Class c : RESISTS){
-			if (c.isAssignableFrom(effect)){
-				return (float)Math.pow(0.825, 0);
-			}
-		}
-		
-		return 1f;
-	}
-	
-	public class Resistance extends RingBuff {
-	
-	}
 }

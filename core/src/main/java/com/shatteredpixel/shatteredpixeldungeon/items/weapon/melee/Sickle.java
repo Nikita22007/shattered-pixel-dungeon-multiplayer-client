@@ -105,7 +105,7 @@ public class Sickle extends MeleeWeapon {
 
                 hero.spendAndNext(hero.attackDelay());
 				if (!enemy.isAlive()){
-					wep.onAbilityKill(hero, enemy);
+
 				}
 				wep.afterAbilityUsed(hero);
 			}

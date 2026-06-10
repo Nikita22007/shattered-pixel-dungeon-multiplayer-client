@@ -36,9 +36,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Combo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.NaturesPower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BodyForm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -161,11 +159,6 @@ public class Hero extends Char {
 		belongings = new Belongings(this);
 
 		visibleEnemies = new ArrayList<>();
-	}
-
-	@Deprecated
-	public static int heroDamageIntRange(int i, int exStr) {
-		return 0;
 	}
 
 	public void updateHT(boolean boostHP) {
@@ -334,20 +327,8 @@ public class Hero extends Char {
 		speed *= RingOfHaste.speedMultiplier(this);
 
 
-		Momentum momentum = null;
-		if (momentum != null) {
-			((HeroSprite) sprite).sprint(momentum.freerunning() ? 1.5f : 1f);
-			speed *= momentum.speedMultiplier();
-		} else {
-			((HeroSprite) sprite).sprint(1f);
-		}
+        ((HeroSprite) sprite).sprint(1f);
 
-		NaturesPower.naturesPowerTracker natStrength = null;
-		if (natStrength != null) {
-			speed *= (2f + 0.25f * pointsInTalent(Talent.GROWING_POWER));
-		}
-
-        speed = speed;
 
 		return speed;
 

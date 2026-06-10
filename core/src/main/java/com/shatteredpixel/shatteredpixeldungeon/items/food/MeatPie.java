@@ -22,8 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.food;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WellFed;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public class MeatPie extends Food {
@@ -32,12 +30,7 @@ public class MeatPie extends Food {
 		image = ItemSpriteSheet.MEAT_PIE;
 		energy = Hunger.STARVING*2f;
 	}
-	
-	@Override
-	protected void satisfy(Hero hero) {
-		super.satisfy( hero );
-        ((WellFed) null).reset();
-	}
+
 	
 	@Override
 	public int value() {

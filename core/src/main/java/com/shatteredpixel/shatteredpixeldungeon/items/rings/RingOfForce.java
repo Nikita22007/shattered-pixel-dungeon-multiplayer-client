@@ -69,11 +69,14 @@ public class RingOfForce extends Ring {
         if (usingForce) {
 			int level = 0;
             float tier = tier(hero.STR());
-            int dmg = Hero.heroDamageIntRange(min(level, tier), max(level, tier));
+			min(level, tier);
+			max(level, tier);
+			int dmg = 0;
             return dmg;
         } else {
             //attack without any ring of force influence
-            return Hero.heroDamageIntRange(1, Math.max(hero.STR() - 8, 1));
+			hero.STR();
+			return 0;
         }
     }
 

@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.*;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.Stasis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.*;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Blacksmith;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.FlowParticle;
@@ -37,11 +36,8 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.WindParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfChallenge;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.EyeOfNewt;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfRegrowth;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.HeavyBoomerang;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.DecorEmitters;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.LevelTransition;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
@@ -50,7 +46,6 @@ import com.shatteredpixel.shatteredpixeldungeon.mechanics.ShadowCaster;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
@@ -356,26 +351,7 @@ public abstract class Level implements Bundlable {
 	public static void beforeTransition(){
 
 		//time freeze effects need to resolve their pressed cells before transitioning
-		TimekeepersHourglass.timeFreeze timeFreeze = null;
-		if (timeFreeze != null) timeFreeze.disarmPresses();
-		Swiftthistle.TimeBubble timeBubble = null;
-		if (timeBubble != null) timeBubble.disarmPresses();
 
-		//iron stomach and challenge arena do not persist between floors
-		Talent.WarriorFoodImmunity foodImmune = null;
-		if (foodImmune != null) foodImmune.detach();
-		ScrollOfChallenge.ChallengeArena arena = null;
-		if (arena != null) arena.detach();
-		//awareness also doesn't, honestly it's weird that it's a buff
-		Awareness awareness = null;
-		if (awareness != null) awareness.detach();
-
-		Char ally = Stasis.getStasisAlly();
-		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
-		if (false){
-			((Stasis.StasisBuff) null).act();
-			GLog.w(Messages.get(Stasis.StasisBuff.class, "left_behind"));
-		}
 
 		//spend the hero's partial turns,  so the hero cannot take partial turns between floors
 		Dungeon.hero.spendToWhole();
@@ -397,26 +373,6 @@ public abstract class Level implements Bundlable {
 		if (locked) {
 			locked = false;
 		}
-	}
-
-	public ArrayList<Item> getItemsToPreserveFromSealedResurrect(){
-		ArrayList<Item> items = new ArrayList<>();
-		for (Heap h : heaps.valueList()){
-			if (h.type == Heap.Type.HEAP) {
-				for (Item i : h.items){
-					items.add(i);
-				}
-			}
-		}
-		for (Mob m : mobs){
-			for (PinCushion b : new HashSet<PinCushion>()){
-				items.addAll(b.getStuckItems());
-			}
-		}
-		for (HeavyBoomerang.CircleBack b : new HashSet<HeavyBoomerang.CircleBack>()){
-			if (b.activeDepth() == Dungeon.depth) items.add(b.cancel());
-		}
-		return items;
 	}
 
 	public Group addVisuals() {
@@ -876,11 +832,7 @@ public abstract class Level implements Bundlable {
 		
 		int sense = 1;
 		//Currently only the hero can get mind vision
-		if (c.isAlive() && c == Dungeon.hero) {
-			for (Buff b : new HashSet<MindVision>()) {
-				sense = Math.max(((MindVision) b).distance, sense);
-			}
-		}
+
 		
 		//uses rounding
 		if (!sighted || sense > 1) {
@@ -970,10 +922,6 @@ public abstract class Level implements Bundlable {
 				}
 			}
 
-			for (RevealedArea a : new HashSet<RevealedArea>()) {
-				if (Dungeon.depth != a.depth || Dungeon.branch != a.branch) continue;
-				for (int i : PathFinder.NEIGHBOURS9) heroMindFov[a.pos + i] = true;
-			}
 
 			//set mind vision chars
 			for (Mob mob : mobs) {

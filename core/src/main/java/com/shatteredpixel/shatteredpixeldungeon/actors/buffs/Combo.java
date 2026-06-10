@@ -87,7 +87,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 		count++;
 		comboTime = Math.max(comboTime, 5f);
 
-		if (!enemy.isAlive() || (false)){
+		if (!enemy.isAlive()){
 			comboTime = 15f + 15f*((Hero)target).pointsInTalent(Talent.CLEAVE);
 		}
 
@@ -106,10 +106,6 @@ public class Combo extends Buff implements ActionIndicator.Action {
 
 	}
 
-	public void addTime( float time ){
-		comboTime += time;
-	}
-
 	@Override
 	public void detach() {
 		super.detach();
@@ -118,7 +114,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 
 	@Override
 	public boolean act() {
-		comboTime -= TICK * HoldFast.buffDecayFactor(target);
+		comboTime -= TICK * (float) 1;
 		spend(TICK);
 		if (comboTime <= 0) {
 			detach();

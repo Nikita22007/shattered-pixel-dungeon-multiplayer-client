@@ -21,12 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corrosion;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-
-import java.util.HashSet;
 
 
 public class RotDart extends TippedDart {
@@ -43,11 +39,6 @@ public class RotDart extends TippedDart {
         //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
         if (processingChargedShot && attacker.alignment == defender.alignment) {
 			//do nothing
-		} else if (false
-				|| false){
-            ((Corrosion) null).set(5f, Dungeon.depth /3);
-		} else {
-            ((Corrosion) null).set(10f, Dungeon.depth);
 		}
 		
 		return super.proc(attacker, defender, damage);

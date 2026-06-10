@@ -44,13 +44,12 @@ public class Corrupting extends Weapon.Enchantment {
 		// lvl 2 ~ 26%
 		float procChance = (level+5f)/(level+25f) * procChanceMultiplier(attacker);
         if (damage >= defender.HP
-                && Random.Float() < procChance && !false) {
-            if (true
-                    && defender instanceof Mob
+                && Random.Float() < procChance) {
+            if (defender instanceof Mob
                     && defender.isAlive()) {
 
                 Mob enemy = (Mob) defender;
-                Hero hero = (false) ? (Hero) attacker : Dungeon.hero;
+                Hero hero = Dungeon.hero;
 
                 Corruption.corruptionHeal(enemy);
 

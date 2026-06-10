@@ -98,7 +98,7 @@ public class Greataxe extends MeleeWeapon {
 
                 if (!enemy.isAlive()){
 					hero.next();
-					onAbilityKill(hero, enemy);
+
 				} else {
 					hero.spendAndNext(hero.attackDelay());
 				}

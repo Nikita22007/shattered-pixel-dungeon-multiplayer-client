@@ -103,13 +103,7 @@ public class Regeneration extends Buff {
 	}
 
 	public static boolean regenOn(){
-        LockedFloor lock = null;
-		if (lock != null && !lock.regenOn()){
-			return false;
-		}
-//		if (Dungeon.level instanceof VaultLevel){
-//			return false;
-//		}
+
 		return true;
 	}
 

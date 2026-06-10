@@ -152,7 +152,6 @@ public class Dungeon {
 			}
 		}
 
-		Light light = null;
 		hero.viewDistance = level.viewDistance;
 
 		hero.curAction = hero.lastAction = null;

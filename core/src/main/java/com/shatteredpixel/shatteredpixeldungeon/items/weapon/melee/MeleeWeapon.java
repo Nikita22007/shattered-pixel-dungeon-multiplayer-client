@@ -26,8 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GreaterHaste;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MonkEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
@@ -152,17 +150,9 @@ public class MeleeWeapon extends Weapon {
                 ((Talent.CombinedEnergyAbilityTracker) null).wepAbilUsed = true;
             } else {
                 tracker.wepAbilUsed = true;
-                ((MonkEnergy) null).processCombinedEnergy(tracker);
             }
         }
     }
-
-	public static void onAbilityKill( Hero hero, Char killed ){
-		if (killed.alignment == Char.Alignment.ENEMY && hero.hasTalent(Talent.LETHAL_HASTE)){
-			//effectively 3/5 turns of greater haste
-			((GreaterHaste) null).set(2 + 2*hero.pointsInTalent(Talent.LETHAL_HASTE));
-		}
-	}
 
 	protected int baseChargeUse(Hero hero, Char target){
 		return 1; //abilities use 1 charge by default

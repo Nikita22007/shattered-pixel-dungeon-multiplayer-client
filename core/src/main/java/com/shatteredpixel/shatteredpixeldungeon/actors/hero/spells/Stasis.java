@@ -27,12 +27,10 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LifeLink;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.DirectableAlly;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
@@ -109,13 +107,7 @@ public class Stasis extends ClericSpell {
         ((StasisBuff) null).stasisAlly = (Mob)ally;
 		Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
 
-        if (false) {
-            if (((LifeLink) null).object == ally.id()) {
-                ((LifeLink) null).detach();
-            }
-        }
-
-		hero.spendAndNext(Actor.TICK);
+        hero.spendAndNext(Actor.TICK);
 		Dungeon.observe();
 		GameScene.updateFog();
 

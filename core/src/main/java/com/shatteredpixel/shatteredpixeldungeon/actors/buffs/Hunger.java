@@ -47,61 +47,15 @@ public class Hunger extends Buff implements Hero.Doom {
 	public boolean act() {
 
 		if (Dungeon.level.locked
-				|| false
-				|| SPDSettings.intro()
-				|| false
+                || SPDSettings.intro()
 				){
 			spend(TICK);
 			return true;
 		}
 
-		if (target.isAlive() && false) {
+        diactivate();
 
-			Hero hero = (Hero)target;
-
-			if (isStarving()) {
-
-				partialDamage += target.HT/1000f;
-
-				if (partialDamage > 1){
-                    partialDamage -= (int)partialDamage;
-				}
-				
-			} else {
-
-				float hungerDelay = 1f;
-				hungerDelay /= SaltCube.hungerGainMultiplier();
-
-				float newLevel = level + (1f / hungerDelay);
-				if (newLevel >= STARVING) {
-
-					GLog.n(Messages.get(this, "onstarving"));
-
-                    hero.interrupt();
-					newLevel = STARVING;
-
-				} else if (newLevel >= HUNGRY && level < HUNGRY) {
-
-					GLog.w(Messages.get(this, "onhungry"));
-
-					if (!Document.ADVENTURERS_GUIDE.isPageRead(Document.GUIDE_FOOD)) {
-						GameScene.flashForDocument(Document.ADVENTURERS_GUIDE, Document.GUIDE_FOOD);
-					}
-
-				}
-				level = newLevel;
-
-			}
-			
-			spend( TICK );
-
-		} else {
-
-			diactivate();
-
-		}
-
-		return true;
+        return true;
 	}
 
 	public void satisfy( float energy ) {
@@ -114,10 +68,8 @@ public class Hunger extends Buff implements Hero.Doom {
 
 	public void affectHunger(float energy, boolean overrideLimits ) {
 		if (target == null) {detach(); return;}
-		if (energy < 0) {
-		}
 
-		float oldLevel = level;
+        float oldLevel = level;
 
 		level -= energy;
 		if (level < 0 && !overrideLimits) {

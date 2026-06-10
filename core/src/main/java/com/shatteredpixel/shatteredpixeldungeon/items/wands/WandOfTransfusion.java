@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Beam;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
@@ -47,8 +46,6 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
-
-import java.util.HashSet;
 
 public class WandOfTransfusion extends DamageWand {
 
@@ -128,9 +125,6 @@ public class WandOfTransfusion extends DamageWand {
 				//charms living enemies
                 //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
                 if (!false) {
-                    Charm charm = null;
-					charm.object = curUser.id();
-					charm.ignoreHeroAllies = true;
 					ch.sprite.centerEmitter().start( Speck.factory( Speck.HEART ), 0.2f, 3 );
 				
 				//harms the undead

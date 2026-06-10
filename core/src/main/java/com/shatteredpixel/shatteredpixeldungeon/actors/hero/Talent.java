@@ -32,9 +32,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PhysicalEmpower;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ScrollEmpower;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WandEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.Ratmogrify;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.RecallInscription;
@@ -478,7 +475,6 @@ public enum Talent {
 		}
 		if (hero.hasTalent(EMPOWERING_MEAL)){
 			//2/3 bonus wand damage for next 3 zaps
-			((WandEmpower) null).set(1 + hero.pointsInTalent(EMPOWERING_MEAL), 3);
 			ScrollOfRecharging.charge( hero );
 		}
 		int wandChargeTurns = 0;
@@ -497,7 +493,7 @@ public enum Talent {
         }
 		if (hero.hasTalent(STRENGTHENING_MEAL)){
 			//3 bonus physical damage for next 2/3 attacks
-			((PhysicalEmpower) null).set(3, 1 + hero.pointsInTalent(STRENGTHENING_MEAL));
+
 		}
 		if (hero.hasTalent(FOCUSED_MEAL)){
 			if (hero.heroClass == HeroClass.DUELIST){
@@ -506,7 +502,6 @@ public enum Talent {
 				ScrollOfRecharging.charge( hero );
 			} else {
 				// lvl/3 / lvl/2 bonus dmg on next hit for other classes
-				((PhysicalEmpower) null).set(Math.round(hero.lvl / (4f - hero.pointsInTalent(FOCUSED_MEAL))), 1);
 			}
 		}
 		if (hero.hasTalent(SATIATED_SPELLS)){
@@ -542,10 +537,6 @@ public enum Talent {
 			SpellSprite.show(hero, SpellSprite.CHARGE);
 		}
 		if (artifactChargeTurns > 0){
-			ArtifactRecharge buff = null;
-			if (buff.left() < artifactChargeTurns){
-				buff.set(artifactChargeTurns).ignoreHornOfPlenty = false;
-			}
 			ScrollOfRecharging.charge( hero );
 			SpellSprite.show(hero, SpellSprite.CHARGE, 0, 1, 1);
 		}
@@ -620,7 +611,6 @@ public enum Talent {
 	public static void onScrollUsed( Hero hero, int pos, float factor, Class<?extends Item> cls ){
 		if (hero.hasTalent(INSCRIBED_POWER)){
 			// 2/3 empowered wand zaps
-			((ScrollEmpower) null).reset((int) (factor * (1 + hero.pointsInTalent(INSCRIBED_POWER))));
 		}
 		if (hero.hasTalent(INSCRIBED_STEALTH)){
 			// 3/5 turns of stealth
