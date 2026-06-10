@@ -22,13 +22,9 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLevitation;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
 
 public class ElixirOfFeatherFall extends Elixir {
@@ -39,14 +35,7 @@ public class ElixirOfFeatherFall extends Elixir {
 		talentChance = 1/(float)Recipe.OUT_QUANTITY;
 	}
 
-	@Override
-	public void apply(Hero hero) {
-
-        hero.sprite.emitter().burst(Speck.factory(Speck.JET), 20);
-		GLog.p(Messages.get(this, "light"));
-	}
-
-	public static class FeatherBuff extends FlavourBuff {
+    public static class FeatherBuff extends FlavourBuff {
 		//does nothing, just waits to be triggered by chasm falling
 		{
 			type = buffType.POSITIVE;

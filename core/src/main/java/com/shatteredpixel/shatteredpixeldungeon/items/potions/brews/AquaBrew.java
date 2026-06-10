@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.potions.brews;
 
+import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfStormClouds;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.GeyserTrap;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
@@ -32,22 +33,6 @@ public class AquaBrew extends Brew {
 		image = ItemSpriteSheet.BREW_AQUA;
 
 		talentChance = 1/(float)Recipe.OUT_QUANTITY;
-	}
-
-	@Override
-	public void shatter(int cell) {
-		GeyserTrap geyser = new GeyserTrap();
-		geyser.pos = cell;
-		geyser.source = this;
-
-		int userPos = curUser == null ? cell : curUser.pos;
-		if (userPos != cell){
-			Ballistica aim = new Ballistica(userPos, cell, Ballistica.STOP_TARGET);
-			if (aim.path.size() > aim.dist+1) {
-				geyser.centerKnockBackDirection = aim.path.get(aim.dist + 1);
-			}
-		}
-		geyser.activate();
 	}
 
 	@Override

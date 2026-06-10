@@ -38,12 +38,6 @@ public class PotionOfHealing extends Potion {
 
 		bones = true;
 	}
-	
-	@Override
-	public void apply( Hero hero ) {
-        cure( hero );
-		heal( hero );
-	}
 
 	public static void heal( Char ch ){
 		if (ch instanceof Hero && Dungeon.isChallenged(Challenges.NO_HEALING)){

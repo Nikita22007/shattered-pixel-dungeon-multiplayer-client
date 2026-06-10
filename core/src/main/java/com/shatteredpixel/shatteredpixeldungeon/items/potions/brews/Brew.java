@@ -40,9 +40,6 @@ public abstract class Brew extends Potion {
 	}
 	
 	@Override
-	public abstract void shatter( int cell );
-	
-	@Override
 	public boolean isKnown() {
 		return true;
 	}

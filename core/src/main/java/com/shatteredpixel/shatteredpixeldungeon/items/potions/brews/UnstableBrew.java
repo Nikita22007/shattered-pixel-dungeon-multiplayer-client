@@ -21,11 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.potions.brews;
 
-import com.shatteredpixel.shatteredpixeldungeon.Challenges;
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfExperience;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfFrost;
@@ -41,8 +37,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfToxicGas;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.ExoticPotion;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,43 +66,7 @@ public class UnstableBrew extends Brew {
 		potionChances.put(PotionOfPurity.class, 2f);
 		potionChances.put(PotionOfExperience.class, 1f);
 	}
-	
-	@Override
-	public void apply(Hero hero) {
-		//Don't allow this to roll healing in pharma
-		if (Dungeon.isChallenged(Challenges.NO_HEALING)){
-			potionChances.put(PotionOfHealing.class, 0f);
-		}
 
-		Potion p = Reflection.newInstance(Random.chances(potionChances));
-
-		//reroll the potion if it wasn't a good potion to drink
-		while (mustThrowPots.contains(p.getClass())){
-			p = Reflection.newInstance(Random.chances(potionChances));
-		}
-
-		p.anonymize();
-		p.apply(hero);
-
-		if (Dungeon.isChallenged(Challenges.NO_HEALING)){
-			potionChances.put(PotionOfHealing.class, 3f);
-		}
-	}
-	
-	@Override
-	public void shatter(int cell) {
-		Potion p = Reflection.newInstance(Random.chances(potionChances));
-
-		//reroll the potion if it wasn't a good potion to throw
-		while (!mustThrowPots.contains(p.getClass()) && !canThrowPots.contains(p.getClass())){
-			p = Reflection.newInstance(Random.chances(potionChances));
-		}
-
-		p.anonymize();
-		curItem = p;
-		p.shatter(cell);
-	}
-	
 	@Override
 	public boolean isKnown() {
 		return true;

@@ -35,26 +35,4 @@ public class PotionOfCorrosiveGas extends ExoticPotion {
 	{
 		icon = ItemSpriteSheet.Icons.POTION_CORROGAS;
 	}
-	
-	@Override
-	public void shatter( int cell ) {
-
-		splash( cell );
-		if (Dungeon.level.heroFOV[cell]) {
-
-            Sample.INSTANCE.play( Assets.Sounds.SHATTER );
-			Sample.INSTANCE.play( Assets.Sounds.GAS );
-		}
-
-		int centerVolume = 25;
-		for (int i : PathFinder.NEIGHBOURS8){
-			if (!Dungeon.level.solid[cell+i]){
-				GameScene.add( Blob.seed( cell+i, 25, CorrosiveGas.class ).setStrength( 2 + Dungeon.scalingDepth()/5));
-			} else {
-				centerVolume += 25;
-			}
-		}
-
-		GameScene.add( Blob.seed( cell, centerVolume, CorrosiveGas.class ).setStrength( 2 + Dungeon.scalingDepth()/5));
-	}
 }

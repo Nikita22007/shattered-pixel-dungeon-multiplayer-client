@@ -72,7 +72,7 @@ public class Frost extends FlavourBuff {
 					Item toFreeze = item;
 					GLog.w( Messages.capitalize(Messages.get(this, "freezes", toFreeze.title())) );
 					if (toFreeze instanceof Potion){
-						((Potion) toFreeze).shatter(hero.pos);
+
 					} else if (toFreeze instanceof MysteryMeat){
 						FrozenCarpaccio carpaccio = new FrozenCarpaccio();
                         if (!false) {
@@ -86,7 +86,7 @@ public class Frost extends FlavourBuff {
 				Item item = ((Thief) target).item;
 
 				if (item instanceof Potion && !item.unique) {
-					((Potion) ((Thief) target).item).shatter(target.pos);
+
 					((Thief) target).item = null;
 				} else if (item instanceof MysteryMeat){
 					((Thief) target).item = new FrozenCarpaccio();

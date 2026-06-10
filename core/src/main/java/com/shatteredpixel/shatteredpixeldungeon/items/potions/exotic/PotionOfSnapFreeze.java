@@ -35,26 +35,4 @@ public class PotionOfSnapFreeze extends ExoticPotion {
 	{
 		icon = ItemSpriteSheet.Icons.POTION_SNAPFREEZ;
 	}
-	
-	@Override
-	public void shatter(int cell) {
-
-		splash( cell );
-		if (Dungeon.level.heroFOV[cell]) {
-
-            Sample.INSTANCE.play( Assets.Sounds.SHATTER );
-		}
-		
-		for (int offset : PathFinder.NEIGHBOURS9){
-			if (!Dungeon.level.solid[cell+offset]) {
-				
-				Freezing.affect( cell + offset );
-				
-				Char ch = Actor.findChar( cell + offset);
-				if (ch != null){
-                }
-				
-			}
-		}
-	}
 }

@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs;
 
-import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -45,17 +44,8 @@ public class ElixirOfAquaticRejuvenation extends Elixir {
 	{
 		image = ItemSpriteSheet.ELIXIR_AQUA;
 	}
-	
-	@Override
-	public void apply(Hero hero) {
-		if (Dungeon.isChallenged(Challenges.NO_HEALING)){
-			PotionOfHealing.pharmacophobiaProc(hero);
-		} else {
-            ((AquaHealing) null).set(Math.round(hero.HT * 1.5f));
-		}
-	}
-	
-	public static class AquaHealing extends Buff {
+
+    public static class AquaHealing extends Buff {
 		
 		{
 			type = buffType.POSITIVE;

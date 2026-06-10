@@ -21,12 +21,9 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items;
 
-import com.nikita22007.pixeldungeonmultiplayer.TextureManager;
-import com.nikita22007.pixeldungeonmultiplayer.TexturePack;
 import com.nikita22007.pixeldungeonmultiplayer.TranslationUtils;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Wraith;
@@ -349,9 +346,8 @@ public class Heap implements Bundlable {
 
 				if (item instanceof Potion) {
 					items.remove(item);
-					((Potion) item).shatter(pos);
 
-				} else if (item instanceof Honeypot.ShatteredPot) {
+                } else if (item instanceof Honeypot.ShatteredPot) {
 					items.remove(item);
 					((Honeypot.ShatteredPot) item).destroyPot(pos);
 
@@ -390,8 +386,8 @@ public class Heap implements Bundlable {
 				frozen = true;
 			} else if (item instanceof Potion && !item.unique) {
 				items.remove(item);
-				((Potion) item).shatter(pos);
-				frozen = true;
+
+                frozen = true;
 			} else if (item instanceof Bomb && ((Bomb) item).fuse != null){
 				frozen = frozen || ((Bomb) item).fuse.freeze();
 			}
