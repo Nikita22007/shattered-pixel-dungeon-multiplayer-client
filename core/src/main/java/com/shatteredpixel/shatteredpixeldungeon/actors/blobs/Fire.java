@@ -41,8 +41,7 @@ public class Fire extends Blob {
 		
 		Heap heap = Dungeon.level.heaps.get( pos );
 		if (heap != null) {
-			heap.burn();
-		}
+        }
 
 		Plant plant = Dungeon.level.plants.get( pos );
 		if (plant != null){

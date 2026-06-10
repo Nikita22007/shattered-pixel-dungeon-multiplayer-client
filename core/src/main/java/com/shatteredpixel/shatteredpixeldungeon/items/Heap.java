@@ -32,8 +32,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
-import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
-import com.shatteredpixel.shatteredpixeldungeon.items.food.ChargrilledMeat;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.TippedDart;
@@ -147,18 +145,7 @@ public class Heap implements Bundlable {
 		sprite.link();
 		sprite.drop();
 	}
-	
-	public Heap setHauntedIfCursed(){
-		for (Item item : items) {
-			if (item.cursed) {
-				haunted = true;
-				item.cursedKnown = true;
-				break;
-			}
-		}
-		return this;
-	}
-	
+
 	public int size() {
 		return items.size();
 	}
@@ -258,48 +245,6 @@ public class Heap implements Bundlable {
 			sprite.view(this).place( pos );
 		}
 	}
-	
-	public void burn() {
-		hidden = false;
-
-		if (type != Type.HEAP) {
-			return;
-		}
-		
-		boolean burnt = false;
-		boolean evaporated = false;
-		
-		for (Item item : items.toArray( new Item[0] )) {
-			if (false) {
-				items.remove( item );
-				burnt = true;
-			} else if (false) {
-				items.remove( item );
-				evaporated = true;
-			} else if (false || false) {
-				replace( item, ChargrilledMeat.cook( item.quantity ) );
-				burnt = true;
-			} else
-		}
-		
-		if (burnt || evaporated) {
-			
-			if (Dungeon.level.heroFOV[pos]) {
-				if (burnt) {
-					burnFX( pos );
-				} else {
-					evaporateFX( pos );
-				}
-			}
-			
-			if (isEmpty()) {
-				destroy();
-			} else if (sprite != null) {
-				sprite.view(this).place( pos );
-			}
-			
-		}
-	}
 
 	//Note: should not be called to initiate an explosion, but rather by an explosion that is happening.
 	public void explode() {
@@ -325,22 +270,7 @@ public class Heap implements Bundlable {
 				if (item.unique || item.isUpgradable() || item instanceof EquipableItem){
 					continue;
 				}
-
-				if (false) {
-					items.remove(item);
-
-                } else if (false) {
-					items.remove(item);
-
-				} else if (false) {
-					items.remove( item );
-					((Bomb) item).explode(pos);
-					if (((Bomb) item).explodesDestructively()) {
-						//stop processing current explosion, it will be replaced by the new one.
-						return;
-					}
-
-				} else {
+				{
 					items.remove( item );
 				}
 

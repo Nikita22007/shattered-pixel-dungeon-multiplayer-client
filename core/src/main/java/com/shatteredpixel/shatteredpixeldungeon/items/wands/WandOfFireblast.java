@@ -100,8 +100,8 @@ public class WandOfFireblast extends DamageWand {
 				adjacentCells.add(cell);
 				//do burn any heaps located here though
 				if (Dungeon.level.heaps.get(cell) != null){
-					Dungeon.level.heaps.get(cell).burn();
-				}
+                    Dungeon.level.heaps.get(cell);
+                }
 			} else {
 				GameScene.add( Blob.seed( cell, 1+chargesPerCast(), Fire.class ) );
 			}
