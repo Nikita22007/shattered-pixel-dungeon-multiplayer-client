@@ -65,7 +65,7 @@ public class Dart extends MissileWeapon {
 	protected static final String AC_TIP = "TIP";
 	
 	@Override
-	public void execute(Hero hero, String action) {
+	public void execute( Hero hero, String action ) {
 		super.execute(hero, action);
 		if (action.equals(AC_TIP)){
 			GameScene.selectItem(itemSelector);

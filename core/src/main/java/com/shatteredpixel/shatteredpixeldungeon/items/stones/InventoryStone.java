@@ -42,7 +42,7 @@ public abstract class InventoryStone extends Runestone {
 	public static final String AC_USE	= "USE";
 	
 	@Override
-	public void execute(Hero hero, String action) {
+	public void execute( Hero hero, String action ) {
 		super.execute(hero, action);
 		if (action.equals(AC_USE)) {
             if (true) {

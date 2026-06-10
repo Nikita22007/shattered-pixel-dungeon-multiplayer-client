@@ -61,7 +61,7 @@ public abstract class TippedDart extends Dart {
 	private static final String AC_CLEAN = "CLEAN";
 	
 	@Override
-	public void execute(final Hero hero, String action) {
+	public void execute( final Hero hero, String action ) {
 		super.execute(hero, action);
 		if (action.equals( AC_CLEAN )){
 
@@ -78,7 +78,7 @@ public abstract class TippedDart extends Dart {
 					Messages.get(this, "cancel")
 				};
 			}
-			
+
 			GameScene.show(new WndOptions(new ItemSprite(this),
 					Messages.titleCase(name()),
 					Messages.get(this, "clean_desc"),
@@ -88,7 +88,7 @@ public abstract class TippedDart extends Dart {
 					if (index == 0){
 						detachAll(hero.belongings.backpack);
 						new Dart().quantity(quantity).collect();
-						
+
 						hero.spend( 1f );
 						hero.busy();
 						hero.sprite.operate(hero.pos);
@@ -98,14 +98,14 @@ public abstract class TippedDart extends Dart {
 
 						//reset durability if there are darts left in the stack
 						durability = MAX_DURABILITY;
-						
+
 						hero.spend( 1f );
 						hero.busy();
 						hero.sprite.operate(hero.pos);
 					}
 				}
 			});
-			
+
 		}
 	}
 	

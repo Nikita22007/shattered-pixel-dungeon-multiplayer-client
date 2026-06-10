@@ -69,7 +69,7 @@ public class WandOfWarding extends Wand {
 	}
 
 	@Override
-	public void execute(Hero hero, String action) {
+	public void execute( Hero hero, String action ) {
 		//cursed warding does use targeting as it's just doing regular cursed zaps
 		usesTargeting = cursed && cursedKnown;
 		super.execute(hero, action);

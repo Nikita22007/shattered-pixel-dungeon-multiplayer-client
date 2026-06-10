@@ -71,7 +71,7 @@ public class SummonElemental extends Spell {
 	private Class<? extends Elemental> summonClass = Elemental.AllyNewBornElemental.class;
 
 	@Override
-	public void execute(Hero hero, String action) {
+	public void execute( Hero hero, String action ) {
 		super.execute(hero, action);
 
 		if (action.equals(AC_IMBUE)){

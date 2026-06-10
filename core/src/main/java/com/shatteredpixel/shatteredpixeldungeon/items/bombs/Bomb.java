@@ -94,7 +94,7 @@ public class Bomb extends Item {
 	}
 
 	@Override
-	public void execute(Hero hero, String action) {
+	public void execute( Hero hero, String action ) {
 
 		if (action.equals(AC_LIGHTTHROW)) {
 			lightingFuse = true;

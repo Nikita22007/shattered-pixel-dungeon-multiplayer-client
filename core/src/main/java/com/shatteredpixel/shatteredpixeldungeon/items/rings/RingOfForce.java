@@ -182,7 +182,7 @@ public class RingOfForce extends Ring {
 	}
 
 	@Override
-	public void execute(Hero hero, String action) {
+	public void execute( Hero hero, String action ) {
 		if (action.equals(AC_ABILITY)) {
 			{
 				if (!isEquipped(hero)) {

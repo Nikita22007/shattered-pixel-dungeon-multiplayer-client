@@ -71,7 +71,7 @@ public class EtherealChains extends Artifact {
 	}
 
 	@Override
-	public void execute(Hero hero, String action) {
+	public void execute( Hero hero, String action ) {
 
         super.execute(hero, action);
 

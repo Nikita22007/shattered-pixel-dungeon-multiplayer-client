@@ -68,7 +68,7 @@ public class ShardOfOblivion extends Trinket {
 	}
 
 	@Override
-	public void execute(Hero hero, String action) {
+	public void execute( Hero hero, String action ) {
 		if (action.equals(AC_IDENTIFY)){
 			curUser = hero;
 			curItem = this;

@@ -45,7 +45,7 @@ abstract public class KindOfWeapon extends EquipableItem {
 	protected float hitSoundPitch = 1f;
 
 	@Override
-	public void execute(Hero hero, String action) {
+	public void execute( Hero hero, String action ) {
 		if (hero.subClass == HeroSubClass.CHAMPION && action.equals(AC_EQUIP)){
 			usesTargeting = false;
 			String primaryName = Messages.titleCase(hero.belongings.weapon != null ? hero.belongings.weapon.trueName() : Messages.get(KindOfWeapon.class, "empty"));

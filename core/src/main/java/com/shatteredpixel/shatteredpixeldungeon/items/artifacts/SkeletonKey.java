@@ -76,7 +76,7 @@ public class SkeletonKey extends Artifact {
 	public static final String AC_INSERT = "INSERT";
 
 	@Override
-	public void execute(Hero hero, String action) {
+	public void execute( Hero hero, String action ) {
         super.execute(hero, action);
 
         if (action.equals(AC_INSERT)) {

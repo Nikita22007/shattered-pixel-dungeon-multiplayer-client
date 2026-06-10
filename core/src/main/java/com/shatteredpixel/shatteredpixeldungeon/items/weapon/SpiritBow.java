@@ -72,16 +72,16 @@ public class SpiritBow extends Weapon {
 	public float sniperSpecialBonusDamage = 0f;
 	
 	@Override
-	public void execute(Hero hero, String action) {
-		
+	public void execute( Hero hero, String action ) {
+
 		super.execute(hero, action);
-		
+
 		if (action.equals(AC_SHOOT)) {
-			
+
 			curUser = hero;
 			curItem = this;
 			GameScene.selectCell( shooter );
-			
+
 		}
 	}
 

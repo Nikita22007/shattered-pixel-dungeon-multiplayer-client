@@ -55,7 +55,7 @@ public class ChaliceOfBlood extends Artifact {
 	public static final String AC_PRICK = "PRICK";
 
 	@Override
-	public void execute(Hero hero, String action ) {
+	public void execute( Hero hero, String action ) {
 		super.execute(hero, action);
 
 		if (action.equals(AC_PRICK)){
