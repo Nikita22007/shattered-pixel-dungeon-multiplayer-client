@@ -37,19 +37,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfShr
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfSnapFreeze;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfStormClouds;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Blindweed;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Earthroot;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Fadeleaf;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Firebloom;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Icecap;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Mageroyal;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Rotberry;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Sorrowmoss;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Starflower;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Stormvine;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Sungrass;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Bundle;
@@ -263,40 +250,21 @@ public class Potion extends Item {
 	}
 
 	public static class PlaceHolder extends Potion {
-		
+
 		{
 			image = ItemSpriteSheet.POTION_HOLDER;
 		}
-		
+
 		@Override
 		public boolean isSimilar(Item item) {
 			return ExoticPotion.regToExo.containsKey(item.getClass())
 					|| ExoticPotion.regToExo.containsValue(item.getClass());
 		}
-		
+
 		@Override
 		public String info() {
 			return "";
 		}
 	}
-	
-	public static class SeedToPotion {
-		
-		public static HashMap<Class<?extends Plant.Seed>, Class<?extends Potion>> types = new HashMap<>();
-		static {
-			types.put(Blindweed.Seed.class,     PotionOfInvisibility.class);
-			types.put(Mageroyal.Seed.class,     PotionOfPurity.class);
-			types.put(Earthroot.Seed.class,     PotionOfParalyticGas.class);
-			types.put(Fadeleaf.Seed.class,      PotionOfMindVision.class);
-			types.put(Firebloom.Seed.class,     PotionOfLiquidFlame.class);
-			types.put(Icecap.Seed.class,        PotionOfFrost.class);
-			types.put(Rotberry.Seed.class,      PotionOfStrength.class);
-			types.put(Sorrowmoss.Seed.class,    PotionOfToxicGas.class);
-			types.put(Starflower.Seed.class,    PotionOfExperience.class);
-			types.put(Stormvine.Seed.class,     PotionOfLevitation.class);
-			types.put(Sungrass.Seed.class,      PotionOfHealing.class);
-			types.put(Swiftthistle.Seed.class,  PotionOfHaste.class);
-		}
 
-	}
 }
