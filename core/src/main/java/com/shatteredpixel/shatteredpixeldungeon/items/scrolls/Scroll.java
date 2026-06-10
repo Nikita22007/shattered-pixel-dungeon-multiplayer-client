@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.ItemStatusHandler;
-import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ExoticScroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.Runestone;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAggression;
@@ -49,7 +48,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 import java.util.*;
 
@@ -256,7 +254,7 @@ public abstract class Scroll extends Item {
 		}
 	}
 	
-	public static class ScrollToStone extends Recipe {
+	public static class ScrollToStone {
 		
 		private static HashMap<Class<?extends Scroll>, Class<?extends Runestone>> stones = new HashMap<>();
 		static {
@@ -273,34 +271,6 @@ public abstract class Scroll extends Item {
 			stones.put(ScrollOfTransmutation.class, StoneOfAugmentation.class);
 			stones.put(ScrollOfUpgrade.class,       StoneOfEnchantment.class);
 		}
-		
-		@Override
-		public boolean testIngredients(ArrayList<Item> ingredients) {
-			if (ingredients.size() != 1
-					|| !(ingredients.get(0) instanceof Scroll)
-					|| !stones.containsKey(ingredients.get(0).getClass())){
-				return false;
-			}
-			
-			return true;
-		}
-		
-		@Override
-		public int cost(ArrayList<Item> ingredients) {
-			return 0;
-		}
 
-		@Override
-		public Item sampleOutput(ArrayList<Item> ingredients) {
-			if (!testIngredients(ingredients)) return null;
-			
-			Scroll s = (Scroll) ingredients.get(0);
-
-			if (!s.isKnown()){
-				return new Runestone.PlaceHolder().quantity(2);
-			} else {
-				return Reflection.newInstance(stones.get(s.getClass())).quantity(2);
-			}
-		}
 	}
 }

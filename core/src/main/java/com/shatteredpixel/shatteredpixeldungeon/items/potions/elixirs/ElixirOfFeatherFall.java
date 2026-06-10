@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLevitation;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
@@ -32,7 +31,7 @@ public class ElixirOfFeatherFall extends Elixir {
 	{
 		image = ItemSpriteSheet.ELIXIR_FEATHER;
 
-		talentChance = 1/(float)Recipe.OUT_QUANTITY;
+		talentChance = 1;
 	}
 
     public static class FeatherBuff extends FlavourBuff {
@@ -64,22 +63,6 @@ public class ElixirOfFeatherFall extends Elixir {
 		public float iconFadePercent() {
 			return Math.max(0, (DURATION - visualcooldown()) / DURATION);
 		}
-	}
-
-	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe.SimpleRecipe {
-
-		private static final int OUT_QUANTITY = 1;
-
-		{
-			inputs =  new Class[]{PotionOfLevitation.class};
-			inQuantity = new int[]{1};
-
-			cost = 10;
-
-			output = ElixirOfFeatherFall.class;
-			outQuantity = OUT_QUANTITY;
-		}
-
 	}
 
 }

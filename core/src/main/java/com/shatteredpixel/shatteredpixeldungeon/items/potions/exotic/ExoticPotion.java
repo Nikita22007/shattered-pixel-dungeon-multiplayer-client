@@ -21,8 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic;
 
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfExperience;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfFrost;
@@ -38,7 +36,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfToxicGas;
 import com.watabou.utils.Reflection;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class ExoticPotion extends Potion {
@@ -117,25 +114,7 @@ public class ExoticPotion extends Potion {
 		return (Reflection.newInstance(exoToReg.get(getClass())).energyVal() + 4) * quantity;
 	}
 
-	public static class PotionToExotic extends Recipe{
+	public static class PotionToExotic {
 
-		@Override
-		public boolean testIngredients(ArrayList<Item> ingredients) {
-			if (ingredients.size() == 1 && regToExo.containsKey(ingredients.get(0).getClass())){
-				return true;
-			}
-
-			return false;
-		}
-		
-		@Override
-		public int cost(ArrayList<Item> ingredients) {
-			return 4;
-		}
-
-        @Override
-		public Item sampleOutput(ArrayList<Item> ingredients) {
-			return Reflection.newInstance(regToExo.get(ingredients.get(0).getClass()));
-		}
 	}
 }

@@ -23,11 +23,8 @@ package com.shatteredpixel.shatteredpixeldungeon.items.trinkets;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Bundle;
-
-import java.util.ArrayList;
 
 public abstract class Trinket extends Item {
 
@@ -105,21 +102,7 @@ public abstract class Trinket extends Item {
 
 	}
 
-	public static class UpgradeTrinket extends Recipe {
+	public static class UpgradeTrinket {
 
-		@Override
-		public boolean testIngredients(ArrayList<Item> ingredients) {
-			return ingredients.size() == 1 && ingredients.get(0) instanceof Trinket && ingredients.get(0).level() < 3;
-		}
-
-		@Override
-		public int cost(ArrayList<Item> ingredients) {
-			return ((Trinket)ingredients.get(0)).upgradeEnergyCost();
-		}
-
-		@Override
-		public Item sampleOutput(ArrayList<Item> ingredients) {
-			return ingredients.get(0).duplicate().upgrade();
-		}
 	}
 }

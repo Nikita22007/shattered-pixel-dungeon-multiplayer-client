@@ -28,9 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
-import com.shatteredpixel.shatteredpixeldungeon.items.quest.MetalShard;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMight;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRemoveCurse;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
@@ -38,14 +36,12 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
 
-import java.util.ArrayList;
-
 public class CurseInfusion extends InventorySpell {
 	
 	{
 		image = ItemSpriteSheet.CURSE_INFUSE;
 
-		talentChance = 1/(float)Recipe.OUT_QUANTITY;
+		talentChance = 1/(float) 4;
 	}
 
 	@Override
@@ -97,27 +93,12 @@ public class CurseInfusion extends InventorySpell {
 	
 	@Override
 	public int value() {
-		return (int)(60 * (quantity/(float)Recipe.OUT_QUANTITY));
+		return (int)(60 * (quantity/(float) 4));
 	}
 
 	@Override
 	public int energyVal() {
-		return (int)(12 * (quantity/(float)Recipe.OUT_QUANTITY));
+		return (int)(12 * (quantity/(float) 4));
 	}
-	
-	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe.SimpleRecipe {
 
-		private static final int OUT_QUANTITY = 4;
-		
-		{
-			inputs =  new Class[]{ScrollOfRemoveCurse.class, MetalShard.class};
-			inQuantity = new int[]{1, 1};
-			
-			cost = 6;
-			
-			output = CurseInfusion.class;
-			outQuantity = OUT_QUANTITY;
-		}
-
-    }
 }

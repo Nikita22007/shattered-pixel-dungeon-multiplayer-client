@@ -31,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfFrost;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfInvisibility;
@@ -52,7 +51,6 @@ import com.watabou.utils.BArray;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -295,7 +293,7 @@ public class Bomb extends Item {
 		}
 	}
 	
-	public static class EnhanceBomb extends Recipe {
+	public static class EnhanceBomb {
 		
 		public static final LinkedHashMap<Class<?extends Item>, Class<?extends Bomb>> validIngredients = new LinkedHashMap<>();
 		static {
@@ -332,42 +330,6 @@ public class Bomb extends Item {
 			bombCosts.put(ArcaneBomb.class,     6);
 			bombCosts.put(ShrapnelBomb.class,   6);
 		}
-		
-		@Override
-		public boolean testIngredients(ArrayList<Item> ingredients) {
-			boolean bomb = false;
-			boolean ingredient = false;
-			
-			for (Item i : ingredients){
-				if (!i.isIdentified()) return false;
-				if (i.getClass().equals(Bomb.class)){
-					bomb = true;
-				} else if (validIngredients.containsKey(i.getClass())){
-					ingredient = true;
-				}
-			}
-			
-			return bomb && ingredient;
-		}
-		
-		@Override
-		public int cost(ArrayList<Item> ingredients) {
-			for (Item i : ingredients){
-				if (validIngredients.containsKey(i.getClass())){
-					return (bombCosts.get(validIngredients.get(i.getClass())));
-				}
-			}
-			return 0;
-		}
 
-		@Override
-		public Item sampleOutput(ArrayList<Item> ingredients) {
-			for (Item i : ingredients){
-				if (validIngredients.containsKey(i.getClass())){
-					return Reflection.newInstance(validIngredients.get(i.getClass()));
-				}
-			}
-			return null;
-		}
 	}
 }

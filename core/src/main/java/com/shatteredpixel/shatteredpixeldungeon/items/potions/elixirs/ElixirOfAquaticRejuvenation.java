@@ -24,8 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
-import com.shatteredpixel.shatteredpixeldungeon.items.quest.GooBlob;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -127,19 +125,5 @@ public class ElixirOfAquaticRejuvenation extends Elixir {
 			
 		}
 	}
-	
-	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe.SimpleRecipe {
-		
-		{
-			inputs =  new Class[]{PotionOfHealing.class, GooBlob.class};
-			inQuantity = new int[]{1, 1};
-			
-			cost = 6;
-			
-			output = ElixirOfAquaticRejuvenation.class;
-			outQuantity = 1;
-		}
 
-	}
-	
 }

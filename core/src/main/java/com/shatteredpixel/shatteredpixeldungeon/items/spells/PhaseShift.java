@@ -39,7 +39,7 @@ public class PhaseShift extends TargetedSpell {
 
 		usesTargeting = true;
 
-		talentChance = 1/(float)Recipe.OUT_QUANTITY;
+		talentChance = 1/(float) 6;
 	}
 	
 	@Override
@@ -65,28 +65,12 @@ public class PhaseShift extends TargetedSpell {
 	
 	@Override
 	public int value() {
-		return (int)(60 * (quantity/(float)Recipe.OUT_QUANTITY));
+		return (int)(60 * (quantity/(float) 6));
 	}
 
 	@Override
 	public int energyVal() {
-		return (int)(12 * (quantity/(float)Recipe.OUT_QUANTITY));
+		return (int)(12 * (quantity/(float) 6));
 	}
-	
-	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe.SimpleRecipe {
 
-		private static final int OUT_QUANTITY = 6;
-		
-		{
-			inputs =  new Class[]{ScrollOfTeleportation.class};
-			inQuantity = new int[]{1};
-			
-			cost = 10;
-			
-			output = PhaseShift.class;
-			outQuantity = OUT_QUANTITY;
-		}
-		
-	}
-	
 }

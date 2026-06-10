@@ -30,7 +30,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.LiquidMetal;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -43,7 +42,7 @@ public class TelekineticGrab extends TargetedSpell {
 	{
 		image = ItemSpriteSheet.TELE_GRAB;
 
-		talentChance = 1/(float)Recipe.OUT_QUANTITY;
+		talentChance = 1/(float) 8;
 	}
 
 	@Override
@@ -136,28 +135,12 @@ public class TelekineticGrab extends TargetedSpell {
 
 	@Override
 	public int value() {
-		return (int)(50 * (quantity/(float)Recipe.OUT_QUANTITY));
+		return (int)(50 * (quantity/(float) 8));
 	}
 
 	@Override
 	public int energyVal() {
-		return (int)(10 * (quantity/(float)Recipe.OUT_QUANTITY));
-	}
-
-	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe.SimpleRecipe {
-
-		private static final int OUT_QUANTITY = 8;
-
-		{
-			inputs =  new Class[]{LiquidMetal.class};
-			inQuantity = new int[]{10};
-
-			cost = 10;
-
-			output = TelekineticGrab.class;
-			outQuantity = OUT_QUANTITY;
-		}
-
+		return (int)(10 * (quantity/(float) 8));
 	}
 
 }

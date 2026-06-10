@@ -21,8 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs;
 
-import com.shatteredpixel.shatteredpixeldungeon.items.Honeypot;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public class ElixirOfHoneyedHealing extends Elixir {
@@ -42,17 +40,4 @@ public class ElixirOfHoneyedHealing extends Elixir {
 		return 8;
 	}
 
-	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe.SimpleRecipe {
-		
-		{
-			inputs =  new Class[]{PotionOfHealing.class, Honeypot.ShatteredPot.class};
-			inQuantity = new int[]{1, 1};
-			
-			cost = 2;
-			
-			output = ElixirOfHoneyedHealing.class;
-			outQuantity = 1;
-		}
-		
-	}
 }

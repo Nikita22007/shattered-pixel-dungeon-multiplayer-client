@@ -27,8 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
-import java.util.ArrayList;
-
 public class ArcaneResin extends Item {
 
 	{
@@ -58,31 +56,7 @@ public class ArcaneResin extends Item {
 		return 30*quantity();
 	}
 
-	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe {
-
-		@Override
-		public boolean testIngredients(ArrayList<Item> ingredients) {
-			return ingredients.size() == 1
-					&& ingredients.get(0) instanceof Wand
-					&& ingredients.get(0).cursedKnown
-					&& !ingredients.get(0).cursed;
-		}
-
-		@Override
-		public int cost(ArrayList<Item> ingredients) {
-			return 5;
-		}
-
-		@Override
-		public Item sampleOutput(ArrayList<Item> ingredients) {
-			Wand w = (Wand)ingredients.get(0);
-
-			if (w.levelKnown){
-				return new ArcaneResin().quantity(resinQuantity(w));
-			} else {
-				return new ArcaneResin();
-			}
-		}
+	public static class Recipe {
 
 		private int resinQuantity(Wand w){
 			int level = w.level() - w.resinBonus;

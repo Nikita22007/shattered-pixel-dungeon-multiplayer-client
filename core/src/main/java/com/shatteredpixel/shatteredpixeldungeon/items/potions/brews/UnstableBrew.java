@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.potions.brews;
 
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfExperience;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfFrost;
@@ -34,11 +33,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfMindVision
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfParalyticGas;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfPurity;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfToxicGas;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.ExoticPotion;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UnstableBrew extends Brew {
@@ -83,35 +79,8 @@ public class UnstableBrew extends Brew {
 		return 8 * quantity;
 	}
 
-	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe {
-		
-		@Override
-		public boolean testIngredients(ArrayList<Item> ingredients) {
-			boolean potion = false;
-			boolean seed = false;
+	public static class Recipe {
 
-			for (Item i : ingredients){
-				if (i instanceof Plant.Seed) {
-					seed = true;
-					//if it is a regular or exotic potion
-				} else if (ExoticPotion.regToExo.containsKey(i.getClass())
-						|| ExoticPotion.regToExo.containsValue(i.getClass())) {
-					potion = true;
-				}
-			}
-
-			return potion && seed;
-		}
-
-		@Override
-		public int cost(ArrayList<Item> ingredients) {
-			return 1;
-		}
-
-        @Override
-		public Item sampleOutput(ArrayList<Item> ingredients) {
-			return new UnstableBrew();
-		}
 	}
 	
 }

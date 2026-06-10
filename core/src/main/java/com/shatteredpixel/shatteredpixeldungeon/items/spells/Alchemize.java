@@ -26,11 +26,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.stones.Runestone;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.Trinket;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -42,8 +40,6 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndTradeItem;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Random;
-
-import java.util.ArrayList;
 
 public class Alchemize extends Spell {
 	
@@ -71,34 +67,10 @@ public class Alchemize extends Spell {
 		return (int)(4 * (quantity/(float)Recipe.OUT_QUANTITY));
 	}
 
-	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe {
+	public static class Recipe {
 
 		private static final int OUT_QUANTITY = 8;
 
-		@Override
-		public boolean testIngredients(ArrayList<Item> ingredients) {
-			if (ingredients.size() != 2) return false;
-
-			if (ingredients.get(0) instanceof Plant.Seed && ingredients.get(1) instanceof Runestone){
-				return true;
-			}
-
-			if (ingredients.get(0) instanceof Runestone && ingredients.get(1) instanceof Plant.Seed){
-				return true;
-			}
-
-			return false;
-		}
-
-		@Override
-		public int cost(ArrayList<Item> ingredients) {
-			return 2;
-		}
-
-		@Override
-		public Item sampleOutput(ArrayList<Item> ingredients) {
-			return new Alchemize().quantity(OUT_QUANTITY);
-		}
 	}
 
 	private static WndBag.ItemSelector itemSelector = new WndBag.ItemSelector() {

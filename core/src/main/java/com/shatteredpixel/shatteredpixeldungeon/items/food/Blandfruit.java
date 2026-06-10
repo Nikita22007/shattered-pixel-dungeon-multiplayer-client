@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.food;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfExperience;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfFrost;
@@ -43,8 +42,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Reflection;
-
-import java.util.ArrayList;
 
 public class Blandfruit extends Food {
 
@@ -180,67 +177,6 @@ public class Blandfruit extends Food {
 	@Override
 	public ItemSprite.Glowing glowing() {
 		return potionGlow;
-	}
-	
-	public static class CookFruit extends Recipe {
-		
-		@Override
-		//also sorts ingredients if it can
-		public boolean testIngredients(ArrayList<Item> ingredients) {
-			if (ingredients.size() != 2) return false;
-			
-			if (ingredients.get(0) instanceof Blandfruit){
-				if (!(ingredients.get(1) instanceof Seed)){
-					return false;
-				}
-			} else if (ingredients.get(0) instanceof Seed){
-				if (ingredients.get(1) instanceof Blandfruit){
-					Item temp = ingredients.get(0);
-					ingredients.set(0, ingredients.get(1));
-					ingredients.set(1, temp);
-				} else {
-					return false;
-				}
-			} else {
-				return false;
-			}
-			
-			Blandfruit fruit = (Blandfruit) ingredients.get(0);
-			Seed seed = (Seed) ingredients.get(1);
-			
-			if (fruit.quantity() >= 1 && fruit.potionAttrib == null
-				&& seed.quantity() >= 1){
-
-				return true;
-			}
-			
-			return false;
-		}
-		
-		@Override
-		public int cost(ArrayList<Item> ingredients) {
-			return 2;
-		}
-
-        @Override
-		public Item sampleOutput(ArrayList<Item> ingredients) {
-			if (!testIngredients(ingredients)) return null;
-			
-			return new Blandfruit().cook((Seed) ingredients.get(1));
-		}
-	}
-
-	public static class Chunks extends Food {
-
-		{
-			stackable = true;
-			image = ItemSpriteSheet.BLAND_CHUNKS;
-
-			energy = Hunger.STARVING;
-
-			bones = true;
-		}
-
 	}
 
 }

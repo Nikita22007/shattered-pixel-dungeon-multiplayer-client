@@ -21,8 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic;
 
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
@@ -38,7 +36,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutat
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.watabou.utils.Reflection;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public abstract class ExoticScroll extends Scroll {
@@ -122,25 +119,7 @@ public abstract class ExoticScroll extends Scroll {
 		return (Reflection.newInstance(exoToReg.get(getClass())).energyVal() + 6) * quantity;
 	}
 	
-	public static class ScrollToExotic extends Recipe {
-		
-		@Override
-		public boolean testIngredients(ArrayList<Item> ingredients) {
-			if (ingredients.size() == 1 && regToExo.containsKey(ingredients.get(0).getClass())){
-				return true;
-			}
+	public static class ScrollToExotic {
 
-			return false;
-		}
-		
-		@Override
-		public int cost(ArrayList<Item> ingredients) {
-			return 6;
-		}
-
-        @Override
-		public Item sampleOutput(ArrayList<Item> ingredients) {
-			return Reflection.newInstance(regToExo.get(ingredients.get(0).getClass()));
-		}
 	}
 }

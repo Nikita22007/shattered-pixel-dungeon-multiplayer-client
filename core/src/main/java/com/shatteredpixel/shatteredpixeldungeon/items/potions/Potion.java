@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.ItemStatusHandler;
-import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.ElixirOfHoneyedHealing;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.ExoticPotion;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCleansing;
@@ -53,7 +52,6 @@ import com.shatteredpixel.shatteredpixeldungeon.plants.Sungrass;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.watabou.utils.Bundle;
 
 import java.util.*;
@@ -291,7 +289,7 @@ public class Potion extends Item {
 		}
 	}
 	
-	public static class SeedToPotion extends Recipe {
+	public static class SeedToPotion {
 		
 		public static HashMap<Class<?extends Plant.Seed>, Class<?extends Potion>> types = new HashMap<>();
 		static {
@@ -308,42 +306,6 @@ public class Potion extends Item {
 			types.put(Sungrass.Seed.class,      PotionOfHealing.class);
 			types.put(Swiftthistle.Seed.class,  PotionOfHaste.class);
 		}
-		
-		@Override
-		public boolean testIngredients(ArrayList<Item> ingredients) {
-			if (ingredients.size() != 3) {
-				return false;
-			}
-			
-			for (Item ingredient : ingredients){
-				if (!(ingredient instanceof Plant.Seed
-						&& ingredient.quantity() >= 1
-						&& types.containsKey(ingredient.getClass()))){
-					return false;
-				}
-			}
-			return true;
-		}
-		
-		@Override
-		public int cost(ArrayList<Item> ingredients) {
-			return 0;
-		}
 
-		@Override
-		public Item sampleOutput(ArrayList<Item> ingredients) {
-			return new WndBag.Placeholder(ItemSpriteSheet.POTION_HOLDER){
-
-				@Override
-				public String name() {
-					return Messages.get(SeedToPotion.class, "name");
-				}
-				
-				@Override
-				public String info() {
-					return "";
-				}
-			};
-		}
 	}
 }

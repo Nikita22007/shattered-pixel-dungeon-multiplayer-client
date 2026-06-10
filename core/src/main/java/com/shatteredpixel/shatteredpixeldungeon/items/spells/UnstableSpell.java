@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.spells;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
@@ -35,13 +34,10 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRetributio
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTerror;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ExoticScroll;
-import com.shatteredpixel.shatteredpixeldungeon.items.stones.Runestone;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -125,34 +121,7 @@ public class UnstableSpell extends Spell {
 		return 8 * quantity;
 	}
 
-	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe {
+	public static class Recipe {
 
-		@Override
-		public boolean testIngredients(ArrayList<Item> ingredients) {
-			boolean scroll = false;
-			boolean stone = false;
-
-			for (Item i : ingredients){
-				if (i instanceof Runestone){
-					stone = true;
-					//if it is a regular or exotic potion
-				} else if (ExoticScroll.regToExo.containsKey(i.getClass())
-						|| ExoticScroll.regToExo.containsValue(i.getClass())) {
-					scroll = true;
-				}
-			}
-
-			return scroll && stone;
-		}
-		
-		@Override
-		public int cost(ArrayList<Item> ingredients) {
-			return 1;
-		}
-
-		@Override
-		public Item sampleOutput(ArrayList<Item> ingredients) {
-			return new UnstableSpell();
-		}
 	}
 }

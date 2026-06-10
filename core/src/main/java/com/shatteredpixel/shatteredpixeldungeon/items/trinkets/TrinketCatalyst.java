@@ -90,22 +90,8 @@ public class TrinketCatalyst extends Item {
 		}
 	}
 
-	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe {
+	public static class Recipe {
 
-		@Override
-		public boolean testIngredients(ArrayList<Item> ingredients) {
-			return ingredients.size() == 1 && ingredients.get(0) instanceof TrinketCatalyst;
-		}
-
-		@Override
-		public int cost(ArrayList<Item> ingredients) {
-			return 6;
-		}
-
-        @Override
-		public Item sampleOutput(ArrayList<Item> ingredients) {
-			return new Trinket.PlaceHolder();
-		}
 	}
 
 	public static class RandomTrinket extends Item {

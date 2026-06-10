@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.ui;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.AlchemyScene;
@@ -119,80 +118,6 @@ public class QuickRecipe extends Component {
 		layout();
 	}
 
-	public QuickRecipe(Recipe r, ArrayList<Item> inputs, final Item output) {
-		
-		ingredients = inputs;
-		int cost = r.cost(inputs);
-		boolean hasInputs = true;
-		this.inputs = new ArrayList<>();
-		for (final Item in : inputs) {
-			anonymize(in);
-			ItemSlot curr;
-			curr = new ItemSlot(in) {
-				{
-					hotArea.blockLevel = PointerArea.NEVER_BLOCK;
-				}
-
-				@Override
-				protected void onClick() {
-					ShatteredPixelDungeon.scene().addToFront(new WndInfoItem(in));
-				}
-			};
-
-			int quantity = 0;
-			if (Dungeon.hero != null) {
-				ArrayList<Item> similar = Dungeon.hero.belongings.getAllSimilar(in);
-				for (Item sim : similar) {
-					//if we are looking for a specific item, it must be IDed
-					if (sim.getClass() != in.getClass() || sim.isIdentified())
-						quantity += sim.quantity();
-				}
-				if (quantity < in.quantity()) {
-					curr.sprite.alpha(0.3f);
-					hasInputs = false;
-				}
-			} else {
-				hasInputs = false;
-			}
-
-			curr.showExtraInfo(false);
-			add(curr);
-			this.inputs.add(curr);
-		}
-		
-		if (cost > 0) {
-			arrow = new arrow(Icons.get(Icons.ARROW), cost);
-			arrow.hardlightText(0x44CCFF);
-		} else {
-			arrow = new arrow(Icons.get(Icons.ARROW));
-		}
-		if (hasInputs) {
-			arrow.icon.tint(1, 1, 0, 1);
-			if (!(ShatteredPixelDungeon.scene() instanceof AlchemyScene)) {
-				arrow.enable(false);
-			}
-		} else {
-			arrow.icon.color(0, 0, 0);
-			arrow.enable(false);
-		}
-		add(arrow);
-		
-		anonymize(output);
-		this.output = new ItemSlot(output){
-			@Override
-			protected void onClick() {
-				ShatteredPixelDungeon.scene().addToFront(new WndInfoItem(output));
-			}
-		};
-		if (Dungeon.hero != null && !hasInputs){
-			this.output.sprite.alpha(0.3f);
-		}
-		this.output.showExtraInfo(false);
-		add(this.output);
-		
-		layout();
-	}
-	
 	@Override
 	protected void layout() {
 		

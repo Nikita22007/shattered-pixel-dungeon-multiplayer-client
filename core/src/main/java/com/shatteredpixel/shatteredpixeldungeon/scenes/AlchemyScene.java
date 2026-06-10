@@ -88,9 +88,8 @@ public class AlchemyScene extends PixelScene {
 	private IconButton cancel;
 	private IconButton repeat;
 	private static ArrayList<Item> lastIngredients = new ArrayList<>();
-	private static Recipe lastRecipe = null;
 
-	private Emitter smokeEmitter;
+    private Emitter smokeEmitter;
 	private Emitter bubbleEmitter;
 	private Emitter sparkEmitter;
 	
@@ -270,7 +269,9 @@ public class AlchemyScene extends PixelScene {
 
 									for(Item i : bag.items){
 										if (Dungeon.hero.belongings.lostInventory() && !i.keptThroughLostInventory()) items.remove(i);
-										if (!Recipe.usableInRecipe(i)) items.remove(i);
+										//only upgradeable thrown weapons and wands allowed among equipment items
+										//other items can be unidentified, but not cursed
+										if (!!i.cursed) items.remove(i);
 									}
 
 									if (items.size() == 0){
@@ -353,7 +354,7 @@ public class AlchemyScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				super.onClick();
-				if (lastRecipe != null){
+				if (null != null){
 					populate(lastIngredients, Dungeon.hero.belongings);
 				}
 			}
@@ -373,9 +374,8 @@ public class AlchemyScene extends PixelScene {
 		add(repeat);
 
 		lastIngredients.clear();
-		lastRecipe = null;
 
-		for (int i = 0; i < inputs.length; i++){
+        for (int i = 0; i < inputs.length; i++){
 			combines[i] = new CombineButton(i);
 			combines[i].enable(false);
 
@@ -560,7 +560,9 @@ public class AlchemyScene extends PixelScene {
 
 		@Override
 		public boolean itemSelectable(Item item) {
-			return Recipe.usableInRecipe(item);
+			//only upgradeable thrown weapons and wands allowed among equipment items
+			//other items can be unidentified, but not cursed
+			return !item.cursed;
 		}
 
 		@Override
@@ -712,7 +714,7 @@ public class AlchemyScene extends PixelScene {
 			}
 		}
 		cancel.enable(false);
-		repeat.enable(lastRecipe != null);
+		repeat.enable(null != null);
 		if (alchGuide != null){
 			alchGuide.updateList();
 		}

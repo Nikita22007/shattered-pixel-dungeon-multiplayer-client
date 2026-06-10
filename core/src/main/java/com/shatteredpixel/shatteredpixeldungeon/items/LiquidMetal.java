@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.MagicalHolster;
@@ -30,13 +29,10 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWea
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.watabou.noosa.audio.Sample;
-
-import java.util.ArrayList;
 
 //these aren't considered potions internally as most potion effects shouldn't apply to them
 //mainly due to their high quantity
@@ -144,31 +140,7 @@ public class LiquidMetal extends Item {
 		}
 	};
 
-	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe {
-
-		@Override
-		public boolean testIngredients(ArrayList<Item> ingredients) {
-			return ingredients.size() == 1
-					&& ingredients.get(0) instanceof MissileWeapon
-					&& ingredients.get(0).cursedKnown
-					&& !ingredients.get(0).cursed;
-		}
-
-		@Override
-		public int cost(ArrayList<Item> ingredients) {
-			return 3;
-		}
-
-        @Override
-		public Item sampleOutput(ArrayList<Item> ingredients) {
-			MissileWeapon m = (MissileWeapon) ingredients.get(0);
-
-			if (m.levelKnown){
-				return new LiquidMetal().quantity(metalQuantity(m));
-			} else {
-				return new LiquidMetal();
-			}
-		}
+	public static class Recipe {
 
 		private int metalQuantity(MissileWeapon m){
 			float quantityPerWeapon = 5*(m.tier+1);
