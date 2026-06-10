@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.windows;
 
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Imp;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.DwarfToken;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
@@ -36,7 +35,7 @@ public class WndImp extends Window {
 	private static final int BTN_HEIGHT = 20;
 	private static final int GAP        = 2;
 
-	public WndImp( final Imp imp, final DwarfToken tokens ) {
+	public WndImp( final DwarfToken tokens ) {
 		
 		super();
 		

@@ -25,12 +25,8 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.Stasis;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.DirectableAlly;
-import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
@@ -41,14 +37,10 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.AlchemyScene;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.GhostSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.ui.BossHealthBar;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ItemButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
@@ -63,7 +55,6 @@ import com.watabou.utils.Random;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class DriedRose extends Artifact {
 
@@ -80,10 +71,7 @@ public class DriedRose extends Artifact {
 
 	private boolean talkedTo = false;
 	private boolean firstSummon = false;
-	
-	private GhostHero ghost = null;
-	private int ghostID = 0;
-	
+
 	private MeleeWeapon weapon = null;
 	private Armor armor = null;
 
@@ -95,27 +83,9 @@ public class DriedRose extends Artifact {
 
 	@Override
 	public String defaultAction() {
-		if (ghost != null){
-			return AC_DIRECT;
-		} else {
-			return AC_SUMMON;
-		}
-	}
+        return AC_SUMMON;
+    }
 
-	private void findGhost(){
-		Actor a = Actor.findById(ghostID);
-		if (a != null){
-			ghost = (GhostHero)a;
-		} else {
-			if (false){
-				ghost = (GhostHero) Stasis.getStasisAlly();
-				ghostID = ghost.id();
-			} else {
-				ghostID = 0;
-			}
-		}
-	}
-	
 	public int ghostStrength(){
 		return 13 + level()/2;
 	}
@@ -168,22 +138,7 @@ public class DriedRose extends Artifact {
 		return super.value();
 	}
 
-	@Override
-	public String status() {
-		if (ghost == null && ghostID != 0){
-			try {
-				findGhost();
-			} catch ( ClassCastException e ){
-				ShatteredPixelDungeon.reportException(e);
-				ghostID = 0;
-			}
-		}
-		if (ghost == null){
-			return super.status();
-		} else {
-			return ((ghost.HP*100) / ghost.HT) + "%";
-		}
-	}
+
 	
 	@Override
 	protected ArtifactBuff passiveBuff() {
@@ -192,31 +147,22 @@ public class DriedRose extends Artifact {
 	
 	@Override
 	public void charge(Hero target, float amount) {
-        if (cursed || false) return;
+        if (cursed) return;
 
-		if (ghost == null){
-			if (charge < chargeCap) {
-				partialCharge += 4*amount;
-				while (partialCharge >= 1f){
-					charge++;
-					partialCharge--;
-				}
-				if (charge >= chargeCap) {
-					charge = chargeCap;
-					partialCharge = 0;
-					GLog.p(Messages.get(DriedRose.class, "charged"));
-				}
-				updateQuickslot();
-			}
-		} else if (ghost.HP < ghost.HT) {
-			int heal = Math.round((1 + level()/3f)*amount);
-			ghost.HP = Math.min( ghost.HT, ghost.HP + heal);
-			if (ghost.sprite != null) {
-				ghost.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(heal), FloatingText.HEALING);
-			}
-			updateQuickslot();
-		}
-	}
+        if (charge < chargeCap) {
+            partialCharge += 4 * amount;
+            while (partialCharge >= 1f) {
+                charge++;
+                partialCharge--;
+            }
+            if (charge >= chargeCap) {
+                charge = chargeCap;
+                partialCharge = 0;
+                GLog.p(Messages.get(DriedRose.class, "charged"));
+            }
+            updateQuickslot();
+        }
+    }
 	
 	@Override
 	public Item upgrade() {
@@ -227,13 +173,8 @@ public class DriedRose extends Artifact {
 
 		//For upgrade transferring via well of transmutation
 		droppedPetals = Math.max( level(), droppedPetals );
-		
-		if (ghost != null){
-			ghost.updateRose();
-			ghost.HP = Math.min(ghost.HP+8, ghost.HT);
-		}
 
-		return super.upgrade();
+        return super.upgrade();
 	}
 	
 	public Weapon ghostWeapon(){
@@ -258,7 +199,7 @@ public class DriedRose extends Artifact {
 
 		bundle.put( TALKEDTO, talkedTo );
 		bundle.put( FIRSTSUMMON, firstSummon );
-		bundle.put( GHOSTID, ghostID );
+		bundle.put( GHOSTID, 0);
 		bundle.put( PETALS, droppedPetals );
 		
 		if (weapon != null) bundle.put( WEAPON, weapon );
@@ -271,7 +212,6 @@ public class DriedRose extends Artifact {
 
 		talkedTo = bundle.getBoolean( TALKEDTO );
 		firstSummon = bundle.getBoolean( FIRSTSUMMON );
-		ghostID = bundle.getInt( GHOSTID );
 		droppedPetals = bundle.getInt( PETALS );
 		
 		if (bundle.contains(WEAPON)) weapon = (MeleeWeapon)bundle.get( WEAPON );
@@ -285,41 +225,14 @@ public class DriedRose extends Artifact {
 			
 			spend( TICK );
 			
-			if (ghost == null && ghostID != 0){
-				findGhost();
+			if (false){
 			}
 
-			if (ghost != null && !ghost.isAlive()){
-				ghost = null;
-			}
-			
-			//rose does not charge while ghost hero is alive
-			if (ghost != null && !cursed) {
-				{
-					//heals to full over 500 turns
-					if (ghost.HP < ghost.HT && Regeneration.regenOn()) {
-						partialCharge += (ghost.HT / 500f) * RingOfEnergy.artifactChargeMultiplier(target);
-						updateQuickslot();
-
-						while (partialCharge > 1) {
-							ghost.HP++;
-							partialCharge--;
-							if (ghost.HP == ghost.HT) {
-								partialCharge = 0;
-							}
-						}
-					} else {
-						partialCharge = 0;
-					}
-
-					return true;
-				}
-			}
+            //rose does not charge while ghost hero is alive
 
             if (charge < chargeCap
-					&& !cursed
-					&& true
-					&& Regeneration.regenOn()) {
+                    && !cursed
+                    && Regeneration.regenOn()) {
 				//500 turns to a full charge
 				partialCharge += (1/5f * RingOfEnergy.artifactChargeMultiplier(target));
 				while (partialCharge > 1){
@@ -341,7 +254,7 @@ public class DriedRose extends Artifact {
 					}
 				}
 
-				if (spawnPoints.size() > 0) {
+				if (!spawnPoints.isEmpty()) {
                     Random.element(spawnPoints);
                     Sample.INSTANCE.play(Assets.Sounds.CURSED);
 				}
@@ -353,307 +266,7 @@ public class DriedRose extends Artifact {
 			return true;
 		}
 	}
-	
-	public CellSelector.Listener ghostDirector = new CellSelector.Listener(){
-		
-		@Override
-		public void onSelect(Integer cell) {
-			if (cell == null) return;
-			
-			Sample.INSTANCE.play( Assets.Sounds.GHOST );
 
-			ghost.directTocell(cell);
-
-		}
-		
-		@Override
-		public String prompt() {
-			return  "\"" + Messages.get(GhostHero.class, "direct_prompt") + "\"";
-		}
-	};
-
-	public static class Petal extends Item {
-
-		{
-			stackable = true;
-			dropsDownHeap = true;
-			
-			image = ItemSpriteSheet.PETAL;
-		}
-
-		@Override
-		public boolean isUpgradable() {
-			return false;
-		}
-
-		@Override
-		public boolean isIdentified() {
-			return true;
-		}
-
-	}
-
-	public static class GhostHero extends DirectableAlly {
-
-		{
-			spriteClass = GhostSprite.class;
-
-			flying = true;
-
-			state = HUNTING;
-
-			new HashSet<Property>().add(Property.UNDEAD);
-			new HashSet<Property>().add(Property.INORGANIC);
-		}
-
-		private DriedRose rose = null;
-
-		public GhostHero() {
-			super();
-		}
-
-		public GhostHero(DriedRose rose) {
-			super();
-			this.rose = rose;
-			updateRose();
-			HP = HT;
-		}
-
-		@Override
-		public void defendPos(int cell) {
-			yell(Messages.get(this, "directed_position_" + Random.IntRange(1, 5)));
-			super.defendPos(cell);
-		}
-
-		@Override
-		public void followHero() {
-			yell(Messages.get(this, "directed_follow_" + Random.IntRange(1, 5)));
-			super.followHero();
-		}
-
-		@Override
-		public void targetChar(Char ch) {
-			yell(Messages.get(this, "directed_attack_" + Random.IntRange(1, 5)));
-			super.targetChar(ch);
-		}
-
-		private void updateRose() {
-			if (rose == null) {
-				rose = Dungeon.hero.belongings.getItem(DriedRose.class);
-				if (rose != null) {
-					rose.ghost = this;
-					rose.ghostID = id();
-				}
-			}
-
-			//same dodge as the hero
-			defenseSkill = (Dungeon.hero.lvl + 4);
-			if (rose == null) return;
-			HT = 20 + 8 * rose.level();
-		}
-
-		public Weapon weapon() {
-			if (rose != null) return rose.weapon;
-			else return null;
-		}
-
-		public Armor armor() {
-			if (rose != null) return rose.armor;
-			else return null;
-		}
-
-		@Override
-		protected boolean act() {
-			updateRose();
-			if (rose == null
-					|| !rose.isEquipped(Dungeon.hero)
-					|| false) {
-			}
-
-			if (!isAlive()) {
-				return true;
-			}
-			return super.act();
-		}
-
-		public static class NoRoseDamage {
-		}
-
-		@Override
-		public int attackSkill(Char target) {
-
-			//same accuracy as the hero.
-			int acc = Dungeon.hero.lvl + 9;
-
-			if (weapon() != null) {
-				acc *= weapon().accuracyFactor(this, target);
-			}
-
-			return acc;
-		}
-
-		@Override
-		protected boolean canAttack(Char enemy) {
-			return super.canAttack(enemy) || (weapon() != null && weapon().canReach(this, enemy.pos));
-		}
-
-		@Override
-		public int damageRoll() {
-			int dmg = 0;
-			if (weapon() != null) {
-				dmg += weapon().damageRoll(this);
-			} else {
-				dmg += Random.NormalIntRange(0, 5);
-			}
-
-			return dmg;
-		}
-
-		@Override
-		public float speed() {
-			float speed = super.speed();
-
-			//moves 2 tiles at a time when returning to the hero
-			if (state == WANDERING
-					&& defendingPos == -1
-					&& Dungeon.level.distance(pos, Dungeon.hero.pos) > 1) {
-				speed *= 2;
-			}
-
-			return speed;
-		}
-
-		@Override
-		public int defenseSkill(Char enemy) {
-			int defense = super.defenseSkill(enemy);
-
-			if (defense != 0 && armor() != null) {
-				defense = Math.round(armor().evasionFactor(this, defense));
-			}
-
-			return defense;
-		}
-
-		@Override
-		public int drRoll() {
-			int dr = super.drRoll();
-			if (armor() != null) {
-				dr += Random.NormalIntRange(armor().DRMin(), armor().DRMax());
-			}
-			if (weapon() != null) {
-				dr += Random.NormalIntRange(0, weapon().defenseFactor(this));
-			}
-			return dr;
-		}
-
-		@Override
-		public int glyphLevel(Class<? extends Armor.Glyph> cls) {
-			if (armor() != null && armor().hasGlyph(cls, this)) {
-				return Math.max(super.glyphLevel(cls), armor().buffedLvl());
-			} else {
-				return super.glyphLevel(cls);
-			}
-		}
-
-		@Override
-		public void die(Object cause) {
-			sayDefeated();
-			super.die(cause);
-		}
-
-		@Override
-		public void destroy() {
-			updateRose();
-			//TODO stasis?
-			if (rose != null) {
-				rose.ghost = null;
-				rose.charge = 0;
-				rose.partialCharge = 0;
-				rose.ghostID = -1;
-			}
-			super.destroy();
-		}
-
-		public void sayAppeared() {
-			{
-				int depth = (Dungeon.depth - 1) / 5;
-
-				//only some lines are said on the first floor of a depth
-				int variant = Dungeon.depth % 5 == 1 ? Random.IntRange(1, 3) : Random.IntRange(1, 6);
-
-				switch (depth) {
-					case 0:
-						yell(Messages.get(this, "dialogue_sewers_" + variant));
-						break;
-					case 1:
-						yell(Messages.get(this, "dialogue_prison_" + variant));
-						break;
-					case 2:
-						yell(Messages.get(this, "dialogue_caves_" + variant));
-						break;
-					case 3:
-						yell(Messages.get(this, "dialogue_city_" + variant));
-						break;
-					case 4:
-					default:
-						yell(Messages.get(this, "dialogue_halls_" + variant));
-						break;
-				}
-			}
-			if (ShatteredPixelDungeon.scene() instanceof GameScene) {
-				Sample.INSTANCE.play(Assets.Sounds.GHOST);
-			}
-		}
-
-		public void sayBoss() {
-			int depth = (Dungeon.depth - 1) / 5;
-
-			switch (depth) {
-				case 0:
-					yell(Messages.get(this, "seen_goo_" + Random.IntRange(1, 3)));
-					break;
-				case 1:
-					yell(Messages.get(this, "seen_tengu_" + Random.IntRange(1, 3)));
-					break;
-				case 2:
-					yell(Messages.get(this, "seen_dm300_" + Random.IntRange(1, 3)));
-					break;
-				case 3:
-					yell(Messages.get(this, "seen_king_" + Random.IntRange(1, 3)));
-					break;
-				case 4:
-				default:
-					yell(Messages.get(this, "seen_yog_" + Random.IntRange(1, 3)));
-					break;
-			}
-			Sample.INSTANCE.play(Assets.Sounds.GHOST);
-		}
-
-		public void sayDefeated() {
-			if (BossHealthBar.isAssigned()) {
-				yell(Messages.get(this, "defeated_by_boss_" + Random.IntRange(1, 3)));
-			} else {
-				yell(Messages.get(this, "defeated_by_enemy_" + Random.IntRange(1, 3)));
-			}
-			Sample.INSTANCE.play(Assets.Sounds.GHOST);
-		}
-
-		public void sayHeroKilled() {
-			yell(Messages.get(this, "player_killed_" + Random.IntRange(1, 3)));
-			GLog.newLine();
-			Sample.INSTANCE.play(Assets.Sounds.GHOST);
-		}
-
-		public void sayAnhk() {
-			yell(Messages.get(this, "blessed_ankh_" + Random.IntRange(1, 3)));
-			Sample.INSTANCE.play(Assets.Sounds.GHOST);
-		}
-
-		{
-		}
-
-	}
-	
 	public static class WndGhostHero extends Window{
 		
 		private static final int BTN_SIZE	= 32;
@@ -661,8 +274,8 @@ public class DriedRose extends Artifact {
 		private static final float BTN_GAP	= 12;
 		private static final int WIDTH		= 116;
 		
-		private ItemButton btnWeapon;
-		private ItemButton btnArmor;
+		private final ItemButton btnWeapon;
+		private final ItemButton btnArmor;
 		
 		public WndGhostHero(JSONObject obj){
 			final JSONObject args = obj.getJSONObject("args");

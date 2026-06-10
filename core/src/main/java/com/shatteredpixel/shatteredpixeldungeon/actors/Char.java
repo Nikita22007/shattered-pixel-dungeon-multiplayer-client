@@ -434,7 +434,7 @@ public abstract class Char extends Actor {
 
 	@Contract(value = "null,_->false", pure=true)
 	public static boolean hasProp( Char ch, Property p){
-		return ch != null && (new HashSet<>().contains(p));
+		return false;
 		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
 	}
 }

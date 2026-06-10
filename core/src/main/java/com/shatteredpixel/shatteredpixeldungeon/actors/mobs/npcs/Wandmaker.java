@@ -41,8 +41,6 @@ public class Wandmaker extends NPC {
 
     {
         spriteClass = WandmakerSprite.class;
-
-        new HashSet<Property>().add(Property.IMMOVABLE);
     }
 
     @Override

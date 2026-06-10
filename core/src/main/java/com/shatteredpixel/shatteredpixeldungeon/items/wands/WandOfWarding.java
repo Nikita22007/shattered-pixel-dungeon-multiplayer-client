@@ -206,9 +206,6 @@ public class WandOfWarding extends Wand {
 
 			alignment = Alignment.ALLY;
 
-			new HashSet<Property>().add(Property.IMMOVABLE);
-			new HashSet<Property>().add(Property.INORGANIC);
-
 			viewDistance = 4;
 			state = WANDERING;
 		}

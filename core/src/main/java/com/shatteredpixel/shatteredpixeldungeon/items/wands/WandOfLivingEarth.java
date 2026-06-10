@@ -336,8 +336,6 @@ public class WandOfLivingEarth extends DamageWand {
 			state = HUNTING;
 			intelligentAlly = true;
 
-			new HashSet<Property>().add(Property.INORGANIC);
-
 			WANDERING = new Wandering();
 
 			//before other mobs

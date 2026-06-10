@@ -32,6 +32,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Freezing;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Lightning;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
@@ -175,9 +176,7 @@ public abstract class Elemental extends Mob {
 			loot = PotionOfLiquidFlame.class;
 			lootChance = 1/8f;
 			
-			new HashSet<Property>().add( Property.FIERY );
-			
-			harmfulBuffs.add( com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost.class );
+			harmfulBuffs.add( Frost.class );
 			harmfulBuffs.add( Chill.class );
 		}
 		
@@ -206,8 +205,6 @@ public abstract class Elemental extends Mob {
 			spriteClass = ElementalSprite.NewbornFire.class;
 
 			defenseSkill = 12;
-			
-			new HashSet<Property>().add(Property.MINIBOSS);
 		}
 
 		private int targetingPos = -1;
@@ -353,8 +350,6 @@ public abstract class Elemental extends Mob {
 			loot = PotionOfFrost.class;
 			lootChance = 1/8f;
 			
-			new HashSet<Property>().add( Property.ICY );
-			
 			harmfulBuffs.add( Burning.class );
 		}
 		
@@ -380,8 +375,6 @@ public abstract class Elemental extends Mob {
 			
 			loot = ScrollOfRecharging.class;
 			lootChance = 1/4f;
-			
-			new HashSet<Property>().add( Property.ELECTRIC );
 		}
 		
 		@Override

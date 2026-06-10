@@ -22,44 +22,22 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.DirectableAlly;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShaftParticle;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MobSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.TextureFilm;
-import com.watabou.utils.GameMath;
-import com.watabou.utils.Random;
 
 public class SpiritHawk extends ArmorAbility {
 
-	protected float baseChargeUse = 35;
-
-	@Override
-	public String targetingPrompt() {
-		if (getHawk() == null) {
-			return super.targetingPrompt();
-		} else {
-			return Messages.get(this, "prompt");
-		}
-	}
 
 	@Override
 	public boolean useTargeting(){
 		return false;
 	}
 
-	{
-		baseChargeUse = 35f;
-	}
 
 	@Override
 	public int icon() {
@@ -71,124 +49,7 @@ public class SpiritHawk extends ArmorAbility {
 		return new Talent[]{Talent.EAGLE_EYE, Talent.GO_FOR_THE_EYES, Talent.SWIFT_SPIRIT, Talent.HEROIC_ENERGY};
 	}
 
-	private static HawkAlly getHawk(){
-		for (Char ch : Actor.chars()){
-		}
-		return null;
-	}
-
-	public static class HawkAlly extends DirectableAlly {
-
-		{
-			spriteClass = HawkSprite.class;
-
-			HP = HT = 10;
-			defenseSkill = 60;
-
-			flying = true;
-			if (Dungeon.hero != null) {
-				viewDistance = (int) GameMath.gate(6, 6 + Dungeon.hero.pointsInTalent(Talent.EAGLE_EYE), 8);
-				baseSpeed = 2f + Dungeon.hero.pointsInTalent(Talent.SWIFT_SPIRIT) / 2f;
-			} else {
-				viewDistance = 6;
-				baseSpeed = 2f;
-			}
-			attacksAutomatically = false;
-
-		}
-
-		@Override
-		public int attackSkill(Char target) {
-			return 60;
-		}
-
-		private int dodgesUsed = 0;
-		private float timeRemaining = 100f;
-
-		@Override
-		public int defenseSkill(Char enemy) {
-			if (Dungeon.hero.hasTalent(Talent.SWIFT_SPIRIT) &&
-					dodgesUsed < 2*Dungeon.hero.pointsInTalent(Talent.SWIFT_SPIRIT)) {
-				dodgesUsed++;
-				return Char.INFINITE_EVASION;
-			}
-			return super.defenseSkill(enemy);
-		}
-
-		@Override
-		public int damageRoll() {
-			return Random.NormalIntRange(5, 10);
-		}
-
-		@Override
-		protected boolean act() {
-			if (timeRemaining <= 0){
-				die(null);
-				Dungeon.hero.interrupt();
-				return true;
-			}
-			viewDistance = 6+Dungeon.hero.pointsInTalent(Talent.EAGLE_EYE);
-			baseSpeed = 2f + Dungeon.hero.pointsInTalent(Talent.SWIFT_SPIRIT)/2f;
-			boolean result = super.act();
-			Dungeon.level.updateFieldOfView( this, fieldOfView );
-			GameScene.updateFog(pos, viewDistance+(int)Math.ceil(speed()));
-			return result;
-		}
-
-		@Override
-		public void die(Object cause) {
-			flying = false;
-			super.die(cause);
-		}
-
-		@Override
-		protected void spend(float time) {
-			super.spend(time);
-			timeRemaining -= time;
-		}
-
-		@Override
-		public void destroy() {
-			super.destroy();
-			Dungeon.observe();
-			GameScene.updateFog();
-		}
-
-		@Override
-		public void defendPos(int cell) {
-			GLog.i(Messages.get(this, "direct_defend"));
-			super.defendPos(cell);
-		}
-
-		@Override
-		public void followHero() {
-			GLog.i(Messages.get(this, "direct_follow"));
-			super.followHero();
-		}
-
-		@Override
-		public void targetChar(Char ch) {
-			GLog.i(Messages.get(this, "direct_attack"));
-			super.targetChar(ch);
-		}
-
-		@Override
-		public String description() {
-			String message = Messages.get(this, "desc", (int)timeRemaining);
-			if (Actor.chars().contains(this)){
-				message += "\n\n" + Messages.get(this, "desc_remaining", (int)timeRemaining);
-				if (dodgesUsed < 2*Dungeon.hero.pointsInTalent(Talent.SWIFT_SPIRIT)){
-					message += "\n" + Messages.get(this, "desc_dodges", (2*Dungeon.hero.pointsInTalent(Talent.SWIFT_SPIRIT) - dodgesUsed));
-				}
-			}
-			return message;
-		}
-
-		private static final String DODGES_USED     = "dodges_used";
-		private static final String TIME_REMAINING  = "time_remaining";
-
-	}
-
+	@SuppressWarnings("unused")
 	public static class HawkSprite extends MobSprite {
 
 		public HawkSprite() {

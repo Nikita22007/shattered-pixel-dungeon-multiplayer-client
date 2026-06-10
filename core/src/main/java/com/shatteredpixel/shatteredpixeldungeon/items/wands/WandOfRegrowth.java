@@ -360,8 +360,6 @@ public class WandOfRegrowth extends Wand {
 
         {
             alignment = Alignment.NEUTRAL;
-            new HashSet<Property>().add(Property.IMMOVABLE);
-            new HashSet<Property>().add(Property.STATIC);
 
             spriteClass = LotusSprite.class;
 

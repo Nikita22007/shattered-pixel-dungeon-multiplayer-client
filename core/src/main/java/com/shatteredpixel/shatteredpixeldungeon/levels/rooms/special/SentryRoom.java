@@ -48,8 +48,6 @@ public class SentryRoom {
 
         {
             spriteClass = SentrySprite.class;
-
-            new HashSet<Property>().add(Property.IMMOVABLE);
         }
 
         private float initialChargeDelay;

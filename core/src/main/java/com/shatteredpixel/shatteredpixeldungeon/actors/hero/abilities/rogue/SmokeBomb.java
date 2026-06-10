@@ -68,8 +68,6 @@ public class SmokeBomb extends ArmorAbility {
 			spriteClass = NinjaLogSprite.class;
 			defenseSkill = 0;
 
-			new HashSet<Property>().add(Property.INORGANIC); //wood is organic, but this is accurate for game logic
-
 			alignment = Alignment.ALLY;
 
 			HT = 20;

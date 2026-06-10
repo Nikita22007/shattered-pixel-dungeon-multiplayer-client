@@ -137,8 +137,6 @@ public class PowerOfMany extends ArmorAbility {
 			spriteClass = LightAllySprite.class;
 
 			HP = HT = 80;
-
-			new HashSet<Property>().add(Property.INORGANIC);
 		}
 
 		HeroClass cls;

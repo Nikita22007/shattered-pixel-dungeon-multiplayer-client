@@ -168,16 +168,7 @@ public class Stasis extends ClericSpell {
 			stasisAlly.pos = Random.element(spawnPoints);
 			GameScene.add(stasisAlly);
 
-			if (false){
-				((DirectableAlly) stasisAlly).clearDefensingPos();
-			}
-
-            if (false) {
-                ((LifeLink) null).cooldown();
-                ((LifeLink) null).object = stasisAlly.id();
-            }
-
-			ScrollOfTeleportation.appear(stasisAlly, stasisAlly.pos);
+            ScrollOfTeleportation.appear(stasisAlly, stasisAlly.pos);
 			Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
 
 			return super.act();

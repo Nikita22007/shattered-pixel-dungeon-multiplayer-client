@@ -46,8 +46,6 @@ public class Shopkeeper extends NPC {
 
 	{
 		spriteClass = ShopkeeperSprite.class;
-
-		new HashSet<Property>().add(Property.IMMOVABLE);
 	}
 
 	public static int MAX_BUYBACK_HISTORY = 3;

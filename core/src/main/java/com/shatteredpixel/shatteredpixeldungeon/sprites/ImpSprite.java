@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.watabou.noosa.TextureFilm;
 
+@SuppressWarnings("unused")
 public class ImpSprite extends MobSprite {
 	
 	public ImpSprite() {
