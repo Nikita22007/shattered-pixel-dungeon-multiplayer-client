@@ -205,6 +205,7 @@ import com.shatteredpixel.shatteredpixeldungeon.plants.Starflower;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Stormvine;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Sungrass;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
+import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -273,7 +274,8 @@ public class Generator {
 		public float secondProb;
 		public Class<? extends Item> superClass;
 		
-		private Category( float firstProb, float secondProb, Class<? extends Item> superClass ) {
+		@Contract(pure = true)
+		private Category(float firstProb, float secondProb, Class<? extends Item> superClass ) {
 			this.firstProb = firstProb;
 			this.secondProb = secondProb;
 			this.superClass = superClass;
