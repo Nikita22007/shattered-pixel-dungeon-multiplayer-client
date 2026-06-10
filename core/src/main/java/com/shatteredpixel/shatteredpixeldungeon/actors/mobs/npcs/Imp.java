@@ -37,7 +37,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ImpSprite;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndImp;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndQuest;
 import com.watabou.noosa.Game;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 
 public class Imp extends NPC {
@@ -153,48 +152,6 @@ public class Imp extends NPC {
             completed = false;
 
             reward = null;
-        }
-
-        private static final String NODE = "demon";
-
-        private static final String ALTERNATIVE = "alternative";
-        private static final String SPAWNED = "spawned";
-        private static final String GIVEN = "given";
-        private static final String COMPLETED = "completed";
-        private static final String REWARD = "reward";
-
-        public static void storeInBundle(Bundle bundle) {
-
-            Bundle node = new Bundle();
-
-            node.put(SPAWNED, spawned);
-
-            if (spawned) {
-                node.put(ALTERNATIVE, alternative);
-
-                node.put(GIVEN, given);
-                node.put(COMPLETED, completed);
-                node.put(REWARD, reward);
-            }
-
-            bundle.put(NODE, node);
-        }
-
-        public static void restoreFromBundle(Bundle bundle) {
-
-            Bundle node = bundle.getBundle(NODE);
-
-            if (!node.isNull() && (spawned = node.getBoolean(SPAWNED))) {
-                alternative = node.getBoolean(ALTERNATIVE);
-
-                given = node.getBoolean(GIVEN);
-                completed = node.getBoolean(COMPLETED);
-                reward = (Ring) node.get(REWARD);
-            }
-        }
-
-        public static boolean given() {
-            return given;
         }
 
         public static void process(Mob mob) {
