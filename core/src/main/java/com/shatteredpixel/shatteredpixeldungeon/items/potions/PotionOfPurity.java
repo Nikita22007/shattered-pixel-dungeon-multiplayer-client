@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.potions;
 
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BlobImmunity;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 import java.util.ArrayList;
@@ -36,7 +35,6 @@ public class PotionOfPurity extends Potion {
 	{
 		icon = ItemSpriteSheet.Icons.POTION_PURITY;
 
-        new BlobImmunity();
         affectedBlobs = new ArrayList<>(new HashSet<Class>());
 	}
 

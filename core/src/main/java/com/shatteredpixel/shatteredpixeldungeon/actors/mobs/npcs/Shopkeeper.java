@@ -26,11 +26,8 @@ import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BlobImmunity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -55,7 +52,6 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class Shopkeeper extends NPC {
 
@@ -115,34 +111,9 @@ public class Shopkeeper extends NPC {
 				@Override
 				protected boolean act() {
 					//cleanses all harmful blobs in the shop
-					ArrayList<Blob> blobs = new ArrayList<>();
-                    new BlobImmunity();
-                    for (Class c : new HashSet<Class>()) {
-						Blob b = Dungeon.level.blobs.get(c);
-						if (b != null && b.volume > 0) {
-							blobs.add(b);
-						}
-					}
 
 					PathFinder.buildDistanceMap(pos, BArray.not(Dungeon.level.solid, null), 4);
 
-					for (int i = 0; i < Dungeon.level.length(); i++) {
-						if (PathFinder.distance[i] < Integer.MAX_VALUE) {
-
-							boolean affected = false;
-							for (Blob blob : blobs) {
-								if (blob.cur[i] > 0) {
-									blob.clear(i);
-									affected = true;
-								}
-							}
-
-							if (affected && Dungeon.level.heroFOV[i]) {
-								CellEmitter.get(i).burst(Speck.factory(Speck.DISCOVER), 2);
-							}
-
-						}
-					}
 					Actor.remove(this);
 					return true;
 				}
