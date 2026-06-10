@@ -118,29 +118,6 @@ public class MagesStaff extends MeleeWeapon {
 	}
 
 	@Override
-	public void execute( Hero hero, String action ) {
-
-		super.execute(hero, action);
-
-		if (action.equals(AC_IMBUE)) {
-
-			curUser = hero;
-			GameScene.selectItem(itemSelector);
-
-		} else if (action.equals(AC_ZAP)){
-
-			if (wand == null) {
-				GameScene.show(new WndUseItem(null, this));
-				return;
-			}
-
-			if (cursed || hasCurseEnchant()) wand.cursed = true;
-			else                             wand.cursed = false;
-			wand.execute(hero, AC_ZAP);
-		}
-	}
-
-	@Override
 	public int buffedVisiblyUpgraded() {
 		if (wand != null){
 			return Math.max(super.buffedVisiblyUpgraded(), wand.buffedVisiblyUpgraded());
