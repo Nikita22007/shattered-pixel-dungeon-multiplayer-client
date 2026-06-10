@@ -26,13 +26,9 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
-
-import java.util.ArrayList;
 
 public abstract class EquipableItem extends CustomItem {
 
@@ -67,13 +63,6 @@ public abstract class EquipableItem extends CustomItem {
 			}
 		} else if (action.equals( AC_UNEQUIP )) {
 			doUnequip( hero, true );
-		}
-	}
-
-	@Override
-	public void doDrop( Hero hero ) {
-		if (!isEquipped( hero ) || doUnequip( hero, false, false )) {
-			super.doDrop( hero );
 		}
 	}
 

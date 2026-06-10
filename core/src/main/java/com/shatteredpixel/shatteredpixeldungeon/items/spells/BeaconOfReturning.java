@@ -103,17 +103,8 @@ public class BeaconOfReturning extends Spell {
 		}
 		super.onThrow(cell);
 	}
-	
-	@Override
-	public void doDrop(Hero hero) {
-		if (returnDepth != -1) {
-			Notes.remove(Notes.Landmark.BEACON_LOCATION, returnDepth);
-			returnDepth = -1;
-		}
-		super.doDrop(hero);
-	}
-	
-	private void setBeacon(Hero hero ) {
+
+    private void setBeacon(Hero hero ) {
 		if (returnDepth != -1) {
 			Notes.remove(Notes.Landmark.BEACON_LOCATION, returnDepth);
 		}

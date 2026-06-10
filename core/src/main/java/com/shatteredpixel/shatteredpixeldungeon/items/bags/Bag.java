@@ -32,6 +32,7 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndQuickBag;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
@@ -107,9 +108,9 @@ public class Bag extends CustomItem implements Iterable<Item> {
 		super.execute( hero, action );
 
 		if (action.equals( AC_OPEN ) && !items.isEmpty()) {
-			
+
 			GameScene.show( new WndQuickBag( this ) );
-			
+
 		}
 	}
 	
@@ -211,7 +212,8 @@ public class Bag extends CustomItem implements Iterable<Item> {
 		}
 		loading = false;
 	}
-	
+
+	@Contract(pure = true)
 	public boolean contains( Item item ) {
 		for (Item i : items) {
 			if (i == item) {

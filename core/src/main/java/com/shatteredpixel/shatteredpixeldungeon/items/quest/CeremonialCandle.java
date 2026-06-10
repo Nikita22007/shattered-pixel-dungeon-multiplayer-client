@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Elemental;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
@@ -67,14 +66,7 @@ public class CeremonialCandle extends Item {
 		return true;
 	}
 
-	@Override
-	public void doDrop(Hero hero) {
-		super.doDrop(hero);
-		aflame = false;
-		checkCandles();
-	}
-
-	@Override
+    @Override
 	protected void onThrow(int cell) {
 		super.onThrow(cell);
 		aflame = false;

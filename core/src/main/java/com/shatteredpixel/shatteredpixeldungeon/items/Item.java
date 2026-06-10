@@ -67,8 +67,7 @@ public class Item implements Bundlable {
 	
 	protected static final float TIME_TO_THROW		= 1.0f;
 	protected static final float TIME_TO_PICK_UP	= 1.0f;
-	protected static final float TIME_TO_DROP		= 1.0f;
-	
+
 	public static final String AC_DROP		= "DROP";
 	public static final String AC_THROW		= "THROW";
 	
@@ -120,12 +119,6 @@ public class Item implements Bundlable {
 		return Messages.get(this, "ac_" + action);
 	}
 
-	public void doDrop( Hero hero ) {
-		hero.spendAndNext(TIME_TO_DROP);
-		int pos = hero.pos;
-		Dungeon.level.drop(detachAll(hero.belongings.backpack), pos).sprite.drop(pos);
-	}
-
 	//resets an item's properties, to ensure consistency between runs
 	public void reset(){
 		keptThoughLostInvent = false;
@@ -145,13 +138,7 @@ public class Item implements Bundlable {
 		curUser = hero;
 		curItem = this;
 		
-		if (action.equals( AC_DROP )) {
-			
-			if (hero.belongings.backpack.contains(this) || isEquipped(hero)) {
-				doDrop(hero);
-			}
-			
-		} else if (action.equals( AC_THROW )) {
+		if (action.equals( AC_THROW )) {
 			
 			if (hero.belongings.backpack.contains(this) || isEquipped(hero)) {
 				doThrow(hero);
@@ -435,7 +422,8 @@ public class Item implements Bundlable {
 	public boolean isIdentified() {
 		return levelKnown && cursedKnown;
 	}
-	
+
+	@Contract(pure = true)
 	public boolean isEquipped( Hero hero ) {
 		return false;
 	}
