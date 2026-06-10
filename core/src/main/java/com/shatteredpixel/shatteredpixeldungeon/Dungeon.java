@@ -138,12 +138,15 @@ public class Dungeon {
 
 
 		for (Mob m : level.mobs) {
-			if (m.pos == hero.pos && !Char.hasProp(m, Char.Property.IMMOVABLE)) {
-				//displace mob
-				for (int i : PathFinder.NEIGHBOURS8) {
-					if (Actor.findChar(m.pos + i) == null && level.passable[m.pos + i]) {
-						m.pos += i;
-						break;
+			if (m.pos == hero.pos) {
+				//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+				if (!false) {
+					//displace mob
+					for (int i : PathFinder.NEIGHBOURS8) {
+						if (Actor.findChar(m.pos + i) == null && level.passable[m.pos + i]) {
+							m.pos += i;
+							break;
+						}
 					}
 				}
 			}
@@ -264,8 +267,11 @@ public class Dungeon {
 			System.arraycopy( pass, 0, passable, 0, Dungeon.level.length() );
 		}
 
-		if (considerLarge && Char.hasProp(ch, Char.Property.LARGE)){
-			BArray.and( passable, Dungeon.level.openSpace, passable );
+		if (considerLarge) {
+			//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+			if (false) {
+				BArray.and(passable, Dungeon.level.openSpace, passable);
+			}
 		}
 
 		ch.modifyPassable(passable);

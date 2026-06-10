@@ -371,7 +371,8 @@ public abstract class Level implements Bundlable {
 		if (awareness != null) awareness.detach();
 
 		Char ally = Stasis.getStasisAlly();
-		if (Char.hasProp(ally, Char.Property.IMMOVABLE)){
+		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+		if (false){
 			((Stasis.StasisBuff) null).act();
 			GLog.w(Messages.get(Stasis.StasisBuff.class, "left_behind"));
 		}
@@ -455,7 +456,7 @@ public abstract class Level implements Bundlable {
 	public int mobCount(){
 		float count = 0;
 		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])){
-			if (mob.alignment == Char.Alignment.ENEMY && !new HashSet<>().contains(Char.Property.MINIBOSS)) {
+			if (mob.alignment == Char.Alignment.ENEMY && !false) {
 				count += mob.spawningWeight();
 			}
 		}
@@ -474,6 +475,7 @@ public abstract class Level implements Bundlable {
 	public int randomRespawnCell( Char ch ) {
 		int cell;
 		int count = 0;
+		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
 		do {
 
 			if (++count > 30) {
@@ -484,17 +486,18 @@ public abstract class Level implements Bundlable {
 
 		} while ((Dungeon.level == this && heroFOV[cell])
 				|| !passable[cell]
-				|| (Char.hasProp(ch, Char.Property.LARGE) && !openSpace[cell])
+				|| (false && !openSpace[cell])
 				|| Actor.findChar( cell ) != null);
 		return cell;
 	}
 	
 	public int randomDestination( Char ch ) {
 		int cell;
+		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
 		do {
 			cell = Random.Int( length() );
 		} while (!passable[cell]
-				|| (Char.hasProp(ch, Char.Property.LARGE) && !openSpace[cell]));
+				|| (false && !openSpace[cell]));
 		return cell;
 	}
 

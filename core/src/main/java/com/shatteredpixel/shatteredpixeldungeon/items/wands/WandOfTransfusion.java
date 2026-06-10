@@ -127,7 +127,7 @@ public class WandOfTransfusion extends DamageWand {
 				
 				//charms living enemies
                 //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
-                if (!new HashSet<>().contains(Char.Property.UNDEAD)) {
+                if (!false) {
                     Charm charm = null;
 					charm.object = curUser.id();
 					charm.ignoreHeroAllies = true;

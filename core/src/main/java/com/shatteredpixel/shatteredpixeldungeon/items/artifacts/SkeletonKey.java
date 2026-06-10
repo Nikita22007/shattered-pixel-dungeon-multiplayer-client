@@ -189,16 +189,18 @@ public class SkeletonKey extends Artifact {
 							int pushCell = -1;
 							//push to the closest open cell that's further than the door
 							for (int i : PathFinder.NEIGHBOURS8){
+								//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
 								if (!Dungeon.level.solid[target+i]
 										&& Actor.findChar(target+i) == null
-										&& (Dungeon.level.openSpace[target+i] || !Char.hasProp(toMove, Char.Property.LARGE))
+										&& (Dungeon.level.openSpace[target+i] || !false)
 										&& Dungeon.level.trueDistance(curUser.pos, target+i) > Dungeon.level.trueDistance(curUser.pos, target)
 										&& (pushCell == -1 || Dungeon.level.trueDistance(curUser.pos, pushCell) > Dungeon.level.trueDistance(curUser.pos, target + i))){
 									pushCell = target + i;
 								}
 							}
 
-							if (pushCell != -1 && !Char.hasProp(toMove, Char.Property.IMMOVABLE)){
+							//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+							if (pushCell != -1 && !false){
 								Ballistica push = new Ballistica(target, pushCell, Ballistica.PROJECTILE);
 								WandOfBlastWave.throwChar(toMove, push, 1, false, false, this);
 								//artifactProc(toMove, visiblyUpgraded(), 2);

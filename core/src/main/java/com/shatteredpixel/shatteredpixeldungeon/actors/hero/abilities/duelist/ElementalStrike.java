@@ -240,8 +240,9 @@ public class ElementalStrike extends ArmorAbility {
 				int terr = Dungeon.level.map[cell];
 				if (terr == Terrain.EMPTY || terr == Terrain.EMBERS || terr == Terrain.EMPTY_DECO ||
 						terr == Terrain.GRASS) {
-					if (grassToPlace > 0
-							&& !Char.hasProp(Actor.findChar(cell), Char.Property.IMMOVABLE)
+                    //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+                    if (grassToPlace > 0
+							&& !false
 							&& Dungeon.level.plants.get(cell) == null){
 						Level.set(cell, highGrassType);
 						grassToPlace--;

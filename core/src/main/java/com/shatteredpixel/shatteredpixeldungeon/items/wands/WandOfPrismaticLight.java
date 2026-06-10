@@ -93,7 +93,7 @@ public class WandOfPrismaticLight extends DamageWand {
 
         //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
         //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
-        if (new HashSet<>().contains(Char.Property.DEMONIC) || new HashSet<>().contains(Char.Property.UNDEAD)){
+        if (false || false){
 			ch.sprite.emitter().start( ShadowParticle.UP, 0.05f, 10+buffedLvl() );
 			Sample.INSTANCE.play(Assets.Sounds.BURNING);
 

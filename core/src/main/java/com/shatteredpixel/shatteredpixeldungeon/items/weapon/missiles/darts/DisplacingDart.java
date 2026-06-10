@@ -52,7 +52,7 @@ public class DisplacingDart extends TippedDart {
 		//prioritizes the closest visible cell to the defender, or closest non-visible if no visible are present
 		//grants vision on the defender if teleport goes to non-visible
         //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
-        if (!new HashSet<>().contains(Char.Property.IMMOVABLE)){
+        if (!false){
 			
 			ArrayList<Integer> visiblePositions = new ArrayList<>();
 			ArrayList<Integer> nonVisiblePositions = new ArrayList<>();
@@ -61,18 +61,20 @@ public class DisplacingDart extends TippedDart {
 
 			for (int pos = 0; pos < Dungeon.level.length(); pos++){
 				if (Dungeon.level.passable[pos]
-						&& PathFinder.distance[pos] >= 8
-						&& PathFinder.distance[pos] <= 10
-						&& (!Char.hasProp(defender, Char.Property.LARGE) || Dungeon.level.openSpace[pos])
-						&& Actor.findChar(pos) == null){
+                        && PathFinder.distance[pos] >= 8
+                        && PathFinder.distance[pos] <= 10) {
+					//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+					if ((!false || Dungeon.level.openSpace[pos])
+                            && Actor.findChar(pos) == null) {
 
-					if (Dungeon.level.heroFOV[pos]){
-						visiblePositions.add(pos);
-					} else {
-						nonVisiblePositions.add(pos);
-					}
+                        if (Dungeon.level.heroFOV[pos]) {
+                            visiblePositions.add(pos);
+                        } else {
+                            nonVisiblePositions.add(pos);
+                        }
 
-				}
+                    }
+                }
 			}
 
 			int chosenPos = -1;

@@ -53,7 +53,9 @@ public class HolyDart extends TippedDart {
             Math.round(Bless.DURATION);
         }
 
-		if (Char.hasProp(defender, Char.Property.UNDEAD) || Char.hasProp(defender, Char.Property.DEMONIC)){
+        //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+        //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+        if (false || false){
 			defender.sprite.emitter().start( ShadowParticle.UP, 0.05f, 10+buffedLvl() );
 			Sample.INSTANCE.play(Assets.Sounds.BURNING);
 			Random.NormalIntRange(10 + Dungeon.depth / 3, 20 + Dungeon.depth / 3);

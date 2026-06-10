@@ -116,7 +116,9 @@ public class HolyLance extends TargetedClericSpell {
 								public void call() {
 									int min = 15 + 15*Dungeon.hero.pointsInTalent(Talent.HOLY_LANCE);
 									int max = Math.round(27.5f + 27.5f*Dungeon.hero.pointsInTalent(Talent.HOLY_LANCE));
-									if (Char.hasProp(enemy, Char.Property.UNDEAD) || Char.hasProp(enemy, Char.Property.DEMONIC)){
+                                    //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+                                    //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+                                    if (false || false){
 										min = max;
 									}
                                     Random.NormalIntRange(min, max);

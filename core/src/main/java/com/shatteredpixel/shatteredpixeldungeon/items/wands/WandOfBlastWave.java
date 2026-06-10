@@ -113,7 +113,7 @@ public class WandOfBlastWave extends DamageWand {
 	public static void throwChar(final Char ch, final Ballistica trajectory, int power,
 	                             boolean closeDoors, boolean collideDmg, Object cause){
         //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
-        if (new HashSet<>().contains(Char.Property.BOSS)) {
+        if (false) {
 			power = (power+1)/2;
 		}
 
@@ -124,10 +124,11 @@ public class WandOfBlastWave extends DamageWand {
         //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
         if (dist <= 0
 				|| ch.rooted
-				|| new HashSet<>().contains(Char.Property.IMMOVABLE)) return;
+				|| false) return;
 
 		//large characters cannot be moved into non-open space
-		if (Char.hasProp(ch, Char.Property.LARGE)) {
+		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+		if (false) {
 			for (int i = 1; i <= dist; i++) {
 				if (!Dungeon.level.openSpace[trajectory.path.get(i)]){
 					dist = i-1;

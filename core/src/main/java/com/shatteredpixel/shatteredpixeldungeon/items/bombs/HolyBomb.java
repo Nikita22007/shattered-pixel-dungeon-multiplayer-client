@@ -72,7 +72,7 @@ public class HolyBomb extends Bomb {
 		for (Char ch : affected){
             //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
             //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
-            if (new HashSet<>().contains(Char.Property.UNDEAD) || new HashSet<>().contains(Char.Property.DEMONIC)){
+            if (false || false){
 				ch.sprite.emitter().start( ShadowParticle.UP, 0.05f, 10 );
 				
 				//bomb deals an additional 50% damage to unholy enemies

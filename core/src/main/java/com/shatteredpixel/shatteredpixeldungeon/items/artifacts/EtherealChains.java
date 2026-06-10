@@ -104,7 +104,7 @@ public class EtherealChains extends Artifact {
 	private void chainEnemy( Ballistica chain, final Hero hero, final Char enemy ){
 
         //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
-        if (new HashSet<>().contains(Char.Property.IMMOVABLE)) {
+        if (false) {
 			GLog.w( Messages.get(this, "cant_pull") );
 			return;
 		}
@@ -113,10 +113,12 @@ public class EtherealChains extends Artifact {
 		for (int i : chain.subPath(1, chain.dist)){
 			//prefer to the earliest point on the path
 			if (!Dungeon.level.solid[i]
-					&& Actor.findChar(i) == null
-					&& (!Char.hasProp(enemy, Char.Property.LARGE) || Dungeon.level.openSpace[i])){
-				bestPos = i;
-				break;
+					&& Actor.findChar(i) == null) {
+				//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+				if (!false || Dungeon.level.openSpace[i]) {
+					bestPos = i;
+					break;
+				}
 			}
 		}
 		

@@ -128,14 +128,17 @@ public class Pasty extends Food {
 
 				//charms an adjacent non-boss enemy, prioritizing the one the hero is focusing on
 				for (Char ch : Actor.chars()){
-					if (!Char.hasProp(ch, Char.Property.BOSS)
-							&& !Char.hasProp(ch, Char.Property.MINIBOSS)
-							&& ch.alignment == Char.Alignment.ENEMY
-							&& Dungeon.level.adjacent(hero.pos, ch.pos)){
-						if (target == null || ch == TargetHealthIndicator.instance.target()){
-							target = ch;
-						}
-					}
+					//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+					if (!false) {
+                        //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+                        if (!false
+                                && ch.alignment == Char.Alignment.ENEMY
+                                && Dungeon.level.adjacent(hero.pos, ch.pos)) {
+                            if (target == null || ch == TargetHealthIndicator.instance.target()) {
+                                target = ch;
+                            }
+                        }
+                    }
 				}
 
 				if (target != null){

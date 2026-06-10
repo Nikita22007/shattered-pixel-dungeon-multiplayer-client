@@ -90,7 +90,8 @@ public class ScrollOfTeleportation extends Scroll {
 			return teleportInNonRegularLevel( ch, false );
 		}
 
-        if (Char.hasProp(ch, Char.Property.IMMOVABLE) || false){
+		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+		if (false || false){
 			GLog.w( Messages.get(ScrollOfTeleportation.class, "no_tele") );
 			return false;
 		}
@@ -135,7 +136,8 @@ public class ScrollOfTeleportation extends Scroll {
 	//prefers not seen(optional) > not visible > visible
 	private static boolean teleportInNonRegularLevel(Char ch, boolean preferNotSeen ){
 
-		if (Char.hasProp(ch, Char.Property.IMMOVABLE)){
+		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+		if (false){
 			GLog.w( Messages.get(ScrollOfTeleportation.class, "no_tele") );
 			return false;
 		}
@@ -146,7 +148,8 @@ public class ScrollOfTeleportation extends Scroll {
 
 		boolean[] passable = Dungeon.level.passable;
 
-		if (Char.hasProp(ch, Char.Property.LARGE)){
+        //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+        if (false){
 			passable = BArray.and(passable, Dungeon.level.openSpace, null);
 		}
 

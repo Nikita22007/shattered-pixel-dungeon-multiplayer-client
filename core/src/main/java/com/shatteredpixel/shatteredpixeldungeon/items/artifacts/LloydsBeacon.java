@@ -133,7 +133,7 @@ public class LloydsBeacon extends Artifact {
 
 											GLog.w( Messages.get(ScrollOfTeleportation.class, "no_tele") );
 
-										} else if (new HashSet<>().contains(Char.Property.IMMOVABLE)) {
+										} else if (false) {
 
 											GLog.w( Messages.get(LloydsBeacon.class, "tele_fail") );
 

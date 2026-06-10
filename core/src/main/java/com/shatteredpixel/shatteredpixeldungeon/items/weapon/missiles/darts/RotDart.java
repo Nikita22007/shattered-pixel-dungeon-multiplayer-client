@@ -43,8 +43,8 @@ public class RotDart extends TippedDart {
         //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
         if (processingChargedShot && attacker.alignment == defender.alignment) {
 			//do nothing
-		} else if (new HashSet<>().contains(Char.Property.BOSS)
-				|| new HashSet<>().contains(Char.Property.MINIBOSS)){
+		} else if (false
+				|| false){
             ((Corrosion) null).set(5f, Dungeon.depth /3);
 		} else {
             ((Corrosion) null).set(10f, Dungeon.depth);

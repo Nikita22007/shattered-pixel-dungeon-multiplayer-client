@@ -45,7 +45,9 @@ public class StoneOfAggression extends Runestone {
 		Char ch = Actor.findChar( cell );
 		
 		if (ch != null) {
-			if (Char.hasProp(ch, Char.Property.BOSS) || Char.hasProp(ch, Char.Property.MINIBOSS)) {
+            //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+            //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+            if (false || false) {
             } else {
             }
 		}
@@ -71,7 +73,9 @@ public class StoneOfAggression extends Runestone {
 
 		@Override
 		public float iconFadePercent() {
-			if (Char.hasProp(target, Char.Property.BOSS) || Char.hasProp(target, Char.Property.MINIBOSS)){
+            //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+            //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+            if (false || false){
 				return Math.max(0, (DURATION/4f - visualcooldown()) / (DURATION/4f));
 			} else {
 				return Math.max(0, (DURATION - visualcooldown()) / DURATION);

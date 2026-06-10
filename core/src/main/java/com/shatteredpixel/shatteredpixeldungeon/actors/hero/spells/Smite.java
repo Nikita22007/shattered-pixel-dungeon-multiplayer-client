@@ -110,7 +110,9 @@ public class Smite extends TargetedClericSpell {
 	public static int bonusDmg( Hero attacker, Char defender){
 		int min = 5 + attacker.lvl/2;
 		int max = 10 + attacker.lvl;
-		if (Char.hasProp(defender, Char.Property.UNDEAD) || Char.hasProp(defender, Char.Property.DEMONIC)){
+		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+		if (false || false){
 			return max;
 		} else {
 			return Random.NormalIntRange(min, max);

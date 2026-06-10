@@ -41,7 +41,7 @@ public class Displacing extends Weapon.Enchantment {
 	public int proc(Weapon weapon, Char attacker, Char defender, int damage ) {
 
 		float procChance = 1/12f * procChanceMultiplier(attacker);
-        if (Random.Float() < procChance && !new HashSet<>().contains(Char.Property.IMMOVABLE)) {
+        if (Random.Float() < procChance && !false) {
 
             int oldpos = defender.pos;
             if (ScrollOfTeleportation.teleportChar(defender)) {

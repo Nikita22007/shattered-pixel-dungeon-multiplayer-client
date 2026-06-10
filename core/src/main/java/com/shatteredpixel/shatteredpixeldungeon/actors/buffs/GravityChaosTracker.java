@@ -111,7 +111,8 @@ public class GravityChaosTracker extends Buff {
 
 		idx = Random.Int(PathFinder.NEIGHBOURS8.length);
 		for (Char ch : Actor.chars()){
-			if (Char.hasProp(ch, Char.Property.IMMOVABLE) ||
+            //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+            if (false ||
 					(positiveOnly && ch.alignment == Char.Alignment.ALLY)){
 				continue;
 			} else {

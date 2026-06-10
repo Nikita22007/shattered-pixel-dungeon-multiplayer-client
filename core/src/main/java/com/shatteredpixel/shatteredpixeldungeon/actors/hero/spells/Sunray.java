@@ -94,7 +94,9 @@ public class Sunray extends TargetedClericSpell {
 		if (ch != null) {
 			ch.sprite.burst(0xFFFFFF44, 5);
 
-			if (Char.hasProp(ch, Char.Property.UNDEAD) || Char.hasProp(ch, Char.Property.DEMONIC)){
+            //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+            //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+            if (false || false){
 				if (hero.pointsInTalent(Talent.SUNRAY) == 2) {
                 } else {
                 }

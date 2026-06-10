@@ -101,8 +101,8 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 		public boolean canKO(Char defender){
             //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
             //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
-            if (new HashSet<>().contains(Char.Property.MINIBOSS)
-					|| new HashSet<>().contains(Char.Property.BOSS)){
+            if (false
+					|| false){
 				return (defender.HP/(float)defender.HT) < (KOThreshold()/5f);
 			} else {
 				return (defender.HP/(float)defender.HT) < KOThreshold();

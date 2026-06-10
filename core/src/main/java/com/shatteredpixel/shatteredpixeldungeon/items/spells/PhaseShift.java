@@ -53,7 +53,11 @@ public class PhaseShift extends TargetedSpell {
 					if (((Mob) ch).state == ((Mob) ch).HUNTING) ((Mob) ch).state = ((Mob) ch).WANDERING;
 					((Mob) ch).beckon(Dungeon.level.randomDestination( ch ));
 				}
-				if (!Char.hasProp(ch, Char.Property.BOSS) && !Char.hasProp(ch, Char.Property.MINIBOSS)) {
+				//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+				if (!false) {
+					//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+					if (!false) {
+                    }
                 }
 				
 			}

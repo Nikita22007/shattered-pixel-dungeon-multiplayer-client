@@ -48,7 +48,6 @@ import com.watabou.utils.GameMath;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 
 public class WandOfRegrowth extends Wand {
@@ -96,20 +95,23 @@ public class WandOfRegrowth extends Wand {
 			if (!(terr == Terrain.EMPTY || terr == Terrain.EMBERS || terr == Terrain.EMPTY_DECO ||
 					terr == Terrain.GRASS || terr == Terrain.HIGH_GRASS || terr == Terrain.FURROWED_GRASS)) {
 				i.remove();
-			} else if (Char.hasProp(Actor.findChar(cell), Char.Property.IMMOVABLE)) {
-				i.remove();
-			} else if (Dungeon.level.plants.get(cell) != null){
-				i.remove();
 			} else {
-				if (terr != Terrain.HIGH_GRASS && terr != Terrain.FURROWED_GRASS) {
-					Level.set(cell, Terrain.GRASS);
-					GameScene.updateMap( cell );
-				}
-				Char ch = Actor.findChar(cell);
-				if (ch != null){
+				//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+				if (false) {
+					i.remove();
+				} else if (Dungeon.level.plants.get(cell) != null){
+					i.remove();
+				} else {
+					if (terr != Terrain.HIGH_GRASS && terr != Terrain.FURROWED_GRASS) {
+						Level.set(cell, Terrain.GRASS);
+						GameScene.updateMap( cell );
+					}
+					Char ch = Actor.findChar(cell);
+					if (ch != null){
 
-					wandProc(ch, chargesPerCast());
-                }
+						wandProc(ch, chargesPerCast());
+					}
+				}
 			}
 		}
 

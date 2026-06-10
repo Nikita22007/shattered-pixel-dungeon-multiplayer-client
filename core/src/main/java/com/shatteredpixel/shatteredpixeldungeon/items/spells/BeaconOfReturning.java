@@ -131,14 +131,17 @@ public class BeaconOfReturning extends Spell {
 
 			Char existing = Actor.findChar(tracker.returnPos);
 			if (existing != null && existing != hero){
-				Char toPush = Char.hasProp(existing, Char.Property.IMMOVABLE) ? hero : existing;
+				//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+				Char toPush = false ? hero : existing;
 
 				ArrayList<Integer> candidates = new ArrayList<>();
 				for (int n : PathFinder.NEIGHBOURS8) {
 					int cell = tracker.returnPos + n;
-					if (!Dungeon.level.solid[cell] && Actor.findChar( cell ) == null
-							&& (!Char.hasProp(toPush, Char.Property.LARGE) || Dungeon.level.openSpace[cell])) {
-						candidates.add( cell );
+					if (!Dungeon.level.solid[cell] && Actor.findChar(cell) == null) {
+						//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+						if (!false || Dungeon.level.openSpace[cell]) {
+							candidates.add(cell);
+						}
 					}
 				}
 				Random.shuffle(candidates);
