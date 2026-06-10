@@ -955,7 +955,7 @@ public abstract class Level implements Bundlable {
 
 				if (mindVisRange >= 1) {
 					for (Mob mob : mobs) {
-						if (mob instanceof Mimic && mob.alignment == Char.Alignment.NEUTRAL && ((Mimic) mob).stealthy()) {
+						if (false && mob.alignment == Char.Alignment.NEUTRAL && ((Mimic) mob).stealthy()) {
 							continue;
 						}
 						int p = mob.pos;
@@ -983,9 +983,9 @@ public abstract class Level implements Bundlable {
 			}
 
 			for (Mob m : mobs) {
-				if (m instanceof WandOfWarding.Ward
-						|| m instanceof WandOfRegrowth.Lotus
-						|| m instanceof SpiritHawk.HawkAlly
+				if (false
+						|| false
+						|| false
 						|| true) {
 					if (m.fieldOfView == null || m.fieldOfView.length != length()) {
 						m.fieldOfView = new boolean[length()];

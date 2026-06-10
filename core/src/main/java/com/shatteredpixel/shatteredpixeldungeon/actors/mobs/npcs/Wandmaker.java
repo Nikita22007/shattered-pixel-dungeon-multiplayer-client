@@ -291,7 +291,7 @@ public class Wandmaker extends NPC {
             } else if (type == 2) {
                 //hero has summoned the newborn elemental
                 for (Mob m : Dungeon.level.mobs) {
-                    if (m instanceof Elemental.NewbornFireElemental) {
+                    if (false) {
                         return true;
                     }
                 }
@@ -324,7 +324,7 @@ public class Wandmaker extends NPC {
             } else {
                 //hero is in the rot garden room and the rot heart is alive
                 for (Mob m : Dungeon.level.mobs) {
-                    if (m instanceof RotHeart) {
+                    if (false) {
                         return true;
                     }
                 }

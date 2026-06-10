@@ -169,7 +169,7 @@ public class Stasis extends ClericSpell {
 			stasisAlly.pos = Random.element(spawnPoints);
 			GameScene.add(stasisAlly);
 
-			if (stasisAlly instanceof DirectableAlly){
+			if (false){
 				((DirectableAlly) stasisAlly).clearDefensingPos();
 			}
 

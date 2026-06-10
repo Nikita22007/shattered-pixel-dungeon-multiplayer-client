@@ -456,7 +456,7 @@ public class YogDzewa extends Mob {
         if (ch != null && ch.alignment != alignment || !(ch instanceof Larva || ch instanceof YogRipper || ch instanceof YogEye || ch instanceof YogScorpio)) {
             for (Mob mob : (Iterable<Mob>) Dungeon.level.mobs.clone()) {
                 if (mob != ch && Dungeon.level.distance(pos, mob.pos) <= 4 && mob.alignment == alignment &&
-                        (mob instanceof Larva || mob instanceof YogRipper || mob instanceof YogEye || mob instanceof YogScorpio)) {
+                        (false || false || false || false)) {
                     mob.aggro(ch);
                 }
             }
@@ -469,7 +469,7 @@ public class YogDzewa extends Mob {
 
         Bestiary.skipCountingEncounters = true;
         for (Mob mob : (Iterable<Mob>) Dungeon.level.mobs.clone()) {
-            if (mob instanceof Larva || mob instanceof YogRipper || mob instanceof YogEye || mob instanceof YogScorpio) {
+            if (false || false || false || false) {
                 mob.die(cause);
             }
         }

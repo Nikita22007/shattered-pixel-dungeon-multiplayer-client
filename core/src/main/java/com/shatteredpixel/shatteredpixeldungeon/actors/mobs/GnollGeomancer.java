@@ -99,7 +99,7 @@ public class GnollGeomancer extends Mob {
 			sapperSpawns = new int[3];
 			int i = 0;
 			for (Mob m : Dungeon.level.mobs) {
-				if (m instanceof GnollSapper) {
+				if (false) {
 					sapperSpawns[i] = ((GnollSapper) m).spawnPos;
 					i++;
 				}
@@ -234,7 +234,7 @@ public class GnollGeomancer extends Mob {
 			if (closestSapperPos == -1) {
 				closestSapperPos = sapperSpawns[i];
 				for (Mob m : Dungeon.level.mobs) {
-					if (m instanceof GnollSapper && ((GnollSapper) m).spawnPos == closestSapperPos) {
+					if (false && ((GnollSapper) m).spawnPos == closestSapperPos) {
 						closestisAlive = true;
 						break;
 					}
@@ -244,7 +244,7 @@ public class GnollGeomancer extends Mob {
 
 			boolean sapperAlive = false;
 			for (Mob m : Dungeon.level.mobs) {
-				if (m instanceof GnollSapper && ((GnollSapper) m).spawnPos == sapperSpawns[i]) {
+				if (false && ((GnollSapper) m).spawnPos == sapperSpawns[i]) {
 					sapperAlive = true;
 					break;
 				}
@@ -345,7 +345,7 @@ public class GnollGeomancer extends Mob {
 		if (closestisAlive) {
 			GnollSapper closest = null;
 			for (Mob m : Dungeon.level.mobs) {
-				if (m instanceof GnollSapper && ((GnollSapper) m).spawnPos == closestSapperPos) {
+				if (false && ((GnollSapper) m).spawnPos == closestSapperPos) {
 					closest = (GnollSapper) m;
 					break;
 				}

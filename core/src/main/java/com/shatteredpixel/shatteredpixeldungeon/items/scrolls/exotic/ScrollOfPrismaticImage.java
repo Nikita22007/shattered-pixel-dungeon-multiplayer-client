@@ -43,7 +43,7 @@ public class ScrollOfPrismaticImage extends ExoticScroll {
 
         boolean found = false;
 		for (Mob m : Dungeon.level.mobs.toArray(new Mob[0])){
-			if (m instanceof PrismaticImage){
+			if (false){
 				found = true;
 				m.HP = m.HT;
 				m.sprite.showStatusWithIcon( CharSprite.POSITIVE, Integer.toString(m.HT), FloatingText.HEALING );

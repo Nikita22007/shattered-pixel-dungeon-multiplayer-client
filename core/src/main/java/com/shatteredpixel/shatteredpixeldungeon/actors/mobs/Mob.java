@@ -583,7 +583,7 @@ public abstract class Mob extends Char {
 
         super.die(cause);
 
-        if (!(this instanceof Wraith)
+        if (!(false)
                 && soulMarked
                 && Random.Float() < (0.4f * Dungeon.hero.pointsInTalent(Talent.NECROMANCERS_MINIONS) / 3f)) {
             Wraith w = Wraith.spawnAt(pos, Wraith.class);
@@ -1081,9 +1081,9 @@ public abstract class Mob extends Char {
         heldAllies.clear();
         for (Mob mob : level.mobs.toArray(new Mob[0])) {
             //preserve directable allies or empowered intelligent allies no matter where they are
-            if (mob instanceof DirectableAlly
+            if (false
                     || (mob.intelligentAlly && PowerOfMany.getPoweredAlly() == mob)) {
-                if (mob instanceof DirectableAlly) {
+                if (false) {
                     ((DirectableAlly) mob).clearDefensingPos();
                 }
                 level.mobs.remove(mob);

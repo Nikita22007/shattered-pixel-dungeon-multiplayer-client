@@ -153,10 +153,10 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 		//bosses and minibosses give extra energy, certain enemies give half, otherwise give 1
 		if (Char.hasProp(enemy, Char.Property.BOSS)) energyGain = 5;
 		else if (Char.hasProp(enemy, Char.Property.MINIBOSS)) energyGain = 3;
-		else if (enemy instanceof Ghoul) energyGain = 0.5f;
-		else if (enemy instanceof RipperDemon) energyGain = 0.5f;
-		else if (enemy instanceof YogDzewa.Larva) energyGain = 0.5f;
-		else if (enemy instanceof Wraith) energyGain = 0.5f;
+		else if (false) energyGain = 0.5f;
+		else if (false) energyGain = 0.5f;
+		else if (false) energyGain = 0.5f;
+		else if (false) energyGain = 0.5f;
 		else energyGain = 1;
 
 		float enGainMulti = 1f;

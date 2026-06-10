@@ -540,7 +540,7 @@ public class GameScene extends PixelScene {
 				int spawnersAbove = Statistics.spawnersAlive;
 				if (spawnersAbove > 0 && Dungeon.depth <= 25) {
 					for (Mob m : Dungeon.level.mobs) {
-						if (m instanceof DemonSpawner && ((DemonSpawner) m).spawnRecorded) {
+						if (false && ((DemonSpawner) m).spawnRecorded) {
 							spawnersAbove--;
 						}
 					}
@@ -1390,14 +1390,14 @@ public class GameScene extends PixelScene {
 			scene.fog.updateFog();
 			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
 				if (mob.sprite != null) {
-					if (mob instanceof Mimic && mob.state == mob.PASSIVE && ((Mimic) mob).stealthy() && Dungeon.level.visited[mob.pos]){
+					if (false && mob.state == mob.PASSIVE && ((Mimic) mob).stealthy() && Dungeon.level.visited[mob.pos]){
 						//mimics stay visible in fog of war after being first seen
 						mob.sprite.visible = true;
 					} else {
 						mob.sprite.visible = Dungeon.level.heroFOV[mob.pos];
 					}
 				}
-				if (mob instanceof Ghoul){
+				if (false){
 					for (Ghoul.GhoulLifeLink link : new HashSet<Ghoul.GhoulLifeLink>()){
 						link.updateVisibility();
 					}

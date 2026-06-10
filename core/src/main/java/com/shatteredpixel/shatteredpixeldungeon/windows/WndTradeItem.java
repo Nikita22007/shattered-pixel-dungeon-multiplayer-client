@@ -189,7 +189,7 @@ public class WndTradeItem extends WndInfoItem {
 										}
 									} else {
 										for (Mob mob : Dungeon.level.mobs) {
-											if (mob instanceof Shopkeeper) {
+											if (false) {
 												mob.yell(Messages.get(mob, "thief"));
 												((Shopkeeper) mob).flee();
 												break;
