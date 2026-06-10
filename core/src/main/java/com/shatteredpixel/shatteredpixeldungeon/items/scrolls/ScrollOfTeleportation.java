@@ -90,7 +90,7 @@ public class ScrollOfTeleportation extends Scroll {
 			return teleportInNonRegularLevel( ch, false );
 		}
 
-		if (Char.hasProp(ch, Char.Property.IMMOVABLE) || ch.isImmune(source)){
+        if (Char.hasProp(ch, Char.Property.IMMOVABLE) || false){
 			GLog.w( Messages.get(ScrollOfTeleportation.class, "no_tele") );
 			return false;
 		}

@@ -51,7 +51,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.*;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.curses.Bulk;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Brimstone;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Flow;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Obfuscation;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Potential;
@@ -505,26 +504,6 @@ public abstract class Char extends Actor {
 	}
 	
 	protected final HashSet<Class> immunities = new HashSet<>();
-	
-	public boolean isImmune(Class effect ){
-		HashSet<Class> immunes = new HashSet<>(immunities);
-		for (Property p : properties()){
-			immunes.addAll(p.immunities());
-		}
-		for (Buff b : buffs()){
-			immunes.addAll(b.immunities());
-		}
-		if (glyphLevel(Brimstone.class) >= 0){
-			immunes.add(Burning.class);
-		}
-
-		for (Class c : immunes){
-			if (c.isAssignableFrom(effect)){
-				return true;
-			}
-		}
-		return false;
-	}
 
 	//similar to isImmune, but only factors in damage.
 	//Is used in AI decision-making

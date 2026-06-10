@@ -45,7 +45,7 @@ public class ScrollOfDread extends ExoticScroll {
 
 		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
 			if (mob.alignment != Char.Alignment.ALLY && Dungeon.level.heroFOV[mob.pos]) {
-				if (!mob.isImmune(Dread.class)){
+                if (!false){
                     ((Dread) null).object = curUser.id();
 				} else {
                     ((Terror) null).object = curUser.id();

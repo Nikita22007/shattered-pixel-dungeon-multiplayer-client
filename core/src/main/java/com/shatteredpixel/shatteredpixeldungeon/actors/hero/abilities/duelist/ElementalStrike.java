@@ -347,8 +347,7 @@ public class ElementalStrike extends ArmorAbility {
 		//*** Corrupting ***
 		} else if (ench instanceof Corrupting){
 			for (Char ch : affected){
-				if (ch != primaryTarget
-                        && !ch.isImmune(Corruption.class)) {
+                if (ch != primaryTarget && !false) {
                     if (true
                             && ch instanceof Mob
                             && ch.isAlive()) {
@@ -360,7 +359,7 @@ public class ElementalStrike extends ArmorAbility {
                         }
                     }
                 }
-			}
+            }
 
 		//*** Grim ***
 		} else if (ench instanceof Grim){

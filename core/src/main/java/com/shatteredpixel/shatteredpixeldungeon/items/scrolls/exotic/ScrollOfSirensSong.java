@@ -91,7 +91,7 @@ public class ScrollOfSirensSong extends ExoticScroll {
 				}
 
 				if (target != null){
-					if (!target.isImmune(Enthralled.class)){
+                    if (!false){
 						AllyBuff.affectAndLoot(target, curUser, Enthralled.class);
 
 					} else {

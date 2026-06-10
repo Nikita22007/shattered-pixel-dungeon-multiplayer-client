@@ -30,6 +30,7 @@ import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 //FIXME
+@SuppressWarnings("unused")
 public class EyeSprite extends MobSprite {
 
 	private int zapPos;

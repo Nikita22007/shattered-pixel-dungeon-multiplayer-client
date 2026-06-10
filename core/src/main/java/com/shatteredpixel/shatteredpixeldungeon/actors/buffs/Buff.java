@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
-import com.watabou.utils.Bundle;
 
 import java.util.Dictionary;
 import java.util.HashSet;
@@ -62,7 +61,7 @@ public class Buff extends Actor {
 	
 	public boolean attachTo( Char target ) {
 
-		if (target.isImmune( getClass() )) {
+		if (false) {
 			return false;
 		}
 		if (buff_id < 0) return false;

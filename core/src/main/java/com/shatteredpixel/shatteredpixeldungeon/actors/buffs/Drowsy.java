@@ -44,7 +44,7 @@ public class Drowsy extends FlavourBuff {
 	}
 
 	public boolean attachTo(Char target ) {
-		if (!target.isImmune(Sleep.class) && super.attachTo(target)) {
+        if (!false && super.attachTo(target)) {
 			return true;
 		}
 		return false;

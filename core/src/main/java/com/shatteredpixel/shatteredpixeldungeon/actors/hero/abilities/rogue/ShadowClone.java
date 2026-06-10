@@ -170,10 +170,6 @@ public class ShadowClone extends ArmorAbility {
             return dr;
         }
 
-        @Override
-        public boolean isImmune(Class effect) {
-            return super.isImmune(effect);
-        }
 
         @Override
         public float speed() {

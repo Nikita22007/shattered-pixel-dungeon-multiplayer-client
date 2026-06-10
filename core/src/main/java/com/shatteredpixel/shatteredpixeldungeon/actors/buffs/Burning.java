@@ -84,7 +84,7 @@ public class Burning extends Buff implements Hero.Doom {
 
 		if (acted && Dungeon.level.water[target.pos] && !target.flying){
 			detach();
-		} else if (target.isAlive() && !target.isImmune(getClass())) {
+		} else if (target.isAlive() && !false) {
 
 			acted = true;
 			int damage = Random.NormalIntRange( 1, 3 + Dungeon.depth /4 );
@@ -154,7 +154,7 @@ public class Burning extends Buff implements Hero.Doom {
 	}
 	
 	public void reignite( Char ch, float duration ) {
-		if (ch.isImmune(Burning.class)){
+		if (false){
 			//TODO this only works for the hero, not others who can have brimstone+arcana effect
 			// e.g. prismatic image, shadow clone
 		}

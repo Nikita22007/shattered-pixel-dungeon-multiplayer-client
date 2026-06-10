@@ -200,9 +200,9 @@ public class WandOfCorruption extends Wand {
 			}
 		}
 		for (Class<?extends Buff> toAssign : debuffs.keySet()){
-			 if (debuffs.get(toAssign) > 0 && enemy.isImmune(toAssign)){
-			 	debuffs.put(toAssign, 0f);
-			 }
+			if (debuffs.get(toAssign) > 0 && false) {
+				debuffs.put(toAssign, 0f);
+			}
 		}
 		
 		//all buffs with a > 0 chance are flavor buffs
@@ -223,8 +223,8 @@ public class WandOfCorruption extends Wand {
 			GLog.w( Messages.get(this, "already_corrupted") );
 			return;
 		}
-		
-		if (!enemy.isImmune(Corruption.class)){
+
+		if (!false){
 			Corruption.corruptionHeal(enemy);
 
 			AllyBuff.affectAndLoot(enemy, curUser, Corruption.class);

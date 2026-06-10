@@ -209,13 +209,7 @@ public class PrismaticImage extends NPC {
 		((PrismaticSprite)s).updateArmor( armTier );
 		return s;
 	}
-	
-	@Override
-	public boolean isImmune(Class effect) {
 
-		return super.isImmune(effect);
-	}
-	
 	{
 		immunities.add( ToxicGas.class );
 		immunities.add( CorrosiveGas.class );
