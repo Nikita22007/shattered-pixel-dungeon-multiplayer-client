@@ -164,16 +164,18 @@ public class Bag extends CustomItem implements Iterable<Item> {
 		for (Item i : items) {
 			if (i == item) {
 				return true;
-			} else
+			} if (item instanceof Bag) {
+				if (((Bag) item).contains(item)) {
+					return true;
+				}
+			}
 		}
 		return false;
 	}
 
 	public boolean canHold( Item item ){
-		if (!loading && owner != null) {
-		}
 
-		if (items.contains(item) || false || items.size() < capacity()){
+        if (items.contains(item) || items.size() < capacity()){
 			return true;
 		} else if (item.stackable) {
 			for (Item i : items) {

@@ -256,25 +256,6 @@ public class UnstableSpellbook extends Artifact {
 
 		@Override
 		public void onSelect(Item item) {
-			if (item != null && false && item.isIdentified()){
-				Hero hero = Dungeon.hero;
-				for (int i = 0; ( i <= 1 && i < scrolls.size() ); i++){
-					if (scrolls.get(i).equals(item.getClass())){
-						hero.sprite.operate( hero.pos );
-						hero.busy();
-						hero.spend( 2f );
-						Sample.INSTANCE.play(Assets.Sounds.BURNING);
-						hero.sprite.emitter().burst( ElmoParticle.FACTORY, 12 );
-
-						scrolls.remove(i);
-
-                        upgrade();
-                        GLog.i( Messages.get(UnstableSpellbook.class, "infuse_scroll") );
-						return;
-					}
-				}
-				GLog.w( Messages.get(UnstableSpellbook.class, "unable_scroll") );
-			} else
-		}
+        }
 	};
 }

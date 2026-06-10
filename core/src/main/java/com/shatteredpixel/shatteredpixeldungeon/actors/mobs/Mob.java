@@ -45,7 +45,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Bestiary;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
@@ -502,8 +501,6 @@ public abstract class Mob extends Char {
                 Statistics.enemiesSlain++;
                 Badges.validateMonstersSlain();
                 Statistics.qualifiedForNoKilling = false;
-                Bestiary.setSeen(getClass());
-                Bestiary.countEncounter(getClass());
 
                 int exp = Dungeon.hero.lvl <= maxLvl ? EXP : 0;
 

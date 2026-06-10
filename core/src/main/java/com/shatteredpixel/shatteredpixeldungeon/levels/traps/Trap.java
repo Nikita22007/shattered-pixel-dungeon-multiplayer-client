@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.levels.traps;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Bestiary;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.watabou.noosa.audio.Sample;
@@ -96,8 +95,7 @@ public abstract class Trap implements Bundlable {
 			}
 			if (disarmedByActivation) disarm();
 			Dungeon.level.discover(pos);
-			Bestiary.setSeen(getClass());
-			Bestiary.countEncounter(getClass());
+
 			activate();
 		}
 	}

@@ -21,25 +21,11 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.journal;
 
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Eye;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Necromancer;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.RipperDemon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Scorpio;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Skeleton;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Wraith;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.YogDzewa;
-import com.shatteredpixel.shatteredpixeldungeon.items.quest.CorpseDust;
-import com.shatteredpixel.shatteredpixeldungeon.levels.traps.GnollRockfallTrap;
-import com.shatteredpixel.shatteredpixeldungeon.levels.traps.PoisonDartTrap;
-import com.shatteredpixel.shatteredpixeldungeon.levels.traps.RockfallTrap;
-import com.shatteredpixel.shatteredpixeldungeon.levels.traps.TenguDartTrap;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.watabou.utils.Bundle;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 //contains all the game's various entities, mostly enemies, NPCS, and allies, but also traps and plants
@@ -92,55 +78,7 @@ public enum Bestiary {
 		// Empty on client, filled dynamically by server actions
 	}
 
-	//some mobs and traps have different internal classes in some cases, so need to convert here
-	private static final HashMap<Class<?>, Class<?>> classConversions = new HashMap<>();
-	static {
-		classConversions.put(CorpseDust.DustWraith.class,      Wraith.class);
 
-		classConversions.put(Necromancer.NecroSkeleton.class,  Skeleton.class);
-
-		classConversions.put(TenguDartTrap.class,              PoisonDartTrap.class);
-		classConversions.put(GnollRockfallTrap.class,          RockfallTrap.class);
-
-
-		classConversions.put(YogDzewa.YogRipper.class,         RipperDemon.class);
-		classConversions.put(YogDzewa.YogEye.class,            Eye.class);
-		classConversions.put(YogDzewa.YogScorpio.class,        Scorpio.class);
-	}
-
-	public static boolean isSeen(Class<?> cls){
-		for (Bestiary cat : values()) {
-			if (cat.seen.containsKey(cls)) {
-				return cat.seen.get(cls);
-			}
-		}
-		return false;
-	}
-
-	public static void setSeen(Class<?> cls){
-		if (classConversions.containsKey(cls)){
-			cls = classConversions.get(cls);
-		}
-		for (Bestiary cat : values()) {
-			if (cat.seen.containsKey(cls) && !cat.seen.get(cls)) {
-				cat.seen.put(cls, true);
-			}
-		}
-		Badges.validateCatalogBadges();
-	}
-
-	public static void updateEntity(String bestiaryName, Class<?> cls, boolean isSeen, int count) {
-		try {
-			Bestiary cat = valueOf(bestiaryName);
-			if (classConversions.containsKey(cls)){
-				cls = classConversions.get(cls);
-			}
-			cat.seen.put(cls, isSeen);
-			cat.encounterCount.put(cls, count);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	public static void reset() {
 		for (Bestiary cat : values()) {
@@ -149,38 +87,8 @@ public enum Bestiary {
 		}
 	}
 
-	public static int encounterCount(Class<?> cls) {
-		for (Bestiary cat : values()) {
-			if (cat.encounterCount.containsKey(cls)) {
-				return cat.encounterCount.get(cls);
-			}
-		}
-		return 0;
-	}
-
 	//used primarily when bosses are killed and need to clean up their minions
 	public static boolean skipCountingEncounters = false;
-
-	public static void countEncounter(Class<?> cls){
-		countEncounters(cls, 1);
-	}
-
-	public static void countEncounters(Class<?> cls, int encounters){
-		if (skipCountingEncounters){
-			return;
-		}
-		if (classConversions.containsKey(cls)){
-			cls = classConversions.get(cls);
-		}
-		for (Bestiary cat : values()) {
-			if (cat.encounterCount.containsKey(cls) && cat.encounterCount.get(cls) != Integer.MAX_VALUE){
-				cat.encounterCount.put(cls, cat.encounterCount.get(cls)+encounters);
-				if (cat.encounterCount.get(cls) < -1_000_000_000){ //to catch cases of overflow
-					cat.encounterCount.put(cls, Integer.MAX_VALUE);
-				}
-			}
-		}
-	}
 
 	private static final String BESTIARY_CLASSES    = "bestiary_classes";
 	private static final String BESTIARY_SEEN       = "bestiary_seen";
