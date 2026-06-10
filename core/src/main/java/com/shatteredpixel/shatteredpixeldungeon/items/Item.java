@@ -158,14 +158,7 @@ public class Item implements Bundlable {
 			execute(hero, defaultAction());
 		}
 	}
-	
-	protected void onThrow( int cell ) {
-		Heap heap = Dungeon.level.drop( this, cell );
-		if (!heap.isEmpty()) {
-			heap.sprite.drop( cell );
-		}
-	}
-	
+
 	//takes two items and merges them (if possible)
 	public Item merge( Item other ){
 		if (isSimilar( other )){
@@ -633,7 +626,9 @@ public class Item implements Bundlable {
 						public void call() {
                             curUser = user;
                             Item i = Item.this.detach(user.belongings.backpack);
-                            if (i != null) i.onThrow(cell);
+                            if (i != null) {
+
+							}
                             if (curUser.hasTalent(Talent.IMPROVISED_PROJECTILES)
                                     && !(Item.this instanceof MissileWeapon)) {
                                 {
@@ -659,7 +654,9 @@ public class Item implements Bundlable {
 							curUser = user;
 							Item i = Item.this.detach(user.belongings.backpack);
 							user.spend(delay);
-							if (i != null) i.onThrow(cell);
+							if (i != null) {
+
+							}
 							user.next();
 						}
 					});

@@ -30,6 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
+import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfPassage;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
@@ -92,17 +93,6 @@ public class BeaconOfReturning extends Spell {
 	
 	//we reset return depth when beacons are dropped to prevent
 	//having two stacks of beacons with different return locations
-	
-	@Override
-	protected void onThrow(int cell) {
-		if (returnDepth != -1) {
-			if (Dungeon.hero.belongings.getItem(getClass()) == null) {
-				Notes.remove(Notes.Landmark.BEACON_LOCATION, returnDepth);
-			}
-			returnDepth = -1;
-		}
-		super.onThrow(cell);
-	}
 
     private void setBeacon(Hero hero ) {
 		if (returnDepth != -1) {

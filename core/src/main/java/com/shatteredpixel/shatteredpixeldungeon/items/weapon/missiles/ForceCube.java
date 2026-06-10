@@ -52,32 +52,6 @@ public class ForceCube extends MissileWeapon {
 	}
 
 	@Override
-	protected void onThrow(int cell) {
-		if (Dungeon.level.pit[cell]){
-			super.onThrow(cell);
-			return;
-		}
-
-		rangedHit( null, cell );
-
-		ArrayList<Char> targets = new ArrayList<>();
-		if (Actor.findChar(cell) != null) targets.add(Actor.findChar(cell));
-		
-
-		for (Char target : targets){
-			curUser.shoot(target, this);
-			if (target instanceof Hero && !target.isAlive()){
-				Badges.validateDeathFromFriendlyMagic();
-				Dungeon.fail(this);
-				GLog.n(Messages.get(this, "ondeath"));
-			}
-		}
-		
-		WandOfBlastWave.BlastWave.blast(cell);
-		Sample.INSTANCE.play( Assets.Sounds.BLAST );
-	}
-
-	@Override
 	public boolean doEquip(Hero hero) {
 		return false;
 	}

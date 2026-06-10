@@ -75,15 +75,6 @@ public class Honeypot extends Item {
 		}
 	}
 	
-	@Override
-	protected void onThrow( int cell ) {
-		if (Dungeon.level.pit[cell]) {
-			super.onThrow( cell );
-		} else {
-            Dungeon.level.drop(shatter( null, cell ), cell);
-		}
-	}
-	
 	public Item shatter( Char owner, int pos ) {
 		
 		if (Dungeon.level.heroFOV[pos]) {
@@ -146,12 +137,6 @@ public class Honeypot extends Item {
 		{
 			image = ItemSpriteSheet.SHATTPOT;
 			stackable = true;
-		}
-
-		@Override
-		protected void onThrow(int cell) {
-			super.onThrow(cell);
-			dropPot(curUser, cell);
 		}
 
 		public void pickupPot(Char holder){

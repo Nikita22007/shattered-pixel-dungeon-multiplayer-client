@@ -188,26 +188,6 @@ public class Blandfruit extends Food {
 	public static final String POTIONATTRIB = "potionattrib";
 	
 	@Override
-	protected void onThrow(int cell) {
-		if (Dungeon.level.map[cell] == Terrain.WELL || Dungeon.level.pit[cell]) {
-			super.onThrow( cell );
-			
-		} else if (potionAttrib instanceof PotionOfLiquidFlame ||
-				potionAttrib instanceof PotionOfToxicGas ||
-				potionAttrib instanceof PotionOfParalyticGas ||
-				potionAttrib instanceof PotionOfFrost ||
-				potionAttrib instanceof PotionOfLevitation ||
-				potionAttrib instanceof PotionOfPurity) {
-
-            potionAttrib.shatter( cell );
-			Dungeon.level.drop(new Chunks(), cell).sprite.drop();
-			
-		} else {
-			super.onThrow( cell );
-		}
-	}
-	
-	@Override
 	public void reset() {
 		super.reset();
 		if (potionAttrib != null) {

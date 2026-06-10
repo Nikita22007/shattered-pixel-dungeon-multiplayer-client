@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.plants;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -36,18 +35,13 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfRegrowth;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Bestiary;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
-import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
-
-import java.util.ArrayList;
 
 public abstract class Plant implements Bundlable {
 	
@@ -140,29 +134,6 @@ public abstract class Plant implements Bundlable {
 		protected Class<? extends Plant> plantClass;
 		
 		@Override
-		protected void onThrow( int cell ) {
-			if (Dungeon.level.map[cell] == Terrain.ALCHEMY
-					|| Dungeon.level.pit[cell]
-					|| Dungeon.level.traps.get(cell) != null
-					|| Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
-				super.onThrow( cell );
-			} else {
-                Dungeon.level.plant( this, cell );
-				if (Dungeon.hero.subClass == HeroSubClass.WARDEN) {
-					for (int i : PathFinder.NEIGHBOURS8) {
-						int c = Dungeon.level.map[cell + i];
-						if ( c == Terrain.EMPTY || c == Terrain.EMPTY_DECO
-								|| c == Terrain.EMBERS || c == Terrain.GRASS){
-							Level.set(cell + i, Terrain.FURROWED_GRASS);
-							GameScene.updateMap(cell + i);
-							CellEmitter.get( cell + i ).burst( LeafParticle.LEVEL_SPECIFIC, 4 );
-						}
-					}
-				}
-			}
-		}
-		
-		@Override
 		public void execute( Hero hero, String action ) {
 
 			super.execute (hero, action );
@@ -170,11 +141,12 @@ public abstract class Plant implements Bundlable {
 			if (action.equals( AC_PLANT )) {
 
 				hero.busy();
-				((Seed)detach( hero.belongings.backpack )).onThrow( hero.pos );
+				detach(hero.belongings.backpack);
+
 				hero.spend( TIME_TO_PLANT );
 
 				hero.sprite.operate( hero.pos );
-				
+
 			}
 		}
 		

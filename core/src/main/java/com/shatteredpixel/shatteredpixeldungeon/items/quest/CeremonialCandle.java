@@ -66,13 +66,6 @@ public class CeremonialCandle extends Item {
 		return true;
 	}
 
-    @Override
-	protected void onThrow(int cell) {
-		super.onThrow(cell);
-		aflame = false;
-		checkCandles();
-	}
-
 	public boolean aflame = false;
 
 	public static String AFLAME = "aflame";

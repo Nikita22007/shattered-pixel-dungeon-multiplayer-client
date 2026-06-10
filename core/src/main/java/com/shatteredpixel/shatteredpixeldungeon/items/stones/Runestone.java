@@ -42,22 +42,6 @@ public abstract class Runestone extends Item {
 		image = ItemSpriteSheet.STONE_HOLDER;
 		anonymous = true;
 	}
-
-	@Override
-	protected void onThrow(int cell) {
-		///inventory stones are thrown like normal items, other stones don't trigger when thrown into pits
-        if (this instanceof InventoryStone ||
-                false ||
-                (Dungeon.level.pit[cell] && Actor.findChar(cell) == null)){
-			if (!anonymous) super.onThrow( cell );
-		} else {
-			if (!anonymous) {
-                Talent.onRunestoneUsed(curUser, cell, getClass());
-			}
-			activate(cell);
-			Invisibility.dispel();
-		}
-	}
 	
 	protected abstract void activate(int cell);
 	

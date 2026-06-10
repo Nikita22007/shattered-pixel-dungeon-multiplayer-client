@@ -73,23 +73,6 @@ public class LiquidMetal extends Item {
 	}
 
 	@Override
-	protected void onThrow( int cell ) {
-		if (Dungeon.level.map[cell] == Terrain.WELL || Dungeon.level.pit[cell]) {
-
-			super.onThrow( cell );
-
-		} else  {
-
-			if (Dungeon.level.heroFOV[cell]) {
-				GLog.i( Messages.get(Potion.class, "shatter") );
-				Sample.INSTANCE.play( Assets.Sounds.SHATTER );
-				Splash.at( cell, 0xBFBFBF, 5 );
-			}
-
-		}
-	}
-
-	@Override
 	public boolean isUpgradable() {
 		return false;
 	}

@@ -37,22 +37,6 @@ public class IncendiaryDart extends TippedDart {
 	}
 	
 	@Override
-	protected void onThrow( int cell ) {
-		Char enemy = Actor.findChar( cell );
-		if ((enemy == null || enemy == curUser) && Dungeon.level.flamable[cell]) {
-			GameScene.add(Blob.seed(cell, 4, Fire.class));
-			decrementDurability();
-			if (durability > 0 || spawnedForEffect){
-				super.onThrow(cell);
-			} else {
-				Dungeon.level.drop(new Dart().quantity(1), cell).sprite.drop();
-			}
-		} else{
-			super.onThrow(cell);
-		}
-	}
-	
-	@Override
 	public int proc( Char attacker, Char defender, int damage ) {
 		//when processing charged shot, only burn enemies
 		if (!processingChargedShot || attacker.alignment != defender.alignment) {

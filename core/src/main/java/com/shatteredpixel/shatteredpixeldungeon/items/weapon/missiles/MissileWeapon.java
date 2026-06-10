@@ -24,11 +24,8 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PinCushion;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RevealedArea;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
@@ -44,8 +41,6 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 import org.jetbrains.annotations.Contract;
-
-import java.util.ArrayList;
 
 abstract public class MissileWeapon extends Weapon {
 
@@ -219,37 +214,6 @@ abstract public class MissileWeapon extends Weapon {
 	}
 
 	@Override
-	protected void onThrow( int cell ) {
-		Char enemy = Actor.findChar( cell );
-		if (enemy == null || enemy == curUser) {
-			parent = null;
-
-			//metamorphed seer shot logic
-			if (curUser.hasTalent(Talent.SEER_SHOT)
-					&& curUser.heroClass != HeroClass.HUNTRESS) {
-				{
-					if (Actor.findChar(cell) == null) {
-						curUser.pointsInTalent(Talent.SEER_SHOT);
-						RevealedArea a = null;
-						a.depth = Dungeon.depth;
-						a.pos = cell;
-					}
-				}
-			}
-
-			if (!spawnedForEffect) super.onThrow( cell );
-		} else {
-			if (!curUser.shoot( enemy, this )) {
-				rangedMiss( cell );
-			} else {
-				
-				rangedHit( enemy, cell );
-
-			}
-		}
-	}
-
-	@Override
 	public int proc(Char attacker, Char defender, int damage) {
 		if (attacker instanceof Hero && Random.Int(3) < Dungeon.hero.pointsInTalent(Talent.SHARED_ENCHANTMENT)){
 			if (this instanceof Dart && ((Dart) this).crossbowHasEnchant(Dungeon.hero)){
@@ -311,7 +275,9 @@ abstract public class MissileWeapon extends Weapon {
 	
 	protected void rangedMiss( int cell ) {
 		parent = null;
-		if (!spawnedForEffect) super.onThrow(cell);
+		if (!spawnedForEffect) {
+
+		}
 	}
 
 	public float durabilityLeft(){

@@ -109,14 +109,6 @@ public class Bomb extends Item {
 		return new Fuse();
 	}
 
-	@Override
-	protected void onThrow( int cell ) {
-		if (!Dungeon.level.pit[ cell ] && lightingFuse) {
-			Actor.addDelayed(fuse = createFuse().ignite(this), 2);
-		}
-		super.onThrow( cell );
-	}
-
 	public void explode(int cell){
 		//We're blowing up, so no need for a fuse anymore.
 		if (fuse != null) {
