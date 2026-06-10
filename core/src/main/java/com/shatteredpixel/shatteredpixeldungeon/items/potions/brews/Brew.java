@@ -21,11 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.potions.brews;
 
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-
-import java.util.ArrayList;
 
 public abstract class Brew extends Potion {
 
@@ -33,12 +29,7 @@ public abstract class Brew extends Potion {
 	public String defaultAction() {
 		return AC_THROW;
 	}
-	
-	@Override
-	public void doThrow(Hero hero) {
-		GameScene.selectCell(thrower);
-	}
-	
+
 	@Override
 	public boolean isKnown() {
 		return true;

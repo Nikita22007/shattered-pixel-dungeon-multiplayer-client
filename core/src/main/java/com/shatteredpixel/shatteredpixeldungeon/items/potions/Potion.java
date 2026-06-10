@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -52,11 +51,9 @@ import com.shatteredpixel.shatteredpixeldungeon.plants.Starflower;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Stormvine;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Sungrass;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
@@ -200,32 +197,6 @@ public class Potion extends Item {
 			return AC_CHOOSE;
 		} else {
 			return AC_DRINK;
-		}
-	}
-	
-	@Override
-	public void doThrow( final Hero hero ) {
-
-		if (isKnown()
-				&& !mustThrowPots.contains(this.getClass())
-				&& !canThrowPots.contains(this.getClass())) {
-		
-			GameScene.show(
-				new WndOptions(new ItemSprite(this),
-						Messages.get(Potion.class, "beneficial"),
-						Messages.get(Potion.class, "sure_throw"),
-						Messages.get(Potion.class, "yes"), Messages.get(Potion.class, "no") ) {
-					@Override
-					protected void onSelect(int index) {
-						if (index == 0) {
-							Potion.super.doThrow( hero );
-						}
-					}
-				}
-			);
-			
-		} else {
-			super.doThrow( hero );
 		}
 	}
 

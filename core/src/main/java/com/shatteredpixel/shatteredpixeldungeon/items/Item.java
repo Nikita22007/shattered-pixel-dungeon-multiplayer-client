@@ -115,10 +115,6 @@ public class Item implements Bundlable {
 		return keptThoughLostInvent;
 	}
 
-	public void doThrow( Hero hero ) {
-		GameScene.selectCell(thrower);
-	}
-	
 	public void execute( Hero hero, String action ) {
 
 		GameScene.cancel();
@@ -128,7 +124,7 @@ public class Item implements Bundlable {
 		if (action.equals( AC_THROW )) {
 			
 			if (hero.belongings.backpack.contains(this) || isEquipped(hero)) {
-				doThrow(hero);
+
 			}
 			
 		}
