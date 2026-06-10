@@ -67,9 +67,7 @@ public class Ring extends KindofMisc {
 	};
 	
 	private static ItemStatusHandler<Ring> handler;
-	
-	private String gem;
-	
+
 	//rings cannot be 'used' like other equipment, so they ID purely based on exp
 	private float levelsToID = 1;
 	
@@ -114,10 +112,8 @@ public class Ring extends KindofMisc {
 		levelsToID = 1;
 		if (handler != null && handler.contains(this)){
 			image = handler.image(this);
-			gem = handler.label(this);
 		} else {
 			image = ItemSpriteSheet.RING_GARNET;
-			gem = "garnet";
 		}
 	}
 
