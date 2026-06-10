@@ -402,21 +402,6 @@ public class Hero extends Char {
 
 
 	@Override
-	public String defenseVerb() {
-		Combo.ParryTracker parry = null;
-		if (parry != null) {
-			parry.parried = true;
-			if (true || ((Combo) null).getComboCount() < 9 || pointsInTalent(Talent.ENHANCED_COMBO) < 2) {
-				parry.detach();
-			}
-			return Messages.get(Monk.class, "parried");
-		}
-
-		return super.defenseVerb();
-	}
-
-
-	@Override
 	public float speed() {
 
 		float speed = super.speed();
@@ -1650,30 +1635,12 @@ public class Hero extends Char {
 		HP = HT;
 		live();
 
-		MagicalHolster holster = belongings.getItem(MagicalHolster.class);
-
 		//lost inventory is dropped in interlevelscene
 
 		//activate items that persist after lost inventory
 		//FIXME this is very messy, maybe it would be better to just have one buff that
 		// handled all items that recharge over time?
-		for (Item i : belongings) {
-			if (i instanceof EquipableItem && i.isEquipped(this)) {
-				((EquipableItem) i).activate(this);
-			} else if (i instanceof CloakOfShadows && i.keptThroughLostInventory() && hasTalent(Talent.LIGHT_CLOAK)) {
-				((CloakOfShadows) i).activate(this);
-			} else if (i instanceof HolyTome && i.keptThroughLostInventory() && hasTalent(Talent.LIGHT_READING)) {
-				((HolyTome) i).activate(this);
-			} else if (i instanceof Wand && i.keptThroughLostInventory()) {
-				if (holster != null && holster.contains(i)) {
-					((Wand) i).charge(this, MagicalHolster.HOLSTER_SCALE_FACTOR);
-				} else {
-					((Wand) i).charge(this);
-				}
-			} else if (i instanceof MagesStaff && i.keptThroughLostInventory()) {
-				((MagesStaff) i).applyWandChargeBuff(this);
-			}
-		}
+
 
 		updateHT(false);
 	}
