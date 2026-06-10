@@ -524,52 +524,6 @@ public abstract class Mob extends Char {
         }
     }
 
-    @Override
-    public void die(Object cause) {
-
-        if (cause == Chasm.class) {
-            //50% chance to round up, 50% to round down
-            if (EXP % 2 == 1) EXP += Random.Int(2);
-            EXP /= 2;
-        }
-
-        if (alignment == Alignment.ENEMY) {
-
-            if (cause instanceof Hero || cause instanceof Weapon || cause instanceof Weapon.Enchantment) {
-                if (Dungeon.hero.hasTalent(Talent.LETHAL_MOMENTUM)
-                        && Random.Float() < 0.34f + 0.33f * Dungeon.hero.pointsInTalent(Talent.LETHAL_MOMENTUM)) {
-                }
-                if (Dungeon.hero.heroClass != HeroClass.DUELIST
-                        && Dungeon.hero.hasTalent(Talent.LETHAL_HASTE)) {
-                    {
-                        ((GreaterHaste) null).set(2 + 2 * Dungeon.hero.pointsInTalent(Talent.LETHAL_HASTE));
-                    }
-                }
-            }
-
-        }
-
-        if (Dungeon.hero.isAlive() && !Dungeon.level.heroFOV[pos]) {
-            GLog.i(Messages.get(this, "died"));
-        }
-
-        boolean soulMarked = false;
-
-        super.die(cause);
-
-        if (!(false)
-                && soulMarked
-                && Random.Float() < (0.4f * Dungeon.hero.pointsInTalent(Talent.NECROMANCERS_MINIONS) / 3f)) {
-            Wraith w = Wraith.spawnAt(pos, Wraith.class);
-            if (w != null) {
-                if (Dungeon.level.heroFOV[pos]) {
-                    CellEmitter.get(pos).burst(ShadowParticle.CURSE, 6);
-                    Sample.INSTANCE.play(Assets.Sounds.CURSED);
-                }
-            }
-        }
-    }
-
     protected Object loot = null;
     protected float lootChance = 0;
 
