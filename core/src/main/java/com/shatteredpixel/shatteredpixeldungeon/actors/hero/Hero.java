@@ -1565,7 +1565,6 @@ public class Hero extends Char {
 
 				if (hasKey) {
 					GameScene.updateKeyDisplay();
-					heap.open(this);
 					spend(Key.TIME_TO_UNLOCK);
 				}
 			}

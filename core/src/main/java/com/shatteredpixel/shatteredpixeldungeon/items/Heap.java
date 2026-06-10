@@ -24,28 +24,21 @@ package com.shatteredpixel.shatteredpixeldungeon.items;
 import com.nikita22007.pixeldungeonmultiplayer.TranslationUtils;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Wraith;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.TippedDart;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -112,40 +105,6 @@ public class Heap implements Bundlable {
 	public boolean hidden = false; //sets alpha to 15%
 	
 	public LinkedList<Item> items = new LinkedList<>();
-	
-	public void open( Hero hero ) {
-		switch (type) {
-		case TOMB:
-			Wraith.spawnAround( hero.pos );
-			break;
-		case REMAINS:
-		case SKELETON:
-			CellEmitter.center( pos ).start(Speck.factory(Speck.RATTLE), 0.1f, 3);
-			break;
-		default:
-		}
-		
-		if (haunted){
-			if (Wraith.spawnAt( pos ) == null) {
-				hero.sprite.emitter().burst( ShadowParticle.CURSE, 6 );
-                if (!hero.isAlive()){
-					Dungeon.fail(Wraith.class);
-					GLog.n( Messages.capitalize(Messages.get(Char.class, "kill", Messages.get(Wraith.class, "name"))));
-				}
-			}
-			Sample.INSTANCE.play( Assets.Sounds.CURSED );
-		}
-
-		type = Type.HEAP;
-
-		ArrayList<Item> bonus = null;
-		if (bonus != null && !bonus.isEmpty()) {
-			items.addAll(0, bonus);
-			RingOfWealth.showFlareForBonusDrop(sprite);
-		}
-		sprite.link();
-		sprite.drop();
-	}
 
 	public int size() {
 		return items.size();

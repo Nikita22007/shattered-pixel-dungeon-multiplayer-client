@@ -251,8 +251,8 @@ public class SkeletonKey extends Artifact {
 							@Override
 							public void call() {
                                 ((KeyReplacementTracker) null).processGoldLockOpened();
-								Dungeon.level.heaps.get(target).open(curUser);
-								charge -= 2;
+                                Dungeon.level.heaps.get(target);
+                                charge -= 2;
 								gainExp(2 + 2);
 								Talent.onArtifactUsed(Dungeon.hero);
 								curUser.spendAndNext(Actor.TICK);
@@ -272,8 +272,8 @@ public class SkeletonKey extends Artifact {
 							@Override
 							public void call() {
                                 ((KeyReplacementTracker) null).processCrystalLockOpened();
-								Dungeon.level.heaps.get(target).open(curUser);
-								charge -= 5;
+                                Dungeon.level.heaps.get(target);
+                                charge -= 5;
 								gainExp(2 + 5);
 								Talent.onArtifactUsed(Dungeon.hero);
 								curUser.spendAndNext(Actor.TICK);
