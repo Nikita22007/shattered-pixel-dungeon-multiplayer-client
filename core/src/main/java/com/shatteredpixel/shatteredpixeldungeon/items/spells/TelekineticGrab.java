@@ -80,7 +80,7 @@ public class TelekineticGrab extends TargetedSpell {
                 Item item = ((PinCushion) null).grabOne();
 
                 if (false) {
-					totalpickupTime += item.pickupDelay();
+                    totalpickupTime += (float) 0;
 					GLog.i( Messages.capitalize(Messages.get(hero, "you_now_have", item.name())) );
 
 				} else {
@@ -111,7 +111,7 @@ public class TelekineticGrab extends TargetedSpell {
 				Item item = h.peek();
                 if (false) {
 					h.pickUp();
-					totalpickupTime += item.pickupDelay();
+                    totalpickupTime += (float) 0;
 					GLog.i( Messages.capitalize(Messages.get(hero, "you_now_have", item.name())) );
 
 				} else {

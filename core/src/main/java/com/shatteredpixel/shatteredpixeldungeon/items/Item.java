@@ -109,6 +109,8 @@ public class Item implements Bundlable {
 		keptThoughLostInvent = false;
 	}
 
+
+	@Contract(pure = true)
 	public boolean keptThroughLostInventory(){
 		return keptThoughLostInvent;
 	}
@@ -436,10 +438,6 @@ public class Item implements Bundlable {
 		Sample.INSTANCE.play(Assets.Sounds.MISS, 0.6f, 0.6f, 1.5f);
 	}
 
-	public float pickupDelay(){
-		return TIME_TO_PICK_UP;
-	}
-	
 	protected static Hero curUser = null;
 	protected static Item curItem = null;
 	public void setCurrent( Hero hero ){

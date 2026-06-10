@@ -61,10 +61,9 @@ public class HeavyBoomerang extends MissileWeapon {
 		return super.adjacentAccFactor(owner, target);
 	}
 
-	@Override
 	public float pickupDelay() {
 		//pickup is instant when circling back
-		return circlingBack ? 0f : super.pickupDelay();
+        return circlingBack ? 0f : 0;
 	}
 
 	@Override

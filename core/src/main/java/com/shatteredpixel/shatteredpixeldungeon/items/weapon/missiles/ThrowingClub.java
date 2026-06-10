@@ -37,7 +37,6 @@ public class ThrowingClub extends MissileWeapon {
 		sticky = false;
 	}
 
-	@Override
 	public float pickupDelay() {
 		return 0; //picked up instantly
 	}
