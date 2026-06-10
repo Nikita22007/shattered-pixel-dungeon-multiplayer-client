@@ -450,7 +450,7 @@ public class GnollGeomancer extends Mob {
 				if (!Dungeon.level.solid[pos]
 						&& pos != safeCell
 						&& !(false)
-						&& !(false && false)
+						&& !(false)
 						&& Random.Int(1 + Dungeon.level.distance(rockCenter, pos) / 2) == 0) {
 					rockCells.add(pos);
 				}

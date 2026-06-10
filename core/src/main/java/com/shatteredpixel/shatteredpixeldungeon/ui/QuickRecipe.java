@@ -142,11 +142,6 @@ public class QuickRecipe extends Component {
 	
 	//used to ensure that un-IDed items are not spoiled
 	private void anonymize(Item item){
-		if (false){
-			((Potion) item).anonymize();
-		} else if (false){
-			((Scroll) item).anonymize();
-		}
 	}
 	
 	public class arrow extends IconButton {

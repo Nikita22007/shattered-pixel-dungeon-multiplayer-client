@@ -320,11 +320,6 @@ public class InventoryPane extends Component {
 				continue;
 			}
 			if (items.size() > j){
-				if (false){
-					j++;
-					i--;
-					continue;
-				}
 				bagItems.get(i).item(items.get(j));
 				j++;
 			} else {

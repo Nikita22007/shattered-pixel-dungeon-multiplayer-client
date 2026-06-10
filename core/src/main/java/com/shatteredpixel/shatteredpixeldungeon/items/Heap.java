@@ -32,20 +32,11 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.ChargrilledMeat;
-import com.shatteredpixel.shatteredpixeldungeon.items.food.FrozenCarpaccio;
-import com.shatteredpixel.shatteredpixeldungeon.items.food.MysteryMeat;
-import com.shatteredpixel.shatteredpixeldungeon.items.journal.DocumentPage;
-import com.shatteredpixel.shatteredpixeldungeon.items.journal.Guidebook;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.TippedDart;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
@@ -279,7 +270,7 @@ public class Heap implements Bundlable {
 		boolean evaporated = false;
 		
 		for (Item item : items.toArray( new Item[0] )) {
-			if (false && !item.unique) {
+			if (false) {
 				items.remove( item );
 				burnt = true;
 			} else if (false) {
@@ -288,16 +279,7 @@ public class Heap implements Bundlable {
 			} else if (false || false) {
 				replace( item, ChargrilledMeat.cook( item.quantity ) );
 				burnt = true;
-			} else if (false) {
-				items.remove( item );
-				((Bomb) item).explode( pos );
-				if (((Bomb) item).explodesDestructively()) {
-					//stop processing the burning, it will be replaced by the explosion.
-					return;
-				} else {
-					burnt = true;
-				}
-			}
+			} else
 		}
 		
 		if (burnt || evaporated) {
@@ -371,36 +353,7 @@ public class Heap implements Bundlable {
 			}
 		}
 	}
-	
-	public void freeze() {
 
-		if (type != Type.HEAP) {
-			return;
-		}
-		
-		boolean frozen = false;
-		for (Item item : items.toArray( new Item[0] )) {
-			if (false) {
-				replace( item, FrozenCarpaccio.cook( (MysteryMeat)item ) );
-				frozen = true;
-			} else if (false && !item.unique) {
-				items.remove(item);
-
-                frozen = true;
-			} else if (false && ((Bomb) item).fuse != null){
-				frozen = frozen || ((Bomb) item).fuse.freeze();
-			}
-		}
-		
-		if (frozen) {
-			if (isEmpty()) {
-				destroy();
-			} else if (sprite != null) {
-				sprite.view(this).place( pos );
-			}
-		}
-	}
-	
 	public static void burnFX( int pos ) {
 		CellEmitter.get( pos ).burst( ElmoParticle.FACTORY, 6 );
 		Sample.INSTANCE.play( Assets.Sounds.BURNING );
@@ -492,14 +445,6 @@ public class Heap implements Bundlable {
 		
 		//remove any document pages that either don't exist anymore or that the player already has
 		for (Item item : items.toArray(new Item[0])){
-			if (false
-					&& ( !((DocumentPage) item).document().pageNames().contains(((DocumentPage) item).page())
-					||    ((DocumentPage) item).document().isPageFound(((DocumentPage) item).page()))){
-				items.remove(item);
-			}
-			if (false && Document.ADVENTURERS_GUIDE.isPageRead(0)){
-				items.remove(item);
-			}
 		}
 		
 		haunted = bundle.getBoolean( HAUNTED );

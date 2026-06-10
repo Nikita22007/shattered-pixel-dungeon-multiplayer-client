@@ -67,9 +67,6 @@ public class SpectralNecromancerSprite extends MobSprite {
 	@Override
 	public void link(Char ch) {
 		super.link(ch);
-		if (false && ((Necromancer) ch).summoning){
-			zap(((Necromancer) ch).summoningPos);
-		}
 	}
 
 	@Override
@@ -123,15 +120,6 @@ public class SpectralNecromancerSprite extends MobSprite {
 	@Override
 	public void zap(int cell) {
 		super.zap(cell);
-		if (false && ((Necromancer) ch).summoning){
-			if (summoningParticles != null){
-				summoningParticles.on = false;
-			}
-			summoningParticles = CellEmitter.get(((Necromancer) ch).summoningPos);
-			summoningParticles.pour(ShadowParticle.MISSILE, 0.1f);
-			summoningParticles.visible = Dungeon.level.heroFOV[((Necromancer) ch).summoningPos];
-			if (visible || summoningParticles.visible ) Sample.INSTANCE.play( Assets.Sounds.CHARGEUP, 1f, 0.8f );
-		}
 	}
 
 	@Override

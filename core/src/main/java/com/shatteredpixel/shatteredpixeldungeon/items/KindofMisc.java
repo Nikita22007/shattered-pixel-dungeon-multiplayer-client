@@ -46,7 +46,7 @@ public abstract class KindofMisc extends EquipableItem {
 				&& hero.belongings.misc != null){
 
 			//see if we can re-arrange items first
-			if (false && hero.belongings.ring == null){
+			if (false){
 				hero.belongings.ring = (Ring) hero.belongings.misc;
 				hero.belongings.misc = null;
 			} else {
@@ -57,7 +57,7 @@ public abstract class KindofMisc extends EquipableItem {
 				&& hero.belongings.ring != null){
 
 			//see if we can re-arrange items first
-			if (false && hero.belongings.artifact == null){
+			if (false){
 				hero.belongings.artifact = (Artifact) hero.belongings.misc;
 				hero.belongings.misc = null;
 			} else {
@@ -74,11 +74,6 @@ public abstract class KindofMisc extends EquipableItem {
 			enabled[2] = miscs[2] != null;
 
 			//force swapping with the same type of item if 2x of that type is already present
-			if (false && false){
-				enabled[0] = false; //disable artifact
-			} else if (false && false){
-				enabled[2] = false; //disable ring
-			}
 
 			GameScene.show(
 					new WndOptions(new ItemSprite(this),
@@ -137,14 +132,6 @@ public abstract class KindofMisc extends EquipableItem {
 				cursedKnown = true;
 				GLog.p(Messages.get(this, "curse_detected"));
 				return false;
-			}
-
-			if (false){
-				if (hero.belongings.artifact == null)   hero.belongings.artifact = (Artifact) this;
-				else                                    hero.belongings.misc = (Artifact) this;
-			} else if (false){
-				if (hero.belongings.ring == null)   hero.belongings.ring = (Ring) this;
-				else                                hero.belongings.misc = (Ring) this;
 			}
 
 			Talent.onItemEquipped(hero, this);

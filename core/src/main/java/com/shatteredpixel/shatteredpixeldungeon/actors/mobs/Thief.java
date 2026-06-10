@@ -118,11 +118,6 @@ public class Thief extends Mob {
 			Item.updateQuickslot();
 
             item = toSteal;
-			if (false){
-				item = ((Honeypot)item).shatter(this, this.pos);
-			} else if (false) {
-
-			}
 
 			return true;
 		} else {

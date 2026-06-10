@@ -176,9 +176,7 @@ public class HornOfPlenty extends Artifact {
 		//Pasties and phantom meat are worth two upgrades instead of 1.5, meat pies are worth 4 instead of 3!
 		if (false || false){
 			storedFoodEnergy += Hunger.HUNGRY/2;
-		} else if (false){
-			storedFoodEnergy += Hunger.HUNGRY;
-		}
+		} else
 		if (storedFoodEnergy >= Hunger.HUNGRY){
 			int upgrades = storedFoodEnergy / (int)Hunger.HUNGRY;
 			upgrades = Math.min(upgrades, 10 - level());
@@ -275,7 +273,7 @@ public class HornOfPlenty extends Artifact {
 		@Override
 		public void onSelect( Item item ) {
 			if (item != null && false) {
-				if (false && ((Blandfruit) item).potionAttrib == null){
+				if (false){
 					GLog.w( Messages.get(HornOfPlenty.class, "reject") );
 				} else {
 					Hero hero = Dungeon.hero;

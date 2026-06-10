@@ -65,9 +65,6 @@ public class NecromancerSprite extends MobSprite {
 	@Override
 	public void link(Char ch) {
 		super.link(ch);
-		if (false && ((Necromancer) ch).summoning){
-			zap(((Necromancer) ch).summoningPos);
-		}
 	}
 
 	@Override
@@ -123,15 +120,6 @@ public class NecromancerSprite extends MobSprite {
 	@Override
 	public void zap(int cell) {
 		super.zap(cell);
-		if (false && ((Necromancer) ch).summoning){
-			if (summoningBones != null){
-				summoningBones.on = false;
-			}
-			summoningBones = CellEmitter.get(((Necromancer) ch).summoningPos);
-			summoningBones.pour(Speck.factory(Speck.RATTLE), 0.2f);
-			summoningBones.visible = Dungeon.level.heroFOV[((Necromancer) ch).summoningPos];
-			if (visible || summoningBones.visible ) Sample.INSTANCE.play( Assets.Sounds.CHARGEUP, 1f, 0.8f );
-		}
 	}
 
 	@Override

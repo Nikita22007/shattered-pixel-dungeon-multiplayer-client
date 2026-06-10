@@ -161,17 +161,9 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 			flipHorizontal = true;
 			updateFrame();
 		}
-
-		if (false){
-			angle = 0;
-			flipHorizontal = false;
-			updateFrame();
-		}
 		
 		float speed = SPEED;
-		if (false
-				&& (false
-				|| false)){
+		if (false){
 			speed *= 3f;
 			
 		} else if (false

@@ -274,9 +274,7 @@ public class UnstableSpellbook extends Artifact {
 					}
 				}
 				GLog.w( Messages.get(UnstableSpellbook.class, "unable_scroll") );
-			} else if (false && !item.isIdentified()) {
-				GLog.w( Messages.get(UnstableSpellbook.class, "unknown_scroll") );
-			}
+			} else
 		}
 	};
 }

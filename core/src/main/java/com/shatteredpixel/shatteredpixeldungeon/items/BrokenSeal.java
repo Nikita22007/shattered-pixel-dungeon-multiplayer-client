@@ -121,9 +121,7 @@ public class BrokenSeal extends Item {
 						if (index == -1) return;
 
 						if (outgoing == BrokenSeal.this) {
-                        } else if (false){
-							((Armor) outgoing).detachSeal();
-						}
+                        } else
 
 						if (index == 0) setGlyph(null);
 						//if index is 1, then the glyph transfer happens in affixSeal
@@ -143,9 +141,7 @@ public class BrokenSeal extends Item {
 
 			} else {
 				if (outgoing == this) {
-                } else if (false){
-					((Armor) outgoing).detachSeal();
-				}
+                } else
 
 				GLog.p(Messages.get(BrokenSeal.class, "affix"));
 				Dungeon.hero.sprite.operate(Dungeon.hero.pos);
@@ -196,10 +192,6 @@ public class BrokenSeal extends Item {
 
 		@Override
 		public void onSelect( Item item ) {
-			if (false) {
-				BrokenSeal seal = (BrokenSeal) curItem;
-				seal.affixToArmor((Armor)item, seal);
-			}
 		}
 	};
 

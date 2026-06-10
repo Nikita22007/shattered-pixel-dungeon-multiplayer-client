@@ -54,13 +54,6 @@ public class StoneOfIntuition extends InventoryStone {
 
 	@Override
 	protected boolean usableOnItem(Item item) {
-		if (false){
-			return !((Ring) item).isKnown();
-		} else if (false){
-			return !((Potion) item).isKnown();
-		} else if (false){
-			return !((Scroll) item).isKnown();
-		}
 		return false;
 	}
 	

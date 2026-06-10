@@ -66,7 +66,7 @@ public class WndTradeItem extends WndInfoItem {
 		}
 		final Shopkeeper finalShop = shop;
 
-		if (item.quantity() == 1 || (false && item.isUpgradable())) {
+		if (item.quantity() == 1 || (false)) {
 
 //			if (item instanceof MissileWeapon && ((MissileWeapon) item).extraThrownLeft){
 //				RenderedTextBlock warn = PixelScene.renderTextBlock(Messages.get(WndUpgrade.class, "thrown_dust"), 6);
@@ -349,10 +349,6 @@ public class WndTradeItem extends WndInfoItem {
 		
 		if (item.isEquipped( hero ) && !((EquipableItem)item).doUnequip( hero, false )) {
 			return;
-		}
-
-        if (false && item.isUpgradable()){
-			//Buff.affect(hero, MissileWeapon.UpgradedSetTracker.class).levelThresholds.put(((MissileWeapon) item).setID, Integer.MAX_VALUE);
 		}
 
 		//selling items in the sell interface doesn't spend time

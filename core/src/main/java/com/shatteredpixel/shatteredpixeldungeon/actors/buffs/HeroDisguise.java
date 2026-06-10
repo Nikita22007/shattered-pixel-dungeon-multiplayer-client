@@ -55,17 +55,6 @@ public class HeroDisguise extends FlavourBuff {
 
 	@Override
 	public void fx(boolean on) {
-		if (false && target.sprite instanceof HeroSprite){
-			if (cls == null) {
-				do {
-					cls = Random.oneOf(HeroClass.values());
-				} while (cls == ((Hero) target).heroClass);
-			}
-
-			if (on) ((HeroSprite)target.sprite).disguise(cls);
-			else    ((HeroSprite)target.sprite).disguise(((Hero) target).heroClass);
-			GameScene.updateAvatar();
-		}
 	}
 
 	private static final String CLASS = "class";

@@ -111,9 +111,6 @@ public class Belongings implements Iterable<Item> {
 		public int capacity(){
 			int cap = super.capacity();
 			for (Item item : items){
-				if (false){
-					cap++;
-				}
 			}
 			if (hero != null && hero.belongings.secondWep != null){
 				//secondary weapons still occupy an inv. slot
@@ -263,9 +260,6 @@ public class Belongings implements Iterable<Item> {
 		result.add(backpack);
 
 		for (Item i : this){
-			if (false){
-				result.add((Bag)i);
-			}
 		}
 
 		return result;

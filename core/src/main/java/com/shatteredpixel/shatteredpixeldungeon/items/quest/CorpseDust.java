@@ -71,11 +71,6 @@ public class CorpseDust extends Item {
 
 		@Override
 		public boolean act() {
-			if (false && ((Hero) target).belongings.getItem(CorpseDust.class) == null){
-				spawnPower = 0;
-				spend(TICK);
-				return true;
-			}
 
 			spawnPower++;
 			int wraiths = 1; //we include the wraith we're trying to spawn

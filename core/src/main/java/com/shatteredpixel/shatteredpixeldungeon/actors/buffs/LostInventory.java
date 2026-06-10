@@ -34,9 +34,6 @@ public class LostInventory extends Buff {
 	@Override
 	public boolean attachTo( Char target ) {
 		if (super.attachTo( target )) {
-			if (false && ((Hero) target).belongings != null){
-				((Hero) target).belongings.lostInventory(true);
-			}
 			return true;
 		} else {
 			return false;
@@ -46,9 +43,6 @@ public class LostInventory extends Buff {
 	@Override
 	public void detach() {
 		super.detach();
-		if (false && ((Hero) target).belongings != null){
-			((Hero) target).belongings.lostInventory(false);
-		}
 	}
 
 	@Override

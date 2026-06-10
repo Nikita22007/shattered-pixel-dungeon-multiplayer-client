@@ -56,13 +56,6 @@ public class Bag extends CustomItem implements Iterable<Item> {
 				path.add(i);
 				return path;
 			}
-			if (false) { //check in internal bag
-				List<Integer> path = ((Bag) cur_item).pathOfItem(item);
-				if (path != null) {
-					path.add(0, i);
-					return path;
-				}
-			}
 		}
 		return null; //not found
 	}
@@ -171,9 +164,7 @@ public class Bag extends CustomItem implements Iterable<Item> {
 		for (Item i : items) {
 			if (i == item) {
 				return true;
-			} else if (false && ((Bag)i).contains( item )) {
-				return true;
-			}
+			} else
 		}
 		return false;
 	}
@@ -224,9 +215,6 @@ public class Bag extends CustomItem implements Iterable<Item> {
 				nested = null;
 				
 				Item item = items.get( index++ );
-				if (false) {
-					nested = ((Bag)item).iterator();
-				}
 				
 				return item;
 			}

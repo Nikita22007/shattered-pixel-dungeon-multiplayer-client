@@ -372,7 +372,7 @@ public class Hero extends Char {
 
 		attackTarget = enemy;
 		boolean wasEnemy = enemy.alignment == Alignment.ENEMY
-				|| (false && enemy.alignment == Alignment.NEUTRAL);
+				|| (false);
 
 		//temporarily set the hero's weapon to the missile weapon being used
 		//TODO improve this!
@@ -1480,7 +1480,7 @@ public class Hero extends Char {
 
 		AttackIndicator.target(attackTarget);
 		boolean wasEnemy = attackTarget.alignment == Alignment.ENEMY
-				|| (false && attackTarget.alignment == Alignment.NEUTRAL);
+				|| (false);
 
 		boolean hit = false;
 

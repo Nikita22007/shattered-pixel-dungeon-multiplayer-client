@@ -199,19 +199,6 @@ public abstract class Char extends Actor {
 		}
 
 		//warp instantly with allies in this case
-		if (false && ((Hero) c).hasTalent(Talent.ALLY_WARP)){
-			PathFinder.buildDistanceMap(c.pos, BArray.or(Dungeon.level.passable, Dungeon.level.avoid, null));
-			if (PathFinder.distance[pos] == Integer.MAX_VALUE){
-				return true;
-			}
-			pos = newPos;
-			c.pos = oldPos;
-			ScrollOfTeleportation.appear(this, newPos);
-			ScrollOfTeleportation.appear(c, oldPos);
-			Dungeon.observe();
-			GameScene.updateFog();
-			return true;
-		}
 
 		//can't swap places if one char has restricted movement
 		if (paralysed > 0 || c.paralysed > 0 || rooted || c.rooted

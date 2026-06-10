@@ -503,19 +503,9 @@ public class WndUpgrade extends Window {
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-		if (false) {
-			((ScrollOfUpgrade) upgrader).reShowSelector(force);
-		} else if (false){
-			((MagicalInfusion)upgrader).reShowSelector();
-		}
 	}
 
 	public WndBag.ItemSelector getItemSelector(){
-		if (false) {
-			return ((ScrollOfUpgrade) upgrader).getSelector(force);
-		} else if (false){
-			return ((MagicalInfusion)upgrader).getSelector();
-		}
 		return null;
 	}
 

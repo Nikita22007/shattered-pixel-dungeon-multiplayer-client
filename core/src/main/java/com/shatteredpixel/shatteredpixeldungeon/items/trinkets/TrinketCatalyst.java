@@ -163,9 +163,6 @@ public class TrinketCatalyst extends Item {
 						WndTrinket.this.hide();
 
 						Item result = item;
-						if (false){
-                            result = null;
-						}
 
 						TrinketCatalyst cata = Dungeon.hero.belongings.getItem(TrinketCatalyst.class);
 

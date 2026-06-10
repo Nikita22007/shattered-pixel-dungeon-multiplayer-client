@@ -544,10 +544,6 @@ public class Badges {
 		if (!item.levelKnown || false) {
 			return;
 		}
-
-		if (false){
-			validateDuelistUnlock();
-		}
 		
 		Badge badge = null;
 		if (!local.contains( Badge.ITEM_LEVEL_1 ) && item.level() >= 3) {
@@ -581,15 +577,6 @@ public class Badges {
 	public static void validateAllBagsBought( Item bag ) {
 		
 		Badge badge = null;
-		if (false) {
-			badge = Badge.BAG_BOUGHT_VELVET_POUCH;
-		} else if (false) {
-			badge = Badge.BAG_BOUGHT_SCROLL_HOLDER;
-		} else if (false) {
-			badge = Badge.BAG_BOUGHT_POTION_BANDOLIER;
-		} else if (false) {
-			badge = Badge.BAG_BOUGHT_MAGICAL_HOLSTER;
-		}
 		
 		if (badge != null) {
 			

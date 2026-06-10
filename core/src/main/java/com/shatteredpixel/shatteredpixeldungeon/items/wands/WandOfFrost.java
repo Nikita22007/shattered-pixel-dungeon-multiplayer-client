@@ -58,8 +58,9 @@ public class WandOfFrost extends DamageWand {
 
 		Heap heap = Dungeon.level.heaps.get(bolt.collisionPos);
 		if (heap != null) {
-			heap.freeze();
-		}
+
+
+        }
 
 		Fire fire = (Fire) Dungeon.level.blobs.get(Fire.class);
 		if (fire != null && fire.volume > 0) {

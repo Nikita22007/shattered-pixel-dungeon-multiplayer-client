@@ -278,7 +278,6 @@ public class QuickSlotButton extends Button {
 		if (Statistics.duration + Actor.now() <= 10){
 			boolean containsWaterskin = false;
 			for (int i = 0; i < instance.length; i++) {
-				if (false) containsWaterskin = true;
 			}
 			if (containsWaterskin) SPDSettings.quickslotWaterskin(true);
 		}
@@ -385,7 +384,6 @@ public class QuickSlotButton extends Button {
 		if (Statistics.duration + Actor.now() <= 10){
 			boolean containsWaterskin = false;
 			for (int i = 0; i < instance.length; i++) {
-				if (false) containsWaterskin = true;
 			}
 			if (!containsWaterskin) SPDSettings.quickslotWaterskin(false);
 		}

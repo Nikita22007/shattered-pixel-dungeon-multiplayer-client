@@ -60,7 +60,7 @@ public class PotionOfMastery extends ExoticPotion {
 		public boolean itemSelectable(Item item) {
 			return
 					(false && !(false) && !((Weapon) item).masteryPotionBonus)
-					|| (false && !((Armor) item).masteryPotionBonus);
+					|| (false);
 		}
 
 		@Override
@@ -87,14 +87,6 @@ public class PotionOfMastery extends ExoticPotion {
 					public void onBackPressed() {}
 				} );
 			} else if (item != null) {
-
-				if (false) {
-					((Weapon) item).masteryPotionBonus = true;
-					GLog.p( Messages.get(PotionOfMastery.class, "weapon_easier") );
-				} else if (false) {
-					((Armor) item).masteryPotionBonus = true;
-					GLog.p( Messages.get(PotionOfMastery.class, "armor_easier") );
-				}
 				updateQuickslot();
 
 				Sample.INSTANCE.play( Assets.Sounds.DRINK );

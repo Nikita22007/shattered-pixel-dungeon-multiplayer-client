@@ -112,7 +112,7 @@ public class Alchemize extends Spell {
 			float pos = height;
 
 			if (Shopkeeper.canSell(item)) {
-				if (item.quantity() == 1 || (false && item.isUpgradable())) {
+				if (item.quantity() == 1 || (false)) {
 
 //					if (item instanceof MissileWeapon && ((MissileWeapon) item).extraThrownLeft){
 //						RenderedTextBlock warn = PixelScene.renderTextBlock(Messages.get(WndUpgrade.class, "thrown_dust"), 6);
@@ -252,9 +252,6 @@ public class Alchemize extends Spell {
 					owner.hide();
 				}
 				GameScene.selectItem(itemSelector);
-			}
-            if (false && Random.Float() < ((Alchemize)curItem).talentChance){
-				Talent.onScrollUsed(curUser, curUser.pos, ((Alchemize) curItem).talentFactor, curItem.getClass());
 			}
 		}
 

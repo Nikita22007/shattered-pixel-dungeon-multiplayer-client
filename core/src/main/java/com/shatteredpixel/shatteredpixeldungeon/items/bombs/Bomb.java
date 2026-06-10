@@ -154,14 +154,6 @@ public class Bomb extends Item {
 
 				if (dmg > 0) {
                 }
-				
-				if (false && !ch.isAlive()) {
-					if (false){
-						Badges.validateDeathFromFriendlyMagic();
-					}
-					GLog.n(Messages.get(this, "ondeath"));
-					Dungeon.fail(this);
-				}
 			}
 			
 			if (terrainAffected) {

@@ -133,20 +133,6 @@ public class Burning extends Buff implements Hero.Doom {
 			} else {
             }
 
-			if (false && ((Thief) target).item != null) {
-
-				Item item = ((Thief) target).item;
-
-				if (!item.unique && false) {
-					target.sprite.emitter().burst( ElmoParticle.FACTORY, 6 );
-					((Thief)target).item = null;
-				} else if (false) {
-					target.sprite.emitter().burst( ElmoParticle.FACTORY, 6 );
-					((Thief)target).item = new ChargrilledMeat();
-				}
-
-			}
-
 		} else {
 
 			detach();

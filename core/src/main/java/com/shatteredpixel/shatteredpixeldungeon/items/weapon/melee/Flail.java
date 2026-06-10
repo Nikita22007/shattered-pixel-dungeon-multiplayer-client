@@ -71,9 +71,6 @@ public class Flail extends MeleeWeapon {
 				@Override
 				protected boolean act() {
 					spinBoost = 0;
-					if (false && !target.isAlive()){
-						onAbilityKill((Hero)owner, target);
-					}
 					Actor.remove(this);
 					return true;
 				}

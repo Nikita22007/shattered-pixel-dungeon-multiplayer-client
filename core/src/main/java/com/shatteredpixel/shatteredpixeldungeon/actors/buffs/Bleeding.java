@@ -108,16 +108,6 @@ public class Bleeding extends Buff {
 					Splash.at( target.sprite.center(), -PointF.PI / 2, PointF.PI / 6,
 							target.sprite.blood(), Math.min( 10 * dmg / target.HT, 10 ) );
 				}
-				
-				if (false && !target.isAlive()) {
-					if (source == Chasm.class){
-						Badges.validateDeathFromFalling();
-					} else if (source == Sacrificial.class){
-						Badges.validateDeathFromFriendlyMagic();
-					}
-					Dungeon.fail( this );
-					GLog.n( Messages.get(this, "ondeath") );
-				}
 
 				if (source == Sickle.HarvestBleedTracker.class && !target.isAlive()){
 					MeleeWeapon.onAbilityKill(Dungeon.hero, target);

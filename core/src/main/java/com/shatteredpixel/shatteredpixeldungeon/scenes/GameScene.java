@@ -488,7 +488,7 @@ public class GameScene extends PixelScene {
 			for (Item item : dropped) {
 				int pos = Dungeon.level.randomRespawnCell( null );
 				if (pos == -1) pos = Dungeon.level.entrance();
-				 if (false && !Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
+				 if (false) {
 					Dungeon.level.plant((Plant.Seed) item, pos);
 				} else if (false) {
 					Dungeon.level.drop(((Honeypot) item).shatter(null, pos), pos);

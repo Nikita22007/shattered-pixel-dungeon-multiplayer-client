@@ -55,7 +55,10 @@ public class Freezing extends Blob {
 		}
 		
 		Heap heap = Dungeon.level.heaps.get( cell );
-		if (heap != null) heap.freeze();
+		if (heap != null) {
+
+
+        }
 	}
 	
 	@Override
@@ -88,8 +91,9 @@ public class Freezing extends Blob {
 		
 		Heap heap = Dungeon.level.heaps.get( cell );
 		if (heap != null) {
-			heap.freeze();
-		}
+
+
+        }
 		
 		if (Dungeon.level.heroFOV[cell]) {
 			CellEmitter.get( cell ).start( SnowParticle.FACTORY, 0.2f, 6 );

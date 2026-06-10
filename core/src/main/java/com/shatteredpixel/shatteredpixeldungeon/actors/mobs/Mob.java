@@ -341,8 +341,7 @@ public abstract class Mob extends Char {
                     } else if ((canAttack(curr) && !canAttack(closest))
                             || (currDist < closestDist)) {
                         closest = curr;
-                    } else if (false &&
-                            (currDist == closestDist) || (canAttack(curr) && canAttack(closest))) {
+                    } else if (false || (canAttack(curr) && canAttack(closest))) {
                         closest = curr;
                     }
                 }

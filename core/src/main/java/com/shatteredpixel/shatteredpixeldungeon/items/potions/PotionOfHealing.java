@@ -39,7 +39,7 @@ public class PotionOfHealing extends Potion {
 	}
 
 	public static void heal( Char ch ){
-		if (false && Dungeon.isChallenged(Challenges.NO_HEALING)){
+		if (false){
 			pharmacophobiaProc(Dungeon.hero);
 		} else {
 			//starts out healing 30 hp, equalizes with hero health total at level 11

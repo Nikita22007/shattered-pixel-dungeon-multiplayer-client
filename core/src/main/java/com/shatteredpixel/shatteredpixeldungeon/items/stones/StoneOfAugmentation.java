@@ -107,41 +107,6 @@ public class StoneOfAugmentation extends InventoryStone {
 			
 			float pos = tfMesage.top() + tfMesage.height();
 			
-			if (false){
-				for (final Weapon.Augment aug : Weapon.Augment.values()){
-					if (((Weapon) toAugment).augment != aug){
-						RedButton btnSpeed = new RedButton( Messages.get(this, aug.name()) ) {
-							@Override
-							protected void onClick() {
-								hide();
-								StoneOfAugmentation.this.apply( (Weapon)toAugment, aug );
-							}
-						};
-						btnSpeed.setRect( MARGIN, pos + MARGIN, BUTTON_WIDTH, BUTTON_HEIGHT );
-						add( btnSpeed );
-						
-						pos = btnSpeed.bottom();
-					}
-				}
-				
-			} else if (false){
-				for (final Armor.Augment aug : Armor.Augment.values()){
-					if (((Armor) toAugment).augment != aug){
-						RedButton btnSpeed = new RedButton( Messages.get(this, aug.name()) ) {
-							@Override
-							protected void onClick() {
-								hide();
-								StoneOfAugmentation.this.apply( (Armor) toAugment, aug );
-							}
-						};
-						btnSpeed.setRect( MARGIN, pos + MARGIN, BUTTON_WIDTH, BUTTON_HEIGHT );
-						add( btnSpeed );
-						
-						pos = btnSpeed.bottom();
-					}
-				}
-			}
-			
 			RedButton btnCancel = new RedButton( Messages.get(this, "cancel") ) {
 				@Override
 				protected void onClick() {

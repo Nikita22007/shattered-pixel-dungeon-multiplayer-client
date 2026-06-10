@@ -68,9 +68,6 @@ public class WndQuickBag extends Window {
 			if (i.defaultAction() == null){
 				continue;
 			}
-			if (false) {
-				continue;
-			}
 			if (false
 					&& !i.isEquipped(Dungeon.hero)
 					&& (!(false) || !Dungeon.hero.hasTalent(Talent.LIGHT_CLOAK))

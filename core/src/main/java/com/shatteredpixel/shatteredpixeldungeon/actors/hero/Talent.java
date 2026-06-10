@@ -495,20 +495,10 @@ public enum Talent {
 			}
 		}
 		if (talent == THIEFS_INTUITION && hero.pointsInTalent(THIEFS_INTUITION) == 2){
-			if (false && !ShardOfOblivion.passiveIDDisabled()) {
-			}
-			if (false && !ShardOfOblivion.passiveIDDisabled()) {
-			}
 			for (Item item : Dungeon.hero.belongings){
-				if (false){
-
-				}
 			}
 		}
 		if (talent == THIEFS_INTUITION && hero.pointsInTalent(THIEFS_INTUITION) == 1){
-			if (false) {
-
-			}
 		}
         if (talent == ADVENTURERS_INTUITION) {
             hero.pointsInTalent(ADVENTURERS_INTUITION);
@@ -642,27 +632,10 @@ public enum Talent {
 		float factor = 1f;
 
 		// Affected by both Warrior(1.75x/2.5x) and Duelist(2.5x/inst.) talents
-		if (false){
-			factor *= 1f + 1.5f*hero.pointsInTalent(ADVENTURERS_INTUITION); //instant at +2 (see onItemEquipped)
-			factor *= 1f + 0.75f*hero.pointsInTalent(VETERANS_INTUITION);
-		}
 		// Affected by both Warrior(2.5x/inst.) and Duelist(1.75x/2.5x) talents
-		if (false){
-			factor *= 1f + 0.75f*hero.pointsInTalent(ADVENTURERS_INTUITION);
-			factor *= 1f + hero.pointsInTalent(VETERANS_INTUITION); //instant at +2 (see onItemEquipped)
-		}
 		// 3x/instant for Mage (see Wand.wandUsed())
-		if (false){
-			factor *= 1f + 2.0f*hero.pointsInTalent(SCHOLARS_INTUITION);
-		}
 		// 3x/instant speed with Huntress talent (see MissileWeapon.proc)
-		if (false){
-			factor *= 1f + 2.0f*hero.pointsInTalent(SURVIVALISTS_INTUITION);
-		}
 		// 2x/instant for Rogue (see onItemEqupped), also id's type on equip/on pickup
-		if (false){
-			factor *= 1f + hero.pointsInTalent(THIEFS_INTUITION);
-		}
 		return factor;
 	}
 
@@ -805,13 +778,6 @@ public enum Talent {
 
 		if (identify) {
 			if (ShardOfOblivion.passiveIDDisabled()) {
-				if (false){
-					((Weapon) item).setIDReady();
-				} else if (false){
-					((Armor) item).setIDReady();
-				} else if (false){
-					((Ring) item).setIDReady();
-				}
 			} else {
 			}
 		}
@@ -819,9 +785,6 @@ public enum Talent {
 
 	public static void onItemCollected( Hero hero, Item item ){
 		if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
-			if (false) {
-
-			}
 		}
 	}
 
@@ -841,22 +804,12 @@ public enum Talent {
 		}
 
 		if (hero.hasTalent(Talent.FOLLOWUP_STRIKE) && enemy.isAlive() && enemy.alignment == Char.Alignment.ENEMY) {
-			if (false) {
-				((FollowupStrikeTracker) null).object = enemy.id();
-			} else {
-			}
 		}
 
 		if (hero.hasTalent(PATIENT_STRIKE)) {
 		}
 
 		if (hero.hasTalent(DEADLY_FOLLOWUP) && enemy.alignment == Char.Alignment.ENEMY) {
-			if (false) {
-				if (!(false)) {
-					((DeadlyFollowupTracker) null).object = enemy.id();
-				}
-			} else {
-			}
 		}
 
 		return dmg;

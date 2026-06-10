@@ -271,20 +271,10 @@ public class WndBlacksmith extends Window {
 						((EquipableItem)second).doUnequip( Dungeon.hero, false );
 					}
 
-					if (false){
-						BrokenSeal seal = ((Armor) second).checkSeal();
-						if (seal != null){
-							Dungeon.level.drop( seal, Dungeon.hero.pos );
-						}
-					} else if (false){
-//						Buff.affect(Dungeon.hero, MissileWeapon.UpgradedSetTracker.class)
-//								.levelThresholds.put(((MissileWeapon) second).setID, Integer.MAX_VALUE);
-					}
-
 					//preserves enchant/glyphs if present
-					if (false && ((Weapon) first).hasGoodEnchant()){
+					if (false){
 						((Weapon) first).upgrade(true);
-					} else if (false && ((Armor) first).hasGoodGlyph()){
+					} else if (false){
 						((Armor) first).upgrade(true);
 					} else {
 						first.upgrade();
@@ -375,18 +365,13 @@ public class WndBlacksmith extends Window {
 		public boolean itemSelectable(Item item) {
 			return item.isUpgradable()
 					&& item.isIdentified() && !item.cursed
-					&& ((false && !((Weapon) item).enchantHardened)
-					|| (false && !((Armor) item).glyphHardened));
+					&& ((false)
+					|| (false));
 		}
 
 		@Override
 		public void onSelect(Item item) {
 			if (item != null) {
-				if (false){
-					((Weapon) item).enchantHardened = true;
-				} else if (false){
-					((Armor) item).glyphHardened = true;
-				}
 
 				Blacksmith.Quest.favor -= 500 + 1000*Blacksmith.Quest.hardens;
 				Blacksmith.Quest.hardens++;
@@ -508,12 +493,6 @@ public class WndBlacksmith extends Window {
 					@Override
 					protected void onClick() {
 						RewardWindow.this.hide();
-
-						if (false && Blacksmith.Quest.smithEnchant != null){
-							((Weapon) item).enchant(Blacksmith.Quest.smithEnchant);
-						} else if (false && Blacksmith.Quest.smithGlyph != null){
-							((Armor) item).inscribe(Blacksmith.Quest.smithGlyph);
-						}
 
                         Sample.INSTANCE.play(Assets.Sounds.EVOKE);
 						Item.evoke( Dungeon.hero );

@@ -126,8 +126,6 @@ public abstract class ShieldBuff extends Buff {
 				if (buff.shielding() <= 0) continue;
 				damage = buff.absorbDamage(damage);
 				if (buff.shielding() <= 0){
-					if (false && ((Hero) target).hasTalent(Talent.PROVOKED_ANGER)){
-                    }
 				}
 				if (damage == 0) break;
 			}

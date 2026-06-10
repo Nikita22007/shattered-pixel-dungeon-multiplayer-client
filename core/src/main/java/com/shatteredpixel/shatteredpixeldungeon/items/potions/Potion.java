@@ -138,15 +138,6 @@ public class Potion extends Item {
 	public static void saveSelectively( Bundle bundle, ArrayList<Item> items ) {
 		ArrayList<Class<?extends Item>> classes = new ArrayList<>();
 		for (Item i : items){
-			if (false){
-				if (!classes.contains(ExoticPotion.exoToReg.get(i.getClass()))){
-					classes.add(ExoticPotion.exoToReg.get(i.getClass()));
-				}
-			} else if (false){
-				if (!classes.contains(i.getClass())){
-					classes.add(i.getClass());
-				}
-			}
 		}
 		handler.saveClassesSelectively( bundle, classes );
 	}

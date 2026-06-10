@@ -110,23 +110,6 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 					item.cursed = false;
 				}
 			}
-			if (false){
-				Weapon w = (Weapon) item;
-				if (w.hasCurseEnchant()){
-					w.enchant(null);
-					procced = true;
-				}
-			}
-			if (false){
-				Armor a = (Armor) item;
-				if (a.hasCurseGlyph()){
-					a.inscribe(null);
-					procced = true;
-				}
-			}
-			if (false){
-				((Wand) item).updateLevel();
-			}
 		}
 		
 		if (procced) {

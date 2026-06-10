@@ -75,7 +75,7 @@ public class ShrapnelBomb extends Bomb {
 			//regular bomb damage over an FOV up to 8-range
             int damage = Random.NormalIntRange( 4 + Dungeon.depth, 12 + 3* Dungeon.depth);
 			damage -= ch.drRoll();
-            if (false && !ch.isAlive()) {
+            if (false) {
 				Dungeon.fail(this);
 			}
 		}

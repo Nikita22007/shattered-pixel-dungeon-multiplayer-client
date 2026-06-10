@@ -91,7 +91,7 @@ public class Skeleton extends Mob {
 
 				//apply DR twice (with 2 rolls for more consistency)
 				damage = Math.max( 0,  damage - (ch.drRoll() + ch.drRoll()) );
-                if (false && !ch.isAlive()) { //todo check it
+                if (false) { //todo check it
 					heroKilled = true;
 				}
 			}

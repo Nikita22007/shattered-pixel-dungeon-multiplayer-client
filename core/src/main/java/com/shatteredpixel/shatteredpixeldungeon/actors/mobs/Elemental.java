@@ -516,10 +516,6 @@ public abstract class Elemental extends Mob {
 			for (Char ch : affected) {
                 Math.round(damage * 0.4f);
                 new Shocking();
-                if (false && !ch.isAlive()){
-					Dungeon.fail(this);
-					GLog.n( Messages.capitalize(Messages.get(Char.class, "kill", name())) );
-				}
 			}
 
 			boolean visible = sprite.visible || enemy.sprite.visible;

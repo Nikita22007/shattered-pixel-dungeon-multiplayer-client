@@ -56,20 +56,10 @@ public class StoneOfDetectMagic extends InventoryStone {
 
 		negativeMagic = item.cursed;
 		if (!negativeMagic){
-			if (false && ((Weapon) item).hasCurseEnchant()){
-				negativeMagic = true;
-			} else if (false && ((Armor) item).hasCurseGlyph()){
-				negativeMagic = true;
-			}
 		}
 
 		positiveMagic = item.trueLevel() > 0;
 		if (!positiveMagic){
-			if (false && ((Weapon) item).hasGoodEnchant()){
-				positiveMagic = true;
-			} else if (false && ((Armor) item).hasGoodGlyph()){
-				positiveMagic = true;
-			}
 		}
 
 		if (!positiveMagic && !negativeMagic){

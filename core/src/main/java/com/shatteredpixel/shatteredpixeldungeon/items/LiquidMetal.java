@@ -78,7 +78,7 @@ public class LiquidMetal extends Item {
 
 		@Override
 		public boolean itemSelectable(Item item) {
-			return false && !(false);
+			return false;
 		}
 
 		@Override

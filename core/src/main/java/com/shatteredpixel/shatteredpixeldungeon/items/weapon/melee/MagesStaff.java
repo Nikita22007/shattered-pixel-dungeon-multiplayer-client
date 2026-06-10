@@ -120,10 +120,6 @@ public class MagesStaff extends MeleeWeapon {
 
 	@Override
 	public int proc(Char attacker, Char defender, int damage) {
-		if (false && ((Hero) attacker).hasTalent(Talent.MYSTICAL_CHARGE)){
-			Hero hero = (Hero) attacker;
-			ArtifactRecharge.chargeArtifacts(hero, hero.pointsInTalent(Talent.MYSTICAL_CHARGE)/2f);
-		}
 
         Talent.EmpoweredStrikeTracker empoweredStrike = null;
 		if (empoweredStrike != null){
@@ -160,19 +156,6 @@ public class MagesStaff extends MeleeWeapon {
 	public Item imbueWand(Wand wand, Char owner){
 
 		int oldStaffcharges = this.wand != null ? this.wand.curCharges : 0;
-
-		if (false && Dungeon.hero.hasTalent(Talent.WAND_PRESERVATION)){
-            Talent.WandPreservationCounter counter = null;
-			if (counter.count() == 0){
-				counter.countUp(1);
-				this.wand.level(0);
-                if (!false) {
-					Dungeon.level.drop(this.wand, owner.pos);
-				}
-				GLog.newLine();
-				GLog.p(Messages.get(this, "preserved"));
-			}
-		}
 
 		this.wand = null;
 

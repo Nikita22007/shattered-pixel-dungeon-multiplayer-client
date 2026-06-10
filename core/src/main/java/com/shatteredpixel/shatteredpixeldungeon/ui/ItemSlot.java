@@ -244,7 +244,7 @@ public class ItemSlot extends Button {
 				status.resetColor();
 			}
 
-			if (item.icon != -1 && (item.isIdentified() || (false && ((Ring) item).isKnown()))) {
+			if (item.icon != -1 && (item.isIdentified() || (false))) {
 				extra.text(null);
 
 				itemIcon = new Image(Assets.Sprites.ITEM_ICONS);
@@ -258,9 +258,9 @@ public class ItemSlot extends Button {
 					extra.text(Messages.format(TXT_STRENGTH, str));
 					if (Dungeon.hero != null && str > Dungeon.hero.STR()) {
 						extra.hardlight(DEGRADED);
-					} else if (false && ((Weapon) item).masteryPotionBonus) {
+					} else if (false) {
 						extra.hardlight(MASTERED);
-					} else if (false && ((Armor) item).masteryPotionBonus) {
+					} else if (false) {
 						extra.hardlight(MASTERED);
 					} else {
 						extra.resetColor();
@@ -286,9 +286,9 @@ public class ItemSlot extends Button {
 				level.measure();
 				if (trueLvl == buffedLvl || buffedLvl <= 0) {
 					if (buffedLvl > 0) {
-						if ((false && ((Weapon) item).curseInfusionBonus)
-								|| (false && ((Armor) item).curseInfusionBonus)
-								|| (false && ((Wand) item).curseInfusionBonus)) {
+						if ((false)
+								|| (false)
+								|| (false)) {
 							level.hardlight(CURSE_INFUSED);
 						} else {
 							level.hardlight(UPGRADED);

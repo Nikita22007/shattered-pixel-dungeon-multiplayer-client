@@ -148,9 +148,6 @@ abstract public class Weapon extends KindOfWeapon {
 					damage = trinityEnchant.proc(this, attacker, defender, damage);
 				}
 			}
-
-			if (false && isEquipped((Hero) attacker)) {
-			}
 		}
 
 		if (!levelKnown && attacker == Dungeon.hero) {
@@ -259,12 +256,6 @@ abstract public class Weapon extends KindOfWeapon {
 	@Override
 	public int reachFactor(Char owner) {
 		int reach = RCH;
-		if (false && RingOfForce.fightingUnarmed((Hero) owner)){
-			reach = 1; //brawlers stance benefits from enchantments, but not innate reach
-			if (!RingOfForce.unarmedGetsWeaponEnchantment((Hero) owner)){
-				return reach;
-			}
-		}
 		if (hasEnchant(Projecting.class, owner)){
 			return reach + Math.round(Enchantment.genericProcChanceMultiplier(owner));
 		} else {

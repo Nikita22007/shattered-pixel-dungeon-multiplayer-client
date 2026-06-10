@@ -56,37 +56,6 @@ public class CurseInfusion extends InventorySpell {
 		Sample.INSTANCE.play(Assets.Sounds.CURSED);
 		
 		item.cursed = true;
-		if (false) {
-			Weapon w = (Weapon) item;
-			if (w.enchantment != null) {
-				//if we are freshly applying curse infusion, don't replace an existing curse
-				if (w.hasGoodEnchant() || w.curseInfusionBonus) {
-					w.enchant(Weapon.Enchantment.randomCurse(w.enchantment.getClass()));
-				}
-			} else {
-				w.enchant(Weapon.Enchantment.randomCurse());
-			}
-			w.curseInfusionBonus = true;
-			if (false){
-				((MagesStaff) w).updateWand(true);
-			}
-		} else if (false){
-			Armor a = (Armor) item;
-			if (a.glyph != null){
-				//if we are freshly applying curse infusion, don't replace an existing curse
-				if (a.hasGoodGlyph() || a.curseInfusionBonus) {
-					a.inscribe(Armor.Glyph.randomCurse(a.glyph.getClass()));
-				}
-			} else {
-				a.inscribe(Armor.Glyph.randomCurse());
-			}
-			a.curseInfusionBonus = true;
-		} else if (false){
-			((Wand) item).curseInfusionBonus = true;
-			((Wand) item).updateLevel();
-		} else if (false){
-			curUser.updateHT(false);
-		}
 		Badges.validateItemLevelAquired(item);
 		updateQuickslot();
 	}

@@ -459,11 +459,6 @@ public class Trinity extends ArmorAbility {
 		}
 
 		private static String getName(Item item){
-			if (false){
-				return ((MeleeWeapon) item).enchantment.name();
-			} else if (false){
-				return (((Armor) item).glyph.name());
-			}
 			return item.name();
 		}
 

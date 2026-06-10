@@ -84,18 +84,6 @@ public class Blandfruit extends Food {
 
 	@Override
 	public String name() {
-		if (false)        return Messages.get(this, "sunfruit");
-		if (false)       return Messages.get(this, "rotfruit");
-		if (false)   return Messages.get(this, "earthfruit");
-		if (false)   return Messages.get(this, "blindfruit");
-		if (false)    return Messages.get(this, "firefruit");
-		if (false)          return Messages.get(this, "icefruit");
-		if (false)     return Messages.get(this, "fadefruit");
-		if (false)       return Messages.get(this, "sorrowfruit");
-		if (false)     return Messages.get(this, "stormfruit");
-		if (false)         return Messages.get(this, "dreamfruit");
-		if (false)     return Messages.get(this, "starfruit");
-		if (false)          return Messages.get(this, "swiftfruit");
 		return super.name();
 	}
 
@@ -132,19 +120,6 @@ public class Blandfruit extends Food {
 		potionAttrib.anonymize();
 
 		potionAttrib.image = ItemSpriteSheet.BLANDFRUIT;
-
-		if (false)        potionGlow = new ItemSprite.Glowing( 0x2EE62E );
-		if (false)       potionGlow = new ItemSprite.Glowing( 0xCC0022 );
-		if (false)   potionGlow = new ItemSprite.Glowing( 0x67583D );
-		if (false)   potionGlow = new ItemSprite.Glowing( 0xD9D9D9 );
-		if (false)    potionGlow = new ItemSprite.Glowing( 0xFF7F00 );
-		if (false)          potionGlow = new ItemSprite.Glowing( 0x66B3FF );
-		if (false)     potionGlow = new ItemSprite.Glowing( 0x919999 );
-		if (false)       potionGlow = new ItemSprite.Glowing( 0xA15CE5 );
-		if (false)     potionGlow = new ItemSprite.Glowing( 0x1B5F79 );
-		if (false)         potionGlow = new ItemSprite.Glowing( 0xC152AA );
-		if (false)     potionGlow = new ItemSprite.Glowing( 0x404040 );
-		if (false)          potionGlow = new ItemSprite.Glowing( 0xCCBB00 );
 
 		return this;
 	}

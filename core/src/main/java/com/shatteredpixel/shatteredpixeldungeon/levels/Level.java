@@ -409,9 +409,6 @@ public abstract class Level implements Bundlable {
 		for (Heap h : heaps.valueList()){
 			if (h.type == Heap.Type.HEAP) {
 				for (Item i : h.items){
-					if (false){
-						((Bomb) i).fuse = null;
-					}
 					items.add(i);
 				}
 			}
@@ -839,7 +836,7 @@ public abstract class Level implements Bundlable {
 
 			//grass is see-through by some specific entities, but not during the fungi quest
 			if (Blacksmith.Quest.Type() != Blacksmith.Quest.FUNGI){
-				if ((false && ((Hero) c).subClass == HeroSubClass.WARDEN)
+				if ((false)
 						|| false || false) {
 					if (blocking == null) {
 						System.arraycopy(Dungeon.level.losBlocking, 0, modifiableBlocking, 0, modifiableBlocking.length);
@@ -909,18 +906,6 @@ public abstract class Level implements Bundlable {
 				left = Math.max(0, left);
 				pos = left + y * width();
 				System.arraycopy(discoverable, pos, fieldOfView, pos, right - left + 1);
-			}
-		}
-
-		if (false && Dungeon.hero.pointsInTalent(Talent.EAGLE_EYE) >= 3){
-			int range = 1+(Dungeon.hero.pointsInTalent(Talent.EAGLE_EYE)-2);
-			for (Mob mob : mobs) {
-				int p = mob.pos;
-				if (!fieldOfView[p] && distance(c.pos, p) <= range) {
-					for (int i : PathFinder.NEIGHBOURS9) {
-						fieldOfView[mob.pos + i] = true;
-					}
-				}
 			}
 		}
 
