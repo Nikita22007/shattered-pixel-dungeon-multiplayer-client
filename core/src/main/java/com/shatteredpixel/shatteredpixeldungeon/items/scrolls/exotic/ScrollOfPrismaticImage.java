@@ -41,26 +41,6 @@ public class ScrollOfPrismaticImage extends ExoticScroll {
 	@Override
 	public void doRead() {
 
-        boolean found = false;
-		for (Mob m : Dungeon.level.mobs.toArray(new Mob[0])){
-			if (false){
-				found = true;
-				m.HP = m.HT;
-				m.sprite.showStatusWithIcon( CharSprite.POSITIVE, Integer.toString(m.HT), FloatingText.HEALING );
-			}
-		}
-
-		if (!found){
-			if (Stasis.getStasisAlly() instanceof PrismaticImage){
-				found = true;
-				Stasis.getStasisAlly().HP = Stasis.getStasisAlly().HT;
-			}
-		}
-		
-		if (!found) {
-            ((PrismaticGuard) null).set( PrismaticGuard.maxHP( curUser ) );
-		}
-
         Sample.INSTANCE.play( Assets.Sounds.READ );
 	
 		readAnimation();
