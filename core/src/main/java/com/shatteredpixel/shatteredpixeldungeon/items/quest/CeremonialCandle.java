@@ -21,25 +21,11 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.quest;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Elemental;
-import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
-import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.levels.RegularLevel;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.PathFinder;
-import com.watabou.utils.Random;
-
-import java.util.ArrayList;
 
 
 public class CeremonialCandle extends Item {
@@ -94,67 +80,4 @@ public class CeremonialCandle extends Item {
 		return super.emitter();
 	}
 
-	private static void checkCandles(){
-		if (!(Dungeon.level instanceof RegularLevel)){
-			return;
-		}
-
-
-		Heap[] candleHeaps = new Heap[4];
-
-		candleHeaps[0] = Dungeon.level.heaps.get(ritualPos - Dungeon.level.width());
-		candleHeaps[1] = Dungeon.level.heaps.get(ritualPos + 1);
-		candleHeaps[2] = Dungeon.level.heaps.get(ritualPos + Dungeon.level.width());
-		candleHeaps[3] = Dungeon.level.heaps.get(ritualPos - 1);
-
-		boolean allCandles = true;
-		for (Heap h : candleHeaps){
-			if (h != null && h.type == Heap.Type.HEAP){
-				boolean foundCandle = false;
-				for (Item i : h.items){
-				}
-				if (!foundCandle){
-					allCandles = false;
-				}
-			} else {
-				allCandles = false;
-			}
-		}
-
-		if (allCandles){
-
-			for (Heap h : candleHeaps) {
-				for (Item i : h.items.toArray(new Item[0])){
-				}
-			}
-				
-			Elemental.NewbornFireElemental elemental = new Elemental.NewbornFireElemental();
-			Char ch = Actor.findChar( ritualPos );
-			if (ch != null) {
-				ArrayList<Integer> candidates = new ArrayList<>();
-				for (int n : PathFinder.NEIGHBOURS8) {
-					int cell = ritualPos + n;
-					if ((Dungeon.level.passable[cell] || Dungeon.level.avoid[cell]) && Actor.findChar( cell ) == null) {
-						candidates.add( cell );
-					}
-				}
-				if (candidates.size() > 0) {
-					elemental.pos = Random.element( candidates );
-				} else {
-					elemental.pos = ritualPos;
-				}
-			} else {
-				elemental.pos = ritualPos;
-			}
-			elemental.state = elemental.HUNTING;
-			GameScene.add(elemental, 1);
-
-
-			for (int i : PathFinder.NEIGHBOURS9){
-				CellEmitter.get(ritualPos+i).burst(ElmoParticle.FACTORY, 10);
-			}
-			Sample.INSTANCE.play(Assets.Sounds.BURNING);
-		}
-
-	}
 }
