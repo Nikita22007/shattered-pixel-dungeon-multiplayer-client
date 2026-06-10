@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
@@ -49,20 +48,6 @@ public class PotionOfMastery extends ExoticPotion {
 	}
 
 	protected static boolean identifiedByUse = false;
-
-	@Override
-	//need to override drink so that time isn't spent right away
-	protected void drink(final Hero hero) {
-
-		if (!isKnown()) {
-            curItem = this;
-			identifiedByUse = true;
-		} else {
-			identifiedByUse = false;
-		}
-
-		GameScene.selectItem(itemSelector);
-	}
 
 	protected WndBag.ItemSelector itemSelector = new WndBag.ItemSelector() {
 

@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
@@ -57,20 +56,6 @@ public class PotionOfDragonsBreath extends ExoticPotion {
 
 	protected static boolean identifiedByUse = false;
 
-	@Override
-	//need to override drink so that time isn't spent right away
-	protected void drink(final Hero hero) {
-
-		if (!isKnown()) {
-			curItem = this;
-			identifiedByUse = true;
-		} else {
-			identifiedByUse = false;
-		}
-
-		GameScene.selectCell(targeter);
-	}
-	
 	private CellSelector.Listener targeter = new CellSelector.Listener() {
 
 		private boolean showingWindow = false;

@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -76,8 +75,6 @@ public class Potion extends Item {
 	
 	//used internally for potions that can be drunk or thrown
 	public static final String AC_CHOOSE = "CHOOSE";
-
-	private static final float TIME_TO_DRINK = 1f;
 
 	private static final LinkedHashMap<String, Integer> colors = new LinkedHashMap<String, Integer>() {
 		{
@@ -234,24 +231,7 @@ public class Potion extends Item {
 			super.doThrow( hero );
 		}
 	}
-	
-	protected void drink( Hero hero ) {
 
-		hero.spend( TIME_TO_DRINK );
-		hero.busy();
-		apply( hero );
-		
-		Sample.INSTANCE.play( Assets.Sounds.DRINK );
-		
-		hero.sprite.operate( hero.pos );
-
-		if (!anonymous) {
-            if (Random.Float() < talentChance) {
-				Talent.onPotionUsed(curUser, curUser.pos, talentFactor);
-			}
-		}
-	}
-	
 	public void apply( Hero hero ) {
 		shatter( hero.pos );
 	}
