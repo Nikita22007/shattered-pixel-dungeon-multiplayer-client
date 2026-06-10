@@ -77,17 +77,7 @@ public class MeatPie extends Food {
 		public int cost(ArrayList<Item> ingredients) {
 			return 6;
 		}
-		
-		private Item brew(ArrayList<Item> ingredients) {
-			if (!testIngredients(ingredients)) return null;
-			
-			for (Item ingredient : ingredients){
-				ingredient.quantity(ingredient.quantity() - 1);
-			}
-			
-			return sampleOutput(null);
-		}
-		
+
 		@Override
 		public Item sampleOutput(ArrayList<Item> ingredients) {
 			return new MeatPie();

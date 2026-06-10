@@ -151,16 +151,6 @@ public class UnstableSpell extends Spell {
 		}
 
 		@Override
-		public Item brew(ArrayList<Item> ingredients) {
-
-			for (Item i : ingredients){
-				i.quantity(i.quantity()-1);
-			}
-
-			return sampleOutput(null);
-		}
-
-		@Override
 		public Item sampleOutput(ArrayList<Item> ingredients) {
 			return new UnstableSpell();
 		}

@@ -159,21 +159,7 @@ public class LiquidMetal extends Item {
 			return 3;
 		}
 
-		@Override
-		public Item brew(ArrayList<Item> ingredients) {
-			Item result = sampleOutput(ingredients);
-//			MissileWeapon m = (MissileWeapon) ingredients.get(0);
-//			if (!m.levelKnown){
-//				result.quantity(metalQuantity(m));
-//			}
-//
-//			m.quantity(0);
-//			Buff.affect(Dungeon.hero, MissileWeapon.UpgradedSetTracker.class).levelThresholds.put(m.setID, Integer.MAX_VALUE);
-
-			return result;
-		}
-
-		@Override
+        @Override
 		public Item sampleOutput(ArrayList<Item> ingredients) {
 			MissileWeapon m = (MissileWeapon) ingredients.get(0);
 

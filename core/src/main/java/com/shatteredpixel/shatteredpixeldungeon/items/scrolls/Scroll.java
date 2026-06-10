@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.scrolls;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -46,7 +45,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfIntuition;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfShock;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.AlchemyScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Bundle;
@@ -291,23 +289,7 @@ public abstract class Scroll extends Item {
 		public int cost(ArrayList<Item> ingredients) {
 			return 0;
 		}
-		
-		private Item brew(ArrayList<Item> ingredients) {
-			if (!testIngredients(ingredients)) return null;
-			
-			Scroll s = (Scroll) ingredients.get(0);
-			
-			s.quantity(s.quantity() - 1);
-			if (ShatteredPixelDungeon.scene() instanceof AlchemyScene){
-				if (!s.isIdentified()){
-					((AlchemyScene) ShatteredPixelDungeon.scene()).showIdentify(s);
-				}
-			} else {
-			}
-			
-			return Reflection.newInstance(stones.get(s.getClass())).quantity(2);
-		}
-		
+
 		@Override
 		public Item sampleOutput(ArrayList<Item> ingredients) {
 			if (!testIngredients(ingredients)) return null;

@@ -55,8 +55,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 import java.util.*;
 
@@ -331,50 +329,7 @@ public class Potion extends Item {
 		public int cost(ArrayList<Item> ingredients) {
 			return 0;
 		}
-		
-		@Override
-		public Item brew(ArrayList<Item> ingredients) {
-			if (!testIngredients(ingredients)) return null;
-			
-			for (Item ingredient : ingredients){
-				ingredient.quantity(ingredient.quantity() - 1);
-			}
-			
-			ArrayList<Class<?extends Plant.Seed>> seeds = new ArrayList<>();
-			for (Item i : ingredients) {
-				if (!seeds.contains(i.getClass())) {
-					seeds.add((Class<? extends Plant.Seed>) i.getClass());
-				}
-			}
-			
-			Potion result;
-			
-			if ( (seeds.size() == 2 && Random.Int(4) == 0)
-					|| (seeds.size() == 3 && Random.Int(2) == 0)) {
 
-                result = (Potion) null;
-				
-			} else {
-				result = Reflection.newInstance(types.get(Random.element(ingredients).getClass()));
-				
-			}
-			
-			if (seeds.size() == 1){
-			}
-
-			while (result instanceof PotionOfHealing
-					&& Random.Int(10) < Dungeon.LimitedDrops.COOKING_HP.count) {
-
-                result = (Potion) null;
-			}
-			
-			if (result instanceof PotionOfHealing) {
-				Dungeon.LimitedDrops.COOKING_HP.count++;
-			}
-			
-			return result;
-		}
-		
 		@Override
 		public Item sampleOutput(ArrayList<Item> ingredients) {
 			return new WndBag.Placeholder(ItemSpriteSheet.POTION_HOLDER){

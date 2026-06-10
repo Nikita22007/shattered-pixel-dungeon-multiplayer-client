@@ -56,9 +56,5 @@ public class CausticBrew extends Brew {
 			outQuantity = 1;
 		}
 
-		@Override
-		public Item brew(ArrayList<Item> ingredients) {
-            return super.brew(ingredients);
-		}
-	}
+    }
 }

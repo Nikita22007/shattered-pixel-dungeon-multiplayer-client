@@ -96,13 +96,6 @@ public class Alchemize extends Spell {
 		}
 
 		@Override
-		public Item brew(ArrayList<Item> ingredients) {
-			ingredients.get(0).quantity(ingredients.get(0).quantity()-1);
-			ingredients.get(1).quantity(ingredients.get(1).quantity()-1);
-			return sampleOutput(null);
-		}
-
-		@Override
 		public Item sampleOutput(ArrayList<Item> ingredients) {
 			return new Alchemize().quantity(OUT_QUANTITY);
 		}

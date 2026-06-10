@@ -73,18 +73,6 @@ public class ArcaneResin extends Item {
 			return 5;
 		}
 
-		private Item brew(ArrayList<Item> ingredients) {
-			Item result = sampleOutput(ingredients);
-			Wand w = (Wand)ingredients.get(0);
-
-			if (!w.levelKnown){
-				result.quantity(resinQuantity(w));
-			}
-			w.quantity(0);
-
-			return result;
-		}
-
 		@Override
 		public Item sampleOutput(ArrayList<Item> ingredients) {
 			Wand w = (Wand)ingredients.get(0);

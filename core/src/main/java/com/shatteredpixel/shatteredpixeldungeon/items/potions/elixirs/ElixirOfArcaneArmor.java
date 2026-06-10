@@ -21,12 +21,9 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs;
 
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfEarthenArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.GooBlob;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-
-import java.util.ArrayList;
 
 public class ElixirOfArcaneArmor extends Elixir {
 	
@@ -46,9 +43,5 @@ public class ElixirOfArcaneArmor extends Elixir {
 			outQuantity = 1;
 		}
 
-		@Override
-		public Item brew(ArrayList<Item> ingredients) {
-            return super.brew(ingredients);
-		}
-	}
+    }
 }

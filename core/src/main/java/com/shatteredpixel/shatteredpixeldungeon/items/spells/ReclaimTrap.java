@@ -172,9 +172,6 @@ public class ReclaimTrap extends TargetedSpell {
 			outQuantity = OUT_QUANTITY;
 		}
 
-		private Item brew(ArrayList<Item> ingredients) {
-            return super.brew(ingredients);
-		}
 	}
 
 	public static class ReclaimedTrap extends Buff {

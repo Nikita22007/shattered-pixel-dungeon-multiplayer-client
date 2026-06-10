@@ -117,14 +117,6 @@ public abstract class Trinket extends Item {
 			return ((Trinket)ingredients.get(0)).upgradeEnergyCost();
 		}
 
-		private Item brew(ArrayList<Item> ingredients) {
-			Item result = ingredients.get(0).duplicate();
-			ingredients.get(0).quantity(0);
-			result.upgrade();
-
-            return result;
-		}
-
 		@Override
 		public Item sampleOutput(ArrayList<Item> ingredients) {
 			return ingredients.get(0).duplicate().upgrade();
