@@ -27,7 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.SkeletonSprite;
 public class Necromancer {
 
 	@SuppressWarnings("unused")
-	public static class NecroSkeleton extends Skeleton {
+	public static class NecroSkeleton {
 		@SuppressWarnings("unused")
 		public static class NecroSkeletonSprite extends SkeletonSprite{
 
