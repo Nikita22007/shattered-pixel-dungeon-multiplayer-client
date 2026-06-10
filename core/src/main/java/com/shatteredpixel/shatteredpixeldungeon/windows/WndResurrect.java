@@ -147,7 +147,7 @@ public class WndResurrect extends Window {
 		@Override
 		public boolean itemSelectable(Item item) {
 			//cannot select ankhs or bags or equippable items that aren't equipped
-			return !(false || false);
+			return !(item instanceof Ankh || item instanceof Bag);
 		}
 
 		@Override

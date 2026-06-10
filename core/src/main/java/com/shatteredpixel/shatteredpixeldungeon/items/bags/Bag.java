@@ -31,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndQuickBag;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
@@ -112,58 +111,6 @@ public class Bag extends CustomItem implements Iterable<Item> {
 			
 		}
 	}
-	
-	@Override
-	public boolean collect( Bag container ) {
-
-		grabItems(container);
-
-		//if there are any quickslot placeholders that match items in this bag, assign them
-		for (Item item : items) {
-			Dungeon.quickslot.replacePlaceholder(item);
-		}
-
-		if (super.collect( container )) {
-			
-			owner = container.owner;
-			
-			Badges.validateAllBagsBought( this );
-			
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	@Override
-	public void onDetach( ) {
-		this.owner = null;
-		for (Item item : items) {
-			Dungeon.quickslot.clearItem(item);
-		}
-		updateQuickslot();
-	}
-
-	public void grabItems(){
-		if (owner != null && owner instanceof Hero && this != ((Hero) owner).belongings.backpack) {
-			grabItems(((Hero) owner).belongings.backpack);
-		}
-	}
-
-	public void grabItems( Bag container ){
-		for (Item item : container.items.toArray( new Item[0] )) {
-			if (canHold( item )) {
-				int slot = Dungeon.quickslot.getSlot(item);
-				item.detachAll(container);
-				if (!item.collect(this)) {
-					item.collect(container);
-				}
-				if (slot != -1) {
-					Dungeon.quickslot.setSlot(slot, item);
-				}
-			}
-		}
-	}
 
 	@Override
 	public boolean isUpgradable() {
@@ -196,21 +143,6 @@ public class Bag extends CustomItem implements Iterable<Item> {
 	//temp variable so that bags can load contents even with lost inventory debuff
 	private boolean loading;
 
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-
-		loading = true;
-		for (Bundlable item : bundle.getCollection( ITEMS )) {
-			if (item != null){
-				if (!((Item)item).collect( this )){
-					//force-add the item if necessary, such as if its item category changed after an update
-					items.add((Item) item);
-				}
-			}
-		}
-		loading = false;
-	}
 	
 	public boolean contains( Item item ) {
 		for (Item i : items) {
@@ -224,12 +156,8 @@ public class Bag extends CustomItem implements Iterable<Item> {
 	}
 
 	public boolean canHold( Item item ){
-		if (!loading && owner != null && owner.buff(LostInventory.class) != null
-			&& !item.keptThroughLostInventory()){
-			return false;
-		}
 
-		if (items.contains(item) || item instanceof Bag || items.size() < capacity()){
+        if (items.contains(item) || item instanceof Bag || items.size() < capacity()){
 			return true;
 		} else if (item.stackable) {
 			for (Item i : items) {

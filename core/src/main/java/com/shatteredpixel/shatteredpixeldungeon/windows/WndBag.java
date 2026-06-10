@@ -319,7 +319,7 @@ public class WndBag extends WndTabbed {
 
 		// Items in the bag, except other containers (they have tags at the bottom)
 		for (Item item : container.items.toArray(new Item[0])) {
-			if (!(false)) {
+			if (!(item instanceof Bag)) {
 				placeItem( item );
 			} else {
 				count++;
