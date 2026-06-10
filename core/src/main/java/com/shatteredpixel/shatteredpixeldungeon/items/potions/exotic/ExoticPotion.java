@@ -92,15 +92,7 @@ public class ExoticPotion extends Potion {
 	public boolean isKnown() {
 		return anonymous || (handler != null && handler.isKnown( exoToReg.get(this.getClass()) ));
 	}
-	
-	@Override
-	public void setKnown() {
-		if (!isKnown()) {
-			handler.know(exoToReg.get(this.getClass()));
-			updateQuickslot();
-		}
-	}
-	
+
 	@Override
 	public void reset() {
 		super.reset();

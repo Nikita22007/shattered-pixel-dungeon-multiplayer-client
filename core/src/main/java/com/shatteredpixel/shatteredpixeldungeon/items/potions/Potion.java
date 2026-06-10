@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.potions;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
@@ -41,7 +40,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCor
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfShroudingFog;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfSnapFreeze;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfStormClouds;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Blindweed;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Earthroot;
@@ -62,7 +60,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndUseItem;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
@@ -272,21 +269,7 @@ public class Potion extends Item {
 	public boolean isKnown() {
 		return anonymous || (handler != null && handler.isKnown( this ));
 	}
-	
-	public void setKnown() {
-		if (!anonymous) {
-			if (!isKnown()) {
-				handler.know(this);
-				updateQuickslot();
-			}
-			
-			if (Dungeon.hero.isAlive()) {
-				Catalog.setSeen(getClass());
-				Statistics.itemTypesDiscovered.add(getClass());
-			}
-		}
-	}
-	
+
 	@Override
 	public String name() {
 		return isKnown() ? super.name() : Messages.get(this, color);
