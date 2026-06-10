@@ -68,7 +68,7 @@ public class FlashBangBomb extends Bomb {
 		ArrayList<Lightning.Arc> arcs = new ArrayList<>();
 		for (Char ch : affected){
 			//25% bonus damage and 10 turns of stun
-			int damage = Math.round(Random.NormalIntRange(4 + Dungeon.scalingDepth(), 12 + 3*Dungeon.scalingDepth()) / 4f);
+            int damage = Math.round(Random.NormalIntRange(4 + Dungeon.depth, 12 + 3* Dungeon.depth) / 4f);
             new Electricity();
             if (ch.isAlive()) {
             }

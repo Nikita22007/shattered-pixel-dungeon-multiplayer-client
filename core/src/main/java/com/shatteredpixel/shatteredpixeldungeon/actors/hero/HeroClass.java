@@ -107,7 +107,6 @@ public enum HeroClass {
         }
 
         new VelvetPouch();
-        Dungeon.LimitedDrops.VELVET_POUCH.drop();
 
 		Waterskin waterskin = new Waterskin();
 

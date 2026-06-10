@@ -113,7 +113,7 @@ public abstract class Trap implements Bundlable {
 	//If the trap is part of the level, it should use the true depth
 	//If it's not part of the level (e.g. effect from reclaim trap), use scaling depth
 	protected int scalingDepth(){
-		return (reclaimed || Dungeon.level.traps.get(pos) != this) ? Dungeon.scalingDepth() : Dungeon.depth;
+        return reclaimed || Dungeon.level.traps.get(pos) != this ? Dungeon.depth : Dungeon.depth;
 	}
 
 	public String name(){

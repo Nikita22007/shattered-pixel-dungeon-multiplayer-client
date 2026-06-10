@@ -94,14 +94,12 @@ public class Thief extends Mob {
 		return super.lootChance() * (float)Math.pow(1/3f, Dungeon.LimitedDrops.THEIF_MISC.count);
 	}
 
-	@Override
 	public void rollToDropLoot() {
 		if (item != null) {
 			Dungeon.level.drop( item, pos ).sprite.drop();
 			//updates position
             item = null;
 		}
-		super.rollToDropLoot();
 	}
 
 	@Override

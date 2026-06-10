@@ -21,25 +21,18 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Surprise;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
 public class MasterThievesArmband extends Artifact {
@@ -69,77 +62,10 @@ public class MasterThievesArmband extends Artifact {
 				GLog.w( Messages.get(MasterThievesArmband.class, "no_target") );
 			} else {
 				Char ch = Actor.findChar(target);
-				if (false){
-					GLog.w( Messages.get(MasterThievesArmband.class, "steal_shopkeeper") );
-				} else if (ch.alignment != Char.Alignment.ENEMY
-						&& !(false && ch.alignment == Char.Alignment.NEUTRAL)){
-					GLog.w( Messages.get(MasterThievesArmband.class, "no_target") );
-				} else if (ch instanceof Mob) {
-					curUser.busy();
-					curUser.sprite.attack(target, new Callback() {
-						@Override
-						public void call() {
-							Sample.INSTANCE.play(Assets.Sounds.HIT);
-
-							boolean surprised = ((Mob) ch).surprisedBy(curUser, false);
-							float lootMultiplier = 1f + 0.1f*level();
-							int debuffDuration = 3 + level()/2;
-
-							Invisibility.dispel(curUser);
-
-							if (surprised){
-								lootMultiplier += 0.5f;
-								Surprise.hit(ch);
-								Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
-								debuffDuration += 2;
-								exp += 2;
-							}
-
-							float lootChance = ((Mob) ch).lootChance() * lootMultiplier;
-
-							if (Dungeon.hero.lvl > ((Mob) ch).maxLvl + 2) {
-								lootChance = 0;
-							} else {
-                            }
-
-							if (lootChance == 0){
-								GLog.w(Messages.get(MasterThievesArmband.class, "no_steal"));
-							} else if (Random.Float() <= lootChance){
-								Item loot = ((Mob) ch).createLoot();
-								if (Challenges.isItemBlocked(loot)){
-									GLog.i(Messages.get(MasterThievesArmband.class, "failed_steal"));
-                                    ((StolenTracker) null).setItemStolen(false);
-								} else {
-                                    if (false) {
-										//item collection happens instantly
-										curUser.spend(-(float) 0);
-									} else {
-										Dungeon.level.drop(loot, curUser.pos).sprite.drop();
-									}
-									GLog.i(Messages.get(MasterThievesArmband.class, "stole_item", loot.name()));
-                                    ((StolenTracker) null).setItemStolen(true);
-								}
-							} else {
-								GLog.i(Messages.get(MasterThievesArmband.class, "failed_steal"));
-                                ((StolenTracker) null).setItemStolen(false);
-							}
-
-
-                            charge--;
-							exp += 3;
-							Talent.onArtifactUsed(Dungeon.hero);
-							while (exp >= (10 + Math.round(3.33f * level())) && level() < levelCap) {
-								exp -= 10 + Math.round(3.33f * level());
-                                GLog.p(Messages.get(MasterThievesArmband.class, "level_up"));
-								upgrade();
-							}
-							Item.updateQuickslot();
-							curUser.next();
-						}
-					});
-
-				}
-			}
+                if (ch.alignment != Char.Alignment.ENEMY){
+                    GLog.w( Messages.get(MasterThievesArmband.class, "no_target") );
+                }
+            }
 
 		}
 

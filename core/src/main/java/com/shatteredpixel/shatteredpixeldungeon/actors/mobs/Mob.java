@@ -41,16 +41,12 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.duelist.Feint;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.ShadowClone;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.Stasis;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.DirectableAlly;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.MasterThievesArmband;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.ExoticPotion;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ExoticScroll;
@@ -551,8 +547,6 @@ public abstract class Mob extends Char {
 
         if (alignment == Alignment.ENEMY) {
 
-            rollToDropLoot();
-
             if (cause instanceof Hero || cause instanceof Weapon || cause instanceof Weapon.Enchantment) {
                 if (Dungeon.hero.hasTalent(Talent.LETHAL_MOMENTUM)
                         && Random.Float() < 0.34f + 0.33f * Dungeon.hero.pointsInTalent(Talent.LETHAL_MOMENTUM)) {
@@ -607,37 +601,6 @@ public abstract class Mob extends Char {
         dropBonus += ShardOfOblivion.lootChanceMultiplier() - 1f;
 
         return lootChance * dropBonus;
-    }
-
-    public void rollToDropLoot() {
-        if (Dungeon.hero.lvl > maxLvl + 2) return;
-
-        MasterThievesArmband.StolenTracker stolen = null;
-        if (stolen == null || !stolen.itemWasStolen()) {
-            if (Random.Float() < lootChance()) {
-                Item loot = createLoot();
-                if (loot != null) {
-                    Dungeon.level.drop(loot, pos).sprite.drop();
-                }
-            }
-        }
-
-        //ring of wealth logic
-        if (0 > 0) {
-            int rolls = 1;
-            if (properties.contains(Property.BOSS)) rolls = 15;
-            else if (properties.contains(Property.MINIBOSS)) rolls = 5;
-            ArrayList<Item> bonus = RingOfWealth.tryForBonusDrop(Dungeon.hero, rolls);
-            if (bonus != null && !bonus.isEmpty()) {
-                for (Item b : bonus) Dungeon.level.drop(b, pos).sprite.drop();
-                RingOfWealth.showFlareForBonusDrop(sprite);
-            }
-        }
-
-        //lucky enchant logic
-
-        //soul eater talent
-
     }
 
     protected Object loot = null;

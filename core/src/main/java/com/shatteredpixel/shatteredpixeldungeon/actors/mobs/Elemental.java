@@ -33,7 +33,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Lightning;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
@@ -82,7 +81,7 @@ public abstract class Elemental extends Mob {
 		if (!summonedALly) {
 			return Random.NormalIntRange(20, 25);
 		} else {
-			int regionScale = Math.max(2, (1 + Dungeon.scalingDepth()/5));
+			int regionScale = Math.max(2, (1 + Dungeon.depth /5));
 			return Random.NormalIntRange(5*regionScale, 5 + 5*regionScale);
 		}
 	}
@@ -92,7 +91,7 @@ public abstract class Elemental extends Mob {
 		if (!summonedALly) {
 			return 25;
 		} else {
-			int regionScale = Math.max(2, (1 + Dungeon.scalingDepth()/5));
+			int regionScale = Math.max(2, (1 + Dungeon.depth /5));
 			return 5 + 5*regionScale;
 		}
 	}
@@ -100,7 +99,7 @@ public abstract class Elemental extends Mob {
 	public void setSummonedALly(){
 		summonedALly = true;
 		//sewers are prison are equivalent, otherwise scales as normal (2/2/3/4/5)
-		int regionScale = Math.max(2, (1 + Dungeon.scalingDepth()/5));
+		int regionScale = Math.max(2, (1 + Dungeon.depth /5));
 		defenseSkill = 5*regionScale;
 		HT = 15*regionScale;
 	}

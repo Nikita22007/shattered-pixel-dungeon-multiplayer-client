@@ -612,7 +612,7 @@ public class InterlevelScene extends PixelScene {
 		Level oldLevel = level;
 		Dungeon.level = new SewerLevel();
 		Dungeon.level.create(oldLevel);
-		Dungeon.init();
+		
 	}
 
 	//TODO atm falling always just increments depth by 1, do we eventually want to roll it into the transition system?

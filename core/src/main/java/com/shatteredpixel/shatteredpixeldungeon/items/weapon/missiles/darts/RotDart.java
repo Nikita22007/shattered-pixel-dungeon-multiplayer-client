@@ -41,9 +41,9 @@ public class RotDart extends TippedDart {
 			//do nothing
 		} else if (defender.properties().contains(Char.Property.BOSS)
 				|| defender.properties().contains(Char.Property.MINIBOSS)){
-            ((Corrosion) null).set(5f, Dungeon.scalingDepth()/3);
+            ((Corrosion) null).set(5f, Dungeon.depth /3);
 		} else {
-            ((Corrosion) null).set(10f, Dungeon.scalingDepth());
+            ((Corrosion) null).set(10f, Dungeon.depth);
 		}
 		
 		return super.proc(attacker, defender, damage);

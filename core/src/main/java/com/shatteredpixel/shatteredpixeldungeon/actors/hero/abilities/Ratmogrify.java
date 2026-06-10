@@ -166,10 +166,8 @@ public class Ratmogrify extends ArmorAbility {
 			return original.attackDelay();
 		}
 
-		@Override
 		public void rollToDropLoot() {
 			original.pos = pos;
-			original.rollToDropLoot();
 		}
 
 		@Override

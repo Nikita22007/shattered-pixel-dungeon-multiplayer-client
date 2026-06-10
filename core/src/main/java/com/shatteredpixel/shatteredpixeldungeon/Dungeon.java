@@ -26,31 +26,18 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.*;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Blacksmith;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Imp;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Wandmaker;
 import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.RegularLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.LevelTransition;
 import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
-import com.shatteredpixel.shatteredpixeldungeon.ui.Toolbar;
-import com.shatteredpixel.shatteredpixeldungeon.utils.DungeonSeed;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndResurrect;
-import com.watabou.noosa.Game;
 import com.watabou.utils.*;
 import com.watabou.utils.Random;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Dungeon {
@@ -58,85 +45,22 @@ public class Dungeon {
 	//enum of items which have limited spawns, records how many have spawned
 	//could all be their own separate numbers, but this allows iterating, much nicer for bundling/initializing.
 	public static enum LimitedDrops {
-		//limited world drops
-		STRENGTH_POTIONS,
-		UPGRADE_SCROLLS,
-		ARCANE_STYLI,
-		ENCH_STONE,
-		INT_STONE,
-		TRINKET_CATA,
-		LAB_ROOM, //actually a room, but logic is the same
 
-		//Health potion sources
-		//enemies
-		SWARM_HP,
 		NECRO_HP,
-		BAT_HP,
-		WARLOCK_HP,
 		//Demon spawners are already limited in their spawnrate, no need to limit their health drops
 		//alchemy
 		COOKING_HP,
-		BLANDFRUIT_SEED,
 
-		//Other limited enemy drops
-		SLIME_WEP,
 		SKELE_WEP,
-		THEIF_MISC,
-		GUARD_ARM,
-		SHAMAN_WAND,
-		DM200_EQUIP,
-		GOLEM_EQUIP,
-
-		//containers
-		VELVET_POUCH,
-		SCROLL_HOLDER,
-		POTION_BANDOLIER,
-		MAGICAL_HOLSTER,
-
-		//lore documents
-		LORE_SEWERS,
-		LORE_PRISON,
-		LORE_CAVES,
-		LORE_CITY,
-		LORE_HALLS;
+		THEIF_MISC;
 
 		public int count = 0;
 
 		//for items which can only be dropped once, should directly access count otherwise.
-		public boolean dropped(){
-			return count != 0;
-		}
-		public void drop(){
-			count = 1;
-		}
-
-		public static void reset(){
-			for (LimitedDrops lim : values()){
-				lim.count = 0;
-			}
-		}
-
-		public static void store( Bundle bundle ){
-			for (LimitedDrops lim : values()){
-				bundle.put(lim.name(), lim.count);
-			}
-		}
-
-		public static void restore( Bundle bundle ){
-			for (LimitedDrops lim : values()){
-				if (bundle.contains(lim.name())){
-					lim.count = bundle.getInt(lim.name());
-				} else {
-					lim.count = 0;
-				}
-				
-			}
-		}
 
 	}
 
 	public static int challenges;
-	public static float mobsToChampion;
 
 	public static Hero hero;
 	public static Level level;
@@ -149,12 +73,7 @@ public class Dungeon {
 	// 1 is for quest sub-floors
 	public static int branch;
 
-	//keeps track of what levels the game should try to load instead of creating fresh
-	public static ArrayList<Integer> generatedLevels = new ArrayList<>();
-
 	public static int energy;
-	
-	public static HashSet<Integer> chapters;
 
 	public static SparseArray<ArrayList<Item>> droppedItems;
 
@@ -169,87 +88,9 @@ public class Dungeon {
 	public static long lastPlayed;
 
 	//we initialize the seed separately so that things like interlevelscene can access it early
-	public static void initSeed(){
-		if (daily) {
-			//Ensures that daily seeds are not in the range of user-enterable seeds
-			seed = SPDSettings.lastDaily() + DungeonSeed.TOTAL_SEEDS;
-			DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ROOT);
-			format.setTimeZone(TimeZone.getTimeZone("UTC"));
-			customSeedText = format.format(new Date(SPDSettings.lastDaily()));
-		} else if (!SPDSettings.customSeed().isEmpty()){
-			customSeedText = SPDSettings.customSeed();
-			seed = DungeonSeed.convertFromText(customSeedText);
-		} else {
-			customSeedText = "";
-			seed = DungeonSeed.randomSeed();
-		}
-	}
-
-	public static void init() {
-
-		initialVersion = version = Game.versionCode;
-		challenges = SPDSettings.challenges();
-		mobsToChampion = 1;
-
-		Actor.clear();
-		Actor.resetNextID();
-
-		//offset seed slightly to avoid output patterns
-		Random.pushGenerator( seed+1 );
-
-			Scroll.initLabels();
-			Potion.initColors();
-			Ring.initGems();
-
-		Random.resetGenerators();
-		
-		Statistics.reset();
-		Notes.reset();
-
-		quickslot.reset();
-		QuickSlotButton.reset();
-		Toolbar.swappedQuickslots = false;
-		
-		depth = 1;
-		branch = 0;
-		generatedLevels.clear();
-
-		//hero.gold = 0;
-		energy = 0;
-
-		droppedItems = new SparseArray<>();
-
-		LimitedDrops.reset();
-		
-		chapters = new HashSet<>();
-
-
-		Blacksmith.Quest.reset();
-		Imp.Quest.reset();
-
-//		if (hero == null) {
-//			hero = new Hero();
-//		}
-//
-//		Badges.reset();
-//
-//		GamesInProgress.selectedClass.initHero( hero );
-	}
 
 	public static boolean isChallenged( int mask ) {
 		return (challenges & mask) != 0;
-	}
-
-	public static boolean levelHasBeenGenerated(int depth, int branch){
-		return generatedLevels.contains(depth + 1000*branch);
-	}
-
-	public static void resetLevel() {
-		
-		Actor.clear();
-		
-		level.reset();
-		switchLevel( level, level.entrance() );
 	}
 
 	public static long seedCurDepth(){
@@ -285,13 +126,6 @@ public class Dungeon {
 
 	//value used for scaling of damage values and other effects.
 	//is usually the dungeon depth, but can be set to 26 when ascending
-	public static int scalingDepth(){
-		if (Dungeon.hero != null && false){
-			return 26;
-		} else {
-			return depth;
-		}
-	}
 
 	public static boolean interfloorTeleportAllowed(){
 		if (Dungeon.level.locked || (Dungeon.hero != null && Dungeon.hero.belongings.getItem(Amulet.class) != null)){
@@ -353,79 +187,6 @@ public class Dungeon {
 		dropped.add( item );
 	}
 
-	public static boolean posNeeded() {
-		//2 POS each floor set
-		int posLeftThisSet = 2 - (LimitedDrops.STRENGTH_POTIONS.count - (depth / 5) * 2);
-		if (posLeftThisSet <= 0) return false;
-
-		int floorThisSet = (depth % 5);
-
-		//pos drops every two floors, (numbers 1-2, and 3-4) with a 50% chance for the earlier one each time.
-		int targetPOSLeft = 2 - floorThisSet/2;
-		if (floorThisSet % 2 == 1 && Random.Int(2) == 0) targetPOSLeft --;
-
-		if (targetPOSLeft < posLeftThisSet) return true;
-		else return false;
-
-	}
-	
-	public static boolean souNeeded() {
-		int souLeftThisSet;
-		//3 SOU each floor set
-		souLeftThisSet = 3 - (LimitedDrops.UPGRADE_SCROLLS.count - (depth / 5) * 3);
-		if (souLeftThisSet <= 0) return false;
-
-		int floorThisSet = (depth % 5);
-		//chance is floors left / scrolls left
-		return Random.Int(5 - floorThisSet) < souLeftThisSet;
-	}
-	
-	public static boolean asNeeded() {
-		//1 AS each floor set
-		int asLeftThisSet = 1 - (LimitedDrops.ARCANE_STYLI.count - (depth / 5));
-		if (asLeftThisSet <= 0) return false;
-
-		int floorThisSet = (depth % 5);
-		//chance is floors left / scrolls left
-		return Random.Int(5 - floorThisSet) < asLeftThisSet;
-	}
-
-	public static boolean enchStoneNeeded(){
-		//1 enchantment stone, spawns on chapter 2 or 3
-		if (!LimitedDrops.ENCH_STONE.dropped()){
-			int region = 1+depth/5;
-			if (region > 1){
-				int floorsVisited = depth - 5;
-				if (floorsVisited > 4) floorsVisited--; //skip floor 10
-				return Random.Int(9-floorsVisited) == 0; //1/8 chance each floor
-			}
-		}
-		return false;
-	}
-
-	public static boolean intStoneNeeded(){
-		//one stone on floors 1-3
-		return depth < 5 && !LimitedDrops.INT_STONE.dropped() && Random.Int(4-depth) == 0;
-	}
-
-	public static boolean trinketCataNeeded(){
-		//one trinket catalyst on floors 1-3
-		return depth < 5 && !LimitedDrops.TRINKET_CATA.dropped() && Random.Int(4-depth) == 0;
-	}
-
-	public static boolean labRoomNeeded(){
-		//one laboratory each floor set, in floor 3 or 4, 1/2 chance each floor
-		int region = 1+depth/5;
-		if (region > LimitedDrops.LAB_ROOM.count){
-			int floorThisRegion = depth%5;
-			if (floorThisRegion >= 4 || (floorThisRegion == 3 && Random.Int(2) == 0)){
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private static final String INIT_VER	= "init_ver";
 	public  static final String VERSION		= "version";
 	private static final String SEED		= "seed";
 	private static final String CUSTOM_SEED	= "custom_seed";

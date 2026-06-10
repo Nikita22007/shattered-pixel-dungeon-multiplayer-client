@@ -261,7 +261,7 @@ public class ChaoticCenser extends Trinket {
 
 				//corrosion starts at the same level as potion of corrosive gas
 				if (gasType == CorrosiveGas.class){
-					((CorrosiveGas)Dungeon.level.blobs.get(CorrosiveGas.class)).setStrength( 2 + Dungeon.scalingDepth()/5, ChaoticCenser.class);
+                    ((CorrosiveGas)Dungeon.level.blobs.get(CorrosiveGas.class)).setStrength( 2 + Dungeon.depth /5, ChaoticCenser.class);
 				}
 
 				MagicMissile.boltFromChar(Dungeon.hero.sprite.parent, MISSILE_VFX.get(gasType), Dungeon.hero.sprite, targetCell, null);
