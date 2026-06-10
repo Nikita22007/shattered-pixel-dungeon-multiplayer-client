@@ -223,7 +223,7 @@ public class Dungeon {
 		
 		chapters = new HashSet<>();
 
-		Wandmaker.Quest.reset();
+
 		Blacksmith.Quest.reset();
 		Imp.Quest.reset();
 

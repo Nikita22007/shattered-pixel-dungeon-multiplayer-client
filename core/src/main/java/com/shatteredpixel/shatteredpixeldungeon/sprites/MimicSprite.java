@@ -23,9 +23,9 @@ package com.shatteredpixel.shatteredpixeldungeon.sprites;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
 import com.watabou.noosa.TextureFilm;
 
+@SuppressWarnings("unused")
 public class MimicSprite extends MobSprite {
 
 	protected Animation advancedHiding;

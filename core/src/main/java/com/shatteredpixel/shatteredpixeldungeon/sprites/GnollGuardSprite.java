@@ -57,11 +57,7 @@ public class GnollGuardSprite extends MobSprite {
 	@Override
 	public void link( Char ch ) {
 		super.link( ch );
-
-		if (false && ((GnollGuard) ch).hasSapper()){
-			setupArmor();
-		}
-	}
+    }
 
 	public void setupArmor(){
 		if (earthArmor == null) {

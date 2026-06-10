@@ -536,13 +536,8 @@ public class GameScene extends PixelScene {
 
 				int spawnersAbove = Statistics.spawnersAlive;
 				if (spawnersAbove > 0 && Dungeon.depth <= 25) {
-					for (Mob m : Dungeon.level.mobs) {
-						if (false && ((DemonSpawner) m).spawnRecorded) {
-							spawnersAbove--;
-						}
-					}
 
-					if (spawnersAbove > 0) {
+                    if (spawnersAbove > 0) {
 						if (Dungeon.bossLevel()) {
 							GLog.n(Messages.get(this, "spawner_warn_final"));
 						} else {
@@ -1387,13 +1382,8 @@ public class GameScene extends PixelScene {
 			scene.fog.updateFog();
 			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
 				if (mob.sprite != null) {
-					if (false && mob.state == mob.PASSIVE && ((Mimic) mob).stealthy() && Dungeon.level.visited[mob.pos]){
-						//mimics stay visible in fog of war after being first seen
-						mob.sprite.visible = true;
-					} else {
-						mob.sprite.visible = Dungeon.level.heroFOV[mob.pos];
-					}
-				}
+                    mob.sprite.visible = Dungeon.level.heroFOV[mob.pos];
+                }
 			}
 		}
 	}
@@ -1668,10 +1658,7 @@ public class GameScene extends PixelScene {
 			GameScene.show( new WndHero() );
 		} else if ( o instanceof Mob && ((Mob) o).isActive() ){
 			GameScene.show(new WndInfoMob((Mob) o));
-			if (o instanceof Snake && !Document.ADVENTURERS_GUIDE.isPageRead(Document.GUIDE_SURPRISE_ATKS)){
-				GameScene.flashForDocument(Document.ADVENTURERS_GUIDE, Document.GUIDE_SURPRISE_ATKS);
-			}
-		} else if ( o instanceof Heap && !((Heap) o).isEmpty() ){
+        } else if ( o instanceof Heap && !((Heap) o).isEmpty() ){
 			GameScene.show(new WndInfoItem((Heap)o));
 		} else if ( o instanceof Plant ){
 			GameScene.show( new WndInfoPlant((Plant) o) );

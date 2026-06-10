@@ -30,15 +30,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Blacksmith;
-import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.effects.TargetedCell;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.quest.DarkGold;
-import com.shatteredpixel.shatteredpixeldungeon.items.quest.Pickaxe;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
@@ -97,11 +91,7 @@ public class GnollGeomancer extends Mob {
 	protected boolean act() {
 		if (sapperSpawns == null) {
 			sapperSpawns = new int[3];
-			int i = 0;
-			for (Mob m : Dungeon.level.mobs) {
-				if (i == 3) break;
-			}
-		}
+        }
 
 		if (throwingRocksFromPos != null) {
 			boolean attacked = false;
@@ -126,14 +116,13 @@ public class GnollGeomancer extends Mob {
 	@Override
 	public boolean isInvulnerable(Class effect) {
 		if (super.isInvulnerable(effect)) return true;
-		return (false)
-				|| hasSapper();
+		return hasSapper();
 	}
 
 	@Override
 	public boolean add(Buff buff) {
 		//immune to buffs and debuff (except its own buffs) while sleeping
-		if (state == SLEEPING && !(false || false)) {
+		if (state == SLEEPING) {
 			return false;
 		} else {
 			return super.add(buff);
@@ -173,35 +162,6 @@ public class GnollGeomancer extends Mob {
 
 	int hits = 0;
 
-	@Override
-	public boolean interact(Char c) {
-		if (c != Dungeon.hero || true) {
-			return super.interact(c);
-		} else {
-			final Pickaxe p = Dungeon.hero.belongings.getItem(Pickaxe.class);
-
-			if (p == null) {
-				return true;
-			}
-
-			Dungeon.hero.sprite.attack(pos, new Callback() {
-				@Override
-				public void call() {
-
-				}
-			});
-
-			return false;
-		}
-	}
-
-	public void linkSapper(GnollSapper sapper) {
-		this.sapperID = sapper.id();
-		if (sprite instanceof GnollGeomancerSprite) {
-			((GnollGeomancerSprite) sprite).setupArmor();
-		}
-	}
-
 	public boolean hasSapper() {
 		return sapperID != -1
 				&& Actor.findById(sapperID) instanceof GnollSapper
@@ -215,178 +175,6 @@ public class GnollGeomancer extends Mob {
 				((GnollGeomancerSprite) sprite).loseArmor();
 			}
 		}
-	}
-
-	private void carveRockAndDash() {
-
-		//aim for closest sapper, preferring living ones within 16 tiles
-		int closestSapperPos = -1;
-		boolean closestisAlive = false;
-		for (int i = 0; i < sapperSpawns.length; i++) {
-			if (sapperSpawns[i] == -1) {
-				continue;
-			}
-
-			if (closestSapperPos == -1) {
-				closestSapperPos = sapperSpawns[i];
-				for (Mob m : Dungeon.level.mobs) {
-					if (false && ((GnollSapper) m).spawnPos == closestSapperPos) {
-						closestisAlive = true;
-						break;
-					}
-				}
-				continue;
-			}
-
-			boolean sapperAlive = false;
-			for (Mob m : Dungeon.level.mobs) {
-				if (false && ((GnollSapper) m).spawnPos == sapperSpawns[i]) {
-					sapperAlive = true;
-					break;
-				}
-			}
-
-			if ((sapperAlive && !closestisAlive && Dungeon.level.distance(pos, sapperSpawns[i]) <= 16)
-					|| Dungeon.level.trueDistance(pos, sapperSpawns[i]) < Dungeon.level.trueDistance(pos, closestSapperPos)) {
-				closestSapperPos = sapperSpawns[i];
-				closestisAlive = sapperAlive;
-			}
-		}
-
-		int dashPos = closestSapperPos;
-
-		//can only dash 3 times
-		if (dashPos == -1) {
-			return;
-		}
-
-		//if spawn pos is more than 12 tiles away, get as close as possible
-		Ballistica path = new Ballistica(pos, dashPos, Ballistica.STOP_TARGET);
-
-		if (path.dist > 12) {
-			dashPos = path.path.get(12);
-		}
-
-		if (Actor.findChar(dashPos) != null || Dungeon.level.traps.get(dashPos) != null) {
-			ArrayList<Integer> candidates = new ArrayList<>();
-			for (int i : PathFinder.NEIGHBOURS8) {
-				if (Actor.findChar(dashPos + i) == null && Dungeon.level.traps.get(dashPos + i) == null) {
-					candidates.add(dashPos + i);
-				}
-			}
-			if (!candidates.isEmpty()) {
-				dashPos = Random.element(candidates);
-			}
-		}
-
-		for (int i = 0; i < sapperSpawns.length; i++) {
-			if (sapperSpawns[i] == closestSapperPos) {
-				sapperSpawns[i] = -1;
-			}
-		}
-
-		path = new Ballistica(pos, dashPos, Ballistica.STOP_TARGET);
-
-		ArrayList<Integer> cells = new ArrayList<>(path.subPath(0, path.dist));
-		cells.addAll(spreadDiamondAOE(cells));
-		cells.addAll(spreadDiamondAOE(cells));
-		cells.addAll(spreadDiamondAOE(cells));
-
-		ArrayList<Integer> exteriorCells = spreadDiamondAOE(cells);
-
-		for (int i : cells) {
-			if (Dungeon.level.map[i] == Terrain.WALL_DECO) {
-				Dungeon.level.drop(new DarkGold(), i).sprite.drop();
-				Dungeon.level.map[i] = Terrain.EMPTY_DECO;
-			} else if (Dungeon.level.solid[i]) {
-				if (Random.Int(3) == 0) {
-					Dungeon.level.map[i] = Terrain.MINE_BOULDER;
-				} else {
-					Dungeon.level.map[i] = Terrain.EMPTY_DECO;
-				}
-			} else if (Dungeon.level.map[i] == Terrain.HIGH_GRASS || Dungeon.level.map[i] == Terrain.FURROWED_GRASS) {
-				Dungeon.level.map[i] = Terrain.GRASS;
-			}
-			CellEmitter.get(i - Dungeon.level.width()).start(Speck.factory(Speck.ROCK), 0.07f, 10);
-		}
-		for (int i : exteriorCells) {
-			if (!Dungeon.level.solid[i]
-					&& Dungeon.level.map[i] != Terrain.EMPTY_SP
-					&& !Dungeon.level.adjacent(i, Dungeon.level.entrance())
-					&& Dungeon.level.traps.get(i) == null
-					&& Dungeon.level.plants.get(i) == null
-					&& Actor.findChar(i) == null) {
-				Dungeon.level.map[i] = Terrain.MINE_BOULDER;
-			}
-		}
-		if (Dungeon.level.solid[dashPos]) {
-			Dungeon.level.map[dashPos] = Terrain.EMPTY_DECO;
-		}
-		//we potentially update a lot of cells, so might as well just reset properties instead of incrementally updating
-		Dungeon.level.buildFlagMaps();
-		Dungeon.level.cleanWalls();
-		GameScene.updateMap();
-		GameScene.updateFog();
-		Dungeon.observe();
-
-		PixelScene.shake(3, 0.7f);
-		Sample.INSTANCE.play(Assets.Sounds.ROCKS);
-
-		int oldpos = pos;
-		pos = dashPos;
-		spend(TICK);
-		abilityCooldown = 1;
-		Actor.add(new Pushing(this, oldpos, pos));
-
-		if (closestisAlive) {
-			GnollSapper closest = null;
-			for (Mob m : Dungeon.level.mobs) {
-				if (false && ((GnollSapper) m).spawnPos == closestSapperPos) {
-					closest = (GnollSapper) m;
-					break;
-				}
-			}
-			if (closest != null) {
-				Actor guard = closest.getPartner();
-				closest.linkPartner(this);
-				//moves sapper and its guard toward geomancer if it is too far away
-				if (Dungeon.level.distance(closest.pos, dashPos) > 3) {
-					ArrayList<Integer> candidates = new ArrayList<>();
-					for (int i : PathFinder.NEIGHBOURS8) {
-						if (!Dungeon.level.solid[dashPos + i]
-								&& Dungeon.level.traps.get(dashPos + i) == null
-								&& Dungeon.level.plants.get(dashPos + i) == null
-								&& Actor.findChar(dashPos + i) == null) {
-							candidates.add(dashPos + i);
-						}
-					}
-
-					if (!candidates.isEmpty()) {
-						int newSapperPos = Random.element(candidates);
-						ScrollOfTeleportation.appear(closest, newSapperPos);
-						closest.spawnPos = newSapperPos;
-						candidates.remove((Integer) newSapperPos);
-
-						if (guard instanceof GnollGuard && !candidates.isEmpty()) {
-							ScrollOfTeleportation.appear((GnollGuard) guard, Random.element(candidates));
-						}
-
-					}
-				}
-			}
-		}
-	}
-
-	private ArrayList<Integer> spreadDiamondAOE(ArrayList<Integer> currentCells) {
-		ArrayList<Integer> spreadCells = new ArrayList<>();
-		for (int i : currentCells) {
-			for (int j : PathFinder.NEIGHBOURS4) {
-				if (Dungeon.level.insideMap(i + j) && !spreadCells.contains(i + j) && !currentCells.contains(i + j)) {
-					spreadCells.add(i + j);
-				}
-			}
-		}
-		return spreadCells;
 	}
 
 	@Override
@@ -533,16 +321,8 @@ public class GnollGeomancer extends Mob {
 			}
 		}
 
-		//ignore rocks already being thrown
-		for (Char ch : Actor.chars()) {
-			if (false && ((GnollGeomancer) ch).throwingRocksFromPos != null) {
-				for (int i : ((GnollGeomancer) ch).throwingRocksFromPos) {
-					candidateRocks.remove((Integer) i);
-				}
-			} else
-		}
 
-		if (candidateRocks.isEmpty()) {
+        if (candidateRocks.isEmpty()) {
 			return null;
 		} else {
 

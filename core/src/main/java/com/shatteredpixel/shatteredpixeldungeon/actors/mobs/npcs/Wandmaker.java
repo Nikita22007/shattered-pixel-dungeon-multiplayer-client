@@ -107,7 +107,7 @@ public class Wandmaker extends NPC {
                 Game.runOnRenderThread(new Callback() {
                     @Override
                     public void call() {
-                        GameScene.show(new WndWandmaker(Wandmaker.this, item));
+
                     }
                 });
             } else {

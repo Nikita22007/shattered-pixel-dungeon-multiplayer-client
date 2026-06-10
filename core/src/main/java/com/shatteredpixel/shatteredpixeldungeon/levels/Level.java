@@ -951,10 +951,7 @@ public abstract class Level implements Bundlable {
 
 				if (mindVisRange >= 1) {
 					for (Mob mob : mobs) {
-						if (false && mob.alignment == Char.Alignment.NEUTRAL && ((Mimic) mob).stealthy()) {
-							continue;
-						}
-						int p = mob.pos;
+                        int p = mob.pos;
 						if (!fieldOfView[p] && (distance(c.pos, p) <= mindVisRange || (ally != null && distance(ally.pos, p) <= mindVisRange))) {
 							for (int i : PathFinder.NEIGHBOURS9) {
 								heroMindFov[mob.pos + i] = true;

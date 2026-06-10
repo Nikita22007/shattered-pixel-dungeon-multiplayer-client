@@ -95,9 +95,7 @@ public class WndWandmaker extends Window {
 
 		resize(WIDTH, (int) btnWand2.bottom());
 	}
-	public WndWandmaker( final Wandmaker wandmaker, final Item item ) {
-	}
-	
+
 	private void selectReward( int index ) {
 		SendData.sendWindowResult(id, index);
 	}
