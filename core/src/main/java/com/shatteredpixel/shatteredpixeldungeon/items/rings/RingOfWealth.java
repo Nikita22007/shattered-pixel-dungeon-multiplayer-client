@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Honeypot;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfExperience;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.brews.UnstableBrew;
@@ -38,7 +37,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfMet
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.UnstableSpell;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfEnchantment;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ExoticCrystals;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.Visual;
@@ -192,50 +190,6 @@ public class RingOfWealth extends Ring {
 			case 3:
 				return Random.Float() < ExoticCrystals.consumableExoticChance() ? new ScrollOfMetamorphosis() : new ScrollOfTransmutation();
 		}
-	}
-
-	private static Item genEquipmentDrop( int level ){
-		Item result;
-		//each upgrade increases depth used for calculating drops by 1
-		int floorset = (Dungeon.depth + level)/5;
-		switch (Random.Int(5)){
-			default: case 0: case 1:
-				Weapon w = null;
-				if (!w.hasGoodEnchant() && Random.Int(10) < level)      w.enchant();
-				else if (w.hasCurseEnchant())                           w.enchant(null);
-				result = w;
-				break;
-			case 2:
-				Armor a = null;
-				if (!a.hasGoodGlyph() && Random.Int(10) < level)        a.inscribe();
-				else if (a.hasCurseGlyph())                             a.inscribe(null);
-				result = a;
-				break;
-			case 3:
-				result = null;
-				break;
-			case 4:
-                result = null;
-				break;
-		}
-		//minimum level is 1/2/3/4/5/6 when ring level is 1/3/5/7/9/11
-		if (result.isUpgradable()){
-			int minLevel = (level+1)/2;
-			if (result.level() < minLevel){
-				result.level(minLevel);
-			}
-		}
-		result.cursed = false;
-		result.cursedKnown = true;
-		if (result.level() >= 2) {
-			latestDropTier = 4;
-		} else {
-			latestDropTier = 3;
-		}
-		return result;
-	}
-
-	public class Wealth extends RingBuff {
 	}
 
 }
