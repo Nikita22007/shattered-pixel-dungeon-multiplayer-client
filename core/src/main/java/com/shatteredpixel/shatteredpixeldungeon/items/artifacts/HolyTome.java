@@ -73,24 +73,11 @@ public class HolyTome extends Artifact {
 		}
 	}
 
-	@Override
-	public boolean doUnequip(Hero hero, boolean collect, boolean single) {
-		if (super.doUnequip(hero, collect, single)){
-			if (collect && hero.hasTalent(Talent.LIGHT_READING)){
-				activate(hero);
-			}
-
-			return true;
-		} else
-			return false;
-	}
-
 	public boolean canCast( Hero hero, ClericSpell spell ){
         if ((!isEquipped(hero) && (!Dungeon.hero.hasTalent(Talent.LIGHT_READING) || !hero.belongings.contains(this))))
             return false;
-        return true
-				&& charge >= spell.chargeUse(hero)
-				&& spell.canCast(hero);
+        return charge >= spell.chargeUse(hero)
+                && spell.canCast(hero);
 	}
 
 	public void spendCharge( float chargesSpent ){

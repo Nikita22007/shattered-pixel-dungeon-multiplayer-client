@@ -534,15 +534,6 @@ public enum Talent {
 			}
 		}
 
-		if (talent == LIGHT_READING && hero.heroClass == HeroClass.CLERIC){
-			for (Item item : Dungeon.hero.belongings.backpack){
-				if (item instanceof HolyTome){
-					if (!hero.belongings.lostInventory() || item.keptThroughLostInventory()) {
-						((HolyTome) item).activate(Dungeon.hero);
-					}
-				}
-			}
-		}
 
 		//if we happen to have spirit form applied with a ring of might
 		if (talent == SPIRIT_FORM){

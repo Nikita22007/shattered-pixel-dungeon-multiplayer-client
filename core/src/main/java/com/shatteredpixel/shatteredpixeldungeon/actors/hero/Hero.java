@@ -113,6 +113,7 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
+import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -285,10 +286,12 @@ public class Hero extends Char {
 		Belongings.preview(info, bundle);
 	}
 
+	@Contract(pure = true)
 	public boolean hasTalent(Talent talent) {
 		return pointsInTalent(talent) > 0;
 	}
 
+	@Contract(pure = true)
 	public int pointsInTalent(Talent talent) {
 		for (LinkedHashMap<Talent, Integer> tier : talents) {
 			for (Talent f : tier.keySet()) {

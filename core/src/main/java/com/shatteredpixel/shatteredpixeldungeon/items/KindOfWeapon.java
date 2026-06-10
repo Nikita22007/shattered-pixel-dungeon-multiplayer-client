@@ -70,7 +70,7 @@ abstract public class KindOfWeapon extends EquipableItem {
 		if (hero.belongings.secondWep == null || hero.belongings.secondWep.doUnequip( hero, true )) {
 
 			hero.belongings.secondWep = this;
-			activate( hero );
+
 			Talent.onItemEquipped(hero, this);
 			Badges.validateDuelistUnlock();
 			updateQuickslot();

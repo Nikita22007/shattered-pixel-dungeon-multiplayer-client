@@ -78,7 +78,6 @@ public class KingsCrown extends Item {
 
 				hero.belongings.armor = classArmor;
 				((HeroSprite) hero.sprite).updateArmor();
-				classArmor.activate(hero);
 
 			} else {
 
