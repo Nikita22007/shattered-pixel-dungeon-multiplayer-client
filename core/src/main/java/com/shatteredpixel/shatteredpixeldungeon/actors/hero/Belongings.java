@@ -344,8 +344,7 @@ public class Belongings implements Iterable<Item> {
 	//triggers when a run ends, so ignores lost inventory effects
 	public void identify() {
 		for (Item item : this) {
-			item.identify(false);
-		}
+        }
 	}
 	
 	public void observe() {
@@ -353,7 +352,7 @@ public class Belongings implements Iterable<Item> {
 			if (ShardOfOblivion.passiveIDDisabled() && weapon() instanceof Weapon){
 				((Weapon) weapon()).setIDReady();
 			} else {
-				weapon().identify();
+				weapon();
 				Badges.validateItemLevelAquired(weapon());
 			}
 		}
@@ -361,7 +360,7 @@ public class Belongings implements Iterable<Item> {
 			if (ShardOfOblivion.passiveIDDisabled() && secondWep() instanceof Weapon){
 				((Weapon) secondWep()).setIDReady();
 			} else {
-				secondWep().identify();
+				secondWep();
 				Badges.validateItemLevelAquired(secondWep());
 			}
 		}
@@ -369,20 +368,20 @@ public class Belongings implements Iterable<Item> {
 			if (ShardOfOblivion.passiveIDDisabled()){
 				//armor().setIDReady();
 			} else {
-				armor().identify();
+				armor();
 				Badges.validateItemLevelAquired(armor());
 			}
 		}
 		if (artifact() != null) {
 			//oblivion shard does not prevent artifact IDing
-			artifact().identify();
+			artifact();
 			Badges.validateItemLevelAquired(artifact());
 		}
 		if (misc() != null) {
 			if (ShardOfOblivion.passiveIDDisabled() && misc() instanceof Ring){
 				((Ring) misc()).setIDReady();
 			} else {
-				misc().identify();
+				misc();
 				Badges.validateItemLevelAquired(misc());
 			}
 		}
@@ -390,7 +389,7 @@ public class Belongings implements Iterable<Item> {
 			if (ShardOfOblivion.passiveIDDisabled()){
 				//ring().setIDReady();
 			} else {
-				ring().identify();
+				ring();
 				Badges.validateItemLevelAquired(ring());
 			}
 		}

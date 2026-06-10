@@ -493,15 +493,12 @@ public enum Talent {
 
 		if (talent == VETERANS_INTUITION && hero.pointsInTalent(VETERANS_INTUITION) == 2){
 			if (hero.belongings.armor() != null && !ShardOfOblivion.passiveIDDisabled())  {
-				hero.belongings.armor.identify();
 			}
 		}
 		if (talent == THIEFS_INTUITION && hero.pointsInTalent(THIEFS_INTUITION) == 2){
 			if (hero.belongings.ring instanceof Ring && !ShardOfOblivion.passiveIDDisabled()) {
-				hero.belongings.ring.identify();
 			}
 			if (hero.belongings.misc instanceof Ring && !ShardOfOblivion.passiveIDDisabled()) {
-				hero.belongings.misc.identify();
 			}
 			for (Item item : Dungeon.hero.belongings){
 				if (item instanceof Ring){
@@ -514,7 +511,7 @@ public enum Talent {
 		}
 		if (talent == ADVENTURERS_INTUITION && hero.pointsInTalent(ADVENTURERS_INTUITION) == 2){
 			if (hero.belongings.weapon() != null && !ShardOfOblivion.passiveIDDisabled()){
-				hero.belongings.weapon().identify();
+				hero.belongings.weapon();
 			}
 		}
 
@@ -541,11 +538,11 @@ public enum Talent {
 		}
 
 		if (talent == UNENCUMBERED_SPIRIT && hero.pointsInTalent(talent) == 3){
-			Item toGive = new ClothArmor().identify();
+			Item toGive = new ClothArmor();
 			if (!false){
 				Dungeon.level.drop(toGive, hero.pos).sprite.drop();
 			}
-			toGive = new Gloves().identify();
+			toGive = new Gloves();
 			if (!false){
 				Dungeon.level.drop(toGive, hero.pos).sprite.drop();
 			}
@@ -839,7 +836,6 @@ public enum Talent {
 					((Ring) item).setIDReady();
 				}
 			} else {
-				item.identify();
 			}
 		}
 	}

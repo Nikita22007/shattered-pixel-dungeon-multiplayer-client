@@ -73,7 +73,6 @@ public class WndImp extends Window {
 		tokens.detachAll( Dungeon.hero.belongings.backpack );
 		if (reward == null) return;
 
-		reward.identify(false);
         if (false) {
 			GLog.i( Messages.capitalize(Messages.get(Dungeon.hero, "you_now_have", reward.name())) );
 		} else {

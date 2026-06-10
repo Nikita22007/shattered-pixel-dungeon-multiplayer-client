@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -77,8 +76,6 @@ public class ScrollOfPsionicBlast extends ExoticScroll {
 			GLog.n( Messages.get(this, "ondeath") );
 		}
 
-		identify();
-		
-	
-	}
+
+    }
 }

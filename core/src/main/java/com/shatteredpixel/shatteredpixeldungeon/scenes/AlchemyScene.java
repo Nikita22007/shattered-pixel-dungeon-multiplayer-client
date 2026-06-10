@@ -871,7 +871,6 @@ public class AlchemyScene extends PixelScene {
 				}
 			}
 		};
-		item.identify();
 		IconTitle newName = new IconTitle(item){
 
 			boolean fading;

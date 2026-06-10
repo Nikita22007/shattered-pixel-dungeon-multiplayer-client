@@ -35,9 +35,8 @@ public class PotionOfHaste extends Potion {
 	
 	@Override
 	public void apply(Hero hero) {
-		identify();
-		
-		GLog.w( Messages.get(this, "energetic") );
+
+        GLog.w( Messages.get(this, "energetic") );
         SpellSprite.show(hero, SpellSprite.HASTE, 1, 1, 0);
 	}
 	

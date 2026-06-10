@@ -82,8 +82,7 @@ public class PotionOfPurity extends Potion {
 		if (Dungeon.level.heroFOV[cell]) {
 			Sample.INSTANCE.play(Assets.Sounds.SHATTER);
 
-			identify();
-			GLog.i(Messages.get(this, "freshness"));
+            GLog.i(Messages.get(this, "freshness"));
 		}
 		
 	}
@@ -92,8 +91,7 @@ public class PotionOfPurity extends Potion {
 	public void apply( Hero hero ) {
 		GLog.w( Messages.get(this, "protected") );
         SpellSprite.show(hero, SpellSprite.PURITY);
-		identify();
-	}
+    }
 	
 	@Override
 	public int value() {

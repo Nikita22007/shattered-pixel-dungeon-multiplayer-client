@@ -32,7 +32,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BodyForm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfArcana;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfForce;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
@@ -165,7 +164,6 @@ abstract public class Weapon extends KindOfWeapon {
 					}
 					setIDReady();
 				} else {
-					identify();
 					GLog.p(Messages.get(Weapon.class, "identify"));
 					Badges.validateItemLevelAquired(this);
 				}
@@ -221,15 +219,6 @@ abstract public class Weapon extends KindOfWeapon {
 		super.reset();
 		usesLeftToID = USES_TO_ID;
 		availableUsesToID = USES_TO_ID/2f;
-	}
-
-	@Override
-	public Item identify(boolean byHero) {
-		if (enchantment != null && byHero && Dungeon.hero != null && Dungeon.hero.isAlive()){
-			Catalog.setSeen(enchantment.getClass());
-			Statistics.itemTypesDiscovered.add(enchantment.getClass());
-		}
-		return super.identify(byHero);
 	}
 
 	public void setIDReady(){

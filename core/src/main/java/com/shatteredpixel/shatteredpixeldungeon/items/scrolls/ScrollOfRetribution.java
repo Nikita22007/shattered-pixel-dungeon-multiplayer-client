@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.scrolls;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -70,9 +69,7 @@ public class ScrollOfRetribution extends Scroll {
 
         Dungeon.observe();
 
-		identify();
-		
-		readAnimation();
+        readAnimation();
 		
 	}
 	

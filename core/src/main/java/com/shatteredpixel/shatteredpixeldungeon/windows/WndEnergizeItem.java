@@ -171,8 +171,7 @@ public class WndEnergizeItem extends WndInfoItem {
 			//energizing items doesn't spend time
 			hero.spend(-hero.cooldown());
             new EnergyCrystal(item.energyVal());
-            item.identify();
-			GLog.h("You energized: " + item.name());
+            GLog.h("You energized: " + item.name());
 
 		}
 	}

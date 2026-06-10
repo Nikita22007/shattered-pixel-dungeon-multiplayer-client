@@ -41,9 +41,8 @@ public class PotionOfStrength extends Potion {
 	
 	@Override
 	public void apply( Hero hero ) {
-		identify();
 
-		hero.STR++;
+        hero.STR++;
 		hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, "1", FloatingText.STRENGTH);
 
 		GLog.p( Messages.get(this, "msg", hero.STR()) );

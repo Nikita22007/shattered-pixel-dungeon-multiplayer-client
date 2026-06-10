@@ -34,7 +34,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.ItemStatusHandler;
 import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.brews.AquaBrew;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.ElixirOfHoneyedHealing;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.ExoticPotion;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCleansing;
@@ -43,7 +42,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfShr
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfSnapFreeze;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfStormClouds;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
-import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Blindweed;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Earthroot;
@@ -329,16 +327,6 @@ public class Potion extends Item {
 	}
 	
 	@Override
-	public Item identify( boolean byHero ) {
-		super.identify(byHero);
-
-		if (!isKnown()) {
-			setKnown();
-		}
-		return this;
-	}
-	
-	@Override
 	public String name() {
 		return isKnown() ? super.name() : Messages.get(this, color);
 	}
@@ -494,7 +482,6 @@ public class Potion extends Item {
 			}
 			
 			if (seeds.size() == 1){
-				result.identify();
 			}
 
 			while (result instanceof PotionOfHealing

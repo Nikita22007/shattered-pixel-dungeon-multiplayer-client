@@ -57,9 +57,8 @@ public class ScrollOfTeleportation extends Scroll {
 		if (teleportPreferringUnseen( curUser )){
 			readAnimation();
 		}
-		identify();
 
-	}
+    }
 	
 	public static boolean teleportToLocation(Char ch, int pos){
 		PathFinder.buildDistanceMap(pos, BArray.or(Dungeon.level.passable, Dungeon.level.avoid, null));

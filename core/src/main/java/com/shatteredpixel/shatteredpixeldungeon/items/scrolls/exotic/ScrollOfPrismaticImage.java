@@ -62,9 +62,7 @@ public class ScrollOfPrismaticImage extends ExoticScroll {
             ((PrismaticGuard) null).set( PrismaticGuard.maxHP( curUser ) );
 		}
 
-		identify();
-		
-		Sample.INSTANCE.play( Assets.Sounds.READ );
+        Sample.INSTANCE.play( Assets.Sounds.READ );
 	
 		readAnimation();
 	}

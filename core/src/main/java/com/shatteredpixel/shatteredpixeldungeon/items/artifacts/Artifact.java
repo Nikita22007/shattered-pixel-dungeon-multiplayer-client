@@ -69,8 +69,7 @@ public class Artifact extends KindofMisc {
 
 			if (super.doEquip( hero )){
 
-				identify();
-				return true;
+                return true;
 
 			} else {
 

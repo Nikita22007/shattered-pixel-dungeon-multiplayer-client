@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Degrade;
@@ -32,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -232,11 +230,13 @@ public class Item implements Bundlable {
 	protected void onDetach(){}
 
 	//returns the true level of the item, ignoring all modifiers aside from upgrades
+	@Contract(pure=true)
 	public final int trueLevel(){
 		return level;
 	}
 
 	//returns the persistant level of the item, only affected by modifiers which are persistent (e.g. curse infusion)
+	@Contract(pure=true)
 	public int level(){
 		return level;
 	}
@@ -291,23 +291,28 @@ public class Item implements Bundlable {
 		
 		return this;
 	}
-	
+
+	@Contract(pure=true)
 	public int visiblyUpgraded() {
 		return levelKnown ? level() : 0;
 	}
 
+	@Contract(pure=true)
 	public int buffedVisiblyUpgraded() {
 		return levelKnown ? buffedLvl() : 0;
 	}
-	
+
+	@Contract(pure=true)
 	public boolean visiblyCursed() {
 		return cursed && cursedKnown;
 	}
-	
+
+	@Contract(pure=true)
 	public boolean isUpgradable() {
 		return true;
 	}
-	
+
+	@Contract(pure=true)
 	public boolean isIdentified() {
 		return levelKnown && cursedKnown;
 	}
@@ -317,24 +322,6 @@ public class Item implements Bundlable {
 		return false;
 	}
 
-	public final Item identify(){
-		return identify(true);
-	}
-
-	public Item identify( boolean byHero ) {
-
-		if (byHero && Dungeon.hero != null && Dungeon.hero.isAlive()){
-			Catalog.setSeen(getClass());
-			Statistics.itemTypesDiscovered.add(getClass());
-		}
-
-		levelKnown = true;
-		cursedKnown = true;
-		Item.updateQuickslot();
-		
-		return this;
-	}
-	
 	public void onHeroGainExp( float levelPercent, Hero hero ){
 		//do nothing by default
 	}

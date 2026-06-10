@@ -516,8 +516,7 @@ public class WndBlacksmith extends Window {
 							((Armor) item).inscribe(Blacksmith.Quest.smithGlyph);
 						}
 
-						item.identify(false);
-						Sample.INSTANCE.play(Assets.Sounds.EVOKE);
+                        Sample.INSTANCE.play(Assets.Sounds.EVOKE);
 						Item.evoke( Dungeon.hero );
 						if (false) {
 							GLog.i( Messages.capitalize(Messages.get(Dungeon.hero, "you_now_have", item.name())) );

@@ -36,7 +36,6 @@ public class PotionOfInvisibility extends Potion {
 
 	@Override
 	public void apply( Hero hero ) {
-		identify();
         GLog.i( Messages.get(this, "invisible") );
 		Sample.INSTANCE.play( Assets.Sounds.MELD );
 	}

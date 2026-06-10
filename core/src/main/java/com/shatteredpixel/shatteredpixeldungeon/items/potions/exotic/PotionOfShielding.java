@@ -38,9 +38,8 @@ public class PotionOfShielding extends ExoticPotion {
 	
 	@Override
 	public void apply(Hero hero) {
-		identify();
 
-		if (Dungeon.isChallenged(Challenges.NO_HEALING)){
+        if (Dungeon.isChallenged(Challenges.NO_HEALING)){
 			PotionOfHealing.pharmacophobiaProc(hero);
 		} else {
 			//~75% of a potion of healing

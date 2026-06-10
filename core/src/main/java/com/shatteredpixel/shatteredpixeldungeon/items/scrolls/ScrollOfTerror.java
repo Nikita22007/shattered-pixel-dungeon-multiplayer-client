@@ -68,9 +68,8 @@ public class ScrollOfTerror extends Scroll {
 		default:
 			GLog.i( Messages.get(this, "many") );
 		}
-		identify();
 
-		readAnimation();
+        readAnimation();
 	}
 	
 	@Override

@@ -194,14 +194,6 @@ public class Ring extends KindofMisc {
 		return this;
 	}
 
-
-	@Override
-	public Item identify( boolean byHero ) {
-		setKnown();
-		levelsToID = 0;
-		return super.identify(byHero);
-	}
-
 	public void setIDReady(){
 		levelsToID = -1;
 	}
@@ -293,7 +285,6 @@ public class Ring extends KindofMisc {
 				}
 				setIDReady();
 			} else {
-				identify();
 				GLog.p(Messages.get(Ring.class, "identify"));
 				Badges.validateItemLevelAquired(this);
 			}

@@ -42,8 +42,6 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 
-import java.util.ArrayList;
-
 public class ShardOfOblivion extends Trinket {
 
 	{
@@ -115,8 +113,7 @@ public class ShardOfOblivion extends Trinket {
 			}
 
 			if (ready){
-				item.identify();
-				Badges.validateItemLevelAquired(item);
+                Badges.validateItemLevelAquired(item);
 				curUser.sprite.operate(curUser.pos);
 				Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
 				curUser.sprite.parent.add( new Identification( curUser.sprite.center().offset( 0, -16 ) ) );

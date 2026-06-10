@@ -54,8 +54,6 @@ public class ScrollOfDread extends ExoticScroll {
 			}
 		}
 
-		identify();
-		
-		readAnimation();
+        readAnimation();
 	}
 }

@@ -33,7 +33,6 @@ public class PotionOfStamina extends ExoticPotion {
 	
 	@Override
 	public void apply(Hero hero) {
-		identify();
 
         SpellSprite.show(hero, SpellSprite.HASTE, 0.5f, 1, 0.5f);
 	}

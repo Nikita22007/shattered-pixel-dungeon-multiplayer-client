@@ -81,8 +81,7 @@ public class ScrollOfDivination extends ExoticScroll {
 					}
 					probs[0]--;
 					Potion p = Reflection.newInstance(Random.element(potions));
-					p.identify();
-					IDed.add(p);
+                    IDed.add(p);
 					potions.remove(p.getClass());
 					break;
 				case 1:
@@ -92,8 +91,7 @@ public class ScrollOfDivination extends ExoticScroll {
 					}
 					probs[1]--;
 					Scroll s = Reflection.newInstance(Random.element(scrolls));
-					s.identify();
-					IDed.add(s);
+                    IDed.add(s);
 					scrolls.remove(s.getClass());
 					break;
 				case 2:
@@ -119,8 +117,7 @@ public class ScrollOfDivination extends ExoticScroll {
 		}
 
 		readAnimation();
-		identify();
-	}
+    }
 	
 	private class WndDivination extends Window {
 		

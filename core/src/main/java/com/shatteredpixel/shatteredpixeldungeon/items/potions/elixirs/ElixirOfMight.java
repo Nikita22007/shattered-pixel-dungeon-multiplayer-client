@@ -47,9 +47,8 @@ public class ElixirOfMight extends Elixir {
 	
 	@Override
 	public void apply( Hero hero ) {
-		identify();
-		
-		hero.STR++;
+
+        hero.STR++;
 		hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, "1", FloatingText.STRENGTH);
 
         ((HTBoost) null).reset();

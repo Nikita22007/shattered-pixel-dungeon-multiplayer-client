@@ -43,9 +43,8 @@ public class PotionOfLevitation extends Potion {
 
 		splash( cell );
 		if (Dungeon.level.heroFOV[cell]) {
-			identify();
 
-			Sample.INSTANCE.play( Assets.Sounds.SHATTER );
+            Sample.INSTANCE.play( Assets.Sounds.SHATTER );
 			Sample.INSTANCE.play( Assets.Sounds.GAS );
 		}
 
@@ -54,7 +53,6 @@ public class PotionOfLevitation extends Potion {
 	
 	@Override
 	public void apply( Hero hero ) {
-		identify();
         GLog.i( Messages.get(this, "float") );
 	}
 	

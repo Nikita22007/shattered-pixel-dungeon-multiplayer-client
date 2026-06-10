@@ -217,16 +217,6 @@ public abstract class Scroll extends Item {
 	}
 	
 	@Override
-	public Item identify( boolean byHero ) {
-		super.identify(byHero);
-
-		if (!isKnown()) {
-			setKnown();
-		}
-		return this;
-	}
-	
-	@Override
 	public String name() {
 		return isKnown() ? super.name() : Messages.get(this, rune);
 	}
@@ -341,7 +331,6 @@ public abstract class Scroll extends Item {
 					((AlchemyScene) ShatteredPixelDungeon.scene()).showIdentify(s);
 				}
 			} else {
-				s.identify();
 			}
 			
 			return Reflection.newInstance(stones.get(s.getClass())).quantity(2);

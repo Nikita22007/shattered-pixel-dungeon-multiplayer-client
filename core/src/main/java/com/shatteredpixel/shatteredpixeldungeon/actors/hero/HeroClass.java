@@ -99,7 +99,7 @@ public enum HeroClass {
 		hero.heroClass = this;
 		Talent.initClassTalents(hero);
 
-		Item i = new ClothArmor().identify();
+		Item i = new ClothArmor();
 		if (!Challenges.isItemBlocked(i)) hero.belongings.armor = (ClothArmor)i;
 
 		i = new Food();
@@ -111,7 +111,7 @@ public enum HeroClass {
 
 		Waterskin waterskin = new Waterskin();
 
-        new ScrollOfIdentify().identify();
+		new ScrollOfIdentify();
 
 		switch (this) {
 			case WARRIOR:
@@ -169,17 +169,16 @@ public enum HeroClass {
 	}
 
 	private static void initWarrior( Hero hero ) {
-		(hero.belongings.weapon = new WornShortsword()).identify();
+		hero.belongings.weapon = new WornShortsword();
 		ThrowingStone stones = new ThrowingStone();
-        stones.identify();
 
-        Dungeon.quickslot.setSlot(0, stones);
+		Dungeon.quickslot.setSlot(0, stones);
 
 		if (hero.belongings.armor != null){
 		}
 
-		new PotionOfHealing().identify();
-		new ScrollOfRage().identify();
+		new PotionOfHealing();
+		new ScrollOfRage();
 	}
 
 	private static void initMage( Hero hero ) {
@@ -187,68 +186,66 @@ public enum HeroClass {
 
 		staff = new MagesStaff(new WandOfMagicMissile());
 
-		(hero.belongings.weapon = staff).identify();
+		hero.belongings.weapon = staff;
 
 		Dungeon.quickslot.setSlot(0, staff);
 
-		new ScrollOfUpgrade().identify();
-		new PotionOfLiquidFlame().identify();
+		new ScrollOfUpgrade();
+		new PotionOfLiquidFlame();
 	}
 
 	private static void initRogue( Hero hero ) {
-		(hero.belongings.weapon = new Dagger()).identify();
+		hero.belongings.weapon = new Dagger();
 
 		CloakOfShadows cloak = new CloakOfShadows();
-		(hero.belongings.artifact = cloak).identify();
+		hero.belongings.artifact = cloak;
 
 		ThrowingKnife knives = new ThrowingKnife();
-        knives.identify();
 
-        Dungeon.quickslot.setSlot(0, cloak);
+		Dungeon.quickslot.setSlot(0, cloak);
 		Dungeon.quickslot.setSlot(1, knives);
 
-		new ScrollOfMagicMapping().identify();
-		new PotionOfInvisibility().identify();
+		new ScrollOfMagicMapping();
+		new PotionOfInvisibility();
 	}
 
 	private static void initHuntress( Hero hero ) {
 
-		(hero.belongings.weapon = new Gloves()).identify();
+		hero.belongings.weapon = new Gloves();
 		SpiritBow bow = new SpiritBow();
-        bow.identify();
 
-        Dungeon.quickslot.setSlot(0, bow);
+		Dungeon.quickslot.setSlot(0, bow);
 
-		new PotionOfMindVision().identify();
-		new ScrollOfLullaby().identify();
+		new PotionOfMindVision();
+		new ScrollOfLullaby();
 	}
 
 	private static void initDuelist( Hero hero ) {
 
-		(hero.belongings.weapon = new Rapier()).identify();
+		hero.belongings.weapon = new Rapier();
 
 		ThrowingSpike spikes = new ThrowingSpike();
         //set quantity is 3, but Duelist starts with 2
-        spikes.quantity(2).identify();
+		spikes.quantity(2);
 
-        Dungeon.quickslot.setSlot(0, hero.belongings.weapon);
+		Dungeon.quickslot.setSlot(0, hero.belongings.weapon);
 		Dungeon.quickslot.setSlot(1, spikes);
 
-		new PotionOfStrength().identify();
-		new ScrollOfMirrorImage().identify();
+		new PotionOfStrength();
+		new ScrollOfMirrorImage();
 	}
 
 	private static void initCleric( Hero hero ) {
 
-		(hero.belongings.weapon = new Cudgel()).identify();
+		hero.belongings.weapon = new Cudgel();
 
 		HolyTome tome = new HolyTome();
-		(hero.belongings.artifact = tome).identify();
+		hero.belongings.artifact = tome;
 
 		Dungeon.quickslot.setSlot(0, tome);
 
-		new PotionOfPurity().identify();
-		new ScrollOfRemoveCurse().identify();
+		new PotionOfPurity();
+		new ScrollOfRemoveCurse();
 	}
 
 	public String title() {

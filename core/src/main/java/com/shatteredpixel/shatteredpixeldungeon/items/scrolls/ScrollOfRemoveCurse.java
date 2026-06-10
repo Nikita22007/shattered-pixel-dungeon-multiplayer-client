@@ -58,7 +58,6 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 			}
 		}
 		if (spirit != null) {
-            identify();
             Sample.INSTANCE.play(Assets.Sounds.READ);
             readAnimation();
 

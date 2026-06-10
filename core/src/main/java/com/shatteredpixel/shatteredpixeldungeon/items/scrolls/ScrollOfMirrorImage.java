@@ -52,9 +52,8 @@ public class ScrollOfMirrorImage extends Scroll {
 		} else {
 			GLog.i(Messages.get(this, "no_copies"));
 		}
-		identify();
-		
-		Sample.INSTANCE.play( Assets.Sounds.READ );
+
+        Sample.INSTANCE.play( Assets.Sounds.READ );
 		
 		readAnimation();
 	}

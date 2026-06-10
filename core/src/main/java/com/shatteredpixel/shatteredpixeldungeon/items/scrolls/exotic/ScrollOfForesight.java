@@ -37,9 +37,7 @@ public class ScrollOfForesight extends ExoticScroll {
 		detach(curUser.belongings.backpack);
 		Sample.INSTANCE.play( Assets.Sounds.READ );
 
-        identify();
-		
-		readAnimation();
+        readAnimation();
 	}
 	
 }

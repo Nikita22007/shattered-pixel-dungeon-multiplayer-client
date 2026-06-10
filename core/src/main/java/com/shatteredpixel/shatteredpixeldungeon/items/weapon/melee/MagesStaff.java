@@ -91,7 +91,6 @@ public class MagesStaff extends MeleeWeapon {
 
 	public MagesStaff(Wand wand){
 		this();
-		wand.identify();
 		wand.cursed = false;
 		this.wand = wand;
 		updateWand(false);

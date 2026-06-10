@@ -95,8 +95,7 @@ public class MindForm extends ClericSpell {
 			if (effect instanceof Wand){
 				((Wand) effect).level(effectLevel());
 				((Wand) effect).curCharges = ((Wand) effect).maxCharges;
-				((Wand) effect).identify(false);
-				return (Wand)effect;
+                return (Wand)effect;
 			}
 			return null;
 		}
@@ -105,8 +104,7 @@ public class MindForm extends ClericSpell {
 			if (effect instanceof MissileWeapon){
 				((MissileWeapon) effect).level(effectLevel());
 				((MissileWeapon) effect).repair(100);
-				((MissileWeapon) effect).identify(false);
-				((MissileWeapon) effect).spawnedForEffect = true;
+                ((MissileWeapon) effect).spawnedForEffect = true;
 				return (MissileWeapon) effect;
 			}
 			return null;

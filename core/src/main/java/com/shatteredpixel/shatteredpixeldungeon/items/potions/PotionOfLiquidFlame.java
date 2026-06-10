@@ -41,9 +41,8 @@ public class PotionOfLiquidFlame extends Potion {
 
 		splash( cell );
 		if (Dungeon.level.heroFOV[cell]) {
-			identify();
 
-			Sample.INSTANCE.play( Assets.Sounds.SHATTER );
+            Sample.INSTANCE.play( Assets.Sounds.SHATTER );
 			Sample.INSTANCE.play( Assets.Sounds.BURNING );
 		}
 

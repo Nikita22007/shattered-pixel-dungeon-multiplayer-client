@@ -47,8 +47,6 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 
-import java.util.ArrayList;
-
 abstract public class ClassArmor extends Armor {
 
 	private static final String AC_ABILITY = "ABILITY";
@@ -123,8 +121,7 @@ abstract public class ClassArmor extends Armor {
 		
 		classArmor.level(armor.trueLevel());
 		if (armor.levelKnown && armor.cursedKnown) {
-			classArmor.identify();
-		} else {
+        } else {
 			classArmor.levelKnown = armor.levelKnown;
 			classArmor.cursedKnown = true;
 		}
@@ -251,8 +248,7 @@ abstract public class ClassArmor extends Armor {
 								}
 
 								if (armor.levelKnown && armor.cursedKnown) {
-									identify();
-								} else {
+                                } else {
 									levelKnown = armor.levelKnown;
 									cursedKnown = true;
 								}

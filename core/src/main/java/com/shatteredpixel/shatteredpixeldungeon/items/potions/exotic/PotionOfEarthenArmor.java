@@ -33,9 +33,8 @@ public class PotionOfEarthenArmor extends ExoticPotion {
 	
 	@Override
 	public void apply( Hero hero ) {
-		identify();
-		
-		Barkskin.conditionallyAppend( hero, 2 + hero.lvl/3, 50 );
+
+        Barkskin.conditionallyAppend( hero, 2 + hero.lvl/3, 50 );
 	}
 	
 }

@@ -25,11 +25,8 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -45,9 +42,8 @@ public class PotionOfCleansing extends ExoticPotion {
 	
 	@Override
 	public void apply( Hero hero ) {
-		identify();
-		
-		cleanse( hero );
+
+        cleanse( hero );
 		new Flare( 6, 32 ).color(0xFF4CD2, true).show( curUser.sprite, 2f );
 	}
 	
@@ -59,8 +55,7 @@ public class PotionOfCleansing extends ExoticPotion {
 			splash( cell );
 			if (Dungeon.level.heroFOV[cell]) {
 				Sample.INSTANCE.play(Assets.Sounds.SHATTER);
-				identify();
-			}
+            }
 			
 			if (Actor.findChar(cell) != null){
 				cleanse(Actor.findChar(cell));

@@ -80,9 +80,7 @@ public class ScrollOfMagicMapping extends Scroll {
 		SpellSprite.show( curUser, SpellSprite.MAP );
 		Sample.INSTANCE.play( Assets.Sounds.READ );
 
-		identify();
-
-		readAnimation();
+        readAnimation();
 	}
 	
 	@Override

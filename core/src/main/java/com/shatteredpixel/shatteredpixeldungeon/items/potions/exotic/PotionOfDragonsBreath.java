@@ -62,8 +62,7 @@ public class PotionOfDragonsBreath extends ExoticPotion {
 	protected void drink(final Hero hero) {
 
 		if (!isKnown()) {
-			identify();
-			curItem = detach( hero.belongings.backpack );
+            curItem = detach( hero.belongings.backpack );
 			identifiedByUse = true;
 		} else {
 			identifiedByUse = false;

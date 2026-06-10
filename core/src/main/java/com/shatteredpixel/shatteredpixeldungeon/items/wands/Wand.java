@@ -41,8 +41,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.MagicalHolster;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
@@ -64,7 +62,6 @@ import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 import org.jetbrains.annotations.Contract;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public abstract class Wand extends Item {
@@ -218,17 +215,6 @@ public abstract class Wand extends Item {
 	public void level( int value) {
 		super.level( value );
 		updateLevel();
-	}
-	
-	@Override
-	public Item identify( boolean byHero ) {
-		
-		curChargeKnown = true;
-		super.identify(byHero);
-		
-		updateQuickslot();
-		
-		return this;
 	}
 
 	public void setIDReady(){
@@ -410,7 +396,6 @@ public abstract class Wand extends Item {
 					}
 					setIDReady();
 				} else {
-					identify();
 					GLog.p(Messages.get(Wand.class, "identify"));
 					Badges.validateItemLevelAquired(this);
 				}
