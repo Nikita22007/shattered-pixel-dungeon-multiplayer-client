@@ -140,13 +140,6 @@ public abstract class Plant implements Bundlable {
 		protected Class<? extends Plant> plantClass;
 		
 		@Override
-		public ArrayList<String> actions( Hero hero ) {
-			ArrayList<String> actions = super.actions( hero );
-			actions.add( AC_PLANT );
-			return actions;
-		}
-		
-		@Override
 		protected void onThrow( int cell ) {
 			if (Dungeon.level.map[cell] == Terrain.ALCHEMY
 					|| Dungeon.level.pit[cell]
@@ -236,7 +229,7 @@ public abstract class Plant implements Bundlable {
 			
 			@Override
 			public boolean isSimilar(Item item) {
-				return item instanceof Plant.Seed;
+				return item instanceof Seed;
 			}
 			
 			@Override

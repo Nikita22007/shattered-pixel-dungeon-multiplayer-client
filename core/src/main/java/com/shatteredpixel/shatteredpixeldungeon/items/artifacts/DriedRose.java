@@ -102,29 +102,6 @@ public class DriedRose extends Artifact {
 	public static final String AC_OUTFIT = "OUTFIT";
 
 	@Override
-	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
-		if (!false){
-			return actions;
-		}
-		if (isEquipped(hero)
-                && charge == chargeCap
-                && !cursed) {
-            if (ghostID == 0) {
-                actions.add(AC_SUMMON);
-            }
-        }
-		if (ghostID != 0){
-			actions.add(AC_DIRECT);
-		}
-		if (isIdentified() && !cursed){
-			actions.add(AC_OUTFIT);
-		}
-		
-		return actions;
-	}
-
-	@Override
 	public String defaultAction() {
 		if (ghost != null){
 			return AC_DIRECT;

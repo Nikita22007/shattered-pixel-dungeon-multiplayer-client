@@ -71,19 +71,6 @@ public class HornOfPlenty extends Artifact {
 	public static final String AC_STORE = "STORE";
 
 	@Override
-	public ArrayList<String> actions( Hero hero ) {
-        ArrayList<String> actions = super.actions(hero);
-        if (isEquipped(hero) && charge > 0) {
-            actions.add(AC_SNACK);
-            actions.add(AC_EAT);
-        }
-        if (isEquipped(hero) && level() < levelCap && !cursed) {
-            actions.add(AC_STORE);
-        }
-        return actions;
-    }
-
-	@Override
 	public void execute( Hero hero, String action ) {
 
         super.execute(hero, action);

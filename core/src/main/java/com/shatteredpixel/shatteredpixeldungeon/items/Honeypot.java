@@ -52,13 +52,6 @@ public class Honeypot extends Item {
 	}
 	
 	@Override
-	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
-		actions.add( AC_SHATTER );
-		return actions;
-	}
-	
-	@Override
 	public void execute( final Hero hero, String action ) {
 
 		super.execute( hero, action );

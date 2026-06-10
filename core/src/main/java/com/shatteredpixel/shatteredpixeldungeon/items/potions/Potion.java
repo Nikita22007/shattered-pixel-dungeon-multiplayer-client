@@ -215,13 +215,6 @@ public class Potion extends Item {
 	}
 	
 	@Override
-	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
-		actions.add( AC_DRINK );
-		return actions;
-	}
-	
-	@Override
 	public void execute( final Hero hero, String action ) {
 
 		super.execute( hero, action );
@@ -545,7 +538,7 @@ public class Potion extends Item {
 
 				@Override
 				public String name() {
-					return Messages.get(Potion.SeedToPotion.class, "name");
+					return Messages.get(SeedToPotion.class, "name");
 				}
 				
 				@Override

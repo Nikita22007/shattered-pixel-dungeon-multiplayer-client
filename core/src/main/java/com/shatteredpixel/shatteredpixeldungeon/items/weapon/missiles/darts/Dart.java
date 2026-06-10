@@ -65,13 +65,6 @@ public class Dart extends MissileWeapon {
 	protected static final String AC_TIP = "TIP";
 	
 	@Override
-	public ArrayList<String> actions(Hero hero) {
-		ArrayList<String> actions = super.actions( hero );
-		actions.add( AC_TIP );
-		return actions;
-	}
-	
-	@Override
 	public void execute(Hero hero, String action) {
 		super.execute(hero, action);
 		if (action.equals(AC_TIP)){

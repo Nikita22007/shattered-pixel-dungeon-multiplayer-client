@@ -150,16 +150,6 @@ abstract public class ClassArmor extends Armor {
 		tier = bundle.getInt( ARMOR_TIER );
 		charge = bundle.getFloat(CHARGE);
 	}
-	
-	@Override
-	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
-		if (isEquipped( hero )) {
-			actions.add( AC_ABILITY );
-		}
-		actions.add( AC_TRANSFER );
-		return actions;
-	}
 
 	@Override
 	public String actionName(String action, Hero hero) {

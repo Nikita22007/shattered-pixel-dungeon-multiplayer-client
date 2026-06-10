@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.MetalShard;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
@@ -56,17 +57,6 @@ public class ReclaimTrap extends TargetedSpell {
 	//a buff attached to the hero, which is much more resistant to exploits
 
 	private Class<?extends Trap> storedTrap = null;
-	
-	@Override
-	public ArrayList<String> actions(Hero hero) {
-		ArrayList<String> actions = super.actions(hero);
-		//prevents exploits, pre-v3.0.0
-		if (storedTrap != null){
-			actions.remove(AC_DROP);
-			actions.remove(AC_THROW);
-		}
-		return actions;
-	}
 
 	@Override
 	protected void affectTarget(Ballistica bolt, Hero hero) {

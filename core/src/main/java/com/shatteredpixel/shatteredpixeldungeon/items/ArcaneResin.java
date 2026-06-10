@@ -56,13 +56,6 @@ public class ArcaneResin extends Item {
 	private static final String AC_APPLY = "APPLY";
 
 	@Override
-	public ArrayList<String> actions(Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
-		actions.add( AC_APPLY );
-		return actions;
-	}
-
-	@Override
 	public void execute( Hero hero, String action ) {
 
 		super.execute( hero, action );

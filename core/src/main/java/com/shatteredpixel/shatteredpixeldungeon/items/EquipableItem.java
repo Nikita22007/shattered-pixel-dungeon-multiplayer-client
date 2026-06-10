@@ -43,13 +43,6 @@ public abstract class EquipableItem extends CustomItem {
 		bones = true;
 	}
 
-	@Override
-	public ArrayList<String> actions(Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
-		actions.add( isEquipped( hero ) ? AC_UNEQUIP : AC_EQUIP );
-		return actions;
-	}
-
 	protected static int slotOfUnequipped = -1;
 
 	@Override

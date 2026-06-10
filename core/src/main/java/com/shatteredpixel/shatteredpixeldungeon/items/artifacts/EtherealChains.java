@@ -66,17 +66,6 @@ public class EtherealChains extends Artifact {
 		usesTargeting = true;
 	}
 
-	@Override
-	public ArrayList<String> actions(Hero hero) {
-		ArrayList<String> actions = super.actions( hero );
-		if (isEquipped(hero) && charge > 0 && !cursed) {
-			{
-				actions.add(AC_CAST);
-			}
-		}
-		return actions;
-	}
-
 	public int targetingPos( Hero user, int dst ){
 		return dst;
 	}

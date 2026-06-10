@@ -61,14 +61,6 @@ public abstract class TippedDart extends Dart {
 	private static final String AC_CLEAN = "CLEAN";
 	
 	@Override
-	public ArrayList<String> actions(Hero hero) {
-		ArrayList<String> actions = super.actions( hero );
-		actions.remove( AC_TIP );
-		actions.add( AC_CLEAN );
-		return actions;
-	}
-	
-	@Override
 	public void execute(final Hero hero, String action) {
 		super.execute(hero, action);
 		if (action.equals( AC_CLEAN )){

@@ -59,20 +59,6 @@ public class AlchemistsToolkit extends Artifact {
 	private float warmUpDelay;
 
 	@Override
-	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
-		if (isEquipped(hero) && !cursed) {
-			{
-				actions.add(AC_BREW);
-				if (level() < levelCap) {
-					actions.add(AC_ENERGIZE);
-				}
-			}
-		}
-		return actions;
-	}
-
-	@Override
 	public void execute(Hero hero, String action ) {
 
 		super.execute(hero, action);

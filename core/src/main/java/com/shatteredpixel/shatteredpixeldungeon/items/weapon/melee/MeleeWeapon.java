@@ -79,15 +79,6 @@ public class MeleeWeapon extends Weapon {
 	}
 
 	@Override
-	public ArrayList<String> actions(Hero hero) {
-		ArrayList<String> actions = super.actions(hero);
-		if (isEquipped(hero) && hero.heroClass == HeroClass.DUELIST){
-			actions.add(AC_ABILITY);
-		}
-		return actions;
-	}
-
-	@Override
 	public String actionName(String action, Hero hero) {
 		if (action.equals(AC_ABILITY)){
 			return Messages.upperCase(Messages.get(this, "ability_name"));

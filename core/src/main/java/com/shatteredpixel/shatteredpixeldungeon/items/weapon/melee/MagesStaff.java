@@ -101,16 +101,6 @@ public class MagesStaff extends MeleeWeapon {
 	}
 
 	@Override
-	public ArrayList<String> actions(Hero hero) {
-		ArrayList<String> actions = super.actions( hero );
-		actions.add(AC_IMBUE);
-		if (wand!= null && wand.curCharges > 0) {
-			actions.add( AC_ZAP );
-		}
-		return actions;
-	}
-
-	@Override
 	public String defaultAction() {
 		return AC_ZAP;
 	}

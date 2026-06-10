@@ -93,17 +93,6 @@ public class LloydsBeacon extends Artifact {
 	}
 	
 	@Override
-	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
-		actions.add( AC_ZAP );
-		actions.add( AC_SET );
-		if (returnDepth != -1) {
-			actions.add( AC_RETURN );
-		}
-		return actions;
-	}
-	
-	@Override
 	public void execute( Hero hero, String action ) {
 
 		super.execute( hero, action );

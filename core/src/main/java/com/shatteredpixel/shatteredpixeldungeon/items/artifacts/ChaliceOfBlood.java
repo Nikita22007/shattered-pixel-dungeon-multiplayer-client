@@ -55,20 +55,6 @@ public class ChaliceOfBlood extends Artifact {
 	public static final String AC_PRICK = "PRICK";
 
 	@Override
-	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
-		if (isEquipped(hero)
-                && level() < levelCap
-                && !cursed
-                && !hero.isInvulnerable(getClass())) {
-			{
-				actions.add(AC_PRICK);
-			}
-		}
-		return actions;
-	}
-
-	@Override
 	public void execute(Hero hero, String action ) {
 		super.execute(hero, action);
 

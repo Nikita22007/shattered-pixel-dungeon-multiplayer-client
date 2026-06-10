@@ -61,11 +61,6 @@ public class Pickaxe extends MeleeWeapon {
 	}
 
 	@Override
-	public ArrayList<String> actions( Hero hero ) {
-        return super.actions( hero );
-	}
-
-	@Override
 	public boolean keptThroughLostInventory() {
 		//pickaxe is always kept when it's needed for the mining level
 		return super.keptThroughLostInventory();

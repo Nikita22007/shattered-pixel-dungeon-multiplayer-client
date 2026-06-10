@@ -67,18 +67,6 @@ public class TalismanOfForesight extends Artifact {
 	public static final String AC_SCRY = "SCRY";
 
 	@Override
-	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
-		if (isEquipped(hero)
-                && !cursed) {
-			{
-				actions.add(AC_SCRY);
-			}
-		}
-		return actions;
-	}
-
-	@Override
 	public void execute( Hero hero, String action ) {
         super.execute(hero, action);
 

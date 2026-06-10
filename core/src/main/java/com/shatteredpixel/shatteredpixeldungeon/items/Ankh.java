@@ -59,15 +59,6 @@ public class Ankh extends Item {
 	}
 
 	@Override
-	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions(hero);
-		Waterskin waterskin = hero.belongings.getItem(Waterskin.class);
-		if (waterskin != null && waterskin.isFull() && !blessed)
-			actions.add( AC_BLESS );
-		return actions;
-	}
-
-	@Override
 	public void execute( final Hero hero, String action ) {
 
 		super.execute( hero, action );

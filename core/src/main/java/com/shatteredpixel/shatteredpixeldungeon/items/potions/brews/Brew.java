@@ -28,13 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import java.util.ArrayList;
 
 public abstract class Brew extends Potion {
-	
-	@Override
-	public ArrayList<String> actions(Hero hero) {
-		ArrayList<String> actions = super.actions( hero );
-		actions.remove( AC_DRINK );
-		return actions;
-	}
 
 	@Override
 	public String defaultAction() {

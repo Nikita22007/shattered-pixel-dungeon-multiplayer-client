@@ -97,16 +97,6 @@ public abstract class Wand extends Item {
 	}
 	
 	@Override
-	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
-		if (curCharges > 0 || !curChargeKnown) {
-			actions.add( AC_ZAP );
-		}
-
-		return actions;
-	}
-	
-	@Override
 	public void execute( Hero hero, String action ) {
 
 		super.execute( hero, action );

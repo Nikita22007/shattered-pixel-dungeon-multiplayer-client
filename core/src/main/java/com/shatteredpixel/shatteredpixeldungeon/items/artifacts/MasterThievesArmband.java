@@ -64,18 +64,6 @@ public class MasterThievesArmband extends Artifact {
 	public static final String AC_STEAL = "STEAL";
 
 	@Override
-	public ArrayList<String> actions(Hero hero) {
-		ArrayList<String> actions = super.actions(hero);
-		if (isEquipped(hero)
-                && charge > 0) {
-            if (!cursed) {
-                actions.add(AC_STEAL);
-            }
-        }
-		return actions;
-	}
-
-	@Override
 	public void execute(Hero hero, String action) {
         super.execute(hero, action);
 

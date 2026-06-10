@@ -64,18 +64,6 @@ public class CloakOfShadows extends Artifact {
 	public static final String AC_STEALTH = "STEALTH";
 
 	@Override
-	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
-		if ((isEquipped(hero) || hero.hasTalent(Talent.LIGHT_CLOAK))
-                && !cursed) {
-            if ((charge > 0 || activeBuff != null)) {
-                actions.add(AC_STEALTH);
-            }
-        }
-		return actions;
-	}
-
-	@Override
 	public void execute( Hero hero, String action ) {
 
         super.execute(hero, action);

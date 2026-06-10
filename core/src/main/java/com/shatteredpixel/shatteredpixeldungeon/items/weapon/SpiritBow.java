@@ -72,14 +72,6 @@ public class SpiritBow extends Weapon {
 	public float sniperSpecialBonusDamage = 0f;
 	
 	@Override
-	public ArrayList<String> actions(Hero hero) {
-		ArrayList<String> actions = super.actions(hero);
-		actions.remove(AC_EQUIP);
-		actions.add(AC_SHOOT);
-		return actions;
-	}
-	
-	@Override
 	public void execute(Hero hero, String action) {
 		
 		super.execute(hero, action);

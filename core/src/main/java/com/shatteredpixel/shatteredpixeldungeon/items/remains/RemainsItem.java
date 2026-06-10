@@ -39,13 +39,6 @@ public abstract class RemainsItem extends Item {
 	public static final String AC_USE =  "USE";
 
 	@Override
-	public ArrayList<String> actions(Hero hero) {
-		ArrayList<String> actions = super.actions(hero);
-		actions.add(AC_USE);
-		return actions;
-	}
-
-	@Override
 	public void execute(Hero hero, String action) {
 		super.execute(hero, action);
 

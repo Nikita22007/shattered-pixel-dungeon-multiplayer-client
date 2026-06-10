@@ -118,21 +118,6 @@ public class SandalsOfNature extends Artifact {
 	}
 
 	@Override
-	public ArrayList<String> actions( Hero hero ) {
-        ArrayList<String> actions = super.actions(hero);
-        if (isEquipped(hero) && !cursed) {
-            actions.add(AC_FEED);
-        }
-        if (isEquipped(hero)
-                && !cursed
-                && curSeedEffect != null
-                && charge >= seedChargeReqs.get(curSeedEffect)) {
-            actions.add(AC_ROOT);
-        }
-        return actions;
-    }
-
-	@Override
 	public void execute( Hero hero, String action ) {
         super.execute(hero, action);
 

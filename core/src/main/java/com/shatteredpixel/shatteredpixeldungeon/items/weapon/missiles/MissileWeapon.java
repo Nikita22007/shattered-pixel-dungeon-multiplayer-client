@@ -154,13 +154,6 @@ abstract public class MissileWeapon extends Weapon {
 			return super.upgrade();
 		}
 	}
-
-	@Override
-	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
-		actions.remove( AC_EQUIP );
-		return actions;
-	}
 	
 	@Override
 	public boolean collect(Bag container) {

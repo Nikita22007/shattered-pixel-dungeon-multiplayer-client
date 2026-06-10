@@ -101,22 +101,6 @@ public class UnstableSpellbook extends Artifact {
 	}
 
 	@Override
-	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
-		if (isEquipped(hero) && charge > 0 && !cursed) {
-			{
-				actions.add(AC_READ);
-			}
-		}
-		if (isEquipped(hero) && level() < levelCap && !cursed) {
-			{
-				actions.add(AC_ADD);
-			}
-		}
-		return actions;
-	}
-
-	@Override
 	public void execute( Hero hero, String action ) {
 
         super.execute(hero, action);

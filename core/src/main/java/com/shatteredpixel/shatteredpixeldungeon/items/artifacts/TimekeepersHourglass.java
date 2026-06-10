@@ -78,18 +78,6 @@ public class TimekeepersHourglass extends Artifact {
 	public int sandBags = 0;
 
 	@Override
-	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
-		if (isEquipped(hero)
-                && !cursed) {
-            if ((charge > 0 || activeBuff != null)) {
-                actions.add(AC_ACTIVATE);
-            }
-        }
-		return actions;
-	}
-
-	@Override
 	public void execute( Hero hero, String action ) {
 
         super.execute(hero, action);

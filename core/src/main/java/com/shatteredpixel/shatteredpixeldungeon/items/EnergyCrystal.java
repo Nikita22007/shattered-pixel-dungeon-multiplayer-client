@@ -49,11 +49,6 @@ public class EnergyCrystal extends Item {
 	}
 
 	@Override
-	public ArrayList<String> actions(Hero hero ) {
-		return new ArrayList<>();
-	}
-
-	@Override
 	public boolean isUpgradable() {
 		return false;
 	}

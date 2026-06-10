@@ -70,15 +70,6 @@ public class Waterskin extends Item {
 	}
 
 	@Override
-	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
-		if (volume > 0) {
-			actions.add( AC_DRINK );
-		}
-		return actions;
-	}
-
-	@Override
 	public void execute( final Hero hero, String action ) {
 
 		super.execute( hero, action );
