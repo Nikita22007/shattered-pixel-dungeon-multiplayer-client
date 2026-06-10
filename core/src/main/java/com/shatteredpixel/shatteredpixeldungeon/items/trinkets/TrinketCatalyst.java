@@ -198,7 +198,7 @@ public class TrinketCatalyst extends Item {
 
 						if (cata != null) {
 							if (ShatteredPixelDungeon.scene() instanceof AlchemyScene) {
-								((AlchemyScene) ShatteredPixelDungeon.scene()).craftItem(null, result);
+
 							} else {
 								Sample.INSTANCE.play( Assets.Sounds.PUFF );
 

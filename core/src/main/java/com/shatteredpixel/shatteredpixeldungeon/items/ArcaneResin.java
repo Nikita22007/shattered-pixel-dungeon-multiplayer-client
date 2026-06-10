@@ -21,23 +21,11 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.MagicalHolster;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
-import com.watabou.noosa.audio.Sample;
 
 import java.util.ArrayList;
 
@@ -69,62 +57,6 @@ public class ArcaneResin extends Item {
 	public int value() {
 		return 30*quantity();
 	}
-
-	private final WndBag.ItemSelector itemSelector = new WndBag.ItemSelector() {
-
-		@Override
-		public String textPrompt() {
-			return Messages.get(ArcaneResin.class, "prompt");
-		}
-
-		@Override
-		public Class<?extends Bag> preferredBag(){
-			return MagicalHolster.class;
-		}
-
-		@Override
-		public boolean itemSelectable(Item item) {
-			return item instanceof Wand && item.isIdentified();
-		}
-
-		@Override
-		public void onSelect( Item item ) {
-			if (item != null && item instanceof Wand) {
-				Wand w = (Wand)item;
-
-				if (w.level() >= 3){
-					GLog.w(Messages.get(ArcaneResin.class, "level_too_high"));
-					return;
-				}
-
-				int resinToUse = w.level()+1;
-
-				if (quantity() < resinToUse){
-					GLog.w(Messages.get(ArcaneResin.class, "not_enough"));
-
-				} else {
-
-					Catalog.countUses(ArcaneResin.class, resinToUse);
-					if (resinToUse < quantity()){
-						quantity(quantity()-resinToUse);
-					} else {
-					}
-
-					w.resinBonus++;
-					w.curCharges++;
-					w.updateLevel();
-					Item.updateQuickslot();
-
-					curUser.sprite.operate(curUser.pos);
-					Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
-					curUser.sprite.emitter().start( Speck.factory( Speck.UP ), 0.2f, 3 );
-
-					curUser.spendAndNext(Actor.TICK);
-					GLog.p(Messages.get(ArcaneResin.class, "apply"));
-				}
-			}
-		}
-	};
 
 	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe {
 

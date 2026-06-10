@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.*;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.TrinketCatalyst;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
@@ -664,119 +663,7 @@ public class AlchemyScene extends PixelScene {
 		}
 
 	}
-	
-	private void combine( int slot ){
-		
-		ArrayList<Item> ingredients = filterInput(Item.class);
-		if (ingredients.isEmpty()) return;
 
-		lastIngredients.clear();
-		for (Item i : ingredients){
-			lastIngredients.add(i.duplicate());
-		}
-
-		ArrayList<Recipe> recipes = Recipe.findRecipes(ingredients);
-		if (recipes.size() <= slot) return;
-
-		Recipe recipe = recipes.get(slot);
-		
-		Item result = null;
-		
-		if (recipe != null){
-			int cost = recipe.cost(ingredients);
-
-//			if (toolkit != null){
-//				cost = toolkit.consumeEnergy(cost);
-//			}
-			Catalog.countUses(EnergyCrystal.class, cost);
-			Dungeon.energy -= cost;
-
-			String energyText = Messages.get(AlchemyScene.class, "energy") + " " + Dungeon.energy;
-			if (hasToolkit){
-				energyText += "+" + toolkitEnergy;
-			}
-			energyLeft.text(energyText);
-			energyLeft.setPos(
-					centerW - energyLeft.width()/2,
-					energyLeft.top()
-			);
-
-			energyIcon.x = energyLeft.left() - energyIcon.width();
-			align(energyIcon);
-
-			energyAdd.setPos(energyLeft.right(), energyAdd.top());
-			align(energyAdd);
-			
-			result = recipe.brew(ingredients);
-		}
-		
-		if (result != null){
-
-			craftItem(ingredients, result);
-
-		}
-
-		boolean foundItems = true;
-		for (Item i : lastIngredients){
-			Item found = Dungeon.hero.belongings.getSimilar(i);
-			if (found == null){ //atm no quantity check as items are always loaded individually
-				//currently found can be true if we need, say, 3x of an item but only have 2x of it
-				foundItems = false;
-			}
-		}
-
-		lastRecipe = recipe;
-		repeat.enable(foundItems);
-
-		cancel.enable(false);
-		synchronized (inputs) {
-			for (int i = 0; i < inputs.length; i++) {
-				if (inputs[i] != null && inputs[i].item() != null) {
-					cancel.enable(true);
-					break;
-				}
-			}
-		}
-
-		if (alchGuide != null){
-			alchGuide.updateList();
-		}
-	}
-
-	public void craftItem( ArrayList<Item> ingredients, Item result ){
-		bubbleEmitter.start(Speck.factory( Speck.BUBBLE ), 0.01f, 100 );
-		smokeEmitter.burst(Speck.factory( Speck.WOOL ), 10 );
-		Sample.INSTANCE.play( Assets.Sounds.PUFF );
-
-		int resultQuantity = result.quantity();
-        if (!false){
-			Dungeon.level.drop(result, Dungeon.hero.pos);
-		}
-
-		Statistics.itemsCrafted++;
-		Badges.validateItemsCrafted();
-
-
-
-		synchronized (inputs) {
-			for (int i = 0; i < inputs.length; i++) {
-				if (inputs[i] != null && inputs[i].item() != null) {
-					Item item = inputs[i].item();
-					if (item.quantity() <= 0) {
-						inputs[i].item(null);
-					} else {
-						inputs[i].slot.updateText();
-					}
-				}
-			}
-		}
-
-		updateState();
-		//we reset the quantity in case the result was merged into another stack in the backpack
-		result.quantity(resultQuantity);
-		outputs[0].item(result);
-	}
-	
 	public void populate(ArrayList<Item> toFind, Belongings inventory){
 		clearSlots();
 		
