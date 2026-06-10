@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
@@ -105,8 +104,7 @@ public class HeroicLeap extends ArmorAbility {
 					WandOfBlastWave.BlastWave.blast(dest);
 					PixelScene.shake(2, 0.5f);
 
-					Invisibility.dispel();
-					hero.spendAndNext(Actor.TICK);
+                    hero.spendAndNext(Actor.TICK);
 
 					{
 						if (hero.hasTalent(Talent.DOUBLE_JUMP)) {

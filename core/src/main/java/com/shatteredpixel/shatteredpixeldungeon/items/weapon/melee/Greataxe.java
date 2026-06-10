@@ -25,13 +25,11 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.AttackIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
 
 public class Greataxe extends MeleeWeapon {
@@ -98,8 +96,7 @@ public class Greataxe extends MeleeWeapon {
 				//+(15+(2*lvl)) damage, roughly +60% base damage, +55% scaling
 				int dmgBoost = augment.damageFactor(15 + 2*buffedLvl());
 
-				Invisibility.dispel();
-				if (!enemy.isAlive()){
+                if (!enemy.isAlive()){
 					hero.next();
 					onAbilityKill(hero, enemy);
 				} else {

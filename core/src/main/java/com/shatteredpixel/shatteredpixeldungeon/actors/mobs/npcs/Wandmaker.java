@@ -29,26 +29,20 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.CeremonialCandle;
-import com.shatteredpixel.shatteredpixeldungeon.items.quest.CorpseDust;
-import com.shatteredpixel.shatteredpixeldungeon.items.quest.Embers;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.levels.RegularLevel;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Rotberry;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.WandmakerSprite;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndQuest;
-import com.watabou.noosa.Game;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Callback;
+
+import java.util.HashSet;
 
 public class Wandmaker extends NPC {
 
     {
         spriteClass = WandmakerSprite.class;
 
-        properties.add(Property.IMMOVABLE);
+        new HashSet<Property>().add(Property.IMMOVABLE);
     }
 
     @Override
@@ -73,121 +67,6 @@ public class Wandmaker extends NPC {
 
     @Override
     public boolean reset() {
-        return true;
-    }
-
-    @Override
-    public boolean interact(Char c) {
-        sprite.turnTo(pos, Dungeon.hero.pos);
-
-        if (c != Dungeon.hero) {
-            return true;
-        }
-
-        if (Quest.given) {
-
-            Item item;
-            switch (Quest.type) {
-                case 1:
-                default:
-                    item = Dungeon.hero.belongings.getItem(CorpseDust.class);
-                    break;
-                case 2:
-                    item = Dungeon.hero.belongings.getItem(Embers.class);
-                    break;
-                case 3:
-                    item = Dungeon.hero.belongings.getItem(Rotberry.Seed.class);
-                    break;
-            }
-
-            if (item != null) {
-                Game.runOnRenderThread(new Callback() {
-                    @Override
-                    public void call() {
-
-                    }
-                });
-            } else {
-                String msg;
-                switch (Quest.type) {
-                    case 1:
-                    default:
-                        msg = Messages.get(this, "reminder_dust", Messages.titleCase(Dungeon.hero.name()));
-                        break;
-                    case 2:
-                        msg = Messages.get(this, "reminder_ember", Messages.titleCase(Dungeon.hero.name()));
-                        break;
-                    case 3:
-                        msg = Messages.get(this, "reminder_berry", Messages.titleCase(Dungeon.hero.name()));
-                        break;
-                }
-                Game.runOnRenderThread(new Callback() {
-                    @Override
-                    public void call() {
-                        GameScene.show(new WndQuest(Wandmaker.this, msg));
-                    }
-                });
-            }
-
-        } else {
-
-            String msg1 = "";
-            String msg2 = "";
-            switch (Dungeon.hero.heroClass) {
-                case WARRIOR:
-                    msg1 += Messages.get(this, "intro_warrior");
-                    break;
-                case ROGUE:
-                    msg1 += Messages.get(this, "intro_rogue");
-                    break;
-                case MAGE:
-                    msg1 += Messages.get(this, "intro_mage", Messages.titleCase(Dungeon.hero.name()));
-                    break;
-                case HUNTRESS:
-                    msg1 += Messages.get(this, "intro_huntress");
-                    break;
-                case DUELIST:
-                    msg1 += Messages.get(this, "intro_duelist");
-                    break;
-                case CLERIC:
-                    msg1 += Messages.get(this, "intro_cleric");
-                    break;
-            }
-
-            msg1 += Messages.get(this, "intro_1");
-
-            switch (Quest.type) {
-                case 1:
-                    msg2 += Messages.get(this, "intro_dust");
-                    break;
-                case 2:
-                    msg2 += Messages.get(this, "intro_ember");
-                    break;
-                case 3:
-                    msg2 += Messages.get(this, "intro_berry");
-                    break;
-            }
-
-            msg2 += Messages.get(this, "intro_2");
-            final String msg1Final = msg1;
-            final String msg2Final = msg2;
-
-            Game.runOnRenderThread(new Callback() {
-                @Override
-                public void call() {
-                    GameScene.show(new WndQuest(Wandmaker.this, msg1Final) {
-                        @Override
-                        public void hide() {
-                            super.hide();
-                            GameScene.show(new WndQuest(Wandmaker.this, msg2Final));
-                        }
-                    });
-                }
-            });
-
-            Quest.given = true;
-        }
-
         return true;
     }
 

@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Combo;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -118,8 +117,7 @@ public class Sai extends MeleeWeapon {
 					wep.onAbilityKill(hero, enemy);
 				}
 
-				Invisibility.dispel();
-				hero.spendAndNext(hero.attackDelay());
+                hero.spendAndNext(hero.attackDelay());
 				if (recentHits >= 2 && hit){
 					Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
 				}

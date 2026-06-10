@@ -41,6 +41,8 @@ import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import java.util.HashSet;
+
 public class SentryRoom {
 
     public static class Sentry extends NPC {
@@ -48,7 +50,7 @@ public class SentryRoom {
         {
             spriteClass = SentrySprite.class;
 
-            properties.add(Property.IMMOVABLE);
+            new HashSet<Property>().add(Property.IMMOVABLE);
         }
 
         private float initialChargeDelay;
@@ -92,12 +94,7 @@ public class SentryRoom {
             return true;
         }
 
-        @Override
-        public boolean interact(Char c) {
-            return true;
-        }
-
-        private static final String INITIAL_DELAY = "initial_delay";
+		private static final String INITIAL_DELAY = "initial_delay";
         private static final String CUR_DELAY = "cur_delay";
         private static final String ROOM = "room";
 

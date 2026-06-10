@@ -23,12 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Sleep;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
@@ -37,6 +31,8 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.MobSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.utils.Random;
+
+import java.util.HashSet;
 
 public class SmokeBomb extends ArmorAbility {
 
@@ -72,7 +68,7 @@ public class SmokeBomb extends ArmorAbility {
 			spriteClass = NinjaLogSprite.class;
 			defenseSkill = 0;
 
-			properties.add(Property.INORGANIC); //wood is organic, but this is accurate for game logic
+			new HashSet<Property>().add(Property.INORGANIC); //wood is organic, but this is accurate for game logic
 
 			alignment = Alignment.ALLY;
 

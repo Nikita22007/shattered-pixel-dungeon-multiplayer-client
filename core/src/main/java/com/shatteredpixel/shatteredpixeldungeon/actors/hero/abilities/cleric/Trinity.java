@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
@@ -131,8 +130,7 @@ public class Trinity extends ArmorAbility {
 								Dungeon.hero.spendAndNext(1f);
 								armor.charge -= trinityChargeUsePerEffect(bodyForm.getClass());
 								armor.updateQuickslot();
-								Invisibility.dispel();
-								hide();
+                                hide();
 							}
 						}
 					};
@@ -166,8 +164,7 @@ public class Trinity extends ArmorAbility {
 								Dungeon.hero.spendAndNext(1f);
 								armor.charge -= trinityChargeUsePerEffect(bodyForm.getClass());
 								armor.updateQuickslot();
-								Invisibility.dispel();
-								hide();
+                                hide();
 							}
 						}
 					};
@@ -230,8 +227,7 @@ public class Trinity extends ArmorAbility {
 							hide();
 							return;
 						}
-						Invisibility.dispel();
-						//Rings and the Chalice specifically get their passive effects for 20 turns
+                        //Rings and the Chalice specifically get their passive effects for 20 turns
 						if (spiritForm instanceof Ring || spiritForm instanceof ChaliceOfBlood) {
                             ((SpiritForm.SpiritFormBuff) null).setEffect(spiritForm);
 							Dungeon.hero.spendAndNext(1f);

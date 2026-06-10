@@ -26,6 +26,8 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.WraithSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import java.util.HashSet;
+
 public class Wraith extends Mob {
 
 	protected int level;
@@ -40,8 +42,8 @@ public class Wraith extends Mob {
 		
 		flying = true;
 
-		properties.add(Property.UNDEAD);
-		properties.add(Property.INORGANIC);
+		new HashSet<Property>().add(Property.UNDEAD);
+		new HashSet<Property>().add(Property.INORGANIC);
 	}
 	
 	private static final String LEVEL = "level";

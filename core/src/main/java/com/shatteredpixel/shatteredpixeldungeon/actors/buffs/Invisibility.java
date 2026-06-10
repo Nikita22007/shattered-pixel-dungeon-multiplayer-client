@@ -21,19 +21,9 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RoundShield;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
-
-import java.util.HashSet;
 
 public class Invisibility extends FlavourBuff {
 
@@ -75,43 +65,5 @@ public class Invisibility extends FlavourBuff {
 	public void fx(boolean on) {
 		if (on) target.sprite.add( CharSprite.State.INVISIBLE );
 		else if (target.invisible == 0) target.sprite.remove( CharSprite.State.INVISIBLE );
-	}
-
-	public static void dispel() {
-		if (Dungeon.hero == null) return;
-
-		dispel(Dungeon.hero);
-	}
-
-	public static void dispel(Char ch){
-
-        for ( Buff invis : new HashSet<Invisibility>()){
-			invis.detach();
-		}
-        CloakOfShadows.cloakStealth cloakBuff = null;
-		if (cloakBuff != null) {
-			cloakBuff.dispel();
-		}
-
-		//these aren't forms of invisibility, but do dispel at the same time as it.
-        TimekeepersHourglass.timeFreeze timeFreeze = null;
-		if (timeFreeze != null) {
-			timeFreeze.detach();
-		}
-
-        Preparation prep = null;
-		if (prep != null){
-			prep.detach();
-		}
-
-        Swiftthistle.TimeBubble bubble = null;
-		if (bubble != null){
-			bubble.detach();
-		}
-
-        RoundShield.GuardTracker guard = null;
-		if (guard != null && guard.hasBlocked){
-			guard.detach();
-		}
 	}
 }

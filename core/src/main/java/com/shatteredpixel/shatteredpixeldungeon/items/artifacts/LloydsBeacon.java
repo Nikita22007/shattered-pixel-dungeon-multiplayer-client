@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
@@ -41,6 +40,8 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
+
+import java.util.HashSet;
 
 public class LloydsBeacon extends Artifact {
 
@@ -91,7 +92,6 @@ public class LloydsBeacon extends Artifact {
 
 			if (target == null) return;
 
-			Invisibility.dispel();
             charge -= Dungeon.depth > 20 ? 2 : 1;
 			updateQuickslot();
 
@@ -128,11 +128,12 @@ public class LloydsBeacon extends Artifact {
 											}
 										} while (pos == -1);
 
-										if (pos == -1 || Dungeon.bossLevel()) {
+                                        //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+                                        if (pos == -1 || Dungeon.bossLevel()) {
 
 											GLog.w( Messages.get(ScrollOfTeleportation.class, "no_tele") );
 
-										} else if (ch.properties().contains(Char.Property.IMMOVABLE)) {
+										} else if (new HashSet<>().contains(Char.Property.IMMOVABLE)) {
 
 											GLog.w( Messages.get(LloydsBeacon.class, "tele_fail") );
 

@@ -32,6 +32,7 @@ import com.watabou.utils.BArray;
 import com.watabou.utils.PathFinder;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class DisplacingDart extends TippedDart {
 	
@@ -50,7 +51,8 @@ public class DisplacingDart extends TippedDart {
 		//attempts to teleport the enemy to a position 8-10 cells away from the hero
 		//prioritizes the closest visible cell to the defender, or closest non-visible if no visible are present
 		//grants vision on the defender if teleport goes to non-visible
-		if (!defender.properties().contains(Char.Property.IMMOVABLE)){
+        //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+        if (!new HashSet<>().contains(Char.Property.IMMOVABLE)){
 			
 			ArrayList<Integer> visiblePositions = new ArrayList<>();
 			ArrayList<Integer> nonVisiblePositions = new ArrayList<>();

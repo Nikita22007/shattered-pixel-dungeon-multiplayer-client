@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.quest;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -87,8 +86,7 @@ public class Pickaxe extends MeleeWeapon {
                 //+(8+2*lvl) damage, equivalent to +100% damage
                 beforeAbilityUsed(hero, enemy);
 				AttackIndicator.target(enemy);
-				Invisibility.dispel();
-				hero.spendAndNext(hero.attackDelay());
+                hero.spendAndNext(hero.attackDelay());
 				afterAbilityUsed(hero);
 			}
 		});

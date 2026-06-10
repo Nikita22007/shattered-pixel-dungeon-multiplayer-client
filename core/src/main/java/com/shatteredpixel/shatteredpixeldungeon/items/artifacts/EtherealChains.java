@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -48,7 +47,7 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 public class EtherealChains extends Artifact {
 
@@ -103,8 +102,9 @@ public class EtherealChains extends Artifact {
 	
 	//pulls an enemy to a position along the chain's path, as close to the hero as possible
 	private void chainEnemy( Ballistica chain, final Hero hero, final Char enemy ){
-		
-		if (enemy.properties().contains(Char.Property.IMMOVABLE)) {
+
+        //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+        if (new HashSet<>().contains(Char.Property.IMMOVABLE)) {
 			GLog.w( Messages.get(this, "cant_pull") );
 			return;
 		}
@@ -146,8 +146,8 @@ public class EtherealChains extends Artifact {
 						enemy.pos = pulledPos;
 
 						charge -= chargeUse;
-						Invisibility.dispel(hero);
-						Talent.onArtifactUsed(hero);
+
+                        Talent.onArtifactUsed(hero);
 						updateQuickslot();
 
 						Dungeon.level.occupyCell(enemy);
@@ -213,8 +213,8 @@ public class EtherealChains extends Artifact {
 						hero.pos = newHeroPos;
 
 						charge -= chargeUse;
-						Invisibility.dispel(hero);
-						Talent.onArtifactUsed(hero);
+
+                        Talent.onArtifactUsed(hero);
 						updateQuickslot();
 
 						Dungeon.level.occupyCell(hero);

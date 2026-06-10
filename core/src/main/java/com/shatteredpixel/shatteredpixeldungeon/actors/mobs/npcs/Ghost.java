@@ -25,8 +25,9 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.GhostSprite;
+
+import java.util.HashSet;
 
 public class Ghost extends NPC {
 
@@ -39,7 +40,7 @@ public class Ghost extends NPC {
         state = WANDERING;
 
         //not actually large of course, but this makes the ghost stick to the exit room
-        properties.add(Property.LARGE);
+        new HashSet<Property>().add(Property.LARGE);
     }
 
     protected class Wandering extends Mob.Wandering {
@@ -78,11 +79,6 @@ public class Ghost extends NPC {
 
     @Override
     public boolean reset() {
-        return true;
-    }
-
-    @Override
-    public boolean interact(Char c) {
         return true;
     }
 

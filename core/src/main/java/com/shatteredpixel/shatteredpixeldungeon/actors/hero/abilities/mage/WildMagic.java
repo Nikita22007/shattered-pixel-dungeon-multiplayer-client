@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
@@ -136,7 +135,6 @@ public class WildMagic extends ArmorAbility {
 			hero.next();
 		} else {
             Item.updateQuickslot();
-            Invisibility.dispel();
             if (Random.Int(4) >= hero.pointsInTalent(Talent.CONSERVED_MAGIC)) {
                 hero.spendAndNext(Actor.TICK);
             } else {

@@ -36,7 +36,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Combo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.NaturesPower;
@@ -92,7 +91,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.tweeners.Delayer;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 import org.jetbrains.annotations.Contract;
@@ -336,17 +334,6 @@ public class Hero extends Char {
 		}
 	}
 
-	@Override
-	public void hitSound(float pitch) {
-		if (0 > 0) {
-			//pitch deepens by 2.5% (additive) per point of strength, down to 75%
-			super.hitSound(pitch * GameMath.gate(0.75f, 1.25f - 0.025f * STR(), 1f));
-		} else {
-			super.hitSound(pitch * 1.1f);
-		}
-	}
-
-
 	public void live() {
 		for (Buff b : buffs()) {
 			if (!b.revivePersists) b.detach();
@@ -363,14 +350,12 @@ public class Hero extends Char {
 	public boolean shoot(Char enemy, MissileWeapon wep) {
 
 		attackTarget = enemy;
-		boolean wasEnemy = enemy.alignment == Alignment.ENEMY
-				|| (false);
+		boolean wasEnemy = enemy.alignment == Alignment.ENEMY;
 
 		//temporarily set the hero's weapon to the missile weapon being used
 		//TODO improve this!
 		belongings.thrownWeapon = wep;
 		boolean hit = false;
-		Invisibility.dispel();
 		belongings.thrownWeapon = null;
 
 		if (hit && subClass == HeroSubClass.GLADIATOR && wasEnemy) {
@@ -524,9 +509,6 @@ public class Hero extends Char {
 			if (curAction instanceof HeroAction.Move) {
 				actResult = actMove((HeroAction.Move) curAction);
 
-			} else if (curAction instanceof HeroAction.Interact) {
-				actResult = actInteract((HeroAction.Interact) curAction);
-
 			} else if (curAction instanceof HeroAction.Buy) {
 				actResult = actBuy((HeroAction.Buy) curAction);
 
@@ -612,30 +594,6 @@ public class Hero extends Char {
 
 	private boolean actMove(HeroAction.Move action) {
 		return true;
-	}
-
-	private boolean actInteract(HeroAction.Interact action) {
-
-		Char ch = action.ch;
-
-		if (ch.isAlive() && ch.canInteract(this)) {
-
-			ready();
-			sprite.turnTo(pos, ch.pos);
-			return ch.interact(this);
-
-		} else {
-
-			if (fieldOfView[ch.pos] && false) {
-
-				return true;
-
-			} else {
-				ready();
-				return false;
-			}
-
-		}
 	}
 
 	private boolean actBuy(HeroAction.Buy action) {
@@ -742,7 +700,7 @@ public class Hero extends Char {
 
 					//allow the hero to move between levels even if they can't collect the item
 					if (Dungeon.level.getTransition(pos) != null) {
-						throwItems();
+
 					} else {
 						heap.sprite.drop();
 					}
@@ -1460,7 +1418,6 @@ public class Hero extends Char {
 
 		boolean hit = false;
 
-		Invisibility.dispel();
 		spend(attackDelay());
 
 		if (hit && subClass == HeroSubClass.GLADIATOR && wasEnemy) {

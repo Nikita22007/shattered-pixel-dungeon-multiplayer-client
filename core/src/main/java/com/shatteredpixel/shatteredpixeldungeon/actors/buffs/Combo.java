@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
@@ -46,10 +45,8 @@ import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.Visual;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.BArray;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
-import com.watabou.utils.PathFinder;
 
 public class Combo extends Buff implements ActionIndicator.Action {
 
@@ -287,8 +284,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 		if (move == ComboMove.PARRY){
 			parryUsed = true;
 			comboTime = 5f;
-			Invisibility.dispel();
-			((Hero)target).spendAndNext(Actor.TICK);
+            ((Hero)target).spendAndNext(Actor.TICK);
 			Dungeon.hero.busy();
 		} else {
 			moveBeingUsed = move;
@@ -354,9 +350,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 
 		int oldPos = enemy.pos;
 
-		Invisibility.dispel();
-
-		//Post-attack behaviour
+        //Post-attack behaviour
 		switch(moveBeingUsed){
 			case CLOBBER:
 				clobberUsed = true;

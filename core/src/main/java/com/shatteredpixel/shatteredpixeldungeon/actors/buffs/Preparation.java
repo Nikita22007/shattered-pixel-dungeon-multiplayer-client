@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroAction;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -49,6 +48,7 @@ import com.watabou.utils.PathFinder;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 public class Preparation extends Buff implements ActionIndicator.Action {
@@ -100,8 +100,10 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 		}
 		
 		public boolean canKO(Char defender){
-			if (defender.properties().contains(Char.Property.MINIBOSS)
-					|| defender.properties().contains(Char.Property.BOSS)){
+            //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+            //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+            if (new HashSet<>().contains(Char.Property.MINIBOSS)
+					|| new HashSet<>().contains(Char.Property.BOSS)){
 				return (defender.HP/(float)defender.HT) < (KOThreshold()/5f);
 			} else {
 				return (defender.HP/(float)defender.HT) < KOThreshold();

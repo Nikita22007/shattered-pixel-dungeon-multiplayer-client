@@ -35,6 +35,7 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class HolyBomb extends Bomb {
 	
@@ -69,7 +70,9 @@ public class HolyBomb extends Bomb {
 		}
 		
 		for (Char ch : affected){
-			if (ch.properties().contains(Char.Property.UNDEAD) || ch.properties().contains(Char.Property.DEMONIC)){
+            //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+            //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+            if (new HashSet<>().contains(Char.Property.UNDEAD) || new HashSet<>().contains(Char.Property.DEMONIC)){
 				ch.sprite.emitter().start( ShadowParticle.UP, 0.05f, 10 );
 				
 				//bomb deals an additional 50% damage to unholy enemies

@@ -26,11 +26,9 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Doom;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
-import com.shatteredpixel.shatteredpixeldungeon.items.Dewdrop;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
@@ -47,10 +45,10 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.ColorMath;
 import com.watabou.utils.GameMath;
-import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 
 public class WandOfRegrowth extends Wand {
@@ -362,8 +360,8 @@ public class WandOfRegrowth extends Wand {
 
         {
             alignment = Alignment.NEUTRAL;
-            properties.add(Property.IMMOVABLE);
-            properties.add(Property.STATIC);
+            new HashSet<Property>().add(Property.IMMOVABLE);
+            new HashSet<Property>().add(Property.STATIC);
 
             spriteClass = LotusSprite.class;
 
@@ -385,12 +383,7 @@ public class WandOfRegrowth extends Wand {
             return Math.min(1f, 0.40f + 0.04f * wandLvl);
         }
 
-        @Override
-        public boolean canInteract(Char c) {
-            return false;
-        }
-
-        @Override
+		@Override
         protected boolean act() {
             super.act();
 

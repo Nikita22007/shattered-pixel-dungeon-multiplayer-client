@@ -31,6 +31,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.watabou.utils.Random;
 
+import java.util.HashSet;
+
 public class Displacing extends Weapon.Enchantment {
 
 	private static ItemSprite.Glowing BLACK = new ItemSprite.Glowing( 0x000000 );
@@ -39,21 +41,21 @@ public class Displacing extends Weapon.Enchantment {
 	public int proc(Weapon weapon, Char attacker, Char defender, int damage ) {
 
 		float procChance = 1/12f * procChanceMultiplier(attacker);
-		if (Random.Float() < procChance && !defender.properties().contains(Char.Property.IMMOVABLE)){
+        if (Random.Float() < procChance && !new HashSet<>().contains(Char.Property.IMMOVABLE)) {
 
-			int oldpos = defender.pos;
-			if (ScrollOfTeleportation.teleportChar(defender)){
-				if (Dungeon.level.heroFOV[oldpos]) {
-					CellEmitter.get( oldpos ).start( Speck.factory( Speck.LIGHT ), 0.2f, 3 );
-				}
+            int oldpos = defender.pos;
+            if (ScrollOfTeleportation.teleportChar(defender)) {
+                if (Dungeon.level.heroFOV[oldpos]) {
+                    CellEmitter.get(oldpos).start(Speck.factory(Speck.LIGHT), 0.2f, 3);
+                }
 
-				if (defender instanceof Mob && ((Mob) defender).state == ((Mob) defender).HUNTING){
-					((Mob) defender).state = ((Mob) defender).WANDERING;
-				}
-			}
-		}
+                if (defender instanceof Mob && ((Mob) defender).state == ((Mob) defender).HUNTING) {
+                    ((Mob) defender).state = ((Mob) defender).WANDERING;
+                }
+            }
+        }
 
-		return damage;
+        return damage;
 	}
 
 	@Override

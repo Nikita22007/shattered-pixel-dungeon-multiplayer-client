@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
@@ -31,27 +30,19 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GreaterHaste;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MonkEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.Stasis;
-import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
-import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
@@ -205,10 +196,6 @@ public abstract class Mob extends Char {
             return true;
         }
 
-        if (false || false) {
-            state = FLEEING;
-        }
-
         enemy = chooseEnemy();
 
         boolean enemyInFOV = enemy != null && enemy.isAlive() && fieldOfView[enemy.pos] && enemy.invisible <= 0;
@@ -227,31 +214,6 @@ public abstract class Mob extends Char {
 
     protected Char chooseEnemy() {
 
-        Dread dread = null;
-        if (dread != null) {
-            Char source = (Char) Actor.findById(dread.object);
-            if (source != null) {
-                return source;
-            }
-        }
-
-        Terror terror = null;
-        if (terror != null) {
-            Char source = (Char) Actor.findById(terror.object);
-            if (source != null) {
-                return source;
-            }
-        }
-
-        //if we are an alert enemy, auto-hunt a target that is affected by aggression, even another enemy
-        if ((alignment == Alignment.ENEMY || false) && state != PASSIVE && state != SLEEPING) {
-            if (enemy != null) {
-            }
-            for (Char ch : Actor.chars()) {
-                if (ch != this && fieldOfView[ch.pos]) {
-                }
-            }
-        }
 
         //find a new enemy if..
         boolean newEnemy = false;
@@ -259,7 +221,6 @@ public abstract class Mob extends Char {
         if (enemy == null || !enemy.isAlive() || !Actor.chars().contains(enemy) || state == WANDERING) {
             newEnemy = true;
             //We are amoked and current enemy is the hero
-        } else {
         }
 
         //additionally, if we are an ally, find a new enemy if...
@@ -306,14 +267,6 @@ public abstract class Mob extends Char {
                 }
             }
 
-            //do not target anything that's charming us
-            Charm charm = null;
-            if (charm != null) {
-                Char source = (Char) Actor.findById(charm.object);
-                if (source != null && enemies.contains(source) && enemies.size() > 1) {
-                    enemies.remove(source);
-                }
-            }
 
             //neutral characters in particular do not choose enemies.
             if (enemies.isEmpty()) {
@@ -340,7 +293,7 @@ public abstract class Mob extends Char {
                     } else if ((canAttack(curr) && !canAttack(closest))
                             || (currDist < closestDist)) {
                         closest = curr;
-                    } else if (false || (canAttack(curr) && canAttack(closest))) {
+                    } else if ((canAttack(curr) && canAttack(closest))) {
                         closest = curr;
                     }
                 }
@@ -353,36 +306,6 @@ public abstract class Mob extends Char {
             return enemy;
     }
 
-    @Override
-    public boolean add(Buff buff) {
-        if (super.add(buff)) {
-            if (false || false) {
-                state = HUNTING;
-            } else if (false || false) {
-                state = FLEEING;
-            } else
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean remove(Buff buff) {
-        if (super.remove(buff)) {
-            if (state == FLEEING && ((false)
-                    || (false))) {
-                if (enemySeen) {
-                    sprite.showStatus(CharSprite.WARNING, Messages.get(this, "rage"));
-                    state = HUNTING;
-                } else {
-                    state = WANDERING;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-
     protected boolean canAttack(Char enemy) {
         if (Dungeon.level.adjacent(pos, enemy.pos)) {
             return true;
@@ -391,50 +314,6 @@ public abstract class Mob extends Char {
         return false;
     }
 
-    private boolean cellIsPathable(int cell) {
-        if (!Dungeon.level.passable[cell]) {
-            if (flying || false) {
-                if (!Dungeon.level.avoid[cell]) {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
-        if (Char.hasProp(this, Property.LARGE) && !Dungeon.level.openSpace[cell]) {
-            return false;
-        }
-        if (Actor.findChar(cell) != null) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public float attackDelay() {
-        float delay = 1f;
-        return delay;
-    }
-
-    protected boolean doAttack(Char enemy) {
-
-        if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
-            sprite.attack(enemy.pos);
-            return false;
-
-        } else {
-            Invisibility.dispel(this);
-            spend(attackDelay());
-            return true;
-        }
-    }
-
-    @Override
-    public void onAttackComplete() {
-        Invisibility.dispel(this);
-        spend(attackDelay());
-        super.onAttackComplete();
-    }
 
     @Override
     public int defenseSkill(Char enemy) {
@@ -749,7 +628,7 @@ public abstract class Mob extends Char {
 
                 recentlyAttackedBy.clear();
                 target = enemy.pos;
-                return doAttack(enemy);
+                return true;
 
             } else {
 

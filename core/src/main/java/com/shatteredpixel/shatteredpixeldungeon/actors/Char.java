@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Electricity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ToxicGas;
@@ -36,7 +35,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corrosion;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Momentum;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
@@ -45,10 +43,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Slow;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Speed;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.*;
-import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.curses.Bulk;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Flow;
@@ -73,14 +68,12 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MobSprite;
-import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 import org.jetbrains.annotations.Contract;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -126,25 +119,8 @@ public abstract class Char extends Actor {
 		Dungeon.level.updateFieldOfView( this, fieldOfView );
 
 		//throw any items that are on top of an immovable char
-		if (properties().contains(Property.IMMOVABLE)){
-			throwItems();
-		}
-		return false;
-	}
-
-	protected void throwItems(){
-		Heap heap = Dungeon.level.heaps.get( pos );
-		if (heap != null && heap.type == Heap.Type.HEAP) {
-			ArrayList<Integer> candidates = new ArrayList<>();
-			for (int n : PathFinder.NEIGHBOURS8){
-				if (Dungeon.level.passable[pos+n]){
-					candidates.add(pos+n);
-				}
-			}
-			if (!candidates.isEmpty()){
-				Dungeon.level.drop( heap.pickUp(), Random.element(candidates) ).sprite.drop( pos );
-			}
-		}
+		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+        return false;
 	}
 
 	public String name(){
@@ -154,73 +130,7 @@ public abstract class Char extends Actor {
 		return name;
 	}
 
-	public boolean canInteract(Char c){
-		if (Dungeon.level.adjacent( pos, c.pos )){
-			return true;
-		} else if (false
-				&& alignment == Alignment.ALLY
-				&& !hasProp(this, Property.IMMOVABLE)
-				&& Dungeon.level.distance(pos, c.pos) <= 2*Dungeon.hero.pointsInTalent(Talent.ALLY_WARP)){
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	//swaps places by default
-	public boolean interact(Char c){
-
-		//don't allow char to swap onto hazard unless they're flying
-		//you can swap onto a hazard though, as you're not the one instigating the swap
-		if (!Dungeon.level.passable[pos] && !c.flying){
-			return true;
-		}
-
-		//can't swap into a space without room
-		if (properties().contains(Property.LARGE) && !Dungeon.level.openSpace[c.pos]
-			|| c.properties().contains(Property.LARGE) && !Dungeon.level.openSpace[pos]){
-			return true;
-		}
-
-		//we do a little raw position shuffling here so that the characters are never
-		// on the same cell when logic such as occupyCell() is triggered
-		int oldPos = pos;
-		int newPos = c.pos;
-
-		//can't swap or ally warp if either char is immovable
-		if (hasProp(this, Property.IMMOVABLE) || hasProp(c, Property.IMMOVABLE)){
-			return true;
-		}
-
-		//warp instantly with allies in this case
-
-		//can't swap places if one char has restricted movement
-		if (paralysed > 0 || c.paralysed > 0 || rooted || c.rooted
-				|| false || false){
-			return true;
-		}
-
-		c.pos = oldPos;
-		moveSprite( oldPos, newPos );
-		move( newPos );
-
-		c.pos = newPos;
-		c.sprite.move( newPos, oldPos );
-		c.move( oldPos );
-		
-		c.spend( 1 / c.speed() );
-
-		if (c == Dungeon.hero){
-			if (Dungeon.hero.subClass == HeroSubClass.FREERUNNER){
-				((Momentum) null).gainStack();
-			}
-
-			Dungeon.hero.busy();
-		}
-		
-		return true;
-	}
-	
+	// don't delete, it is useful
 	public boolean moveSprite( int from, int to ) {
 		
 		if (sprite.isVisible() && sprite.parent != null && (Dungeon.level.heroFOV[from] || Dungeon.level.heroFOV[to])) {
@@ -233,14 +143,6 @@ public abstract class Char extends Actor {
 		}
 	}
 
-	public void hitSound( float pitch ){
-		Sample.INSTANCE.play(Assets.Sounds.HIT, 1, pitch);
-	}
-
-	public boolean blockSound( float pitch ) {
-		return false;
-	}
-	
 	protected static final String POS       = "pos";
 	protected static final String TAG_HP    = "HP";
 	protected static final String TAG_HT    = "HT";
@@ -511,20 +413,11 @@ public abstract class Char extends Actor {
 		return false;
 	}
 
-	protected HashSet<Property> properties = new HashSet<>();
-
-	public HashSet<Property> properties() {
-		HashSet<Property> props = new HashSet<>(properties);
-		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
-		return props;
-	}
-
 	public enum Property{
 		BOSS ( new HashSet<Class>( Arrays.asList(Grim.class, GrimTrap.class, ScrollOfRetribution.class, ScrollOfPsionicBlast.class)),
 				new HashSet<Class>( Arrays.asList(AllyBuff.class, Dread.class) )),
 		MINIBOSS ( new HashSet<Class>(),
 				new HashSet<Class>( Arrays.asList(AllyBuff.class, Dread.class) )),
-		BOSS_MINION,
 		UNDEAD,
 		DEMONIC,
 		INORGANIC ( new HashSet<Class>(),
@@ -570,6 +463,7 @@ public abstract class Char extends Actor {
 
 	@Contract(value = "null,_->false", pure=true)
 	public static boolean hasProp( Char ch, Property p){
-		return (ch != null && ch.properties().contains(p));
+		return ch != null && (new HashSet<>().contains(p));
+		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
 	}
 }

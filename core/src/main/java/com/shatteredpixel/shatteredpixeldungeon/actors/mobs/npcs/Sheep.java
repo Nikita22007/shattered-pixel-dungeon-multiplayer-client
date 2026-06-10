@@ -21,14 +21,10 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.SheepSprite;
-import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -66,20 +62,6 @@ public class Sheep extends NPC {
     @Override
     public boolean add(Buff buff) {
         return false;
-    }
-
-    @Override
-    public boolean interact(Char c) {
-        sprite.showStatus(CharSprite.NEUTRAL, Messages.get(this, Random.element(LINE_KEYS)));
-        if (c == Dungeon.hero) {
-            Dungeon.hero.spendAndNext(1f);
-            Sample.INSTANCE.play(Assets.Sounds.SHEEP, 1, Random.Float(0.91f, 1.1f));
-            //sheep summoned by woolly bomb can be dispelled by interacting
-            if (lifespan >= 20) {
-                spend(-cooldown());
-            }
-        }
-        return true;
     }
 
     private static final String LIFESPAN = "lifespan";

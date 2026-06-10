@@ -26,12 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Sleep;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Vertigo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
@@ -44,13 +39,13 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.WardSprite;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
+
+import java.util.HashSet;
 
 public class WandOfWarding extends Wand {
 
@@ -212,8 +207,8 @@ public class WandOfWarding extends Wand {
 
 			alignment = Alignment.ALLY;
 
-			properties.add(Property.IMMOVABLE);
-			properties.add(Property.INORGANIC);
+			new HashSet<Property>().add(Property.IMMOVABLE);
+			new HashSet<Property>().add(Property.INORGANIC);
 
 			viewDistance = 4;
 			state = WANDERING;
@@ -329,18 +324,6 @@ public class WandOfWarding extends Wand {
 			return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 		}
 
-		@Override
-		protected boolean doAttack(Char enemy) {
-			boolean visible = fieldOfView[pos] || fieldOfView[enemy.pos];
-			if (visible) {
-				sprite.zap( enemy.pos );
-			} else {
-				zap();
-			}
-
-			return !visible;
-		}
-
 		private void zap() {
 			spend( 1f );
 
@@ -397,36 +380,6 @@ public class WandOfWarding extends Wand {
 			super.destroy();
 			Dungeon.observe();
 			GameScene.updateFog(pos, viewDistance+1);
-		}
-		
-		@Override
-		public boolean canInteract(Char c) {
-			return true;
-		}
-
-		@Override
-		public boolean interact( Char c ) {
-			if (c != Dungeon.hero){
-				return true;
-			}
-			Game.runOnRenderThread(new Callback() {
-				@Override
-				public void call() {
-					GameScene.show(new WndOptions( sprite(),
-							Messages.get(Ward.this, "dismiss_title"),
-							Messages.get(Ward.this, "dismiss_body"),
-							Messages.get(Ward.this, "dismiss_confirm"),
-							Messages.get(Ward.this, "dismiss_cancel") ){
-						@Override
-						protected void onSelect(int index) {
-							if (index == 0){
-								die(null);
-							}
-						}
-					});
-				}
-			});
-			return true;
 		}
 
 		@Override

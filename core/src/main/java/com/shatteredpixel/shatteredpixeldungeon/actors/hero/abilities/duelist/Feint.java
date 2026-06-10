@@ -36,6 +36,8 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.MirrorSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.tweeners.AlphaTweener;
 
+import java.util.HashSet;
+
 public class Feint extends ArmorAbility {
 
     protected float baseChargeUse = 35;
@@ -74,7 +76,7 @@ public class Feint extends ArmorAbility {
             spriteClass = AfterImageSprite.class;
             defenseSkill = 0;
 
-            properties.add(Property.IMMOVABLE);
+            new HashSet<Property>().add(Property.IMMOVABLE);
 
             alignment = Alignment.ALLY;
             state = PASSIVE;
@@ -93,11 +95,6 @@ public class Feint extends ArmorAbility {
         @Override
         public String description() {
             return ""; //shouldn't be examinable
-        }
-
-        @Override
-        public boolean canInteract(Char c) {
-            return false;
         }
 
         @Override

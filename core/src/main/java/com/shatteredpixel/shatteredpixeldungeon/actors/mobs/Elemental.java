@@ -32,35 +32,30 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Freezing;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Lightning;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
-import com.shatteredpixel.shatteredpixeldungeon.effects.TargetedCell;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfFrost;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.Embers;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
-import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.RatSkull;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Shocking;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ElementalSprite;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public abstract class Elemental extends Mob {
 
@@ -134,31 +129,10 @@ public abstract class Elemental extends Mob {
 			return rangedCooldown < 0 && new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT ).collisionPos == enemy.pos;
 		}
 	}
-	
-	protected boolean doAttack( Char enemy ) {
-		
-		if (Dungeon.level.adjacent( pos, enemy.pos )
-				|| rangedCooldown > 0
-				|| new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT ).collisionPos != enemy.pos) {
-			
-			return super.doAttack( enemy );
-			
-		} else {
-			
-			if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
-				sprite.zap( enemy.pos );
-				return false;
-			} else {
-				zap();
-				return true;
-			}
-		}
-	}
 
-    protected void zap() {
+	protected void zap() {
 		spend( 1f );
 
-		Invisibility.dispel(this);
 		Char enemy = this.enemy;
         if (false) {
 			
@@ -221,7 +195,7 @@ public abstract class Elemental extends Mob {
 			loot = PotionOfLiquidFlame.class;
 			lootChance = 1/8f;
 			
-			properties.add( Property.FIERY );
+			new HashSet<Property>().add( Property.FIERY );
 			
 			harmfulBuffs.add( com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost.class );
 			harmfulBuffs.add( Chill.class );
@@ -253,7 +227,7 @@ public abstract class Elemental extends Mob {
 
 			defenseSkill = 12;
 			
-			properties.add(Property.MINIBOSS);
+			new HashSet<Property>().add(Property.MINIBOSS);
 		}
 
 		private int targetingPos = -1;
@@ -290,61 +264,10 @@ public abstract class Elemental extends Mob {
 			}
 		}
 
-		protected boolean doAttack( Char enemy ) {
-
-			if (rangedCooldown > 0) {
-
-				return super.doAttack( enemy );
-
-			} else if (new Ballistica( pos, enemy.pos, Ballistica.STOP_SOLID | Ballistica.STOP_TARGET ).collisionPos == enemy.pos) {
-
-				//set up an attack for next turn
-				ArrayList<Integer> candidates = new ArrayList<>();
-				for (int i : PathFinder.NEIGHBOURS8){
-					int target = enemy.pos + i;
-					if (target != pos && new Ballistica(pos, target, Ballistica.STOP_SOLID | Ballistica.STOP_TARGET).collisionPos == target){
-						candidates.add(target);
-					}
-				}
-
-				if (!candidates.isEmpty()){
-					targetingPos = Random.element(candidates);
-
-					for (int i : PathFinder.NEIGHBOURS9){
-						if (!Dungeon.level.solid[targetingPos + i]) {
-							sprite.parent.addToBack(new TargetedCell(targetingPos + i, 0xFF0000));
-						}
-					}
-
-					GLog.n(Messages.get(this, "charging"));
-					spend(GameMath.gate(attackDelay(), (int)Math.ceil(Dungeon.hero.cooldown()), 3*attackDelay()));
-					Dungeon.hero.interrupt();
-					return true;
-				} else {
-					rangedCooldown = 1;
-					return super.doAttack(enemy);
-				}
-
-
-			} else {
-
-				if (sprite != null && (sprite.visible || Dungeon.level.heroFOV[targetingPos])) {
-					sprite.zap( targetingPos );
-					return false;
-				} else {
-					zap();
-					return true;
-				}
-
-			}
-		}
-
 		@Override
 		protected void zap() {
 			if (targetingPos != -1) {
 				spend(1f);
-
-				Invisibility.dispel(this);
 
 				for (int i : PathFinder.NEIGHBOURS9) {
 					if (!Dungeon.level.solid[targetingPos + i]) {
@@ -453,17 +376,6 @@ public abstract class Elemental extends Mob {
 		}
 	}
 
-	//not a miniboss, no ranged attack, otherwise a newborn elemental
-	public static class AllyNewBornElemental extends NewbornFireElemental {
-
-		{
-			rangedCooldown = Integer.MAX_VALUE;
-
-			properties.remove(Property.MINIBOSS);
-		}
-
-	}
-	
 	public static class FrostElemental extends Elemental {
 		
 		{
@@ -472,7 +384,7 @@ public abstract class Elemental extends Mob {
 			loot = PotionOfFrost.class;
 			lootChance = 1/8f;
 			
-			properties.add( Property.ICY );
+			new HashSet<Property>().add( Property.ICY );
 			
 			harmfulBuffs.add( Burning.class );
 		}
@@ -500,7 +412,7 @@ public abstract class Elemental extends Mob {
 			loot = ScrollOfRecharging.class;
 			lootChance = 1/4f;
 			
-			properties.add( Property.ELECTRIC );
+			new HashSet<Property>().add( Property.ELECTRIC );
 		}
 		
 		@Override
@@ -536,61 +448,5 @@ public abstract class Elemental extends Mob {
 			}
 		}
 	}
-	
-	public static class ChaosElemental extends Elemental {
-		
-		{
-			spriteClass = ElementalSprite.Chaos.class;
-			
-			loot = ScrollOfTransmutation.class;
-			lootChance = 1f;
-		}
-		
-		@Override
-		protected void meleeProc( Char enemy, int damage ) {
-			Ballistica aim = new Ballistica(pos, enemy.pos, Ballistica.STOP_TARGET);
-			//TODO shortcutting the fx seems fine for now but may cause problems with new cursed effects
-			//of course, not shortcutting it means actor ordering issues =S
-		}
 
-		@Override
-		protected void zap() {
-			spend( 1f );
-
-			Invisibility.dispel(this);
-			Char enemy = this.enemy;
-			//skips accuracy check, always hits
-			rangedProc( enemy );
-
-			rangedCooldown = Random.NormalIntRange( 3, 5 );
-		}
-
-		@Override
-		public void onZapComplete() {
-			zap();
-			//next(); triggers after wand effect
-		}
-
-		@Override
-		protected void rangedProc( Char enemy ) {
-            new Ballistica(pos, enemy.pos, Ballistica.STOP_TARGET);
-
-        }
-	}
-	
-	public static Class<? extends Elemental> random(){
-		float altChance = 1/50f * RatSkull.exoticChanceMultiplier();
-		if (Random.Float() < altChance){
-			return ChaosElemental.class;
-		}
-		
-		float roll = Random.Float();
-		if (roll < 0.4f){
-			return FireElemental.class;
-		} else if (roll < 0.8f){
-			return FrostElemental.class;
-		} else {
-			return ShockElemental.class;
-		}
-	}
 }

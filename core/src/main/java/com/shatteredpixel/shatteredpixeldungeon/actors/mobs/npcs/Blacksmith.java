@@ -31,11 +31,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.quest.DarkGold;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.Pickaxe;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.BlacksmithSprite;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndBlacksmith;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndQuest;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Bundle;
@@ -43,13 +40,14 @@ import com.watabou.utils.Callback;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 public class Blacksmith extends NPC {
 
 	{
 		spriteClass = BlacksmithSprite.class;
 
-		properties.add(Property.IMMOVABLE);
+		new HashSet<Property>().add(Property.IMMOVABLE);
 	}
 
 	@Override
@@ -65,123 +63,6 @@ public class Blacksmith extends NPC {
 			}
 		}
 		return super.act();
-	}
-
-	@Override
-	public boolean interact(Char c) {
-
-		sprite.turnTo(pos, c.pos);
-
-		if (c != Dungeon.hero) {
-			return true;
-		}
-
-		if (!Quest.given) {
-
-			String msg1 = "";
-			String msg2 = "";
-
-			switch (Dungeon.hero.heroClass) {
-				case WARRIOR:
-					msg1 += Messages.get(Blacksmith.this, "intro_quest_warrior");
-					break;
-				case MAGE:
-					msg1 += Messages.get(Blacksmith.this, "intro_quest_mage");
-					break;
-				case ROGUE:
-					msg1 += Messages.get(Blacksmith.this, "intro_quest_rogue");
-					break;
-				case HUNTRESS:
-					msg1 += Messages.get(Blacksmith.this, "intro_quest_huntress");
-					break;
-				case DUELIST:
-					msg1 += Messages.get(Blacksmith.this, "intro_quest_duelist");
-					break;
-				case CLERIC:
-					msg1 += Messages.get(Blacksmith.this, "intro_quest_cleric");
-					break;
-			}
-
-			msg1 += "\n\n" + Messages.get(Blacksmith.this, "intro_quest_start");
-
-			switch (Quest.type) {
-				case Quest.CRYSTAL:
-					msg2 += Messages.get(Blacksmith.this, "intro_quest_crystal");
-					break;
-				case Quest.GNOLL:
-					msg2 += Messages.get(Blacksmith.this, "intro_quest_gnoll");
-					break;
-				case Quest.FUNGI:
-					msg2 += Messages.get(Blacksmith.this, "intro_quest_fungi");
-					break;
-			}
-
-			final String msg1Final = msg1;
-			final String msg2Final = msg2;
-			Game.runOnRenderThread(new Callback() {
-				@Override
-				public void call() {
-					GameScene.show(new WndQuest(Blacksmith.this, msg1Final) {
-						@Override
-						public void hide() {
-							super.hide();
-
-							Quest.given = true;
-							Quest.completed = false;
-							Item pick = Quest.pickaxe != null ? Quest.pickaxe : new Pickaxe();
-                            if (false) {
-								GLog.i(Messages.capitalize(Messages.get(Dungeon.hero, "you_now_have", pick.name())));
-							} else {
-								Dungeon.level.drop(pick, Dungeon.hero.pos).sprite.drop();
-							}
-							Quest.pickaxe = null;
-
-							if (msg2Final != "") {
-								GameScene.show(new WndQuest(Blacksmith.this, msg2Final));
-							}
-
-						}
-					});
-				}
-			});
-
-		} else if (!Quest.completed) {
-
-			String msg = Messages.get(this, "reminder") + "\n\n";
-			switch (Quest.type) {
-				case Quest.CRYSTAL:
-					msg += Messages.get(Blacksmith.this, "reminder_crystal");
-					break;
-				case Quest.GNOLL:
-					msg += Messages.get(Blacksmith.this, "reminder_gnoll");
-					break;
-				case Quest.FUNGI:
-					msg += Messages.get(Blacksmith.this, "reminder_fungi");
-					break;
-			}
-			tell(msg);
-
-		} else if (Quest.rewardsAvailable()) {
-
-			Game.runOnRenderThread(new Callback() {
-				@Override
-				public void call() {
-					//in case game was closed during smith reward selection
-					if (Quest.smithRewards != null && Quest.smiths > 0) {
-						GameScene.show(new WndBlacksmith.WndSmith(Blacksmith.this, Dungeon.hero));
-					} else {
-						GameScene.show(new WndBlacksmith(Blacksmith.this, Dungeon.hero));
-					}
-				}
-			});
-
-		} else {
-
-			tell(Messages.get(this, "get_lost"));
-
-		}
-
-		return true;
 	}
 
 	private void tell(String text) {

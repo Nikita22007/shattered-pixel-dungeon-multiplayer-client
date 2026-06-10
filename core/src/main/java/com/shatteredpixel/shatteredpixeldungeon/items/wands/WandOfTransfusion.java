@@ -48,6 +48,8 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import java.util.HashSet;
+
 public class WandOfTransfusion extends DamageWand {
 
 	{
@@ -124,7 +126,8 @@ public class WandOfTransfusion extends DamageWand {
 				curUser.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(5+buffedLvl()), FloatingText.SHIELDING);
 				
 				//charms living enemies
-				if (!ch.properties().contains(Char.Property.UNDEAD)) {
+                //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+                if (!new HashSet<>().contains(Char.Property.UNDEAD)) {
                     Charm charm = null;
 					charm.object = curUser.id();
 					charm.ignoreHeroAllies = true;

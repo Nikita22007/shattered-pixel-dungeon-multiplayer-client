@@ -45,6 +45,8 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import java.util.HashSet;
+
 public class WandOfPrismaticLight extends DamageWand {
 
 	{
@@ -89,7 +91,9 @@ public class WandOfPrismaticLight extends DamageWand {
             ch.sprite.emitter().burst(Speck.factory(Speck.LIGHT), 6 );
 		}
 
-		if (ch.properties().contains(Char.Property.DEMONIC) || ch.properties().contains(Char.Property.UNDEAD)){
+        //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+        //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+        if (new HashSet<>().contains(Char.Property.DEMONIC) || new HashSet<>().contains(Char.Property.UNDEAD)){
 			ch.sprite.emitter().start( ShadowParticle.UP, 0.05f, 10+buffedLvl() );
 			Sample.INSTANCE.play(Assets.Sounds.BURNING);
 

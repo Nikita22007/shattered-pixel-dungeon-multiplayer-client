@@ -56,16 +56,14 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.IconTitle;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndInfoItem;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndQuest;
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class DriedRose extends Artifact {
 
@@ -404,8 +402,8 @@ public class DriedRose extends Artifact {
 
 			state = HUNTING;
 
-			properties.add(Property.UNDEAD);
-			properties.add(Property.INORGANIC);
+			new HashSet<Property>().add(Property.UNDEAD);
+			new HashSet<Property>().add(Property.INORGANIC);
 		}
 
 		private DriedRose rose = null;
@@ -495,15 +493,6 @@ public class DriedRose extends Artifact {
 		}
 
 		@Override
-		public float attackDelay() {
-			float delay = super.attackDelay();
-			if (weapon() != null) {
-				delay *= weapon().delayFactor(this);
-			}
-			return delay;
-		}
-
-		@Override
 		protected boolean canAttack(Char enemy) {
 			return super.canAttack(enemy) || (weapon() != null && weapon().canReach(this, enemy.pos));
 		}
@@ -563,23 +552,6 @@ public class DriedRose extends Artifact {
 				return Math.max(super.glyphLevel(cls), armor().buffedLvl());
 			} else {
 				return super.glyphLevel(cls);
-			}
-		}
-
-		@Override
-		public boolean interact(Char c) {
-			updateRose();
-			if (false && rose != null && !rose.talkedTo) {
-				rose.talkedTo = true;
-				Game.runOnRenderThread(new Callback() {
-					@Override
-					public void call() {
-						GameScene.show(new WndQuest(GhostHero.this, Messages.get(GhostHero.this, "introduce")));
-					}
-				});
-				return true;
-			} else {
-				return super.interact(c);
 			}
 		}
 

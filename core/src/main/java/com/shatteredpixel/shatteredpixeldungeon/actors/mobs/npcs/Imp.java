@@ -32,17 +32,18 @@ import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ImpSprite;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndImp;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndQuest;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Callback;
+
+import java.util.HashSet;
 
 public class Imp extends NPC {
 
     {
         spriteClass = ImpSprite.class;
 
-        properties.add(Property.IMMOVABLE);
+        new HashSet<Property>().add(Property.IMMOVABLE);
     }
 
     private boolean seenBefore = false;
@@ -78,42 +79,6 @@ public class Imp extends NPC {
 
     @Override
     public boolean reset() {
-        return true;
-    }
-
-    @Override
-    public boolean interact(Char c) {
-
-        sprite.turnTo(pos, Dungeon.hero.pos);
-
-        if (c != Dungeon.hero) {
-            return true;
-        }
-
-        if (Quest.given) {
-
-            DwarfToken tokens = Dungeon.hero.belongings.getItem(DwarfToken.class);
-            if (tokens != null && (tokens.quantity() >= 5 || (!Quest.alternative && tokens.quantity() >= 4))) {
-                Game.runOnRenderThread(new Callback() {
-                    @Override
-                    public void call() {
-                        GameScene.show(new WndImp(Imp.this, tokens));
-                    }
-                });
-            } else {
-                tell(Quest.alternative ?
-                        Messages.get(this, "monks_2", Messages.titleCase(Dungeon.hero.name()))
-                        : Messages.get(this, "golems_2", Messages.titleCase(Dungeon.hero.name())));
-            }
-
-        } else {
-            tell(Messages.get(this, "intro") + "\n\n" + (Quest.alternative ?
-                    Messages.get(this, "monks_1", Messages.titleCase(Dungeon.hero.name()))
-                    : Messages.get(this, "golems_1", Messages.titleCase(Dungeon.hero.name()))));
-            Quest.given = true;
-            Quest.completed = false;
-        }
-
         return true;
     }
 

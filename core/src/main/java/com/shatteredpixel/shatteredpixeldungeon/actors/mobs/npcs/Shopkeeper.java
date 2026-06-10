@@ -23,9 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
-import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
@@ -34,31 +32,24 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ShopkeeperSprite;
-import com.shatteredpixel.shatteredpixeldungeon.ui.CurrencyIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndTitledMessage;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndTradeItem;
-import com.watabou.noosa.Game;
-import com.watabou.noosa.Image;
 import com.watabou.utils.BArray;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Shopkeeper extends NPC {
 
 	{
 		spriteClass = ShopkeeperSprite.class;
 
-		properties.add(Property.IMMOVABLE);
+		new HashSet<Property>().add(Property.IMMOVABLE);
 	}
 
 	public static int MAX_BUYBACK_HISTORY = 3;
@@ -197,77 +188,6 @@ public class Shopkeeper extends NPC {
 			}
 		}
 	};
-
-	@Override
-	public boolean interact(Char c) {
-		if (c != Dungeon.hero) {
-			return true;
-		}
-		Game.runOnRenderThread(new Callback() {
-			@Override
-			public void call() {
-				String[] options = new String[2 + buybackItems.size()];
-				int maxLen = PixelScene.landscape() ? 30 : 25;
-				int i = 0;
-				options[i++] = Messages.get(Shopkeeper.this, "sell");
-				options[i++] = Messages.get(Shopkeeper.this, "talk");
-				for (Item item : buybackItems) {
-					options[i] = Messages.get(Heap.class, "for_sale", item.value(), Messages.titleCase(item.title()));
-					if (options[i].length() > maxLen) options[i] = options[i].substring(0, maxLen - 3) + "...";
-					i++;
-				}
-				CurrencyIndicator.showGold = true;
-				GameScene.show(new WndOptions(sprite(), Messages.titleCase(name()), description(), options) {
-					@Override
-					protected void onSelect(int index) {
-						super.onSelect(index);
-						if (index == 0) {
-							sell();
-						} else if (index == 1) {
-							GameScene.show(new WndTitledMessage(sprite(), Messages.titleCase(name()), chatText()));
-						} else if (index > 1) {
-							GLog.i(Messages.get(Shopkeeper.this, "buyback"));
-							Item returned = buybackItems.remove(index - 2);
-							Dungeon.hero.gold -= returned.value();
-							Statistics.goldCollected -= returned.value();
-                            if (!false) {
-								Dungeon.level.drop(returned, Dungeon.hero.pos);
-							}
-						}
-					}
-
-					@Override
-					protected boolean enabled(int index) {
-						if (index > 1) {
-							return Dungeon.hero.gold >= buybackItems.get(index - 2).value();
-						} else {
-							return super.enabled(index);
-						}
-					}
-
-					@Override
-					protected boolean hasIcon(int index) {
-						return index > 1;
-					}
-
-					@Override
-					protected Image getIcon(int index) {
-						if (index > 1) {
-							return new ItemSprite(buybackItems.get(index - 2));
-						}
-						return null;
-					}
-
-					@Override
-					public void hide() {
-						super.hide();
-						CurrencyIndicator.showGold = false;
-					}
-				});
-			}
-		});
-		return true;
-	}
 
 	public String chatText() {
 		switch (Dungeon.depth) {

@@ -26,6 +26,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corrosion;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
+import java.util.HashSet;
+
 
 public class RotDart extends TippedDart {
 	
@@ -37,10 +39,12 @@ public class RotDart extends TippedDart {
 	public int proc(Char attacker, Char defender, int damage) {
 
 		//when processing charged shot, only corrode enemies
-		if (processingChargedShot && attacker.alignment == defender.alignment) {
+        //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+        //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+        if (processingChargedShot && attacker.alignment == defender.alignment) {
 			//do nothing
-		} else if (defender.properties().contains(Char.Property.BOSS)
-				|| defender.properties().contains(Char.Property.MINIBOSS)){
+		} else if (new HashSet<>().contains(Char.Property.BOSS)
+				|| new HashSet<>().contains(Char.Property.MINIBOSS)){
             ((Corrosion) null).set(5f, Dungeon.depth /3);
 		} else {
             ((Corrosion) null).set(10f, Dungeon.depth);

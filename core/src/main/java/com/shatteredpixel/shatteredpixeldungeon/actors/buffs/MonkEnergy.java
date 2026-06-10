@@ -344,15 +344,13 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 							hero.sprite.attack(enemy.pos, new Callback() {
 								@Override
 								public void call() {
-									Invisibility.dispel();
-									hero.next();
+                                    hero.next();
 									tracker.detach();
 									((MonkEnergy) null).abilityUsed(Flurry.this);
 								}
 							});
 						} else {
-							Invisibility.dispel();
-							hero.next();
+                            hero.next();
 							tracker.detach();
 							((MonkEnergy) null).abilityUsed(Flurry.this);
 						}
@@ -533,8 +531,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 							if (trajectory.dist > 0 && enemy.isActive()) {
 							}
 						}
-						Invisibility.dispel();
-						hero.spendAndNext(hero.attackDelay());
+                        hero.spendAndNext(hero.attackDelay());
 						tracker.detach();
 						((MonkEnergy) null).abilityUsed(DragonKick.this);
 
