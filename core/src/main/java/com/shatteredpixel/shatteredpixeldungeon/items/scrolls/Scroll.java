@@ -27,20 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.ItemStatusHandler;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ExoticScroll;
-import com.shatteredpixel.shatteredpixeldungeon.items.stones.Runestone;
-import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAggression;
-import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAugmentation;
-import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfBlast;
-import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfBlink;
-import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfClairvoyance;
-import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfDeepSleep;
-import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfDetectMagic;
-import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfEnchantment;
-import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfFear;
-import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfFlock;
-import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfIntuition;
-import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfShock;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
@@ -221,45 +207,5 @@ public abstract class Scroll extends Item {
 	public int energyVal() {
 		return 6 * quantity;
 	}
-	
-	public static class PlaceHolder extends Scroll {
-		
-		{
-			image = ItemSpriteSheet.SCROLL_HOLDER;
-		}
-		
-		@Override
-		public boolean isSimilar(Item item) {
-			return ExoticScroll.regToExo.containsKey(item.getClass())
-					|| ExoticScroll.regToExo.containsValue(item.getClass());
-		}
-		
-		@Override
-		public void doRead() {}
-		
-		@Override
-		public String info() {
-			return "";
-		}
-	}
-	
-	public static class ScrollToStone {
-		
-		private static HashMap<Class<?extends Scroll>, Class<?extends Runestone>> stones = new HashMap<>();
-		static {
-			stones.put(ScrollOfIdentify.class,      StoneOfIntuition.class);
-			stones.put(ScrollOfLullaby.class,       StoneOfDeepSleep.class);
-			stones.put(ScrollOfMagicMapping.class,  StoneOfClairvoyance.class);
-			stones.put(ScrollOfMirrorImage.class,   StoneOfFlock.class);
-			stones.put(ScrollOfRetribution.class,   StoneOfBlast.class);
-			stones.put(ScrollOfRage.class,          StoneOfAggression.class);
-			stones.put(ScrollOfRecharging.class,    StoneOfShock.class);
-			stones.put(ScrollOfRemoveCurse.class,   StoneOfDetectMagic.class);
-			stones.put(ScrollOfTeleportation.class, StoneOfBlink.class);
-			stones.put(ScrollOfTerror.class,        StoneOfFear.class);
-			stones.put(ScrollOfTransmutation.class, StoneOfAugmentation.class);
-			stones.put(ScrollOfUpgrade.class,       StoneOfEnchantment.class);
-		}
 
-	}
 }
