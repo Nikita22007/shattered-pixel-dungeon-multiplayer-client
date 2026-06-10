@@ -24,9 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLivingEarth;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -114,12 +112,6 @@ public class Skeleton extends Mob {
 		//each drop makes future drops 1/3 as likely
 		// so loot chance looks like: 1/6, 1/18, 1/54, 1/162, etc.
 		return super.lootChance() * (float)Math.pow(1/3f, Dungeon.LimitedDrops.SKELE_WEP.count);
-	}
-
-	@Override
-	public Item createLoot() {
-		Dungeon.LimitedDrops.SKELE_WEP.count++;
-		return super.createLoot();
 	}
 
 	@Override

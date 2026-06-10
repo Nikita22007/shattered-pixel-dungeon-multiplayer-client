@@ -45,12 +45,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.Stasis;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
-import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.ExoticPotion;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ExoticScroll;
-import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ExoticCrystals;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Bestiary;
@@ -605,37 +600,6 @@ public abstract class Mob extends Char {
 
     protected Object loot = null;
     protected float lootChance = 0;
-
-    @SuppressWarnings("unchecked")
-    public Item createLoot() {
-        Item item;
-        if (loot instanceof Generator.Category) {
-
-            item = null;
-
-        } else if (loot instanceof Class<?>) {
-
-            if (ExoticPotion.regToExo.containsKey(loot)) {
-                if (Random.Float() < ExoticCrystals.consumableExoticChance()) {
-                    ExoticPotion.regToExo.get(loot);
-                    return null;
-                }
-            } else if (ExoticScroll.regToExo.containsKey(loot)) {
-                if (Random.Float() < ExoticCrystals.consumableExoticChance()) {
-                    ExoticScroll.regToExo.get(loot);
-                    return null;
-                }
-            }
-
-            item = null;
-
-        } else {
-
-            item = (Item) loot;
-
-        }
-        return item;
-    }
 
     //how many mobs this one should count as when determining spawning totals
     public float spawningWeight() {

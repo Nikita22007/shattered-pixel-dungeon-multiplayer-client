@@ -103,12 +103,6 @@ public class Thief extends Mob {
 	}
 
 	@Override
-	public Item createLoot() {
-		Dungeon.LimitedDrops.THEIF_MISC.count++;
-		return super.createLoot();
-	}
-
-	@Override
 	public int attackSkill( Char target ) {
 		return 12;
 	}

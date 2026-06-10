@@ -26,11 +26,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Light;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.PurpleParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Dewdrop;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -38,7 +36,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.EyeSprite;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 public class Eye extends Mob {
@@ -212,35 +209,6 @@ public class Eye extends Mob {
 
 		beam = null;
 		beamTarget = -1;
-	}
-
-	//generates an average of 1 dew, 0.25 seeds, and 0.25 stones
-	@Override
-	public Item createLoot() {
-		Item loot;
-		switch (Random.Int(4)) {
-			case 0:
-			case 1:
-			default:
-				loot = new Dewdrop();
-				int ofs;
-				do {
-					ofs = PathFinder.NEIGHBOURS8[Random.Int(8)];
-				} while (Dungeon.level.solid[pos + ofs] && !Dungeon.level.passable[pos + ofs]);
-				if (Dungeon.level.heaps.get(pos + ofs) == null) {
-					Dungeon.level.drop(new Dewdrop(), pos + ofs).sprite.drop(pos);
-				} else {
-					Dungeon.level.drop(new Dewdrop(), pos + ofs).sprite.drop(pos + ofs);
-				}
-				break;
-			case 2:
-                loot = null;
-				break;
-			case 3:
-                loot = null;
-				break;
-		}
-		return loot;
 	}
 
 	private static final String BEAM_TARGET = "beamTarget";
