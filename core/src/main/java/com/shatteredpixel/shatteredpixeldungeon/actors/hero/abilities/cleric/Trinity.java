@@ -236,7 +236,7 @@ public class Trinity extends ArmorAbility {
                             ((SpiritForm.SpiritFormBuff) null).setEffect(spiritForm);
 							Dungeon.hero.spendAndNext(1f);
 						} else {
-							SpiritForm.applyActiveArtifactEffect(armor, (Artifact) spiritForm);
+
 							//turn spending is handled within the application of the artifact effect
 						}
 						Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
