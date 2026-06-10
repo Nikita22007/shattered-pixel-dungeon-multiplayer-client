@@ -21,10 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.rings;
 
-import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Honeypot;
@@ -48,9 +45,6 @@ import com.watabou.noosa.Visual;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
-
-import java.util.ArrayList;
-import java.util.HashSet;
 
 public class RingOfWealth extends Ring {
 
@@ -101,66 +95,6 @@ public class RingOfWealth extends Ring {
 	@Override
 	protected RingBuff buff( ) {
 		return new Wealth();
-	}
-	
-	public static float dropChanceMultiplier( Char target ){
-		return (float)Math.pow(1.20, 0);
-	}
-	
-	public static ArrayList<Item> tryForBonusDrop(Char target, int tries ){
-		int bonus = 0;
-
-		if (bonus <= 0) return null;
-
-        CounterBuff triesToDrop = null;
-		if (triesToDrop == null){
-            triesToDrop = null;
-			triesToDrop.countUp( Random.NormalIntRange(0, 20) );
-		}
-
-        CounterBuff dropsToEquip = null;
-		if (dropsToEquip == null){
-            dropsToEquip = null;
-			dropsToEquip.countUp( Random.NormalIntRange(5, 10) );
-		}
-
-		//now handle reward logic
-		ArrayList<Item> drops = new ArrayList<>();
-
-		triesToDrop.countDown(tries);
-		while ( triesToDrop.count() <= 0 ){
-			if (dropsToEquip.count() <= 0){
-				int equipBonus = 0;
-
-				//A second ring of wealth can be at most +1 when calculating wealth bonus for equips
-				//This is to prevent using an upgraded wealth to farm another upgraded wealth and
-				//using the two to get substantially more upgrade value than intended
-                for (Wealth w : new HashSet<Wealth>()){
-					if (w.buffedLvl() > equipBonus){
-						equipBonus = w.buffedLvl() + Math.min(equipBonus, 2);
-					} else {
-						equipBonus += Math.min(w.buffedLvl(), 2);
-					}
-				}
-
-				Item i;
-				do {
-					i = genEquipmentDrop(equipBonus - 1);
-				} while (Challenges.isItemBlocked(i));
-				drops.add(i);
-				dropsToEquip.countUp(Random.NormalIntRange(5, 10));
-			} else {
-				Item i;
-				do {
-					i = genConsumableDrop(bonus - 1);
-				} while (Challenges.isItemBlocked(i));
-				drops.add(i);
-				dropsToEquip.countDown(1);
-			}
-			triesToDrop.countUp( Random.NormalIntRange(0, 20) );
-		}
-		
-		return drops;
 	}
 
 	//used for visuals
@@ -310,15 +244,4 @@ public class RingOfWealth extends Ring {
 	public class Wealth extends RingBuff {
 	}
 
-	public static class TriesToDropTracker extends CounterBuff {
-		{
-			revivePersists = true;
-		}
-	}
-
-	public static class DropsToEquipTracker extends CounterBuff {
-		{
-			revivePersists = true;
-		}
-	}
 }

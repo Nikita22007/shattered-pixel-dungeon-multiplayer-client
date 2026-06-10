@@ -1194,17 +1194,7 @@ public class Hero extends Char {
 
 	public void earnExp(int exp, Class source) {
 
-		//xp granted by ascension challenge is only for on-exp gain effects
 
-		float percent = exp / (float) maxExp();
-
-		if (source != PotionOfExperience.class) {
-			for (Item i : belongings) {
-				if (i != null) {
-
-				}
-			}
-		}
 
 		boolean levelUp = false;
 		while (this.exp >= maxExp()) {
