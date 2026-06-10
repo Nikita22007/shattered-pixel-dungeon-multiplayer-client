@@ -61,14 +61,6 @@ public class CloakOfShadows extends Artifact {
 	public static final String AC_STEALTH = "STEALTH";
 
 	@Override
-	public void activate(Char ch){
-		super.activate(ch);
-		if (activeBuff != null && activeBuff.target == null){
-			activeBuff.attachTo(ch);
-		}
-	}
-
-	@Override
 	public boolean doUnequip(Hero hero, boolean collect, boolean single) {
 		if (super.doUnequip(hero, collect, single)){
 			if (!collect || !hero.hasTalent(Talent.LIGHT_CLOAK)){

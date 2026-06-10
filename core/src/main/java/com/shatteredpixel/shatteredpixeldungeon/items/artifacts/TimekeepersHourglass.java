@@ -78,13 +78,6 @@ public class TimekeepersHourglass extends Artifact {
 	public int sandBags = 0;
 
 	@Override
-	public void activate(Char ch) {
-		super.activate(ch);
-		if (activeBuff != null)
-			activeBuff.attachTo(ch);
-	}
-
-	@Override
 	public boolean doUnequip(Hero hero, boolean collect, boolean single) {
 		if (super.doUnequip(hero, collect, single)){
 			if (activeBuff != null){

@@ -157,13 +157,6 @@ public class RingOfForce extends Ring {
 	public static String AC_ABILITY = "ABILITY";
 
 	@Override
-	public void activate(Char ch) {
-		super.activate(ch);
-		if (ch instanceof Hero && ((Hero) ch).heroClass == HeroClass.DUELIST){
-        }
-	}
-
-	@Override
 	public String defaultAction() {
 		if (Dungeon.hero != null && Dungeon.hero.heroClass == HeroClass.DUELIST){
 			return AC_ABILITY;

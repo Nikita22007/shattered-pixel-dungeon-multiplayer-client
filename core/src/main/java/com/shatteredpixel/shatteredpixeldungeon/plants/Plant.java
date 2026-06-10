@@ -64,13 +64,11 @@ public abstract class Plant implements Bundlable {
 		}
 
 		wither();
-		activate( ch );
+
 		Bestiary.setSeen(getClass());
 		Bestiary.countEncounter(getClass());
 	}
-	
-	public abstract void activate( Char ch );
-	
+
 	public void wither() {
 		Dungeon.level.uproot( pos );
 

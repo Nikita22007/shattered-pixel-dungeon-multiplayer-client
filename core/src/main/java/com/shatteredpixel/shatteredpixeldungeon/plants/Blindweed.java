@@ -37,24 +37,6 @@ public class Blindweed extends Plant {
 		seedClass = Seed.class;
 	}
 	
-	@Override
-	public void activate( Char ch ) {
-		
-		if (ch != null) {
-			if (ch instanceof Hero && ((Hero) ch).subClass == HeroSubClass.WARDEN){
-			} else {
-                if (ch instanceof Mob) {
-                    if (((Mob) ch).state == ((Mob) ch).HUNTING) ((Mob) ch).state = ((Mob) ch).WANDERING;
-					((Mob) ch).beckon(Dungeon.level.randomDestination( ch ));
-				}
-			}
-		}
-		
-		if (Dungeon.level.heroFOV[pos]) {
-			CellEmitter.get( pos ).burst( Speck.factory( Speck.LIGHT ), 4 );
-		}
-	}
-	
 	public static class Seed extends Plant.Seed {
 		{
 			image = ItemSpriteSheet.SEED_BLINDWEED;

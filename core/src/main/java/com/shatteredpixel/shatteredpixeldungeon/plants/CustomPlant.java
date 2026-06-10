@@ -21,11 +21,6 @@ public class CustomPlant extends Plant {
     }
 
     @Override
-    public void activate(Char ch){
-        //do nothing
-    }
-
-    @Override
     public String name(){
         throw new RuntimeException("Stub!");
     }

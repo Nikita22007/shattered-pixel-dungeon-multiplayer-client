@@ -39,15 +39,6 @@ public class Rotberry extends Plant {
 		image = 0;
 		seedClass = Seed.class;
 	}
-
-	@Override
-	public void activate( Char ch ) {
-		if (ch instanceof Hero && ((Hero) ch).subClass == HeroSubClass.WARDEN){
-            ((AdrenalineSurge) null).reset(1, AdrenalineSurge.DURATION);
-		} else {
-			GameScene.add( Blob.seed( pos, 100, ToxicGas.class ) );
-		}
-	}
 	
 	@Override
 	public void wither() {

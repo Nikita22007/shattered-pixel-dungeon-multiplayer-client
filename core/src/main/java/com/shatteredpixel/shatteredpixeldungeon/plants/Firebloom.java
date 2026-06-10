@@ -41,23 +41,6 @@ public class Firebloom extends Plant {
 		seedClass = Seed.class;
 	}
 	
-	@Override
-	public void activate( Char ch ) {
-		
-		if (ch instanceof Hero && ((Hero) ch).subClass == HeroSubClass.WARDEN){
-            ((FireImbue) null).set( FireImbue.DURATION*0.3f );
-		}
-
-		if (ch instanceof Mob){
-        }
-		
-		GameScene.add( Blob.seed( pos, 2, Fire.class ) );
-		
-		if (Dungeon.level.heroFOV[pos]) {
-			CellEmitter.get( pos ).burst( FlameParticle.FACTORY, 5 );
-		}
-	}
-	
 	public static class Seed extends Plant.Seed {
 		{
 			image = ItemSpriteSheet.SEED_FIREBLOOM;

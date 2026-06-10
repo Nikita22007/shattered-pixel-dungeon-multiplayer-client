@@ -46,15 +46,6 @@ public class Swiftthistle extends Plant {
 		seedClass = Seed.class;
 	}
 	
-	@Override
-	public void activate( Char ch ) {
-		if (ch != null) {
-            ((TimeBubble) null).reset();
-			if (ch instanceof Hero && ((Hero) ch).subClass == HeroSubClass.WARDEN){
-            }
-		}
-	}
-	
 	public static class Seed extends Plant.Seed {
 		{
 			image = ItemSpriteSheet.SEED_SWIFTTHISTLE;

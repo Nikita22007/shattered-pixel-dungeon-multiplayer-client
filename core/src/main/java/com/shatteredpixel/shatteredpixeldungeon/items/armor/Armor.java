@@ -163,13 +163,6 @@ public class Armor extends EquipableItem {
 		seal = null;
 	}
 
-
-
-	@Override
-	public void activate(Char ch) {
-		if (seal != null) ((BrokenSeal.WarriorShield) null).setArmor(this);
-	}
-
 	public void affixSeal(BrokenSeal seal){
 		this.seal = seal;
 		if (seal.level() > 0){

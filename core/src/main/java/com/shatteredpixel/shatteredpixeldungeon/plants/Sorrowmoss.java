@@ -39,23 +39,6 @@ public class Sorrowmoss extends Plant {
 		seedClass = Seed.class;
 	}
 	
-	@Override
-	public void activate( Char ch ) {
-		if (ch instanceof Hero && ((Hero) ch).subClass == HeroSubClass.WARDEN){
-            ((ToxicImbue) null).set(ToxicImbue.DURATION*0.3f);
-		}
-		
-		if (ch != null) {
-			if (ch instanceof Mob){
-            }
-            ((Poison) null).set( 5 + Math.round(2*Dungeon.scalingDepth() / 3f) );
-		}
-		
-		if (Dungeon.level.heroFOV[pos]) {
-			CellEmitter.center( pos ).burst( PoisonParticle.SPLASH, 3 );
-		}
-	}
-	
 	public static class Seed extends Plant.Seed {
 		{
 			image = ItemSpriteSheet.SEED_SORROWMOSS;

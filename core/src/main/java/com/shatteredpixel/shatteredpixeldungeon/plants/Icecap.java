@@ -38,21 +38,6 @@ public class Icecap extends Plant {
 		seedClass = Seed.class;
 	}
 	
-	@Override
-	public void activate( Char ch ) {
-		
-		if (ch instanceof Hero && ((Hero) ch).subClass == HeroSubClass.WARDEN){
-		}
-
-		for (int i : PathFinder.NEIGHBOURS9){
-			if (!Dungeon.level.solid[pos+i]) {
-				Freezing.affect( pos+i );
-				if (Actor.findChar(pos+i) instanceof Mob){
-                }
-			}
-		}
-	}
-	
 	public static class Seed extends Plant.Seed {
 		{
 			image = ItemSpriteSheet.SEED_ICECAP;

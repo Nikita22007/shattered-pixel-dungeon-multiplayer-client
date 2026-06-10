@@ -68,13 +68,6 @@ abstract public class ClassArmor extends Armor {
 	}
 
 	@Override
-	public void activate(Char ch) {
-		super.activate(ch);
-		charger = new Charger();
-		charger.attachTo(ch);
-	}
-
-	@Override
 	public boolean doUnequip( Hero hero, boolean collect, boolean single ) {
 		if (super.doUnequip( hero, collect, single )) {
 			if (charger != null){

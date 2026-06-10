@@ -43,22 +43,6 @@ public class Sungrass extends Plant {
 		seedClass = Seed.class;
 	}
 	
-	@Override
-	public void activate( Char ch ) {
-		
-		if (ch != null){
-			if (ch instanceof Hero && ((Hero) ch).subClass == HeroSubClass.WARDEN) {
-                ((Healing) null).setHeal(ch.HT, 0, 1);
-			} else {
-                ((Health) null).boost(ch.HT);
-			}
-		}
-		
-		if (Dungeon.level.heroFOV[pos]) {
-			CellEmitter.get( pos ).start( ShaftParticle.FACTORY, 0.2f, 3 );
-		}
-	}
-	
 	public static class Seed extends Plant.Seed {
 		{
 			image = ItemSpriteSheet.SEED_SUNGRASS;

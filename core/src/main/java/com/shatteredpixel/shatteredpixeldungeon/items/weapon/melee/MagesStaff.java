@@ -103,12 +103,6 @@ public class MagesStaff extends MeleeWeapon {
 	}
 
 	@Override
-	public void activate( Char ch ) {
-		super.activate(ch);
-		applyWandChargeBuff(ch);
-	}
-
-	@Override
 	public int targetingPos(Hero user, int dst) {
 		if (wand != null) {
 			return wand.targetingPos(user, dst);

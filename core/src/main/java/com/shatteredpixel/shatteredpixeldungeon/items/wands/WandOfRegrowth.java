@@ -335,32 +335,6 @@ public class WandOfRegrowth extends Wand {
 			image = 13;
 		}
 
-		@Override
-		public void activate( Char ch ) {
-
-			int nDrops = Random.NormalIntRange(3, 6);
-
-			ArrayList<Integer> candidates = new ArrayList<>();
-			for (int i : PathFinder.NEIGHBOURS8){
-				if (Dungeon.level.passable[pos+i]
-						&& pos+i != Dungeon.level.entrance()
-						&& pos+i != Dungeon.level.exit()){
-					candidates.add(pos+i);
-				}
-			}
-
-			for (int i = 0; i < nDrops && !candidates.isEmpty(); i++){
-				Integer c = Random.element(candidates);
-				if (Dungeon.level.heaps.get(c) == null) {
-					Dungeon.level.drop(new Dewdrop(), c).sprite.drop(pos);
-				} else {
-					Dungeon.level.drop(new Dewdrop(), c).sprite.drop(c);
-				}
-				candidates.remove(c);
-			}
-
-		}
-
 		//seed is never dropped, only care about plant class
 		public static class Seed extends Plant.Seed {
 			{
@@ -373,28 +347,6 @@ public class WandOfRegrowth extends Wand {
 
 		{
 			image = 14;
-		}
-
-		@Override
-		public void activate( Char ch ) {
-
-			int nSeeds = Random.NormalIntRange(2, 4);
-
-			ArrayList<Integer> candidates = new ArrayList<>();
-			for (int i : PathFinder.NEIGHBOURS8){
-				if (Dungeon.level.passable[pos+i]
-						&& pos+i != Dungeon.level.entrance()
-						&& pos+i != Dungeon.level.exit()){
-					candidates.add(pos+i);
-				}
-			}
-
-			for (int i = 0; i < nSeeds && !candidates.isEmpty(); i++){
-				Integer c = Random.element(candidates);
-                Dungeon.level.drop(null, c).sprite.drop(pos);
-				candidates.remove(c);
-			}
-
 		}
 
 		//seed is never dropped, only care about plant class

@@ -88,6 +88,4 @@ public abstract class EquipableItem extends CustomItem {
 		return doUnequip( hero, collect, true );
 	}
 
-	public void activate( Char ch ){}
-
 }

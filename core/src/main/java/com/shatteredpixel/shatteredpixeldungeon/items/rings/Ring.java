@@ -121,15 +121,6 @@ public class Ring extends KindofMisc {
 			gem = "garnet";
 		}
 	}
-	
-	public void activate( Char ch ) {
-		if (buff != null){
-			buff.detach();
-			buff = null;
-		}
-		buff = buff();
-		buff.attachTo( ch );
-	}
 
 	@Override
 	public boolean doUnequip( Hero hero, boolean collect, boolean single ) {

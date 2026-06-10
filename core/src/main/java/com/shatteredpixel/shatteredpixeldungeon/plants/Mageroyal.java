@@ -36,21 +36,6 @@ public class Mageroyal extends Plant {
 		seedClass = Seed.class;
 	}
 
-	@Override
-	public void activate( Char ch ) {
-
-		if (ch != null) {
-			PotionOfHealing.cure(ch);
-
-			if (ch instanceof Hero) {
-				GLog.i( Messages.get(this, "refreshed") );
-
-				if (((Hero) ch).subClass == HeroSubClass.WARDEN){
-                }
-			}
-		}
-	}
-
 	public static class Seed extends Plant.Seed {
 		{
 			image = ItemSpriteSheet.SEED_MAGEROYAL;

@@ -51,7 +51,6 @@ import com.shatteredpixel.shatteredpixeldungeon.plants.Stormvine;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Sungrass;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
@@ -307,7 +306,7 @@ public class SandalsOfNature extends Artifact {
 					Invisibility.dispel(curUser);
 
 					Plant plant = ((Plant.Seed) Reflection.newInstance(curSeedEffect)).couch(cell, null);
-					plant.activate(Actor.findChar(cell));
+
 					Sample.INSTANCE.play(Assets.Sounds.PLANT);
 					Sample.INSTANCE.playDelayed(Assets.Sounds.TRAMPLE, 0.25f, 1, Random.Float( 0.96f, 1.05f ) );
 
