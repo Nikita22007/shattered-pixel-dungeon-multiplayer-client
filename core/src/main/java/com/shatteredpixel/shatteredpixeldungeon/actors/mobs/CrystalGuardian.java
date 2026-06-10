@@ -138,7 +138,7 @@ public class CrystalGuardian extends Mob{
 		if (recovering){
 			//while recovering, immune to chars that aren't the hero or spire
 			// this is sort of a hack to prevent allies from attacking downed guardians
-			return super.isInvulnerable(effect) || (Char.class.isAssignableFrom(effect) && !Hero.class.isAssignableFrom(effect) && !CrystalSpire.class.isAssignableFrom(effect));
+			return super.isInvulnerable(effect) || (Char.class.isAssignableFrom(effect) && !Hero.class.isAssignableFrom(effect));
 		}
 		return super.isInvulnerable(effect);
 	}
