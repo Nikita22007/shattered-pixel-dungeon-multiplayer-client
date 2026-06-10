@@ -58,7 +58,7 @@ public class RingOfEvasion extends Ring {
 	}
 	
 	public static float evasionMultiplier( Char target ){
-		return (float) Math.pow( 1.125, getBuffedBonus(target, Evasion.class));
+		return (float) Math.pow( 1.125, 0);
 	}
 
 	public class Evasion extends RingBuff {

@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.SpiritForm;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
@@ -51,7 +50,7 @@ public class RingOfForce extends Ring {
 	}
 	
 	public static int armedDamageBonus( Char ch ){
-		return getBuffedBonus( ch, Force.class);
+		return 0;
 	}
 
 	@Override
@@ -79,7 +78,7 @@ public class RingOfForce extends Ring {
         boolean usingForce = false;
         //and ignore that presence if using monk abilities
         if (usingForce) {
-            int level = getBuffedBonus(hero, Force.class);
+			int level = 0;
             float tier = tier(hero.STR());
             int dmg = Hero.heroDamageIntRange(min(level, tier), max(level, tier));
             return dmg;
@@ -216,7 +215,8 @@ public class RingOfForce extends Ring {
 		if (Dungeon.hero != null && Dungeon.hero.heroClass == HeroClass.DUELIST
 			&& (anonymous || isIdentified() || isEquipped(Dungeon.hero))){
 			//0 if unidentified, solo level if unequipped, combined level if equipped
-			int level = isIdentified() ? (isEquipped(Dungeon.hero) ? getBuffedBonus(Dungeon.hero, Force.class) : soloBuffedBonus()) : 0;
+			int level;
+			level = isIdentified() ? isEquipped(Dungeon.hero) ? (0) : (soloBuffedBonus()) : 0;
 			float tier = tier(Dungeon.hero.STR());
 			int dmgBoost = Math.round(3+tier+(level*((4+2*tier)/8f)));
 			if (isIdentified()) {

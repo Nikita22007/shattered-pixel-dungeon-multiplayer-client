@@ -58,7 +58,7 @@ public class RingOfFuror extends Ring {
 	}
 	
 	public static float attackSpeedMultiplier(Char target ){
-		return (float)Math.pow(1.09051, getBuffedBonus(target, Furor.class));
+		return (float)Math.pow(1.09051, 0);
 	}
 
 	public class Furor extends RingBuff {

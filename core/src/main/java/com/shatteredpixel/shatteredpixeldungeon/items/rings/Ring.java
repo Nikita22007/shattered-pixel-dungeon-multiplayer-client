@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.SpiritForm;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.ItemStatusHandler;
@@ -306,36 +305,6 @@ public class Ring extends KindofMisc {
 	public int buffedLvl() {
 		int lvl = super.buffedLvl();
 		return lvl;
-	}
-
-	public static int getBonus(Char target, Class<?extends RingBuff> type) {
-		int bonus = 0;
-		for (RingBuff buff : new HashSet<RingBuff>()) {
-			bonus += buff.level();
-		}
-		SpiritForm.SpiritFormBuff spiritForm = null;
-		if (bonus == 0
-				&& spiritForm != null
-				&& spiritForm.ring() != null
-				&& spiritForm.ring().buffClass == type) {
-			bonus += spiritForm.ring().soloBonus();
-		}
-		return bonus;
-	}
-
-	public static int getBuffedBonus(Char target, Class<?extends RingBuff> type) {
-		int bonus = 0;
-		for (RingBuff buff : new HashSet<RingBuff>()) {
-			bonus += buff.buffedLvl();
-		}
-		if (bonus == 0 && false) {
-			if (((SpiritForm.SpiritFormBuff) null).ring() != null) {
-				if (((SpiritForm.SpiritFormBuff) null).ring().buffClass == type) {
-					bonus += ((SpiritForm.SpiritFormBuff) null).ring().soloBuffedBonus();
-				}
-			}
-		}
-		return bonus;
 	}
 
 	//just used for ring descriptions
