@@ -247,28 +247,8 @@ public class Item implements Bundlable {
 	public final boolean collect() {
 		return collect( Dungeon.hero.belongings.backpack );
 	}
-	
+
 	//returns a new item if the split was sucessful and there are now 2 items, otherwise null
-	public Item split( int amount ){
-		if (amount <= 0 || amount >= quantity()) {
-			return null;
-		} else {
-			//pssh, who needs copy constructors?
-			Item split = Reflection.newInstance(getClass());
-			
-			if (split == null){
-				return null;
-			}
-			
-			Bundle copy = new Bundle();
-			this.storeInBundle(copy);
-			split.restoreFromBundle(copy);
-			split.quantity(amount);
-			quantity -= amount;
-			
-			return split;
-		}
-	}
 
 	public Item duplicate(){
 		Item dupe = Reflection.newInstance(getClass());
@@ -297,9 +277,9 @@ public class Item implements Bundlable {
 			return detachAll( container );
 			
 		} else {
-			
-			
-			Item detached = split(1);
+
+
+			Item detached = null;
 			updateQuickslot();
 			if (detached != null) detached.onDetach( );
 			return detached;

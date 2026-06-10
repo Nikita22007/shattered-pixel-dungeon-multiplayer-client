@@ -120,7 +120,7 @@ abstract public class MissileWeapon extends Weapon {
 		if (!bundleRestoring) {
 			durability = MAX_DURABILITY;
 			if (quantity > 1) {
-				MissileWeapon upgraded = (MissileWeapon) split(1);
+				MissileWeapon upgraded = (MissileWeapon) null;
 				upgraded.parent = null;
 				
 				upgraded = (MissileWeapon) upgraded.upgrade();
@@ -380,24 +380,7 @@ abstract public class MissileWeapon extends Weapon {
 		}
 		return this;
 	}
-	
-	@Override
-	public Item split(int amount) {
-		bundleRestoring = true;
-		Item split = super.split(amount);
-		bundleRestoring = false;
-		
-		//unless the thrown weapon will break, split off a max durability item and
-		//have it reduce the durability of the main stack. Cleaner to the player this way
-		if (split != null){
-			MissileWeapon m = (MissileWeapon)split;
-			m.durability = MAX_DURABILITY;
-			m.parent = this;
-		}
-		
-		return split;
-	}
-	
+
 	@Override
 	public boolean isIdentified() {
 		return true;
