@@ -85,17 +85,6 @@ public class Trinity extends ArmorAbility {
 	private Bundlable spiritForm = null;
 
 	@Override
-	protected void activate(ClassArmor armor, Hero hero, Integer target) {
-
-		if (bodyForm == null && mindForm == null && spiritForm == null){
-			GLog.w(Messages.get(this, "no_imbue"));
-		} else {
-			GameScene.show(new WndUseTrinity(armor));
-		}
-
-	}
-
-	@Override
 	public int targetedPos(Char user, int dst) {
 		if (mindForm != null){
 			return ((Item)mindForm).targetingPos((Hero)user, dst);

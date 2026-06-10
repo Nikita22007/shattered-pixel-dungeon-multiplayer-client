@@ -73,44 +73,6 @@ public class WarpBeacon extends ArmorAbility {
 		return dst;
 	}
 
-	@Override
-	protected void activate(ClassArmor armor, Hero hero, Integer target) {
-        if (target == null) {
-            return;
-        }
-
-        {
-            if (!Dungeon.level.mapped[target] && !Dungeon.level.visited[target]) {
-                return;
-            }
-
-            if (Dungeon.level.distance(hero.pos, target) > 4 * hero.pointsInTalent(Talent.REMOTE_BEACON)) {
-                GLog.w(Messages.get(WarpBeacon.class, "too_far"));
-                return;
-            }
-
-            PathFinder.buildDistanceMap(target, BArray.or(Dungeon.level.passable, Dungeon.level.avoid, null));
-            if (Dungeon.level.pit[target] ||
-                    (Dungeon.level.solid[target] && !Dungeon.level.passable[target]) ||
-                    !(Dungeon.level.passable[target] || Dungeon.level.avoid[target]) ||
-                    PathFinder.distance[hero.pos] == Integer.MAX_VALUE) {
-                GLog.w(Messages.get(WarpBeacon.class, "invalid_beacon"));
-                return;
-            }
-
-            WarpBeaconTracker tracker = new WarpBeaconTracker();
-            tracker.pos = target;
-            tracker.depth = Dungeon.depth;
-            tracker.branch = Dungeon.branch;
-            tracker.attachTo(hero);
-
-            hero.sprite.operate(target);
-            Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
-            Invisibility.dispel();
-            hero.spendAndNext(Actor.TICK);
-        }
-    }
-
 	public static class WarpBeaconTracker extends Buff {
 
 		{

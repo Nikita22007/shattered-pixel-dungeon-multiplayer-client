@@ -79,46 +79,6 @@ public class SpiritHawk extends ArmorAbility {
 	}
 
 	@Override
-	protected void activate(ClassArmor armor, Hero hero, Integer target) {
-		HawkAlly ally = getHawk();
-
-		if (ally != null){
-			if (target == null){
-				return;
-			} else {
-				ally.directTocell(target);
-			}
-		} else {
-			ArrayList<Integer> spawnPoints = new ArrayList<>();
-			for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
-				int p = hero.pos + PathFinder.NEIGHBOURS8[i];
-				if (Actor.findChar(p) == null && (Dungeon.level.passable[p] || Dungeon.level.avoid[p])) {
-					spawnPoints.add(p);
-				}
-			}
-
-			if (!spawnPoints.isEmpty()){
-				armor.charge -= chargeUse(hero);
-				armor.updateQuickslot();
-
-				ally = new HawkAlly();
-				ally.pos = Random.element(spawnPoints);
-				GameScene.add(ally);
-
-				ScrollOfTeleportation.appear(ally, ally.pos);
-				Dungeon.observe();
-
-				Invisibility.dispel();
-				hero.spendAndNext(Actor.TICK);
-
-			} else {
-				GLog.w(Messages.get(this, "no_space"));
-			}
-		}
-
-	}
-
-	@Override
 	public int icon() {
 		return HeroIcon.SPIRIT_HAWK;
 	}

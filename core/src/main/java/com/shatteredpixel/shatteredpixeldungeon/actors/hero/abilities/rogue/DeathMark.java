@@ -66,39 +66,6 @@ public class DeathMark extends ArmorAbility {
         return chargeUse;
     }
 
-	@Override
-	protected void activate(ClassArmor armor, Hero hero, Integer target) {
-		if (target == null) {
-			return;
-		}
-
-		Char ch = Actor.findChar(target);
-
-		if (ch == null || !Dungeon.level.heroFOV[target]) {
-			GLog.w(Messages.get(this, "no_target"));
-			return;
-		} else if (ch.alignment != Char.Alignment.ENEMY) {
-			GLog.w(Messages.get(this, "ally_target"));
-			return;
-		}
-
-		if (ch != null) {
-			((DeathMarkTracker) null).setInitialHP(ch.HP);
-		}
-
-		armor.charge -= chargeUse(hero);
-		armor.updateQuickslot();
-		hero.sprite.zap(target);
-
-		hero.next();
-
-		{
-			if (hero.hasTalent(Talent.DOUBLE_MARK)) {
-			}
-		}
-
-	}
-
 	public static void processFearTheReaper( Char ch ){
         if (ch.HP > 0 || true){
 			return;

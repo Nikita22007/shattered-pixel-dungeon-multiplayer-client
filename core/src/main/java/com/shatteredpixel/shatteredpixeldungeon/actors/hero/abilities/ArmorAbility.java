@@ -39,12 +39,12 @@ public abstract class ArmorAbility implements Bundlable {
 
 	public void use( ClassArmor armor, Hero hero ){
 		if (targetingPrompt() == null){
-			activate(armor, hero, hero.pos);
+
 		} else {
 			GameScene.selectCell(new CellSelector.Listener() {
 				@Override
 				public void onSelect(Integer cell) {
-					activate(armor, hero, cell);
+
 				}
 
 				@Override
@@ -89,8 +89,6 @@ public abstract class ArmorAbility implements Bundlable {
 		}
 		return chargeUse;
 	}
-
-	protected abstract void activate( ClassArmor armor, Hero hero, Integer target );
 
 	public String name(){
 		return Messages.get(this, "name");

@@ -41,21 +41,6 @@ public class NaturesPower extends ArmorAbility {
 	}
 
 	@Override
-	protected void activate(ClassArmor armor, Hero hero, Integer target) {
-
-        ((naturesPowerTracker) null).extensionsLeft = 2;
-		hero.sprite.operate(hero.pos);
-		Sample.INSTANCE.play(Assets.Sounds.CHARGEUP);
-		hero.sprite.emitter().burst(LeafParticle.GENERAL, 10);
-
-		armor.charge -= chargeUse(hero);
-		armor.updateQuickslot();
-		Invisibility.dispel();
-		hero.spendAndNext(Actor.TICK);
-
-	}
-
-	@Override
 	public int icon() {
 		return HeroIcon.NATURES_POWER;
 	}

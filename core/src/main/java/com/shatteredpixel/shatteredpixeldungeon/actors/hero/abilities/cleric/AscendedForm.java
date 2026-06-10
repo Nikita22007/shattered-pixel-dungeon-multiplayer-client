@@ -46,21 +46,6 @@ public class AscendedForm extends ArmorAbility {
 	}
 
 	@Override
-	protected void activate(ClassArmor armor, Hero hero, Integer target) {
-
-        ((AscendBuff) null).reset();
-		hero.sprite.operate(hero.pos);
-		Sample.INSTANCE.play(Assets.Sounds.CHARGEUP);
-		new Flare(6, 48).color(0xFFFF00, true).show(hero.sprite, 2f);
-
-		armor.charge -= chargeUse(hero);
-		armor.updateQuickslot();
-		Invisibility.dispel();
-		hero.spendAndNext(Actor.TICK);
-
-	}
-
-	@Override
 	public int icon() {
 		return HeroIcon.ASCENDED_FORM;
 	}

@@ -47,21 +47,6 @@ public class Endure extends ArmorAbility {
 		baseChargeUse = 50f;
 	}
 
-	@Override
-	protected void activate(ClassArmor armor, Hero hero, Integer target) {
-
-        Combo combo = null;
-        if (combo != null) {
-            combo.addTime(3f);
-        }
-        hero.sprite.operate(hero.pos);
-
-        armor.charge -= chargeUse(hero);
-        armor.updateQuickslot();
-        Invisibility.dispel();
-        hero.spendAndNext(3f);
-    }
-
 	public static class EndureTracker extends FlavourBuff {
 
 		{
