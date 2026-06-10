@@ -108,20 +108,6 @@ public class HolyTome extends Artifact {
 	}
 
 	@Override
-	public boolean collect( Bag container ) {
-		if (super.collect(container)){
-			if (container.owner instanceof Hero
-					&& passiveBuff == null
-					&& ((Hero) container.owner).hasTalent(Talent.LIGHT_READING)){
-				activate((Hero) container.owner);
-			}
-			return true;
-		} else{
-			return false;
-		}
-	}
-
-	@Override
 	protected void onDetach() {
 		if (passiveBuff != null){
 			passiveBuff.detach();

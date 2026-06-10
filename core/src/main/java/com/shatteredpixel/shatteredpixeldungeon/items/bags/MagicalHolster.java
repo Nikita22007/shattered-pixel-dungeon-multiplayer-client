@@ -48,24 +48,6 @@ public class MagicalHolster extends Bag {
 	public int capacity(){
 		return 19;
 	}
-	
-	@Override
-	public boolean collect( Bag container ) {
-		if (super.collect( container )) {
-			if (owner != null) {
-				for (Item item : items) {
-					if (item instanceof Wand) {
-						((Wand) item).charge(owner, HOLSTER_SCALE_FACTOR);
-					} else if (item instanceof MissileWeapon){
-						((MissileWeapon) item).holster = true;
-					}
-				}
-			}
-			return true;
-		} else {
-			return false;
-		}
-	}
 
 	@Override
 	public void onDetach( ) {

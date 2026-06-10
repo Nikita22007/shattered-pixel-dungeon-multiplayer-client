@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.bags;
 
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -113,28 +112,6 @@ public class Bag extends CustomItem implements Iterable<Item> {
 
 		}
 	}
-	
-	@Override
-	public boolean collect( Bag container ) {
-
-		grabItems(container);
-
-		//if there are any quickslot placeholders that match items in this bag, assign them
-		for (Item item : items) {
-			Dungeon.quickslot.replacePlaceholder(item);
-		}
-
-		if (super.collect( container )) {
-			
-			owner = container.owner;
-			
-			Badges.validateAllBagsBought( this );
-			
-			return true;
-		} else {
-			return false;
-		}
-	}
 
 	@Override
 	public void onDetach( ) {
@@ -156,8 +133,7 @@ public class Bag extends CustomItem implements Iterable<Item> {
 			if (canHold( item )) {
 				int slot = Dungeon.quickslot.getSlot(item);
 				item.detachAll(container);
-				if (!item.collect(this)) {
-					item.collect(container);
+				if (!false) {
 				}
 				if (slot != -1) {
 					Dungeon.quickslot.setSlot(slot, item);
@@ -204,7 +180,7 @@ public class Bag extends CustomItem implements Iterable<Item> {
 		loading = true;
 		for (Bundlable item : bundle.getCollection( ITEMS )) {
 			if (item != null){
-				if (!((Item)item).collect( this )){
+				if (!false){
 					//force-add the item if necessary, such as if its item category changed after an update
 					items.add((Item) item);
 				}

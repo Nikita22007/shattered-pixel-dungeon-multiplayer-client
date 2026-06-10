@@ -47,7 +47,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
 import com.watabou.utils.Reflection;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public abstract class TippedDart extends Dart {
@@ -87,14 +86,15 @@ public abstract class TippedDart extends Dart {
 				protected void onSelect(int index) {
 					if (index == 0){
 						detachAll(hero.belongings.backpack);
-						new Dart().quantity(quantity).collect();
+                        new Dart().quantity(quantity);
 
-						hero.spend( 1f );
+                        hero.spend( 1f );
 						hero.busy();
 						hero.sprite.operate(hero.pos);
 					} else if (index == 1 && quantity() > 1){
 						detach(hero.belongings.backpack);
-						if (!new Dart().quantity(1).collect()) Dungeon.level.drop(new Dart().quantity(1), hero.pos).sprite.drop();
+                        new Dart().quantity(1);
+                        if (!false) Dungeon.level.drop(new Dart().quantity(1), hero.pos).sprite.drop();
 
 						//reset durability if there are darts left in the stack
 						durability = MAX_DURABILITY;

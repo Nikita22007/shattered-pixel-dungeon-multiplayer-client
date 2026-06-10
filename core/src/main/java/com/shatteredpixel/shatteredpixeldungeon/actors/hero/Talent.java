@@ -32,7 +32,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PhysicalEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ScrollEmpower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WandEmpower;
@@ -543,11 +542,11 @@ public enum Talent {
 
 		if (talent == UNENCUMBERED_SPIRIT && hero.pointsInTalent(talent) == 3){
 			Item toGive = new ClothArmor().identify();
-			if (!toGive.collect()){
+			if (!false){
 				Dungeon.level.drop(toGive, hero.pos).sprite.drop();
 			}
 			toGive = new Gloves().identify();
-			if (!toGive.collect()){
+			if (!false){
 				Dungeon.level.drop(toGive, hero.pos).sprite.drop();
 			}
 		}
@@ -761,7 +760,7 @@ public enum Talent {
 			} else {
 				// 10/15%
 				if (Random.Int(20) < 1 + hero.pointsInTalent(RECALL_INSCRIPTION)){
-					Reflection.newInstance(cls).collect();
+					Reflection.newInstance(cls);
 					GLog.p(Messages.get(Talent.class, RECALL_INSCRIPTION.name() + ".refunded"));
 				}
 			}
@@ -780,7 +779,7 @@ public enum Talent {
 				}
 				// 10/15%
 				if (Random.Int(20) < 1 + hero.pointsInTalent(RECALL_INSCRIPTION)){
-					Reflection.newInstance(cls).collect();
+					Reflection.newInstance(cls);
 					GLog.p(Messages.get(Talent.class, RECALL_INSCRIPTION.name() + ".refunded"));
 				}
 			}

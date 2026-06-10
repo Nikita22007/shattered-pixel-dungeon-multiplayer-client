@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
@@ -33,8 +32,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.TippedDart;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
@@ -53,7 +50,6 @@ import com.watabou.utils.Reflection;
 import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class Item implements Bundlable {
@@ -166,86 +162,6 @@ public class Item implements Bundlable {
 			other.quantity = 0;
 		}
 		return this;
-	}
-	
-	public boolean collect( Bag container ) {
-
-		if (quantity <= 0){
-			return true;
-		}
-
-		ArrayList<Item> items = container.items;
-
-		if (items.contains( this )) {
-			return true;
-		}
-
-		for (Item item:items) {
-			if (item instanceof Bag && ((Bag)item).canHold( this )) {
-				if (collect( (Bag)item )){
-					return true;
-				}
-			}
-		}
-
-		if (!container.canHold(this)){
-			return false;
-		}
-		
-		if (stackable) {
-			for (Item item:items) {
-				if (isSimilar( item )) {
-					item.merge( this );
-					item.updateQuickslot();
-					if (Dungeon.hero != null && Dungeon.hero.isAlive()) {
-						Badges.validateItemLevelAquired( this );
-						Talent.onItemCollected(Dungeon.hero, item);
-						if (isIdentified()) {
-							Catalog.setSeen(getClass());
-							Statistics.itemTypesDiscovered.add(getClass());
-						}
-					}
-					if (TippedDart.lostDarts > 0){
-						Dart d = new Dart();
-						d.quantity(TippedDart.lostDarts);
-						TippedDart.lostDarts = 0;
-						if (!d.collect()){
-							//have to handle this in an actor as we can't manipulate the heap during pickup
-							Actor.add(new Actor() {
-								{ actPriority = VFX_PRIO; }
-								@Override
-								protected boolean act() {
-									Dungeon.level.drop(d, Dungeon.hero.pos).sprite.drop();
-									Actor.remove(this);
-									return true;
-								}
-							});
-						}
-					}
-					return true;
-				}
-			}
-		}
-
-		if (Dungeon.hero != null && Dungeon.hero.isAlive()) {
-			Badges.validateItemLevelAquired( this );
-			Talent.onItemCollected( Dungeon.hero, this );
-			if (isIdentified()){
-				Catalog.setSeen(getClass());
-				Statistics.itemTypesDiscovered.add(getClass());
-			}
-		}
-
-		items.add( this );
-		Dungeon.quickslot.replacePlaceholder(this);
-		Collections.sort( items, itemComparator );
-		updateQuickslot();
-		return true;
-
-	}
-	
-	public final boolean collect() {
-		return collect( Dungeon.hero.belongings.backpack );
 	}
 
 	//returns a new item if the split was sucessful and there are now 2 items, otherwise null

@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -39,10 +38,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
-
-import java.util.ArrayList;
 
 public class Dart extends MissileWeapon {
 
@@ -303,7 +299,7 @@ public class Dart extends MissileWeapon {
 						}
 						
 						TippedDart newDart = TippedDart.getTipped((Plant.Seed) item, maxToTip);
-						if (!newDart.collect()) Dungeon.level.drop(newDart, curUser.pos).sprite.drop();
+                        if (!false) Dungeon.level.drop(newDart, curUser.pos).sprite.drop();
 						
 						curUser.spend( 1f );
 						curUser.busy();
@@ -319,7 +315,7 @@ public class Dart extends MissileWeapon {
 						}
 						
 						TippedDart newDart = TippedDart.getTipped((Plant.Seed) item, singleSeedDarts);
-						if (!newDart.collect()) Dungeon.level.drop(newDart, curUser.pos).sprite.drop();
+                        if (!false) Dungeon.level.drop(newDart, curUser.pos).sprite.drop();
 						
 						curUser.spend( 1f );
 						curUser.busy();

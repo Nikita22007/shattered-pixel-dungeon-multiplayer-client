@@ -140,8 +140,7 @@ abstract public class KindOfWeapon extends EquipableItem {
 
 		} else {
 			isSwiftEquipping = false;
-			collect( hero.belongings.backpack );
-			return false;
+            return false;
 		}
 	}
 

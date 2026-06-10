@@ -148,7 +148,8 @@ public class StoneOfAugmentation extends InventoryStone {
 				@Override
 				protected void onClick() {
 					hide();
-					if (!anonymous) StoneOfAugmentation.this.collect();
+					if (!anonymous) {
+                    }
 				}
 			};
 			btnCancel.setRect( MARGIN, pos + MARGIN, BUTTON_WIDTH, BUTTON_HEIGHT );
@@ -159,7 +160,8 @@ public class StoneOfAugmentation extends InventoryStone {
 		
 		@Override
 		public void onBackPressed() {
-			if (!anonymous) StoneOfAugmentation.this.collect();
+			if (!anonymous) {
+            }
 			super.onBackPressed();
 		}
 	}

@@ -37,8 +37,6 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndChooseAbility;
 import com.watabou.noosa.audio.Sample;
 
-import java.util.ArrayList;
-
 public class KingsCrown extends Item {
 	
 	private static final String AC_WEAR = "WEAR";
@@ -104,9 +102,8 @@ public class KingsCrown extends Item {
 			} else {
 
 				armor.detach(hero.belongings.backpack);
-				classArmor.collect(hero.belongings.backpack);
 
-			}
+            }
 		}
 
 		hero.armorAbility = ability;

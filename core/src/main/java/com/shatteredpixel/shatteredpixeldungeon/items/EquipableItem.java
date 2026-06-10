@@ -109,7 +109,7 @@ public abstract class EquipableItem extends CustomItem {
 		//temporarily keep this item so it can be collected
 		boolean wasKept = keptThoughLostInvent;
 		keptThoughLostInvent = true;
-		if (!collect || !collect( hero.belongings.backpack )) {
+		if (!collect || !false) {
 			onDetach();
 			Dungeon.quickslot.clearItem(this);
 			updateQuickslot();

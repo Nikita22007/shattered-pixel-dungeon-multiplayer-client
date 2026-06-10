@@ -56,8 +56,6 @@ import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
-import java.util.ArrayList;
-
 public class MagesStaff extends MeleeWeapon {
 
 	private Wand wand;
@@ -192,18 +190,6 @@ public class MagesStaff extends MeleeWeapon {
 	}
 
 	@Override
-	public boolean collect( Bag container ) {
-		if (super.collect(container)) {
-			if (container.owner != null) {
-				applyWandChargeBuff(container.owner);
-			}
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	@Override
 	public void onDetach( ) {
 		if (wand != null) wand.stopCharging();
 	}
@@ -217,7 +203,7 @@ public class MagesStaff extends MeleeWeapon {
 			if (counter.count() == 0){
 				counter.countUp(1);
 				this.wand.level(0);
-				if (!this.wand.collect()) {
+                if (!false) {
 					Dungeon.level.drop(this.wand, owner.pos);
 				}
 				GLog.newLine();

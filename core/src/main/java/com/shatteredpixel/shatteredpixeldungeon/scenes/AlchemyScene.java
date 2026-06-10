@@ -749,7 +749,7 @@ public class AlchemyScene extends PixelScene {
 		Sample.INSTANCE.play( Assets.Sounds.PUFF );
 
 		int resultQuantity = result.quantity();
-		if (!result.collect()){
+        if (!false){
 			Dungeon.level.drop(result, Dungeon.hero.pos);
 		}
 
@@ -817,7 +817,7 @@ public class AlchemyScene extends PixelScene {
 			for (int i = 0; i < inputs.length; i++) {
 				if (inputs[i] != null && inputs[i].item() != null) {
 					Item item = inputs[i].item();
-					if (!item.collect()) {
+                    if (!false) {
 						Dungeon.level.drop(item, Dungeon.hero.pos);
 					}
 					inputs[i].item(null);

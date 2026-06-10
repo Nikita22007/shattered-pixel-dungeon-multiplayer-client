@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PinCushion;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.MagicalHolster;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSharpshooting;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
@@ -126,7 +125,7 @@ abstract public class MissileWeapon extends Weapon {
 				upgraded = (MissileWeapon) upgraded.upgrade();
 				
 				//try to put the upgraded into inventory, if it didn't already merge
-				if (upgraded.quantity() == 1 && !upgraded.collect()) {
+				if (upgraded.quantity() == 1 && !false) {
 					Dungeon.level.drop(upgraded, Dungeon.hero.pos);
 				}
 				updateQuickslot();
@@ -148,12 +147,6 @@ abstract public class MissileWeapon extends Weapon {
 		} else {
 			return super.upgrade();
 		}
-	}
-	
-	@Override
-	public boolean collect(Bag container) {
-		if (container instanceof MagicalHolster) holster = true;
-		return super.collect(container);
 	}
 
 	public boolean isSimilar( Item item ) {

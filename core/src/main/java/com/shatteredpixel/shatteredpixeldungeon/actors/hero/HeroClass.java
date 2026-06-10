@@ -46,7 +46,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue.Smok
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Endure;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.HeroicLeap;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Shockwave;
-import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.Waterskin;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
@@ -78,9 +77,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortswor
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingSpike;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingStone;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.watabou.utils.DeviceCompat;
 
 public enum HeroClass {
 
@@ -106,15 +103,15 @@ public enum HeroClass {
 		if (!Challenges.isItemBlocked(i)) hero.belongings.armor = (ClothArmor)i;
 
 		i = new Food();
-		if (!Challenges.isItemBlocked(i)) i.collect();
+		if (!Challenges.isItemBlocked(i)) {
+        }
 
-		new VelvetPouch().collect();
-		Dungeon.LimitedDrops.VELVET_POUCH.drop();
+        new VelvetPouch();
+        Dungeon.LimitedDrops.VELVET_POUCH.drop();
 
 		Waterskin waterskin = new Waterskin();
-		waterskin.collect();
 
-		new ScrollOfIdentify().identify();
+        new ScrollOfIdentify().identify();
 
 		switch (this) {
 			case WARRIOR:
@@ -174,9 +171,9 @@ public enum HeroClass {
 	private static void initWarrior( Hero hero ) {
 		(hero.belongings.weapon = new WornShortsword()).identify();
 		ThrowingStone stones = new ThrowingStone();
-		stones.identify().collect();
+        stones.identify();
 
-		Dungeon.quickslot.setSlot(0, stones);
+        Dungeon.quickslot.setSlot(0, stones);
 
 		if (hero.belongings.armor != null){
 		}
@@ -205,9 +202,9 @@ public enum HeroClass {
 		(hero.belongings.artifact = cloak).identify();
 
 		ThrowingKnife knives = new ThrowingKnife();
-		knives.identify().collect();
+        knives.identify();
 
-		Dungeon.quickslot.setSlot(0, cloak);
+        Dungeon.quickslot.setSlot(0, cloak);
 		Dungeon.quickslot.setSlot(1, knives);
 
 		new ScrollOfMagicMapping().identify();
@@ -218,9 +215,9 @@ public enum HeroClass {
 
 		(hero.belongings.weapon = new Gloves()).identify();
 		SpiritBow bow = new SpiritBow();
-		bow.identify().collect();
+        bow.identify();
 
-		Dungeon.quickslot.setSlot(0, bow);
+        Dungeon.quickslot.setSlot(0, bow);
 
 		new PotionOfMindVision().identify();
 		new ScrollOfLullaby().identify();
@@ -231,9 +228,10 @@ public enum HeroClass {
 		(hero.belongings.weapon = new Rapier()).identify();
 
 		ThrowingSpike spikes = new ThrowingSpike();
-		spikes.quantity(2).identify().collect(); //set quantity is 3, but Duelist starts with 2
+        //set quantity is 3, but Duelist starts with 2
+        spikes.quantity(2).identify();
 
-		Dungeon.quickslot.setSlot(0, hero.belongings.weapon);
+        Dungeon.quickslot.setSlot(0, hero.belongings.weapon);
 		Dungeon.quickslot.setSlot(1, spikes);
 
 		new PotionOfStrength().identify();
