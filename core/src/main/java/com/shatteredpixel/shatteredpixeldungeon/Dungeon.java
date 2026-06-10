@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.RegularLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.LevelTransition;
@@ -37,8 +36,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndResurrect;
 import com.watabou.utils.*;
 import com.watabou.utils.Random;
-
-import java.util.*;
+import org.jetbrains.annotations.Contract;
 
 public class Dungeon {
 
@@ -57,8 +55,6 @@ public class Dungeon {
 
 	public static int energy;
 
-	public static SparseArray<ArrayList<Item>> droppedItems;
-
 	//first variable is only assigned when game is started, second is updated every time game is saved
 	public static int initialVersion;
 	public static int version;
@@ -71,14 +67,17 @@ public class Dungeon {
 
 	//we initialize the seed separately so that things like interlevelscene can access it early
 
-	public static boolean isChallenged( int mask ) {
+	@Contract(pure = true)
+	public static boolean isChallenged(int mask ) {
 		return (challenges & mask) != 0;
 	}
 
+	@Contract(pure = true)
 	public static long seedCurDepth(){
 		return seedForDepth(depth, branch);
 	}
 
+	@Contract(pure=true)
 	public static long seedForDepth(int depth, int branch){
 		int lookAhead = depth;
 		lookAhead += 30*branch; //Assumes depth is always 1-30, and branch is always 0 or higher
@@ -93,16 +92,14 @@ public class Dungeon {
 		Random.popGenerator();
 		return result;
 	}
-	
-	public static boolean shopOnLevel() {
-		return depth == 6 || depth == 11 || depth == 16;
-	}
-	
+
+	@Contract(pure = true)
 	public static boolean bossLevel() {
 		return bossLevel( depth );
 	}
 	
-	public static boolean bossLevel( int depth ) {
+	@Contract(pure = true)
+	public static boolean bossLevel(int depth ) {
 		return depth == 5 || depth == 10 || depth == 15 || depth == 20 || depth == 25;
 	}
 
@@ -158,15 +155,6 @@ public class Dungeon {
 		hero.curAction = hero.lastAction = null;
 
 		observe();
-	}
-
-	public static void dropToChasm( Item item ) {
-		int depth = Dungeon.depth + 1;
-		ArrayList<Item> dropped = Dungeon.droppedItems.get( depth );
-		if (dropped == null) {
-			Dungeon.droppedItems.put( depth, dropped = new ArrayList<>() );
-		}
-		dropped.add( item );
 	}
 
 	public  static final String VERSION		= "version";

@@ -475,23 +475,7 @@ public class GameScene extends PixelScene {
 				break;
 		}
 
-		ArrayList<Item> dropped = Dungeon.droppedItems.get( Dungeon.depth );
-		if (dropped != null) {
-			for (Item item : dropped) {
-				int pos = Dungeon.level.randomRespawnCell( null );
-				if (pos == -1) pos = Dungeon.level.entrance();
-				 if (false) {
-					Dungeon.level.plant((Plant.Seed) item, pos);
-				} else if (false) {
-					Dungeon.level.drop(((Honeypot) item).shatter(null, pos), pos);
-				} else {
-					Dungeon.level.drop(item, pos);
-				}
-			}
-			Dungeon.droppedItems.remove( Dungeon.depth );
-		}
-
-		Dungeon.hero.next();
+        Dungeon.hero.next();
 
 		switch (InterlevelScene.mode){
 			case FALL: case DESCEND: case CONTINUE:
