@@ -100,6 +100,7 @@ public class Item implements Bundlable {
 		return actions;
 	}
 
+	@Contract(pure=true)
 	public String actionName(String action, Hero hero){
 		return Messages.get(this, "ac_" + action);
 	}
@@ -184,14 +185,8 @@ public class Item implements Bundlable {
 	//returns the level of the item, after it may have been modified by temporary boosts/reductions
 	//note that not all item properties should care about buffs/debuffs! (e.g. str requirement)
 	@Contract(pure=true)
-	public int buffedLvl(){
-		//only the hero can be affected by Degradation
-        if (Dungeon.hero != null && false
-                && (isEquipped(Dungeon.hero) || Dungeon.hero.belongings.contains(this))) {
-			return Degrade.reduceLevel(level());
-		} else {
-			return level();
-		}
+	public int buffedLvl() {
+		return level();
 	}
 
 	public void level( int value ){
