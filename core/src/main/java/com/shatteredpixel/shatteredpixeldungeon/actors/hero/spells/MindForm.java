@@ -150,7 +150,6 @@ public class MindForm extends ClericSpell {
 				}
 			} else if (thrown() != null){
 				MissileWeapon thrown = thrown();
-				thrown.cast(Dungeon.hero, target);
 				((ClassArmor)Dungeon.hero.belongings.armor()).charge -= Trinity.trinityChargeUsePerEffect(thrown.getClass());
 			}
 		}

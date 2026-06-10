@@ -23,27 +23,20 @@ package com.shatteredpixel.shatteredpixeldungeon.items;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Degrade;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.MissileSprite;
-import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Callback;
 import com.watabou.utils.Reflection;
 import org.jetbrains.annotations.Contract;
 
@@ -58,8 +51,7 @@ public class Item implements Bundlable {
 
 	protected static final String TXT_TO_STRING_LVL		= "%s %+d";
 	protected static final String TXT_TO_STRING_X		= "%s x%d";
-	
-	protected static final float TIME_TO_THROW		= 1.0f;
+
 	protected static final float TIME_TO_PICK_UP	= 1.0f;
 
 	public static final String AC_DROP		= "DROP";
@@ -493,70 +485,6 @@ public class Item implements Bundlable {
 	public void throwSound(){
 		Sample.INSTANCE.play(Assets.Sounds.MISS, 0.6f, 0.6f, 1.5f);
 	}
-	
-	public void cast( final Hero user, final int dst ) {
-		
-		final int cell = throwPos( user, dst );
-		user.sprite.zap( cell );
-		user.busy();
-
-		throwSound();
-
-		Char enemy = Actor.findChar( cell );
-		QuickSlotButton.target(enemy);
-		
-		final float delay = castDelay(user, cell);
-
-		if (enemy != null) {
-			((MissileSprite) user.sprite.parent.recycle(MissileSprite.class)).
-					reset(user.sprite,
-							enemy.sprite,
-							this,
-							new Callback() {
-						@Override
-						public void call() {
-                            curUser = user;
-                            Item i = Item.this.detach(user.belongings.backpack);
-                            if (i != null) {
-
-							}
-                            if (curUser.hasTalent(Talent.IMPROVISED_PROJECTILES)
-                                    && !(Item.this instanceof MissileWeapon)) {
-                                {
-                                    if (enemy != null && enemy.alignment != curUser.alignment) {
-                                        Sample.INSTANCE.play(Assets.Sounds.HIT);
-                                        curUser.pointsInTalent(Talent.IMPROVISED_PROJECTILES);
-                                    }
-                                }
-                            }
-                            {
-                                user.spendAndNext(delay);
-                            }
-                        }
-					});
-		} else {
-			((MissileSprite) user.sprite.parent.recycle(MissileSprite.class)).
-					reset(user.sprite,
-							cell,
-							this,
-							new Callback() {
-						@Override
-						public void call() {
-							curUser = user;
-							Item i = Item.this.detach(user.belongings.backpack);
-							user.spend(delay);
-							if (i != null) {
-
-							}
-							user.next();
-						}
-					});
-		}
-	}
-	
-	public float castDelay( Char user, int cell ){
-		return TIME_TO_THROW;
-	}
 
 	public float pickupDelay(){
 		return TIME_TO_PICK_UP;
@@ -573,7 +501,6 @@ public class Item implements Bundlable {
 		@Override
 		public void onSelect( Integer target ) {
 			if (target != null) {
-				curItem.cast( curUser, target );
 			}
 		}
 		@Override

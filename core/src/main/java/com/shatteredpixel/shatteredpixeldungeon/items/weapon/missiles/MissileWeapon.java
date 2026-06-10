@@ -245,12 +245,7 @@ abstract public class MissileWeapon extends Weapon {
 		//show quantity even when it is 1
 		return Integer.toString( quantity );
 	}
-	
-	@Override
-	public float castDelay(Char user, int dst) {
-		return delayFactor( user );
-	}
-	
+
 	protected void rangedHit( Char enemy, int cell ){
 		decrementDurability();
 		if (durability > 0 && !spawnedForEffect){

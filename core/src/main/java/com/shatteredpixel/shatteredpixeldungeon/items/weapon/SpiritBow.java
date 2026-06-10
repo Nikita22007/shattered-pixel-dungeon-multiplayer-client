@@ -25,9 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.RevealedArea;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSharpshooting;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -39,11 +37,8 @@ import com.shatteredpixel.shatteredpixeldungeon.plants.Stormvine;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.MissileSprite;
-import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
-import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 import org.jetbrains.annotations.Contract;
 
@@ -311,101 +306,6 @@ public class SpiritBow extends Weapon {
 		Actor flurryActor = null;
 
 		@Override
-		public void cast(final Hero user, final int dst) {
-			final int cell = throwPos( user, dst );
-			SpiritBow.this.targetPos = cell;
-			if (sniperSpecial && SpiritBow.this.augment == Augment.SPEED){
-				if (flurryCount == -1) flurryCount = 3;
-				
-				final Char enemy = Actor.findChar( cell );
-				
-				if (enemy == null) {
-					{
-						user.spendAndNext(castDelay(user, cell));
-					}
-					sniperSpecial = false;
-					flurryCount = -1;
-
-					if (flurryActor != null) {
-						flurryActor.next();
-						flurryActor = null;
-					}
-					return;
-				}
-
-				QuickSlotButton.target(enemy);
-				
-				user.busy();
-				
-				throwSound();
-
-				user.sprite.zap(cell);
-				((MissileSprite) user.sprite.parent.recycle(MissileSprite.class)).
-						reset(user.sprite,
-								cell,
-								this,
-								new Callback() {
-									@Override
-									public void call() {
-										if (enemy.isAlive()) {
-											curUser = user;
-
-										}
-
-										flurryCount--;
-										if (flurryCount > 0){
-											Actor.add(new Actor() {
-
-												{
-													actPriority = VFX_PRIO-1;
-												}
-
-												@Override
-												protected boolean act() {
-													flurryActor = this;
-													int target = QuickSlotButton.autoAim(enemy, SpiritArrow.this);
-													if (target == -1) target = cell;
-													cast(user, target);
-													Actor.remove(this);
-													return false;
-												}
-											});
-											curUser.next();
-										} else {
-											{
-												user.spendAndNext(castDelay(user, cell));
-											}
-											sniperSpecial = false;
-											flurryCount = -1;
-										}
-
-										if (flurryActor != null){
-											flurryActor.next();
-											flurryActor = null;
-										}
-									}
-								});
-				
-			} else {
-
-				if (user.hasTalent(Talent.SEER_SHOT)) {
-					{
-						int shotPos = throwPos(user, dst);
-						if (Actor.findChar(shotPos) == null) {
-							user.pointsInTalent(Talent.SEER_SHOT);
-							RevealedArea a = null;
-							a.depth = Dungeon.depth;
-							a.branch = Dungeon.branch;
-							a.pos = shotPos;
-						}
-					}
-				}
-
-				super.cast(user, dst);
-			}
-		}
-
-		@Override
 		public boolean doEquip(Hero hero) {
 			return false;
 		}
@@ -415,7 +315,7 @@ public class SpiritBow extends Weapon {
 		@Override
 		public void onSelect( Integer target ) {
 			if (target != null) {
-				knockArrow().cast(curUser, target);
+				knockArrow();
 			}
 		}
 		@Override

@@ -303,10 +303,7 @@ public class Potion extends Item {
 		}
 	}
 
-	@Override
-	public void cast( final Hero user, int dst ) {
-			super.cast(user, dst);
-	}
+
 	
 	public boolean isKnown() {
 		return anonymous || (handler != null && handler.isKnown( this ));

@@ -134,9 +134,8 @@ public class SnipersMark extends FlavourBuff implements ActionIndicator.Action {
 		
 		bow.sniperSpecial = true;
 		bow.sniperSpecialBonusDamage = percentDmgBonus;
-		
-		arrow.cast(hero, cell);
-		detach();
+
+        detach();
 		
 	}
 }

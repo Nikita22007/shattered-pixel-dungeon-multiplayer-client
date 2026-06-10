@@ -66,17 +66,7 @@ public abstract class EquipableItem extends CustomItem {
 		}
 	}
 
-	@Override
-	public void cast( final Hero user, int dst ) {
 
-		if (isEquipped( user )) {
-			if (quantity == 1 && !this.doUnequip( user, false, false )) {
-				return;
-			}
-		}
-
-		super.cast( user, dst );
-	}
 
 	public static void equipCursed( Hero hero ) {
 		hero.sprite.emitter().burst( ShadowParticle.CURSE, 6 );
