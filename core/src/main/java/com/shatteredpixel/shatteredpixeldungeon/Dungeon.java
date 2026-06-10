@@ -42,20 +42,6 @@ import java.util.*;
 
 public class Dungeon {
 
-	//enum of items which have limited spawns, records how many have spawned
-	//could all be their own separate numbers, but this allows iterating, much nicer for bundling/initializing.
-	public static enum LimitedDrops {
-
-		//Demon spawners are already limited in their spawnrate, no need to limit their health drops
-		//alchemy
-		COOKING_HP;
-
-		public int count = 0;
-
-		//for items which can only be dropped once, should directly access count otherwise.
-
-	}
-
 	public static int challenges;
 
 	public static Hero hero;
