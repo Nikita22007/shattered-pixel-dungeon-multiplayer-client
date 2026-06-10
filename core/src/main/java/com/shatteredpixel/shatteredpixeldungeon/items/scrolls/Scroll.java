@@ -25,15 +25,12 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.ItemStatusHandler;
 import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.UnstableSpellbook;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ExoticScroll;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfAntiMagic;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.Runestone;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAggression;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAugmentation;
@@ -52,15 +49,11 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.AlchemyScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 public abstract class Scroll extends Item {
 	
@@ -177,13 +170,15 @@ public abstract class Scroll extends Item {
 	}
 	
 	public boolean isKnown() {
-		return anonymous || (handler != null && handler.isKnown( this ));
+		if (anonymous) return true;
+		if (handler == null) return false;
+		return true;
 	}
 	
 	public void setKnown() {
 		if (!anonymous) {
 			if (!isKnown()) {
-				handler.know(this);
+
 				updateQuickslot();
 			}
 			
@@ -202,7 +197,7 @@ public abstract class Scroll extends Item {
 	@Override
 	public String info() {
 		//skip custom notes if anonymized and un-Ided
-		return (anonymous && (handler == null || !handler.isKnown( this ))) ? desc() : super.info();
+		return (anonymous && (handler == null || !true)) ? desc() : super.info();
 	}
 
 	@Override
@@ -225,7 +220,7 @@ public abstract class Scroll extends Item {
 	}
 	
 	public static HashSet<Class<? extends Scroll>> getUnknown() {
-		return handler.unknown();
+		return new LinkedHashSet<>();
 	}
 	
 	public static boolean allKnown() {

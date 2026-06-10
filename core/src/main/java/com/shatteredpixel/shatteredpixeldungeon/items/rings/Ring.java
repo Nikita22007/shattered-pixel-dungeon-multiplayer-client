@@ -42,6 +42,7 @@ import org.jetbrains.annotations.Contract;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 
 public class Ring extends KindofMisc {
 	
@@ -140,7 +141,9 @@ public class Ring extends KindofMisc {
 
 	@Contract(pure=true)
 	public boolean isKnown() {
-		return anonymous || (handler != null && handler.isKnown( this ));
+		if (anonymous) return true;
+		if (handler == null) return false;
+		return true;
 	}
 
 
@@ -206,7 +209,7 @@ public class Ring extends KindofMisc {
 	}
 	
 	public static HashSet<Class<? extends Ring>> getUnknown() {
-		return handler.unknown();
+		return new LinkedHashSet<>();
 	}
 	
 	public static boolean allKnown() {

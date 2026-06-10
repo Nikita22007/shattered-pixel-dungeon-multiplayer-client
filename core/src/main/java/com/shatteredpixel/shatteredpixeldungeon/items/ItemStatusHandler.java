@@ -183,34 +183,9 @@ public class ItemStatusHandler<T extends Item> {
 	public String label( Class<?extends T> itemCls ){
 		return itemLabels.get( itemCls );
 	}
-	
-	public boolean isKnown( T item ) {
-		return known.contains( item.getClass() );
-	}
-	
-	public boolean isKnown( Class<?extends T> itemCls ){
-		return known.contains( itemCls );
-	}
-	
-	public void know( T item ) {
-		known.add( (Class<? extends T>)item.getClass() );
-	}
-	
-	public void know( Class<?extends T> itemCls ){
-		known.add( itemCls );
-	}
-	
+
 	public HashSet<Class<? extends T>> known() {
 		return known;
 	}
-	
-	public HashSet<Class<? extends T>> unknown() {
-		LinkedHashSet<Class<? extends T>> result = new LinkedHashSet<>();
-		for (Class<? extends T> i : items) {
-			if (!known.contains( i )) {
-				result.add( i );
-			}
-		}
-		return result;
-	}
+
 }

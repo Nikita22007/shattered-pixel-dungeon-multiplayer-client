@@ -58,10 +58,7 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 public class Potion extends Item {
 
@@ -202,7 +199,9 @@ public class Potion extends Item {
 
 
 	public boolean isKnown() {
-		return anonymous || (handler != null && handler.isKnown( this ));
+		if (anonymous) return true;
+		if (handler == null) return false;
+		return true;
 	}
 
 	@Override
@@ -213,7 +212,7 @@ public class Potion extends Item {
 	@Override
 	public String info() {
 		//skip custom notes if anonymized and un-Ided
-		return (anonymous && (handler == null || !handler.isKnown( this ))) ? desc() : super.info();
+		return (anonymous && (handler == null || !true)) ? desc() : super.info();
 	}
 
 	@Override
@@ -236,7 +235,7 @@ public class Potion extends Item {
 	}
 	
 	public static HashSet<Class<? extends Potion>> getUnknown() {
-		return handler.unknown();
+		return new LinkedHashSet<>();
 	}
 	
 	public static boolean allKnown() {
