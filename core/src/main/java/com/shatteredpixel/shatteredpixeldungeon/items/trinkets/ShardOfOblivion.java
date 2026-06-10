@@ -24,8 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.trinkets;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Identification;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -34,12 +32,9 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
-import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import org.jetbrains.annotations.Contract;
 
@@ -117,56 +112,6 @@ public class ShardOfOblivion extends Trinket {
 	@Contract(pure = true)
 	public static boolean passiveIDDisabled(){
 		return trinketLevel(ShardOfOblivion.class) >= 0;
-	}
-
-	public static class WandUseTracker extends FlavourBuff{
-
-		{
-			type = buffType.POSITIVE;
-		}
-
-		public static float DURATION = 50f;
-
-		@Override
-		public int icon() {
-			return BuffIndicator.WAND;
-		}
-
-		@Override
-		public void tintIcon(Image icon) {
-			icon.hardlight(0, 0.6f, 1);
-		}
-
-		@Override
-		public float iconFadePercent() {
-			return Math.max(0, (DURATION - visualcooldown()) / DURATION);
-		}
-
-	}
-
-	public static class ThrownUseTracker extends FlavourBuff{
-
-		{
-			type = buffType.POSITIVE;
-		}
-
-		public static float DURATION = 50f;
-
-		@Override
-		public int icon() {
-			return BuffIndicator.THROWN_WEP;
-		}
-
-		@Override
-		public void tintIcon(Image icon) {
-			icon.hardlight(0, 0.6f, 1);
-		}
-
-		@Override
-		public float iconFadePercent() {
-			return Math.max(0, (DURATION - visualcooldown()) / DURATION);
-		}
-
 	}
 
 	public static float lootChanceMultiplier(){
