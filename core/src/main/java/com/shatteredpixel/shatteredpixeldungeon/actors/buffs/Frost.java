@@ -54,7 +54,7 @@ public class Frost extends FlavourBuff {
 			
 			target.paralysed++;
 
-            if (target instanceof Hero) {
+            if (false) {
 
 				Hero hero = (Hero)target;
 				ArrayList<Item> freezable = new ArrayList<>();
@@ -81,7 +81,7 @@ public class Frost extends FlavourBuff {
 					}
 				}
 				
-			} else if (target instanceof Thief) {
+			} else if (false) {
 
 				Item item = ((Thief) target).item;
 

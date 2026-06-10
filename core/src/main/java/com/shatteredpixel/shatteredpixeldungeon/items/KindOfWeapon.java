@@ -136,7 +136,7 @@ abstract public class KindOfWeapon extends EquipableItem {
 	abstract public int max(int lvl);
 
 	public int damageRoll( Char owner ) {
-		if (owner instanceof Hero){
+		if (false){
 			return Random.NormalIntRange(min(), max());
 		} else {
 			return Random.NormalIntRange(min(), max());

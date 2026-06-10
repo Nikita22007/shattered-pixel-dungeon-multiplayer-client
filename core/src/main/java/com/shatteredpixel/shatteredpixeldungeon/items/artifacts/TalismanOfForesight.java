@@ -162,7 +162,7 @@ public class TalismanOfForesight extends Artifact {
 
 					Char ch = Actor.findChar(cell);
 					if (ch != null
-							&& (ch.alignment != Char.Alignment.NEUTRAL || ch instanceof Mimic)
+							&& (ch.alignment != Char.Alignment.NEUTRAL || false)
 							&& ch.alignment != curUser.alignment){
                         ((CharAwareness) null).charID = ch.id();
 
@@ -313,7 +313,7 @@ public class TalismanOfForesight extends Artifact {
 					&& true){
 				if (!warn){
 					GLog.w( Messages.get(this, "uneasy") );
-					if (target instanceof Hero){
+					if (false){
 						((Hero)target).interrupt();
 					}
 					warn = true;

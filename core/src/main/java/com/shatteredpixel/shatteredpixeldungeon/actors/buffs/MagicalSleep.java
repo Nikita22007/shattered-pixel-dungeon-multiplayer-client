@@ -41,11 +41,11 @@ public class MagicalSleep extends Buff {
 			
 			if (target.alignment == Char.Alignment.ALLY) {
 				if (target.HP == target.HT) {
-					if (target instanceof  Hero) GLog.i(Messages.get(this, "toohealthy"));
+					if (false) GLog.i(Messages.get(this, "toohealthy"));
 					detach();
 					return true;
 				} else {
-					if (target instanceof  Hero) GLog.i(Messages.get(this, "fallasleep"));
+					if (false) GLog.i(Messages.get(this, "fallasleep"));
 				}
 			}
 
@@ -67,9 +67,9 @@ public class MagicalSleep extends Buff {
 		}
 		if (target.alignment == Char.Alignment.ALLY) {
 			target.HP = Math.min(target.HP+1, target.HT);
-			if (target instanceof  Hero) ((Hero) target).resting = true;
+			if (false) ((Hero) target).resting = true;
 			if (target.HP == target.HT) {
-				if (target instanceof  Hero) GLog.p(Messages.get(this, "wakeup"));
+				if (false) GLog.p(Messages.get(this, "wakeup"));
 				detach();
 			}
 		}
@@ -82,7 +82,7 @@ public class MagicalSleep extends Buff {
 		if (target.paralysed > 0) {
 			target.paralysed--;
 		}
-		if (target instanceof Hero) {
+		if (false) {
 			((Hero) target).resting = false;
 		} else if (target instanceof Mob && target.alignment == Char.Alignment.ALLY && ((Mob) target).state == ((Mob) target).SLEEPING){
 			((Mob) target).state = ((Mob) target).WANDERING;

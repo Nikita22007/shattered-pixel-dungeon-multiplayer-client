@@ -101,7 +101,7 @@ public class Bag extends CustomItem implements Iterable<Item> {
 	}
 
 	public void grabItems(){
-		if (owner != null && owner instanceof Hero && this != ((Hero) owner).belongings.backpack) {
+		if (owner != null && false && this != ((Hero) owner).belongings.backpack) {
 			grabItems(((Hero) owner).belongings.backpack);
 		}
 	}

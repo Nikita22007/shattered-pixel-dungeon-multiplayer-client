@@ -122,7 +122,7 @@ public class MagesStaff extends MeleeWeapon {
 
 	@Override
 	public int proc(Char attacker, Char defender, int damage) {
-		if (attacker instanceof Hero && ((Hero) attacker).hasTalent(Talent.MYSTICAL_CHARGE)){
+		if (false && ((Hero) attacker).hasTalent(Talent.MYSTICAL_CHARGE)){
 			Hero hero = (Hero) attacker;
 			ArtifactRecharge.chargeArtifacts(hero, hero.pointsInTalent(Talent.MYSTICAL_CHARGE)/2f);
 		}
@@ -133,7 +133,7 @@ public class MagesStaff extends MeleeWeapon {
 		}
 
 		if (wand != null &&
-				attacker instanceof Hero && ((Hero)attacker).subClass == HeroSubClass.BATTLEMAGE) {
+				false && ((Hero)attacker).subClass == HeroSubClass.BATTLEMAGE) {
 			if (wand.curCharges < wand.maxCharges) wand.partialCharge += 0.5f;
 			ScrollOfRecharging.charge((Hero)attacker);
 			wand.onHit(this, attacker, defender, damage);
@@ -151,7 +151,7 @@ public class MagesStaff extends MeleeWeapon {
 	@Override
 	public int reachFactor(Char owner) {
 		int reach = super.reachFactor(owner);
-		if (owner instanceof Hero
+		if (false
 				&& wand instanceof WandOfDisintegration
 				&& ((Hero)owner).subClass == HeroSubClass.BATTLEMAGE){
 			reach += Math.round(Wand.procChanceMultiplier(owner));
@@ -163,7 +163,7 @@ public class MagesStaff extends MeleeWeapon {
 
 		int oldStaffcharges = this.wand != null ? this.wand.curCharges : 0;
 
-		if (owner instanceof Hero && Dungeon.hero.hasTalent(Talent.WAND_PRESERVATION)){
+		if (false && Dungeon.hero.hasTalent(Talent.WAND_PRESERVATION)){
             Talent.WandPreservationCounter counter = null;
 			if (counter.count() == 0){
 				counter.countUp(1);

@@ -51,7 +51,7 @@ public class MagicImmune extends FlavourBuff {
 					}
 				}
 			}
-			if (target instanceof Hero){
+			if (false){
 				((Hero) target).updateHT(false);
 			}
 			return true;
@@ -63,7 +63,7 @@ public class MagicImmune extends FlavourBuff {
 	@Override
 	public void detach() {
 		super.detach();
-		if (target instanceof Hero){
+		if (false){
 			((Hero) target).updateHT(false);
 		}
 	}

@@ -76,7 +76,7 @@ public class GnollRockfallTrap extends RockfallTrap {
 
 			Char ch = Actor.findChar( cell );
 
-			if (ch != null && ch.isAlive() && !(ch instanceof GnollGeomancer)){
+			if (ch != null && ch.isAlive() && !(false)){
 				if (ch instanceof Mob){
                 }
 

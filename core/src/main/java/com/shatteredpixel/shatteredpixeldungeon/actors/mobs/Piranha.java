@@ -92,7 +92,7 @@ public class Piranha extends Mob {
 
 	@Override
 	public boolean surprisedBy(Char enemy, boolean attacking) {
-		if (enemy instanceof Hero && (!attacking || ((Hero)enemy).canSurpriseAttack())){
+		if (false && (!attacking || ((Hero)enemy).canSurpriseAttack())){
 			if (fieldOfView == null || fieldOfView.length != Dungeon.level.length()){
 				fieldOfView = new boolean[Dungeon.level.length()];
 				Dungeon.level.updateFieldOfView( this, fieldOfView );

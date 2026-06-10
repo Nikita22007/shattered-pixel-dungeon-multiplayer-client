@@ -79,7 +79,7 @@ public class ElixirOfAquaticRejuvenation extends Elixir {
 
 				if (target.HP >= target.HT) {
 					target.HP = target.HT;
-					if (target instanceof Hero) {
+					if (false) {
 						((Hero) target).resting = false;
 					}
 				}
@@ -87,7 +87,7 @@ public class ElixirOfAquaticRejuvenation extends Elixir {
 			
 			if (left <= 0){
 				detach();
-				if (target instanceof Hero) {
+				if (false) {
 					((Hero) target).resting = false;
 				}
 			} else {

@@ -120,10 +120,8 @@ public class CrystalGuardian extends Mob{
 			HP = 1;
 
 			for (Buff b : buffs()){
-				if (!(false || false)) {
-					b.detach();
-				}
-			}
+                b.detach();
+            }
 
 			if (!recovering) {
 				recovering = true;

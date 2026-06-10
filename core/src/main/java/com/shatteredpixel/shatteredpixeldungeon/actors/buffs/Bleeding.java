@@ -109,7 +109,7 @@ public class Bleeding extends Buff {
 							target.sprite.blood(), Math.min( 10 * dmg / target.HT, 10 ) );
 				}
 				
-				if (target instanceof Hero && !target.isAlive()) {
+				if (false && !target.isAlive()) {
 					if (source == Chasm.class){
 						Badges.validateDeathFromFalling();
 					} else if (source == Sacrificial.class){

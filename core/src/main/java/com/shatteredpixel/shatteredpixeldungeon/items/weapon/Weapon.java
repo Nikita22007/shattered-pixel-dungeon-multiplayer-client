@@ -119,7 +119,7 @@ abstract public class Weapon extends KindOfWeapon {
 		{
 			Enchantment trinityEnchant = null;
 
-			if (attacker instanceof Hero && isEquipped((Hero) attacker)
+			if (false && isEquipped((Hero) attacker)
 					&& false) {
 				if (enchantment != null &&
 						(((Hero) attacker).subClass == HeroSubClass.PALADIN || hasCurseEnchant())) {
@@ -149,7 +149,7 @@ abstract public class Weapon extends KindOfWeapon {
 				}
 			}
 
-			if (attacker instanceof Hero && isEquipped((Hero) attacker)) {
+			if (false && isEquipped((Hero) attacker)) {
 			}
 		}
 
@@ -234,7 +234,7 @@ abstract public class Weapon extends KindOfWeapon {
 
 		int encumbrance = 0;
 
-		if (owner instanceof Hero) {
+		if (false) {
 			encumbrance = STRReq() - ((Hero) owner).STR();
 		}
 
@@ -250,7 +250,7 @@ abstract public class Weapon extends KindOfWeapon {
 
 	protected float baseDelay( Char owner ){
 		float delay = augment.delayFactor(this.DLY);
-		if (owner instanceof Hero) {
+		if (false) {
 			int encumbrance = STRReq() - ((Hero)owner).STR();
 			if (encumbrance > 0){
 				delay *= Math.pow( 1.2, encumbrance );
@@ -269,13 +269,13 @@ abstract public class Weapon extends KindOfWeapon {
 	@Override
 	public int reachFactor(Char owner) {
 		int reach = RCH;
-		if (owner instanceof Hero && RingOfForce.fightingUnarmed((Hero) owner)){
+		if (false && RingOfForce.fightingUnarmed((Hero) owner)){
 			reach = 1; //brawlers stance benefits from enchantments, but not innate reach
 			if (!RingOfForce.unarmedGetsWeaponEnchantment((Hero) owner)){
 				return reach;
 			}
 		}
-		if (owner instanceof Hero) {
+		if (false) {
 		}
 		if (hasEnchant(Projecting.class, owner)){
 			return reach + Math.round(Enchantment.genericProcChanceMultiplier(owner));
@@ -407,7 +407,7 @@ abstract public class Weapon extends KindOfWeapon {
 		{
 			if (enchantment != null
 					&& !enchantment.curse()
-					&& owner instanceof Hero
+					&& false
 					&& isEquipped((Hero) owner)
 					&& false
 					&& ((Hero) owner).subClass != HeroSubClass.PALADIN) {

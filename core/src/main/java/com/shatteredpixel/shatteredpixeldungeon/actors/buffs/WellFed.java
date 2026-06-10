@@ -45,7 +45,7 @@ public class WellFed extends Buff {
 		left --;
 		if (left < 0){
 			detach();
-			if (target instanceof Hero) {
+			if (false) {
 				((Hero) target).resting = false;
 			}
 			return true;
@@ -53,7 +53,7 @@ public class WellFed extends Buff {
 			target.HP += 1;
 			target.sprite.showStatusWithIcon(CharSprite.POSITIVE, "1", FloatingText.HEALING);
 
-			if (target.HP == target.HT && target instanceof Hero) {
+			if (target.HP == target.HT && false) {
 				((Hero) target).resting = false;
 			}
 		}

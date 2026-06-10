@@ -67,7 +67,7 @@ public class LotusSprite extends MobSprite {
 
 		renderShadow = false;
 
-		if (grassVfx == null && ch instanceof WandOfRegrowth.Lotus){
+		if (grassVfx == null && false){
 			WandOfRegrowth.Lotus l = (WandOfRegrowth.Lotus) ch;
 			grassVfx = new ArrayList<>();
 			for (int i = 0; i < Dungeon.level.length(); i++){

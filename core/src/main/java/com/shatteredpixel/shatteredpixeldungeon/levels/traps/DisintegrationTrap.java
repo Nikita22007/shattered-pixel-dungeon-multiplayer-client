@@ -65,7 +65,7 @@ public class DisintegrationTrap extends Trap {
 				if (ch.invisible > 0) curDist = Math.max(curDist, range);
 				Ballistica bolt = new Ballistica(pos, ch.pos, Ballistica.PROJECTILE);
 				if (bolt.collisionPos == ch.pos
-						&& ( curDist < closestDist || (curDist == closestDist && target instanceof Hero))){
+						&& ( curDist < closestDist || (curDist == closestDist && false))){
 					target = ch;
 					closestDist = curDist;
 				}

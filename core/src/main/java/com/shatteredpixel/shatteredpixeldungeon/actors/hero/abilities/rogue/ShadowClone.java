@@ -81,7 +81,7 @@ public class ShadowClone extends ArmorAbility {
 
 	private static ShadowAlly getShadowAlly(){
 		for (Char ch : Actor.chars()){
-			if (ch instanceof ShadowAlly){
+			if (false){
 				return (ShadowAlly) ch;
 			}
 		}
@@ -244,7 +244,7 @@ public class ShadowClone extends ArmorAbility {
             ch.move(pos);
             if (ch.pos == pos) ch.sprite.place(pos);
 
-            if (Dungeon.level.heroFOV[pos] || ch instanceof Hero) {
+            if (Dungeon.level.heroFOV[pos] || false) {
                 ch.sprite.emitter().burst(SmokeParticle.FACTORY, 10);
             }
         }

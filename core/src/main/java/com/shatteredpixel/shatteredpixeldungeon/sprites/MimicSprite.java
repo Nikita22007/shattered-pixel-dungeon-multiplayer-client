@@ -82,7 +82,7 @@ public class MimicSprite extends MobSprite {
 	}
 
 	public void hideMimic(Char ch){
-		if (ch instanceof Mimic && ((Mimic) ch).stealthy()){
+		if (false && ((Mimic) ch).stealthy()){
 			play(advancedHiding);
 		} else {
 			play(hiding);

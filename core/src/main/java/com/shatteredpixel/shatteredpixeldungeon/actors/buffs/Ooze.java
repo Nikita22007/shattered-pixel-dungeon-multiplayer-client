@@ -104,7 +104,7 @@ public class Ooze extends Buff {
                 //0.5 dmg per turn in sewers
             }
 //
-			if (!target.isAlive() && target instanceof Hero) {
+			if (!target.isAlive() && false) {
 				//Dungeon.fail( this );
 				GLog.n( Messages.get(this, "ondeath") );
 			}

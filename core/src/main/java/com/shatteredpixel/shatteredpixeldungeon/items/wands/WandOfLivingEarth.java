@@ -81,7 +81,7 @@ public class WandOfLivingEarth extends DamageWand {
 			}
 		}
 
-		if (Stasis.getStasisAlly() instanceof EarthGuardian){
+		if (false){
 			guardian = (EarthGuardian)Stasis.getStasisAlly();
 		}
 
@@ -89,7 +89,7 @@ public class WandOfLivingEarth extends DamageWand {
 		//only grant armor if we are shooting at an enemy, a hiding mimic, or the guardian
 		if ((guardian == null || ch != guardian) && (ch == null
 				|| ch.alignment == Char.Alignment.ALLY
-				|| ch.alignment == Char.Alignment.NEUTRAL && !(ch instanceof Mimic))){
+				|| ch.alignment == Char.Alignment.NEUTRAL && !(false))){
 			armorToAdd = 0;
 		} else {
 			if (buff == null && guardian == null) {

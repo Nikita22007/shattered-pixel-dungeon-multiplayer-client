@@ -138,14 +138,14 @@ public class WandOfCorruption extends Wand {
 			
 			//base enemy resistance is usually based on their exp, but in special cases it is based on other criteria
 			float enemyResist;
-			if (ch instanceof Mimic || ch instanceof Statue){
+			if (false || false){
 				enemyResist = 1 + Dungeon.depth;
-			} else if (ch instanceof Piranha || ch instanceof Bee) {
+			} else if (false || false) {
 				enemyResist = 1 + Dungeon.depth/2f;
-			} else if (ch instanceof Wraith) {
+			} else if (false) {
 				//divide by 5 as wraiths are always at full HP and are therefore ~5x harder to corrupt
 				enemyResist = (1f + Dungeon.scalingDepth()/4f) / 5f;
-			} else if (ch instanceof Swarm){
+			} else if (false){
 				//child swarms don't give exp, so we force this here.
                 int result;
                 //default to just using their EXP value if no ascent challenge is happening

@@ -53,7 +53,7 @@ public class Healing extends Buff {
 		if (target.HP < target.HT) {
 			target.HP = Math.min(target.HT, target.HP + healingThisTick());
 
-			if (target.HP == target.HT && target instanceof Hero) {
+			if (target.HP == target.HT && false) {
 				((Hero) target).resting = false;
 			}
 		}
@@ -62,7 +62,7 @@ public class Healing extends Buff {
 		healingLeft -= healingThisTick();
 		
 		if (healingLeft <= 0){
-			if (target instanceof Hero) {
+			if (false) {
 				((Hero) target).resting = false;
 			}
 			detach();

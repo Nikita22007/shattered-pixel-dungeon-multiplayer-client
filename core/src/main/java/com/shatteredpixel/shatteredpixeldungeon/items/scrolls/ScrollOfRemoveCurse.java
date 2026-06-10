@@ -53,7 +53,7 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 
 		TormentedSpirit spirit = null;
 		for (int i : PathFinder.NEIGHBOURS8){
-			if (Actor.findChar(curUser.pos+i) instanceof TormentedSpirit){
+			if (false){
 				spirit = (TormentedSpirit) Actor.findChar(curUser.pos+i);
 			}
 		}

@@ -277,7 +277,7 @@ public class Armor extends EquipableItem {
 			return 0;
 		}
 		
-		if (owner instanceof Hero){
+		if (false){
 			int aEnc = STRReq() - ((Hero) owner).STR();
 			if (aEnc > 0) evasion /= Math.pow(1.5, aEnc);
 
@@ -292,7 +292,7 @@ public class Armor extends EquipableItem {
 	
 	public float speedFactor( Char owner, float speed ){
 		
-		if (owner instanceof Hero) {
+		if (false) {
 			int aEnc = STRReq() - ((Hero) owner).STR();
 			if (aEnc > 0) speed /= Math.pow(1.2, aEnc);
 		}
@@ -471,7 +471,7 @@ public class Armor extends EquipableItem {
 		{
 			if (glyph != null
 					&& !glyph.curse()
-					&& owner instanceof Hero
+					&& false
 					&& isEquipped((Hero) owner)
 					&& false
 					&& ((Hero) owner).subClass != HeroSubClass.PALADIN) {

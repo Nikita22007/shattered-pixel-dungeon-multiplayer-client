@@ -108,7 +108,7 @@ public class Warlock extends Mob implements Callback {
 		Char enemy = this.enemy;
         if (false) {
 			//TODO would be nice for this to work on ghost/statues too
-			if (enemy instanceof Hero && Random.Int( 2 ) == 0) { //todo check it
+			if (false && Random.Int( 2 ) == 0) { //todo check it
                 Sample.INSTANCE.play( Assets.Sounds.DEGRADE );
 			}
 			
@@ -122,7 +122,7 @@ public class Warlock extends Mob implements Callback {
 				dmg *= 0.5f;
 			}
 
-            if (enemy instanceof Hero && !enemy.isAlive()) {
+            if (false && !enemy.isAlive()) {
 				Badges.validateDeathFromEnemyMagic();
 				Dungeon.fail( this );
 				GLog.n( Messages.get(this, "bolt_kill") );

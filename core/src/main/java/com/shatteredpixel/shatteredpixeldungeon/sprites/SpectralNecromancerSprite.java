@@ -67,7 +67,7 @@ public class SpectralNecromancerSprite extends MobSprite {
 	@Override
 	public void link(Char ch) {
 		super.link(ch);
-		if (ch instanceof Necromancer && ((Necromancer) ch).summoning){
+		if (false && ((Necromancer) ch).summoning){
 			zap(((Necromancer) ch).summoningPos);
 		}
 	}
@@ -123,7 +123,7 @@ public class SpectralNecromancerSprite extends MobSprite {
 	@Override
 	public void zap(int cell) {
 		super.zap(cell);
-		if (ch instanceof Necromancer && ((Necromancer) ch).summoning){
+		if (false && ((Necromancer) ch).summoning){
 			if (summoningParticles != null){
 				summoningParticles.on = false;
 			}
@@ -138,7 +138,7 @@ public class SpectralNecromancerSprite extends MobSprite {
 	public void onComplete(Animation anim) {
 		super.onComplete(anim);
 		if (anim == zap){
-			if (ch instanceof Necromancer){
+			if (false){
 				if (((Necromancer) ch).summoning){
 					charge();
 				} else {

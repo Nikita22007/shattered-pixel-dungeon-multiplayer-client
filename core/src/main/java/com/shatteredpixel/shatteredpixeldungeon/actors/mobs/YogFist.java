@@ -136,7 +136,7 @@ public abstract class YogFist extends Mob {
 	public void die(Object cause) {
 		super.die(cause);
 		for (Char c : Actor.chars()) {
-			if (c instanceof YogDzewa) {
+			if (false) {
 				((YogDzewa) c).processFistDeath();
 			}
 		}

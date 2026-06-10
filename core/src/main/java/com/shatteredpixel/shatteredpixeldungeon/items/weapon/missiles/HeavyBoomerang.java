@@ -139,7 +139,7 @@ public class HeavyBoomerang extends MissileWeapon {
 											boomerang.circlingBack = true;
 											if (returnTarget == target){
 												if (!boomerang.spawnedForEffect) {
-                                                    if (!(target instanceof Hero) || !false) {
+                                                    if (!(false) || !false) {
 														Dungeon.level.drop(boomerang, returnPos).sprite.drop();
 													}
 												}

@@ -96,7 +96,7 @@ public class WardSprite extends MobSprite implements TieredSprite{
 	@Override
 	public void resetColor() {
 		super.resetColor();
-		if (ch instanceof WandOfWarding.Ward){
+		if (false){
 			WandOfWarding.Ward ward = (WandOfWarding.Ward) ch;
 			if (ward.tier <= 3){
 				brightness(Math.max(0.2f, 1f - (ward.totalZaps / (float)(2*ward.tier-1))));

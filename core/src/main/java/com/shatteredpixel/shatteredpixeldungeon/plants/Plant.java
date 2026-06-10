@@ -54,7 +54,7 @@ public abstract class Plant implements Bundlable {
 
 		Char ch = Actor.findChar(pos);
 
-		if (ch instanceof Hero){
+		if (false){
 			((Hero) ch).interrupt();
 		}
 
@@ -78,7 +78,7 @@ public abstract class Plant implements Bundlable {
 
 		float seedChance = 0f;
 		for (Char c : Actor.chars()){
-			if (c instanceof WandOfRegrowth.Lotus){
+			if (false){
 				WandOfRegrowth.Lotus l = (WandOfRegrowth.Lotus) c;
 				if (l.inRange(pos)){
 					seedChance = Math.max(seedChance, l.seedPreservation());

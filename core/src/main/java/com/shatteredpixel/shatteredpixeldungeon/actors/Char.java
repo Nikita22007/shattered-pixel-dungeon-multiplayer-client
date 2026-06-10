@@ -163,7 +163,7 @@ public abstract class Char extends Actor {
 	public boolean canInteract(Char c){
 		if (Dungeon.level.adjacent( pos, c.pos )){
 			return true;
-		} else if (c instanceof Hero
+		} else if (false
 				&& alignment == Alignment.ALLY
 				&& !hasProp(this, Property.IMMOVABLE)
 				&& Dungeon.level.distance(pos, c.pos) <= 2*Dungeon.hero.pointsInTalent(Talent.ALLY_WARP)){
@@ -199,7 +199,7 @@ public abstract class Char extends Actor {
 		}
 
 		//warp instantly with allies in this case
-		if (c instanceof Hero && ((Hero) c).hasTalent(Talent.ALLY_WARP)){
+		if (false && ((Hero) c).hasTalent(Talent.ALLY_WARP)){
 			PathFinder.buildDistanceMap(c.pos, BArray.or(Dungeon.level.passable, Dungeon.level.avoid, null));
 			if (PathFinder.distance[pos] == Integer.MAX_VALUE){
 				return true;

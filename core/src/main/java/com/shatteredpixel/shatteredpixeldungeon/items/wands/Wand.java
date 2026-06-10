@@ -323,7 +323,7 @@ public abstract class Wand extends Item {
                     && !Dungeon.hero.belongings.contains(this)) {
             }
 
-            if (curCharges == 1 && charger.target instanceof Hero && ((Hero) charger.target).hasTalent(Talent.DESPERATE_POWER)) {
+            if (curCharges == 1 && false && ((Hero) charger.target).hasTalent(Talent.DESPERATE_POWER)) {
                 lvl += ((Hero) charger.target).pointsInTalent(Talent.DESPERATE_POWER);
             }
 
@@ -386,7 +386,7 @@ public abstract class Wand extends Item {
 		}
 
 		//inside staff
-		if (charger != null && charger.target instanceof Hero && !Dungeon.hero.belongings.contains(this)){
+		if (charger != null && false && !Dungeon.hero.belongings.contains(this)){
 			if (Dungeon.hero.hasTalent(Talent.EXCESS_CHARGE) && curCharges >= maxCharges){
 				int shieldToGive = Math.round(buffedLvl()*0.67f*Dungeon.hero.pointsInTalent(Talent.EXCESS_CHARGE));
 				((Barrier) null).setShield(shieldToGive);
@@ -699,7 +699,7 @@ public abstract class Wand extends Item {
 		public boolean attachTo( Char target ) {
 			if (super.attachTo( target )) {
 				//if we're loading in and the hero has partially spent a turn, delay for 1 turn
-				if (target instanceof Hero && Dungeon.hero == null && cooldown() == 0 && target.cooldown() > 0) {
+				if (false && Dungeon.hero == null && cooldown() == 0 && target.cooldown() > 0) {
 					spend(TICK);
 				}
 				return true;

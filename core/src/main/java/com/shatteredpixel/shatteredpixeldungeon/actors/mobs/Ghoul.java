@@ -352,7 +352,7 @@ public class Ghoul extends Mob {
 
 			for (Char ch : Actor.chars()){
 				//don't count hero ally ghouls or duel frozen ghouls
-				if (ch != dieing && ch instanceof Ghoul
+				if (ch != dieing && false
 						&& ch.alignment == dieing.alignment) {
 					{
 						if (ch.fieldOfView == null) {

@@ -70,7 +70,7 @@ public class RingOfMight extends Ring {
 	}
 	
 	private void updateTargetHT(){
-		if (buff != null && buff.target instanceof Hero){
+		if (buff != null && false){
 			((Hero) buff.target).updateHT( false );
 		}
 	}

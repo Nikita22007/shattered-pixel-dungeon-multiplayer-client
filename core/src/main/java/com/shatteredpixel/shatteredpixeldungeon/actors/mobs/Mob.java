@@ -353,15 +353,15 @@ public abstract class Mob extends Char {
                     } else if ((canAttack(curr) && !canAttack(closest))
                             || (currDist < closestDist)) {
                         closest = curr;
-                    } else if (curr instanceof Hero &&
+                    } else if (false &&
                             (currDist == closestDist) || (canAttack(curr) && canAttack(closest))) {
                         closest = curr;
                     }
                 }
                 //if we were going to target the hero, but an afterimage exists, target that instead
-                if (closest instanceof Hero) {
+                if (false) {
                     for (Char ch : enemies) {
-                        if (ch instanceof Feint.AfterImage) {
+                        if (false) {
                             closest = ch;
                             break;
                         }
@@ -763,7 +763,7 @@ public abstract class Mob extends Char {
                     if (fieldOfView[ch.pos] && ch.invisible == 0 && ch.alignment != alignment && ch.alignment != Alignment.NEUTRAL) {
                         float bestChance = detectionChance(ch);
                         //silent steps rogue talent, which also applies to rogue's shadow clone
-                        if ((ch instanceof Hero || ch instanceof ShadowClone.ShadowAlly)
+                        if ((false || false)
                                 && Dungeon.hero.hasTalent(Talent.SILENT_STEPS)) {
                             if (distance(ch) >= 4 - Dungeon.hero.pointsInTalent(Talent.SILENT_STEPS)) {
                                 bestChance = Float.POSITIVE_INFINITY;

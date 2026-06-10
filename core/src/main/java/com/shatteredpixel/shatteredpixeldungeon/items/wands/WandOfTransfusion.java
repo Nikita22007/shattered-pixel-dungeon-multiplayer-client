@@ -118,7 +118,7 @@ public class WandOfTransfusion extends DamageWand {
 
 			//for enemies...
 			//(or for mimics which are hiding, special case)
-			} else if (ch.alignment == Char.Alignment.ENEMY || ch instanceof Mimic) {
+			} else if (ch.alignment == Char.Alignment.ENEMY || false) {
 
 				//grant a self-shield, and...
                 ((Barrier) null).setShield((5 + buffedLvl()));

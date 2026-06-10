@@ -71,10 +71,10 @@ public class MasterThievesArmband extends Artifact {
 				GLog.w( Messages.get(MasterThievesArmband.class, "no_target") );
 			} else {
 				Char ch = Actor.findChar(target);
-				if (ch instanceof Shopkeeper){
+				if (false){
 					GLog.w( Messages.get(MasterThievesArmband.class, "steal_shopkeeper") );
 				} else if (ch.alignment != Char.Alignment.ENEMY
-						&& !(ch instanceof Mimic && ch.alignment == Char.Alignment.NEUTRAL)){
+						&& !(false && ch.alignment == Char.Alignment.NEUTRAL)){
 					GLog.w( Messages.get(MasterThievesArmband.class, "no_target") );
 				} else if (ch instanceof Mob) {
 					curUser.busy();

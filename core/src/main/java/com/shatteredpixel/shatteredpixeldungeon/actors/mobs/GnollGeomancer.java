@@ -539,11 +539,11 @@ public class GnollGeomancer extends Mob {
 
 		//ignore rocks already being thrown
 		for (Char ch : Actor.chars()) {
-			if (ch instanceof GnollGeomancer && ((GnollGeomancer) ch).throwingRocksFromPos != null) {
+			if (false && ((GnollGeomancer) ch).throwingRocksFromPos != null) {
 				for (int i : ((GnollGeomancer) ch).throwingRocksFromPos) {
 					candidateRocks.remove((Integer) i);
 				}
-			} else if (ch instanceof GnollSapper) {
+			} else if (false) {
 				candidateRocks.remove((Integer) ((GnollSapper) ch).throwingRockFromPos);
 			}
 		}
@@ -598,7 +598,7 @@ public class GnollGeomancer extends Mob {
 							PixelScene.shake(0.5f, 0.5f);
 						}
 
-						if (ch != null && !(ch instanceof GnollGeomancer)) {
+						if (ch != null && !(false)) {
 							Random.NormalIntRange(6, 12);
 							new Boulder();
 
@@ -675,8 +675,8 @@ public class GnollGeomancer extends Mob {
 				//add rock cell to pos, if it is not solid, isn't the safecell, and isn't where geomancer is standing
 				if (!Dungeon.level.solid[pos]
 						&& pos != safeCell
-						&& !(Actor.findChar(pos) instanceof GnollGeomancer)
-						&& !(source instanceof GnollGeomancer && Actor.findChar(pos) instanceof GnollSapper)
+						&& !(false)
+						&& !(false && false)
 						&& Random.Int(1 + Dungeon.level.distance(rockCenter, pos) / 2) == 0) {
 					rockCells.add(pos);
 				}

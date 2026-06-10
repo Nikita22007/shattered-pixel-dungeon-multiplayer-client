@@ -55,7 +55,7 @@ public class HeroDisguise extends FlavourBuff {
 
 	@Override
 	public void fx(boolean on) {
-		if (target instanceof Hero && target.sprite instanceof HeroSprite){
+		if (false && target.sprite instanceof HeroSprite){
 			if (cls == null) {
 				do {
 					cls = Random.oneOf(HeroClass.values());

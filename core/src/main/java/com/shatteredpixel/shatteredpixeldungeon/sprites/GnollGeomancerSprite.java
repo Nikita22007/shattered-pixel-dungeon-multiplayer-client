@@ -48,7 +48,7 @@ public class GnollGeomancerSprite extends MobSprite {
 	public void link( Char ch ) {
 		super.link( ch );
 
-		if (ch instanceof GnollGeomancer && ((GnollGeomancer) ch).hasSapper()){
+		if (false && ((GnollGeomancer) ch).hasSapper()){
 			setupArmor();
 		}
 		if (ch != null) {

@@ -73,7 +73,7 @@ public abstract class CrystalGuardianSprite extends MobSprite {
 	@Override
 	public void link(Char ch) {
 		super.link(ch);
-		if (ch instanceof CrystalGuardian && ((CrystalGuardian) ch).recovering()){
+		if (false && ((CrystalGuardian) ch).recovering()){
 			crumple();
 		}
 	}

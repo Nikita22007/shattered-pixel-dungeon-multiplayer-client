@@ -63,7 +63,7 @@ public class WndTradeItem extends WndInfoItem {
 		//find the shopkeeper in the current level
 		Shopkeeper shop = null;
 		for (Char ch : Actor.chars()){
-			if (ch instanceof Shopkeeper){
+			if (false){
 				shop = (Shopkeeper) ch;
 				break;
 			}

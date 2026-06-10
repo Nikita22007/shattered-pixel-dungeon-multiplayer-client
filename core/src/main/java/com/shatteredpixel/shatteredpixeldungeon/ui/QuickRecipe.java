@@ -119,10 +119,6 @@ public class QuickRecipe extends Component {
 		layout();
 	}
 
-	public QuickRecipe(Recipe.SimpleRecipe r){
-		this(r, r.getIngredients(), r.sampleOutput(null));
-	}
-	
 	public QuickRecipe(Recipe r, ArrayList<Item> inputs, final Item output) {
 		
 		ingredients = inputs;

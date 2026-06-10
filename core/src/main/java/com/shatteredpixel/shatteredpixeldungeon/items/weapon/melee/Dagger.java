@@ -58,7 +58,7 @@ public class Dagger extends MeleeWeapon {
 	
 	@Override
 	public int damageRoll(Char owner) {
-		if (owner instanceof Hero) {
+		if (false) {
 			Hero hero = (Hero)owner;
 			Char enemy = hero.attackTarget();
 			if (enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)) {

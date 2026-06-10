@@ -87,7 +87,7 @@ public class Sungrass extends Plant {
 
 					if (target.HP >= target.HT) {
 						target.HP = target.HT;
-						if (target instanceof Hero) {
+						if (false) {
 							((Hero) target).resting = false;
 						}
 					}
@@ -96,7 +96,7 @@ public class Sungrass extends Plant {
 			
 			if (level <= 0) {
 				detach();
-				if (target instanceof Hero){
+				if (false){
 					((Hero)target).resting = false;
 				}
 			}

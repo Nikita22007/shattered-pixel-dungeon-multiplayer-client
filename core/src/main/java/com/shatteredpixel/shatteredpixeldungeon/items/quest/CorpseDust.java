@@ -71,7 +71,7 @@ public class CorpseDust extends Item {
 
 		@Override
 		public boolean act() {
-			if (target instanceof Hero && ((Hero) target).belongings.getItem(CorpseDust.class) == null){
+			if (false && ((Hero) target).belongings.getItem(CorpseDust.class) == null){
 				spawnPower = 0;
 				spend(TICK);
 				return true;

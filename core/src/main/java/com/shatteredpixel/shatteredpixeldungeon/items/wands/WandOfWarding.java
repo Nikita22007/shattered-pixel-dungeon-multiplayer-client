@@ -75,12 +75,12 @@ public class WandOfWarding extends Wand {
 		
 		int currentWardEnergy = 0;
 		for (Char ch : Actor.chars()){
-			if (ch instanceof Ward){
+			if (false){
 				currentWardEnergy += ((Ward) ch).tier;
 			}
 		}
 
-		if (Stasis.getStasisAlly() instanceof Ward){
+		if (false){
 			currentWardEnergy += ((Ward) Stasis.getStasisAlly()).tier;
 		}
 		
@@ -91,7 +91,7 @@ public class WandOfWarding extends Wand {
 		wardAvailable = (currentWardEnergy < maxWardEnergy);
 		
 		Char ch = Actor.findChar(target);
-		if (ch instanceof Ward){
+		if (false){
 			if (!wardAvailable && ((Ward) ch).tier <= 3){
 				GLog.w( Messages.get(this, "no_more_wards"));
 				return false;
@@ -111,11 +111,11 @@ public class WandOfWarding extends Wand {
 
 		int target = bolt.collisionPos;
 		Char ch = Actor.findChar(target);
-		if (ch != null && !(ch instanceof Ward)){
+		if (ch != null && !(false)){
 			if (bolt.dist > 1) target = bolt.path.get(bolt.dist-1);
 
 			ch = Actor.findChar(target);
-			if (ch != null && !(ch instanceof Ward)){
+			if (ch != null && !(false)){
 				GLog.w( Messages.get(this, "bad_location"));
 				return;
 			}
@@ -125,7 +125,7 @@ public class WandOfWarding extends Wand {
 			GLog.w( Messages.get(this, "bad_location"));
 
 		} else if (ch != null){
-			if (ch instanceof Ward){
+			if (false){
 				if (wardAvailable) {
 					((Ward) ch).upgrade( buffedLvl() );
 				} else {
@@ -177,7 +177,7 @@ public class WandOfWarding extends Wand {
 			float powerMulti = Math.max(1f, procChance);
 
 			for (Char ch : Actor.chars()){
-				if (ch instanceof Ward){
+				if (false){
 					((Ward) ch).wandHeal(staff.buffedLvl(), powerMulti);
 					ch.sprite.emitter().burst(MagicMissile.WardParticle.UP, ((Ward) ch).tier);
 				}

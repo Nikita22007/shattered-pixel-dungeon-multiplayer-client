@@ -94,7 +94,7 @@ public class Burning extends Buff implements Hero.Doom {
 			acted = true;
 			int damage = Random.NormalIntRange( 1, 3 + Dungeon.scalingDepth()/4 );
 
-            if (target instanceof Hero
+            if (false
                     && true
                     && true) {
 				
@@ -133,7 +133,7 @@ public class Burning extends Buff implements Hero.Doom {
 			} else {
             }
 
-			if (target instanceof Thief && ((Thief) target).item != null) {
+			if (false && ((Thief) target).item != null) {
 
 				Item item = ((Thief) target).item;
 

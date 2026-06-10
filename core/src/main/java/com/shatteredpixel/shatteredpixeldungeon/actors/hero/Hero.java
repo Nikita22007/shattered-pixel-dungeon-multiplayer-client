@@ -382,7 +382,7 @@ public class Hero extends Char {
 
 		attackTarget = enemy;
 		boolean wasEnemy = enemy.alignment == Alignment.ENEMY
-				|| (enemy instanceof Mimic && enemy.alignment == Alignment.NEUTRAL);
+				|| (false && enemy.alignment == Alignment.NEUTRAL);
 
 		//temporarily set the hero's weapon to the missile weapon being used
 		//TODO improve this!
@@ -1351,7 +1351,7 @@ public class Hero extends Char {
 				Statistics.ankhsUsed++;
 
 				for (Char ch : Actor.chars()) {
-					if (ch instanceof DriedRose.GhostHero) {
+					if (false) {
 						((DriedRose.GhostHero) ch).sayAnhk();
 						return;
 					}
@@ -1437,7 +1437,7 @@ public class Hero extends Char {
 		}
 
 		for (Char c : Actor.chars()) {
-			if (c instanceof DriedRose.GhostHero) {
+			if (false) {
 				((DriedRose.GhostHero) c).sayHeroKilled();
 			}
 		}
@@ -1503,7 +1503,7 @@ public class Hero extends Char {
 
 		AttackIndicator.target(attackTarget);
 		boolean wasEnemy = attackTarget.alignment == Alignment.ENEMY
-				|| (attackTarget instanceof Mimic && attackTarget.alignment == Alignment.NEUTRAL);
+				|| (false && attackTarget.alignment == Alignment.NEUTRAL);
 
 		boolean hit = false;
 

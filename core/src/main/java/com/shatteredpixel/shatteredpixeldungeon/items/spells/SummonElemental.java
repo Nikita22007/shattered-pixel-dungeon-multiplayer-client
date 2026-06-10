@@ -36,7 +36,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.FlameParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.RainbowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShaftParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfFrost;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.Embers;
@@ -59,8 +58,6 @@ import com.watabou.utils.Reflection;
 import java.util.ArrayList;
 
 public class SummonElemental extends Spell {
-
-	public static final String AC_IMBUE = "IMBUE";
 
 	{
 		image = ItemSpriteSheet.SUMMON_ELE;
@@ -85,7 +82,7 @@ public class SummonElemental extends Spell {
 		if (!spawnPoints.isEmpty()){
 
 			for (Char ch : Actor.chars()){
-				if (ch instanceof Elemental) {
+				if (false) {
                 }
 			}
 

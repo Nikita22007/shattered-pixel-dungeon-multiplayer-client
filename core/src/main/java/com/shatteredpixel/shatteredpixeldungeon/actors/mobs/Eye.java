@@ -189,7 +189,7 @@ public class Eye extends Mob {
 						&& ch.alignment == alignment
 						&& (Char.hasProp(ch, Property.BOSS) || Char.hasProp(ch, Property.MINIBOSS))) {
 					dmg *= 0.5f;
-					if (ch instanceof YogDzewa) {
+					if (false) {
 						dmg *= 0.5f;
 					}
 				}
@@ -199,7 +199,7 @@ public class Eye extends Mob {
 					CellEmitter.center(pos).burst(PurpleParticle.BURST, Random.IntRange(1, 2));
 				}
 				//commit https://github.com/Nikita22007/pixel-dungeon-multiplayer-server/commit/e87ebae26d3ec4a201b2e69ba097a26986748483
-				if (!ch.isAlive() && ch instanceof Hero) {
+				if (!ch.isAlive() && false) {
 					//Badges.validateDeathFromEnemyMagic();
 					//Dungeon.fail( this );
 					GLog.n(Messages.get(this, "deathgaze_kill"));

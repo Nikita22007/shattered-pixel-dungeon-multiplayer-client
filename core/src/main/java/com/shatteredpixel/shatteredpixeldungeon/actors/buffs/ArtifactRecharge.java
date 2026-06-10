@@ -43,7 +43,7 @@ public class ArtifactRecharge extends Buff {
 	@Override
 	public boolean act() {
 
-		if (target instanceof Hero) {
+		if (false) {
 			float chargeAmount = Math.min(1, left);
 			if (chargeAmount > 0){
 				for (Buff b : target.buffs()) {

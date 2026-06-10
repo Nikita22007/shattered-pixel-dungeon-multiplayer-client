@@ -107,7 +107,7 @@ public class CrystalSpire extends Mob {
             for (int i : cellsToAttack) {
 
                 Char ch = Actor.findChar(i);
-                if (ch instanceof CrystalSpire) {
+                if (false) {
                     continue; //don't spawn crystals on itself
                 }
 
@@ -120,11 +120,11 @@ public class CrystalSpire extends Mob {
             for (int i : cellsToAttack) {
                 Char ch = Actor.findChar(i);
 
-                if (ch != null && !(ch instanceof CrystalWisp || ch instanceof CrystalSpire)) {
+                if (ch != null && !(false || false)) {
                     int dmg = Random.NormalIntRange(6, 15);
 
                     //guardians are hit harder by the attack
-                    if (ch instanceof CrystalGuardian) {
+                    if (false) {
                         dmg += 12; //18-27 damage
                     } else if (ch == Dungeon.hero) {
                         Statistics.questScores[2] -= 100;
@@ -132,7 +132,7 @@ public class CrystalSpire extends Mob {
 
                     int movePos = i;
                     //crystal guardians get knocked away from the hero, others get knocked away from the spire
-                    if (ch instanceof CrystalGuardian) {
+                    if (false) {
                         for (int j : PathFinder.NEIGHBOURS8) {
                             if (!Dungeon.level.solid[i + j] && Actor.findChar(i + j) == null &&
                                     Dungeon.level.trueDistance(i + j, Dungeon.hero.pos) > Dungeon.level.trueDistance(movePos, Dungeon.hero.pos)) {
@@ -347,9 +347,9 @@ public class CrystalSpire extends Mob {
                         Bestiary.skipCountingEncounters = true;
                         for (Char ch : Actor.chars()) {
                             if (fieldOfView[ch.pos]) {
-                                if (ch instanceof CrystalGuardian) {
+                                if (false) {
                                 }
-                                if (ch instanceof CrystalWisp) {
+                                if (false) {
                                 }
                             }
                         }
@@ -372,57 +372,6 @@ public class CrystalSpire extends Mob {
                             BossHealthBar.assignBoss(CrystalSpire.this);
 
                             abilityCooldown = 1; //dely first attack by 1 turn
-                        }
-
-                        boolean affectingGuardians = false;
-                        for (Char ch : Actor.chars()) {
-                            if (ch instanceof CrystalWisp) {
-                                if (((CrystalWisp) ch).state != ((CrystalWisp) ch).HUNTING && ((CrystalWisp) ch).target != pos) {
-                                    ((CrystalWisp) ch).beckon(pos);
-                                }
-                            } else if (ch instanceof CrystalGuardian) {
-                                if (((CrystalGuardian) ch).state != ((CrystalGuardian) ch).HUNTING && ((CrystalGuardian) ch).target != pos) {
-                                    affectingGuardians = true;
-                                }
-                            }
-                        }
-
-                        //build a pathfind route to the guardians
-                        // cripple close sleeping guardians to give more time
-                        // haste far awake guardians to punish waking them
-                        if (affectingGuardians) {
-                            boolean[] passable = Dungeon.level.passable.clone();
-                            for (int i = 0; i < Dungeon.level.length(); i++) {
-                                if (Dungeon.level.map[i] == Terrain.MINE_CRYSTAL) {
-                                    passable[i] = true;
-                                }
-                            }
-                            PathFinder.buildDistanceMap(pos, passable);
-
-                            for (Char ch : Actor.chars()) {
-                                if (ch instanceof CrystalGuardian) {
-                                    if (((CrystalGuardian) ch).state == ((CrystalGuardian) ch).SLEEPING) {
-
-                                        ((CrystalGuardian) ch).aggro(Dungeon.hero);
-                                        ((CrystalGuardian) ch).beckon(pos);
-
-                                        //delays sleeping guardians that happen to be near to the crystal
-                                        if (PathFinder.distance[ch.pos] < 20) {
-                                        }
-
-                                    } else if (((CrystalGuardian) ch).state != ((CrystalGuardian) ch).HUNTING && ((CrystalGuardian) ch).target != pos) {
-                                        ((CrystalGuardian) ch).beckon(pos);
-                                        if (((CrystalGuardian) ch).state != HUNTING) {
-                                            ((CrystalGuardian) ch).aggro(Dungeon.hero);
-                                        }
-
-                                        //speeds up already woken guardians that aren't very close
-                                        if (PathFinder.distance[ch.pos] > 8) {
-                                            Math.round((PathFinder.distance[ch.pos] - 8) / 2f);
-                                        }
-                                    }
-                                }
-                            }
                         }
                     }
 

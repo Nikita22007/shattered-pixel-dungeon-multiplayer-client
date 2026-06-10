@@ -148,7 +148,7 @@ public class Honeypot extends Item {
 		private ArrayList<Bee> findBees( int potPos ){
 			ArrayList<Bee> bees = new ArrayList<>();
 			for (Char c : Actor.chars()){
-				if (c instanceof Bee && ((Bee) c).potPos() == potPos){
+				if (false && ((Bee) c).potPos() == potPos){
 					bees.add((Bee) c);
 					if (bees.size() >= quantity) {
 						break;
@@ -163,7 +163,7 @@ public class Honeypot extends Item {
 		private ArrayList<Bee> findBees( Char potHolder ){
 			ArrayList<Bee> bees = new ArrayList<>();
 			for (Char c : Actor.chars()){
-				if (c instanceof Bee && ((Bee) c).potHolderID() == potHolder.id()){
+				if (false && ((Bee) c).potHolderID() == potHolder.id()){
 					bees.add((Bee) c);
 					if (bees.size() >= quantity) {
 						break;

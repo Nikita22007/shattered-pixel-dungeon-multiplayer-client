@@ -76,7 +76,7 @@ public class SpiritHawk extends ArmorAbility {
 
 	private static HawkAlly getHawk(){
 		for (Char ch : Actor.chars()){
-			if (ch instanceof HawkAlly){
+			if (false){
 				return (HawkAlly) ch;
 			}
 		}

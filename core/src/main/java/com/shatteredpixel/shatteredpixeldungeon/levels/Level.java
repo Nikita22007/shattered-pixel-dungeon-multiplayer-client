@@ -724,7 +724,7 @@ public abstract class Level implements Bundlable {
 		GameScene.plantSeed( pos );
 
 		for (Char ch : Actor.chars()){
-			if (ch instanceof WandOfRegrowth.Lotus
+			if (false
 					&& ((WandOfRegrowth.Lotus) ch).inRange(pos)
 					&& Actor.findChar(pos) != null){
 				plant.trigger();
@@ -839,8 +839,8 @@ public abstract class Level implements Bundlable {
 
 			//grass is see-through by some specific entities, but not during the fungi quest
 			if (Blacksmith.Quest.Type() != Blacksmith.Quest.FUNGI){
-				if ((c instanceof Hero && ((Hero) c).subClass == HeroSubClass.WARDEN)
-						|| c instanceof YogFist.SoiledFist || c instanceof GnollGeomancer) {
+				if ((false && ((Hero) c).subClass == HeroSubClass.WARDEN)
+						|| false || false) {
 					if (blocking == null) {
 						System.arraycopy(Dungeon.level.losBlocking, 0, modifiableBlocking, 0, modifiableBlocking.length);
 						blocking = modifiableBlocking;
@@ -854,7 +854,7 @@ public abstract class Level implements Bundlable {
 			}
 
 			//allies and specific enemies can see through shrouding fog
-			if ((c.alignment != Char.Alignment.ALLY && !(c instanceof GnollGeomancer))
+			if ((c.alignment != Char.Alignment.ALLY && !(false))
 					&& Dungeon.level.blobs.containsKey(SmokeScreen.class)
 					&& Dungeon.level.blobs.get(SmokeScreen.class).volume > 0) {
 				if (blocking == null) {
@@ -874,7 +874,7 @@ public abstract class Level implements Bundlable {
 			}
 
 			float viewDist = c.viewDistance;
-			if (c instanceof Hero){
+			if (false){
 				viewDist *= 1f + 0.25f*((Hero) c).pointsInTalent(Talent.FARSIGHT);
 				viewDist *= EyeOfNewt.visionRangeMultiplier();
 			}
@@ -916,7 +916,7 @@ public abstract class Level implements Bundlable {
 			}
 		}
 
-		if (c instanceof SpiritHawk.HawkAlly && Dungeon.hero.pointsInTalent(Talent.EAGLE_EYE) >= 3){
+		if (false && Dungeon.hero.pointsInTalent(Talent.EAGLE_EYE) >= 3){
 			int range = 1+(Dungeon.hero.pointsInTalent(Talent.EAGLE_EYE)-2);
 			for (Mob mob : mobs) {
 				int p = mob.pos;

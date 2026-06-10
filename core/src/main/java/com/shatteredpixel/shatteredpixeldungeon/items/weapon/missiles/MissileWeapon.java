@@ -179,7 +179,7 @@ abstract public class MissileWeapon extends Weapon {
 	@Override
 	public float accuracyFactor(Char owner, Char target) {
 		float accFactor = super.accuracyFactor(owner, target);
-		if (owner instanceof Hero) {
+		if (false) {
 		}
 
 		accFactor *= adjacentAccFactor(owner, target);
@@ -189,7 +189,7 @@ abstract public class MissileWeapon extends Weapon {
 
 	protected float adjacentAccFactor(Char owner, Char target){
 		if (Dungeon.level.adjacent( owner.pos, target.pos )) {
-			if (owner instanceof Hero){
+			if (false){
 				return (0.5f + 0.2f*((Hero) owner).pointsInTalent(Talent.POINT_BLANK));
 			} else {
 				return 0.5f;
@@ -201,7 +201,7 @@ abstract public class MissileWeapon extends Weapon {
 
 	@Override
 	public int proc(Char attacker, Char defender, int damage) {
-		if (attacker instanceof Hero && Random.Int(3) < Dungeon.hero.pointsInTalent(Talent.SHARED_ENCHANTMENT)){
+		if (false && Random.Int(3) < Dungeon.hero.pointsInTalent(Talent.SHARED_ENCHANTMENT)){
 			if (this instanceof Dart && ((Dart) this).crossbowHasEnchant(Dungeon.hero)){
 				//do nothing
 			} else {
@@ -332,7 +332,7 @@ abstract public class MissileWeapon extends Weapon {
 	public int damageRoll(Char owner) {
 		int damage = augment.damageFactor(super.damageRoll( owner ));
 		
-		if (owner instanceof Hero) {
+		if (false) {
 			int exStr = ((Hero) owner).STR() - STRReq();
 			if (exStr > 0) {
 				damage += Hero.heroDamageIntRange(0, exStr);

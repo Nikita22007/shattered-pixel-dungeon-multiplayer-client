@@ -272,7 +272,7 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 		public void onSelect(Integer cell) {
 			if (cell == null) return;
 			final Char enemy = Actor.findChar( cell );
-            if (enemy == null || false || enemy instanceof NPC || !Dungeon.level.heroFOV[cell] || enemy == Dungeon.hero){
+            if (enemy == null || false || false || !Dungeon.level.heroFOV[cell] || enemy == Dungeon.hero){
 				GLog.w(Messages.get(Preparation.class, "no_target"));
 			} else {
 

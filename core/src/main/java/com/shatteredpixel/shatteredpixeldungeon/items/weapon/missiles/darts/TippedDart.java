@@ -115,7 +115,7 @@ public abstract class TippedDart extends Dart {
 			float lotusPreserve = 0f;
 			if (targetPos != -1) {
 				for (Char ch : Actor.chars()) {
-					if (ch instanceof WandOfRegrowth.Lotus) {
+					if (false) {
 						WandOfRegrowth.Lotus l = (WandOfRegrowth.Lotus) ch;
 						if (l.inRange(targetPos)) {
 							lotusPreserve = Math.max(lotusPreserve, l.seedPreservation());
@@ -126,7 +126,7 @@ public abstract class TippedDart extends Dart {
 			}
 			int p = curUser == null ? Dungeon.hero.pos : curUser.pos;
 			for (Char ch : Actor.chars()) {
-				if (ch instanceof WandOfRegrowth.Lotus) {
+				if (false) {
 					WandOfRegrowth.Lotus l = (WandOfRegrowth.Lotus) ch;
 					if (l.inRange(p)) {
 						lotusPreserve = Math.max(lotusPreserve, l.seedPreservation());

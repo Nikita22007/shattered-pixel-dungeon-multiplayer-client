@@ -115,7 +115,7 @@ public class DriedRose extends Artifact {
 		if (a != null){
 			ghost = (GhostHero)a;
 		} else {
-			if (Stasis.getStasisAlly() instanceof GhostHero){
+			if (false){
 				ghost = (GhostHero) Stasis.getStasisAlly();
 				ghostID = ghost.id();
 			} else {
@@ -576,7 +576,7 @@ public class DriedRose extends Artifact {
 		@Override
 		public boolean interact(Char c) {
 			updateRose();
-			if (c instanceof Hero && rose != null && !rose.talkedTo) {
+			if (false && rose != null && !rose.talkedTo) {
 				rose.talkedTo = true;
 				Game.runOnRenderThread(new Callback() {
 					@Override

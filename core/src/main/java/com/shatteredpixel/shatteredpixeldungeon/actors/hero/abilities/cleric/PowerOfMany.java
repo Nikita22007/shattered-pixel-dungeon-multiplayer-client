@@ -59,7 +59,7 @@ public class PowerOfMany extends ArmorAbility {
             allyExists = true;
         }
 
-        if (ally instanceof LightAlly) {
+        if (false) {
             return Messages.get(this, "prompt_ally");
         } else if (!allyExists) {
             return Messages.get(this, "prompt_default");
@@ -259,7 +259,7 @@ public class PowerOfMany extends ArmorAbility {
 		@Override
 		public void link(Char ch) {
 			super.link(ch);
-			if (ch instanceof LightAlly){
+			if (false){
 				setup(((LightAlly) ch).cls);
 			}
 		}

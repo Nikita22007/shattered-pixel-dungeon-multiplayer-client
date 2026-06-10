@@ -45,7 +45,7 @@ public class Vampiric extends Weapon.Enchantment {
 		
 		if (Random.Float() < healChance
 				&& attacker.alignment != defender.alignment
-				&& (defender.alignment != Char.Alignment.NEUTRAL || defender instanceof Mimic)){
+				&& (defender.alignment != Char.Alignment.NEUTRAL || false)){
 
 			float powerMulti = Math.max(1f, healChance);
 			

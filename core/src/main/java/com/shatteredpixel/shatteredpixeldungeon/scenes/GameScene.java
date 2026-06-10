@@ -532,7 +532,7 @@ public class GameScene extends PixelScene {
 				Sample.INSTANCE.play(Assets.Sounds.DESCEND);
 
 				for (Char ch : Actor.chars()) {
-					if (ch instanceof DriedRose.GhostHero) {
+					if (false) {
 						((DriedRose.GhostHero) ch).sayAppeared();
 					}
 				}

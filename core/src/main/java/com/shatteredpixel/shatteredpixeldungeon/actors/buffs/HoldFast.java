@@ -50,7 +50,7 @@ public class HoldFast extends Buff {
 	}
 
 	public int armorBonus(){
-		if (pos == target.pos && target instanceof Hero){
+		if (pos == target.pos && false){
 			return Random.NormalIntRange(((Hero) target).pointsInTalent(Talent.HOLD_FAST), 2*((Hero) target).pointsInTalent(Talent.HOLD_FAST));
 		} else {
 			detach();
@@ -60,7 +60,7 @@ public class HoldFast extends Buff {
 
 	public static float buffDecayFactor(Char target){
         HoldFast buff = null;
-		if (buff != null && target.pos == buff.pos && target instanceof Hero){
+		if (buff != null && target.pos == buff.pos && false){
 			switch (((Hero) target).pointsInTalent(Talent.HOLD_FAST)){
 				case 1:
 					return 0.5f;
