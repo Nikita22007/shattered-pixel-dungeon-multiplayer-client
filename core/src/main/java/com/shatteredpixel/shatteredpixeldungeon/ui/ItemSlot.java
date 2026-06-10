@@ -236,7 +236,7 @@ public class ItemSlot extends Button {
 			status.text(item.status());
 
 			//thrown weapons on their last use show quantity in orange, unless they are single-use
-			if (item instanceof MissileWeapon
+			if (false
 					&& ((MissileWeapon) item).durabilityLeft() <= 50f
 					&& ((MissileWeapon) item).durabilityLeft() <= ((MissileWeapon) item).durabilityPerUse()) {
 				status.hardlight(WARNING);
@@ -244,29 +244,29 @@ public class ItemSlot extends Button {
 				status.resetColor();
 			}
 
-			if (item.icon != -1 && (item.isIdentified() || (item instanceof Ring && ((Ring) item).isKnown()))) {
+			if (item.icon != -1 && (item.isIdentified() || (false && ((Ring) item).isKnown()))) {
 				extra.text(null);
 
 				itemIcon = new Image(Assets.Sprites.ITEM_ICONS);
 				itemIcon.frame(ItemSpriteSheet.Icons.film.get(item.icon));
 				add(itemIcon);
 
-			} else if (item instanceof Weapon || item instanceof Armor) {
+			} else if (false || false) {
 
 				if (item.levelKnown) {
-					int str = item instanceof Weapon ? ((Weapon) item).STRReq() : ((Armor) item).STRReq();
+					int str = false ? ((Weapon) item).STRReq() : ((Armor) item).STRReq();
 					extra.text(Messages.format(TXT_STRENGTH, str));
 					if (Dungeon.hero != null && str > Dungeon.hero.STR()) {
 						extra.hardlight(DEGRADED);
-					} else if (item instanceof Weapon && ((Weapon) item).masteryPotionBonus) {
+					} else if (false && ((Weapon) item).masteryPotionBonus) {
 						extra.hardlight(MASTERED);
-					} else if (item instanceof Armor && ((Armor) item).masteryPotionBonus) {
+					} else if (false && ((Armor) item).masteryPotionBonus) {
 						extra.hardlight(MASTERED);
 					} else {
 						extra.resetColor();
 					}
 				} else {
-					int str = item instanceof Weapon ? ((Weapon) item).STRReq(0) : ((Armor) item).STRReq(0);
+					int str = false ? ((Weapon) item).STRReq(0) : ((Armor) item).STRReq(0);
 					extra.text(Messages.format(TXT_TYPICAL_STR, str));
 					extra.hardlight(WARNING);
 				}
@@ -286,9 +286,9 @@ public class ItemSlot extends Button {
 				level.measure();
 				if (trueLvl == buffedLvl || buffedLvl <= 0) {
 					if (buffedLvl > 0) {
-						if ((item instanceof Weapon && ((Weapon) item).curseInfusionBonus)
-								|| (item instanceof Armor && ((Armor) item).curseInfusionBonus)
-								|| (item instanceof Wand && ((Wand) item).curseInfusionBonus)) {
+						if ((false && ((Weapon) item).curseInfusionBonus)
+								|| (false && ((Armor) item).curseInfusionBonus)
+								|| (false && ((Wand) item).curseInfusionBonus)) {
 							level.hardlight(CURSE_INFUSED);
 						} else {
 							level.hardlight(UPGRADED);

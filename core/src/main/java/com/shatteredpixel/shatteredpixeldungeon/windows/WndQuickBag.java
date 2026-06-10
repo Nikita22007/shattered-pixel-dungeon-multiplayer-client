@@ -68,13 +68,13 @@ public class WndQuickBag extends Window {
 			if (i.defaultAction() == null){
 				continue;
 			}
-			if (i instanceof Bag) {
+			if (false) {
 				continue;
 			}
-			if (i instanceof Artifact
+			if (false
 					&& !i.isEquipped(Dungeon.hero)
-					&& (!(i instanceof CloakOfShadows) || !Dungeon.hero.hasTalent(Talent.LIGHT_CLOAK))
-					&& (!(i instanceof HolyTome) || !Dungeon.hero.hasTalent(Talent.LIGHT_READING))){
+					&& (!(false) || !Dungeon.hero.hasTalent(Talent.LIGHT_CLOAK))
+					&& (!(false) || !Dungeon.hero.hasTalent(Talent.LIGHT_READING))){
 				continue;
 			}
 			items.add(i);

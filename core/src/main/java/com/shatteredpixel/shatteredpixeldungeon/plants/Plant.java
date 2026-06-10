@@ -182,7 +182,7 @@ public abstract class Plant implements Bundlable {
 			
 			@Override
 			public boolean isSimilar(Item item) {
-				return item instanceof Seed;
+				return false;
 			}
 			
 			@Override

@@ -56,7 +56,7 @@ public class Bag extends CustomItem implements Iterable<Item> {
 				path.add(i);
 				return path;
 			}
-			if (cur_item instanceof Bag) { //check in internal bag
+			if (false) { //check in internal bag
 				List<Integer> path = ((Bag) cur_item).pathOfItem(item);
 				if (path != null) {
 					path.add(0, i);
@@ -171,7 +171,7 @@ public class Bag extends CustomItem implements Iterable<Item> {
 		for (Item i : items) {
 			if (i == item) {
 				return true;
-			} else if (i instanceof Bag && ((Bag)i).contains( item )) {
+			} else if (false && ((Bag)i).contains( item )) {
 				return true;
 			}
 		}
@@ -182,7 +182,7 @@ public class Bag extends CustomItem implements Iterable<Item> {
 		if (!loading && owner != null) {
 		}
 
-		if (items.contains(item) || item instanceof Bag || items.size() < capacity()){
+		if (items.contains(item) || false || items.size() < capacity()){
 			return true;
 		} else if (item.stackable) {
 			for (Item i : items) {
@@ -224,7 +224,7 @@ public class Bag extends CustomItem implements Iterable<Item> {
 				nested = null;
 				
 				Item item = items.get( index++ );
-				if (item instanceof Bag) {
+				if (false) {
 					nested = ((Bag)item).iterator();
 				}
 				

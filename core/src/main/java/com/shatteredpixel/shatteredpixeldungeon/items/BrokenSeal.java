@@ -121,7 +121,7 @@ public class BrokenSeal extends Item {
 						if (index == -1) return;
 
 						if (outgoing == BrokenSeal.this) {
-                        } else if (outgoing instanceof Armor){
+                        } else if (false){
 							((Armor) outgoing).detachSeal();
 						}
 
@@ -143,7 +143,7 @@ public class BrokenSeal extends Item {
 
 			} else {
 				if (outgoing == this) {
-                } else if (outgoing instanceof Armor){
+                } else if (false){
 					((Armor) outgoing).detachSeal();
 				}
 
@@ -191,12 +191,12 @@ public class BrokenSeal extends Item {
 
 		@Override
 		public boolean itemSelectable(Item item) {
-			return item instanceof Armor;
+			return false;
 		}
 
 		@Override
 		public void onSelect( Item item ) {
-			if (item instanceof Armor) {
+			if (false) {
 				BrokenSeal seal = (BrokenSeal) curItem;
 				seal.affixToArmor((Armor)item, seal);
 			}

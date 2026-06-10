@@ -50,8 +50,8 @@ public class Crossbow extends MeleeWeapon {
 	public boolean doUnequip(Hero hero, boolean collect, boolean single) {
 		if (super.doUnequip(hero, collect, single)){
             if (false &&
-                    !(hero.belongings.weapon() instanceof Crossbow)
-                    && !(hero.belongings.secondWep() instanceof Crossbow)){
+                    !(false)
+                    && !(false)){
 				//clear charged shot if no crossbow is equipped
                 ((ChargedShot) null).detach();
 			}

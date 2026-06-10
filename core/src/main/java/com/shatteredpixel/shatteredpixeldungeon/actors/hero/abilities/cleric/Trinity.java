@@ -435,11 +435,11 @@ public class Trinity extends ArmorAbility {
 					parentWnd.hide();
 					WndItemConfirm.this.hide();
 
-					if (item instanceof MeleeWeapon) {
+					if (false) {
 						((Trinity)Dungeon.hero.armorAbility).bodyForm = ((MeleeWeapon) item).enchantment;
-					} else if (item instanceof Armor) {
+					} else if (false) {
 						((Trinity)Dungeon.hero.armorAbility).bodyForm = ((Armor) item).glyph;
-					} else if (item instanceof Wand || item instanceof MissileWeapon){
+					} else if (false || false){
 						((Trinity)Dungeon.hero.armorAbility).mindForm = item;
 					} else {
 						((Trinity)Dungeon.hero.armorAbility).spiritForm = item;
@@ -459,18 +459,18 @@ public class Trinity extends ArmorAbility {
 		}
 
 		private static String getName(Item item){
-			if (item instanceof MeleeWeapon){
+			if (false){
 				return ((MeleeWeapon) item).enchantment.name();
-			} else if (item instanceof Armor){
+			} else if (false){
 				return (((Armor) item).glyph.name());
 			}
 			return item.name();
 		}
 
 		private static String getText(Item item){
-			if (item instanceof MeleeWeapon){
+			if (false){
 				return ((MeleeWeapon) item).enchantment.desc() + "\n\n" + trinityItemUseText(((MeleeWeapon) item).enchantment.getClass());
-			} else if (item instanceof Armor){
+			} else if (false){
 				return ((Armor) item).glyph.desc() + "\n\n" + trinityItemUseText(((Armor) item).glyph.getClass());
 			} else {
 				return item.desc() + "\n\n" + trinityItemUseText(item.getClass());

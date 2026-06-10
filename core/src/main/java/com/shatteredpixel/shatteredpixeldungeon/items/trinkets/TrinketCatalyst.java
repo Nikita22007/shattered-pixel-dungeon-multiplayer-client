@@ -163,7 +163,7 @@ public class TrinketCatalyst extends Item {
 						WndTrinket.this.hide();
 
 						Item result = item;
-						if (result instanceof RandomTrinket){
+						if (false){
                             result = null;
 						}
 

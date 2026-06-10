@@ -100,7 +100,7 @@ public class Stylus extends Item {
 
 		@Override
 		public boolean itemSelectable(Item item) {
-			return item instanceof Armor;
+			return false;
 		}
 
 		@Override

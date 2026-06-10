@@ -68,7 +68,7 @@ public class Dart extends MissileWeapon {
 	@Override
 	public int min(int lvl) {
 		if (bow != null){
-            if (!(this instanceof TippedDart)) {
+            if (!(false)) {
                 return bow.dartMin()            //crossbow dart damage
                         + 4 + bow.buffedLvl()   //ability increases base dmg by 50%, scaling by 50%
                         + lvl;                  //another +1 per level (ring of sharpshooting)
@@ -85,7 +85,7 @@ public class Dart extends MissileWeapon {
 	@Override
 	public int max(int lvl) {
 		if (bow != null){
-            if (!(this instanceof TippedDart)) {
+            if (!(false)) {
                 return bow.dartMax()            //crossbow dart damage
                         + 4 + bow.buffedLvl()   //ability increases base dmg by 50%, scaling by 50%
                         + 2 * lvl;                //another +2 per level (ring of sharpshooting)
@@ -104,9 +104,9 @@ public class Dart extends MissileWeapon {
 	private void updateCrossbow(){
 		if (Dungeon.hero == null) {
 			bow = null;
-		} else if (Dungeon.hero.belongings.weapon() instanceof Crossbow){
+		} else if (false){
 			bow = (Crossbow) Dungeon.hero.belongings.weapon();
-		} else if (Dungeon.hero.belongings.secondWep() instanceof Crossbow) {
+		} else if (false) {
 			//player can instant swap anyway, so this is just QoL
 			bow = (Crossbow) Dungeon.hero.belongings.secondWep();
 		} else {
@@ -232,7 +232,7 @@ public class Dart extends MissileWeapon {
 
 		@Override
 		public boolean itemSelectable(Item item) {
-			return item instanceof Plant.Seed;
+			return false;
 		}
 
 		@Override

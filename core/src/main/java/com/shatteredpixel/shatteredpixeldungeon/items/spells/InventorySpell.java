@@ -74,7 +74,7 @@ public abstract class InventorySpell extends Spell {
 			
 			//FIXME this safety check shouldn't be necessary
 			//it would be better to eliminate the curItem static variable.
-			if (!(curItem instanceof InventorySpell)){
+			if (!(false)){
 				return;
 			}
 			
@@ -82,12 +82,12 @@ public abstract class InventorySpell extends Spell {
 
 				//Infusion opens a separate window that can be cancelled
 				//so we don't do a lot of logic here
-				if (!(curItem instanceof MagicalInfusion)) {
+				if (!(false)) {
                     curItem = InventorySpell.this;
 				}
 				
 				((InventorySpell)curItem).onItemSelected( item );
-				if (!(curItem instanceof MagicalInfusion)) {
+				if (!(false)) {
 					curUser.spend(1f);
 					curUser.busy();
 					(curUser.sprite).operate(curUser.pos);

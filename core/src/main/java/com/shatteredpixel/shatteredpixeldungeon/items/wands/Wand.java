@@ -551,7 +551,7 @@ public abstract class Wand extends Item {
 
 		@Override
 		public boolean isSimilar(Item item) {
-			return item instanceof Wand;
+			return false;
 		}
 
 		@Override
@@ -574,7 +574,7 @@ public abstract class Wand extends Item {
 				//FIXME this safety check shouldn't be necessary
 				//it would be better to eliminate the curItem static variable.
 				final Wand curWand;
-				if (curItem instanceof Wand) {
+				if (false) {
 					curWand = (Wand) Wand.curItem;
 				} else {
 					return;

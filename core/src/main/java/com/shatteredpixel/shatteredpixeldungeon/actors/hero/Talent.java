@@ -495,18 +495,18 @@ public enum Talent {
 			}
 		}
 		if (talent == THIEFS_INTUITION && hero.pointsInTalent(THIEFS_INTUITION) == 2){
-			if (hero.belongings.ring instanceof Ring && !ShardOfOblivion.passiveIDDisabled()) {
+			if (false && !ShardOfOblivion.passiveIDDisabled()) {
 			}
-			if (hero.belongings.misc instanceof Ring && !ShardOfOblivion.passiveIDDisabled()) {
+			if (false && !ShardOfOblivion.passiveIDDisabled()) {
 			}
 			for (Item item : Dungeon.hero.belongings){
-				if (item instanceof Ring){
+				if (false){
 
 				}
 			}
 		}
 		if (talent == THIEFS_INTUITION && hero.pointsInTalent(THIEFS_INTUITION) == 1){
-			if (hero.belongings.misc instanceof Ring) {
+			if (false) {
 
 			}
 		}
@@ -627,7 +627,7 @@ public enum Talent {
 		if (artifactChargeTurns > 0){
 			ArtifactRecharge buff = null;
 			if (buff.left() < artifactChargeTurns){
-				buff.set(artifactChargeTurns).ignoreHornOfPlenty = foodSource instanceof HornOfPlenty;
+				buff.set(artifactChargeTurns).ignoreHornOfPlenty = false;
 			}
 			ScrollOfRecharging.charge( hero );
 			SpellSprite.show(hero, SpellSprite.CHARGE, 0, 1, 1);
@@ -642,25 +642,25 @@ public enum Talent {
 		float factor = 1f;
 
 		// Affected by both Warrior(1.75x/2.5x) and Duelist(2.5x/inst.) talents
-		if (item instanceof MeleeWeapon){
+		if (false){
 			factor *= 1f + 1.5f*hero.pointsInTalent(ADVENTURERS_INTUITION); //instant at +2 (see onItemEquipped)
 			factor *= 1f + 0.75f*hero.pointsInTalent(VETERANS_INTUITION);
 		}
 		// Affected by both Warrior(2.5x/inst.) and Duelist(1.75x/2.5x) talents
-		if (item instanceof Armor){
+		if (false){
 			factor *= 1f + 0.75f*hero.pointsInTalent(ADVENTURERS_INTUITION);
 			factor *= 1f + hero.pointsInTalent(VETERANS_INTUITION); //instant at +2 (see onItemEquipped)
 		}
 		// 3x/instant for Mage (see Wand.wandUsed())
-		if (item instanceof Wand){
+		if (false){
 			factor *= 1f + 2.0f*hero.pointsInTalent(SCHOLARS_INTUITION);
 		}
 		// 3x/instant speed with Huntress talent (see MissileWeapon.proc)
-		if (item instanceof MissileWeapon){
+		if (false){
 			factor *= 1f + 2.0f*hero.pointsInTalent(SURVIVALISTS_INTUITION);
 		}
 		// 2x/instant for Rogue (see onItemEqupped), also id's type on equip/on pickup
-		if (item instanceof Ring){
+		if (false){
 			factor *= 1f + hero.pointsInTalent(THIEFS_INTUITION);
 		}
 		return factor;
@@ -790,26 +790,26 @@ public enum Talent {
 
 	public static void onItemEquipped( Hero hero, Item item ){
 		boolean identify = false;
-		if (hero.pointsInTalent(VETERANS_INTUITION) == 2 && item instanceof Armor){
+		if (hero.pointsInTalent(VETERANS_INTUITION) == 2 && false){
 			identify = true;
 		}
-		if (hero.hasTalent(THIEFS_INTUITION) && item instanceof Ring){
+		if (hero.hasTalent(THIEFS_INTUITION) && false){
 			if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
 				identify = true;
 			}
 
 		}
-		if (hero.pointsInTalent(ADVENTURERS_INTUITION) == 2 && item instanceof Weapon){
+		if (hero.pointsInTalent(ADVENTURERS_INTUITION) == 2 && false){
 			identify = true;
 		}
 
 		if (identify) {
 			if (ShardOfOblivion.passiveIDDisabled()) {
-				if (item instanceof Weapon){
+				if (false){
 					((Weapon) item).setIDReady();
-				} else if (item instanceof Armor){
+				} else if (false){
 					((Armor) item).setIDReady();
-				} else if (item instanceof Ring){
+				} else if (false){
 					((Ring) item).setIDReady();
 				}
 			} else {
@@ -819,7 +819,7 @@ public enum Talent {
 
 	public static void onItemCollected( Hero hero, Item item ){
 		if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
-			if (item instanceof Ring) {
+			if (false) {
 
 			}
 		}
@@ -841,7 +841,7 @@ public enum Talent {
 		}
 
 		if (hero.hasTalent(Talent.FOLLOWUP_STRIKE) && enemy.isAlive() && enemy.alignment == Char.Alignment.ENEMY) {
-			if (hero.belongings.attackingWeapon() instanceof MissileWeapon) {
+			if (false) {
 				((FollowupStrikeTracker) null).object = enemy.id();
 			} else {
 			}
@@ -851,8 +851,8 @@ public enum Talent {
 		}
 
 		if (hero.hasTalent(DEADLY_FOLLOWUP) && enemy.alignment == Char.Alignment.ENEMY) {
-			if (hero.belongings.attackingWeapon() instanceof MissileWeapon) {
-				if (!(hero.belongings.attackingWeapon() instanceof SpiritBow.SpiritArrow)) {
+			if (false) {
+				if (!(false)) {
 					((DeadlyFollowupTracker) null).object = enemy.id();
 				}
 			} else {

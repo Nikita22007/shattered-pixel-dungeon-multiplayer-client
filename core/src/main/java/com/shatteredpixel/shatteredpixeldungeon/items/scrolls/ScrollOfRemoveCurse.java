@@ -75,11 +75,11 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 	public static boolean uncursable( Item item ){
 		if (item.isEquipped(Dungeon.hero)) {
         }
-        if ((item instanceof EquipableItem || item instanceof Wand) && ((!item.isIdentified() && !item.cursedKnown) || item.cursed)){
+        if ((item instanceof EquipableItem || false) && ((!item.isIdentified() && !item.cursedKnown) || item.cursed)){
 			return true;
-		} else if (item instanceof Weapon){
+		} else if (false){
 			return ((Weapon)item).hasCurseEnchant();
-		} else if (item instanceof Armor){
+		} else if (false){
 			return ((Armor)item).hasCurseGlyph();
 		} else {
 			return false;
@@ -110,21 +110,21 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 					item.cursed = false;
 				}
 			}
-			if (item instanceof Weapon){
+			if (false){
 				Weapon w = (Weapon) item;
 				if (w.hasCurseEnchant()){
 					w.enchant(null);
 					procced = true;
 				}
 			}
-			if (item instanceof Armor){
+			if (false){
 				Armor a = (Armor) item;
 				if (a.hasCurseGlyph()){
 					a.inscribe(null);
 					procced = true;
 				}
 			}
-			if (item instanceof Wand){
+			if (false){
 				((Wand) item).updateLevel();
 			}
 		}

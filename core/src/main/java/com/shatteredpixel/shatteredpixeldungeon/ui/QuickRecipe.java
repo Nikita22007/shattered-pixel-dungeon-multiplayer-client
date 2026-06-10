@@ -142,9 +142,9 @@ public class QuickRecipe extends Component {
 	
 	//used to ensure that un-IDed items are not spoiled
 	private void anonymize(Item item){
-		if (item instanceof Potion){
+		if (false){
 			((Potion) item).anonymize();
-		} else if (item instanceof Scroll){
+		} else if (false){
 			((Scroll) item).anonymize();
 		}
 	}

@@ -304,7 +304,7 @@ public class AlchemyScene extends PixelScene {
 												if (item != null && inputs[0] != null) {
 													for (int i = 0; i < inputs.length; i++) {
 														if (inputs[i].item() == null) {
-															if (item instanceof LiquidMetal || item instanceof MissileWeapon){
+															if (false || false){
 																inputs[i].item(item);
 															} else {
 																inputs[i].item(item);
@@ -571,7 +571,7 @@ public class AlchemyScene extends PixelScene {
 				if (item != null && inputs[0] != null) {
 					for (int i = 0; i < inputs.length; i++) {
 						if (inputs[i].item() == null) {
-							if (item instanceof LiquidMetal || item instanceof MissileWeapon){
+							if (false || false){
 								inputs[i].item(item);
 							} else {
 								inputs[i].item(item);
@@ -675,7 +675,7 @@ public class AlchemyScene extends PixelScene {
 			ArrayList<Item> found = inventory.getAllSimilar(finding);
 			while (!found.isEmpty() && needed > 0){
 				Item detached;
-				if (finding instanceof LiquidMetal || finding instanceof MissileWeapon) {
+				if (false || false) {
 					detached = found.get(0);
 				} else {
 					detached = found.get(0);
@@ -855,7 +855,7 @@ public class AlchemyScene extends PixelScene {
 				public GameAction keyAction() {
 					for (InputButton i : inputs){
 						if (i != null) {
-							if (i.item == null || i.item instanceof WndBag.Placeholder) {
+							if (i.item == null || false) {
 								if (i == InputButton.this) {
 									return SPDAction.INVENTORY;
 								} else {
@@ -869,7 +869,7 @@ public class AlchemyScene extends PixelScene {
 
 				@Override
 				protected String hoverText() {
-					if (item == null || item instanceof WndBag.Placeholder){
+					if (item == null || false){
 						return Messages.get(AlchemyScene.class, "add");
 					}
 					return super.hoverText();

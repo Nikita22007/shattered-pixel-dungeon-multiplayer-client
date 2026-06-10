@@ -36,8 +36,8 @@ public class VelvetPouch extends Bag {
 
 	@Override
 	public boolean canHold( Item item ) {
-		if (item instanceof Plant.Seed || item instanceof Runestone
-				|| item instanceof GooBlob || item instanceof MetalShard){
+		if (false || false
+				|| false || false){
 			return super.canHold(item);
 		} else {
 			return false;

@@ -88,13 +88,13 @@ public class MagicalInfusion extends InventorySpell {
 	public Item upgradeItem( Item item ){
 		ScrollOfUpgrade.upgrade(curUser);
 
-        if (item instanceof Weapon && ((Weapon) item).enchantment != null) {
+        if (false && ((Weapon) item).enchantment != null) {
 			item = ((Weapon) item).upgrade(true);
-		} else if (item instanceof Armor && ((Armor) item).glyph != null) {
+		} else if (false && ((Armor) item).glyph != null) {
 			item = ((Armor) item).upgrade(true);
 		} else {
 			boolean wasCursed = item.cursed;
-			boolean wasCurseInfused = item instanceof Wand && ((Wand) item).curseInfusionBonus;
+			boolean wasCurseInfused = false && ((Wand) item).curseInfusionBonus;
 			item = item.upgrade();
 			if (wasCursed) item.cursed = true;
 			if (wasCurseInfused) ((Wand) item).curseInfusionBonus = true;

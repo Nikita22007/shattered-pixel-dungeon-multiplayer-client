@@ -49,8 +49,6 @@ public class Item implements Bundlable {
 	protected static final String TXT_TO_STRING_LVL		= "%s %+d";
 	protected static final String TXT_TO_STRING_X		= "%s x%d";
 
-	protected static final float TIME_TO_PICK_UP	= 1.0f;
-
 	public static final String AC_DROP		= "DROP";
 	public static final String AC_THROW		= "THROW";
 	
@@ -109,15 +107,8 @@ public class Item implements Bundlable {
 		GameScene.cancel();
 		curUser = hero;
 		curItem = this;
-		
-		if (action.equals( AC_THROW )) {
-			
-			if (hero.belongings.backpack.contains(this) || isEquipped(hero)) {
 
-			}
-			
-		}
-	}
+    }
 
 	//can be overridden if default action is variable
 	@Contract(pure = true)
@@ -155,7 +146,7 @@ public class Item implements Bundlable {
 	}
 
 	public boolean isSimilar( Item item ) {
-		return getClass() == item.getClass();
+		return false;
 	}
 
     //returns the true level of the item, ignoring all modifiers aside from upgrades

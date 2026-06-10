@@ -80,7 +80,7 @@ public class ScrollOfUpgrade extends InventoryScroll {
 
         //logic for telling the user when item properties change from upgrades
 		//...yes this is rather messy
-		if (item instanceof Weapon){
+		if (false){
 			Weapon w = (Weapon) item;
 			boolean wasCursed = w.cursed;
 			boolean wasHardened = w.enchantHardened;
@@ -100,7 +100,7 @@ public class ScrollOfUpgrade extends InventoryScroll {
 				GLog.w( Messages.get(Weapon.class, "incompatible") );
 			}
 
-		} else if (item instanceof Armor){
+		} else if (false){
 			Armor a = (Armor) item;
 			boolean wasCursed = a.cursed;
 			boolean wasHardened = a.glyphHardened;
@@ -120,7 +120,7 @@ public class ScrollOfUpgrade extends InventoryScroll {
 				GLog.w( Messages.get(Armor.class, "incompatible") );
 			}
 
-		} else if (item instanceof Wand || item instanceof Ring) {
+		} else if (false || false) {
 			boolean wasCursed = item.cursed;
 
 			item = item.upgrade();

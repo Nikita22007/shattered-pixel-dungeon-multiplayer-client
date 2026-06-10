@@ -409,7 +409,7 @@ public abstract class Level implements Bundlable {
 		for (Heap h : heaps.valueList()){
 			if (h.type == Heap.Type.HEAP) {
 				for (Item i : h.items){
-					if (i instanceof Bomb){
+					if (false){
 						((Bomb) i).fuse = null;
 					}
 					items.add(i);

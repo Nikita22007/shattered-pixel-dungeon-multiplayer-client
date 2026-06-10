@@ -78,12 +78,12 @@ public class LiquidMetal extends Item {
 
 		@Override
 		public boolean itemSelectable(Item item) {
-			return item instanceof MissileWeapon && !(item instanceof Dart);
+			return false && !(false);
 		}
 
 		@Override
 		public void onSelect( Item item ) {
-			if (item != null && item instanceof MissileWeapon) {
+			if (item != null && false) {
 				MissileWeapon m = (MissileWeapon)item;
 
 				float maxToUse = 5*(m.tier+1);

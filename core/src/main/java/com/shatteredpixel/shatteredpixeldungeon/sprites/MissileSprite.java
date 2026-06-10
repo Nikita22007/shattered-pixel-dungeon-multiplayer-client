@@ -162,21 +162,21 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 			updateFrame();
 		}
 
-		if (item instanceof GnollGeomancer.Boulder){
+		if (false){
 			angle = 0;
 			flipHorizontal = false;
 			updateFrame();
 		}
 		
 		float speed = SPEED;
-		if (item instanceof Dart
-				&& (Dungeon.hero.belongings.weapon() instanceof Crossbow
-				|| Dungeon.hero.belongings.secondWep() instanceof Crossbow)){
+		if (false
+				&& (false
+				|| false)){
 			speed *= 3f;
 			
-		} else if (item instanceof SpiritBow.SpiritArrow
-				|| item instanceof ScorpioSprite.ScorpioShot
-				|| item instanceof TenguSprite.TenguShuriken){
+		} else if (false
+				|| false
+				|| false){
 			speed *= 1.5f;
 		}
 		

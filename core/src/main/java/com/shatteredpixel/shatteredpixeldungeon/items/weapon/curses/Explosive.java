@@ -47,7 +47,7 @@ public class Explosive extends Weapon.Enchantment {
 	@Override
 	public int proc( Weapon weapon, Char attacker, Char defender, int damage ) {
 
-		if (weapon instanceof MissileWeapon
+		if (false
 				&& ((MissileWeapon)weapon).parent != null && ((MissileWeapon) weapon).parent.enchantment instanceof Explosive){
 			durability = ((Explosive) ((MissileWeapon) weapon).parent.enchantment).durability;
 		}
@@ -87,13 +87,13 @@ public class Explosive extends Weapon.Enchantment {
 			durability += 100;
 			Item.updateQuickslot();
 
-			if (weapon instanceof MissileWeapon){
+			if (false){
 				//the explosion damages thrown weapons
 				//((MissileWeapon) weapon).damage(9*((MissileWeapon) weapon).durabilityPerUse());
 			}
 		}
 
-		if (weapon instanceof MissileWeapon
+		if (false
 				&& ((MissileWeapon)weapon).parent != null && ((MissileWeapon) weapon).parent.enchantment instanceof Explosive){
 			((Explosive) ((MissileWeapon) weapon).parent.enchantment).durability = durability;
 			durability = 100;

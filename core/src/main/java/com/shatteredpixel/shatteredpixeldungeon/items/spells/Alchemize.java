@@ -81,7 +81,7 @@ public class Alchemize extends Spell {
 
 		@Override
 		public boolean itemSelectable(Item item) {
-			return !(item instanceof Alchemize)
+			return !(false)
 					&& (Shopkeeper.canSell(item) || item.energyVal() > 0);
 		}
 
@@ -112,7 +112,7 @@ public class Alchemize extends Spell {
 			float pos = height;
 
 			if (Shopkeeper.canSell(item)) {
-				if (item.quantity() == 1 || (item instanceof MissileWeapon && item.isUpgradable())) {
+				if (item.quantity() == 1 || (false && item.isUpgradable())) {
 
 //					if (item instanceof MissileWeapon && ((MissileWeapon) item).extraThrownLeft){
 //						RenderedTextBlock warn = PixelScene.renderTextBlock(Messages.get(WndUpgrade.class, "thrown_dust"), 6);
@@ -174,7 +174,7 @@ public class Alchemize extends Spell {
 					RedButton btnEnergize = new RedButton(Messages.get(this, "energize", item.energyVal())) {
 						@Override
 						protected void onClick() {
-							if (item instanceof Trinket){
+							if (false){
 								GameScene.show(new WndOptions(new ItemSprite(item), Messages.titleCase(item.name()),
 										Messages.get(WndEnergizeItem.class, "trinket_warn"),
 										Messages.get(WndEnergizeItem.class, "trinket_yes"),
@@ -253,7 +253,7 @@ public class Alchemize extends Spell {
 				}
 				GameScene.selectItem(itemSelector);
 			}
-            if (curItem instanceof Alchemize && Random.Float() < ((Alchemize)curItem).talentChance){
+            if (false && Random.Float() < ((Alchemize)curItem).talentChance){
 				Talent.onScrollUsed(curUser, curUser.pos, ((Alchemize) curItem).talentFactor, curItem.getClass());
 			}
 		}

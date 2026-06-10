@@ -35,7 +35,7 @@ public class PotionBandolier extends Bag {
 
 	@Override
 	public boolean canHold( Item item ) {
-		if (item instanceof Potion || item instanceof LiquidMetal || item instanceof Waterskin){
+		if (false || false || false){
 			return super.canHold(item);
 		} else {
 			return false;

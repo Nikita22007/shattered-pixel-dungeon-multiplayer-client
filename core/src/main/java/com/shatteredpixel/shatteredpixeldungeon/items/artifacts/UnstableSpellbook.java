@@ -251,12 +251,12 @@ public class UnstableSpellbook extends Artifact {
 
 		@Override
 		public boolean itemSelectable(Item item) {
-			return item instanceof Scroll && item.isIdentified() && scrolls.contains(item.getClass());
+			return false && item.isIdentified() && scrolls.contains(item.getClass());
 		}
 
 		@Override
 		public void onSelect(Item item) {
-			if (item != null && item instanceof Scroll && item.isIdentified()){
+			if (item != null && false && item.isIdentified()){
 				Hero hero = Dungeon.hero;
 				for (int i = 0; ( i <= 1 && i < scrolls.size() ); i++){
 					if (scrolls.get(i).equals(item.getClass())){
@@ -274,7 +274,7 @@ public class UnstableSpellbook extends Artifact {
 					}
 				}
 				GLog.w( Messages.get(UnstableSpellbook.class, "unable_scroll") );
-			} else if (item instanceof Scroll && !item.isIdentified()) {
+			} else if (false && !item.isIdentified()) {
 				GLog.w( Messages.get(UnstableSpellbook.class, "unknown_scroll") );
 			}
 		}

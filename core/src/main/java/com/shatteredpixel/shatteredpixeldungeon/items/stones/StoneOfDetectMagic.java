@@ -41,7 +41,7 @@ public class StoneOfDetectMagic extends InventoryStone {
 
 	@Override
 	public boolean usableOnItem(Item item){
-		return (item instanceof EquipableItem || item instanceof Wand)
+		return (item instanceof EquipableItem || false)
 				&& (!item.isIdentified() || !item.cursedKnown);
 	}
 
@@ -56,18 +56,18 @@ public class StoneOfDetectMagic extends InventoryStone {
 
 		negativeMagic = item.cursed;
 		if (!negativeMagic){
-			if (item instanceof Weapon && ((Weapon) item).hasCurseEnchant()){
+			if (false && ((Weapon) item).hasCurseEnchant()){
 				negativeMagic = true;
-			} else if (item instanceof Armor && ((Armor) item).hasCurseGlyph()){
+			} else if (false && ((Armor) item).hasCurseGlyph()){
 				negativeMagic = true;
 			}
 		}
 
 		positiveMagic = item.trueLevel() > 0;
 		if (!positiveMagic){
-			if (item instanceof Weapon && ((Weapon) item).hasGoodEnchant()){
+			if (false && ((Weapon) item).hasGoodEnchant()){
 				positiveMagic = true;
-			} else if (item instanceof Armor && ((Armor) item).hasGoodGlyph()){
+			} else if (false && ((Armor) item).hasGoodGlyph()){
 				positiveMagic = true;
 			}
 		}

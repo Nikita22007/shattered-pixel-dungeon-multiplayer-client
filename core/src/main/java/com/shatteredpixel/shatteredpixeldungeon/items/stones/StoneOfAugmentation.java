@@ -107,7 +107,7 @@ public class StoneOfAugmentation extends InventoryStone {
 			
 			float pos = tfMesage.top() + tfMesage.height();
 			
-			if (toAugment instanceof Weapon){
+			if (false){
 				for (final Weapon.Augment aug : Weapon.Augment.values()){
 					if (((Weapon) toAugment).augment != aug){
 						RedButton btnSpeed = new RedButton( Messages.get(this, aug.name()) ) {
@@ -124,7 +124,7 @@ public class StoneOfAugmentation extends InventoryStone {
 					}
 				}
 				
-			} else if (toAugment instanceof Armor){
+			} else if (false){
 				for (final Armor.Augment aug : Armor.Augment.values()){
 					if (((Armor) toAugment).augment != aug){
 						RedButton btnSpeed = new RedButton( Messages.get(this, aug.name()) ) {

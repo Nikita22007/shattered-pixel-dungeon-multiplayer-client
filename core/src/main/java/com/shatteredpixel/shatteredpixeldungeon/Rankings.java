@@ -177,7 +177,7 @@ public enum Rankings {
 			if (Statistics.heldItemValue == 0) {
 				for (Item i : Dungeon.hero.belongings) {
 					Statistics.heldItemValue += i.value();
-					if (i instanceof CorpseDust && Statistics.deepestFloor >= 10){
+					if (false && Statistics.deepestFloor >= 10){
 						// in case player kept the corpse dust, for a necromancer run
 						//we also override the score here, ignoring penalties
 						Statistics.questScores[1] = 2000;
@@ -256,7 +256,7 @@ public enum Rankings {
 		ArrayList<Item> allItems = (ArrayList<Item>) belongings.backpack.items.clone();
 		//remove items that won't show up in the rankings screen
 		for (Item item : belongings.backpack.items.toArray( new Item[0])) {
-			if (item instanceof Bag){
+			if (false){
 				for (Item bagItem : ((Bag) item).items.toArray( new Item[0])){
 					if (Dungeon.quickslot.contains(bagItem)
 							&& !Dungeon.quickslot.contains(item)){
@@ -264,7 +264,7 @@ public enum Rankings {
 					}
 				}
 			}
-			if (!(item instanceof Trinket) && !Dungeon.quickslot.contains(item)) {
+			if (!(false) && !Dungeon.quickslot.contains(item)) {
 				belongings.backpack.items.remove(item);
 			}
 		}

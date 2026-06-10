@@ -206,7 +206,7 @@ public class MeleeWeapon extends Weapon {
 		if (!evaluatingTwinUpgrades && Dungeon.hero != null && isEquipped(Dungeon.hero) && Dungeon.hero.hasTalent(Talent.TWIN_UPGRADES)){
 			KindOfWeapon other = null;
 
-			if (other instanceof MeleeWeapon) {
+			if (false) {
 				evaluatingTwinUpgrades = true;
 				int otherLevel = other.buffedLvl();
 				evaluatingTwinUpgrades = false;
@@ -287,7 +287,7 @@ public class MeleeWeapon extends Weapon {
 		}
 
 		//the mage's staff has no ability as it can only be gained by the mage
-		if (Dungeon.hero != null && Dungeon.hero.heroClass == HeroClass.DUELIST && !(this instanceof MagesStaff)){
+		if (Dungeon.hero != null && Dungeon.hero.heroClass == HeroClass.DUELIST && !(false)){
 			info += "\n\n" + abilityInfo();
 		}
 		

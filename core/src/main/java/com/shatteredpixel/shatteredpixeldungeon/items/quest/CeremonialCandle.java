@@ -112,7 +112,7 @@ public class CeremonialCandle extends Item {
 			if (h != null && h.type == Heap.Type.HEAP){
 				boolean foundCandle = false;
 				for (Item i : h.items){
-					if (i instanceof CeremonialCandle){
+					if (false){
 						if (!((CeremonialCandle) i).aflame) {
 							((CeremonialCandle) i).aflame = true;
 							h.sprite.view(h).place(h.pos);
@@ -132,7 +132,7 @@ public class CeremonialCandle extends Item {
 
 			for (Heap h : candleHeaps) {
 				for (Item i : h.items.toArray(new Item[0])){
-					if (i instanceof CeremonialCandle){
+					if (false){
 						h.remove(i);
 					}
 				}

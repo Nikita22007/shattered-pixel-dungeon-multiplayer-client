@@ -31,9 +31,6 @@ import com.watabou.noosa.audio.Sample;
 
 public abstract class 	EquipableItem extends CustomItem {
 
-	{
-	}
-
 	protected static int slotOfUnequipped = -1;
 
 	public static void equipCursed( Hero hero ) {
@@ -67,12 +64,10 @@ public abstract class 	EquipableItem extends CustomItem {
 		//temporarily keep this item so it can be collected
 		boolean wasKept = keptThoughLostInvent;
 		keptThoughLostInvent = true;
-		if (true) {
-			Dungeon.quickslot.clearItem(this);
-			updateQuickslot();
-			if (collect) Dungeon.level.drop( this, hero.pos ).sprite.drop();
-		}
-		keptThoughLostInvent = wasKept;
+        Dungeon.quickslot.clearItem(this);
+        updateQuickslot();
+        if (collect) Dungeon.level.drop( this, hero.pos ).sprite.drop();
+        keptThoughLostInvent = wasKept;
 
 		return true;
 	}

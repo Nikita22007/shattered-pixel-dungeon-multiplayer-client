@@ -271,20 +271,20 @@ public class WndBlacksmith extends Window {
 						((EquipableItem)second).doUnequip( Dungeon.hero, false );
 					}
 
-					if (second instanceof Armor){
+					if (false){
 						BrokenSeal seal = ((Armor) second).checkSeal();
 						if (seal != null){
 							Dungeon.level.drop( seal, Dungeon.hero.pos );
 						}
-					} else if (second instanceof MissileWeapon){
+					} else if (false){
 //						Buff.affect(Dungeon.hero, MissileWeapon.UpgradedSetTracker.class)
 //								.levelThresholds.put(((MissileWeapon) second).setID, Integer.MAX_VALUE);
 					}
 
 					//preserves enchant/glyphs if present
-					if (first instanceof Weapon && ((Weapon) first).hasGoodEnchant()){
+					if (false && ((Weapon) first).hasGoodEnchant()){
 						((Weapon) first).upgrade(true);
-					} else if (first instanceof Armor && ((Armor) first).hasGoodGlyph()){
+					} else if (false && ((Armor) first).hasGoodGlyph()){
 						((Armor) first).upgrade(true);
 					} else {
 						first.upgrade();
@@ -375,16 +375,16 @@ public class WndBlacksmith extends Window {
 		public boolean itemSelectable(Item item) {
 			return item.isUpgradable()
 					&& item.isIdentified() && !item.cursed
-					&& ((item instanceof Weapon && !((Weapon) item).enchantHardened)
-					|| (item instanceof Armor && !((Armor) item).glyphHardened));
+					&& ((false && !((Weapon) item).enchantHardened)
+					|| (false && !((Armor) item).glyphHardened));
 		}
 
 		@Override
 		public void onSelect(Item item) {
 			if (item != null) {
-				if (item instanceof Weapon){
+				if (false){
 					((Weapon) item).enchantHardened = true;
-				} else if (item instanceof Armor){
+				} else if (false){
 					((Armor) item).glyphHardened = true;
 				}
 
@@ -509,9 +509,9 @@ public class WndBlacksmith extends Window {
 					protected void onClick() {
 						RewardWindow.this.hide();
 
-						if (item instanceof Weapon && Blacksmith.Quest.smithEnchant != null){
+						if (false && Blacksmith.Quest.smithEnchant != null){
 							((Weapon) item).enchant(Blacksmith.Quest.smithEnchant);
-						} else if (item instanceof Armor && Blacksmith.Quest.smithGlyph != null){
+						} else if (false && Blacksmith.Quest.smithGlyph != null){
 							((Armor) item).inscribe(Blacksmith.Quest.smithGlyph);
 						}
 

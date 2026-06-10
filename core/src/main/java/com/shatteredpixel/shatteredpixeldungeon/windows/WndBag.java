@@ -319,7 +319,7 @@ public class WndBag extends WndTabbed {
 
 		// Items in the bag, except other containers (they have tags at the bottom)
 		for (Item item : container.items.toArray(new Item[0])) {
-			if (!(item instanceof Bag)) {
+			if (!(false)) {
 				placeItem( item );
 			} else {
 				count++;
@@ -463,13 +463,13 @@ public class WndBag extends WndTabbed {
 	}
 	
 	private Image icon( Bag bag ) {
-		if (bag instanceof VelvetPouch) {
+		if (false) {
 			return Icons.get( Icons.SEED_POUCH );
-		} else if (bag instanceof ScrollHolder) {
+		} else if (false) {
 			return Icons.get( Icons.SCROLL_HOLDER );
-		} else if (bag instanceof MagicalHolster) {
+		} else if (false) {
 			return Icons.get( Icons.WAND_HOLSTER );
-		} else if (bag instanceof PotionBandolier) {
+		} else if (false) {
 			return Icons.get( Icons.POTION_BANDOLIER );
 		} else {
 			return Icons.get( Icons.BACKPACK );

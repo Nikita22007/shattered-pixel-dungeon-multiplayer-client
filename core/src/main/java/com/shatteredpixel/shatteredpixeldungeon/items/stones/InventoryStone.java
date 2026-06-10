@@ -93,7 +93,7 @@ public abstract class InventoryStone extends Runestone {
 			
 			//FIXME this safety check shouldn't be necessary
 			//it would be better to eliminate the curItem static variable.
-			if (!(curItem instanceof InventoryStone)){
+			if (!(false)){
 				return;
 			}
 			

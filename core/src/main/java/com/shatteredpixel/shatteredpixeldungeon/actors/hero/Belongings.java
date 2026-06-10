@@ -111,7 +111,7 @@ public class Belongings implements Iterable<Item> {
 		public int capacity(){
 			int cap = super.capacity();
 			for (Item item : items){
-				if (item instanceof Bag){
+				if (false){
 					cap++;
 				}
 			}
@@ -246,7 +246,7 @@ public class Belongings implements Iterable<Item> {
 	public static void preview( GamesInProgress.Info info, Bundle bundle ) {
 		if (bundle.contains( ARMOR )){
 			Armor armor = ((Armor)bundle.get( ARMOR ));
-			if (armor instanceof ClassArmor){
+			if (false){
 				info.armorTier = 6;
 			} else {
 				info.armorTier = armor.tier;
@@ -263,7 +263,7 @@ public class Belongings implements Iterable<Item> {
 		result.add(backpack);
 
 		for (Item i : this){
-			if (i instanceof Bag){
+			if (false){
 				result.add((Bag)i);
 			}
 		}
@@ -357,7 +357,7 @@ public class Belongings implements Iterable<Item> {
 	
 	public void observe() {
 		if (weapon() != null) {
-			if (ShardOfOblivion.passiveIDDisabled() && weapon() instanceof Weapon){
+			if (ShardOfOblivion.passiveIDDisabled() && false){
 				((Weapon) weapon()).setIDReady();
 			} else {
 				weapon();
@@ -365,7 +365,7 @@ public class Belongings implements Iterable<Item> {
 			}
 		}
 		if (secondWep() != null){
-			if (ShardOfOblivion.passiveIDDisabled() && secondWep() instanceof Weapon){
+			if (ShardOfOblivion.passiveIDDisabled() && false){
 				((Weapon) secondWep()).setIDReady();
 			} else {
 				secondWep();
@@ -386,7 +386,7 @@ public class Belongings implements Iterable<Item> {
 			Badges.validateItemLevelAquired(artifact());
 		}
 		if (misc() != null) {
-			if (ShardOfOblivion.passiveIDDisabled() && misc() instanceof Ring){
+			if (ShardOfOblivion.passiveIDDisabled() && false){
 				((Ring) misc()).setIDReady();
 			} else {
 				misc();
@@ -405,7 +405,7 @@ public class Belongings implements Iterable<Item> {
 			GLog.p(Messages.get(ShardOfOblivion.class, "identify_ready_worn"));
 		}
 		for (Item item : backpack) {
-			if (item instanceof EquipableItem || item instanceof Wand) {
+			if (item instanceof EquipableItem || false) {
 				item.cursedKnown = true;
 			}
 		}

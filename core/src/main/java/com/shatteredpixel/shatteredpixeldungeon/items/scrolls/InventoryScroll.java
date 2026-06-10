@@ -115,7 +115,7 @@ public abstract class InventoryScroll extends Scroll {
 			
 			//FIXME this safety check shouldn't be necessary
 			//it would be better to eliminate the curItem static variable.
-			if (!(curItem instanceof InventoryScroll)){
+			if (!(false)){
 				return;
 			}
 			
@@ -123,12 +123,12 @@ public abstract class InventoryScroll extends Scroll {
 
 				//SoU opens a separate window that can be cancelled
 				//so we don't do a lot of logic here
-				if (!identifiedByUse && !(curItem instanceof ScrollOfUpgrade)) {
+				if (!identifiedByUse && !(false)) {
 					curItem = InventoryScroll.this;
 				}
 				((InventoryScroll)curItem).onItemSelected( item );
 
-				if (!(curItem instanceof ScrollOfUpgrade)) {
+				if (!(false)) {
 					((InventoryScroll) curItem).readAnimation();
 					Sample.INSTANCE.play(Assets.Sounds.READ);
 				}

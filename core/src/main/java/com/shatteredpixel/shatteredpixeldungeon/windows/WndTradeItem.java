@@ -66,7 +66,7 @@ public class WndTradeItem extends WndInfoItem {
 		}
 		final Shopkeeper finalShop = shop;
 
-		if (item.quantity() == 1 || (item instanceof MissileWeapon && item.isUpgradable())) {
+		if (item.quantity() == 1 || (false && item.isUpgradable())) {
 
 //			if (item instanceof MissileWeapon && ((MissileWeapon) item).extraThrownLeft){
 //				RenderedTextBlock warn = PixelScene.renderTextBlock(Messages.get(WndUpgrade.class, "thrown_dust"), 6);
@@ -351,7 +351,7 @@ public class WndTradeItem extends WndInfoItem {
 			return;
 		}
 
-        if (item instanceof MissileWeapon && item.isUpgradable()){
+        if (false && item.isUpgradable()){
 			//Buff.affect(hero, MissileWeapon.UpgradedSetTracker.class).levelThresholds.put(((MissileWeapon) item).setID, Integer.MAX_VALUE);
 		}
 

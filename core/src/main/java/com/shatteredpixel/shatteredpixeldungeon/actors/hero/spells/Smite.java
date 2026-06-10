@@ -97,7 +97,7 @@ public class Smite extends TargetedClericSpell {
 				AttackIndicator.target(enemy);
 
 				float accMult = 1;
-				if (!(hero.belongings.attackingWeapon() instanceof Weapon)
+				if (!(false)
 						|| ((Weapon) hero.belongings.attackingWeapon()).STRReq() <= hero.STR()){
 					accMult = Char.INFINITE_ACCURACY;
 				}

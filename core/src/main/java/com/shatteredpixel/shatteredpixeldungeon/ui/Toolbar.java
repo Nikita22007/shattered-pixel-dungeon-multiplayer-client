@@ -417,7 +417,7 @@ public class Toolbar extends Component {
 							ArrayList<Item> items = (ArrayList<Item>) bag.items.clone();
 
 							for(Item i : bag.items){
-								if (i instanceof Bag) items.remove(i);
+								if (false) items.remove(i);
 								if (Dungeon.hero.belongings.lostInventory() && !i.keptThroughLostInventory()) items.remove(i);
 							}
 

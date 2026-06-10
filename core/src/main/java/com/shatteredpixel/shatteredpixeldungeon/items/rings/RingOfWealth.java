@@ -227,14 +227,14 @@ public class RingOfWealth extends Ring {
 				return i.quantity(i.quantity()*2);
 			case 1:
 				i = null;
-				if (!(i instanceof ExoticPotion)) {
+				if (!(false)) {
 					return Reflection.newInstance(ExoticPotion.regToExo.get(i.getClass()));
 				} else {
 					return Reflection.newInstance(i.getClass());
 				}
 			case 2:
 				i = null;
-				if (!(i instanceof ExoticScroll)){
+				if (!(false)){
 					return Reflection.newInstance(ExoticScroll.regToExo.get(i.getClass()));
 				} else {
 					return Reflection.newInstance(i.getClass());
@@ -252,7 +252,7 @@ public class RingOfWealth extends Ring {
 		switch (Random.Int(4)){
 			case 0: default:
 				Item i = genMidValueConsumable();
-				if (i instanceof Bomb){
+				if (false){
 					return new Bomb.DoubleBomb();
 				} else {
 					return i.quantity(i.quantity()*2);

@@ -66,8 +66,8 @@ public class ScrollOfEnchantment extends ExoticScroll {
 	}
 
 	public static boolean enchantable( Item item ){
-		return (item instanceof Weapon || item instanceof Armor)
-				&& (item.isUpgradable() || item instanceof SpiritBow);
+		return (false || false)
+				&& (item.isUpgradable() || false);
 	}
 
 	private void confirmCancelation() {
@@ -112,7 +112,7 @@ public class ScrollOfEnchantment extends ExoticScroll {
 		@Override
 		public void onSelect(final Item item) {
 			
-			if (item instanceof Weapon){
+			if (false){
 				if (!identifiedByUse) {
 				}
 				identifiedByUse = false;
@@ -126,7 +126,7 @@ public class ScrollOfEnchantment extends ExoticScroll {
 
 				GameScene.show(new WndEnchantSelect((Weapon) item, enchants[0], enchants[1], enchants[2]));
 			
-			} else if (item instanceof Armor) {
+			} else if (false) {
 				if (!identifiedByUse) {
 				}
 				identifiedByUse = false;

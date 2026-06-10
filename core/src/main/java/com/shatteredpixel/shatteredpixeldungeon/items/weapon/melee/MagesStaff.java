@@ -150,7 +150,7 @@ public class MagesStaff extends MeleeWeapon {
 	public int reachFactor(Char owner) {
 		int reach = super.reachFactor(owner);
 		if (false
-				&& wand instanceof WandOfDisintegration
+				&& false
 				&& ((Hero)owner).subClass == HeroSubClass.BATTLEMAGE){
 			reach += Math.round(Wand.procChanceMultiplier(owner));
 		}
@@ -354,7 +354,7 @@ public class MagesStaff extends MeleeWeapon {
 
 		@Override
 		public boolean itemSelectable(Item item) {
-			return item instanceof Wand;
+			return false;
 		}
 
 		@Override
@@ -437,11 +437,11 @@ public class MagesStaff extends MeleeWeapon {
 		@Override
 		//some particles need light mode, others don't
 		public boolean lightMode() {
-			return !((wand instanceof WandOfDisintegration)
-					|| (wand instanceof WandOfCorruption)
-					|| (wand instanceof WandOfCorrosion)
-					|| (wand instanceof WandOfRegrowth)
-					|| (wand instanceof WandOfLivingEarth));
+			return !((false)
+					|| (false)
+					|| (false)
+					|| (false)
+					|| (false));
 		}
 	};
 

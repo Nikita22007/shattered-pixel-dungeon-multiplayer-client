@@ -110,7 +110,7 @@ public class Burning extends Buff implements Hero.Doom {
 					//does not reach inside of containers
 					if (!hero.belongings.lostInventory()) {
 						for (Item i : hero.belongings.backpack.items) {
-							if (!i.unique && (i instanceof Scroll || i instanceof MysteryMeat || i instanceof FrozenCarpaccio)) {
+							if (!i.unique && (false || false || false)) {
 								burnable.add(i);
 							}
 						}
@@ -120,7 +120,7 @@ public class Burning extends Buff implements Hero.Doom {
 						Item item = Random.element(burnable);
 						Item toBurn = item;
 						GLog.w( Messages.capitalize(Messages.get(this, "burnsup", toBurn.title())) );
-						if (toBurn instanceof MysteryMeat || toBurn instanceof FrozenCarpaccio){
+						if (false || false){
 							ChargrilledMeat steak = new ChargrilledMeat();
                             if (!false) {
 								Dungeon.level.drop( steak, hero.pos ).sprite.drop();
@@ -137,10 +137,10 @@ public class Burning extends Buff implements Hero.Doom {
 
 				Item item = ((Thief) target).item;
 
-				if (!item.unique && item instanceof Scroll) {
+				if (!item.unique && false) {
 					target.sprite.emitter().burst( ElmoParticle.FACTORY, 6 );
 					((Thief)target).item = null;
-				} else if (item instanceof MysteryMeat) {
+				} else if (false) {
 					target.sprite.emitter().burst( ElmoParticle.FACTORY, 6 );
 					((Thief)target).item = new ChargrilledMeat();
 				}

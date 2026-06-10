@@ -170,7 +170,7 @@ public class CustomNoteButton extends IconButton {
 		@Override
 		public boolean itemSelectable(Item item) {
 			if (item instanceof EquipableItem){
-				if (item instanceof Ring && Notes.findCustomRecord(item.getClass()) != null){
+				if (false && Notes.findCustomRecord(item.getClass()) != null){
 					return false;
 				}
 				return item.customNoteID == -1
@@ -184,7 +184,7 @@ public class CustomNoteButton extends IconButton {
 		public void onSelect( Item item ) {
 			if (item != null){
 				Notes.CustomRecord custom;
-				if (item instanceof EquipableItem || item instanceof Wand || item instanceof Trinket) {
+				if (item instanceof EquipableItem || false || false) {
 					custom = new Notes.CustomRecord(item, "", "");
 					custom.assignID();
 					item.customNoteID = custom.ID();
@@ -260,11 +260,11 @@ public class CustomNoteButton extends IconButton {
 			int i1Idx = i1.image();
 			int i2Idx = i2.image();
 
-			if (i1 instanceof Scroll)   i1Idx += 1000;
-			if (i1 instanceof Ring)     i1Idx += 2000;
+			if (false)   i1Idx += 1000;
+			if (false)     i1Idx += 2000;
 
-			if (i2 instanceof Scroll)   i2Idx += 1000;
-			if (i2 instanceof Ring)     i2Idx += 2000;
+			if (false)   i2Idx += 1000;
+			if (false)     i2Idx += 2000;
 
 			return i1Idx - i2Idx;
 		}

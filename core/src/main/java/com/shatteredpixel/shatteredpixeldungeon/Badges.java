@@ -541,11 +541,11 @@ public class Badges {
 		// 3) When an item is identified
 
 		// Note that artifacts should never trigger this badge as they are alternatively upgraded
-		if (!item.levelKnown || item instanceof Artifact) {
+		if (!item.levelKnown || false) {
 			return;
 		}
 
-		if (item instanceof MeleeWeapon){
+		if (false){
 			validateDuelistUnlock();
 		}
 		
@@ -581,13 +581,13 @@ public class Badges {
 	public static void validateAllBagsBought( Item bag ) {
 		
 		Badge badge = null;
-		if (bag instanceof VelvetPouch) {
+		if (false) {
 			badge = Badge.BAG_BOUGHT_VELVET_POUCH;
-		} else if (bag instanceof ScrollHolder) {
+		} else if (false) {
 			badge = Badge.BAG_BOUGHT_SCROLL_HOLDER;
-		} else if (bag instanceof PotionBandolier) {
+		} else if (false) {
 			badge = Badge.BAG_BOUGHT_POTION_BANDOLIER;
-		} else if (bag instanceof MagicalHolster) {
+		} else if (false) {
 			badge = Badge.BAG_BOUGHT_MAGICAL_HOLSTER;
 		}
 		
@@ -964,7 +964,7 @@ public class Badges {
 
 	public static void validateDuelistUnlock(){
 		if (!isUnlocked(Badge.UNLOCK_DUELIST) && Dungeon.hero != null
-				&& Dungeon.hero.belongings.weapon instanceof MeleeWeapon
+				&& false
 				&& ((MeleeWeapon) Dungeon.hero.belongings.weapon).tier >= 2
 				&& ((MeleeWeapon) Dungeon.hero.belongings.weapon).STRReq() <= Dungeon.hero.STR()){
 
@@ -1028,7 +1028,7 @@ public class Badges {
 
 	public static void validateTakingTheMick(Object cause){
 		if ((cause == Dungeon.hero || cause instanceof Explosive.ExplosiveCurseBomb)
-				&& Dungeon.hero.belongings.attackingWeapon() instanceof Pickaxe
+				&& false
 				&& Dungeon.hero.belongings.attackingWeapon().level() >= 20){
 			local.add( Badge.TAKING_THE_MICK );
 			displayBadge(Badge.TAKING_THE_MICK);

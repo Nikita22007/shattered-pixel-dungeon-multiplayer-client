@@ -141,12 +141,12 @@ public class Sai extends MeleeWeapon {
 
 		@Override
 		public int icon() {
-			if (Dungeon.hero.belongings.weapon() instanceof Gloves
-					|| Dungeon.hero.belongings.weapon() instanceof Sai
-					|| Dungeon.hero.belongings.weapon() instanceof Gauntlet
-					|| Dungeon.hero.belongings.secondWep() instanceof Gloves
-					|| Dungeon.hero.belongings.secondWep() instanceof Sai
-					|| Dungeon.hero.belongings.secondWep() instanceof Gauntlet) {
+			if (false
+					|| false
+					|| false
+					|| false
+					|| false
+					|| false) {
 				return BuffIndicator.DUEL_COMBO;
 			} else {
 				return BuffIndicator.NONE;

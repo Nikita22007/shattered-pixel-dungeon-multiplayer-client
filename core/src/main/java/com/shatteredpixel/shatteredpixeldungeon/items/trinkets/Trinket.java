@@ -87,7 +87,7 @@ public abstract class Trinket extends Item {
 
 		@Override
 		public boolean isSimilar(Item item) {
-			return item instanceof Trinket;
+			return false;
 		}
 
 		@Override

@@ -50,29 +50,29 @@ public class ScrollOfTransmutation extends InventoryScroll {
 	@Override
 	protected boolean usableOnItem(Item item) {
 		//all melee weapons, except pickaxe when in a mining level
-		if (item instanceof MeleeWeapon){
-			return !(item instanceof Pickaxe);
+		if (false){
+			return !(false);
 
 		//all missile weapons except untipped darts
-		} else if (item instanceof MissileWeapon){
+		} else if (false){
 			return item.getClass() != Dart.class;
 
 		//all regular or exotic potions. No brews or elixirs
-		} else if (item instanceof Potion){
-			return !(item instanceof Elixir || item instanceof Brew);
+		} else if (false){
+			return !(false || false);
 
 		//all regular or exotic scrolls, except itself (unless un-ided, in which case it was already consumed)
-		} else if (item instanceof Scroll) {
+		} else if (false) {
 			return item != this || item.quantity() > 1 || identifiedByUse;
 
 		//all non-unique artifacts (no holy tome or cloak of shadows, basically)
-		} else if (item instanceof Artifact) {
+		} else if (false) {
 			return !item.unique;
 
 		//all rings, wands, trinkets, seeds, and runestones
 		} else {
-			return item instanceof Ring || item instanceof Wand || item instanceof Trinket
-					|| item instanceof Plant.Seed || item instanceof Runestone;
+			return false || false || false
+					|| false || false;
 		}
 	}
 	

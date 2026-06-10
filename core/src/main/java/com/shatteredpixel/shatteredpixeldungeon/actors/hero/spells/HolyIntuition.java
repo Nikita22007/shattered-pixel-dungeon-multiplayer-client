@@ -46,7 +46,7 @@ public class HolyIntuition extends InventoryClericSpell {
 
 	@Override
 	protected boolean usableOnItem(Item item) {
-		return (item instanceof EquipableItem || item instanceof Wand) && !item.isIdentified() && !item.cursedKnown;
+		return (item instanceof EquipableItem || false) && !item.isIdentified() && !item.cursedKnown;
 	}
 
 	@Override

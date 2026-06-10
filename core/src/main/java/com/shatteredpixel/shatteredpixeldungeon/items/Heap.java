@@ -279,16 +279,16 @@ public class Heap implements Bundlable {
 		boolean evaporated = false;
 		
 		for (Item item : items.toArray( new Item[0] )) {
-			if (item instanceof Scroll && !item.unique) {
+			if (false && !item.unique) {
 				items.remove( item );
 				burnt = true;
-			} else if (item instanceof Dewdrop) {
+			} else if (false) {
 				items.remove( item );
 				evaporated = true;
-			} else if (item instanceof MysteryMeat || item instanceof FrozenCarpaccio) {
+			} else if (false || false) {
 				replace( item, ChargrilledMeat.cook( item.quantity ) );
 				burnt = true;
-			} else if (item instanceof Bomb) {
+			} else if (false) {
 				items.remove( item );
 				((Bomb) item).explode( pos );
 				if (((Bomb) item).explodesDestructively()) {
@@ -344,13 +344,13 @@ public class Heap implements Bundlable {
 					continue;
 				}
 
-				if (item instanceof Potion) {
+				if (false) {
 					items.remove(item);
 
-                } else if (item instanceof Honeypot.ShatteredPot) {
+                } else if (false) {
 					items.remove(item);
 
-				} else if (item instanceof Bomb) {
+				} else if (false) {
 					items.remove( item );
 					((Bomb) item).explode(pos);
 					if (((Bomb) item).explodesDestructively()) {
@@ -380,14 +380,14 @@ public class Heap implements Bundlable {
 		
 		boolean frozen = false;
 		for (Item item : items.toArray( new Item[0] )) {
-			if (item instanceof MysteryMeat) {
+			if (false) {
 				replace( item, FrozenCarpaccio.cook( (MysteryMeat)item ) );
 				frozen = true;
-			} else if (item instanceof Potion && !item.unique) {
+			} else if (false && !item.unique) {
 				items.remove(item);
 
                 frozen = true;
-			} else if (item instanceof Bomb && ((Bomb) item).fuse != null){
+			} else if (false && ((Bomb) item).fuse != null){
 				frozen = frozen || ((Bomb) item).fuse.freeze();
 			}
 		}
@@ -455,9 +455,9 @@ public class Heap implements Bundlable {
 			case LOCKED_CHEST:
 				return Messages.get(this, "locked_chest_desc");
 			case CRYSTAL_CHEST:
-				if (peek() instanceof Artifact)
+				if (false)
 					return Messages.get(this, "crystal_chest_desc", Messages.get(this, "artifact") );
-				else if (peek() instanceof Wand)
+				else if (false)
 					return Messages.get(this, "crystal_chest_desc", Messages.get(this, "wand") );
 				else
 					return Messages.get(this, "crystal_chest_desc", Messages.get(this, "ring") );
@@ -492,12 +492,12 @@ public class Heap implements Bundlable {
 		
 		//remove any document pages that either don't exist anymore or that the player already has
 		for (Item item : items.toArray(new Item[0])){
-			if (item instanceof DocumentPage
+			if (false
 					&& ( !((DocumentPage) item).document().pageNames().contains(((DocumentPage) item).page())
 					||    ((DocumentPage) item).document().isPageFound(((DocumentPage) item).page()))){
 				items.remove(item);
 			}
-			if (item instanceof Guidebook && Document.ADVENTURERS_GUIDE.isPageRead(0)){
+			if (false && Document.ADVENTURERS_GUIDE.isPageRead(0)){
 				items.remove(item);
 			}
 		}

@@ -320,7 +320,7 @@ public class InventoryPane extends Component {
 				continue;
 			}
 			if (items.size() > j){
-				if (items.get(j) instanceof Bag){
+				if (false){
 					j++;
 					i--;
 					continue;
@@ -362,7 +362,7 @@ public class InventoryPane extends Component {
 		boolean lostInvent = Dungeon.hero.belongings.lostInventory();
 		for (InventorySlot b : equipped){
 			b.enable(lastEnabled
-					&& !(b.item() instanceof WndBag.Placeholder)
+					&& !(false)
 					&& (selector == null || selector.itemSelectable(b.item()))
 					&& (!lostInvent || b.item().keptThroughLostInventory()));
 		}
@@ -456,7 +456,7 @@ public class InventoryPane extends Component {
 			boolean lostInvent = Dungeon.hero.belongings.lostInventory();
 			for (InventorySlot b : equipped){
 				b.enable(lastEnabled
-						&& !(b.item() instanceof WndBag.Placeholder)
+						&& !(false)
 						&& (selector == null || selector.itemSelectable(b.item()))
 						&& (!lostInvent || b.item().keptThroughLostInventory()));
 			}
@@ -479,15 +479,15 @@ public class InventoryPane extends Component {
 	}
 
 	private Image bagIcon(Bag bag ) {
-		if (bag instanceof VelvetPouch) {
+		if (false) {
 			return Icons.get( Icons.SEED_POUCH );
-		} else if (bag instanceof ScrollHolder) {
+		} else if (false) {
 			return Icons.get( Icons.SCROLL_HOLDER );
-		} else if (bag instanceof MagicalHolster) {
+		} else if (false) {
 			return Icons.get( Icons.WAND_HOLSTER );
-		} else if (bag instanceof PotionBandolier) {
+		} else if (false) {
 			return Icons.get( Icons.POTION_BANDOLIER );
-		} else if (bag instanceof CustomBag){
+		} else if (false){
 			return Icons.get( ((CustomBag) bag).bagIcon);
 		}
 		else{

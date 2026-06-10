@@ -61,7 +61,7 @@ public class WndEnergizeItem extends WndInfoItem {
 				@Override
 				protected void onClick() {
                     // TODO: 19.02.2026 Add support for trinket warn on the server and this back to sendResult 
-					if (item instanceof Trinket){
+					if (false){
 						Game.scene().addToFront(new WndOptions(new ItemSprite(item), Messages.titleCase(item.name()),
 								Messages.get(WndEnergizeItem.class, "trinket_warn"),
 								Messages.get(WndEnergizeItem.class, "trinket_yes"),

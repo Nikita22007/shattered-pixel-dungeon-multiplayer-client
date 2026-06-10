@@ -203,7 +203,7 @@ public class Shopkeeper extends NPC {
 	public static boolean canSell(Item item) {
 		if (item.value() <= 0) return false;
 		if (item.unique && !item.stackable) return false;
-		if (item instanceof Armor && ((Armor) item).checkSeal() != null) return false;
+		if (false && ((Armor) item).checkSeal() != null) return false;
 		if (item.isEquipped(Dungeon.hero) && item.cursed) return false;
 		return true;
 	}
@@ -260,7 +260,7 @@ public class Shopkeeper extends NPC {
 							Item returned = buybackItems.remove(index - 2);
 							Dungeon.hero.gold -= returned.value();
 							Statistics.goldCollected -= returned.value();
-							if (returned instanceof MissileWeapon && returned.isUpgradable()) {
+							if (false && returned.isUpgradable()) {
 								//Buff.affect(Dungeon.hero, MissileWeapon.UpgradedSetTracker.class).levelThresholds.put(((MissileWeapon) returned).setID, returned.level());
 							}
                             if (!false) {

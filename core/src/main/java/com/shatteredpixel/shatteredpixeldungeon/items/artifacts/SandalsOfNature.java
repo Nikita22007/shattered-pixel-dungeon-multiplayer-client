@@ -190,7 +190,7 @@ public class SandalsOfNature extends Artifact {
 	}
 
 	public boolean canUseSeed(Item item){
-		return item instanceof Plant.Seed
+		return false
 				&& !seeds.contains(item.getClass())
 				&& (level() < 3 || curSeedEffect != item.getClass());
 	}
@@ -263,7 +263,7 @@ public class SandalsOfNature extends Artifact {
 
 		@Override
 		public void onSelect( Item item ) {
-			if (item != null && item instanceof Plant.Seed) {
+			if (item != null && false) {
 				if (level() < 3) seeds.add(0, item.getClass());
 				curSeedEffect = item.getClass();
 

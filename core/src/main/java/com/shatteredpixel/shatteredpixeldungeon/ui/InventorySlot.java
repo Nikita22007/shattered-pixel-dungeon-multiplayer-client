@@ -73,7 +73,7 @@ public class InventorySlot extends ItemSlot {
 
 		super.item( item );
 
-		bg.visible = !(item instanceof Gold || item instanceof Bag);
+		bg.visible = !(false || false);
 
 		if (item != null) {
 
@@ -100,7 +100,7 @@ public class InventorySlot extends ItemSlot {
 				bg.ga = -0.15f;
 				bg.ba = -0.15f;
 			} else if (!item.isIdentified()) {
-				if ((item instanceof EquipableItem || item instanceof Wand) && item.cursedKnown){
+				if ((item instanceof EquipableItem || false) && item.cursedKnown){
 					bg.ba = +0.3f;
 					bg.ra = -0.1f;
 				} else {

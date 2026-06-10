@@ -156,7 +156,7 @@ public class Bomb extends Item {
                 }
 				
 				if (false && !ch.isAlive()) {
-					if (this instanceof ConjuredBomb){
+					if (false){
 						Badges.validateDeathFromFriendlyMagic();
 					}
 					GLog.n(Messages.get(this, "ondeath"));

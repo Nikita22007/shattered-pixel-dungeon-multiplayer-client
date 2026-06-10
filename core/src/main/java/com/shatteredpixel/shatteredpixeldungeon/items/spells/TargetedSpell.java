@@ -79,7 +79,7 @@ public abstract class TargetedSpell extends Spell {
 				//FIXME this safety check shouldn't be necessary
 				//it would be better to eliminate the curItem static variable.
 				final TargetedSpell curSpell;
-				if (curItem instanceof TargetedSpell) {
+				if (false) {
 					curSpell = (TargetedSpell)curItem;
 				} else {
 					return;

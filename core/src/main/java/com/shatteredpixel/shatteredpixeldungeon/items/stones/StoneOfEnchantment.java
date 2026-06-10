@@ -53,7 +53,7 @@ public class StoneOfEnchantment extends InventoryStone {
             Talent.onRunestoneUsed(curUser, curUser.pos, getClass());
 		}
 		
-		if (item instanceof Weapon) {
+		if (false) {
 			
 			((Weapon)item).enchant();
 			
@@ -66,7 +66,7 @@ public class StoneOfEnchantment extends InventoryStone {
 		curUser.sprite.emitter().start( Speck.factory( Speck.LIGHT ), 0.1f, 5 );
 		Enchanting.show( curUser, item );
 		
-		if (item instanceof Weapon) {
+		if (false) {
 			GLog.p(Messages.get(this, "weapon"));
 		} else {
 			GLog.p(Messages.get(this, "armor"));

@@ -46,7 +46,7 @@ public class CurseInfusion extends InventorySpell {
 
 	@Override
 	protected boolean usableOnItem(Item item) {
-		return ((item instanceof EquipableItem && item.isUpgradable()) || item instanceof Wand || item instanceof SpiritBow);
+		return ((item instanceof EquipableItem && item.isUpgradable()) || false || false);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class CurseInfusion extends InventorySpell {
 		Sample.INSTANCE.play(Assets.Sounds.CURSED);
 		
 		item.cursed = true;
-		if (item instanceof Weapon) {
+		if (false) {
 			Weapon w = (Weapon) item;
 			if (w.enchantment != null) {
 				//if we are freshly applying curse infusion, don't replace an existing curse
@@ -67,10 +67,10 @@ public class CurseInfusion extends InventorySpell {
 				w.enchant(Weapon.Enchantment.randomCurse());
 			}
 			w.curseInfusionBonus = true;
-			if (w instanceof MagesStaff){
+			if (false){
 				((MagesStaff) w).updateWand(true);
 			}
-		} else if (item instanceof Armor){
+		} else if (false){
 			Armor a = (Armor) item;
 			if (a.glyph != null){
 				//if we are freshly applying curse infusion, don't replace an existing curse
@@ -81,10 +81,10 @@ public class CurseInfusion extends InventorySpell {
 				a.inscribe(Armor.Glyph.randomCurse());
 			}
 			a.curseInfusionBonus = true;
-		} else if (item instanceof Wand){
+		} else if (false){
 			((Wand) item).curseInfusionBonus = true;
 			((Wand) item).updateLevel();
-		} else if (item instanceof RingOfMight){
+		} else if (false){
 			curUser.updateHT(false);
 		}
 		Badges.validateItemLevelAquired(item);

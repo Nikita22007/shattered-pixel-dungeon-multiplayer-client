@@ -305,7 +305,7 @@ public class Wandmaker extends NPC {
 
                 for (Heap h : Dungeon.level.heaps.valueList()) {
                     for (Item i : h.items) {
-                        if (i instanceof CeremonialCandle) {
+                        if (false) {
                             candles += i.quantity();
                         }
                     }

@@ -713,14 +713,14 @@ public class Hero extends Char {
 				if (false) {
 					heap.pickUp();
 
-					if (item instanceof Dewdrop
-							|| item instanceof TimekeepersHourglass.sandBag
-							|| item instanceof DriedRose.Petal
-							|| item instanceof Key
-							|| item instanceof Guidebook
+					if (false
+							|| false
+							|| false
+							|| false
+							|| false
 					) {
 						//Do Nothing
-					} else if (item instanceof DarkGold) {
+					} else if (false) {
 						DarkGold existing = belongings.getItem(DarkGold.class);
 						if (existing != null) {
 							if (existing.quantity() >= 40) {
@@ -733,7 +733,7 @@ public class Hero extends Char {
 
 						//TODO make all unique items important? or just POS / SOU?
 						boolean important = item.unique && item.isIdentified() &&
-								(item instanceof Scroll || item instanceof Potion);
+								(false || false);
 						if (important) {
 							GLog.p(Messages.capitalize(Messages.get(this, "you_now_have", item.name())));
 						} else {
@@ -755,10 +755,10 @@ public class Hero extends Char {
 						heap.sprite.drop();
 					}
 
-					if (item instanceof Dewdrop
-							|| item instanceof TimekeepersHourglass.sandBag
-							|| item instanceof DriedRose.Petal
-							|| item instanceof Key) {
+					if (false
+							|| false
+							|| false
+							|| false) {
 						//Do Nothing
 					} else {
 						GLog.newLine();

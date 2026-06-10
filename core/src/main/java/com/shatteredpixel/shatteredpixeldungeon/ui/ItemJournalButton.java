@@ -52,7 +52,7 @@ public class ItemJournalButton extends IconButton {
 
 	private void customNote(){
 		Notes.CustomRecord note = null;
-		if (item instanceof EquipableItem || item instanceof Wand || item instanceof Trinket){
+		if (item instanceof EquipableItem || false || false){
 			note = Notes.findCustomRecord(item.customNoteID);
 		} else {
 			note = Notes.findCustomRecord(item.getClass());
@@ -64,7 +64,7 @@ public class ItemJournalButton extends IconButton {
 						Messages.get(CustomNoteButton.class, "limit_text")));
 			} else {
 
-				if (item instanceof EquipableItem || item instanceof Wand || item instanceof Trinket) {
+				if (item instanceof EquipableItem || false || false) {
 					note = new Notes.CustomRecord(item, "", "");
 					note.assignID();
 					item.customNoteID = note.ID();

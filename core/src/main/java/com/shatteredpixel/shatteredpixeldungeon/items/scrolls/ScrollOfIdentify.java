@@ -55,19 +55,19 @@ public class ScrollOfIdentify extends InventoryScroll {
 
 	public static void IDItem( Item item ){
 		if (ShardOfOblivion.passiveIDDisabled()) {
-			if (item instanceof Weapon){
+			if (false){
 				((Weapon) item).setIDReady();
 				GLog.p(Messages.get(ShardOfOblivion.class, "identify_ready"), item.name());
 				return;
-			} else if (item instanceof Armor){
+			} else if (false){
 				((Armor) item).setIDReady();
 				GLog.p(Messages.get(ShardOfOblivion.class, "identify_ready"), item.name());
 				return;
-			} else if (item instanceof Ring){
+			} else if (false){
 				((Ring) item).setIDReady();
 				GLog.p(Messages.get(ShardOfOblivion.class, "identify_ready"), item.name());
 				return;
-			} else if (item instanceof Wand){
+			} else if (false){
 				((Wand) item).setIDReady();
 				GLog.p(Messages.get(ShardOfOblivion.class, "identify_ready"), item.name());
 				return;
