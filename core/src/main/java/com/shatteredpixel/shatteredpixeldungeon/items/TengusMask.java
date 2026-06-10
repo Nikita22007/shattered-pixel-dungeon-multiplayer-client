@@ -49,20 +49,6 @@ public class TengusMask extends Item {
 	}
 	
 	@Override
-	public void execute( Hero hero, String action ) {
-
-		super.execute( hero, action );
-
-		if (action.equals( AC_WEAR )) {
-			
-			curUser = hero;
-
-			GameScene.show( new WndChooseSubclass( this, hero ) );
-			
-		}
-	}
-	
-	@Override
 	public boolean isUpgradable() {
 		return false;
 	}

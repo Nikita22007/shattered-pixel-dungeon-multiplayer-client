@@ -92,20 +92,6 @@ public abstract class Wand extends Item {
 		usesTargeting = true;
 		bones = true;
 	}
-	
-	@Override
-	public void execute( Hero hero, String action ) {
-
-		super.execute( hero, action );
-
-		if (action.equals( AC_ZAP )) {
-			
-			curUser = hero;
-			curItem = this;
-			GameScene.selectCell( zapper );
-			
-		}
-	}
 
 	@Override
 	public int targetingPos(Hero user, int dst) {

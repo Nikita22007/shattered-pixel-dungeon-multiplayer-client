@@ -70,61 +70,6 @@ public class Waterskin extends Item {
 	}
 
 	@Override
-	public void execute( final Hero hero, String action ) {
-
-		super.execute( hero, action );
-
-		if (action.equals( AC_DRINK )) {
-
-			if (volume > 0) {
-
-                float missingHealthPercent = 1f - (hero.HP / (float) hero.HT);
-
-                //each drop is worth 5% of total health
-                float dropsNeeded = missingHealthPercent / 0.05f;
-
-                //we are getting extra heal value, scale back drops needed accordingly
-                if (dropsNeeded > 1.01f && VialOfBlood.delayBurstHealing()) {
-                    dropsNeeded /= VialOfBlood.totalHealMultiplier();
-                }
-
-                //add extra drops if we can gain shielding
-                int curShield = 0;
-                int maxShield = Math.round(hero.HT * 0.2f * hero.pointsInTalent(Talent.SHIELDING_DEW));
-                if (hero.hasTalent(Talent.SHIELDING_DEW)) {
-                    float missingShieldPercent = 1f - (curShield / (float) maxShield);
-                    missingShieldPercent *= 0.2f * hero.pointsInTalent(Talent.SHIELDING_DEW);
-                    if (missingShieldPercent > 0) {
-                        dropsNeeded += missingShieldPercent / 0.05f;
-                    }
-                }
-
-                //trimming off 0.01 drops helps with floating point errors
-                int dropsToConsume = (int) Math.ceil(dropsNeeded - 0.01f);
-                dropsToConsume = (int) GameMath.gate(1, dropsToConsume, volume);
-
-				if (true) {
-                    volume -= dropsToConsume;
-                    Catalog.countUses(Dewdrop.class, dropsToConsume);
-
-                    hero.spend(TIME_TO_DRINK);
-                    hero.busy();
-
-                    Sample.INSTANCE.play(Assets.Sounds.DRINK);
-                    hero.sprite.operate(hero.pos);
-
-                    updateQuickslot();
-                }
-
-
-            } else {
-				GLog.w( Messages.get(this, "empty") );
-			}
-
-		}
-	}
-
-	@Override
 	public String info() {
 		String info = super.info();
 

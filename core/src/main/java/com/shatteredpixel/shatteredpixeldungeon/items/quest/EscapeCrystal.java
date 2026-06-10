@@ -47,47 +47,6 @@ public class EscapeCrystal extends Item {
 
 	public static final String AC_USE = "USE";
 
-	@Override
-	public void execute( final Hero hero, String action ) {
-
-		super.execute(hero, action);
-
-		if (action.equals( AC_USE )) {
-
-			if (Dungeon.depth > 15 && Dungeon.depth < 20 && Dungeon.branch == 1 ){
-
-				Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
-
-				//for full release this will remove any non revive persists buff, but for now just do item buffs
-				for (Buff b : hero.buffs()){
-					if (false
-                            || false
-                            || false
-                            //not melee charger, Duelist should retain her charge count
-                            || false){
-						b.detach();
-					}
-				}
-
-				restoreHeroBelongings(hero);
-				hero.updateHT( false );
-
-				Level.beforeTransition();
-				InterlevelScene.curTransition = new LevelTransition(Dungeon.level,
-						hero.pos,
-						LevelTransition.Type.BRANCH_ENTRANCE,
-						Dungeon.depth,
-						0,
-						LevelTransition.Type.BRANCH_EXIT);
-				InterlevelScene.mode = InterlevelScene.Mode.ASCEND;
-				Game.switchScene( InterlevelScene.class );
-
-            }
-
-		}
-
-	}
-
 	public static String BELONGINGS = "belongings";
 	public static String QUICKSLOTS = "quickslots";
 	public static String GOLD       = "gold";

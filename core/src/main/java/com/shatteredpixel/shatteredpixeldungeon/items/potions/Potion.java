@@ -213,40 +213,6 @@ public class Potion extends Item {
 	}
 	
 	@Override
-	public void execute( final Hero hero, String action ) {
-
-		super.execute( hero, action );
-		
-		if (action.equals( AC_CHOOSE )){
-			
-			GameScene.show(new WndUseItem(null, this) );
-			
-		} else if (action.equals( AC_DRINK )) {
-			
-			if (isKnown() && mustThrowPots.contains(getClass())) {
-				
-					GameScene.show(
-						new WndOptions(new ItemSprite(this),
-								Messages.get(Potion.class, "harmful"),
-								Messages.get(Potion.class, "sure_drink"),
-								Messages.get(Potion.class, "yes"), Messages.get(Potion.class, "no") ) {
-							@Override
-							protected void onSelect(int index) {
-								if (index == 0) {
-									drink( hero );
-								}
-							}
-						}
-					);
-					
-				} else {
-					drink( hero );
-				}
-			
-		}
-	}
-	
-	@Override
 	public void doThrow( final Hero hero ) {
 
 		if (isKnown()

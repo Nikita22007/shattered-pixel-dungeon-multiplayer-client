@@ -100,27 +100,6 @@ public class UnstableSpellbook extends Artifact {
 		scrolls.remove(ScrollOfTransmutation.class);
 	}
 
-	@Override
-	public void execute( Hero hero, String action ) {
-
-        super.execute(hero, action);
-
-        if (action.equals(AC_READ)) {
-
-			{
-				if (!isEquipped(hero)) GLog.i(Messages.get(Artifact.class, "need_to_equip"));
-				else if (charge <= 0) GLog.i(Messages.get(this, "no_charge"));
-				else if (cursed) GLog.i(Messages.get(this, "cursed"));
-				else {
-					doReadEffect(hero);
-				}
-			}
-
-		} else if (action.equals(AC_ADD)) {
-            GameScene.selectItem(itemSelector);
-        }
-    }
-
 	public void doReadEffect(Hero hero){
 		charge--;
 

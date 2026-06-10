@@ -93,32 +93,6 @@ public class Blandfruit extends Food {
 	}
 
 	@Override
-	public void execute( Hero hero, String action ) {
-
-		if (action.equals( Potion.AC_CHOOSE )){
-
-			GameScene.show(new WndUseItem(null, this) );
-			return;
-
-		}
-
-		if (action.equals( AC_EAT ) && potionAttrib == null) {
-
-			GLog.w( Messages.get(this, "raw"));
-			return;
-
-		}
-
-		super.execute(hero, action);
-
-		if (action.equals( AC_EAT ) && potionAttrib != null){
-
-			potionAttrib.apply(hero);
-
-		}
-	}
-
-	@Override
 	public String name() {
 		if (potionAttrib instanceof PotionOfHealing)        return Messages.get(this, "sunfruit");
 		if (potionAttrib instanceof PotionOfStrength)       return Messages.get(this, "rotfruit");

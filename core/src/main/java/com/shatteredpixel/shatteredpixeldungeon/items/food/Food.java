@@ -53,31 +53,6 @@ public class Food extends Item {
 
 		bones = true;
 	}
-	
-	@Override
-	public void execute( Hero hero, String action ) {
-
-		super.execute( hero, action );
-
-		if (action.equals( AC_EAT )) {
-
-            satisfy(hero);
-			GLog.i( Messages.get(this, "eat_msg") );
-			
-			hero.sprite.operate( hero.pos );
-			hero.busy();
-			SpellSprite.show( hero, SpellSprite.FOOD );
-			eatSFX();
-			
-			hero.spend( eatingTime() );
-
-			Talent.onFoodEaten(hero, energy, this);
-			
-			Statistics.foodEaten++;
-			Badges.validateFoodEaten();
-			
-		}
-	}
 
 	protected void eatSFX(){
 		Sample.INSTANCE.play( Assets.Sounds.EAT );

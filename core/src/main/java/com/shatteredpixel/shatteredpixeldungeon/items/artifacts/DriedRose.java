@@ -110,13 +110,6 @@ public class DriedRose extends Artifact {
 		}
 	}
 
-	@Override
-	public void execute( Hero hero, String action ) {
-
-		super.execute(hero, action);
-
-	}
-
 	private void findGhost(){
 		Actor a = Actor.findById(ghostID);
 		if (a != null){

@@ -61,25 +61,6 @@ public class HolyTome extends Artifact {
 
 	public static final String AC_CAST = "CAST";
 
-	@Override
-	public void execute( Hero hero, String action ) {
-
-        super.execute(hero, action);
-
-        if (action.equals(AC_CAST)) {
-
-            if (!isEquipped(hero) && !hero.hasTalent(Talent.LIGHT_READING))
-                GLog.i(Messages.get(Artifact.class, "need_to_equip"));
-            else if (cursed) GLog.i(Messages.get(this, "cursed"));
-            else {
-
-                GameScene.show(new WndClericSpells(this, hero, false));
-
-            }
-
-        }
-    }
-
 	//used to ensure tome has variable targeting logic for whatever spell is being case
 	public ClericSpell targetingSpell = null;
 

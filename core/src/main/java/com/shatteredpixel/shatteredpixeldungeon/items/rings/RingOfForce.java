@@ -182,24 +182,6 @@ public class RingOfForce extends Ring {
 	}
 
 	@Override
-	public void execute( Hero hero, String action ) {
-		if (action.equals(AC_ABILITY)) {
-			{
-				if (!isEquipped(hero)) {
-					GLog.w(Messages.get(MeleeWeapon.class, "ability_need_equip"));
-
-				} else {
-					((BrawlersStance) null).reset();
-					AttackIndicator.updateState();
-					hero.sprite.operate(hero.pos);
-				}
-			}
-		} else {
-			super.execute(hero, action);
-		}
-	}
-
-	@Override
 	public String info() {
 		String info = super.info();
 

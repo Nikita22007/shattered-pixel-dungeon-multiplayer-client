@@ -68,41 +68,6 @@ public class HornOfPlenty extends Artifact {
 	public static final String AC_EAT = "EAT";
 	public static final String AC_STORE = "STORE";
 
-	@Override
-	public void execute( Hero hero, String action ) {
-
-        super.execute(hero, action);
-
-        if (action.equals(AC_EAT) || action.equals(AC_SNACK)) {
-
-            if (!isEquipped(hero)) GLog.i(Messages.get(Artifact.class, "need_to_equip"));
-            else if (charge == 0) GLog.i(Messages.get(this, "no_food"));
-            else {
-                //consume as much food as it takes to be full, to a minimum of 1
-                int satietyPerCharge = (int) (Hunger.STARVING / 5f);
-                if (Dungeon.isChallenged(Challenges.NO_FOOD)) {
-                    satietyPerCharge /= 3;
-                }
-
-                Hunger hunger = null;
-                int chargesToUse = Math.max(1, hunger.hunger() / satietyPerCharge);
-                if (chargesToUse > charge) chargesToUse = charge;
-
-                //always use 1 charge if snacking
-                if (action.equals(AC_SNACK)) {
-                    chargesToUse = 1;
-                }
-
-                doEatEffect(hero, chargesToUse);
-            }
-
-        } else if (action.equals(AC_STORE)) {
-
-            GameScene.selectItem(itemSelector);
-
-        }
-    }
-
 	public void doEatEffect(Hero hero, int chargesToUse){
 		int satietyPerCharge = (int) (Hunger.STARVING/5f);
 		if (Dungeon.isChallenged(Challenges.NO_FOOD)){

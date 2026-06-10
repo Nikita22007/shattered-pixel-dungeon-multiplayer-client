@@ -54,50 +54,6 @@ public class ChaliceOfBlood extends Artifact {
 
 	public static final String AC_PRICK = "PRICK";
 
-	@Override
-	public void execute( Hero hero, String action ) {
-		super.execute(hero, action);
-
-		if (action.equals(AC_PRICK)){
-
-			int minDmg = minPrickDmg();
-			int maxDmg = maxPrickDmg();
-
-			int totalHeroHP = hero.HP + hero.shielding();
-
-			float deathChance = 0;
-
-			if (totalHeroHP < maxDmg) {
-				deathChance = (maxDmg - totalHeroHP) / (float) (maxDmg - minDmg);
-				if (deathChance < 0.5f) {
-					deathChance = (float) Math.pow(2 * deathChance, 2) / 2f;
-				} else if (deathChance < 1f) {
-					deathChance = 1f - deathChance;
-					deathChance = (float) Math.pow(2 * deathChance, 2) / 2f;
-					deathChance = 1f - deathChance;
-				} else {
-					deathChance = 1;
-				}
-			}
-
-			GameScene.show(
-				new WndOptions(new ItemSprite(this),
-						Messages.titleCase(name()),
-						Messages.get(this, "prick_warn", minDmg, maxDmg, Messages.decimalFormat("#.##", 100*deathChance)),
-						Messages.get(this, "yes"),
-						Messages.get(this, "no")) {
-					@Override
-					protected void onSelect(int index) {
-						if (index == 0) {
-							prick(Dungeon.hero);
-						}
-					}
-				}
-			);
-
-		}
-	}
-
 	private int minPrickDmg(){
 		return (int)Math.ceil(3 + 2.5f*(level()*level()));
 	}

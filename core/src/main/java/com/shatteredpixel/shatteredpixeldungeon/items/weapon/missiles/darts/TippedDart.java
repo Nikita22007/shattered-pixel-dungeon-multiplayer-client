@@ -59,54 +59,6 @@ public abstract class TippedDart extends Dart {
 	
 	private static final String AC_CLEAN = "CLEAN";
 	
-	@Override
-	public void execute( final Hero hero, String action ) {
-		super.execute(hero, action);
-		if (action.equals( AC_CLEAN )){
-
-			String[] options;
-			if (quantity() > 1){
-				options = new String[]{
-					Messages.get(this, "clean_all"),
-					Messages.get(this, "clean_one"),
-					Messages.get(this, "cancel")
-				};
-			} else {
-				options = new String[]{
-					Messages.get(this, "clean_one"),
-					Messages.get(this, "cancel")
-				};
-			}
-
-			GameScene.show(new WndOptions(new ItemSprite(this),
-					Messages.titleCase(name()),
-					Messages.get(this, "clean_desc"),
-					options){
-				@Override
-				protected void onSelect(int index) {
-					if (index == 0){
-						new Dart().quantity(quantity);
-
-                        hero.spend( 1f );
-						hero.busy();
-						hero.sprite.operate(hero.pos);
-					} else if (index == 1 && quantity() > 1){
-						new Dart().quantity(1);
-                        if (!false) Dungeon.level.drop(new Dart().quantity(1), hero.pos).sprite.drop();
-
-						//reset durability if there are darts left in the stack
-						durability = MAX_DURABILITY;
-
-						hero.spend( 1f );
-						hero.busy();
-						hero.sprite.operate(hero.pos);
-					}
-				}
-			});
-
-		}
-	}
-	
 	//exact same damage as regular darts, despite being higher tier.
 
 	@Override

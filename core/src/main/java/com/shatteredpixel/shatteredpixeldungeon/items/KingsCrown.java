@@ -50,23 +50,6 @@ public class KingsCrown extends Item {
 	}
 	
 	@Override
-	public void execute( Hero hero, String action ) {
-
-		super.execute( hero, action );
-
-		if (action.equals(AC_WEAR)) {
-
-			curUser = hero;
-			if (hero.belongings.armor() != null){
-				GameScene.show( new WndChooseAbility(this, hero.belongings.armor(), hero));
-			} else {
-				GLog.w( Messages.get(this, "naked"));
-			}
-			
-		}
-	}
-	
-	@Override
 	public boolean isUpgradable() {
 		return false;
 	}

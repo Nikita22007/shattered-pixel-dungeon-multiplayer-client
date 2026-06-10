@@ -36,6 +36,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.FlameParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.RainbowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShaftParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfFrost;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.Embers;
@@ -68,15 +69,6 @@ public class SummonElemental extends Spell {
 	}
 
 	private Class<? extends Elemental> summonClass = Elemental.AllyNewBornElemental.class;
-
-	@Override
-	public void execute( Hero hero, String action ) {
-		super.execute(hero, action);
-
-		if (action.equals(AC_IMBUE)){
-			GameScene.selectItem(selector);
-		}
-	}
 
 	@Override
 	protected void onCast(Hero hero) {

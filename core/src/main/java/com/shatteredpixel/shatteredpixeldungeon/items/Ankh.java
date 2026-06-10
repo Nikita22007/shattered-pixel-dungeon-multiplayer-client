@@ -57,29 +57,6 @@ public class Ankh extends Item {
 	public boolean isIdentified() {
 		return true;
 	}
-
-	@Override
-	public void execute( final Hero hero, String action ) {
-
-		super.execute( hero, action );
-
-		if (action.equals( AC_BLESS )) {
-
-			Waterskin waterskin = hero.belongings.getItem(Waterskin.class);
-			if (waterskin != null){
-				blessed = true;
-				waterskin.empty();
-				GLog.p( Messages.get(this, "bless") );
-				hero.spend( 1f );
-				hero.busy();
-
-
-				Sample.INSTANCE.play( Assets.Sounds.DRINK );
-				CellEmitter.get(hero.pos).start(Speck.factory(Speck.LIGHT), 0.2f, 3);
-				hero.sprite.operate( hero.pos );
-			}
-		}
-	}
 	
 	@Override
 	public String desc() {

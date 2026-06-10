@@ -56,19 +56,6 @@ public class ArcaneResin extends Item {
 	private static final String AC_APPLY = "APPLY";
 
 	@Override
-	public void execute( Hero hero, String action ) {
-
-		super.execute( hero, action );
-
-		if (action.equals(AC_APPLY)) {
-
-			curUser = hero;
-			GameScene.selectItem( itemSelector );
-
-		}
-	}
-
-	@Override
 	public boolean isUpgradable() {
 		return false;
 	}

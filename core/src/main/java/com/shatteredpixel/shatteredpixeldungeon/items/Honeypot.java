@@ -51,28 +51,6 @@ public class Honeypot extends Item {
 		stackable = true;
 	}
 	
-	@Override
-	public void execute( final Hero hero, String action ) {
-
-		super.execute( hero, action );
-
-		if (action.equals( AC_SHATTER )) {
-			
-			hero.sprite.zap( hero.pos );
-
-			Item item = shatter( hero, hero.pos );
-            if (!false){
-				Dungeon.level.drop(item, hero.pos);
-				if (item instanceof ShatteredPot){
-					((ShatteredPot) item).dropPot(hero, hero.pos);
-				}
-			}
-
-			hero.next();
-
-		}
-	}
-	
 	public Item shatter( Char owner, int pos ) {
 		
 		if (Dungeon.level.heroFOV[pos]) {

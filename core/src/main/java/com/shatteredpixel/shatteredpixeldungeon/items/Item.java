@@ -133,11 +133,12 @@ public class Item implements Bundlable {
 	}
 
 	//can be overridden if default action is variable
+	@Contract(pure = true)
 	public String defaultAction(){
 		return defaultAction;
 	}
 	
-	public void execute( Hero hero ) {
+	public final void execute( Hero hero ) {
 		String action = defaultAction();
 		if (action != null) {
 			execute(hero, defaultAction());

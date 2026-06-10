@@ -100,19 +100,6 @@ public class BrokenSeal extends Item {
 		return glyph != null ? glyph.glowing() : null;
 	}
 
-	@Override
-	public void execute( Hero hero, String action ) {
-
-		super.execute(hero, action);
-
-		if (action.equals(AC_AFFIX)){
-			curItem = this;
-			GameScene.selectItem(armorSelector);
-		} else if (action.equals(AC_INFO)) {
-			GameScene.show(new WndUseItem(null, this));
-		}
-	}
-
 	//outgoing is either the seal itself as an item, or an armor the seal is affixed to
 	public void affixToArmor(Armor armor, Item outgoing){
 		if (armor != null) {

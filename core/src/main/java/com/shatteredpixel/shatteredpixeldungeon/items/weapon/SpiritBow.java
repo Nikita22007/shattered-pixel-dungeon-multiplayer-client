@@ -58,20 +58,6 @@ public class SpiritBow extends Weapon {
 	
 	public boolean sniperSpecial = false;
 	public float sniperSpecialBonusDamage = 0f;
-	
-	@Override
-	public void execute( Hero hero, String action ) {
-
-		super.execute(hero, action);
-
-		if (action.equals(AC_SHOOT)) {
-
-			curUser = hero;
-			curItem = this;
-			GameScene.selectCell( shooter );
-
-		}
-	}
 
 	@Override
 	public boolean doEquip(Hero hero) {

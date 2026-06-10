@@ -160,28 +160,6 @@ public abstract class Scroll extends Item {
 		}
 	}
 	
-	@Override
-	public void execute( Hero hero, String action ) {
-
-		super.execute( hero, action );
-
-		if (action.equals( AC_READ )) {
-
-            {
-                {
-                    if (false
-                            && ((UnstableSpellbook.bookRecharge) null).isCursed()
-                            && !(this instanceof ScrollOfRemoveCurse || this instanceof ScrollOfAntiMagic)) {
-                        GLog.n(Messages.get(this, "cursed"));
-                    } else {
-                        doRead();
-                    }
-                }
-            }
-
-        }
-	}
-	
 	public abstract void doRead();
 
 	public void readAnimation() {

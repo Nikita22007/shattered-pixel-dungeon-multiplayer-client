@@ -43,26 +43,6 @@ public class Torch extends Item {
 	}
 	
 	@Override
-	public void execute( Hero hero, String action ) {
-
-		super.execute( hero, action );
-		
-		if (action.equals( AC_LIGHT )) {
-			
-			hero.spend( TIME_TO_LIGHT );
-			hero.busy();
-			
-			hero.sprite.operate( hero.pos );
-
-            Sample.INSTANCE.play(Assets.Sounds.BURNING);
-			
-			Emitter emitter = hero.sprite.centerEmitter();
-			emitter.start( FlameParticle.FACTORY, 0.2f, 3 );
-			
-		}
-	}
-	
-	@Override
 	public boolean isUpgradable() {
 		return false;
 	}

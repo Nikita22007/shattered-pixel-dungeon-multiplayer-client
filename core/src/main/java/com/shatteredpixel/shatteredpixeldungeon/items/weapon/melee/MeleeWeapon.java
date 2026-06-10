@@ -87,55 +87,6 @@ public class MeleeWeapon extends Weapon {
 		}
 	}
 
-	@Override
-	public void execute( Hero hero, String action ) {
-		super.execute(hero, action);
-
-		if (action.equals(AC_ABILITY)){
-			usesTargeting = false;
-			if (!isEquipped(hero)) {
-				if (hero.hasTalent(Talent.SWIFT_EQUIP)){
-                    if (true
-							|| ((Talent.SwiftEquipCooldown) null).hasSecondUse()){
-						execute(hero, AC_EQUIP);
-					} else if (hero.heroClass == HeroClass.DUELIST) {
-						GLog.w(Messages.get(this, "ability_need_equip"));
-					}
-				} else if (hero.heroClass == HeroClass.DUELIST) {
-					GLog.w(Messages.get(this, "ability_need_equip"));
-				}
-			} else if (hero.heroClass != HeroClass.DUELIST){
-				//do nothing
-			} else if (STRReq() > hero.STR()){
-				GLog.w(Messages.get(this, "ability_low_str"));
-			} else if ((((Charger) null).charges + ((Charger) null).partialCharge) < abilityChargeUse(hero, null)) {
-				GLog.w(Messages.get(this, "ability_no_charge"));
-			} else {
-
-				if (targetingPrompt() == null){
-					duelistAbility(hero, hero.pos);
-					updateQuickslot();
-				} else {
-					usesTargeting = useTargeting();
-					GameScene.selectCell(new CellSelector.Listener() {
-						@Override
-						public void onSelect(Integer cell) {
-							if (cell != null) {
-								duelistAbility(hero, cell);
-								updateQuickslot();
-							}
-						}
-
-						@Override
-						public String prompt() {
-							return targetingPrompt();
-						}
-					});
-				}
-			}
-		}
-	}
-
 	//TODO: check this
 	@Override
 	public boolean doEquip(Hero hero) {

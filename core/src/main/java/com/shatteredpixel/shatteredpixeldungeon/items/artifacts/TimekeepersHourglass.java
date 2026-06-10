@@ -78,62 +78,6 @@ public class TimekeepersHourglass extends Artifact {
 	public int sandBags = 0;
 
 	@Override
-	public void execute( Hero hero, String action ) {
-
-        super.execute(hero, action);
-
-        if (action.equals(AC_ACTIVATE)) {
-
-            if (!isEquipped(hero)) GLog.i(Messages.get(Artifact.class, "need_to_equip"));
-            else if (activeBuff != null) {
-                {
-                    activeBuff.detach();
-                    GLog.i(Messages.get(this, "deactivate"));
-                }
-            } else if (charge <= 0) GLog.i(Messages.get(this, "no_charge"));
-            else if (cursed) GLog.i(Messages.get(this, "cursed"));
-            else GameScene.show(
-                        new WndOptions(new ItemSprite(this),
-                                Messages.titleCase(name()),
-                                Messages.get(this, "prompt"),
-                                Messages.get(this, "stasis"),
-                                Messages.get(this, "freeze")) {
-                            @Override
-                            protected void onSelect(int index) {
-                                if (index == 0) {
-                                    GLog.i(Messages.get(TimekeepersHourglass.class, "onstasis"));
-                                    GameScene.flash(0x80FFFFFF);
-                                    Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
-
-                                    activeBuff = new timeStasis();
-                                    Talent.onArtifactUsed(Dungeon.hero);
-                                    activeBuff.attachTo(Dungeon.hero);
-                                } else if (index == 1) {
-
-                                    //This might be really good...
-                                    for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
-                                        if (Dungeon.level.heroFOV[mob.pos]) {
-                                        }
-                                    }
-
-                                    GLog.i(Messages.get(TimekeepersHourglass.class, "onfreeze"));
-                                    GameScene.flash(0x80FFFFFF);
-                                    Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
-
-                                    Invisibility.dispel(Dungeon.hero);
-                                    activeBuff = new timeFreeze();
-                                    Talent.onArtifactUsed(Dungeon.hero);
-                                    activeBuff.attachTo(Dungeon.hero);
-                                    charge--;
-                                    ((timeFreeze) activeBuff).processTime(0f);
-                                }
-                            }
-                        }
-                );
-        }
-    }
-
-	@Override
 	public void activate(Char ch) {
 		super.activate(ch);
 		if (activeBuff != null)

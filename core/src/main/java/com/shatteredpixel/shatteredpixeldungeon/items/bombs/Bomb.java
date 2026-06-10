@@ -93,18 +93,6 @@ public class Bomb extends Item {
 		return 1;
 	}
 
-	@Override
-	public void execute( Hero hero, String action ) {
-
-		if (action.equals(AC_LIGHTTHROW)) {
-			lightingFuse = true;
-			action = AC_THROW;
-		} else
-			lightingFuse = false;
-
-		super.execute(hero, action);
-	}
-
 	protected Fuse createFuse(){
 		return new Fuse();
 	}

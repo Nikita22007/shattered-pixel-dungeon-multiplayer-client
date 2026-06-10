@@ -45,51 +45,6 @@ abstract public class KindOfWeapon extends EquipableItem {
 	protected float hitSoundPitch = 1f;
 
 	@Override
-	public void execute( Hero hero, String action ) {
-		if (hero.subClass == HeroSubClass.CHAMPION && action.equals(AC_EQUIP)){
-			usesTargeting = false;
-			String primaryName = Messages.titleCase(hero.belongings.weapon != null ? hero.belongings.weapon.trueName() : Messages.get(KindOfWeapon.class, "empty"));
-			String secondaryName = Messages.titleCase(hero.belongings.secondWep != null ? hero.belongings.secondWep.trueName() : Messages.get(KindOfWeapon.class, "empty"));
-			if (primaryName.length() > 18) primaryName = primaryName.substring(0, 15) + "...";
-			if (secondaryName.length() > 18) secondaryName = secondaryName.substring(0, 15) + "...";
-			GameScene.show(new WndOptions(
-					new ItemSprite(this),
-					Messages.titleCase(name()),
-					Messages.get(KindOfWeapon.class, "which_equip_msg"),
-					Messages.get(KindOfWeapon.class, "which_equip_primary", primaryName),
-					Messages.get(KindOfWeapon.class, "which_equip_secondary", secondaryName)
-			){
-				@Override
-				protected void onSelect(int index) {
-					super.onSelect(index);
-					if (index == 0 || index == 1){
-						//In addition to equipping itself, item reassigns itself to the quickslot
-						//This is a special case as the item is being removed from inventory, but is staying with the hero.
-						int slot = Dungeon.quickslot.getSlot( KindOfWeapon.this );
-						slotOfUnequipped = -1;
-						if (index == 0) {
-							doEquip(hero);
-						} else {
-							equipSecondary(hero);
-						}
-						if (slot != -1) {
-							Dungeon.quickslot.setSlot( slot, KindOfWeapon.this );
-							updateQuickslot();
-						//if this item wasn't quickslotted, but the item it is replacing as equipped was
-						//then also have the item occupy the unequipped item's quickslot
-						} else if (slotOfUnequipped != -1 && defaultAction() != null) {
-							Dungeon.quickslot.setSlot( slotOfUnequipped, KindOfWeapon.this );
-							updateQuickslot();
-						}
-					}
-				}
-			});
-		} else {
-			super.execute(hero, action);
-		}
-	}
-
-	@Override
 	public boolean isEquipped( Hero hero ) {
 		return hero != null && (hero.belongings.weapon() == this || hero.belongings.secondWep() == this);
 	}

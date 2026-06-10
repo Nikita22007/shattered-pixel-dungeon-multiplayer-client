@@ -100,19 +100,6 @@ public class Bag extends CustomItem implements Iterable<Item> {
 		}
 	}
 
-	@Override
-	public void execute( Hero hero, String action ) {
-		quickUseItem = null;
-
-		super.execute( hero, action );
-
-		if (action.equals( AC_OPEN ) && !items.isEmpty()) {
-
-			GameScene.show( new WndQuickBag( this ) );
-
-		}
-	}
-
 	public void grabItems(){
 		if (owner != null && owner instanceof Hero && this != ((Hero) owner).belongings.backpack) {
 			grabItems(((Hero) owner).belongings.backpack);

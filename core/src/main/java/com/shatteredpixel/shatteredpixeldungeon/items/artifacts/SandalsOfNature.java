@@ -118,25 +118,6 @@ public class SandalsOfNature extends Artifact {
 	}
 
 	@Override
-	public void execute( Hero hero, String action ) {
-        super.execute(hero, action);
-
-        if (action.equals(AC_FEED)) {
-
-            GameScene.selectItem(itemSelector);
-
-        } else if (action.equals(AC_ROOT) && !cursed) {
-
-            if (!isEquipped(hero)) GLog.i(Messages.get(Artifact.class, "need_to_equip"));
-            else if (curSeedEffect == null) GLog.i(Messages.get(this, "no_effect"));
-            else if (charge < seedChargeReqs.get(curSeedEffect)) GLog.i(Messages.get(this, "low_charge"));
-            else {
-                GameScene.selectCell(cellSelector);
-            }
-        }
-    }
-
-	@Override
 	protected ArtifactBuff passiveBuff() {
 		return new Naturalism();
 	}

@@ -133,22 +133,6 @@ public abstract class Plant implements Bundlable {
 		
 		protected Class<? extends Plant> plantClass;
 		
-		@Override
-		public void execute( Hero hero, String action ) {
-
-			super.execute (hero, action );
-
-			if (action.equals( AC_PLANT )) {
-
-				hero.busy();
-
-				hero.spend( TIME_TO_PLANT );
-
-				hero.sprite.operate( hero.pos );
-
-			}
-		}
-		
 		public Plant couch( int pos, Level level ) {
 			if (level != null && level.heroFOV != null && level.heroFOV[pos]) {
 				Sample.INSTANCE.play(Assets.Sounds.PLANT);

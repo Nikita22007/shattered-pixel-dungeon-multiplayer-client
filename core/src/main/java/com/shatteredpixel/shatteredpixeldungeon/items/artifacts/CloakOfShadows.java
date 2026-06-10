@@ -61,38 +61,6 @@ public class CloakOfShadows extends Artifact {
 	public static final String AC_STEALTH = "STEALTH";
 
 	@Override
-	public void execute( Hero hero, String action ) {
-
-        super.execute(hero, action);
-
-        if (action.equals(AC_STEALTH)) {
-
-            if (activeBuff == null) {
-                if (!isEquipped(hero) && !hero.hasTalent(Talent.LIGHT_CLOAK))
-                    GLog.i(Messages.get(Artifact.class, "need_to_equip"));
-                else if (cursed) GLog.i(Messages.get(this, "cursed"));
-                else if (charge <= 0) GLog.i(Messages.get(this, "no_charge"));
-                else {
-                    hero.spend(1f);
-                    hero.busy();
-                    Sample.INSTANCE.play(Assets.Sounds.MELD);
-                    activeBuff = activeBuff();
-                    activeBuff.attachTo(hero);
-                    Talent.onArtifactUsed(Dungeon.hero);
-                    hero.sprite.operate(hero.pos);
-                }
-            } else {
-                activeBuff.detach();
-                activeBuff = null;
-                if (hero.invisible <= 0) {
-                }
-                hero.sprite.operate(hero.pos);
-            }
-
-        }
-    }
-
-	@Override
 	public void activate(Char ch){
 		super.activate(ch);
 		if (activeBuff != null && activeBuff.target == null){

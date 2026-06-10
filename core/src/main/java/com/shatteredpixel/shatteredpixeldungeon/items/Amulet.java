@@ -44,16 +44,6 @@ public class Amulet extends Item {
 		unique = true;
 	}
 	
-	@Override
-	public void execute( Hero hero, String action ) {
-
-		super.execute( hero, action );
-
-		if (action.equals(AC_END)) {
-			showAmuletScene( false );
-		}
-	}
-	
 	private void showAmuletScene( boolean showText ) {
 		AmuletScene.noText = !showText;
 		Game.switchScene( AmuletScene.class, new Game.SceneChangeCallback() {
