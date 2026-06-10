@@ -55,7 +55,7 @@ public class PotionOfDivineInspiration extends ExoticPotion {
 	protected void drink(final Hero hero) {
 
 		if (!isKnown()) {
-            curItem = detach( hero.belongings.backpack );
+			curItem = this;
 			identifiedByUse = true;
 		} else {
 			identifiedByUse = false;
@@ -104,7 +104,6 @@ public class PotionOfDivineInspiration extends ExoticPotion {
                     ((DivineInspirationTracker) null).setBoosted(index+1);
 
 					if (!identifiedByUse) {
-						curItem.detach(curUser.belongings.backpack);
 					}
 					identifiedByUse = false;
 

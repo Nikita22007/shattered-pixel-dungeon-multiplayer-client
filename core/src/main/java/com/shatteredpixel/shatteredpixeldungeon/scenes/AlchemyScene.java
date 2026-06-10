@@ -307,7 +307,7 @@ public class AlchemyScene extends PixelScene {
 															if (item instanceof LiquidMetal || item instanceof MissileWeapon){
 																inputs[i].item(item);
 															} else {
-																inputs[i].item(item.detach(Dungeon.hero.belongings.backpack));
+																inputs[i].item(item);
 															}
 															break;
 														}
@@ -573,7 +573,7 @@ public class AlchemyScene extends PixelScene {
 							if (item instanceof LiquidMetal || item instanceof MissileWeapon){
 								inputs[i].item(item);
 							} else {
-								inputs[i].item(item.detach(Dungeon.hero.belongings.backpack));
+								inputs[i].item(item);
 							}
 							break;
 						}
@@ -789,7 +789,7 @@ public class AlchemyScene extends PixelScene {
 				if (finding instanceof LiquidMetal || finding instanceof MissileWeapon) {
 					detached = found.get(0);
 				} else {
-					detached = found.get(0).detach(inventory.backpack);
+					detached = found.get(0);
 				}
 				inputs[curslot].item(detached);
 				curslot++;

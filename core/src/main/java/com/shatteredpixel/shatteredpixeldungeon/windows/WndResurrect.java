@@ -126,9 +126,7 @@ public class WndResurrect extends Window {
 
 		Statistics.ankhsUsed++;
 
-        ankh.detach(Dungeon.hero.belongings.backpack);
-
-		if (btnItem1.item() != null){
+        if (btnItem1.item() != null){
 			btnItem1.item().keptThoughLostInvent = true;
 		}
 		if (btnItem2.item() != null){

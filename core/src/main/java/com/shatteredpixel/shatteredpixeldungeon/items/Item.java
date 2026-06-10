@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Degrade;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -165,32 +164,6 @@ public class Item implements Bundlable {
 		this.storeInBundle(copy);
 		dupe.restoreFromBundle(copy);
 		return dupe;
-	}
-	
-	public final Item detach( Bag container ) {
-		
-		if (quantity <= 0) {
-			
-			return null;
-			
-		} else
-		if (quantity == 1) {
-
-			if (stackable){
-				Dungeon.quickslot.convertToPlaceholder(this);
-			}
-
-			return this;
-			
-		} else {
-
-
-			Item detached = null;
-			updateQuickslot();
-			if (detached != null) detached.onDetach( );
-			return detached;
-			
-		}
 	}
 
 	public boolean isSimilar( Item item ) {

@@ -55,7 +55,7 @@ public class PotionOfMastery extends ExoticPotion {
 	protected void drink(final Hero hero) {
 
 		if (!isKnown()) {
-            curItem = detach( hero.belongings.backpack );
+            curItem = this;
 			identifiedByUse = true;
 		} else {
 			identifiedByUse = false;
@@ -116,8 +116,7 @@ public class PotionOfMastery extends ExoticPotion {
 				curUser.sprite.operate(curUser.pos);
 
 				if (!identifiedByUse) {
-					curItem.detach(curUser.belongings.backpack);
-				}
+                }
 				identifiedByUse = false;
 
 				if (!anonymous) {

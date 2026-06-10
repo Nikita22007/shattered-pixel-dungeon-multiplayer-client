@@ -57,8 +57,7 @@ public abstract class TargetedSpell extends Spell {
 	}
 
 	protected void onSpellused(){
-		detach( curUser.belongings.backpack );
-		Invisibility.dispel();
+        Invisibility.dispel();
 		updateQuickslot();
 		curUser.spendAndNext( timeToCast() );
         if (Random.Float() < talentChance){

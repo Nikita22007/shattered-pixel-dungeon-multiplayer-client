@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.spells;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
@@ -284,7 +283,6 @@ public class Alchemize extends Spell {
 					owner.hide();
 				}
 			} else {
-				curItem.detach(Dungeon.hero.belongings.backpack);
 				if (owner != null){
 					owner.hide();
 				}

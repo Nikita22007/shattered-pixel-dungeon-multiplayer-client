@@ -90,9 +90,8 @@ public class UnstableSpell extends Spell {
 	
 	@Override
 	protected void onCast(Hero hero) {
-		
-		detach( curUser.belongings.backpack );
-		updateQuickslot();
+
+        updateQuickslot();
 		
 		Scroll s = Reflection.newInstance(Random.chances(scrollChances));
 

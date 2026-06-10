@@ -303,8 +303,7 @@ public class SandalsOfNature extends Artifact {
 				} else {
 					GLog.i( Messages.get(SandalsOfNature.class, "absorb_seed") );
 				}
-				item.detach(hero.belongings.backpack);
-			}
+            }
 		}
 	};
 

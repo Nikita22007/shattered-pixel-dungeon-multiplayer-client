@@ -83,7 +83,7 @@ public abstract class InventorySpell extends Spell {
 				//Infusion opens a separate window that can be cancelled
 				//so we don't do a lot of logic here
 				if (!(curItem instanceof MagicalInfusion)) {
-					curItem = detach(curUser.belongings.backpack);
+                    curItem = InventorySpell.this;
 				}
 				
 				((InventorySpell)curItem).onItemSelected( item );

@@ -78,9 +78,7 @@ public class KingsCrown extends Item {
 	
 	public void upgradeArmor(Hero hero, CustomItem armor, ArmorAbility ability) {
 
-		detach(hero.belongings.backpack);
-
-        hero.sprite.emitter().burst( Speck.factory( Speck.CROWN), 12 );
+		hero.sprite.emitter().burst( Speck.factory( Speck.CROWN), 12 );
 		hero.spend(Actor.TICK);
 		hero.busy();
 
@@ -101,9 +99,7 @@ public class KingsCrown extends Item {
 
 			} else {
 
-				armor.detach(hero.belongings.backpack);
-
-            }
+			}
 		}
 
 		hero.armorAbility = ability;

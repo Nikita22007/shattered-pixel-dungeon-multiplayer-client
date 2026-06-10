@@ -37,8 +37,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 
-import java.util.ArrayList;
-
 public class Food extends Item {
 
 	public static final float TIME_TO_EAT	= 3f;
@@ -62,8 +60,6 @@ public class Food extends Item {
 		super.execute( hero, action );
 
 		if (action.equals( AC_EAT )) {
-			
-			detach( hero.belongings.backpack );
 
             satisfy(hero);
 			GLog.i( Messages.get(this, "eat_msg") );

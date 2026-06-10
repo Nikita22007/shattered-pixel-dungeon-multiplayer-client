@@ -408,7 +408,6 @@ public class Blacksmith extends NPC {
 				pick.doUnequip(Dungeon.hero, false);
 				pick.cursed = wasCursed;
 			}
-			pick.detach(Dungeon.hero.belongings.backpack);
 			Quest.pickaxe = pick;
 
 			if (bossBeaten) favor += 1000;

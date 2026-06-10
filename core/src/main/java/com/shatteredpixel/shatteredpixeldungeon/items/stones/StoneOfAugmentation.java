@@ -62,8 +62,7 @@ public class StoneOfAugmentation extends InventoryStone {
 		useAnimation();
 		ScrollOfUpgrade.upgrade(curUser);
 		if (!anonymous) {
-			curItem.detach(curUser.belongings.backpack);
-            Talent.onRunestoneUsed(curUser, curUser.pos, getClass());
+			Talent.onRunestoneUsed(curUser, curUser.pos, getClass());
 		}
 	}
 	
@@ -73,8 +72,7 @@ public class StoneOfAugmentation extends InventoryStone {
 		useAnimation();
 		ScrollOfUpgrade.upgrade(curUser);
 		if (!anonymous) {
-			curItem.detach(curUser.belongings.backpack);
-            Talent.onRunestoneUsed(curUser, curUser.pos, getClass());
+			Talent.onRunestoneUsed(curUser, curUser.pos, getClass());
 		}
 	}
 	

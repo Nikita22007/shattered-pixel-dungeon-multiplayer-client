@@ -40,7 +40,6 @@ public class ScrollOfRecharging extends Scroll {
 	@Override
 	public void doRead() {
 
-		detach(curUser.belongings.backpack);
         charge(curUser);
 
 		Sample.INSTANCE.play( Assets.Sounds.READ );

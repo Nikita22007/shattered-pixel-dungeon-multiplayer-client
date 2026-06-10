@@ -68,7 +68,8 @@ public class Frost extends FlavourBuff {
 				}
 				
 				if (!freezable.isEmpty()){
-					Item toFreeze = Random.element(freezable).detach( hero.belongings.backpack );
+					Item item = Random.element(freezable);
+					Item toFreeze = item;
 					GLog.w( Messages.capitalize(Messages.get(this, "freezes", toFreeze.title())) );
 					if (toFreeze instanceof Potion){
 						((Potion) toFreeze).shatter(hero.pos);

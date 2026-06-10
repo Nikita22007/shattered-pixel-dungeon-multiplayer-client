@@ -379,9 +379,8 @@ public class UnstableSpellbook extends Artifact {
 						hero.sprite.emitter().burst( ElmoParticle.FACTORY, 12 );
 
 						scrolls.remove(i);
-						item.detach(hero.belongings.backpack);
 
-						upgrade();
+                        upgrade();
                         GLog.i( Messages.get(UnstableSpellbook.class, "infuse_scroll") );
 						return;
 					}

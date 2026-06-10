@@ -49,7 +49,7 @@ public class ScrollOfSirensSong extends ExoticScroll {
 	@Override
 	public void doRead() {
 		if (!isKnown()) {
-            curItem = detach(curUser.belongings.backpack);
+			curItem = this;
 			identifiedByUse = true;
 		} else {
 			identifiedByUse = false;
@@ -104,7 +104,6 @@ public class ScrollOfSirensSong extends ExoticScroll {
 				}
 
 				if (!identifiedByUse) {
-					curItem.detach(curUser.belongings.backpack);
 				}
 				identifiedByUse = false;
 

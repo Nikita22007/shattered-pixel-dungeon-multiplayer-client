@@ -141,7 +141,6 @@ public abstract class Plant implements Bundlable {
 			if (action.equals( AC_PLANT )) {
 
 				hero.busy();
-				detach(hero.belongings.backpack);
 
 				hero.spend( TIME_TO_PLANT );
 

@@ -150,7 +150,7 @@ public class WndEnergizeItem extends WndInfoItem {
 		if (item.quantity() <= 1) {
 			energizeAll( item );
 		} else {
-			energize(item.detach( Dungeon.hero.belongings.backpack ));
+			energize(item);
 		}
 	}
 

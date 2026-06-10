@@ -37,8 +37,7 @@ public class ScrollOfMysticalEnergy extends ExoticScroll {
 	@Override
 	public void doRead() {
 
-		detach(curUser.belongings.backpack);
-		//append buff
+        //append buff
         ((ArtifactRecharge) null).set( 30 ).ignoreHornOfPlenty = false;
 
 		Sample.INSTANCE.play( Assets.Sounds.READ );

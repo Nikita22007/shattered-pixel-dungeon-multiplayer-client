@@ -36,7 +36,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.FlameParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.RainbowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShaftParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfFrost;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.Embers;
@@ -107,7 +106,6 @@ public class SummonElemental extends Spell {
 			curUser.sprite.operate(curUser.pos);
 			curUser.spendAndNext(Actor.TICK);
 
-			detach(Dungeon.hero.belongings.backpack);
             if (Random.Float() < talentChance){
 				Talent.onScrollUsed(curUser, curUser.pos, talentFactor, getClass());
 			}
@@ -177,8 +175,7 @@ public class SummonElemental extends Spell {
 				return;
 			}
 
-			item.detach(Dungeon.hero.belongings.backpack);
-			if (item instanceof PotionOfLiquidFlame) {
+            if (item instanceof PotionOfLiquidFlame) {
 				Sample.INSTANCE.play(Assets.Sounds.BURNING);
 				curUser.sprite.emitter().burst( FlameParticle.FACTORY, 12 );
 				summonClass = Elemental.FireElemental.class;

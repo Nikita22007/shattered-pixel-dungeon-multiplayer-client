@@ -451,8 +451,6 @@ public class MagesStaff extends MeleeWeapon {
 
 			Dungeon.quickslot.clearItem(wand);
 
-			wand.detach(curUser.belongings.backpack);
-
 			GLog.p( Messages.get(MagesStaff.class, "imbue", wand.name()));
 			imbueWand( wand, curUser );
 

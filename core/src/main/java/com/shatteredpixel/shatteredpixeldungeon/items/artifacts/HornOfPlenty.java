@@ -47,8 +47,6 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 
-import java.util.ArrayList;
-
 public class HornOfPlenty extends Artifact {
 
 
@@ -321,8 +319,7 @@ public class HornOfPlenty extends Artifact {
 					hero.spend( Food.TIME_TO_EAT );
 
 					((HornOfPlenty)curItem).gainFoodValue(((Food)item));
-					item.detach(hero.belongings.backpack);
-				}
+                }
 
 			}
 		}

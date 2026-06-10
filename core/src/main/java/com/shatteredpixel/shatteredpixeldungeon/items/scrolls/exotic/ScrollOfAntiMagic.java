@@ -33,7 +33,6 @@ public class ScrollOfAntiMagic extends ExoticScroll {
 	@Override
 	public void doRead() {
 
-		detach(curUser.belongings.backpack);
         new Flare( 5, 32 ).color( 0x00FF00, true ).show( curUser.sprite, 2f );
 
         readAnimation();

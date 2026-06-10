@@ -39,7 +39,7 @@ public abstract class InventoryScroll extends Scroll {
 	public void doRead() {
 		
 		if (!isKnown()) {
-            curItem = detach( curUser.belongings.backpack );
+			curItem = this;
 			identifiedByUse = true;
 		} else {
 			identifiedByUse = false;
@@ -124,7 +124,7 @@ public abstract class InventoryScroll extends Scroll {
 				//SoU opens a separate window that can be cancelled
 				//so we don't do a lot of logic here
 				if (!identifiedByUse && !(curItem instanceof ScrollOfUpgrade)) {
-					curItem = detach(curUser.belongings.backpack);
+					curItem = InventoryScroll.this;
 				}
 				((InventoryScroll)curItem).onItemSelected( item );
 

@@ -50,7 +50,6 @@ public class StoneOfEnchantment extends InventoryStone {
 	@Override
 	protected void onItemSelected(Item item) {
 		if (!anonymous) {
-			curItem.detach(curUser.belongings.backpack);
             Talent.onRunestoneUsed(curUser, curUser.pos, getClass());
 		}
 		

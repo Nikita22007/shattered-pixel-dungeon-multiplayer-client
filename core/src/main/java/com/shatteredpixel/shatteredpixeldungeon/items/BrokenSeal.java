@@ -46,7 +46,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.GameMath;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class BrokenSeal extends Item {
@@ -137,8 +136,7 @@ public class BrokenSeal extends Item {
 						if (index == -1) return;
 
 						if (outgoing == BrokenSeal.this) {
-							detach(Dungeon.hero.belongings.backpack);
-						} else if (outgoing instanceof Armor){
+                        } else if (outgoing instanceof Armor){
 							((Armor) outgoing).detachSeal();
 						}
 
@@ -160,8 +158,7 @@ public class BrokenSeal extends Item {
 
 			} else {
 				if (outgoing == this) {
-					detach(Dungeon.hero.belongings.backpack);
-				} else if (outgoing instanceof Armor){
+                } else if (outgoing instanceof Armor){
 					((Armor) outgoing).detachSeal();
 				}
 

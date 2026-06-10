@@ -388,8 +388,8 @@ public class WndTradeItem extends WndInfoItem {
 		} else {
 			
 			Hero hero = Dungeon.hero;
-			
-			item = item.detach( hero.belongings.backpack );
+
+			item = item;
 
 			//selling items in the sell interface doesn't spend time
 			hero.spend(-hero.cooldown());

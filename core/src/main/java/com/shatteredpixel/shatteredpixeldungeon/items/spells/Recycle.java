@@ -81,8 +81,7 @@ public class Recycle extends InventorySpell {
 				result = TippedDart.randomTipped(1);
 			}
 		} while (result.getClass() == item.getClass() || Challenges.isItemBlocked(result));
-		
-		item.detach(curUser.belongings.backpack);
+
 		GLog.p(Messages.get(this, "recycled", result.name()));
         if (!false){
 			Dungeon.level.drop(result, curUser.pos).sprite.drop();

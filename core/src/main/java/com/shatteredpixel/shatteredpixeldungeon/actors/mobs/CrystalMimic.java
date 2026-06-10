@@ -131,9 +131,8 @@ public class CrystalMimic extends Mimic {
 
 			if (item instanceof Honeypot){
 				items.add(((Honeypot)item).shatter(this, this.pos));
-				item.detach( hero.belongings.backpack );
-			} else {
-				items.add(item.detach( hero.belongings.backpack ));
+            } else {
+                items.add(item);
 				if ( item instanceof Honeypot.ShatteredPot)
 					((Honeypot.ShatteredPot)item).pickupPot(this);
 			}

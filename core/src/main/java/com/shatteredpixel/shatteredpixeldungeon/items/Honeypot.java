@@ -59,10 +59,8 @@ public class Honeypot extends Item {
 		if (action.equals( AC_SHATTER )) {
 			
 			hero.sprite.zap( hero.pos );
-			
-			detach( hero.belongings.backpack );
 
-            Item item = shatter( hero, hero.pos );
+			Item item = shatter( hero, hero.pos );
             if (!false){
 				Dungeon.level.drop(item, hero.pos);
 				if (item instanceof ShatteredPot){

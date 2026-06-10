@@ -63,8 +63,7 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 
             new Flare(6, 32).show(curUser.sprite, 2f);
 
-            detach(curUser.belongings.backpack);
-            GLog.p(Messages.get(this, "spirit"));
+			GLog.p(Messages.get(this, "spirit"));
             spirit.cleanse();
         } else {
 			super.doRead();

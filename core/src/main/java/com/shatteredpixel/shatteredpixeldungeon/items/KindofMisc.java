@@ -147,8 +147,6 @@ public abstract class KindofMisc extends EquipableItem {
 				else                                hero.belongings.misc = (Ring) this;
 			}
 
-			detach( hero.belongings.backpack );
-
 			Talent.onItemEquipped(hero, this);
 			activate( hero );
 

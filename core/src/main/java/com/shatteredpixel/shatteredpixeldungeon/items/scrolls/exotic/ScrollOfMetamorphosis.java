@@ -59,7 +59,7 @@ public class ScrollOfMetamorphosis extends ExoticScroll {
 	@Override
 	public void doRead() {
 		if (!isKnown()) {
-            curItem = detach(curUser.belongings.backpack);
+			curItem = this;
 			identifiedByUse = true;
 		} else {
 			identifiedByUse = false;
@@ -197,7 +197,6 @@ public class ScrollOfMetamorphosis extends ExoticScroll {
 			super();
 
 			if (!identifiedByUse && curItem instanceof ScrollOfMetamorphosis) {
-				curItem.detach(curUser.belongings.backpack);
 			}
 			identifiedByUse = false;
 

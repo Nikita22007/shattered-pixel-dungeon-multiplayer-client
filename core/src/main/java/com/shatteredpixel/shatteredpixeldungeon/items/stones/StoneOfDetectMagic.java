@@ -83,7 +83,6 @@ public class StoneOfDetectMagic extends InventoryStone {
 		}
 
 		if (!anonymous) {
-			curItem.detach(curUser.belongings.backpack);
             Talent.onRunestoneUsed(curUser, curUser.pos, getClass());
 		}
 

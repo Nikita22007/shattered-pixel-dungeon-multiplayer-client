@@ -28,8 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 
-import java.util.ArrayList;
-
 public class Torch extends Item {
 
 	public static final String AC_LIGHT	= "LIGHT";
@@ -55,8 +53,6 @@ public class Torch extends Item {
 			hero.busy();
 			
 			hero.sprite.operate( hero.pos );
-			
-			detach( hero.belongings.backpack );
 
             Sample.INSTANCE.play(Assets.Sounds.BURNING);
 			

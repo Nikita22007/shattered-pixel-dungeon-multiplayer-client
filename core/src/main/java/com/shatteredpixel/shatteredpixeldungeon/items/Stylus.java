@@ -35,8 +35,6 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.watabou.noosa.audio.Sample;
 
-import java.util.ArrayList;
-
 public class Stylus extends Item {
 	
 	private static final float TIME_TO_INSCRIBE = 2;
@@ -85,8 +83,6 @@ public class Stylus extends Item {
 			GLog.w( Messages.get(this, "cursed"));
 			return;
 		}
-		
-		detach(curUser.belongings.backpack);
 
         GLog.w( Messages.get(this, "inscribed"));
 

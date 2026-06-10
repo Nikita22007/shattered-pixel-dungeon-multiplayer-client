@@ -135,7 +135,6 @@ abstract public class MissileWeapon extends Weapon {
 				
 				Item similar = Dungeon.hero.belongings.getSimilar(this);
 				if (similar != null){
-					detach(Dungeon.hero.belongings.backpack);
 					Item result = similar.merge(this);
 					updateQuickslot();
 					return result;

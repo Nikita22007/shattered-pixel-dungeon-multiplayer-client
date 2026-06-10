@@ -26,8 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 
-import java.util.ArrayList;
-
 public abstract class RemainsItem extends Item {
 
 	{
@@ -48,8 +46,7 @@ public abstract class RemainsItem extends Item {
             doEffect(hero);
 
 			hero.spendAndNext(Actor.TICK);
-			detach(hero.belongings.backpack);
-		}
+        }
 	}
 
 	protected abstract void doEffect(Hero hero);

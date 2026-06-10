@@ -1362,8 +1362,6 @@ public class Hero extends Char {
 				GLog.w(Messages.get(this, "revive"));
 				Statistics.ankhsUsed++;
 
-				ankh.detach(belongings.backpack);
-
 				for (Char ch : Actor.chars()) {
 					if (ch instanceof DriedRose.GhostHero) {
 						((DriedRose.GhostHero) ch).sayAnhk();

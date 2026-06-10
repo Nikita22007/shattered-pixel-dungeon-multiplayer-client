@@ -208,7 +208,6 @@ abstract public class ClassArmor extends Armor {
 								if (item == null || item == ClassArmor.this) return;
 
 								Armor armor = (Armor)item;
-								armor.detach(hero.belongings.backpack);
 								if (hero.belongings.armor == armor){
 									hero.belongings.armor = null;
 									if (hero.sprite instanceof HeroSprite) {
