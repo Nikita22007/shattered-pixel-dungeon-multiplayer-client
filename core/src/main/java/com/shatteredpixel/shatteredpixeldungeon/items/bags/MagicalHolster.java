@@ -50,18 +50,6 @@ public class MagicalHolster extends Bag {
 	}
 
 	@Override
-	public void onDetach( ) {
-		super.onDetach();
-		for (Item item : items) {
-			if (item instanceof Wand) {
-				((Wand)item).stopCharging();
-			} else if (item instanceof MissileWeapon){
-				((MissileWeapon) item).holster = false;
-			}
-		}
-	}
-	
-	@Override
 	public int value() {
 		return 60;
 	}

@@ -100,7 +100,6 @@ public abstract class EquipableItem extends CustomItem {
 		boolean wasKept = keptThoughLostInvent;
 		keptThoughLostInvent = true;
 		if (!collect || !false) {
-			onDetach();
 			Dungeon.quickslot.clearItem(this);
 			updateQuickslot();
 			if (collect) Dungeon.level.drop( this, hero.pos ).sprite.drop();

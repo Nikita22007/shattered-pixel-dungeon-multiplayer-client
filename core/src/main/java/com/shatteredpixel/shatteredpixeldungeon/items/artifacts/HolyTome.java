@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.ClericSpell;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.GuidingLight;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -41,8 +40,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndClericSpells;
 import com.watabou.utils.Bundle;
-
-import java.util.ArrayList;
 
 public class HolyTome extends Artifact {
 
@@ -105,14 +102,6 @@ public class HolyTome extends Artifact {
 			return true;
 		} else
 			return false;
-	}
-
-	@Override
-	protected void onDetach() {
-		if (passiveBuff != null){
-			passiveBuff.detach();
-			passiveBuff = null;
-		}
 	}
 
 	public boolean canCast( Hero hero, ClericSpell spell ){

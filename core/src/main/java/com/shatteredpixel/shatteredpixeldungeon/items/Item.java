@@ -170,9 +170,7 @@ public class Item implements Bundlable {
 		return getClass() == item.getClass();
 	}
 
-	protected void onDetach(){}
-
-	//returns the true level of the item, ignoring all modifiers aside from upgrades
+    //returns the true level of the item, ignoring all modifiers aside from upgrades
 	@Contract(pure=true)
 	public final int trueLevel(){
 		return level;

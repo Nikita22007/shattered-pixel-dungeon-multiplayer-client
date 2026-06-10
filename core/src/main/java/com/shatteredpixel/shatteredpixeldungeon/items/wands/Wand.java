@@ -200,11 +200,6 @@ public abstract class Wand extends Item {
 		}
 	}
 
-	@Override
-	public void onDetach( ) {
-		stopCharging();
-	}
-
 	public void stopCharging() {
 		if (charger != null) {
 			charger.detach();

@@ -113,15 +113,6 @@ public class Bag extends CustomItem implements Iterable<Item> {
 		}
 	}
 
-	@Override
-	public void onDetach( ) {
-		this.owner = null;
-		for (Item item : items) {
-			Dungeon.quickslot.clearItem(item);
-		}
-		updateQuickslot();
-	}
-
 	public void grabItems(){
 		if (owner != null && owner instanceof Hero && this != ((Hero) owner).belongings.backpack) {
 			grabItems(((Hero) owner).belongings.backpack);

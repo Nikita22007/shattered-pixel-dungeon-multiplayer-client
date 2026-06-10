@@ -30,7 +30,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
@@ -40,8 +39,6 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
-
-import java.util.ArrayList;
 
 public class CloakOfShadows extends Artifact {
 
@@ -118,18 +115,6 @@ public class CloakOfShadows extends Artifact {
 			return true;
 		} else
 			return false;
-	}
-
-	@Override
-	protected void onDetach() {
-		if (passiveBuff != null){
-			passiveBuff.detach();
-			passiveBuff = null;
-		}
-		if (activeBuff != null && !isEquipped((Hero) activeBuff.target)){
-			activeBuff.detach();
-			activeBuff = null;
-		}
 	}
 
 	@Override

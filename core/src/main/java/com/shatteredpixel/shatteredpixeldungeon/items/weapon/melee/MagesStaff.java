@@ -188,11 +188,6 @@ public class MagesStaff extends MeleeWeapon {
 		return reach;
 	}
 
-	@Override
-	public void onDetach( ) {
-		if (wand != null) wand.stopCharging();
-	}
-
 	public Item imbueWand(Wand wand, Char owner){
 
 		int oldStaffcharges = this.wand != null ? this.wand.curCharges : 0;
