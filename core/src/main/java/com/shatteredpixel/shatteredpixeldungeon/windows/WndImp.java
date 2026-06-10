@@ -69,8 +69,7 @@ public class WndImp extends Window {
 	private void takeReward( Imp imp, DwarfToken tokens, Item reward ) {
 		
 		hide();
-		
-		tokens.detachAll( Dungeon.hero.belongings.backpack );
+
 		if (reward == null) return;
 
         if (false) {

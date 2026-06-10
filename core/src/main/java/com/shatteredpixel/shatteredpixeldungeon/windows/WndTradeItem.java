@@ -359,9 +359,8 @@ public class WndTradeItem extends WndInfoItem {
 		if (item.isEquipped( hero ) && !((EquipableItem)item).doUnequip( hero, false )) {
 			return;
 		}
-		item.detachAll( hero.belongings.backpack );
 
-		if (item instanceof MissileWeapon && item.isUpgradable()){
+        if (item instanceof MissileWeapon && item.isUpgradable()){
 			//Buff.affect(hero, MissileWeapon.UpgradedSetTracker.class).levelThresholds.put(((MissileWeapon) item).setID, Integer.MAX_VALUE);
 		}
 

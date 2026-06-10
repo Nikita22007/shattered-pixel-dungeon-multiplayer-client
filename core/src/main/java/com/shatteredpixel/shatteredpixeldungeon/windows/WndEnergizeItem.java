@@ -142,7 +142,6 @@ public class WndEnergizeItem extends WndInfoItem {
 		if (item.isEquipped( Dungeon.hero ) && !((EquipableItem)item).doUnequip( Dungeon.hero, false )) {
 			return;
 		}
-		item.detachAll( Dungeon.hero.belongings.backpack );
 		energize(item);
 	}
 

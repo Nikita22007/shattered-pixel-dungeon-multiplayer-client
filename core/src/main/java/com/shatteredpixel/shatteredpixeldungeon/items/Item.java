@@ -180,7 +180,7 @@ public class Item implements Bundlable {
 				Dungeon.quickslot.convertToPlaceholder(this);
 			}
 
-			return detachAll( container );
+			return this;
 			
 		} else {
 
@@ -192,29 +192,7 @@ public class Item implements Bundlable {
 			
 		}
 	}
-	
-	public final Item detachAll( Bag container ) {
-		Dungeon.quickslot.clearItem( this );
 
-		for (Item item : container.items) {
-			if (item == this) {
-				container.items.remove(this);
-				item.onDetach();
-				container.grabItems(); //try to put more items into the bag as it now has free space
-				updateQuickslot();
-				return this;
-			} else if (item instanceof Bag) {
-				Bag bag = (Bag)item;
-				if (bag.contains( this )) {
-					return detachAll( bag );
-				}
-			}
-		}
-
-		updateQuickslot();
-		return this;
-	}
-	
 	public boolean isSimilar( Item item ) {
 		return getClass() == item.getClass();
 	}

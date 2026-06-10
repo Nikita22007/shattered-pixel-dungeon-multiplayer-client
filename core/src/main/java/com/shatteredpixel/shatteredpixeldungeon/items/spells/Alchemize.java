@@ -280,8 +280,7 @@ public class Alchemize extends Spell {
 		private void consumeAlchemize(){
 			Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
 			if (curItem.quantity() <= 1){
-				curItem.detachAll(Dungeon.hero.belongings.backpack);
-				if (owner != null) {
+                if (owner != null) {
 					owner.hide();
 				}
 			} else {

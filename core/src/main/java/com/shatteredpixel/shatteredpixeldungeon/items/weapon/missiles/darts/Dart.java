@@ -287,7 +287,6 @@ public class Dart extends MissileWeapon {
 					
 					if (index == 0 && options.length == 3){
 						if (item.quantity() <= maxSeedsToUse){
-							item.detachAll( curUser.belongings.backpack );
 						} else {
 							item.quantity(item.quantity() - maxSeedsToUse);
 						}
@@ -295,7 +294,6 @@ public class Dart extends MissileWeapon {
 						if (maxToTip < curItem.quantity()){
 							curItem.quantity(curItem.quantity() - maxToTip);
 						} else {
-							curItem.detachAll(curUser.belongings.backpack);
 						}
 						
 						TippedDart newDart = TippedDart.getTipped((Plant.Seed) item, maxToTip);
@@ -309,7 +307,6 @@ public class Dart extends MissileWeapon {
 						item.detach( curUser.belongings.backpack );
 						
 						if (curItem.quantity() <= singleSeedDarts){
-							curItem.detachAll( curUser.belongings.backpack );
 						} else {
 							curItem.quantity(curItem.quantity() - singleSeedDarts);
 						}

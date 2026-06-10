@@ -121,7 +121,6 @@ public class ArcaneResin extends Item {
 					if (resinToUse < quantity()){
 						quantity(quantity()-resinToUse);
 					} else {
-						detachAll(Dungeon.hero.belongings.backpack);
 					}
 
 					w.resinBonus++;

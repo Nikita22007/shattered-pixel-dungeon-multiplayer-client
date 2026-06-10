@@ -270,7 +270,6 @@ public class WndBlacksmith extends Window {
 					if (second.isEquipped( Dungeon.hero )) {
 						((EquipableItem)second).doUnequip( Dungeon.hero, false );
 					}
-					second.detachAll( Dungeon.hero.belongings.backpack );
 
 					if (second instanceof Armor){
 						BrokenSeal seal = ((Armor) second).checkSeal();

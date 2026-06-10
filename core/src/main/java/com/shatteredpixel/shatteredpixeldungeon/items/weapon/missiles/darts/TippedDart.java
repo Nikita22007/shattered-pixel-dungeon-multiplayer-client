@@ -85,8 +85,7 @@ public abstract class TippedDart extends Dart {
 				@Override
 				protected void onSelect(int index) {
 					if (index == 0){
-						detachAll(hero.belongings.backpack);
-                        new Dart().quantity(quantity);
+						new Dart().quantity(quantity);
 
                         hero.spend( 1f );
 						hero.busy();

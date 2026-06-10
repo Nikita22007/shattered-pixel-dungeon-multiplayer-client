@@ -132,7 +132,6 @@ public class Bag extends CustomItem implements Iterable<Item> {
 		for (Item item : container.items.toArray( new Item[0] )) {
 			if (canHold( item )) {
 				int slot = Dungeon.quickslot.getSlot(item);
-				item.detachAll(container);
 				if (!false) {
 				}
 				if (slot != -1) {

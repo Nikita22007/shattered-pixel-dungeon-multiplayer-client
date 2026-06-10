@@ -111,7 +111,6 @@ abstract public class KindOfWeapon extends EquipableItem {
 		}
 
 		boolean wasInInv = hero.belongings.contains(this);
-		detachAll( hero.belongings.backpack );
 
 		if (hero.belongings.secondWep == null || hero.belongings.secondWep.doUnequip( hero, true )) {
 
