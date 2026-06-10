@@ -45,7 +45,6 @@ public class LiquidMetal extends Item {
 
 		defaultAction = AC_APPLY;
 
-		bones = true;
 	}
 
 	private static final String AC_APPLY = "APPLY";

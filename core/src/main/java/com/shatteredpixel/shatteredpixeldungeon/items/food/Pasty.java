@@ -48,8 +48,7 @@ public class Pasty extends Food {
 
 		energy = Hunger.STARVING;
 
-		bones = true;
-	}
+    }
 	
 	@Override
 	public void reset() {

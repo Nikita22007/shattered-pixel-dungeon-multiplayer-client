@@ -55,7 +55,6 @@ public class Blandfruit extends Food {
 		//only applies when blandfruit is cooked
 		energy = Hunger.STARVING;
 
-		bones = true;
 	}
 
 	@Override

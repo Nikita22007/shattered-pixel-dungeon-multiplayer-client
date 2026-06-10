@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
@@ -37,7 +36,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
-import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 
 public class CloakOfShadows extends Artifact {
@@ -55,7 +53,6 @@ public class CloakOfShadows extends Artifact {
 		defaultAction = AC_STEALTH;
 
 		unique = true;
-		bones = false;
 	}
 
 	public static final String AC_STEALTH = "STEALTH";

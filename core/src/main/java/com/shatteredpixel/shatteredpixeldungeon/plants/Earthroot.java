@@ -41,8 +41,7 @@ public class Earthroot extends Plant {
 
 			plantClass = Earthroot.class;
 
-			bones = true;
-		}
+        }
 	}
 	
 	public static class Armor extends Buff {

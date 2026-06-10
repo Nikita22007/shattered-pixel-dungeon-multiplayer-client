@@ -36,7 +36,6 @@ public class PotionOfHealing extends Potion {
 	{
 		icon = ItemSpriteSheet.Icons.POTION_HEALING;
 
-		bones = true;
 	}
 
 	public static void heal( Char ch ){

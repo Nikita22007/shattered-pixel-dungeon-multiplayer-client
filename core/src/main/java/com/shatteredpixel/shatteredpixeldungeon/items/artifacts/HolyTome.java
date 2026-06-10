@@ -38,7 +38,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndClericSpells;
 import com.watabou.utils.Bundle;
 
 public class HolyTome extends Artifact {
@@ -56,8 +55,7 @@ public class HolyTome extends Artifact {
 		defaultAction = AC_CAST;
 
 		unique = true;
-		bones = false;
-	}
+    }
 
 	public static final String AC_CAST = "CAST";
 

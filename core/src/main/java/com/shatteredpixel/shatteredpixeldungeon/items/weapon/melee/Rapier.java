@@ -47,7 +47,6 @@ public class Rapier extends MeleeWeapon {
 
 		tier = 1;
 
-		bones = false;
 	}
 
 	@Override

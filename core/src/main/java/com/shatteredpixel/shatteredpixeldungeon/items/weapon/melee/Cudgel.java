@@ -36,8 +36,7 @@ public class Cudgel extends MeleeWeapon {
 		tier = 1;
 		ACC = 1.40f; //40% boost to accuracy
 
-		bones = false;
-	}
+    }
 
 	@Override
 	public int max(int lvl) {

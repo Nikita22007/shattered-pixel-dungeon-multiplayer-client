@@ -40,7 +40,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndUseItem;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
@@ -60,9 +59,8 @@ public class BrokenSeal extends Item {
 
 		cursedKnown = levelKnown = true;
 		unique = true;
-		bones = false;
 
-		defaultAction = AC_INFO;
+        defaultAction = AC_INFO;
 	}
 
 	private Armor.Glyph glyph;

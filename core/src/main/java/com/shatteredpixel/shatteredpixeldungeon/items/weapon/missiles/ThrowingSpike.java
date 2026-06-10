@@ -32,9 +32,7 @@ public class ThrowingSpike extends MissileWeapon {
 		hitSound = Assets.Sounds.HIT_STAB;
 		hitSoundPitch = 1.2f;
 
-		bones = false;
-
-		baseUses = 12;
+        baseUses = 12;
 		tier = 1;
 	}
 

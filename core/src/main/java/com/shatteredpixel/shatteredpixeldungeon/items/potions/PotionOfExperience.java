@@ -28,9 +28,7 @@ public class PotionOfExperience extends Potion {
 	{
 		icon = ItemSpriteSheet.Icons.POTION_EXP;
 
-		bones = true;
-
-		talentFactor = 2f;
+        talentFactor = 2f;
 	}
 
     @Override

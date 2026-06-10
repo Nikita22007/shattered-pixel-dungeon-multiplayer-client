@@ -41,7 +41,6 @@ public class Pickaxe extends MeleeWeapon {
 		levelKnown = true;
 		
 		unique = true;
-		bones = false;
 
 		tier = 2;
 	}

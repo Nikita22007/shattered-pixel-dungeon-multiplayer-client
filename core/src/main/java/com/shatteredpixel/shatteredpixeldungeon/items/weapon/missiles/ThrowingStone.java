@@ -31,10 +31,8 @@ public class ThrowingStone extends MissileWeapon {
 		image = ItemSpriteSheet.THROWING_STONE;
 		hitSound = Assets.Sounds.HIT;
 		hitSoundPitch = 1.1f;
-		
-		bones = false;
-		
-		tier = 1;
+
+        tier = 1;
 		baseUses = 5;
 		sticky = false;
 	}

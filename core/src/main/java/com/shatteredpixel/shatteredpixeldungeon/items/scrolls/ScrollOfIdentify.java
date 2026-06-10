@@ -38,8 +38,7 @@ public class ScrollOfIdentify extends InventoryScroll {
 	{
 		icon = ItemSpriteSheet.Icons.SCROLL_IDENTIFY;
 
-		bones = true;
-	}
+    }
 
 	@Override
 	protected boolean usableOnItem(Item item) {

@@ -35,9 +35,8 @@ public class WornShortsword extends MeleeWeapon {
 		hitSoundPitch = 1.1f;
 
 		tier = 1;
-		
-		bones = false;
-	}
+
+    }
 
 	@Override
 	protected int baseChargeUse(Hero hero, Char target) {
