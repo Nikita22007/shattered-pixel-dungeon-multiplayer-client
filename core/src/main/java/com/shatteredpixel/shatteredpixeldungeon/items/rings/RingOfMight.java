@@ -101,11 +101,6 @@ public class RingOfMight extends Ring {
 		return Messages.decimalFormat("#.##", 100f * (Math.pow(1.035, level+1)-1f)) + "%";
 	}
 
-	@Override
-	protected RingBuff buff( ) {
-		return new Might();
-	}
-	
 	public static int strengthBonus( Char target ){
 		return 0;
 	}

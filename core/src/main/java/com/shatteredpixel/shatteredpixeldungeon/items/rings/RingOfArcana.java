@@ -52,12 +52,7 @@ public class RingOfArcana extends Ring {
 		return Messages.decimalFormat("#.##", 100f * (Math.pow(1.175f, level+1)-1f)) + "%";
 	}
 
-	@Override
-	protected RingBuff buff( ) {
-		return new Arcana();
-	}
-
-	public static float enchantPowerMultiplier(Char target ){
+    public static float enchantPowerMultiplier(Char target ){
 		return (float)Math.pow(1.175f, 0);
 	}
 

@@ -52,11 +52,6 @@ public class RingOfTenacity extends Ring {
 		return Messages.decimalFormat("#.##", 100f * (1f - Math.pow(0.85f, level+1))) + "%";
 	}
 
-	@Override
-	protected RingBuff buff( ) {
-		return new Tenacity();
-	}
-	
 	public static float damageMultiplier( Char t ){
 		//(HT - HP)/HT = heroes current % missing health.
 		return (float)Math.pow(0.85, 0 *((float)(t.HT - t.HP)/t.HT));

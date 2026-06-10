@@ -58,13 +58,8 @@ public class RingOfSharpshooting extends Ring {
 		if (cursed && cursedKnown) level = Math.min(-1, level-3);
 		return Messages.decimalFormat("#.##", 100f * (Math.pow(1.2, level+1)-1f)) + "%";
 	}
-	
-	@Override
-	protected RingBuff buff( ) {
-		return new Aim();
-	}
-	
-	public static int levelDamageBonus( Char target ){
+
+    public static int levelDamageBonus( Char target ){
 		return 0;
 	}
 	

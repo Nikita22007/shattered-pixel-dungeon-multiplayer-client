@@ -92,11 +92,6 @@ public class RingOfWealth extends Ring {
 		dropsToRare = bundle.getInt(DROPS_TO_RARE);
 	}
 
-	@Override
-	protected RingBuff buff( ) {
-		return new Wealth();
-	}
-
 	//used for visuals
 	// 1/2/3 used for low/mid/high tier consumables
 	// 3 used for +0-1 equips, 4 used for +2 or higher equips

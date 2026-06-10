@@ -63,13 +63,8 @@ public class RingOfElements extends Ring {
 		if (cursed && cursedKnown) level = Math.min(-1, level-3);
 		return Messages.decimalFormat("#.##", 100f * (1f - Math.pow(0.825f, level+1))) + "%";
 	}
-	
-	@Override
-	protected RingBuff buff( ) {
-		return new Resistance();
-	}
 
-	public static final HashSet<Class> RESISTS = new HashSet<>();
+    public static final HashSet<Class> RESISTS = new HashSet<>();
 	static {
 		RESISTS.add( Burning.class );
 		RESISTS.add( Chill.class );

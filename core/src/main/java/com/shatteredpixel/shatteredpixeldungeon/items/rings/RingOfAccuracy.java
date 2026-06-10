@@ -51,13 +51,8 @@ public class RingOfAccuracy extends Ring {
 		if (cursed && cursedKnown) level = Math.min(-1, level-3);
 		return Messages.decimalFormat("#.##", 100f * (Math.pow(1.3f, level+1)-1f)) + "%";
 	}
-	
-	@Override
-	protected RingBuff buff( ) {
-		return new Accuracy();
-	}
-	
-	public static float accuracyMultiplier( Char target ){
+
+    public static float accuracyMultiplier( Char target ){
 		return (float)Math.pow(1.3f, 0);
 	}
 	

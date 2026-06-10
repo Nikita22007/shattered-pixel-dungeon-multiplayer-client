@@ -55,12 +55,7 @@ public class RingOfEnergy extends Ring {
 		if (cursed && cursedKnown) level = Math.min(-1, level-3);
 		return Messages.decimalFormat("#.##", 100f * (Math.pow(1.175f, level+1)-1f)) + "%";
 	}
-	
-	@Override
-	protected RingBuff buff( ) {
-		return new Energy();
-	}
-	
+
 	public static float wandChargeMultiplier( Char target ){
 		float bonus = (float)Math.pow(1.175, 0);
 

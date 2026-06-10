@@ -26,16 +26,12 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.AttackIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
-
-import java.util.ArrayList;
 
 public class RingOfForce extends Ring {
 
@@ -44,12 +40,7 @@ public class RingOfForce extends Ring {
 		buffClass = Force.class;
 	}
 
-	@Override
-	protected RingBuff buff( ) {
-		return new Force();
-	}
-	
-	public static int armedDamageBonus( Char ch ){
+    public static int armedDamageBonus( Char ch ){
 		return 0;
 	}
 

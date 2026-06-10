@@ -52,12 +52,7 @@ public class RingOfFuror extends Ring {
 		return Messages.decimalFormat("#.##", 100f * (Math.pow(1.09051f, level+1)-1f)) + "%";
 	}
 
-	@Override
-	protected RingBuff buff( ) {
-		return new Furor();
-	}
-	
-	public static float attackSpeedMultiplier(Char target ){
+    public static float attackSpeedMultiplier(Char target ){
 		return (float)Math.pow(1.09051, 0);
 	}
 

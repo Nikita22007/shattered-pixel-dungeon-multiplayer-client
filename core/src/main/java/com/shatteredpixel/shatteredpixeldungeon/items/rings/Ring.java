@@ -230,10 +230,6 @@ public class Ring extends KindofMisc {
 		}
 		return price;
 	}
-	
-	protected RingBuff buff() {
-		return null;
-	}
 
 	private static final String LEVELS_TO_ID    = "levels_to_ID";
 
