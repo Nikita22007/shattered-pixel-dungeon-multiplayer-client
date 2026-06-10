@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
-import com.watabou.utils.Bundle;
 
 public class ScrollEmpower extends Buff {
 
@@ -80,15 +79,4 @@ public class ScrollEmpower extends Buff {
 
 	private static final String LEFT = "left";
 
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put(LEFT, left);
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		left = bundle.getInt(LEFT);
-	}
 }

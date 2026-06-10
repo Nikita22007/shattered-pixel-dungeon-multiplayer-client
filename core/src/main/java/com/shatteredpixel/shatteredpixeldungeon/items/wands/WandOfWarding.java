@@ -40,7 +40,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.WardSprite;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
@@ -403,21 +402,5 @@ public class WandOfWarding extends Wand {
 		private static final String WAND_LEVEL = "wand_level";
 		private static final String TOTAL_ZAPS = "total_zaps";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(TIER, tier);
-			bundle.put(WAND_LEVEL, wandLevel);
-			bundle.put(TOTAL_ZAPS, totalZaps);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			tier = bundle.getInt(TIER);
-			viewDistance = 3 + tier;
-			wandLevel = bundle.getInt(WAND_LEVEL);
-			totalZaps = bundle.getInt(TOTAL_ZAPS);
-		}
 	}
 }

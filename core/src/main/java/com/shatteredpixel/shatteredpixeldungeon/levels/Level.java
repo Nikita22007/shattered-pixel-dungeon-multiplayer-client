@@ -249,8 +249,6 @@ public abstract class Level implements Bundlable {
 		bundle.put( TRAPS, traps.valueList() );
 		bundle.put( CUSTOM_TILES, customTiles );
 		bundle.put( CUSTOM_WALLS, customWalls );
-		bundle.put( MOBS, mobs );
-		bundle.put( BLOBS, blobs.values() );
 		bundle.put( FEELING, feeling );
 		bundle.put( "mobs_to_spawn", mobsToSpawn.toArray(new Class[0]));
 	}

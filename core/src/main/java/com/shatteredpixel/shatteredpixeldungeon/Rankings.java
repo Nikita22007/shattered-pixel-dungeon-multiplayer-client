@@ -264,7 +264,6 @@ public enum Rankings {
 			}
 		}
 
-		rec.gameData.put( HERO, Dungeon.hero );
 
 		//save stats
 		Bundle stats = new Bundle();

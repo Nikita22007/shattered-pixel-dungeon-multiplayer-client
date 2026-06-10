@@ -36,7 +36,6 @@ import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Halo;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Point;
 import com.watabou.utils.PointF;
 
@@ -155,26 +154,6 @@ public class SuperNovaTracker extends Buff {
 
 	public static final String LEFT = "left";
 	public static final String HARMS_ALLIES = "harms_allies";
-
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put(POS, pos);
-		bundle.put(DEPTH, depth);
-		bundle.put(BRANCH, branch);
-		bundle.put(LEFT, turnsLeft);
-		bundle.put(HARMS_ALLIES, harmsAllies);
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		pos = bundle.getInt(POS);
-		depth = bundle.getInt(DEPTH);
-		branch = bundle.getInt(BRANCH);
-		turnsLeft = bundle.getInt(LEFT);
-		harmsAllies = bundle.getBoolean(HARMS_ALLIES);
-	}
 
 	public class NovaVFX extends Halo {
 

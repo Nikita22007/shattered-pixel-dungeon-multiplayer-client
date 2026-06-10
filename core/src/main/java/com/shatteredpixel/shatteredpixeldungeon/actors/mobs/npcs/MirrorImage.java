@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAccuracy;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEvasion;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MirrorSprite;
-import com.watabou.utils.Bundle;
 
 public class MirrorImage extends NPC {
 	
@@ -70,19 +69,7 @@ public class MirrorImage extends NPC {
 	}
 	
 	private static final String HEROID	= "hero_id";
-	
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( HEROID, heroID );
-	}
-	
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		heroID = bundle.getInt( HEROID );
-	}
-	
+
 	public void duplicate( Hero hero ) {
 		this.hero = hero;
 		heroID = this.hero.id();

@@ -31,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
-import com.watabou.utils.Bundle;
 
 public class SnipersMark extends FlavourBuff implements ActionIndicator.Action {
 
@@ -62,20 +61,6 @@ public class SnipersMark extends FlavourBuff implements ActionIndicator.Action {
 	public void detach() {
 		super.detach();
 		ActionIndicator.clearAction(this);
-	}
-	
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( OBJECT, object );
-		bundle.put( BONUS, percentDmgBonus );
-	}
-
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		object = bundle.getInt( OBJECT );
-		percentDmgBonus = bundle.getFloat( BONUS );
 	}
 
 	@Override

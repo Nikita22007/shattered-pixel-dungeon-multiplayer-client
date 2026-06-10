@@ -21,12 +21,10 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
@@ -36,10 +34,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.watabou.noosa.Game;
-import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
@@ -110,17 +106,6 @@ public class UnstableSpellbook extends Artifact {
 			return true;
 		}
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put( "scroll", scroll );
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			scroll = (Scroll)bundle.get("scroll");
-		}
 	}
 
 	@Override

@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
-import com.watabou.utils.Bundle;
 
 import java.util.HashSet;
 
@@ -53,18 +52,6 @@ public class LifeLink extends FlavourBuff {
 				}
 			}
 		}
-	}
-
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( OBJECT, object );
-	}
-
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		object = bundle.getInt( OBJECT );
 	}
 
 	@Override

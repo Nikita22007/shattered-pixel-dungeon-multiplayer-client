@@ -33,7 +33,6 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.RatSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 
 public class Ratmogrify extends ArmorAbility {
 
@@ -181,23 +180,5 @@ public class Ratmogrify extends ArmorAbility {
 		private static final String ORIGINAL = "original";
 		private static final String ALLIED = "allied";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(ORIGINAL, original);
-			bundle.put(ALLIED, allied);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-
-			original = (Mob) bundle.get(ORIGINAL);
-			defenseSkill = original.defenseSkill;
-			EXP = original.EXP;
-
-			allied = bundle.getBoolean(ALLIED);
-			if (allied) alignment = Alignment.ALLY;
-		}
 	}
 }

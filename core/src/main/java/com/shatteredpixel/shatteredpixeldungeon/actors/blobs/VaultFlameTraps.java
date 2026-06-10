@@ -5,7 +5,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.BlobEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.watabou.utils.Bundle;
 
 import java.util.Arrays;
 
@@ -47,20 +46,6 @@ public class VaultFlameTraps extends Blob {
 
 	private static final String ONE	= "one";
 	private static final String TWO	= "two";
-
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put(ONE, initialCooldowns);
-		bundle.put(TWO, cooldowns);
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		initialCooldowns = bundle.getIntArray(ONE);
-		cooldowns = bundle.getIntArray(TWO);
-	}
 
 	@Override
 	public void use( BlobEmitter emitter ) {

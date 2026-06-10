@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 
 public class Shadows extends Invisibility {
 	
@@ -41,19 +40,6 @@ public class Shadows extends Invisibility {
 		type = buffType.POSITIVE;
 	}
 
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( LEFT, left );
-		
-	}
-	
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		left = bundle.getFloat( LEFT );
-	}
-	
 	@Override
 	public boolean attachTo( Char target ) {
 		if (Dungeon.level != null) {

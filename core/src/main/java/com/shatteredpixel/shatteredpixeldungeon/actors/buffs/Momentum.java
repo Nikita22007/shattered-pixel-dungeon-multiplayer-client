@@ -36,7 +36,6 @@ import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.Visual;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.GameMath;
 
 public class Momentum extends Buff implements ActionIndicator.Action {
@@ -186,26 +185,6 @@ public class Momentum extends Buff implements ActionIndicator.Action {
 	private static final String STACKS =        "stacks";
 	private static final String FREERUN_TURNS = "freerun_turns";
 	private static final String FREERUN_CD =    "freerun_CD";
-	
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put(STACKS, momentumStacks);
-		bundle.put(FREERUN_TURNS, freerunTurns);
-		bundle.put(FREERUN_CD, freerunCooldown);
-	}
-	
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		momentumStacks = bundle.getInt(STACKS);
-		freerunTurns = bundle.getInt(FREERUN_TURNS);
-		freerunCooldown = bundle.getInt(FREERUN_CD);
-		if (momentumStacks > 0 && freerunTurns <= 0){
-			ActionIndicator.setAction(this);
-		}
-		movedLastTurn = false;
-	}
 
 	@Override
 	public String actionName() {

@@ -35,7 +35,6 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -55,22 +54,6 @@ public class Burning extends Buff implements Hero.Doom {
 	{
 		type = buffType.NEGATIVE;
 		announced = true;
-	}
-	
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( LEFT, left );
-		bundle.put( ACTED, acted );
-		bundle.put( BURN, burnIncrement );
-	}
-	
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle(bundle);
-		left = bundle.getFloat( LEFT );
-		acted = bundle.getBoolean( ACTED );
-		burnIncrement = bundle.getInt( BURN );
 	}
 
 	@Override

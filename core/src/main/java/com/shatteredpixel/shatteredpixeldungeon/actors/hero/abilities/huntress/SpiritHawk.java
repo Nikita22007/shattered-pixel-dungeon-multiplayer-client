@@ -36,7 +36,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.MobSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.TextureFilm;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.GameMath;
 import com.watabou.utils.Random;
 
@@ -188,19 +187,6 @@ public class SpiritHawk extends ArmorAbility {
 		private static final String DODGES_USED     = "dodges_used";
 		private static final String TIME_REMAINING  = "time_remaining";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(DODGES_USED, dodgesUsed);
-			bundle.put(TIME_REMAINING, timeRemaining);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			dodgesUsed = bundle.getInt(DODGES_USED);
-			timeRemaining = bundle.getFloat(TIME_REMAINING);
-		}
 	}
 
 	public static class HawkSprite extends MobSprite {

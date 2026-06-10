@@ -24,10 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.CorrosiveGas;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ToxicGas;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.PrismaticGuard;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
@@ -39,7 +35,6 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.PrismaticSprite;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 public class PrismaticImage extends NPC {
@@ -124,21 +119,7 @@ public class PrismaticImage extends NPC {
 
 	private static final String HEROID	= "hero_id";
 	private static final String TIMER	= "timer";
-	
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( HEROID, heroID );
-		bundle.put( TIMER, deathTimer );
-	}
-	
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		heroID = bundle.getInt( HEROID );
-		deathTimer = bundle.getInt( TIMER );
-	}
-	
+
 	public void duplicate( Hero hero, int HP ) {
 		this.hero = hero;
 		heroID = this.hero.id();

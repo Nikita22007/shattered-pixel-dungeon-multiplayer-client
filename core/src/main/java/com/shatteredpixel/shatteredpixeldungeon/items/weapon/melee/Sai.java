@@ -34,7 +34,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.AttackIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 
 public class Sai extends MeleeWeapon {
@@ -188,19 +187,6 @@ public class Sai extends MeleeWeapon {
 		private static final String TIME  = "combo_time";
 		public static String RECENT_HITS = "recent_hits";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(TIME, comboTime);
-			bundle.put(RECENT_HITS, hits);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			comboTime = bundle.getInt(TIME);
-			hits = bundle.getInt(RECENT_HITS);
-		}
 	}
 
 }

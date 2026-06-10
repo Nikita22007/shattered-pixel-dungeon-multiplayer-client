@@ -22,24 +22,20 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.utils.Log;
 import com.watabou.noosa.Game;
-import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.SparseArray;
 import org.jetbrains.annotations.Contract;
 
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.HashSet;
 
-public abstract class Actor implements Bundlable {
+public abstract class Actor {
 	
 	public static final float TICK	= 1f;
 
@@ -119,23 +115,6 @@ public abstract class Actor implements Bundlable {
 
 	private static final String TIME    = "time";
 	private static final String ID      = "id";
-
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		bundle.put( TIME, time );
-		bundle.put( ID, id );
-	}
-
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		time = bundle.getFloat( TIME );
-		int incomingID = bundle.getInt( ID );
-		if (Actor.findById(incomingID) == null){
-			id = incomingID;
-		} else {
-			id = nextID++;
-		}
-	}
 
 	@Contract(pure = true)
 	public int id() {

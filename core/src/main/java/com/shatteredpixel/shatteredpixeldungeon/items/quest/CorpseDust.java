@@ -32,7 +32,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
@@ -130,17 +129,6 @@ public class CorpseDust extends Item {
 
 		private static String SPAWNPOWER = "spawnpower";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put( SPAWNPOWER, spawnPower );
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			spawnPower = bundle.getInt( SPAWNPOWER );
-		}
 	}
 
 	public static class DustWraith extends Wraith{
@@ -149,17 +137,6 @@ public class CorpseDust extends Item {
 
 		private static final String ATK_COUNT = "atk_count";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(ATK_COUNT, atkCount);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			atkCount = bundle.getInt(ATK_COUNT);
-		}
 	}
 
 }

@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
-import com.watabou.utils.Bundle;
 
 public class RevealedArea extends FlavourBuff{
 
@@ -68,19 +67,4 @@ public class RevealedArea extends FlavourBuff{
 	private static final String DEPTH = "depth";
 	private static final String POS = "pos";
 
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put(DEPTH, depth);
-		bundle.put(BRANCH, branch);
-		bundle.put(POS, pos);
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		depth = bundle.getInt(DEPTH);
-		branch = bundle.getInt(BRANCH);
-		pos = bundle.getInt(POS);
-	}
 }

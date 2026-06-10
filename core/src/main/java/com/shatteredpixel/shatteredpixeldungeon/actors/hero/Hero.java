@@ -209,51 +209,6 @@ public class Hero extends Char {
 	private static final String EXPERIENCE = "exp";
 	private static final String HTBOOST = "htboost";
 
-	@Override
-	public void storeInBundle(Bundle bundle) {
-
-		super.storeInBundle(bundle);
-
-		bundle.put(CLASS, heroClass);
-		bundle.put(SUBCLASS, subClass);
-		bundle.put(ABILITY, armorAbility);
-		Talent.storeTalentsInBundle(bundle, this);
-
-		bundle.put(ATTACK, attackSkill);
-		bundle.put(DEFENSE, defenseSkill);
-
-		bundle.put(STRENGTH, STR);
-
-		bundle.put(LEVEL, lvl);
-		bundle.put(EXPERIENCE, exp);
-
-		bundle.put(HTBOOST, HTBoost);
-
-		belongings.storeInBundle(bundle);
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-
-		lvl = bundle.getInt(LEVEL);
-		exp = bundle.getInt(EXPERIENCE);
-
-		HTBoost = bundle.getInt(HTBOOST);
-
-		super.restoreFromBundle(bundle);
-
-		heroClass = bundle.getEnum(CLASS, HeroClass.class);
-		subClass = bundle.getEnum(SUBCLASS, HeroSubClass.class);
-		armorAbility = (ArmorAbility) bundle.get(ABILITY);
-		Talent.restoreTalentsFromBundle(bundle, this);
-
-		attackSkill = bundle.getInt(ATTACK);
-		defenseSkill = bundle.getInt(DEFENSE);
-
-		STR = bundle.getInt(STRENGTH);
-
-	}
-
 	public static void preview(GamesInProgress.Info info, Bundle bundle) {
 		info.level = bundle.getInt(LEVEL);
 		info.str = bundle.getInt(STRENGTH);

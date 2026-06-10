@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.blobs;
 import com.shatteredpixel.shatteredpixeldungeon.effects.BlobEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.watabou.utils.Bundle;
 
 public class CorrosiveGas extends Blob {
 
@@ -48,20 +47,6 @@ public class CorrosiveGas extends Blob {
 
 	private static final String STRENGTH = "strength";
 	private static final String SOURCE	= "source";
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		strength = bundle.getInt( STRENGTH );
-		source = bundle.getClass( SOURCE );
-	}
-
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put( STRENGTH, strength );
-		bundle.put( SOURCE, source );
-	}
 
 	@Override
 	public void use( BlobEmitter emitter ) {

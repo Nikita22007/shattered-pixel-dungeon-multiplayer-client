@@ -51,7 +51,6 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
@@ -593,22 +592,6 @@ public class SkeletonKey extends Artifact {
 		public static String IRON_NEEDED = "iron_needed";
 		public static String GOLDEN_NEEDED = "golden_needed";
 		public static String CRYSTAL_NEEDED = "crystal_needed";
-
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(IRON_NEEDED, ironKeysNeeded);
-			bundle.put(GOLDEN_NEEDED, goldenKeysNeeded);
-			bundle.put(CRYSTAL_NEEDED, crystalKeysNeeded);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			ironKeysNeeded = bundle.getIntArray(IRON_NEEDED);
-			goldenKeysNeeded = bundle.getIntArray(GOLDEN_NEEDED);
-			crystalKeysNeeded = bundle.getIntArray(CRYSTAL_NEEDED);
-		}
 
 	}
 }

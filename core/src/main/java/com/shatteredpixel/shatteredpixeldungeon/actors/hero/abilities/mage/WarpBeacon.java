@@ -31,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.particles.Emitter;
-import com.watabou.utils.Bundle;
 
 public class WarpBeacon extends ArmorAbility {
 
@@ -79,21 +78,6 @@ public class WarpBeacon extends ArmorAbility {
 		public static final String DEPTH = "depth";
 		public static final String BRANCH = "branch";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(POS, pos);
-			bundle.put(DEPTH, depth);
-			bundle.put(BRANCH, branch);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			pos = bundle.getInt(POS);
-			depth = bundle.getInt(DEPTH);
-			branch = bundle.getInt(BRANCH);
-		}
 	}
 
 	@Override

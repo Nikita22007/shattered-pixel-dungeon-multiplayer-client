@@ -206,11 +206,6 @@ public class Bomb extends Item {
 
 	private static final String FUSE = "fuse";
 
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put( FUSE, fuse );
-	}
 
 	@Override
 	public void restoreFromBundle(Bundle bundle) {

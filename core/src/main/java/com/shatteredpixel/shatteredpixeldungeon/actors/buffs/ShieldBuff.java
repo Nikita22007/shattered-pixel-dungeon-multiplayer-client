@@ -22,9 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.watabou.utils.Bundle;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -135,17 +132,5 @@ public abstract class ShieldBuff extends Buff {
 	}
 	
 	private static final String SHIELDING = "shielding";
-	
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( SHIELDING, shielding);
-	}
-	
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		shielding = bundle.getInt( SHIELDING );
-	}
-	
+
 }

@@ -24,14 +24,12 @@ package com.shatteredpixel.shatteredpixeldungeon.items.bombs;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 
 public class Noisemaker extends Bomb {
 	
@@ -132,19 +130,6 @@ public class Noisemaker extends Bomb {
 		private static final String LEFT = "left";
 		private static final String TRIGGERED = "triggered";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(LEFT, left);
-			bundle.put(TRIGGERED, triggered);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			left = bundle.getInt(LEFT);
-			triggered = bundle.getBoolean(TRIGGERED);
-		}
 	}
 	
 	@Override

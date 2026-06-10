@@ -427,17 +427,6 @@ public class WandOfRegrowth extends Wand {
 
         private static final String WAND_LVL = "wand_lvl";
 
-        @Override
-        public void storeInBundle(Bundle bundle) {
-            super.storeInBundle(bundle);
-            bundle.put(WAND_LVL, wandLvl);
-        }
-
-        @Override
-        public void restoreFromBundle(Bundle bundle) {
-            super.restoreFromBundle(bundle);
-            wandLvl = bundle.getInt(WAND_LVL);
-        }
-    }
+	}
 
 }

@@ -48,7 +48,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.TargetHealthIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.BArray;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
@@ -134,19 +133,6 @@ public class ChaoticCenser extends Trinket {
 
 		private static String LEFT = "left";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(LEFT, left);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			if (bundle.contains(LEFT)){
-				left = bundle.getInt(LEFT);
-			}
-		}
 	}
 
 	private static boolean produceGas( Char target ){
@@ -278,25 +264,6 @@ public class ChaoticCenser extends Trinket {
 		private static final String GAS_TYPE = "gas_type";
 		private static final String GAS_QUANTITY = "gas_quantity";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(CELL, targetCell);
-			bundle.put(DEPTH, depth);
-			bundle.put(BRANCH, branch);
-			bundle.put(GAS_TYPE, gasType);
-			bundle.put(GAS_QUANTITY, gasQuantity);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			targetCell = bundle.getInt(CELL);
-			depth = bundle.getInt(DEPTH);
-			branch = bundle.getInt(BRANCH);
-			gasType = bundle.getClass(GAS_TYPE);
-			gasQuantity = bundle.getInt(GAS_QUANTITY);
-		}
 	}
 
 	private static final float[][] GAS_CAT_CHANCES = new float[4][3];

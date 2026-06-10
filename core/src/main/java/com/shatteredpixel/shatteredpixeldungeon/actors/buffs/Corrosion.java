@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
-import com.watabou.utils.Bundle;
 
 public class Corrosion extends Buff implements Hero.Doom {
 
@@ -46,22 +45,6 @@ public class Corrosion extends Buff implements Hero.Doom {
 	{
 		type = buffType.NEGATIVE;
 		announced = true;
-	}
-
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( DAMAGE, damage );
-		bundle.put( LEFT, left );
-		bundle.put( SOURCE, source);
-	}
-
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		damage = bundle.getFloat( DAMAGE );
-		left = bundle.getFloat( LEFT );
-		source = bundle.getClass( SOURCE );
 	}
 
 	public void set(float duration, int damage){

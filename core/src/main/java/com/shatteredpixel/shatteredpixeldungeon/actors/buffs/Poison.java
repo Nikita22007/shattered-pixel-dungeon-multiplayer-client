@@ -31,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
-import com.watabou.utils.Bundle;
 
 public class Poison extends Buff implements Hero.Doom {
 	
@@ -43,20 +42,7 @@ public class Poison extends Buff implements Hero.Doom {
 		type = buffType.NEGATIVE;
 		announced = true;
 	}
-	
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( LEFT, left );
-		
-	}
-	
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		left = bundle.getFloat( LEFT );
-	}
-	
+
 	public void set( float duration ) {
 		this.left = Math.max(duration, left);
 	}

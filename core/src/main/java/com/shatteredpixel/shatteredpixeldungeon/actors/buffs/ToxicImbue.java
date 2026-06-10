@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 
 public class ToxicImbue extends Buff {
@@ -44,19 +43,6 @@ public class ToxicImbue extends Buff {
 	protected float left;
 
 	private static final String LEFT	= "left";
-
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( LEFT, left );
-
-	}
-
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		left = bundle.getFloat( LEFT );
-	}
 
 	public void set( float duration ) {
 		this.left = duration;

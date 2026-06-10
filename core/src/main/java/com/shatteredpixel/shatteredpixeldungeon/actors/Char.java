@@ -68,8 +68,6 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MobSprite;
-import com.watabou.utils.Bundlable;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 import org.jetbrains.annotations.Contract;
@@ -148,33 +146,6 @@ public abstract class Char extends Actor {
 	protected static final String TAG_HT    = "HT";
 	protected static final String TAG_SHLD  = "SHLD";
 	protected static final String BUFFS	    = "buffs";
-	
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		
-		super.storeInBundle( bundle );
-		
-		bundle.put( POS, pos );
-		bundle.put( TAG_HP, HP );
-		bundle.put( TAG_HT, HT );
-		bundle.put( BUFFS, buffs );
-	}
-	
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		
-		super.restoreFromBundle( bundle );
-		
-		pos = bundle.getInt( POS );
-		HP = bundle.getInt( TAG_HP );
-		HT = bundle.getInt( TAG_HT );
-		
-		for (Bundlable b : bundle.getCollection( BUFFS )) {
-			if (b != null) {
-				((Buff)b).attachTo( this );
-			}
-		}
-	}
 
 	public static int INFINITE_ACCURACY = 1_000_000;
 	public static int INFINITE_EVASION = 1_000_000;

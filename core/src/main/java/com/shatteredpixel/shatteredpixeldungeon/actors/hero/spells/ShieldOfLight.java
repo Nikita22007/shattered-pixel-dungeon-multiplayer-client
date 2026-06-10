@@ -39,7 +39,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 
 public class ShieldOfLight extends TargetedClericSpell {
 
@@ -128,18 +127,6 @@ public class ShieldOfLight extends TargetedClericSpell {
 		}
 
 		private static final String OBJECT  = "object";
-
-		@Override
-		public void storeInBundle( Bundle bundle ) {
-			super.storeInBundle( bundle );
-			bundle.put( OBJECT, object );
-		}
-
-		@Override
-		public void restoreFromBundle( Bundle bundle ) {
-			super.restoreFromBundle( bundle );
-			object = bundle.getInt( OBJECT );
-		}
 
 	}
 

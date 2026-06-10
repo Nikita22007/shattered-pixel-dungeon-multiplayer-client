@@ -38,7 +38,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.utils.BArray;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 
 public class DeathMark extends ArmorAbility {
@@ -159,17 +158,6 @@ public class DeathMark extends ArmorAbility {
 
 		private static String INITIAL_HP = "initial_hp";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(INITIAL_HP, initialHP);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			initialHP = bundle.getInt(INITIAL_HP);
-		}
 	}
 
 }

@@ -45,23 +45,16 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.Runestone;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfIntuition;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gloves;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -229,17 +222,7 @@ public enum Talent {
 		}
 
 		private static final String BARRIER_INC = "barrier_inc";
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put( BARRIER_INC, barrierInc);
-		}
 
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			barrierInc = bundle.getFloat( BARRIER_INC );
-		}
 	}
 	public static class BountyHunterTracker extends FlavourBuff{};
 	public static class RejuvenatingStepsCooldown extends FlavourBuff{
@@ -270,16 +253,7 @@ public enum Talent {
 			return true;
 		}
 		private static final String POS = "pos";
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(POS, pos);
-		}
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			pos = bundle.getInt(POS);
-		}
+
 	};
 	public static class AggressiveBarrierCooldown extends FlavourBuff{
 		public int icon() { return BuffIndicator.TIME; }
@@ -301,16 +275,7 @@ public enum Talent {
 		public float iconFadePercent() { return Math.max(0, 1f - (visualcooldown() / 5)); }
 
 		private static final String USES = "uses";
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(USES, uses);
-		}
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			uses = bundle.getInt(USES);
-		}
+
 	};
 	public static class LethalHasteCooldown extends FlavourBuff{
 		public int icon() { return BuffIndicator.TIME; }
@@ -331,16 +296,7 @@ public enum Talent {
 		public float iconFadePercent() { return GameMath.gate(0, visualcooldown() / 20f, 1); }
 
 		private static final String SECOND_USE = "second_use";
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(SECOND_USE, secondUse);
-		}
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			secondUse = bundle.getBoolean(SECOND_USE);
-		}
+
 	};
 	public static class DeadlyFollowupTracker extends FlavourBuff{
 		public int object;
@@ -349,16 +305,7 @@ public enum Talent {
 		public void tintIcon(Image icon) { icon.hardlight(0.5f, 0f, 1f); }
 		public float iconFadePercent() { return Math.max(0, 1f - (visualcooldown() / 5)); }
 		private static final String OBJECT    = "object";
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(OBJECT, object);
-		}
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			object = bundle.getInt(OBJECT);
-		}
+
 	}
 	public static class PreciseAssaultTracker extends FlavourBuff{
 		{ type = buffType.POSITIVE; }
@@ -370,16 +317,7 @@ public enum Talent {
 		public Class weapon;
 
 		private static final String WEAPON    = "weapon";
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(WEAPON, weapon);
-		}
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			weapon = bundle.getClass(WEAPON);
-		}
+
 	}
 	public static class CombinedLethalityAbilityTracker extends FlavourBuff{
 		public MeleeWeapon weapon;
@@ -390,18 +328,7 @@ public enum Talent {
 
 		private static final String MONK_ABIL_USED  = "monk_abil_used";
 		private static final String WEP_ABIL_USED   = "wep_abil_used";
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(MONK_ABIL_USED, monkAbilused);
-			bundle.put(WEP_ABIL_USED, wepAbilUsed);
-		}
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			monkAbilused = bundle.getBoolean(MONK_ABIL_USED);
-			wepAbilUsed = bundle.getBoolean(WEP_ABIL_USED);
-		}
+
 	}
 	public static class CounterAbilityTacker extends FlavourBuff{}
 	public static class SatiatedSpellsTracker extends Buff{
@@ -835,16 +762,7 @@ public enum Talent {
 		public void tintIcon(Image icon) { icon.hardlight(0f, 0.75f, 1f); }
 		public float iconFadePercent() { return Math.max(0, 1f - (visualcooldown() / 5)); }
 		private static final String OBJECT    = "object";
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(OBJECT, object);
-		}
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			object = bundle.getInt(OBJECT);
-		}
+
 	};
 
 	public static final int MAX_TALENT_TIERS = 4;

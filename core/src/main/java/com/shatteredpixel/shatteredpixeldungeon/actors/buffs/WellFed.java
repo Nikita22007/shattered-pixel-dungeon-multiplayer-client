@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.SaltCube;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
-import com.watabou.utils.Bundle;
 
 public class WellFed extends Buff {
 
@@ -97,16 +96,5 @@ public class WellFed extends Buff {
 	}
 	
 	private static final String LEFT = "left";
-	
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put(LEFT, left);
-	}
-	
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		left = bundle.getInt(LEFT);
-	}
+
 }

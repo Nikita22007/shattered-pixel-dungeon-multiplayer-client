@@ -22,11 +22,8 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
-import com.watabou.utils.Bundle;
 
 import java.util.HashSet;
 
@@ -95,20 +92,6 @@ public class Barkskin extends Buff {
 	
 	private static final String LEVEL	    = "level";
 	private static final String INTERVAL    = "interval";
-	
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( INTERVAL, interval );
-		bundle.put( LEVEL, level );
-	}
-	
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		interval = bundle.getInt( INTERVAL );
-		level = bundle.getInt( LEVEL );
-	}
 
 	//These two methods allow for multiple instances of barkskin to stack in terms of duration
 	// but only the stronger bonus is applied

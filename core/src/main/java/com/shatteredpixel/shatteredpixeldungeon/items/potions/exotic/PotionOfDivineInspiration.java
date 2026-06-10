@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.watabou.utils.Bundle;
 
 public class PotionOfDivineInspiration extends ExoticPotion {
 	
@@ -45,18 +44,6 @@ public class PotionOfDivineInspiration extends ExoticPotion {
 		private boolean[] boostedTiers = new boolean[5];
 
 		private static final String BOOSTED_TIERS = "boosted_tiers";
-
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(BOOSTED_TIERS, boostedTiers);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			boostedTiers = bundle.getBooleanArray(BOOSTED_TIERS);
-		}
 
 		public void setBoosted( int tier ){
 			boostedTiers[tier] = true;

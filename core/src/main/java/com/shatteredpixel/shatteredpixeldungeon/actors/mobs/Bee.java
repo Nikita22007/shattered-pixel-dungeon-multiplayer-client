@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.BeeSprite;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 import java.util.HashSet;
@@ -61,24 +60,6 @@ public class Bee extends Mob {
 	private static final String POTPOS	    = "potpos";
 	private static final String POTHOLDER	= "potholder";
 	private static final String ALIGMNENT   = "alignment";
-	
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( LEVEL, level );
-		bundle.put( POTPOS, potPos );
-		bundle.put( POTHOLDER, potHolder );
-		bundle.put( ALIGMNENT, alignment);
-	}
-	
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		spawn( bundle.getInt( LEVEL ) );
-		potPos = bundle.getInt( POTPOS );
-		potHolder = bundle.getInt( POTHOLDER );
-		if (bundle.contains(ALIGMNENT)) alignment = bundle.getEnum( ALIGMNENT, Alignment.class);
-	}
 
 	@Override
 	public void die(Object cause) {

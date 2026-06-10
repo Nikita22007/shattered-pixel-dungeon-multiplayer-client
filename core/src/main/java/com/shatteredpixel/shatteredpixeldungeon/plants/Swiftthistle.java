@@ -23,10 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.plants;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -35,7 +32,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.particles.Emitter;
-import com.watabou.utils.Bundle;
 
 import java.util.ArrayList;
 
@@ -180,29 +176,6 @@ public class Swiftthistle extends Plant {
 		
 		private static final String PRESSES = "presses";
 		private static final String LEFT = "left";
-		
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			
-			int[] values = new int[presses.size()];
-			for (int i = 0; i < values.length; i ++)
-				values[i] = presses.get(i);
-			bundle.put( PRESSES , values );
-			
-			bundle.put( LEFT, left);
-		}
-		
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			
-			int[] values = bundle.getIntArray( PRESSES );
-			for (int value : values)
-				presses.add(value);
-			
-			left = bundle.getFloat(LEFT);
-		}
-		
+
 	}
 }

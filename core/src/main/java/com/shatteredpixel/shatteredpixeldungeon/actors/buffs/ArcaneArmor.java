@@ -21,11 +21,9 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
-import com.watabou.utils.Bundle;
 
 //A magical version of barkskin, essentially
 public class ArcaneArmor extends Buff {
@@ -99,18 +97,5 @@ public class ArcaneArmor extends Buff {
 	
 	private static final String LEVEL	    = "level";
 	private static final String INTERVAL    = "interval";
-	
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( INTERVAL, interval );
-		bundle.put( LEVEL, level );
-	}
-	
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		interval = bundle.getInt( INTERVAL );
-		level = bundle.getInt( LEVEL );
-	}
+
 }

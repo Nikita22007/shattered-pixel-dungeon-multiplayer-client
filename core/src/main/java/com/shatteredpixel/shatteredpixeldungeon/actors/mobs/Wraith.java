@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.WraithSprite;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 import java.util.HashSet;
@@ -47,20 +46,7 @@ public class Wraith extends Mob {
 	}
 	
 	private static final String LEVEL = "level";
-	
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( LEVEL, level );
-	}
-	
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		level = bundle.getInt( LEVEL );
-		adjustStats( level );
-	}
-	
+
 	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( 1 + level/2, 2 + level );

@@ -38,7 +38,6 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 import java.util.HashSet;
@@ -98,20 +97,7 @@ public class SentryRoom {
         private static final String CUR_DELAY = "cur_delay";
         private static final String ROOM = "room";
 
-        @Override
-        public void storeInBundle(Bundle bundle) {
-            super.storeInBundle(bundle);
-            bundle.put(INITIAL_DELAY, initialChargeDelay);
-            bundle.put(CUR_DELAY, curChargeDelay);
-        }
-
-        @Override
-        public void restoreFromBundle(Bundle bundle) {
-            super.restoreFromBundle(bundle);
-            initialChargeDelay = bundle.getFloat(INITIAL_DELAY);
-            curChargeDelay = bundle.getFloat(CUR_DELAY);
-        }
-    }
+	}
 
 	public static class SentrySprite extends MobSprite {
 

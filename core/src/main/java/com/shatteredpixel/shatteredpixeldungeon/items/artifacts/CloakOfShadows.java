@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
@@ -110,24 +109,6 @@ public class CloakOfShadows extends Artifact {
 	public Item upgrade() {
 		chargeCap = Math.min(chargeCap + 1, 10);
 		return super.upgrade();
-	}
-
-	private static final String STEALTHED = "stealthed";
-	private static final String BUFF = "buff";
-
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle(bundle);
-		if (activeBuff != null) bundle.put(BUFF, activeBuff);
-	}
-
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle(bundle);
-		if (bundle.contains(BUFF)){
-			activeBuff = new cloakStealth();
-			activeBuff.restoreFromBundle(bundle.getBundle(BUFF));
-		}
 	}
 
 	@Override
@@ -284,19 +265,6 @@ public class CloakOfShadows extends Artifact {
 		
 		private static final String TURNSTOCOST = "turnsToCost";
 		private static final String BARRIER_INC = "barrier_inc";
-		
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			
-			bundle.put( TURNSTOCOST , turnsToCost);
-		}
-		
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			
-			turnsToCost = bundle.getInt( TURNSTOCOST );
-		}
+
 	}
 }

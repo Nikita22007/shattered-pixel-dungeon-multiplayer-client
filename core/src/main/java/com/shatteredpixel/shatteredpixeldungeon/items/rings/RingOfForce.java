@@ -31,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.AttackIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
-import com.watabou.utils.Bundle;
 
 public class RingOfForce extends Ring {
 
@@ -268,19 +267,6 @@ public class RingOfForce extends Ring {
 		public static final String ACTIVE = "active";
 		public static final String MIN_TURNS_LEFT = "min_turns_left";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(ACTIVE, active);
-			bundle.put(MIN_TURNS_LEFT, minTurnsLeft);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			active = bundle.getBoolean(ACTIVE);
-			minTurnsLeft = bundle.getInt(MIN_TURNS_LEFT);
-		}
 	}
 }
 

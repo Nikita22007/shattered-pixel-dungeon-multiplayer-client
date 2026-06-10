@@ -37,7 +37,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 
 public class Challenge extends ArmorAbility {
 
@@ -167,19 +166,6 @@ public class Challenge extends ArmorAbility {
 		private static final String LEFT = "left";
 		private static final String TAKEN_DMG = "taken_dmg";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(LEFT, left);
-			bundle.put(TAKEN_DMG, takenDmg);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			left = bundle.getInt(LEFT);
-			takenDmg = bundle.getInt(TAKEN_DMG);
-		}
 	}
 
 }

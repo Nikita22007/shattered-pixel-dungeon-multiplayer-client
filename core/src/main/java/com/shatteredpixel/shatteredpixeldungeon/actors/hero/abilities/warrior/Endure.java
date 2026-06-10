@@ -35,7 +35,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 
 public class Endure extends ArmorAbility {
 
@@ -137,21 +136,6 @@ public class Endure extends ArmorAbility {
 		public static String DAMAGE_BONUS   = "damage_bonus";
 		public static String HITS_LEFT      = "hits_left";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(ENDURING, enduring);
-			bundle.put(DAMAGE_BONUS, damageBonus);
-			bundle.put(HITS_LEFT, hitsLeft);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			enduring = bundle.getBoolean(ENDURING);
-			damageBonus = bundle.getInt(DAMAGE_BONUS);
-			hitsLeft = bundle.getInt(HITS_LEFT);
-		}
 	};
 
 	@Override

@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
-import com.watabou.utils.Bundle;
 
 public class Dread extends Buff {
 
@@ -82,20 +81,6 @@ public class Dread extends Buff {
 
 	private static final String LEFT	= "left";
 	private static final String OBJECT    = "object";
-
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle(bundle);
-		bundle.put(LEFT, left);
-		bundle.put(OBJECT, object);
-	}
-
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		object = bundle.getInt( OBJECT );
-		left = bundle.getInt( LEFT );
-	}
 
 	@Override
 	public int icon() {

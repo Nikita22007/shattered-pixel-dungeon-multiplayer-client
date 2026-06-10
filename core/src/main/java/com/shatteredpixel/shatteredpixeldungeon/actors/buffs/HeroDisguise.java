@@ -21,13 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
-import com.watabou.utils.Bundle;
-import com.watabou.utils.Random;
 
 public class HeroDisguise extends FlavourBuff {
 
@@ -59,15 +54,4 @@ public class HeroDisguise extends FlavourBuff {
 
 	private static final String CLASS = "class";
 
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put(CLASS, cls);
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		cls = bundle.getEnum(CLASS, HeroClass.class);
-	}
 }

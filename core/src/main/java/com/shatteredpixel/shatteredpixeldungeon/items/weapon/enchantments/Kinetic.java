@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
-import com.watabou.utils.Bundle;
 
 public class Kinetic extends Weapon.Enchantment {
 	
@@ -122,22 +121,6 @@ public class Kinetic extends Weapon.Enchantment {
 		}
 		
 		private static final String PRESERVED_DAMAGE = "preserve_damage";
-		
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(PRESERVED_DAMAGE, preservedDamage);
-		}
-		
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			if (bundle.contains(PRESERVED_DAMAGE)){
-				preservedDamage = bundle.getFloat(PRESERVED_DAMAGE);
-			} else {
-				preservedDamage = cooldown()/10;
-				spend(cooldown());
-			}
-		}
+
 	}
 }

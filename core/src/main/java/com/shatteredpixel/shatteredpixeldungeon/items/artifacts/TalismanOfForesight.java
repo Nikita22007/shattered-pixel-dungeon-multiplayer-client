@@ -347,18 +347,6 @@ public class TalismanOfForesight extends Artifact {
 			GameScene.updateFog();
 		}
 
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			charID = bundle.getInt(CHAR_ID);
-		}
-
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(CHAR_ID, charID);
-		}
-
 	}
 
 	public static class HeapAwareness extends FlavourBuff {
@@ -378,21 +366,6 @@ public class TalismanOfForesight extends Artifact {
 			GameScene.updateFog();
 		}
 
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			pos = bundle.getInt(POS);
-			depth = bundle.getInt(DEPTH);
-			branch = bundle.getInt(BRANCH);
-		}
-
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(POS, pos);
-			bundle.put(DEPTH, depth);
-			bundle.put(BRANCH, branch);
-		}
 	}
 
 }

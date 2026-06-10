@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 public class Paralysis extends FlavourBuff {
@@ -105,17 +104,6 @@ public class Paralysis extends FlavourBuff {
 		}
 		
 		private static final String DAMAGE = "damage";
-		
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put( DAMAGE, damage );
-		}
-		
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			damage = bundle.getInt(DAMAGE);
-		}
+
 	}
 }

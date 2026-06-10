@@ -43,7 +43,6 @@ import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.Visual;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 
 import java.util.Arrays;
@@ -218,19 +217,6 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 	}
 	
 	private static final String TURNS = "turnsInvis";
-	
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		turnsInvis = bundle.getInt(TURNS);
-		ActionIndicator.setAction(this);
-	}
-	
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put(TURNS, turnsInvis);
-	}
 
 	@Override
 	public String actionName() {

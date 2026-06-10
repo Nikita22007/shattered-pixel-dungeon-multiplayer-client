@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
-import com.watabou.utils.Bundle;
 
 public class Charm extends FlavourBuff {
 
@@ -40,20 +39,6 @@ public class Charm extends FlavourBuff {
 
 	private static final String OBJECT          = "object";
 	private static final String IGNORE_ALLIES    = "ignore_allies";
-
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( OBJECT, object );
-		bundle.put( IGNORE_ALLIES, ignoreHeroAllies );
-	}
-
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		object = bundle.getInt( OBJECT );
-		ignoreHeroAllies = bundle.getBoolean( IGNORE_ALLIES );
-	}
 
 	@Override
 	public int icon() {

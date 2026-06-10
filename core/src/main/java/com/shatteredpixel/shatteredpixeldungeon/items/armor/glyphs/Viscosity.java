@@ -21,19 +21,14 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs;
 
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor.Glyph;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite.Glowing;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.utils.Bundle;
 
 public class Viscosity extends Glyph {
 	
@@ -94,20 +89,7 @@ public class Viscosity extends Glyph {
 		protected int damage = 0;
 		
 		private static final String DAMAGE	= "damage";
-		
-		@Override
-		public void storeInBundle( Bundle bundle ) {
-			super.storeInBundle( bundle );
-			bundle.put( DAMAGE, damage );
-			
-		}
-		
-		@Override
-		public void restoreFromBundle( Bundle bundle ) {
-			super.restoreFromBundle( bundle );
-			damage = bundle.getInt( DAMAGE );
-		}
-		
+
 		public void extend( float damage ) {
 			if (this.damage == 0){
 				//wait 1 turn before damaging if this is freshly applied

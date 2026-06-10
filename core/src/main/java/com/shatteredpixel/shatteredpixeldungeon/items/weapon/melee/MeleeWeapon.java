@@ -40,8 +40,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
@@ -52,10 +50,7 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.Visual;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 import org.jetbrains.annotations.Contract;
-
-import java.util.ArrayList;
 
 public class MeleeWeapon extends Weapon {
 
@@ -410,20 +405,6 @@ public class MeleeWeapon extends Weapon {
 
 		public static final String CHARGES          = "charges";
 		private static final String PARTIALCHARGE   = "partialCharge";
-
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(CHARGES, charges);
-			bundle.put(PARTIALCHARGE, partialCharge);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			charges = bundle.getInt(CHARGES);
-			partialCharge = bundle.getFloat(PARTIALCHARGE);
-		}
 
 		@Override
 		public String actionName() {

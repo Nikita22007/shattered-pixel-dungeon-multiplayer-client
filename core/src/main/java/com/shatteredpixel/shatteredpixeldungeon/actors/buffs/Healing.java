@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.VialOfBlood;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.GameMath;
 
 public class Healing extends Buff {
@@ -109,25 +108,7 @@ public class Healing extends Buff {
 	private static final String FLAT = "flat";
 
 	private static final String HEALING_LIMITED = "healing_limited";
-	
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put(LEFT, healingLeft);
-		bundle.put(PERCENT, percentHealPerTick);
-		bundle.put(FLAT, flatHealPerTick);
-		bundle.put(HEALING_LIMITED, healingLimited);
-	}
-	
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		healingLeft = bundle.getInt(LEFT);
-		percentHealPerTick = bundle.getFloat(PERCENT);
-		flatHealPerTick = bundle.getInt(FLAT);
-		healingLimited = bundle.getBoolean(HEALING_LIMITED);
-	}
-	
+
 	@Override
 	public int icon() {
 		return BuffIndicator.HEALING;

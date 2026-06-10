@@ -30,7 +30,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MissileSprite;
 import com.watabou.noosa.tweeners.AlphaTweener;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 
 public class HeavyBoomerang extends MissileWeapon {
@@ -175,25 +174,6 @@ public class HeavyBoomerang extends MissileWeapon {
 		private static final String RETURN_DEPTH = "return_depth";
 		private static final String RETURN_BRANCH = "return_branch";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(BOOMERANG, boomerang);
-			bundle.put(THROWN_POS, thrownPos);
-			bundle.put(RETURN_POS, returnPos);
-			bundle.put(RETURN_DEPTH, returnDepth);
-			bundle.put(RETURN_BRANCH, returnBranch);
-		}
-		
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			boomerang = (HeavyBoomerang) bundle.get(BOOMERANG);
-			thrownPos = bundle.getInt(THROWN_POS);
-			returnPos = bundle.getInt(RETURN_POS);
-			returnDepth = bundle.getInt(RETURN_DEPTH);
-			returnBranch = bundle.contains(RETURN_BRANCH) ? bundle.getInt(RETURN_BRANCH) : 0;
-		}
 	}
 	
 }

@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
-import com.watabou.utils.Bundle;
 
 public class Sungrass extends Plant {
 	
@@ -128,21 +127,5 @@ public class Sungrass extends Plant {
 		private static final String PARTIAL = "partial_heal";
 		private static final String LEVEL = "level";
 
-		@Override
-		public void storeInBundle( Bundle bundle ) {
-			super.storeInBundle( bundle );
-			bundle.put( POS, pos );
-			bundle.put( PARTIAL, partialHeal);
-			bundle.put( LEVEL, level);
-		}
-		
-		@Override
-		public void restoreFromBundle( Bundle bundle ) {
-			super.restoreFromBundle( bundle );
-			pos = bundle.getInt( POS );
-			partialHeal = bundle.getFloat( PARTIAL );
-			level = bundle.getInt( LEVEL );
-
-		}
 	}
 }

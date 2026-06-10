@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
-import com.watabou.utils.Bundle;
 
 public class DirectableAlly extends NPC {
 
@@ -99,20 +98,6 @@ public class DirectableAlly extends NPC {
 
 	private static final String DEFEND_POS = "defend_pos";
 	private static final String MOVING_TO_DEFEND = "moving_to_defend";
-
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put(DEFEND_POS, defendingPos);
-		bundle.put(MOVING_TO_DEFEND, movingToDefendPos);
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		if (bundle.contains(DEFEND_POS)) defendingPos = bundle.getInt(DEFEND_POS);
-		movingToDefendPos = bundle.getBoolean(MOVING_TO_DEFEND);
-	}
 
 	private class Wandering extends Mob.Wandering {
 

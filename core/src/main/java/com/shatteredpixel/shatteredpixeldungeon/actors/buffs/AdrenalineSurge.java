@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
-import com.watabou.utils.Bundle;
 
 public class AdrenalineSurge extends Buff {
 
@@ -89,18 +88,5 @@ public class AdrenalineSurge extends Buff {
 	
 	private static final String BOOST	    = "boost";
 	private static final String INTERVAL	    = "interval";
-	
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( BOOST, boost );
-		bundle.put( INTERVAL, interval );
-	}
-	
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		boost = bundle.getInt( BOOST );
-		interval = bundle.getFloat(INTERVAL);
-	}
+
 }

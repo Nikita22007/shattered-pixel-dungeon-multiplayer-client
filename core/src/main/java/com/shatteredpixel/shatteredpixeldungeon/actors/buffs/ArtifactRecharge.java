@@ -22,12 +22,9 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
-import com.watabou.utils.Bundle;
 
 public class ArtifactRecharge extends Buff {
 
@@ -94,20 +91,6 @@ public class ArtifactRecharge extends Buff {
 	
 	private static final String LEFT = "left";
 	private static final String IGNORE_HORN = "ignore_horn";
-	
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put( LEFT, left );
-		bundle.put( IGNORE_HORN, ignoreHornOfPlenty );
-	}
-	
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		left = bundle.getFloat(LEFT);
-		ignoreHornOfPlenty = bundle.getBoolean(IGNORE_HORN);
-	}
 
 	public static void chargeArtifacts( Hero hero, float turns ){
 		for (Buff b : hero.buffs()) {

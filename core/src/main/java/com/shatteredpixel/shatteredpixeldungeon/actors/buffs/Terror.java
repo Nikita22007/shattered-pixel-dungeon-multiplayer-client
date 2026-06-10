@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
-import com.watabou.utils.Bundle;
 
 public class Terror extends FlavourBuff {
 
@@ -35,18 +34,6 @@ public class Terror extends FlavourBuff {
 	{
 		type = buffType.NEGATIVE;
 		announced = true;
-	}
-
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle(bundle);
-		bundle.put(OBJECT, object);
-	}
-
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		object = bundle.getInt( OBJECT );
 	}
 
 	@Override

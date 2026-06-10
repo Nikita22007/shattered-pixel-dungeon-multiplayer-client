@@ -347,27 +347,5 @@ public class BrokenSeal extends Item {
 		public static final String TURNS_SINCE_ENEMIES = "turns_since_enemies";
 		public static final String INITIAL_SHIELD = "initial_shield";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(COOLDOWN, cooldown);
-			bundle.put(TURNS_SINCE_ENEMIES, turnsSinceEnemies);
-			bundle.put(INITIAL_SHIELD, initialShield);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			if (bundle.contains(COOLDOWN)) {
-				cooldown = bundle.getInt(COOLDOWN);
-				turnsSinceEnemies = bundle.getFloat(TURNS_SINCE_ENEMIES);
-				initialShield = bundle.getInt(INITIAL_SHIELD);
-
-			//if we have shield from pre-3.1, have it last a bit
-			} else if (shielding() > 0) {
-				turnsSinceEnemies = -100;
-				initialShield = shielding();
-			}
-		}
 	}
 }

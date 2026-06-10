@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 public class Ooze extends Buff {
@@ -42,21 +41,7 @@ public class Ooze extends Buff {
 
 	private static final String LEFT	= "left";
 	private static final String ACTED   = "acted";
-	
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( LEFT, left );
-		bundle.put( ACTED, acted );
-	}
-	
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle(bundle);
-		left = bundle.getFloat(LEFT);
-		acted = bundle.getBoolean(ACTED);
-	}
-	
+
 	@Override
 	public int icon() {
 		return BuffIndicator.OOZE;

@@ -37,8 +37,6 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndTradeItem;
 import com.watabou.utils.BArray;
-import com.watabou.utils.Bundlable;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 
 import java.util.ArrayList;
@@ -207,22 +205,4 @@ public class Shopkeeper extends NPC {
 
 	public static String TURNS_SINCE_HARMED = "turns_since_harmed";
 
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put(BUYBACK_ITEMS, buybackItems);
-		bundle.put(TURNS_SINCE_HARMED, turnsSinceHarmed);
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		buybackItems.clear();
-		if (bundle.contains(BUYBACK_ITEMS)) {
-			for (Bundlable i : bundle.getCollection(BUYBACK_ITEMS)) {
-				buybackItems.add((Item) i);
-			}
-		}
-		turnsSinceHarmed = bundle.contains(TURNS_SINCE_HARMED) ? bundle.getInt(TURNS_SINCE_HARMED) : -1;
-	}
 }

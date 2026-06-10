@@ -36,7 +36,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Bundlable;
-import com.watabou.utils.Bundle;
 
 public class SpiritForm extends ClericSpell {
 
@@ -147,18 +146,6 @@ public class SpiritForm extends ClericSpell {
 		}
 
 		private static final String EFFECT = "effect";
-
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(EFFECT, effect);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			effect = bundle.get(EFFECT);
-		}
 
 	}
 

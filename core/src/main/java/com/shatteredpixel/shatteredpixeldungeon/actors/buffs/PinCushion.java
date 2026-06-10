@@ -28,10 +28,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.TippedDart;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
-import com.watabou.utils.Bundle;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class PinCushion extends Buff {
 
@@ -74,18 +72,6 @@ public class PinCushion extends Buff {
 	}
 
 	private static final String ITEMS = "items";
-
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		bundle.put( ITEMS , items );
-		super.storeInBundle(bundle);
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		items = new ArrayList<>((Collection<MissileWeapon>) ((Collection<?>) bundle.getCollection(ITEMS)));
-		super.restoreFromBundle( bundle );
-	}
 
 	@Override
 	public int icon() {

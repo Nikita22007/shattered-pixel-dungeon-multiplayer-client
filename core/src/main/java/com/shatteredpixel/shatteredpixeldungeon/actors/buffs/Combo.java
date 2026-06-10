@@ -45,7 +45,6 @@ import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.Visual;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 
 public class Combo extends Buff implements ActionIndicator.Action {
@@ -138,31 +137,6 @@ public class Combo extends Buff implements ActionIndicator.Action {
 
 	private static final String CLOBBER_USED = "clobber_used";
 	private static final String PARRY_USED   = "parry_used";
-
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put(COUNT, count);
-		bundle.put(TIME, comboTime);
-		bundle.put(INITIAL_TIME, initialComboTime);
-
-		bundle.put(CLOBBER_USED, clobberUsed);
-		bundle.put(PARRY_USED, parryUsed);
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		count = bundle.getInt( COUNT );
-		comboTime = bundle.getFloat( TIME );
-
-		initialComboTime = bundle.getFloat( INITIAL_TIME );
-
-		clobberUsed = bundle.getBoolean(CLOBBER_USED);
-		parryUsed = bundle.getBoolean(PARRY_USED);
-
-		if (getHighestMove() != null) ActionIndicator.setAction(this);
-	}
 
 	@Override
 	public String actionName() {

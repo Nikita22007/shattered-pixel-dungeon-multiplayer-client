@@ -28,10 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Charm;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MonkEnergy;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -43,7 +40,6 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
@@ -103,67 +99,6 @@ public abstract class Mob extends Char {
     private static final String MAX_LVL = "max_lvl";
 
     private static final String ENEMY_ID = "enemy_id";
-
-    @Override
-    public void storeInBundle(Bundle bundle) {
-
-        super.storeInBundle(bundle);
-
-        if (state == SLEEPING) {
-            bundle.put(STATE, Sleeping.TAG);
-        } else if (state == WANDERING) {
-            bundle.put(STATE, Wandering.TAG);
-        } else if (state == INVESTIGATING) {
-            bundle.put(STATE, Investigating.TAG);
-        } else if (state == HUNTING) {
-            bundle.put(STATE, Hunting.TAG);
-        } else if (state == FLEEING) {
-            bundle.put(STATE, Fleeing.TAG);
-        } else if (state == PASSIVE) {
-            bundle.put(STATE, Passive.TAG);
-        }
-        bundle.put(SEEN, enemySeen);
-        bundle.put(TARGET, target);
-        bundle.put(MAX_LVL, maxLvl);
-
-        if (enemy != null) {
-            bundle.put(ENEMY_ID, enemy.id());
-        }
-    }
-
-    @Override
-    public void restoreFromBundle(Bundle bundle) {
-
-        super.restoreFromBundle(bundle);
-
-        String state = bundle.getString(STATE);
-        if (state.equals(Sleeping.TAG)) {
-            this.state = SLEEPING;
-        } else if (state.equals(Wandering.TAG)) {
-            this.state = WANDERING;
-        } else if (state.equals(Investigating.TAG)) {
-            this.state = INVESTIGATING;
-        } else if (state.equals(Hunting.TAG)) {
-            this.state = HUNTING;
-        } else if (state.equals(Fleeing.TAG)) {
-            this.state = FLEEING;
-        } else if (state.equals(Passive.TAG)) {
-            this.state = PASSIVE;
-        }
-
-        enemySeen = bundle.getBoolean(SEEN);
-
-        target = bundle.getInt(TARGET);
-
-        if (bundle.contains(MAX_LVL)) maxLvl = bundle.getInt(MAX_LVL);
-
-        if (bundle.contains(ENEMY_ID)) {
-            enemyID = bundle.getInt(ENEMY_ID);
-        }
-
-        //no need to actually save this, must be false
-        firstAdded = false;
-    }
 
     //mobs need to remember their targets after every actor is added
     public void restoreEnemy() {

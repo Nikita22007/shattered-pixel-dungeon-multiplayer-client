@@ -47,7 +47,6 @@ import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.Visual;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.GameMath;
 
@@ -116,24 +115,6 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 
 	public static String ENERGY = "energy";
 	public static String COOLDOWN = "cooldown";
-
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put(ENERGY, energy);
-		bundle.put(COOLDOWN, cooldown);
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		energy = bundle.getFloat(ENERGY);
-		cooldown = bundle.getInt(COOLDOWN);
-
-		if (energy >= 1 && cooldown == 0){
-			ActionIndicator.setAction(this);
-		}
-	}
 
 	public void gainEnergy(Mob enemy ) {
 		if (target == null) return;

@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.SheepSprite;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 public class Sheep extends NPC {
@@ -66,15 +65,4 @@ public class Sheep extends NPC {
 
     private static final String LIFESPAN = "lifespan";
 
-    @Override
-    public void storeInBundle(Bundle bundle) {
-        super.storeInBundle(bundle);
-        bundle.put(LIFESPAN, lifespan);
-    }
-
-    @Override
-    public void restoreFromBundle(Bundle bundle) {
-        super.restoreFromBundle(bundle);
-        lifespan = bundle.getInt(LIFESPAN);
-    }
 }

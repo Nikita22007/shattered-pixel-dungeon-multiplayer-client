@@ -41,7 +41,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.TextureFilm;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 import java.util.HashSet;
@@ -211,19 +210,6 @@ public class PowerOfMany extends ArmorAbility {
 		private static final String HERO_CLS = "hero_cls";
 		private static final String DEF_SKILL = "def_skill";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(HERO_CLS, cls);
-			bundle.put(DEF_SKILL, defenseSkill);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			cls = bundle.getEnum(HERO_CLS, HeroClass.class);
-			defenseSkill = bundle.getInt(DEF_SKILL);
-		}
 	}
 
 	public static class LightAllySprite extends MobSprite {

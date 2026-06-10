@@ -30,7 +30,6 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.watabou.utils.Bundle;
 
 public class AscendedForm extends ArmorAbility {
 
@@ -120,23 +119,6 @@ public class AscendedForm extends ArmorAbility {
 		public static final String FLASH_CASTS = "flash_casts";
 		public static final String DIVINE_INTERVENTION_CAST = "divine_intervention_cast";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(LEFT, left);
-			bundle.put(SPELL_CASTS, spellCasts);
-			bundle.put(FLASH_CASTS, flashCasts);
-			bundle.put(DIVINE_INTERVENTION_CAST, divineInverventionCast);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			left = bundle.getInt(LEFT);
-			spellCasts = bundle.getInt(SPELL_CASTS);
-			flashCasts = bundle.getInt(FLASH_CASTS);
-			divineInverventionCast = bundle.getBoolean(DIVINE_INTERVENTION_CAST);
-		}
 	}
 
 }

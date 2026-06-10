@@ -42,7 +42,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.ColorMath;
 import com.watabou.utils.PathFinder;
@@ -326,21 +325,6 @@ public class WandOfLivingEarth extends DamageWand {
 
 		private static final String POWER_TURNS = "power_turns";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(WAND_LEVEL, wandLevel);
-			bundle.put(ARMOR, armor);
-			bundle.put(POWER_TURNS, powerOfManyTurns);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			wandLevel = bundle.getInt(WAND_LEVEL);
-			armor = bundle.getInt(ARMOR);
-			powerOfManyTurns = bundle.getFloat(POWER_TURNS);
-		}
 	}
 
 	public static class EarthGuardian extends NPC {
@@ -419,20 +403,6 @@ public class WandOfLivingEarth extends DamageWand {
 
 		private static final String DEFENSE = "defense";
 		private static final String WAND_LEVEL = "wand_level";
-
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(DEFENSE, defenseSkill);
-			bundle.put(WAND_LEVEL, wandLevel);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			defenseSkill = bundle.getInt(DEFENSE);
-			wandLevel = bundle.getInt(WAND_LEVEL);
-		}
 
 		private class Wandering extends Mob.Wandering{
 

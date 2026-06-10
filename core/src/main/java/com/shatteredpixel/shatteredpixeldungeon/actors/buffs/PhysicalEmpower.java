@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
-import com.watabou.utils.Bundle;
 
 public class PhysicalEmpower extends Buff {
 
@@ -72,19 +71,5 @@ public class PhysicalEmpower extends Buff {
 
 	private static final String BOOST = "boost";
 	private static final String LEFT = "left";
-
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put( BOOST, dmgBoost );
-		bundle.put( LEFT, left );
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		dmgBoost = bundle.getInt( BOOST );
-		left = bundle.getInt( LEFT );
-	}
 
 }

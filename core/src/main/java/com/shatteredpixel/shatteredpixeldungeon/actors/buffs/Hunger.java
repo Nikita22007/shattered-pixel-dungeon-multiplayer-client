@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.SaltCube;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
@@ -32,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.utils.Bundle;
 
 public class Hunger extends Buff implements Hero.Doom {
 
@@ -44,20 +42,6 @@ public class Hunger extends Buff implements Hero.Doom {
 
 	private static final String LEVEL			= "level";
 	private static final String PARTIALDAMAGE 	= "partialDamage";
-
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle(bundle);
-		bundle.put( LEVEL, level );
-		bundle.put( PARTIALDAMAGE, partialDamage );
-	}
-
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		level = bundle.getFloat( LEVEL );
-		partialDamage = bundle.getFloat(PARTIALDAMAGE);
-	}
 
 	@Override
 	public boolean act() {

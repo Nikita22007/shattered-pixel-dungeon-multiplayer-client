@@ -131,32 +131,7 @@ public class TimekeepersHourglass extends Artifact {
 	private static final String SANDBAGS =  "sandbags";
 	private static final String BUFF =      "buff";
 
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle(bundle);
-		bundle.put( SANDBAGS, sandBags );
 
-		if (activeBuff != null)
-			bundle.put( BUFF , activeBuff );
-	}
-
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle(bundle);
-		sandBags = bundle.getInt( SANDBAGS );
-
-		//these buffs belong to hourglass, need to handle unbundling within the hourglass class.
-		if (bundle.contains( BUFF )){
-			Bundle buffBundle = bundle.getBundle( BUFF );
-
-			if (buffBundle.contains( timeFreeze.PRESSES ))
-				activeBuff = new timeFreeze();
-			else
-				activeBuff = new timeStasis();
-
-			activeBuff.restoreFromBundle(buffBundle);
-		}
-	}
 
 	public class hourglassRecharge extends ArtifactBuff {
 		@Override
@@ -381,28 +356,6 @@ public class TimekeepersHourglass extends Artifact {
 		private static final String PRESSES = "presses";
 		private static final String TURNSTOCOST = "turnsToCost";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-
-			int[] values = new int[presses.size()];
-			for (int i = 0; i < values.length; i ++)
-				values[i] = presses.get(i);
-			bundle.put( PRESSES , values );
-
-			bundle.put( TURNSTOCOST , turnsToCost);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-
-			int[] values = bundle.getIntArray( PRESSES );
-			for (int value : values)
-				presses.add(value);
-
-			turnsToCost = bundle.getFloat( TURNSTOCOST );
-		}
 	}
 
 	public static class sandBag extends Item {

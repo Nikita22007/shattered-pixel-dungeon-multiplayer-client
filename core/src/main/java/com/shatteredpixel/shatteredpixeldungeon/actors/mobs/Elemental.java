@@ -49,7 +49,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ElementalSprite;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
@@ -167,26 +166,7 @@ public abstract class Elemental extends Mob {
 	
 	private static final String COOLDOWN = "cooldown";
 	private static final String SUMMONED_ALLY = "summoned_ally";
-	
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( COOLDOWN, rangedCooldown );
-		bundle.put( SUMMONED_ALLY, summonedALly);
-	}
-	
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		if (bundle.contains( COOLDOWN )){
-			rangedCooldown = bundle.getInt( COOLDOWN );
-		}
-		summonedALly = bundle.getBoolean( SUMMONED_ALLY );
-		if (summonedALly){
-			setSummonedALly();
-		}
-	}
-	
+
 	public static class FireElemental extends Elemental {
 		
 		{
@@ -363,17 +343,6 @@ public abstract class Elemental extends Mob {
 
 		private static final String TARGETING_POS = "targeting_pos";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(TARGETING_POS, targetingPos);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			targetingPos = bundle.getInt(TARGETING_POS);
-		}
 	}
 
 	public static class FrostElemental extends Elemental {

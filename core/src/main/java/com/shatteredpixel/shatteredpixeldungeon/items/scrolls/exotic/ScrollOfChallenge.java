@@ -36,7 +36,6 @@ import com.watabou.utils.BArray;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Point;
 
@@ -180,29 +179,6 @@ public class ScrollOfChallenge extends ExoticScroll {
 		private static final String ARENA_POSITIONS = "arena_positions";
 		private static final String LEFT = "left";
 
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-
-			int[] values = new int[arenaPositions.size()];
-			for (int i = 0; i < values.length; i ++)
-				values[i] = arenaPositions.get(i);
-			bundle.put(ARENA_POSITIONS, values);
-
-			bundle.put(LEFT, left);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-
-			int[] values = bundle.getIntArray( ARENA_POSITIONS );
-			for (int value : values) {
-				arenaPositions.add(value);
-			}
-
-			left = bundle.getInt(LEFT);
-		}
 	}
 	
 }

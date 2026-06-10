@@ -22,12 +22,9 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.SpiritForm;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.ChaliceOfBlood;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ChaoticCenser;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.SaltCube;
-import com.watabou.utils.Bundle;
 
 public class Regeneration extends Buff {
 	
@@ -118,15 +115,4 @@ public class Regeneration extends Buff {
 
 	public static final String PARTIAL_REGEN = "partial_regen";
 
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put(PARTIAL_REGEN, partialRegen);
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		partialRegen = bundle.getFloat(PARTIAL_REGEN);
-	}
 }
