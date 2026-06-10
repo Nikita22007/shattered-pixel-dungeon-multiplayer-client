@@ -326,6 +326,7 @@ public class Item implements Bundlable {
 		hero.sprite.emitter().burst( Speck.factory( Speck.EVOKE ), 5 );
 	}
 
+	@Contract(pure = true)
 	public String title() {
 
 		String name = name();
@@ -339,25 +340,30 @@ public class Item implements Bundlable {
 		return name;
 
 	}
-	
+
+	@Contract(pure = true)
 	public String name() {
 		return trueName();
 	}
-	
+
+	@Contract(pure = true)
 	public final String trueName() {
 		return Messages.get(this, "name");
 	}
-	
+
+	@Contract(pure = true)
 	public int image() {
 		return image;
 	}
-	
+
+	@Contract(pure = true)
 	public ItemSprite.Glowing glowing() {
 		return null;
 	}
 
 	public Emitter emitter() { return null; }
-	
+
+	@Contract(pure = true)
 	public String info() {
 
 		if (Dungeon.hero != null) {
@@ -376,26 +382,30 @@ public class Item implements Bundlable {
 
 		return desc();
 	}
-	
+
+	@Contract(pure = true)
 	public String desc() {
 		return Messages.get(this, "desc");
 	}
-	
+
+	@Contract(pure = true)
 	public int quantity() {
 		return quantity;
 	}
-	
+
 	public Item quantity( int value ) {
 		quantity = value;
 		return this;
 	}
 
 	//item's value in gold coins
+	@Contract(pure = true)
 	public int value() {
 		return 0;
 	}
 
 	//item's value in energy crystals
+	@Contract(pure = true)
 	public int energyVal() {
 		return 0;
 	}
@@ -412,7 +422,8 @@ public class Item implements Bundlable {
 	public Item random() {
 		return this;
 	}
-	
+
+	@Contract(pure = true)
 	public String status() {
 		return quantity != 1 ? Integer.toString( quantity ) : null;
 	}
@@ -478,6 +489,7 @@ public class Item implements Bundlable {
 		return new Ballistica( user.pos, dst, Ballistica.PROJECTILE ).collisionPos;
 	}
 
+	@Contract(pure = true)
 	public void throwSound(){
 		Sample.INSTANCE.play(Assets.Sounds.MISS, 0.6f, 0.6f, 1.5f);
 	}
