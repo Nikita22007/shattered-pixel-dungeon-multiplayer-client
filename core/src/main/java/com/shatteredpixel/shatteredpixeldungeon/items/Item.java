@@ -39,7 +39,6 @@ import com.watabou.utils.Reflection;
 import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 public class Item implements Bundlable {
 	protected String spriteSheet = Assets.Sprites.ITEMS;
@@ -81,14 +80,7 @@ public class Item implements Bundlable {
 	public boolean keptThoughLostInvent = false;
 
 	public int customNoteID = -1;
-	
-	public static final Comparator<Item> itemComparator = new Comparator<Item>() {
-		@Override
-		public int compare( Item lhs, Item rhs ) {
-			return Generator.Category.order( lhs ) - Generator.Category.order( rhs );
-		}
-	};
-	
+
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = new ArrayList<>();
 		actions.add( AC_DROP );
