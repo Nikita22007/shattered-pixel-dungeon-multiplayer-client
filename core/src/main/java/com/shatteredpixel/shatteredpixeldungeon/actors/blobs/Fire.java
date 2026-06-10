@@ -21,34 +21,12 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.blobs;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.effects.BlobEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.FlameParticle;
-import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
 
 public class Fire extends Blob {
 
-	public static void burn( int pos ) {
-		Char ch = Actor.findChar( pos );
-		if (ch != null && !false) {
-			((Burning) null).reignite(ch);
-		}
-
-		Heap heap = Dungeon.level.heaps.get( pos );
-		if (heap != null) {
-        }
-
-		Plant plant = Dungeon.level.plants.get( pos );
-		if (plant != null){
-			plant.wither();
-		}
-	}
-	
 	@Override
 	public void use( BlobEmitter emitter ) {
 		super.use( emitter );

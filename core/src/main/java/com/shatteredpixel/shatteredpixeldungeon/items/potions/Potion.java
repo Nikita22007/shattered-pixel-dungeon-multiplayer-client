@@ -30,7 +30,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.ItemStatusHandler;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.ElixirOfHoneyedHealing;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.ExoticPotion;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCleansing;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCorrosiveGas;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfShroudingFog;
@@ -247,24 +246,6 @@ public class Potion extends Item {
 	@Override
 	public int energyVal() {
 		return 6 * quantity;
-	}
-
-	public static class PlaceHolder extends Potion {
-
-		{
-			image = ItemSpriteSheet.POTION_HOLDER;
-		}
-
-		@Override
-		public boolean isSimilar(Item item) {
-			return ExoticPotion.regToExo.containsKey(item.getClass())
-					|| ExoticPotion.regToExo.containsValue(item.getClass());
-		}
-
-		@Override
-		public String info() {
-			return "";
-		}
 	}
 
 }

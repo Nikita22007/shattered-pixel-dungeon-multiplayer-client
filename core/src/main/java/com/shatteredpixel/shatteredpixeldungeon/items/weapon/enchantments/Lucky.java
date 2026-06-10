@@ -61,7 +61,7 @@ public class Lucky extends Weapon.Enchantment {
 	
 	public static Item genLoot(){
 		//80% common, 20% uncommon, 0% rare
-		return RingOfWealth.genConsumableDrop(-5);
+        return null;
 	}
 
 	public static void showFlare( Visual vis ){
@@ -86,7 +86,7 @@ public class Lucky extends Weapon.Enchantment {
 
 		public Item genLoot(){
 			detach();
-			return RingOfWealth.genConsumableDrop(ringLevel);
+            return null;
 		}
 	}
 	

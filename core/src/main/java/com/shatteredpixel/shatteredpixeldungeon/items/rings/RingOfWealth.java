@@ -23,26 +23,10 @@ package com.shatteredpixel.shatteredpixeldungeon.items.rings;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
-import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
-import com.shatteredpixel.shatteredpixeldungeon.items.Honeypot;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfExperience;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.brews.UnstableBrew;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.ExoticPotion;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfDivineInspiration;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ExoticScroll;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfMetamorphosis;
-import com.shatteredpixel.shatteredpixeldungeon.items.spells.UnstableSpell;
-import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfEnchantment;
-import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ExoticCrystals;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.Visual;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 public class RingOfWealth extends Ring {
 
@@ -113,83 +97,6 @@ public class RingOfWealth extends Ring {
 				break;
 		}
 		latestDropTier = 0;
-	}
-	
-	public static Item genConsumableDrop(int level) {
-		float roll = Random.Float();
-		//60% chance - 4% per level. Starting from +15: 0%
-		if (roll < (0.6f - 0.04f * level)) {
-			latestDropTier = 1;
-			return genLowValueConsumable();
-		//30% chance + 2% per level. Starting from +15: 60%-2%*(lvl-15)
-		} else if (roll < (0.9f - 0.02f * level)) {
-			latestDropTier = 2;
-			return genMidValueConsumable();
-		//10% chance + 2% per level. Starting from +15: 40%+2%*(lvl-15)
-		} else {
-			latestDropTier = 3;
-			return genHighValueConsumable();
-		}
-	}
-
-	private static Item genLowValueConsumable(){
-		switch (Random.Int(4)){
-			case 0: default:
-				Item i = new Gold().random();
-				return i.quantity(i.quantity()/2);
-			case 1:
-				return null;
-			case 2:
-				return null;
-			case 3:
-				return null;
-		}
-	}
-
-	private static Item genMidValueConsumable(){
-		switch (Random.Int(6)){
-			case 0: default:
-				Item i = genLowValueConsumable();
-				return i.quantity(i.quantity()*2);
-			case 1:
-				i = null;
-				if (!(false)) {
-					return Reflection.newInstance(ExoticPotion.regToExo.get(i.getClass()));
-				} else {
-					return Reflection.newInstance(i.getClass());
-				}
-			case 2:
-				i = null;
-				if (!(false)){
-					return Reflection.newInstance(ExoticScroll.regToExo.get(i.getClass()));
-				} else {
-					return Reflection.newInstance(i.getClass());
-				}
-			case 3:
-				return Random.Int(2) == 0 ? new UnstableBrew() : new UnstableSpell();
-			case 4:
-				return new Bomb();
-			case 5:
-				return new Honeypot();
-		}
-	}
-
-	private static Item genHighValueConsumable(){
-		switch (Random.Int(4)){
-			case 0: default:
-				Item i = genMidValueConsumable();
-				if (false){
-					return new Bomb.DoubleBomb();
-				} else {
-					return i.quantity(i.quantity()*2);
-				}
-			case 1:
-				return new StoneOfEnchantment();
-			case 2:
-				return Random.Float() < ExoticCrystals.consumableExoticChance() ? new PotionOfDivineInspiration() : new PotionOfExperience();
-			case 3:
-				return Random.Float() < ExoticCrystals.consumableExoticChance() ? new ScrollOfMetamorphosis() : new ScrollOfTransmutation();
-		}
 	}
 
 }

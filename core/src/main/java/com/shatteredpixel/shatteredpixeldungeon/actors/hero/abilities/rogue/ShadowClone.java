@@ -21,44 +21,21 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.DirectableAlly;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MobSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.TextureFilm;
-import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.tweeners.Tweener;
-import com.watabou.utils.BArray;
-import com.watabou.utils.Bundle;
-import com.watabou.utils.PathFinder;
-import com.watabou.utils.Random;
 
 public class ShadowClone extends ArmorAbility {
 
     protected float baseChargeUse = 35;
-
-    @Override
-	public String targetingPrompt() {
-		if (getShadowAlly() == null) {
-			return super.targetingPrompt();
-		} else {
-			return Messages.get(this, "prompt");
-		}
-	}
 
 	@Override
 	public boolean useTargeting(){
@@ -79,182 +56,7 @@ public class ShadowClone extends ArmorAbility {
 		return new Talent[]{Talent.SHADOW_BLADE, Talent.CLONED_ARMOR, Talent.PERFECT_COPY, Talent.HEROIC_ENERGY};
 	}
 
-	private static ShadowAlly getShadowAlly(){
-		for (Char ch : Actor.chars()){
-		}
-		return null;
-	}
-
-    public static class ShadowAlly extends DirectableAlly {
-
-        {
-            spriteClass = ShadowSprite.class;
-
-            HP = HT = 80;
-
-            properties.add(Property.INORGANIC);
-        }
-
-        public ShadowAlly() {
-            super();
-        }
-
-        public ShadowAlly(int heroLevel) {
-            super();
-            int hpBonus = 15 + 5 * heroLevel;
-            hpBonus = Math.round(0.1f * Dungeon.hero.pointsInTalent(Talent.PERFECT_COPY) * hpBonus);
-            if (hpBonus > 0) {
-                HT += hpBonus;
-                HP += hpBonus;
-            }
-            defenseSkill = heroLevel + 4; //equal to base hero defense skill
-        }
-
-        @Override
-        protected boolean act() {
-            int oldPos = pos;
-            boolean result = super.act();
-            //partially simulates how the hero switches to idle animation
-            if ((pos == target || oldPos == pos) && sprite.looping()) {
-                sprite.idle();
-            }
-            return result;
-        }
-
-        @Override
-        public void defendPos(int cell) {
-            GLog.i(Messages.get(this, "direct_defend"));
-            super.defendPos(cell);
-        }
-
-        @Override
-        public void followHero() {
-            GLog.i(Messages.get(this, "direct_follow"));
-            super.followHero();
-        }
-
-        @Override
-        public void targetChar(Char ch) {
-            GLog.i(Messages.get(this, "direct_attack"));
-            super.targetChar(ch);
-        }
-
-        @Override
-        public int attackSkill(Char target) {
-            return defenseSkill + 5; //equal to base hero attack skill
-        }
-
-        @Override
-        public int damageRoll() {
-            int damage = Random.NormalIntRange(10, 20);
-            int heroDamage = Dungeon.hero.damageRoll();
-            heroDamage /= Dungeon.hero.attackDelay(); //normalize hero damage based on atk speed
-            heroDamage = Math.round(0.08f * Dungeon.hero.pointsInTalent(Talent.SHADOW_BLADE) * heroDamage);
-            if (heroDamage > 0) {
-                damage += heroDamage;
-            }
-            return damage;
-        }
-
-
-        @Override
-        public int drRoll() {
-            int dr = super.drRoll();
-            int heroRoll = Dungeon.hero.drRoll();
-            heroRoll = Math.round(0.12f * Dungeon.hero.pointsInTalent(Talent.CLONED_ARMOR) * heroRoll);
-            if (heroRoll > 0) {
-                dr += heroRoll;
-            }
-            return dr;
-        }
-
-
-        @Override
-        public float speed() {
-            float speed = super.speed();
-
-            //moves 2 tiles at a time when returning to the hero
-            if (state == WANDERING
-                    && defendingPos == -1
-                    && Dungeon.level.distance(pos, Dungeon.hero.pos) > 1) {
-                speed *= 2;
-            }
-
-            return speed;
-        }
-
-        @Override
-        public boolean canInteract(Char c) {
-            if (super.canInteract(c)) {
-                return true;
-            } else if (Dungeon.level.distance(pos, c.pos) <= Dungeon.hero.pointsInTalent(Talent.PERFECT_COPY)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        @Override
-        public boolean interact(Char c) {
-            if (!Dungeon.hero.hasTalent(Talent.PERFECT_COPY)) {
-                return super.interact(c);
-            }
-
-            //some checks from super.interact
-            if (!Dungeon.level.passable[pos] && !c.flying) {
-                return true;
-            }
-
-            if (properties().contains(Property.LARGE) && !Dungeon.level.openSpace[c.pos]
-                    || c.properties().contains(Property.LARGE) && !Dungeon.level.openSpace[pos]) {
-                return true;
-            }
-
-            int curPos = pos;
-
-            //warp instantly with the clone
-            PathFinder.buildDistanceMap(c.pos, BArray.or(Dungeon.level.passable, Dungeon.level.avoid, null));
-            if (PathFinder.distance[pos] == Integer.MAX_VALUE) {
-                return true;
-            }
-            appear(this, Dungeon.hero.pos);
-            appear(Dungeon.hero, curPos);
-            Dungeon.observe();
-            GameScene.updateFog();
-            return true;
-        }
-
-        private static void appear(Char ch, int pos) {
-
-            ch.sprite.interruptMotion();
-
-            if (Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[ch.pos]) {
-                Sample.INSTANCE.play(Assets.Sounds.PUFF);
-            }
-
-            ch.move(pos);
-            if (ch.pos == pos) ch.sprite.place(pos);
-
-            if (Dungeon.level.heroFOV[pos] || false) {
-                ch.sprite.emitter().burst(SmokeParticle.FACTORY, 10);
-            }
-        }
-
-        private static final String DEF_SKILL = "def_skill";
-
-        @Override
-        public void storeInBundle(Bundle bundle) {
-            super.storeInBundle(bundle);
-            bundle.put(DEF_SKILL, defenseSkill);
-        }
-
-        @Override
-        public void restoreFromBundle(Bundle bundle) {
-            super.restoreFromBundle(bundle);
-            defenseSkill = bundle.getInt(DEF_SKILL);
-        }
-    }
-
+    @SuppressWarnings("unused")
 	public static class ShadowSprite extends MobSprite {
 
 		private Emitter smoke;
