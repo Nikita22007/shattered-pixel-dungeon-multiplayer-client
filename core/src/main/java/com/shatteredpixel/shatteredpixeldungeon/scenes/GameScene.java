@@ -709,12 +709,8 @@ public class GameScene extends PixelScene {
 	
 	@Override
 	public synchronized void onPause() {
-		try {
-			if (!Dungeon.hero.ready) waitForActorThread(500, false);
-		} catch (IOException e) {
-			ShatteredPixelDungeon.reportException(e);
-		}
-	}
+        if (!Dungeon.hero.ready) waitForActorThread(500, false);
+    }
 
 	private static Thread actorThread;
 	

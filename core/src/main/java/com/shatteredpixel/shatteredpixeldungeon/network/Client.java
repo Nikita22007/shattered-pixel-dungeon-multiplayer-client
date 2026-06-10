@@ -77,6 +77,7 @@ public class Client extends Thread {
         try {
             socket.close();
         } catch (Exception e) {
+            e.printStackTrace();
         }
         socket = null;
         readStream = null;

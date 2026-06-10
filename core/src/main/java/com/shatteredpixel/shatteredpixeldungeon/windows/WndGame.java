@@ -110,12 +110,8 @@ public class WndGame extends Window {
 		addButton(curBtn = new RedButton(Messages.get(this, "menu")) {
 			@Override
 			protected void onClick() {
-				try {
-                    Client.disconnectWithoutSwitch();
-				} catch (IOException e) {
-					ShatteredPixelDungeon.reportException(e);
-				}
-				Game.switchScene(TitleScene.class);
+                Client.disconnectWithoutSwitch();
+                Game.switchScene(TitleScene.class);
 			}
 		});
 		curBtn.icon(Icons.get(Icons.DISPLAY));
