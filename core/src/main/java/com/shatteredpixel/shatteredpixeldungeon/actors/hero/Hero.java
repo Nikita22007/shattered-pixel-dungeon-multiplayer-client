@@ -1229,7 +1229,7 @@ public class Hero extends Char {
 		if (source != PotionOfExperience.class) {
 			for (Item i : belongings) {
 				if (i != null) {
-					i.onHeroGainExp(percent, this);
+
 				}
 			}
 		}
