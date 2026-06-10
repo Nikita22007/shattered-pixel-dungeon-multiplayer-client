@@ -144,8 +144,7 @@ public class ElixirOfAquaticRejuvenation extends Elixir {
 			outQuantity = 1;
 		}
 
-		@Override
-		public Item brew(ArrayList<Item> ingredients) {
+		private Item brew(ArrayList<Item> ingredients) {
             return super.brew(ingredients);
 		}
 	}

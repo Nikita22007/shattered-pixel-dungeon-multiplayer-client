@@ -46,13 +46,9 @@ public class Dungeon {
 	//could all be their own separate numbers, but this allows iterating, much nicer for bundling/initializing.
 	public static enum LimitedDrops {
 
-		NECRO_HP,
 		//Demon spawners are already limited in their spawnrate, no need to limit their health drops
 		//alchemy
-		COOKING_HP,
-
-		SKELE_WEP,
-		THEIF_MISC;
+		COOKING_HP;
 
 		public int count = 0;
 

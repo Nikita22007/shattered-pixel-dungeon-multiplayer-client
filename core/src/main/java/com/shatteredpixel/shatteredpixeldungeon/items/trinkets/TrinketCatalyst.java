@@ -102,20 +102,7 @@ public class TrinketCatalyst extends Item {
 			return 6;
 		}
 
-		@Override
-		public Item brew(ArrayList<Item> ingredients) {
-			//we silently re-add the catalyst so that we can clear it when a trinket is selected
-			//this way player isn't totally screwed if they quit the game while selecting
-			TrinketCatalyst newCata = (TrinketCatalyst) ingredients.get(0).duplicate();
-
-            ingredients.get(0).quantity(0);
-
-			ShatteredPixelDungeon.scene().addToFront(new WndTrinket(newCata));
-
-			return null;
-		}
-
-		@Override
+        @Override
 		public Item sampleOutput(ArrayList<Item> ingredients) {
 			return new Trinket.PlaceHolder();
 		}

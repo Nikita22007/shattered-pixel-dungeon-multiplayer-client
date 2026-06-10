@@ -78,8 +78,7 @@ public class MeatPie extends Food {
 			return 6;
 		}
 		
-		@Override
-		public Item brew(ArrayList<Item> ingredients) {
+		private Item brew(ArrayList<Item> ingredients) {
 			if (!testIngredients(ingredients)) return null;
 			
 			for (Item ingredient : ingredients){

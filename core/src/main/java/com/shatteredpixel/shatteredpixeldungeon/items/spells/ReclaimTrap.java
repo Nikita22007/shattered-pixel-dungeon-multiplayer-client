@@ -172,8 +172,7 @@ public class ReclaimTrap extends TargetedSpell {
 			outQuantity = OUT_QUANTITY;
 		}
 
-		@Override
-		public Item brew(ArrayList<Item> ingredients) {
+		private Item brew(ArrayList<Item> ingredients) {
             return super.brew(ingredients);
 		}
 	}

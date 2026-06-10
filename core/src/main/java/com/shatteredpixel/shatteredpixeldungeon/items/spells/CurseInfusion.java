@@ -119,9 +119,5 @@ public class CurseInfusion extends InventorySpell {
 			outQuantity = OUT_QUANTITY;
 		}
 
-		@Override
-		public Item brew(ArrayList<Item> ingredients) {
-            return super.brew(ingredients);
-		}
-	}
+    }
 }

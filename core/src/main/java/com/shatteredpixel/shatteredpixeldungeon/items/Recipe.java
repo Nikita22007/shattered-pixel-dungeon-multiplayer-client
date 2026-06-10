@@ -124,32 +124,8 @@ public abstract class Recipe {
 		public int cost(ArrayList<Item> ingredients){
 			return cost;
 		}
-		
-		@Override
-		public Item brew(ArrayList<Item> ingredients) {
-			if (!testIngredients(ingredients)) return null;
-			
-			int[] needed = inQuantity.clone();
-			
-			for (Item ingredient : ingredients){
-				for (int i = 0; i < inputs.length; i++) {
-					if (ingredient.getClass() == inputs[i] && needed[i] > 0) {
-						if (needed[i] <= ingredient.quantity()) {
-							ingredient.quantity(ingredient.quantity() - needed[i]);
-							needed[i] = 0;
-						} else {
-							needed[i] -= ingredient.quantity();
-							ingredient.quantity(0);
-						}
-					}
-				}
-			}
-			
-			//sample output and real output are identical in this case.
-			return sampleOutput(null);
-		}
-		
-		//ingredients are ignored, as output doesn't vary
+
+        //ingredients are ignored, as output doesn't vary
 		public Item sampleOutput(ArrayList<Item> ingredients){
 			try {
 				Item result = Reflection.newInstance(output);

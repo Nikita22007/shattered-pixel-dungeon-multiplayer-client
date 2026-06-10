@@ -359,25 +359,7 @@ public class Bomb extends Item {
 			}
 			return 0;
 		}
-		
-		@Override
-		public Item brew(ArrayList<Item> ingredients) {
-			Item result = null;
-			
-			for (Item i : ingredients){
-				i.quantity(i.quantity()-1);
-				if (validIngredients.containsKey(i.getClass())){
-					result = Reflection.newInstance(validIngredients.get(i.getClass()));
-				}
-			}
 
-			if (result instanceof ArcaneBomb){
-            } else if (result instanceof ShrapnelBomb){
-            }
-
-			return result;
-		}
-		
 		@Override
 		public Item sampleOutput(ArrayList<Item> ingredients) {
 			for (Item i : ingredients){

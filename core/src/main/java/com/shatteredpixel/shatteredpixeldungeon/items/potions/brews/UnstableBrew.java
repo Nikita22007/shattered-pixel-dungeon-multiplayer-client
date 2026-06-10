@@ -108,17 +108,7 @@ public class UnstableBrew extends Brew {
 			return 1;
 		}
 
-		@Override
-		public Item brew(ArrayList<Item> ingredients) {
-
-			for (Item i : ingredients){
-				i.quantity(i.quantity()-1);
-			}
-			
-			return sampleOutput(null);
-		}
-		
-		@Override
+        @Override
 		public Item sampleOutput(ArrayList<Item> ingredients) {
 			return new UnstableBrew();
 		}

@@ -292,8 +292,7 @@ public abstract class Scroll extends Item {
 			return 0;
 		}
 		
-		@Override
-		public Item brew(ArrayList<Item> ingredients) {
+		private Item brew(ArrayList<Item> ingredients) {
 			if (!testIngredients(ingredients)) return null;
 			
 			Scroll s = (Scroll) ingredients.get(0);
