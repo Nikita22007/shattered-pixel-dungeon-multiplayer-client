@@ -414,7 +414,6 @@ public class WandOfLivingEarth extends DamageWand {
 		}
 		
 		{
-			immunities.add( AllyBuff.class );
 		}
 
 		private static final String DEFENSE = "defense";

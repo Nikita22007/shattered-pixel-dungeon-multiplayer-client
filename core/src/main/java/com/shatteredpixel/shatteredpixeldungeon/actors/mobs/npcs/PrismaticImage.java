@@ -210,13 +210,6 @@ public class PrismaticImage extends NPC {
 		return s;
 	}
 
-	{
-		immunities.add( ToxicGas.class );
-		immunities.add( CorrosiveGas.class );
-		immunities.add( Burning.class );
-		immunities.add( AllyBuff.class );
-	}
-	
 	private class Wandering extends Mob.Wandering{
 		
 		@Override

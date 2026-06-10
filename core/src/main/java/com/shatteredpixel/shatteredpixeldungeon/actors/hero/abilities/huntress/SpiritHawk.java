@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BlobImmunity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
@@ -41,6 +40,8 @@ import com.watabou.noosa.TextureFilm;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.GameMath;
 import com.watabou.utils.Random;
+
+import java.util.HashSet;
 
 public class SpiritHawk extends ArmorAbility {
 
@@ -98,8 +99,8 @@ public class SpiritHawk extends ArmorAbility {
 			}
 			attacksAutomatically = false;
 
-			immunities.addAll(new BlobImmunity().immunities());
-			immunities.add(AllyBuff.class);
+			new BlobImmunity();
+			immunities.addAll(new HashSet<Class>());
 		}
 
 		@Override

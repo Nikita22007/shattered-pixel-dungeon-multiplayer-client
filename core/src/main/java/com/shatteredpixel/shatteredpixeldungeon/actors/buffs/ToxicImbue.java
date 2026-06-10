@@ -116,8 +116,6 @@ public class ToxicImbue extends Buff {
 	}
 
 	{
-		immunities.add( ToxicGas.class );
-		immunities.add( Poison.class );
 	}
 
 	@Override

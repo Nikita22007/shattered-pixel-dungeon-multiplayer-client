@@ -197,7 +197,6 @@ public class Spinner extends Mob {
 	}
 	
 	{
-		immunities.add(Web.class);
 	}
 
 	private class Hunting extends Mob.Hunting {

@@ -138,10 +138,6 @@ public class MirrorImage extends NPC {
 	}
 	
 	{
-		immunities.add( ToxicGas.class );
-		immunities.add( CorrosiveGas.class );
-		immunities.add( Burning.class );
-		immunities.add( AllyBuff.class );
 	}
 
 }

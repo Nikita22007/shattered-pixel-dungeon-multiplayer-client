@@ -685,11 +685,6 @@ public class DriedRose extends Artifact {
 		}
 
 		{
-			immunities.add(CorrosiveGas.class);
-			immunities.add(Burning.class);
-			immunities.add(ScrollOfRetribution.class);
-			immunities.add(ScrollOfPsionicBlast.class);
-			immunities.add(AllyBuff.class);
 		}
 
 	}

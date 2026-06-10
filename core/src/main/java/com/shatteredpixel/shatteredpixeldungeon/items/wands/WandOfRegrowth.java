@@ -420,7 +420,6 @@ public class WandOfRegrowth extends Wand {
         }
 
         {
-            immunities.add(Doom.class);
         }
 
         @Override

@@ -131,7 +131,6 @@ public class SuperNovaTracker extends Buff {
 
 	public static class NovaBombImmune extends FlavourBuff{
 		{
-			immunities.add(Bomb.ConjuredBomb.class);
 		}
 	}
 

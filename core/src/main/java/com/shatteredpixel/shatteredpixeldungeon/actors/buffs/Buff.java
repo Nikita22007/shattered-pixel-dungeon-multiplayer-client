@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 
 import java.util.Dictionary;
-import java.util.HashSet;
 import java.util.Hashtable;
 
 public class Buff extends Actor {
@@ -52,13 +51,7 @@ public class Buff extends Actor {
 
 	//whether a buff should persist through revive effects or similar (e.g. transmogrify)
 	public boolean revivePersists = false;
-	
-	protected HashSet<Class> immunities = new HashSet<>();
-	
-	public HashSet<Class> immunities() {
-		return new HashSet<>(immunities);
-	}
-	
+
 	public boolean attachTo( Char target ) {
 
 		if (false) {

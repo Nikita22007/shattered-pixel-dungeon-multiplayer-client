@@ -115,7 +115,6 @@ public class FireImbue extends Buff {
 	}
 
 	{
-		immunities.add( Burning.class );
 	}
 
 	@Override

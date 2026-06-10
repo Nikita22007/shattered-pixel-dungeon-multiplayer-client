@@ -37,6 +37,8 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.MirrorSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.tweeners.AlphaTweener;
 
+import java.util.HashSet;
+
 public class Feint extends ArmorAbility {
 
     protected float baseChargeUse = 35;
@@ -140,7 +142,8 @@ public class Feint extends ArmorAbility {
         }
 
         {
-            immunities.addAll(new BlobImmunity().immunities());
+            new BlobImmunity();
+            immunities.addAll(new HashSet<Class>());
         }
 
         @Override

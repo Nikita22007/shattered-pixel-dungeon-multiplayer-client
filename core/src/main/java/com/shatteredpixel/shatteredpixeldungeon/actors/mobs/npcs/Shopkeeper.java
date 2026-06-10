@@ -34,8 +34,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -57,6 +55,7 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Shopkeeper extends NPC {
 
@@ -117,7 +116,8 @@ public class Shopkeeper extends NPC {
 				protected boolean act() {
 					//cleanses all harmful blobs in the shop
 					ArrayList<Blob> blobs = new ArrayList<>();
-					for (Class c : new BlobImmunity().immunities()) {
+                    new BlobImmunity();
+                    for (Class c : new HashSet<Class>()) {
 						Blob b = Dungeon.level.blobs.get(c);
 						if (b != null && b.volume > 0) {
 							blobs.add(b);

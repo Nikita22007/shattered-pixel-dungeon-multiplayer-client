@@ -182,7 +182,6 @@ public class Ratmogrify extends ArmorAbility {
 		}
 
 		{
-			immunities.add(AllyBuff.class);
 		}
 
 		private static final String ORIGINAL = "original";

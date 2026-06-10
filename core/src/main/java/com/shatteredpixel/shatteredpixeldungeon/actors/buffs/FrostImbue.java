@@ -55,8 +55,6 @@ public class FrostImbue extends FlavourBuff {
 	}
 	
 	{
-		immunities.add( Frost.class );
-		immunities.add( Chill.class );
 	}
 
 	@Override

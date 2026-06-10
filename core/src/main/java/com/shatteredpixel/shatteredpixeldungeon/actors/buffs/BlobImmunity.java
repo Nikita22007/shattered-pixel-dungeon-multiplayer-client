@@ -55,22 +55,4 @@ public class BlobImmunity extends FlavourBuff {
 		return Math.max(0, (DURATION - visualcooldown()) / DURATION);
 	}
 
-	{
-		//all harmful blobs
-		immunities.add( Blizzard.class );
-		immunities.add( ConfusionGas.class );
-		immunities.add( CorrosiveGas.class );
-		immunities.add( Electricity.class );
-		immunities.add( Fire.class );
-		immunities.add( Freezing.class );
-		immunities.add( Inferno.class );
-		immunities.add( ParalyticGas.class );
-		immunities.add( Regrowth.class );
-		immunities.add( SmokeScreen.class );
-		immunities.add( StenchGas.class );
-		immunities.add( StormCloud.class );
-		immunities.add( ToxicGas.class );
-		immunities.add( Web.class );
-	}
-
 }

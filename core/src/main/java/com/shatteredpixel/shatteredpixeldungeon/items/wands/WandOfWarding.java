@@ -444,11 +444,6 @@ public class WandOfWarding extends Wand {
 		}
 		
 		{
-			immunities.add( Sleep.class );
-			immunities.add( Terror.class );
-			immunities.add( Dread.class );
-			immunities.add( Vertigo.class );
-			immunities.add( AllyBuff.class );
 		}
 
 		private static final String TIER = "tier";

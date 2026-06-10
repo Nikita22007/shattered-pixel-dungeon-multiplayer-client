@@ -92,12 +92,6 @@ public class SmokeBomb extends ArmorAbility {
 		}
 
 		{
-			immunities.add( Dread.class );
-			immunities.add( Terror.class );
-			immunities.add( Amok.class );
-			immunities.add( Charm.class );
-			immunities.add( Sleep.class );
-			immunities.add( AllyBuff.class );
 		}
 
 	}

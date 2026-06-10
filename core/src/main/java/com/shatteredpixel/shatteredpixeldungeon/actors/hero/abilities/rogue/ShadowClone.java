@@ -92,8 +92,6 @@ public class ShadowClone extends ArmorAbility {
 
             HP = HT = 80;
 
-            immunities.add(AllyBuff.class);
-
             properties.add(Property.INORGANIC);
         }
 

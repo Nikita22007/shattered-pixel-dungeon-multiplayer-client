@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.BlobImmunity;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -183,33 +182,4 @@ public class Challenge extends ArmorAbility {
 		}
 	}
 
-	public static class SpectatorFreeze extends FlavourBuff {
-
-		@Override
-		public void fx(boolean on) {
-			if (on) {
-				target.sprite.add(CharSprite.State.DARKENED);
-				target.sprite.add(CharSprite.State.PARALYSED);
-			} else {
-				//allies can't be spectator frozen, so just check doom
-				{
-					target.sprite.remove(CharSprite.State.DARKENED);
-				}
-				if (target.paralysed == 0) target.sprite.remove(CharSprite.State.PARALYSED);
-			}
-		}
-
-		@Override
-		public void detach(){
-			super.detach();
-			if (cooldown() > 0) {
-				Actor.delayChar(target, -cooldown());
-			}
-		}
-
-		{
-			immunities.addAll(new BlobImmunity().immunities());
-		}
-
-	}
 }
