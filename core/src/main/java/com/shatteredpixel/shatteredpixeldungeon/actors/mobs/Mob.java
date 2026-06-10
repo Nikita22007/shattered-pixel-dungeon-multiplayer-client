@@ -34,7 +34,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GreaterHaste;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MonkEnergy;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Preparation;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
@@ -45,8 +44,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.Stasis;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
-import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Bestiary;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
@@ -575,27 +572,6 @@ public abstract class Mob extends Char {
                 }
             }
         }
-    }
-
-    public float lootChance() {
-        float lootChance = this.lootChance;
-
-        float dropBonus = RingOfWealth.dropChanceMultiplier(Dungeon.hero);
-
-        Talent.BountyHunterTracker bhTracker = null;
-        if (bhTracker != null) {
-            Preparation prep = null;
-            if (prep != null) {
-                // 2/4/8/16% per prep level, multiplied by talent points
-                float bhBonus = 0.02f * (float) Math.pow(2, prep.attackLevel() - 1);
-                bhBonus *= Dungeon.hero.pointsInTalent(Talent.BOUNTY_HUNTER);
-                dropBonus += bhBonus;
-            }
-        }
-
-        dropBonus += ShardOfOblivion.lootChanceMultiplier() - 1f;
-
-        return lootChance * dropBonus;
     }
 
     protected Object loot = null;

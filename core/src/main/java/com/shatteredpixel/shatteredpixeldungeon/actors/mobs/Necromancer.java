@@ -92,11 +92,6 @@ public class Necromancer extends Mob {
 	public int drRoll() {
 		return super.drRoll() + Random.NormalIntRange(0, 5);
 	}
-	
-	@Override
-	public float lootChance() {
-		return super.lootChance() * ((6f - Dungeon.LimitedDrops.NECRO_HP.count) / 6f);
-	}
 
 	@Override
 	public void die(Object cause) {

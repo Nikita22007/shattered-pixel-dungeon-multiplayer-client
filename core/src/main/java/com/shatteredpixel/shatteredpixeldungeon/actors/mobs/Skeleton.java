@@ -108,13 +108,6 @@ public class Skeleton extends Mob {
 	}
 
 	@Override
-	public float lootChance() {
-		//each drop makes future drops 1/3 as likely
-		// so loot chance looks like: 1/6, 1/18, 1/54, 1/162, etc.
-		return super.lootChance() * (float)Math.pow(1/3f, Dungeon.LimitedDrops.SKELE_WEP.count);
-	}
-
-	@Override
 	public int attackSkill( Char target ) {
 		return 12;
 	}
