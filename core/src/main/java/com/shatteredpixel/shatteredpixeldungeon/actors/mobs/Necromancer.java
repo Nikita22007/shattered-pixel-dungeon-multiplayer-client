@@ -96,12 +96,8 @@ public class Necromancer extends Mob {
 	@Override
 	public void die(Object cause) {
 		if (storedSkeletonID != -1){
-			Actor ch = Actor.findById(storedSkeletonID);
 			storedSkeletonID = -1;
-			if (ch instanceof NecroSkeleton){
-				mySkeleton = (NecroSkeleton) ch;
-			}
-		}
+        }
 		
 		if (mySkeleton != null && mySkeleton.isAlive() && mySkeleton.alignment == alignment){
 			mySkeleton.die(null);

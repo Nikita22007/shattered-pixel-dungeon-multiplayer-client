@@ -402,7 +402,8 @@ public abstract class Actor implements Bundlable {
 			b.spendConstant(time);
 		}
 	}
-	
+
+	@Contract(pure = true)
 	public static synchronized Char findChar( int pos ) {
 		for (Char ch : chars){
 			if (ch.pos == pos)
@@ -411,13 +412,16 @@ public abstract class Actor implements Bundlable {
 		return null;
 	}
 
+	@Contract(pure = true)
 	public static synchronized Actor findById( int id ) {
 		return ids.get( id );
 	}
 
+	@Contract(pure = true)
 	public static synchronized HashSet<Actor> all() {
 		return new HashSet<>(all);
 	}
 
+	@Contract(pure = true)
 	public static synchronized HashSet<Char> chars() { return new HashSet<>(chars); }
 }
