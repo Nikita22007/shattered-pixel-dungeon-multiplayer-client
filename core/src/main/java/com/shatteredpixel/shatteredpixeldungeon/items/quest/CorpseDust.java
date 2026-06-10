@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Wraith;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -97,8 +96,8 @@ public class CorpseDust extends Item {
 					}
 				}
 				if (!candidates.isEmpty()){
-					Wraith.spawnAt(Random.element(candidates), DustWraith.class);
-					Sample.INSTANCE.play(Assets.Sounds.CURSED);
+                    Random.element(candidates);
+                    Sample.INSTANCE.play(Assets.Sounds.CURSED);
 					spawnPower -= powerNeeded;
 				} else {
 					//prevents excessive spawn power buildup
