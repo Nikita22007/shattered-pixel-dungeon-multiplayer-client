@@ -23,6 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.sprites;
 
 import com.watabou.noosa.Game;
 
+@SuppressWarnings("unused")
 public class PrismaticSprite extends MirrorSprite {
 
 	public PrismaticSprite(){
@@ -34,11 +35,7 @@ public class PrismaticSprite extends MirrorSprite {
 				interval > 2 ? Math.max(0, 3-interval): interval-1, 0.5f);
 	}
 
-	@Override
-	public void updateArmor() {
-		updateArmor( ((PrismaticImage)ch).armTier );
-	}
-	
+
 	@Override
 	public void update() {
 		super.update();
