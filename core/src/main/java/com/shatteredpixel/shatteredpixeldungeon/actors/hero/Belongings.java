@@ -43,6 +43,7 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
@@ -160,10 +161,12 @@ public class Belongings implements Iterable<Item> {
 		lostInvent = val;
 	}
 
+	@Contract(pure = true)
 	public boolean lostInventory(){
 		return lostInvent;
 	}
 
+	@Contract(pure = true)
 	public CustomItem weapon(){
 		if (!lostInventory() || (weapon != null && weapon.keptThroughLostInventory())){
 			return weapon;
@@ -172,6 +175,7 @@ public class Belongings implements Iterable<Item> {
 		}
 	}
 
+	@Contract(pure = true)
 	public CustomItem armor(){
 		if (!lostInventory() || (armor != null && armor.keptThroughLostInventory())){
 			return armor;
@@ -180,6 +184,7 @@ public class Belongings implements Iterable<Item> {
 		}
 	}
 
+	@Contract(pure = true)
 	public CustomItem artifact(){
 		if (!lostInventory() || (artifact != null && artifact.keptThroughLostInventory())){
 			return artifact;
@@ -188,6 +193,7 @@ public class Belongings implements Iterable<Item> {
 		}
 	}
 
+	@Contract(pure = true)
 	public CustomItem misc(){
 		if (!lostInventory() || (misc != null && misc.keptThroughLostInventory())){
 			return misc;
@@ -196,6 +202,7 @@ public class Belongings implements Iterable<Item> {
 		}
 	}
 
+	@Contract(pure = true)
 	public CustomItem ring(){
 		if (!lostInventory() || (ring != null && ring.keptThroughLostInventory())){
 			return ring;
@@ -204,6 +211,7 @@ public class Belongings implements Iterable<Item> {
 		}
 	}
 
+	@Contract(pure = true)
 	public CustomItem secondWep(){
 		if (!lostInventory() || (secondWep != null && secondWep.keptThroughLostInventory())){
 			return secondWep;

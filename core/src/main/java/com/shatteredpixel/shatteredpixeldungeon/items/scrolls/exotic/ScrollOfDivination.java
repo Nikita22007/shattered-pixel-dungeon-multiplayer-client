@@ -100,8 +100,8 @@ public class ScrollOfDivination extends ExoticScroll {
 					}
 					probs[2]--;
 					Ring r = Reflection.newInstance(Random.element(rings));
-					r.setKnown();
-					IDed.add(r);
+
+                    IDed.add(r);
 					rings.remove(r.getClass());
 					break;
 			}

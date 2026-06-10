@@ -47,7 +47,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HornOfPlenty;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
@@ -502,33 +501,20 @@ public enum Talent {
 			}
 			for (Item item : Dungeon.hero.belongings){
 				if (item instanceof Ring){
-					((Ring) item).setKnown();
+
 				}
 			}
 		}
 		if (talent == THIEFS_INTUITION && hero.pointsInTalent(THIEFS_INTUITION) == 1){
-			if (hero.belongings.misc instanceof Ring) ((Ring) hero.belongings.misc).setKnown();
-		}
-		if (talent == ADVENTURERS_INTUITION && hero.pointsInTalent(ADVENTURERS_INTUITION) == 2){
-			if (hero.belongings.weapon() != null && !ShardOfOblivion.passiveIDDisabled()){
-				hero.belongings.weapon();
+			if (hero.belongings.misc instanceof Ring) {
+
 			}
 		}
+        if (talent == ADVENTURERS_INTUITION) {
+            hero.pointsInTalent(ADVENTURERS_INTUITION);
+        }
 
-		if (talent == PROTECTIVE_SHADOWS && hero.invisible > 0){
-		}
-
-		if (talent == LIGHT_CLOAK && hero.heroClass == HeroClass.ROGUE){
-			for (Item item : Dungeon.hero.belongings.backpack){
-				if (item instanceof CloakOfShadows){
-					if (!hero.belongings.lostInventory() || item.keptThroughLostInventory()) {
-						((CloakOfShadows) item).activate(Dungeon.hero);
-					}
-				}
-			}
-		}
-
-		if (talent == HEIGHTENED_SENSES || talent == FARSIGHT || talent == DIVINE_SENSE){
+        if (talent == HEIGHTENED_SENSES || talent == FARSIGHT || talent == DIVINE_SENSE){
 			Dungeon.observe();
 		}
 
@@ -820,7 +806,7 @@ public enum Talent {
 			if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
 				identify = true;
 			}
-			((Ring) item).setKnown();
+
 		}
 		if (hero.pointsInTalent(ADVENTURERS_INTUITION) == 2 && item instanceof Weapon){
 			identify = true;
@@ -842,7 +828,9 @@ public enum Talent {
 
 	public static void onItemCollected( Hero hero, Item item ){
 		if (hero.pointsInTalent(THIEFS_INTUITION) == 2){
-			if (item instanceof Ring) ((Ring) item).setKnown();
+			if (item instanceof Ring) {
+
+			}
 		}
 	}
 

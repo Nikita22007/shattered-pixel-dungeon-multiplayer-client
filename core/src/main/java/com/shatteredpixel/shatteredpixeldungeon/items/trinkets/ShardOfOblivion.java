@@ -41,6 +41,7 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
+import org.jetbrains.annotations.Contract;
 
 public class ShardOfOblivion extends Trinket {
 
@@ -113,6 +114,7 @@ public class ShardOfOblivion extends Trinket {
 		}
 	};
 
+	@Contract(pure = true)
 	public static boolean passiveIDDisabled(){
 		return trinketLevel(ShardOfOblivion.class) >= 0;
 	}
