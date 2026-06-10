@@ -21,25 +21,19 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.scrolls;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.TormentedSpirit;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.PathFinder;
 
 public class ScrollOfRemoveCurse extends InventoryScroll {
 
@@ -48,24 +42,6 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 		preferredBag = Belongings.Backpack.class;
 	}
 
-	@Override
-	public void doRead() {
-
-		TormentedSpirit spirit = null;
-		for (int i : PathFinder.NEIGHBOURS8){
-		}
-		if (spirit != null) {
-            Sample.INSTANCE.play(Assets.Sounds.READ);
-            readAnimation();
-
-            new Flare(6, 32).show(curUser.sprite, 2f);
-
-			GLog.p(Messages.get(this, "spirit"));
-            spirit.cleanse();
-        } else {
-			super.doRead();
-		}
-	}
 
 	@Override
 	protected boolean usableOnItem(Item item) {
@@ -75,7 +51,7 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 	public static boolean uncursable( Item item ){
 		if (item.isEquipped(Dungeon.hero)) {
         }
-        if ((item instanceof EquipableItem || false) && ((!item.isIdentified() && !item.cursedKnown) || item.cursed)){
+        if ((item instanceof EquipableItem) && ((!item.isIdentified() && !item.cursedKnown) || item.cursed)){
 			return true;
 		} else if (false){
 			return ((Weapon)item).hasCurseEnchant();

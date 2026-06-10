@@ -206,7 +206,7 @@ public abstract class Actor {
 
 		//mobs need to remember their targets after every actor is added
 		for (Mob mob : Dungeon.level.mobs) {
-			mob.restoreEnemy();
+
 		}
 		
 		for (Blob blob : Dungeon.level.blobs.values()) {

@@ -30,6 +30,7 @@ import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
 
+@SuppressWarnings("unused")
 public class FungalSpinnerSprite extends MobSprite {
 
 	public FungalSpinnerSprite() {

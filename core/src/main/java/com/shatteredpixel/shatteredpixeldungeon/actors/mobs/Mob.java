@@ -81,29 +81,6 @@ public abstract class Mob extends Char {
 
     protected static final float TIME_TO_WAKE_UP = 1f;
 
-    protected boolean firstAdded = true;
-
-    protected void onAdd() {
-        if (firstAdded) {
-            //modify health for ascension challenge if applicable, only on first add
-            float percent = HP / (float) HT;
-            HT = Math.round(HT * (float) 1);
-            HP = Math.round(HT * percent);
-            firstAdded = false;
-        }
-    }
-
-    private static final String STATE = "state";
-    private static final String SEEN = "seen";
-    private static final String TARGET = "target";
-    private static final String MAX_LVL = "max_lvl";
-
-    private static final String ENEMY_ID = "enemy_id";
-
-    //mobs need to remember their targets after every actor is added
-    public void restoreEnemy() {
-        if (enemyID != -1 && enemy == null) enemy = (Char) Actor.findById(enemyID);
-    }
 
     public CharSprite sprite() {
         return Reflection.newInstance(spriteClass);

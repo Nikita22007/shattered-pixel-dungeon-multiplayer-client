@@ -21,18 +21,10 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
-import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.RatSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.watabou.noosa.audio.Sample;
 
 public class Ratmogrify extends ArmorAbility {
 
@@ -65,120 +57,4 @@ public class Ratmogrify extends ArmorAbility {
 		return new Talent[]{ Talent.RATSISTANCE, Talent.RATLOMACY, Talent.RATFORCEMENTS, Talent.HEROIC_ENERGY};
 	}
 
-	public static class TransmogRat extends Mob {
-
-		{
-			spriteClass = RatSprite.class;
-
-			//always false, as we derive stats from what we are transmogging from (which was already added)
-			firstAdded = false;
-		}
-
-		private Mob original;
-		private boolean allied;
-
-		public void setup(Mob original) {
-			this.original = original;
-			original.clearTime();
-
-			HP = original.HP;
-			HT = original.HT;
-
-			defenseSkill = original.defenseSkill;
-
-			EXP = original.EXP;
-			maxLvl = original.maxLvl;
-
-			if (original.state == original.SLEEPING) {
-				state = SLEEPING;
-			} else if (original.state == original.HUNTING) {
-				state = HUNTING;
-			} else {
-				state = WANDERING;
-			}
-
-		}
-
-		public Mob getOriginal(){
-			if (original != null) {
-				original.HP = HP;
-				original.pos = pos;
-			}
-			return original;
-		}
-
-		private float timeLeft = 6f;
-
-		@Override
-		protected boolean act() {
-			if (timeLeft <= 0){
-				Mob original = getOriginal();
-				this.original = null;
-				GameScene.add(original);
-
-				EXP = 0;
-				destroy();
-				sprite.killAndErase();
-				CellEmitter.get(original.pos).burst(Speck.factory(Speck.WOOL), 4);
-				Sample.INSTANCE.play(Assets.Sounds.PUFF);
-				return true;
-			} else {
-				return super.act();
-			}
-		}
-
-		@Override
-		protected void spend(float time) {
-			if (!allied) timeLeft -= time;
-			super.spend(time);
-		}
-
-		public void makeAlly() {
-			allied = true;
-			alignment = Alignment.ALLY;
-			timeLeft = Float.POSITIVE_INFINITY;
-
-		}
-
-		public int attackSkill(Char target) {
-			return original.attackSkill(target);
-		}
-
-		public int drRoll() {
-			return original.drRoll();
-		}
-
-		@Override
-		public int damageRoll() {
-			int damage = original.damageRoll();
-			if (!allied && Dungeon.hero.hasTalent(Talent.RATSISTANCE)){
-				damage *= Math.pow(0.9f, Dungeon.hero.pointsInTalent(Talent.RATSISTANCE));
-			}
-			return damage;
-		}
-
-		public void rollToDropLoot() {
-			original.pos = pos;
-		}
-
-		@Override
-		public void destroy() {
-			super.destroy();
-			if (alignment == Alignment.ENEMY && original != null) {
-
-			}
-		}
-
-		@Override
-		public String name() {
-			return Messages.get(this, "name", original.name());
-		}
-
-		{
-		}
-
-		private static final String ORIGINAL = "original";
-		private static final String ALLIED = "allied";
-
-	}
 }
