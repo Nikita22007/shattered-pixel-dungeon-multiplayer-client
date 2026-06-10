@@ -157,11 +157,6 @@ public class Golem extends Mob {
 
         if (bestPos != enemy.pos) {
             ScrollOfTeleportation.appear(enemy, bestPos);
-            if (false) {
-                ((Hero) enemy).interrupt();
-                Dungeon.observe();
-                GameScene.updateFog();
-            }
         }
 
         enemyTeleCooldown = 20;

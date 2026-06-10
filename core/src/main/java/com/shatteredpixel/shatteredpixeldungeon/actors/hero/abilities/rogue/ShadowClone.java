@@ -81,9 +81,6 @@ public class ShadowClone extends ArmorAbility {
 
 	private static ShadowAlly getShadowAlly(){
 		for (Char ch : Actor.chars()){
-			if (false){
-				return (ShadowAlly) ch;
-			}
 		}
 		return null;
 	}

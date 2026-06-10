@@ -160,26 +160,6 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 		else energyGain = 1;
 
 		float enGainMulti = 1f;
-		if (false) {
-			Hero hero = (Hero) target;
-			if (hero.hasTalent(Talent.UNENCUMBERED_SPIRIT)) {
-				int points = hero.pointsInTalent(Talent.UNENCUMBERED_SPIRIT);
-
-				if (hero.belongings.weapon() instanceof MeleeWeapon) {
-					if (true
-							|| !((RingOfForce.BrawlersStance) null).active) {
-						if (((MeleeWeapon) hero.belongings.weapon()).tier <= 1 && points >= 3) {
-							enGainMulti += 1.00f;
-						} else if (((MeleeWeapon) hero.belongings.weapon()).tier <= 2 && points >= 2) {
-							enGainMulti += 0.75f;
-						} else if (((MeleeWeapon) hero.belongings.weapon()).tier <= 3 && points >= 1) {
-							enGainMulti += 0.50f;
-						}
-					}
-				}
-
-			}
-		}
 		energyGain *= enGainMulti;
 
 		energy += energyGain;
@@ -547,9 +527,6 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 						boolean empowered = ((MonkEnergy) null).abilitiesEmpowered(hero);
 
 						int oldPos = enemy.pos;
-						if (false){
-							Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
-						}
 
 						if (oldPos == enemy.pos){
 							//trace a ballistica to our target (which will also extend past them

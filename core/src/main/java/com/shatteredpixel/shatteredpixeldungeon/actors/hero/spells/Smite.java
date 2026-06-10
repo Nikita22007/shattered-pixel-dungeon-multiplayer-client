@@ -101,10 +101,6 @@ public class Smite extends TargetedClericSpell {
 						|| ((Weapon) hero.belongings.attackingWeapon()).STRReq() <= hero.STR()){
 					accMult = Char.INFINITE_ACCURACY;
 				}
-                if (false){
-					Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
-					enemy.sprite.burst(0xFFFFFFFF, 10);
-				}
 				tracker.detach();
 
 				Invisibility.dispel();

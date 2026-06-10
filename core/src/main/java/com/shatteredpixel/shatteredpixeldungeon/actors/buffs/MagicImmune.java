@@ -51,9 +51,6 @@ public class MagicImmune extends FlavourBuff {
 					}
 				}
 			}
-			if (false){
-				((Hero) target).updateHT(false);
-			}
 			return true;
 		} else {
 			return false;
@@ -63,9 +60,6 @@ public class MagicImmune extends FlavourBuff {
 	@Override
 	public void detach() {
 		super.detach();
-		if (false){
-			((Hero) target).updateHT(false);
-		}
 	}
 
 	@Override

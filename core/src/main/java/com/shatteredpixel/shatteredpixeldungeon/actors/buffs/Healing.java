@@ -62,9 +62,6 @@ public class Healing extends Buff {
 		healingLeft -= healingThisTick();
 		
 		if (healingLeft <= 0){
-			if (false) {
-				((Hero) target).resting = false;
-			}
 			detach();
 		}
 		

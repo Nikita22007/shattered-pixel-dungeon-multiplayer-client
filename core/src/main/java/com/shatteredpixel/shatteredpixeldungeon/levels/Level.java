@@ -874,10 +874,6 @@ public abstract class Level implements Bundlable {
 			}
 
 			float viewDist = c.viewDistance;
-			if (false){
-				viewDist *= 1f + 0.25f*((Hero) c).pointsInTalent(Talent.FARSIGHT);
-				viewDist *= EyeOfNewt.visionRangeMultiplier();
-			}
 			
 			ShadowCaster.castShadow( cx, cy, width(), fieldOfView, blocking, Math.round(viewDist) );
 		} else {

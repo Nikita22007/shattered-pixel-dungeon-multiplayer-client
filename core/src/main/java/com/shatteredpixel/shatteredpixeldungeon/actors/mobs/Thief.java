@@ -99,7 +99,9 @@ public class Thief extends Mob {
 		if (item != null) {
 			Dungeon.level.drop( item, pos ).sprite.drop();
 			//updates position
-			if (item instanceof Honeypot.ShatteredPot) ((Honeypot.ShatteredPot)item).dropPot( this, pos );
+			if (item instanceof Honeypot.ShatteredPot) {
+
+			}
 			item = null;
 		}
 		super.rollToDropLoot();
@@ -137,7 +139,7 @@ public class Thief extends Mob {
 			if (item instanceof Honeypot){
 				item = ((Honeypot)item).shatter(this, this.pos);
 			} else if (item instanceof Honeypot.ShatteredPot) {
-				((Honeypot.ShatteredPot)item).pickupPot(this);
+
 			}
 
 			return true;

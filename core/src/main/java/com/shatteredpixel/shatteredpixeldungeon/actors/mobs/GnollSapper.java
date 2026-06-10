@@ -66,11 +66,6 @@ public class GnollSapper extends Mob {
     public void linkPartner(Char c) {
         losePartner();
         partnerID = c.id();
-        if (false) {
-            ((GnollGuard) c).linkSapper(this);
-        } else if (false) {
-            ((GnollGeomancer) c).linkSapper(this);
-        }
     }
 
     public void losePartner() {

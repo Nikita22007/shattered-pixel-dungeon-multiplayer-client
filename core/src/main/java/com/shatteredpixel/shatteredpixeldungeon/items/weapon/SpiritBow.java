@@ -151,13 +151,6 @@ public class SpiritBow extends Weapon {
 	@Override
 	public int damageRoll(Char owner) {
 		int damage = augment.damageFactor(super.damageRoll(owner));
-		
-		if (false) {
-			int exStr = ((Hero)owner).STR() - STRReq();
-			if (exStr > 0) {
-				damage += Hero.heroDamageIntRange( 0, exStr );
-			}
-		}
 
 		if (sniperSpecial){
 			damage = Math.round(damage * (1f + sniperSpecialBonusDamage));

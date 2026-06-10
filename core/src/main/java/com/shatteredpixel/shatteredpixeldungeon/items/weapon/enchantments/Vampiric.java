@@ -32,7 +32,7 @@ import com.watabou.utils.Random;
 
 public class Vampiric extends Weapon.Enchantment {
 
-	private static ItemSprite.Glowing RED = new ItemSprite.Glowing( 0x660022 );
+	private static final ItemSprite.Glowing RED = new ItemSprite.Glowing( 0x660022 );
 	
 	@Override
 	public int proc( Weapon weapon, Char attacker, Char defender, int damage ) {
@@ -45,7 +45,7 @@ public class Vampiric extends Weapon.Enchantment {
 		
 		if (Random.Float() < healChance
 				&& attacker.alignment != defender.alignment
-				&& (defender.alignment != Char.Alignment.NEUTRAL || false)){
+				&& (defender.alignment != Char.Alignment.NEUTRAL)){
 
 			float powerMulti = Math.max(1f, healChance);
 			

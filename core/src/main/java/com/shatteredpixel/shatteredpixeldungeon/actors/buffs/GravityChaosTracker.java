@@ -90,7 +90,6 @@ public class GravityChaosTracker extends Buff {
 			for (Char ch : blocked.toArray(new Char[0])){
 				Ballistica path = new Ballistica(ch.pos, ch.pos + PathFinder.NEIGHBOURS8[idx], Ballistica.MAGIC_BOLT);
 				if (!(path.dist == 1 && Actor.findChar(path.collisionPos) != null)){
-					if (false) ((Hero) ch).interrupt();
 					WandOfBlastWave.throwChar(ch, path, 3, false, false, this);
 					blocked.remove(ch);
 					blockedremoved = true;
@@ -125,7 +124,6 @@ public class GravityChaosTracker extends Buff {
 				if (path.dist == 1 && Actor.findChar(path.collisionPos) != null){
 					blocked.add(ch);
 				} else {
-					if (false) ((Hero) ch).interrupt();
 					WandOfBlastWave.throwChar(ch, path, 3, false, false, this);
 				}
 			}

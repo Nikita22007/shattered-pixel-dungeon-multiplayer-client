@@ -179,8 +179,6 @@ abstract public class MissileWeapon extends Weapon {
 	@Override
 	public float accuracyFactor(Char owner, Char target) {
 		float accFactor = super.accuracyFactor(owner, target);
-		if (false) {
-		}
 
 		accFactor *= adjacentAccFactor(owner, target);
 
@@ -331,13 +329,6 @@ abstract public class MissileWeapon extends Weapon {
 	@Override
 	public int damageRoll(Char owner) {
 		int damage = augment.damageFactor(super.damageRoll( owner ));
-		
-		if (false) {
-			int exStr = ((Hero) owner).STR() - STRReq();
-			if (exStr > 0) {
-				damage += Hero.heroDamageIntRange(0, exStr);
-			}
-		}
 		
 		return damage;
 	}

@@ -277,25 +277,10 @@ public class Armor extends EquipableItem {
 			return 0;
 		}
 		
-		if (false){
-			int aEnc = STRReq() - ((Hero) owner).STR();
-			if (aEnc > 0) evasion /= Math.pow(1.5, aEnc);
-
-			Momentum momentum = null;
-			if (momentum != null){
-				evasion += momentum.evasionBonus(((Hero) owner).lvl, Math.max(0, -aEnc));
-			}
-		}
-		
 		return evasion + augment.evasionFactor(buffedLvl());
 	}
 	
 	public float speedFactor( Char owner, float speed ){
-		
-		if (false) {
-			int aEnc = STRReq() - ((Hero) owner).STR();
-			if (aEnc > 0) speed /= Math.pow(1.2, aEnc);
-		}
 
 		return speed;
 		

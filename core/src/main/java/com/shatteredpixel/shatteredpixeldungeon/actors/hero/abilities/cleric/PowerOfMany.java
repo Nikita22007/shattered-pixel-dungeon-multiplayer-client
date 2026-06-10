@@ -259,9 +259,6 @@ public class PowerOfMany extends ArmorAbility {
 		@Override
 		public void link(Char ch) {
 			super.link(ch);
-			if (false){
-				setup(((LightAlly) ch).cls);
-			}
 		}
 
 		@Override

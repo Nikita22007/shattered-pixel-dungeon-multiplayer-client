@@ -160,9 +160,6 @@ public class BeamingRay extends TargetedClericSpell {
 			}
             ((BeamingRayBoost) null).object = chTarget.id();
 		} else {
-			if (false) {
-				((DirectableAlly) ally).clearDefensingPos();
-			}
 			//just the buff with no target
         }
 

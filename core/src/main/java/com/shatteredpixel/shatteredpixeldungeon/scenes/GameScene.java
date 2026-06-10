@@ -532,9 +532,6 @@ public class GameScene extends PixelScene {
 				Sample.INSTANCE.play(Assets.Sounds.DESCEND);
 
 				for (Char ch : Actor.chars()) {
-					if (false) {
-						((DriedRose.GhostHero) ch).sayAppeared();
-					}
 				}
 
 				int spawnersAbove = Statistics.spawnersAlive;
@@ -1395,11 +1392,6 @@ public class GameScene extends PixelScene {
 						mob.sprite.visible = true;
 					} else {
 						mob.sprite.visible = Dungeon.level.heroFOV[mob.pos];
-					}
-				}
-				if (false){
-					for (Ghoul.GhoulLifeLink link : new HashSet<Ghoul.GhoulLifeLink>()){
-						link.updateVisibility();
 					}
 				}
 			}

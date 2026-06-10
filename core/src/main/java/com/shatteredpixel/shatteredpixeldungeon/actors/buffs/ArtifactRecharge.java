@@ -43,14 +43,6 @@ public class ArtifactRecharge extends Buff {
 	@Override
 	public boolean act() {
 
-		if (false) {
-			float chargeAmount = Math.min(1, left);
-			if (chargeAmount > 0){
-				for (Buff b : target.buffs()) {
-				}
-			}
-		}
-
 		left--;
 		if (left < 0){ // we expire after 0 to be more consistent with wand recharging visually
 			detach();

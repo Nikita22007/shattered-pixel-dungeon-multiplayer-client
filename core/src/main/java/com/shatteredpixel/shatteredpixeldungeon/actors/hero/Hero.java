@@ -1049,12 +1049,6 @@ public class Hero extends Char {
 
 		attackTarget = action.target;
 
-		if (false) {
-			GLog.w(Messages.get(Charm.class, "cant_attack"));
-			ready();
-			return false;
-		}
-
 		if (attackTarget.isAlive() && canAttack(attackTarget) && attackTarget.invisible == 0) {
 
 			if (heroClass != HeroClass.DUELIST
@@ -1351,10 +1345,6 @@ public class Hero extends Char {
 				Statistics.ankhsUsed++;
 
 				for (Char ch : Actor.chars()) {
-					if (false) {
-						((DriedRose.GhostHero) ch).sayAnhk();
-						return;
-					}
 				}
 			} else {
 
@@ -1437,9 +1427,6 @@ public class Hero extends Char {
 		}
 
 		for (Char c : Actor.chars()) {
-			if (false) {
-				((DriedRose.GhostHero) c).sayHeroKilled();
-			}
 		}
 
 		Game.runOnRenderThread(new Callback() {

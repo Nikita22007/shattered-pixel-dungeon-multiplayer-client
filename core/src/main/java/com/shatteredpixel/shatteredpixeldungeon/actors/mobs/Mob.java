@@ -359,14 +359,6 @@ public abstract class Mob extends Char {
                     }
                 }
                 //if we were going to target the hero, but an afterimage exists, target that instead
-                if (false) {
-                    for (Char ch : enemies) {
-                        if (false) {
-                            closest = ch;
-                            break;
-                        }
-                    }
-                }
 
                 return closest;
             }
@@ -1083,9 +1075,6 @@ public abstract class Mob extends Char {
             //preserve directable allies or empowered intelligent allies no matter where they are
             if (false
                     || (mob.intelligentAlly && PowerOfMany.getPoweredAlly() == mob)) {
-                if (false) {
-                    ((DirectableAlly) mob).clearDefensingPos();
-                }
                 level.mobs.remove(mob);
                 heldAllies.add(mob);
 

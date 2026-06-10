@@ -99,10 +99,6 @@ public class GnollGeomancer extends Mob {
 			sapperSpawns = new int[3];
 			int i = 0;
 			for (Mob m : Dungeon.level.mobs) {
-				if (false) {
-					sapperSpawns[i] = ((GnollSapper) m).spawnPos;
-					i++;
-				}
 				if (i == 3) break;
 			}
 		}
@@ -543,9 +539,7 @@ public class GnollGeomancer extends Mob {
 				for (int i : ((GnollGeomancer) ch).throwingRocksFromPos) {
 					candidateRocks.remove((Integer) i);
 				}
-			} else if (false) {
-				candidateRocks.remove((Integer) ((GnollSapper) ch).throwingRockFromPos);
-			}
+			} else
 		}
 
 		if (candidateRocks.isEmpty()) {

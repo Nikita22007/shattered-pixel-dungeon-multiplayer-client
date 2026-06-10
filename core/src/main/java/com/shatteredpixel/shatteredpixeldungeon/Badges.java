@@ -1123,11 +1123,6 @@ public class Badges {
 			local.add( Badge.HAPPY_END_REMAINS );
 			displayBadge( Badge.HAPPY_END_REMAINS );
 		}
-
-		if (false) {
-			local.add( Badge.PACIFIST_ASCENT );
-			displayBadge( Badge.PACIFIST_ASCENT );
-		}
 	}
 
 	public static void validateChampion( int challenges ) {

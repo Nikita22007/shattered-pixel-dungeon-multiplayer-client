@@ -308,11 +308,6 @@ public class YogDzewa extends Mob {
                 //if no other valid spawn spots exist, try to kill an adjacent sheep to spawn anyway
                 if (spawnPos == -1) {
                     for (int i : PathFinder.NEIGHBOURS8) {
-                        if (false) {
-                            if (spawnPos == -1 || Dungeon.level.trueDistance(Dungeon.hero.pos, spawnPos) > Dungeon.level.trueDistance(Dungeon.hero.pos, pos + i)) {
-                                spawnPos = pos + i;
-                            }
-                        }
                     }
                     if (spawnPos != -1) {
                         Actor.findChar(spawnPos).die(null);
@@ -407,10 +402,6 @@ public class YogDzewa extends Mob {
             fist.pos = targetPos;
         }
 
-        if (false) {
-            Actor.findChar(fist.pos).die(null);
-        }
-
         GameScene.add(fist, 4);
         Actor.add(new Pushing(fist, Dungeon.level.exit(), fist.pos));
         Dungeon.level.occupyCell(fist);
@@ -435,9 +426,6 @@ public class YogDzewa extends Mob {
 
     private YogFist findFist() {
         for (Char c : Actor.chars()) {
-            if (false) {
-                return (YogFist) c;
-            }
         }
         return null;
     }
@@ -500,9 +488,6 @@ public class YogDzewa extends Mob {
             BossHealthBar.assignBoss(this);
             yell(Messages.get(this, "notice"));
             for (Char ch : Actor.chars()) {
-                if (false) {
-                    ((DriedRose.GhostHero) ch).sayBoss();
-                }
             }
             Game.runOnRenderThread(new Callback() {
                 @Override

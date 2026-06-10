@@ -80,11 +80,6 @@ public class Barkskin extends Buff {
 
 	@Override
 	public float iconFadePercent() {
-		if (false){
-			float max = ((Hero) target).lvl*((Hero) target).pointsInTalent(Talent.BARKSKIN)/2;
-			max = Math.max(max, 2+((Hero) target).lvl/3);
-			return Math.max(0, (max-level)/max);
-		}
 		return 0;
 	}
 

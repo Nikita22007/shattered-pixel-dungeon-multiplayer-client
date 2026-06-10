@@ -353,55 +353,6 @@ public class Combo extends Buff implements ActionIndicator.Action {
 		}
 
 		int oldPos = enemy.pos;
-        if (false){
-			//special on-hit effects
-			switch (moveBeingUsed) {
-				case CLOBBER:
-					if (!wasAlly) hit(enemy);
-					//trace a ballistica to our target (which will also extend past them
-					Ballistica trajectory = new Ballistica(target.pos, enemy.pos, Ballistica.STOP_TARGET);
-					//trim it to just be the part that goes past them
-					trajectory = new Ballistica(trajectory.collisionPos, trajectory.path.get(trajectory.path.size() - 1), Ballistica.PROJECTILE);
-					//knock them back along that ballistica, ensuring they don't fall into a pit
-					int dist = 2;
-					if (enemy.isAlive() && count >= 7 && hero.pointsInTalent(Talent.ENHANCED_COMBO) >= 1) {
-						dist++;
-					} else if (!enemy.flying) {
-						while (dist > trajectory.dist ||
-								(dist > 0 && Dungeon.level.pit[trajectory.path.get(dist)])) {
-							dist--;
-						}
-					}
-					if (enemy.pos == oldPos) {
-						WandOfBlastWave.throwChar(enemy, trajectory, dist, true, false, hero);
-					}
-					break;
-				case PARRY:
-					hit(enemy);
-					break;
-				case CRUSH:
-					WandOfBlastWave.BlastWave.blast(enemy.pos);
-					PathFinder.buildDistanceMap(target.pos, BArray.not(Dungeon.level.solid, null), 3);
-					for (Char ch : Actor.chars()) {
-						if (ch != enemy && ch.alignment == Char.Alignment.ENEMY
-								&& PathFinder.distance[ch.pos] < Integer.MAX_VALUE) {
-							int aoeHit = Math.round(target.damageRoll() * 0.25f * count);
-							aoeHit /= 2;
-							aoeHit -= ch.drRoll();
-                            ch.sprite.bloodBurstA(target.sprite.center(), aoeHit);
-							ch.sprite.flash();
-
-							if (!ch.isAlive() && hero.hasTalent(Talent.LETHAL_DEFENSE)) {
-								((BrokenSeal.WarriorShield) null).reduceCooldown(hero.pointsInTalent(Talent.LETHAL_DEFENSE) / 3f);
-							}
-						}
-					}
-					break;
-				default:
-					//nothing
-					break;
-			}
-		}
 
 		Invisibility.dispel();
 

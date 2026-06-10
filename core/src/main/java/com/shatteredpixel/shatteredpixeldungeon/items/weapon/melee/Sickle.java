@@ -105,10 +105,6 @@ public class Sickle extends MeleeWeapon {
 				wep.beforeAbilityUsed(hero, enemy);
 				AttackIndicator.target(enemy);
 
-                if (false){
-					Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
-				}
-
 				Invisibility.dispel();
 				hero.spendAndNext(hero.attackDelay());
 				if (!enemy.isAlive()){

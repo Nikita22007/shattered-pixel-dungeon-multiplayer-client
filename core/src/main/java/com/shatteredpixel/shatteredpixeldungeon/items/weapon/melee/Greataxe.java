@@ -98,10 +98,6 @@ public class Greataxe extends MeleeWeapon {
 				//+(15+(2*lvl)) damage, roughly +60% base damage, +55% scaling
 				int dmgBoost = augment.damageFactor(15 + 2*buffedLvl());
 
-                if (false){
-					Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
-				}
-
 				Invisibility.dispel();
 				if (!enemy.isAlive()){
 					hero.next();

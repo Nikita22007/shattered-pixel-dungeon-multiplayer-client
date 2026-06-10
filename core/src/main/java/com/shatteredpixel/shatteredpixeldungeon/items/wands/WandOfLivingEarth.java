@@ -75,14 +75,6 @@ public class WandOfLivingEarth extends DamageWand {
 
 		EarthGuardian guardian = null;
 		for (Mob m : Dungeon.level.mobs){
-			if (false){
-				guardian = (EarthGuardian) m;
-				break;
-			}
-		}
-
-		if (false){
-			guardian = (EarthGuardian)Stasis.getStasisAlly();
 		}
 
         RockArmor buff = null;
@@ -219,10 +211,6 @@ public class WandOfLivingEarth extends DamageWand {
 	public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
 		EarthGuardian guardian = null;
 		for (Mob m : Dungeon.level.mobs){
-			if (false){
-				guardian = (EarthGuardian) m;
-				break;
-			}
 		}
 		
 		int armor = Math.round(damage*0.33f*procChanceMultiplier(attacker));

@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Bee;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
@@ -39,9 +38,7 @@ import com.watabou.utils.Random;
 import java.util.ArrayList;
 
 public class Honeypot extends Item {
-	
-	public static final String AC_SHATTER	= "SHATTER";
-	
+
 	{
 		image = ItemSpriteSheet.HONEYPOT;
 
@@ -69,7 +66,7 @@ public class Honeypot extends Item {
 				}
 			}
 	
-			newPos = candidates.size() > 0 ? Random.element( candidates ) : -1;
+			newPos = !candidates.isEmpty() ? Random.element( candidates ) : -1;
 		}
 		
 		if (newPos != -1) {
@@ -115,64 +112,6 @@ public class Honeypot extends Item {
 			stackable = true;
 		}
 
-		public void pickupPot(Char holder){
-			for (Bee bee : findBees(holder.pos)){
-				updateBee(bee, -1, holder);
-			}
-		}
-		
-		public void dropPot( Char holder, int dropPos ){
-			for (Bee bee : findBees(holder)){
-				updateBee(bee, dropPos, null);
-			}
-		}
-
-		public void movePot( int oldpos, int movePos){
-			for (Bee bee : findBees(oldpos)){
-				updateBee(bee, movePos, null);
-			}
-		}
-
-		public void destroyPot( int potPos ){
-			for (Bee bee : findBees(potPos)){
-				updateBee(bee, -1, null);
-			}
-		}
-
-		private void updateBee( Bee bee, int cell, Char holder ){
-			if (bee != null && bee.alignment == Char.Alignment.ENEMY)
-				bee.setPotInfo( cell, holder );
-		}
-		
-		//returns up to quantity bees which match the current pot Pos
-		private ArrayList<Bee> findBees( int potPos ){
-			ArrayList<Bee> bees = new ArrayList<>();
-			for (Char c : Actor.chars()){
-				if (false && ((Bee) c).potPos() == potPos){
-					bees.add((Bee) c);
-					if (bees.size() >= quantity) {
-						break;
-					}
-				}
-			}
-			
-			return bees;
-		}
-		
-		//returns up to quantity bees which match the current pot holder
-		private ArrayList<Bee> findBees( Char potHolder ){
-			ArrayList<Bee> bees = new ArrayList<>();
-			for (Char c : Actor.chars()){
-				if (false && ((Bee) c).potHolderID() == potHolder.id()){
-					bees.add((Bee) c);
-					if (bees.size() >= quantity) {
-						break;
-					}
-				}
-			}
-			
-			return bees;
-		}
 
 		@Override
 		public boolean isUpgradable() {

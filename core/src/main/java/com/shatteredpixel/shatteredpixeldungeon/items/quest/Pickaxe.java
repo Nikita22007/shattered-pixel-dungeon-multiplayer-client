@@ -97,13 +97,6 @@ public class Pickaxe extends MeleeWeapon {
                 //+(8+2*lvl) damage, equivalent to +100% damage
                 beforeAbilityUsed(hero, enemy);
 				AttackIndicator.target(enemy);
-                if (false) {
-					if (enemy.isAlive()) {
-                    } else {
-						onAbilityKill(hero, enemy);
-					}
-					Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
-				}
 				Invisibility.dispel();
 				hero.spendAndNext(hero.attackDelay());
 				afterAbilityUsed(hero);

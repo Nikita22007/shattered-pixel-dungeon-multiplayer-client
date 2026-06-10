@@ -80,9 +80,6 @@ public class CorpseDust extends Item {
 			spawnPower++;
 			int wraiths = 1; //we include the wraith we're trying to spawn
 			for (Mob mob : Dungeon.level.mobs){
-				if (false){
-					wraiths++;
-				}
 			}
 
 			//summoning a new wraith requires 1/4/9/16/25/36/49/49/... turns of energy
@@ -121,9 +118,6 @@ public class CorpseDust extends Item {
 		public void dispel(){
 			detach();
 			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])){
-				if (false){
-					mob.die(null);
-				}
 			}
 			Game.runOnRenderThread(new Callback() {
 				@Override

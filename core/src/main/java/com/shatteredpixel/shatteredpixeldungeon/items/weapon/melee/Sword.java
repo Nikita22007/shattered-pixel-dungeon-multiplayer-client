@@ -104,9 +104,6 @@ public class Sword extends MeleeWeapon {
 			public void call() {
 				wep.beforeAbilityUsed(hero, enemy);
 				AttackIndicator.target(enemy);
-                if (false){
-					Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
-				}
 
 				Invisibility.dispel();
 

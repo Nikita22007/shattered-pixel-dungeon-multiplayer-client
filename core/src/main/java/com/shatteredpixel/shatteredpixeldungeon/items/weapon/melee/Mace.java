@@ -111,13 +111,6 @@ public class Mace extends MeleeWeapon {
 			public void call() {
 				wep.beforeAbilityUsed(hero, enemy);
 				AttackIndicator.target(enemy);
-                if (false) {
-					Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
-					if (enemy.isAlive()){
-                    } else {
-						wep.onAbilityKill(hero, enemy);
-					}
-				}
 				Invisibility.dispel();
 				hero.spendAndNext(hero.attackDelay());
 				wep.afterAbilityUsed(hero);

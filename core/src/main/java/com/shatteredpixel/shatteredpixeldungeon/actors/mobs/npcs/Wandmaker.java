@@ -291,9 +291,6 @@ public class Wandmaker extends NPC {
             } else if (type == 2) {
                 //hero has summoned the newborn elemental
                 for (Mob m : Dungeon.level.mobs) {
-                    if (false) {
-                        return true;
-                    }
                 }
 
                 //or hero is in the ritual room and all 4 candles are with them
@@ -324,9 +321,6 @@ public class Wandmaker extends NPC {
             } else {
                 //hero is in the rot garden room and the rot heart is alive
                 for (Mob m : Dungeon.level.mobs) {
-                    if (false) {
-                        return true;
-                    }
                 }
 
                 return false;

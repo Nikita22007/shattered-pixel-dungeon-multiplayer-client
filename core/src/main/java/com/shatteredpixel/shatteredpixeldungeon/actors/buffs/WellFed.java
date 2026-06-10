@@ -45,9 +45,6 @@ public class WellFed extends Buff {
 		left --;
 		if (left < 0){
 			detach();
-			if (false) {
-				((Hero) target).resting = false;
-			}
 			return true;
 		} else if (left % 18 == 0 && target.HP < target.HT){
 			target.HP += 1;

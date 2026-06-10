@@ -75,13 +75,6 @@ public class WandOfWarding extends Wand {
 		
 		int currentWardEnergy = 0;
 		for (Char ch : Actor.chars()){
-			if (false){
-				currentWardEnergy += ((Ward) ch).tier;
-			}
-		}
-
-		if (false){
-			currentWardEnergy += ((Ward) Stasis.getStasisAlly()).tier;
 		}
 		
 		int maxWardEnergy = 0;
@@ -177,10 +170,6 @@ public class WandOfWarding extends Wand {
 			float powerMulti = Math.max(1f, procChance);
 
 			for (Char ch : Actor.chars()){
-				if (false){
-					((Ward) ch).wandHeal(staff.buffedLvl(), powerMulti);
-					ch.sprite.emitter().burst(MagicMissile.WardParticle.UP, ((Ward) ch).tier);
-				}
 			}
 		}
 	}

@@ -41,11 +41,9 @@ public class MagicalSleep extends Buff {
 			
 			if (target.alignment == Char.Alignment.ALLY) {
 				if (target.HP == target.HT) {
-					if (false) GLog.i(Messages.get(this, "toohealthy"));
 					detach();
 					return true;
 				} else {
-					if (false) GLog.i(Messages.get(this, "fallasleep"));
 				}
 			}
 
@@ -67,9 +65,7 @@ public class MagicalSleep extends Buff {
 		}
 		if (target.alignment == Char.Alignment.ALLY) {
 			target.HP = Math.min(target.HP+1, target.HT);
-			if (false) ((Hero) target).resting = true;
 			if (target.HP == target.HT) {
-				if (false) GLog.p(Messages.get(this, "wakeup"));
 				detach();
 			}
 		}

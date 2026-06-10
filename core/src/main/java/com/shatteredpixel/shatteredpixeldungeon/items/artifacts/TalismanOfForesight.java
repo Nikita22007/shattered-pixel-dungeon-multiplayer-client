@@ -313,9 +313,6 @@ public class TalismanOfForesight extends Artifact {
 					&& true){
 				if (!warn){
 					GLog.w( Messages.get(this, "uneasy") );
-					if (false){
-						((Hero)target).interrupt();
-					}
 					warn = true;
 				}
 			} else {

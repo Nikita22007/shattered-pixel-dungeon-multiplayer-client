@@ -108,19 +108,6 @@ public class Spear extends MeleeWeapon {
 				AttackIndicator.target(enemy);
 				int oldPos = enemy.pos;
 				//do not push if enemy has moved, or another push is active (e.g. elastic)
-                if (false) {
-					if (enemy.isAlive() && enemy.pos == oldPos && !Pushing.pushingExistsForChar(enemy)){
-						//trace a ballistica to our target (which will also extend past them
-						Ballistica trajectory = new Ballistica(hero.pos, enemy.pos, Ballistica.STOP_TARGET);
-						//trim it to just be the part that goes past them
-						trajectory = new Ballistica(trajectory.collisionPos, trajectory.path.get(trajectory.path.size() - 1), Ballistica.PROJECTILE);
-						//knock them back along that ballistica
-						WandOfBlastWave.throwChar(enemy, trajectory, 1, true, false, hero);
-					} else if (!enemy.isAlive()) {
-						wep.onAbilityKill(hero, enemy);
-					}
-					Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
-				}
 				Invisibility.dispel();
 				hero.spendAndNext(hero.attackDelay());
 				wep.afterAbilityUsed(hero);

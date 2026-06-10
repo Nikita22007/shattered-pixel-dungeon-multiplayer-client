@@ -46,22 +46,6 @@ public class Dirk extends MeleeWeapon {
 	
 	@Override
 	public int damageRoll(Char owner) {
-		if (false) {
-			Hero hero = (Hero)owner;
-			Char enemy = hero.attackTarget();
-			if (enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)) {
-				//deals 67% toward max to max on surprise, instead of min to max.
-				int diff = max() - min();
-				int damage = augment.damageFactor(Hero.heroDamageIntRange(
-						min() + Math.round(diff*0.67f),
-						max()));
-				int exStr = hero.STR() - STRReq();
-				if (exStr > 0) {
-					damage += Hero.heroDamageIntRange(0, exStr);
-				}
-				return damage;
-			}
-		}
 		return super.damageRoll(owner);
 	}
 

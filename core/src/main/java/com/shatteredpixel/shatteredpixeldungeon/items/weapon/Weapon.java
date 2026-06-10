@@ -234,10 +234,6 @@ abstract public class Weapon extends KindOfWeapon {
 
 		int encumbrance = 0;
 
-		if (false) {
-			encumbrance = STRReq() - ((Hero) owner).STR();
-		}
-
 		float ACC = this.ACC;
 
 		return encumbrance > 0 ? (float) (ACC / Math.pow(1.5, encumbrance)) : ACC;
@@ -250,12 +246,6 @@ abstract public class Weapon extends KindOfWeapon {
 
 	protected float baseDelay( Char owner ){
 		float delay = augment.delayFactor(this.DLY);
-		if (false) {
-			int encumbrance = STRReq() - ((Hero)owner).STR();
-			if (encumbrance > 0){
-				delay *= Math.pow( 1.2, encumbrance );
-			}
-		}
 
 		return delay;
 	}
@@ -274,8 +264,6 @@ abstract public class Weapon extends KindOfWeapon {
 			if (!RingOfForce.unarmedGetsWeaponEnchantment((Hero) owner)){
 				return reach;
 			}
-		}
-		if (false) {
 		}
 		if (hasEnchant(Projecting.class, owner)){
 			return reach + Math.round(Enchantment.genericProcChanceMultiplier(owner));

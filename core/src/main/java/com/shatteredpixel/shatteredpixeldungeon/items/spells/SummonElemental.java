@@ -81,11 +81,6 @@ public class SummonElemental extends Spell {
 
 		if (!spawnPoints.isEmpty()){
 
-			for (Char ch : Actor.chars()){
-				if (false) {
-                }
-			}
-
 			Elemental elemental = Reflection.newInstance(summonClass);
 			GameScene.add( elemental );
             elemental.setSummonedALly();

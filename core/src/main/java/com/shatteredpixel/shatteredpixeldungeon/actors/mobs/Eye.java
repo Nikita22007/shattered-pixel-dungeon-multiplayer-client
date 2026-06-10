@@ -189,9 +189,6 @@ public class Eye extends Mob {
 						&& ch.alignment == alignment
 						&& (Char.hasProp(ch, Property.BOSS) || Char.hasProp(ch, Property.MINIBOSS))) {
 					dmg *= 0.5f;
-					if (false) {
-						dmg *= 0.5f;
-					}
 				}
 
 				if (Dungeon.level.heroFOV[pos]) {

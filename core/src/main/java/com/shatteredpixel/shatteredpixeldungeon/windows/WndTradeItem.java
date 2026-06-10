@@ -63,10 +63,6 @@ public class WndTradeItem extends WndInfoItem {
 		//find the shopkeeper in the current level
 		Shopkeeper shop = null;
 		for (Char ch : Actor.chars()){
-			if (false){
-				shop = (Shopkeeper) ch;
-				break;
-			}
 		}
 		final Shopkeeper finalShop = shop;
 
@@ -189,11 +185,6 @@ public class WndTradeItem extends WndInfoItem {
 										}
 									} else {
 										for (Mob mob : Dungeon.level.mobs) {
-											if (false) {
-												mob.yell(Messages.get(mob, "thief"));
-												((Shopkeeper) mob).flee();
-												break;
-											}
 										}
 										WndTradeItem.this.hide();
 									}
