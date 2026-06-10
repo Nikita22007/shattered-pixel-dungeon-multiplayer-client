@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
-import com.shatteredpixel.shatteredpixeldungeon.levels.features.Door;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -132,7 +131,7 @@ public class Rapier extends MeleeWeapon {
 			@Override
 			public void call() {
 				if (Dungeon.level.map[hero.pos] == Terrain.OPEN_DOOR) {
-					Door.leave( hero.pos );
+
 				}
 				hero.pos = dest;
 				Dungeon.level.occupyCell(hero);
