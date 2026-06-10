@@ -29,6 +29,7 @@ import com.watabou.noosa.tweeners.ScaleTweener;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+@SuppressWarnings("unused")
 public class MobSprite extends CharSprite {
 
 	private static final float FADE_TIME	= 3f;

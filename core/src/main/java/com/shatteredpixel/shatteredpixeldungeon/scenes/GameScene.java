@@ -531,37 +531,19 @@ public class GameScene extends PixelScene {
 					&& (InterlevelScene.mode == InterlevelScene.Mode.DESCEND || InterlevelScene.mode == InterlevelScene.Mode.FALL)) {
 				Sample.INSTANCE.play(Assets.Sounds.DESCEND);
 
-				for (Char ch : Actor.chars()) {
-				}
-
-				int spawnersAbove = Statistics.spawnersAlive;
+                int spawnersAbove = Statistics.spawnersAlive;
 				if (spawnersAbove > 0 && Dungeon.depth <= 25) {
 
-                    if (spawnersAbove > 0) {
-						if (Dungeon.bossLevel()) {
-							GLog.n(Messages.get(this, "spawner_warn_final"));
-						} else {
-							GLog.n(Messages.get(this, "spawner_warn"));
-						}
-					}
-				}
+                    if (Dungeon.bossLevel()) {
+                        GLog.n(Messages.get(this, "spawner_warn_final"));
+                    } else {
+                        GLog.n(Messages.get(this, "spawner_warn"));
+                    }
+                }
 
 			}
 
-			if (Dungeon.hero.hasTalent(Talent.ROGUES_FORESIGHT)
-					&& Dungeon.level instanceof RegularLevel && Dungeon.branch == 0) {
-				int reqSecrets = Dungeon.level.feeling == Level.Feeling.SECRETS ? 2 : 1;
-
-				//75%/100% chance, use level's seed so that we get the same result for the same level
-				//offset seed slightly to avoid output patterns
-				Random.pushGenerator(Dungeon.seedCurDepth() + 1);
-				if (reqSecrets <= 0 && Random.Int(4) < 2 + Dungeon.hero.pointsInTalent(Talent.ROGUES_FORESIGHT)) {
-					GLog.p(Messages.get(this, "secret_hint"));
-				}
-				Random.popGenerator();
-			}
-
-			boolean unspentTalents = false;
+            boolean unspentTalents = false;
 			for (int i = 1; i <= Dungeon.hero.talents.size(); i++) {
 				if (Dungeon.hero.talentPointsAvailable(i) > 0) {
 					unspentTalents = true;
