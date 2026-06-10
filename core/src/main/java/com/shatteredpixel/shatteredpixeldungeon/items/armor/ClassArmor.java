@@ -187,7 +187,7 @@ abstract public class ClassArmor extends Armor {
 			} else if (!isEquipped( hero )) {
 				usesTargeting = false;
 				GLog.w( Messages.get(this, "not_equipped") );
-			} else if (charge < hero.armorAbility.chargeUse(hero)) {
+			} else if (charge < (float) 35) {
 				usesTargeting = false;
 				GLog.w( Messages.get(this, "low_charge") );
 			} else  {
@@ -291,7 +291,7 @@ abstract public class ClassArmor extends Armor {
 			ArmorAbility ability = Dungeon.hero.armorAbility;
 			if (ability != null) {
 				desc += "\n\n" + ability.shortDesc();
-				float chargeUse = ability.chargeUse(Dungeon.hero);
+                float chargeUse = (float) 35;
 				//trinity has variable charge cost
 				if (!(ability instanceof Trinity)) {
 					desc += " " + Messages.get(this, "charge_use", Messages.decimalFormat("#.##", chargeUse));

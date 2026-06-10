@@ -42,6 +42,8 @@ import com.watabou.utils.Random;
 
 public class HeroicLeap extends ArmorAbility {
 
+	protected float baseChargeUse = 35;
+
 	{
 		baseChargeUse = 35f;
 	}
@@ -50,12 +52,6 @@ public class HeroicLeap extends ArmorAbility {
 	public String targetingPrompt() {
 		return Messages.get(this, "prompt");
 	}
-
-	@Override
-	public float chargeUse( Hero hero ) {
-        float chargeUse = super.chargeUse(hero);
-        return chargeUse;
-    }
 
 	public void activate( ClassArmor armor, Hero hero, Integer target ) {
 		if (target != null) {
@@ -75,7 +71,7 @@ public class HeroicLeap extends ArmorAbility {
 				backTrace--;
 			}
 
-			armor.charge -= chargeUse( hero );
+			armor.charge -= (float) 35;
 			armor.updateQuickslot();
 
 			final int dest = cell;

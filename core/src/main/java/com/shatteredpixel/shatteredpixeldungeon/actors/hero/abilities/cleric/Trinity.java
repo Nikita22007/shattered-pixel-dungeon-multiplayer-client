@@ -76,6 +76,8 @@ import java.util.ArrayList;
 
 public class Trinity extends ArmorAbility {
 
+	protected float baseChargeUse = 35;
+
 	{
 		baseChargeUse = 25;
 	}
@@ -512,7 +514,7 @@ public class Trinity extends ArmorAbility {
 	}
 
 	public static float trinityChargeUsePerEffect(Class<?> cls){
-		float chargeUse = Dungeon.hero.armorAbility.chargeUse(Dungeon.hero);
+		float chargeUse = (float) 35;
 		if (Weapon.Enchantment.class.isAssignableFrom(cls) || Armor.Glyph.class.isAssignableFrom(cls)) {
 			for (Class ench : Weapon.Enchantment.rare) {
 				if (ench.equals(cls)) {

@@ -35,9 +35,7 @@ import com.watabou.utils.Bundle;
 
 public abstract class ArmorAbility implements Bundlable {
 
-	protected float baseChargeUse = 35;
-
-	public void use( ClassArmor armor, Hero hero ){
+    public void use( ClassArmor armor, Hero hero ){
 		if (targetingPrompt() == null){
 
 		} else {
@@ -68,28 +66,6 @@ public abstract class ArmorAbility implements Bundlable {
 		return new Ballistica( user.pos, dst, Ballistica.PROJECTILE ).collisionPos;
 	}
 
-	public float chargeUse( Hero hero ){
-		float chargeUse = baseChargeUse;
-		if (hero.hasTalent(Talent.HEROIC_ENERGY)){
-			//reduced charge use by 12%/23%/32%/40%
-			switch (hero.pointsInTalent(Talent.HEROIC_ENERGY)){
-				case 1: default:
-					chargeUse *= 0.88f;
-					break;
-				case 2:
-					chargeUse *= 0.77f;
-					break;
-				case 3:
-					chargeUse *= 0.68f;
-					break;
-				case 4:
-					chargeUse *= 0.6f;
-					break;
-			}
-		}
-		return chargeUse;
-	}
-
 	public String name(){
 		return Messages.get(this, "name");
 	}
@@ -99,7 +75,7 @@ public abstract class ArmorAbility implements Bundlable {
 	}
 
 	public String desc(){
-		return Messages.get(this, "desc") + "\n\n" + Messages.get(this, "cost", (int)baseChargeUse);
+		return Messages.get(this, "desc") + "\n\n" + Messages.get(this, "cost", (int)35);
 	}
 
 	public int icon(){
