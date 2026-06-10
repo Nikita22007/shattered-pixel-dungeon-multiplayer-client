@@ -137,7 +137,8 @@ public class Ring extends KindofMisc {
 
 		}
 	}
-	
+
+	@Contract(pure=true)
 	public boolean isKnown() {
 		return anonymous || (handler != null && handler.isKnown( this ));
 	}
