@@ -33,7 +33,6 @@ public class RingOfEnergy extends Ring {
 
 	{
 		icon = ItemSpriteSheet.Icons.RING_ENERGY;
-		buffClass = Energy.class;
 	}
 
 	public String statsInfo() {

@@ -42,8 +42,7 @@ public class RingOfElements extends Ring {
 
 	{
 		icon = ItemSpriteSheet.Icons.RING_ELEMENTS;
-		buffClass = Resistance.class;
-	}
+    }
 
 	public String statsInfo() {
 		if (isIdentified()){

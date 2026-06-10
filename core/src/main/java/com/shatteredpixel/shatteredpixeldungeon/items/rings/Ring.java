@@ -47,7 +47,6 @@ import java.util.LinkedHashSet;
 public class Ring extends KindofMisc {
 	
 	protected Buff buff;
-	protected Class<? extends RingBuff> buffClass;
 
 	private static final LinkedHashMap<String, Integer> gems = new LinkedHashMap<String, Integer>() {
 		{

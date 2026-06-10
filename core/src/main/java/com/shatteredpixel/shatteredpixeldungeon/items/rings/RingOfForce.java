@@ -37,8 +37,7 @@ public class RingOfForce extends Ring {
 
 	{
 		icon = ItemSpriteSheet.Icons.RING_FORCE;
-		buffClass = Force.class;
-	}
+    }
 
     public static int armedDamageBonus( Char ch ){
 		return 0;
