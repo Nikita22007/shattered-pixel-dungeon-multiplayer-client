@@ -56,6 +56,13 @@ public class Bag extends CustomItem implements Iterable<Item> {
 				path.add(i);
 				return path;
 			}
+			if (cur_item instanceof Bag) { //check in internal bag
+				List<Integer> path = ((Bag) cur_item).pathOfItem(item);
+				if (path != null) {
+					path.add(0, i);
+					return path;
+				}
+			}
 		}
 		return null; //not found
 	}
@@ -93,8 +100,52 @@ public class Bag extends CustomItem implements Iterable<Item> {
 		}
 	}
 
+	@Override
+	public void execute( Hero hero, String action ) {
+		quickUseItem = null;
+
+		super.execute( hero, action );
+
+		if (action.equals( AC_OPEN ) && !items.isEmpty()) {
+			
+			GameScene.show( new WndQuickBag( this ) );
+			
+		}
+	}
+	
+	@Override
+	public boolean collect( Bag container ) {
+
+		grabItems(container);
+
+		//if there are any quickslot placeholders that match items in this bag, assign them
+		for (Item item : items) {
+			Dungeon.quickslot.replacePlaceholder(item);
+		}
+
+		if (super.collect( container )) {
+			
+			owner = container.owner;
+			
+			Badges.validateAllBagsBought( this );
+			
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public void onDetach( ) {
+		this.owner = null;
+		for (Item item : items) {
+			Dungeon.quickslot.clearItem(item);
+		}
+		updateQuickslot();
+	}
+
 	public void grabItems(){
-		if (owner != null && false && this != ((Hero) owner).belongings.backpack) {
+		if (owner != null && owner instanceof Hero && this != ((Hero) owner).belongings.backpack) {
 			grabItems(((Hero) owner).belongings.backpack);
 		}
 	}
@@ -103,7 +154,9 @@ public class Bag extends CustomItem implements Iterable<Item> {
 		for (Item item : container.items.toArray( new Item[0] )) {
 			if (canHold( item )) {
 				int slot = Dungeon.quickslot.getSlot(item);
-				if (!false) {
+				item.detachAll(container);
+				if (!item.collect(this)) {
+					item.collect(container);
 				}
 				if (slot != -1) {
 					Dungeon.quickslot.setSlot(slot, item);
@@ -150,7 +203,7 @@ public class Bag extends CustomItem implements Iterable<Item> {
 		loading = true;
 		for (Bundlable item : bundle.getCollection( ITEMS )) {
 			if (item != null){
-				if (!false){
+				if (!((Item)item).collect( this )){
 					//force-add the item if necessary, such as if its item category changed after an update
 					items.add((Item) item);
 				}
@@ -158,24 +211,25 @@ public class Bag extends CustomItem implements Iterable<Item> {
 		}
 		loading = false;
 	}
-
-	@Contract(pure = true)
+	
 	public boolean contains( Item item ) {
 		for (Item i : items) {
 			if (i == item) {
 				return true;
-			} if (item instanceof Bag) {
-				if (((Bag) item).contains(item)) {
-					return true;
-				}
+			} else if (i instanceof Bag && ((Bag)i).contains( item )) {
+				return true;
 			}
 		}
 		return false;
 	}
 
 	public boolean canHold( Item item ){
+		if (!loading && owner != null && owner.buff(LostInventory.class) != null
+			&& !item.keptThroughLostInventory()){
+			return false;
+		}
 
-        if (items.contains(item) || items.size() < capacity()){
+		if (items.contains(item) || item instanceof Bag || items.size() < capacity()){
 			return true;
 		} else if (item.stackable) {
 			for (Item i : items) {
@@ -217,6 +271,9 @@ public class Bag extends CustomItem implements Iterable<Item> {
 				nested = null;
 				
 				Item item = items.get( index++ );
+				if (item instanceof Bag) {
+					nested = ((Bag)item).iterator();
+				}
 				
 				return item;
 			}
