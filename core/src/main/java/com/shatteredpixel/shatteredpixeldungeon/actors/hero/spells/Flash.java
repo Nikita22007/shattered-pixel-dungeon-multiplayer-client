@@ -72,11 +72,7 @@ public class Flash extends TargetedClericSpell {
 			return;
 		}
 
-		if (ScrollOfTeleportation.teleportToLocation(hero, target)){
-			hero.spendAndNext( 1f );
-			onSpellCast(tome, hero);
-            ((AscendedForm.AscendBuff) null).flashCasts++;
-		}
+
 
 	}
 }

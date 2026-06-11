@@ -859,9 +859,7 @@ public class Hero extends Char {
 
 		} else if (!Dungeon.level.locked && transition != null && transition.inside(pos)) {
 
-			if (Dungeon.level.activateTransition(this, transition)) {
-				curAction = null;
-			} else {
+			{
 				ready();
 			}
 

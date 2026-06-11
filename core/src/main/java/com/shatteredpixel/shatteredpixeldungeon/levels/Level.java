@@ -22,10 +22,8 @@
 package com.shatteredpixel.shatteredpixeldungeon.levels;
 
 import com.shatteredpixel.shatteredpixeldungeon.*;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.*;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.*;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.FlowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.WindParticle;
@@ -39,7 +37,6 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.CustomTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
@@ -312,52 +309,6 @@ public abstract class Level implements Bundlable {
 		return null;
 	}
 
-	//returns true if we immediately transition, false otherwise
-	public boolean activateTransition(Hero hero, LevelTransition transition){
-		if (locked){
-			return false;
-		}
-
-		beforeTransition();
-		InterlevelScene.curTransition = transition;
-		if (transition.type == LevelTransition.Type.REGULAR_EXIT
-				|| transition.type == LevelTransition.Type.BRANCH_EXIT) {
-			InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
-		} else {
-			InterlevelScene.mode = InterlevelScene.Mode.ASCEND;
-		}
-		Game.switchScene(InterlevelScene.class);
-		return true;
-	}
-
-	//some buff effects have special logic or are cancelled from the hero before transitioning levels
-	public static void beforeTransition(){
-
-		//time freeze effects need to resolve their pressed cells before transitioning
-
-
-		//spend the hero's partial turns,  so the hero cannot take partial turns between floors
-		Dungeon.hero.spendToWhole();
-		for (Actor a : Actor.all()){
-			//also adjust any other actors that are now ahead of the hero due to this
-			if (a.cooldown() < Dungeon.hero.cooldown()){
-				a.spendToWhole();
-			}
-		}
-	}
-
-	public void seal(){
-		if (!locked) {
-			locked = true;
-		}
-	}
-
-	public void unseal(){
-		if (locked) {
-			locked = false;
-		}
-	}
-
 	public Group addVisuals() {
 		if (visuals == null || visuals.parent == null){
 			visuals = new Group();
@@ -387,44 +338,6 @@ public abstract class Level implements Bundlable {
 		return wallVisuals;
 	}
 
-
-	public Mob findMob( int pos ){
-		for (Mob mob : mobs){
-			if (mob.pos == pos){
-				return mob;
-			}
-		}
-		return null;
-	}
-
-	public int randomRespawnCell( Char ch ) {
-		int cell;
-		int count = 0;
-		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
-		do {
-
-			if (++count > 30) {
-				return -1;
-			}
-
-			cell = Random.Int( length() );
-
-		} while ((Dungeon.level == this && heroFOV[cell])
-				|| !passable[cell]
-				|| (false && !openSpace[cell])
-				|| Actor.findChar( cell ) != null);
-		return cell;
-	}
-	
-	public int randomDestination( Char ch ) {
-		int cell;
-		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
-		do {
-			cell = Random.Int( length() );
-		} while (!passable[cell]
-				|| (false && !openSpace[cell]));
-		return cell;
-	}
 
 	public void buildFlagMaps() {
 		
@@ -497,37 +410,6 @@ public abstract class Level implements Bundlable {
 		}
 	}
 
-	public void destroy( int pos ) {
-		//if raw tile type is flammable or empty
-		int terr = map[pos];
-		if (terr == Terrain.EMPTY || terr == Terrain.EMPTY_DECO
-				|| (Terrain.flags[map[pos]] & Terrain.FLAMABLE) != 0) {
-			set(pos, Terrain.EMBERS);
-		}
-
-	}
-
-	public void cleanWalls() {
-		if (discoverable == null || discoverable.length != length) {
-			discoverable = new boolean[length()];
-		}
-
-		for (int i=0; i < length(); i++) {
-			
-			boolean d = false;
-			
-			for (int j=0; j < PathFinder.NEIGHBOURS9.length; j++) {
-				int n = i + PathFinder.NEIGHBOURS9[j];
-				if (n >= 0 && n < length() && map[n] != Terrain.WALL && map[n] != Terrain.WALL_DECO) {
-					d = true;
-					break;
-				}
-			}
-			
-			discoverable[i] = d;
-		}
-	}
-	
 	public static void set( int cell, int terrain ){
 		set( cell, terrain, Dungeon.level );
 	}
@@ -670,51 +552,6 @@ public abstract class Level implements Bundlable {
 		if (trap != null)
 			trap.reveal();
 		GameScene.updateMap( cell );
-	}
-
-	public boolean setCellToWater( boolean includeTraps, int cell ){
-		Point p = cellToPoint(cell);
-
-		//if a custom tilemap is over that cell, don't put water there
-		for (CustomTilemap cust : customTiles){
-			Point custPoint = new Point(p);
-			custPoint.x -= cust.tileX;
-			custPoint.y -= cust.tileY;
-			if (custPoint.x >= 0 && custPoint.y >= 0
-					&& custPoint.x < cust.tileW && custPoint.y < cust.tileH){
-				if (cust.image(custPoint.x, custPoint.y) != null){
-					return false;
-				}
-			}
-		}
-
-		int terr = map[cell];
-		if (terr == Terrain.EMPTY || terr == Terrain.GRASS ||
-				terr == Terrain.EMBERS || terr == Terrain.EMPTY_SP ||
-				terr == Terrain.HIGH_GRASS || terr == Terrain.FURROWED_GRASS
-				|| terr == Terrain.EMPTY_DECO){
-			set(cell, Terrain.WATER);
-			GameScene.updateMap(cell);
-			return true;
-		} else if (includeTraps && (terr == Terrain.SECRET_TRAP ||
-				terr == Terrain.TRAP || terr == Terrain.INACTIVE_TRAP)){
-			set(cell, Terrain.WATER);
-			Dungeon.level.traps.remove(cell);
-			GameScene.updateMap(cell);
-			return true;
-		}
-
-		return false;
-	}
-	
-	public int fallCell( boolean fallIntoPit ) {
-		int result;
-		do {
-			result = randomRespawnCell( null );
-			if (result == -1) return -1;
-		} while (traps.get(result) != null
-				|| findMob(result) != null);
-		return result;
 	}
 
 	@Contract(pure = true)
