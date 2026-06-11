@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -119,7 +118,7 @@ public class Pasty extends Food {
 			case APRIL_FOOLS:
 				Sample.INSTANCE.play(Assets.Sounds.MIMIC);
 			case EASTER:
-				ArtifactRecharge.chargeArtifacts(hero, 2f);
+
 				ScrollOfRecharging.charge( hero );
 				break;
 			case PRIDE:

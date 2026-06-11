@@ -36,13 +36,7 @@ public class MossyClump extends Trinket {
 		image = ItemSpriteSheet.MOSSY_CLUMP;
 	}
 
-	@Override
-	protected int upgradeEnergyCost() {
-		//6 -> 10(16) -> 15(31) -> 20(51)
-		return 10+5*level();
-	}
-
-	@Override
+    @Override
 	public String statsDesc() {
 		if (isIdentified()){
 			return Messages.get(this, "stats_desc", (int)(100*overrideNormalLevelChance(buffedLvl())));

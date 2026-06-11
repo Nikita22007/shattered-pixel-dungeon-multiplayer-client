@@ -31,13 +31,7 @@ public class FerretTuft extends Trinket {
 		image = ItemSpriteSheet.FERRET_TUFT;
 	}
 
-	@Override
-	protected int upgradeEnergyCost() {
-		//6 -> 8(14) -> 10(24) -> 12(36)
-		return 6+2*level();
-	}
-
-	@Override
+    @Override
 	public String statsDesc() {
 		if (isIdentified()){
 			return Messages.get(this, "stats_desc", Messages.decimalFormat("#.##", 100 * (evasionMultiplier(buffedLvl())-1f)));

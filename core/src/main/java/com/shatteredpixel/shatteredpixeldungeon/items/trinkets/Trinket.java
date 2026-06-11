@@ -39,8 +39,6 @@ public abstract class Trinket extends Item {
 		return false;
 	}
 
-	protected abstract int upgradeEnergyCost();
-
 	protected static int trinketLevel(Class<? extends Trinket> trinketType ){
 		if (Dungeon.hero == null || Dungeon.hero.belongings == null){
 			return -1;
@@ -78,11 +76,6 @@ public abstract class Trinket extends Item {
 
 		{
 			image = ItemSpriteSheet.TRINKET_HOLDER;
-		}
-
-		@Override
-		protected int upgradeEnergyCost() {
-			return 0;
 		}
 
 		@Override

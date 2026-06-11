@@ -31,12 +31,6 @@ public class WondrousResin extends Trinket {
 	}
 
 	@Override
-	protected int upgradeEnergyCost() {
-		//6 -> 10(16) -> 15(31) -> 20(51)
-		return 10+5*level();
-	}
-
-	@Override
 	public String statsDesc() {
 		if (isIdentified()){
 			return Messages.get(this, "stats_desc",

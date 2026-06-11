@@ -30,13 +30,7 @@ public class ExoticCrystals extends Trinket {
 		image = ItemSpriteSheet.EXOTIC_CRYSTALS;
 	}
 
-	@Override
-	protected int upgradeEnergyCost() {
-		//6 -> 8(14) -> 10(24) -> 12(36)
-		return 6+2*level();
-	}
-
-	@Override
+    @Override
 	public String statsDesc() {
 		if (isIdentified()){
 			return Messages.get(this, "stats_desc", Messages.decimalFormat("#.##", 100*consumableExoticChance(buffedLvl())));

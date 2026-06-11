@@ -21,9 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.trinkets;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blizzard;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ConfusionGas;
@@ -34,22 +31,10 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.SmokeScreen;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.StenchGas;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.StormCloud;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ToxicGas;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
-import com.shatteredpixel.shatteredpixeldungeon.effects.TargetedCell;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.ui.TargetHealthIndicator;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.BArray;
-import com.watabou.utils.PathFinder;
-import com.watabou.utils.Random;
 
 import java.util.HashMap;
 
@@ -57,12 +42,6 @@ public class ChaoticCenser extends Trinket {
 
 	{
 		image = ItemSpriteSheet.CHAOTIC_CENSER;
-	}
-
-	@Override
-	protected int upgradeEnergyCost() {
-		//6 -> 8(14) -> 10(24) -> 12(36)
-		return 6+2*level();
 	}
 
 	@Override
@@ -84,186 +63,6 @@ public class ChaoticCenser extends Trinket {
 		} else {
 			return 300 / (level + 1);
 		}
-	}
-
-	public static class CenserGasTracker extends Buff {
-
-		private int left = Integer.MAX_VALUE;
-		private int safeAreaDelay = 100;
-
-		@Override
-		public boolean act() {
-
-			int avgTurns = averageTurnsUntilGas();
-
-			if (avgTurns == -1){
-				spend(Random.NormalIntRange(1, 5));
-				return true;
-			} else if (left > avgTurns*1.2f){
-				left = Random.IntRange((int) (avgTurns*0.833f), (int) (avgTurns*1.2f));
-			}
-
-			if (left <= 0) {
-
-				if (TargetHealthIndicator.instance != null && TargetHealthIndicator.instance.isVisible()){
-					Char target = TargetHealthIndicator.instance.target();
-
-					if (target != null
-							&& target.isActive()
-							&& target.alignment == Char.Alignment.ENEMY
-							&& (!(target instanceof Mob) || ((Mob) target).state != ((Mob) target).PASSIVE)){
-
-						if (produceGas(target)){
-							Sample.INSTANCE.play(Assets.Sounds.GAS, 0.5f);
-							Dungeon.hero.interrupt();
-							left += Random.IntRange((int) (avgTurns * 0.9f), (int) (avgTurns * 1.1f));
-						}
-					}
-				}
-
-			}
-
-			//buff ticks an average of every 3 turns
-			int delay = Random.NormalIntRange(1, 3);
-			spend(delay);
-			left = (int)Math.max(left-delay, -avgTurns/3f);
-
-			return true;
-		}
-
-		private static String LEFT = "left";
-
-	}
-
-	private static boolean produceGas( Char target ){
-		int level = trinketLevel(ChaoticCenser.class);
-
-		if (level < 0 || level > 3){
-			return false;
-		}
-
-		Class<?extends Blob> gasToSpawn;
-		float gasQuantity;
-		switch (Random.chances(GAS_CAT_CHANCES[level])){
-			case 0: default:
-				do {
-					gasToSpawn = Random.element(COMMON_GASSES.keySet());
-				} while (!Regeneration.regenOn() && gasToSpawn == Regrowth.class);
-				gasQuantity = COMMON_GASSES.get(gasToSpawn);
-				break;
-			case 1:
-				gasToSpawn = Random.element(UNCOMMON_GASSES.keySet());
-				gasQuantity = UNCOMMON_GASSES.get(gasToSpawn);
-				break;
-			case 2:
-				gasToSpawn = Random.element(RARE_GASSES.keySet());
-				gasQuantity = RARE_GASSES.get(gasToSpawn);
-				break;
-		}
-
-		HashMap<Integer, Float> candidateCells = new HashMap<>();
-		PathFinder.buildDistanceMap(Dungeon.hero.pos, BArray.not(Dungeon.level.solid, null), 6);
-
-		//spawn gas in a random visible cell 2-6 tiles away
-		for (int i = 0; i < Dungeon.level.length(); i++){
-			if (Dungeon.level.heroFOV[i] && PathFinder.distance[i] < Integer.MAX_VALUE) {
-				if (PathFinder.distance[i] >= 2 && PathFinder.distance[i] <= 6) {
-					candidateCells.put(i, 0f);
-				}
-			}
-		}
-
-		//strongly prefer cells closer to target
-		int targetpos = target.pos;
-		if (Dungeon.level.trueDistance(target.pos, Dungeon.hero.pos) >= 4){
-			//if target is a distance from the hero, aim in front of them instead
-			for (int i : PathFinder.NEIGHBOURS8){
-				while (!Dungeon.level.solid[targetpos+i]
-						&& Dungeon.level.trueDistance(target.pos+i, Dungeon.hero.pos) < Dungeon.level.trueDistance(targetpos, Dungeon.hero.pos)){
-					targetpos = target.pos+i;
-				}
-			}
-		}
-		float closest = 100;
-		for (int cell : candidateCells.keySet()){
-			float dist = Dungeon.level.distance(cell, targetpos);
-			if (dist < closest){
-				closest = dist;
-			}
-		}
-		for (int cell : candidateCells.keySet()){
-			float dist = Dungeon.level.distance(cell, targetpos);
-			if (dist - closest == 0) {
-				candidateCells.put(cell, 8f);
-			} else if (dist - closest <= 1) {
-				candidateCells.put(cell, 1f);
-			} else {
-				candidateCells.put(cell, 0f);
-			}
-		}
-
-		if (!candidateCells.isEmpty()) {
-			Integer targetCell = Random.chances(candidateCells);
-			if (targetCell != null) {
-                Dungeon.hero.cooldown();
-                ((GasSpewer) null).set(targetCell, gasToSpawn, (int)gasQuantity);
-				GLog.w(Messages.get(ChaoticCenser.class, "spew", Messages.titleCase(Messages.get(gasToSpawn, "name")) ));
-				if (target.sprite != null && target.sprite.parent != null) {
-					target.sprite.parent.addToBack(new TargetedCell(targetCell, 0xFF0000));
-				}
-				return true;
-			}
-		}
-
-		return false;
-
-	}
-
-	public static class GasSpewer extends FlavourBuff {
-
-		private int targetCell;
-
-		private int depth;
-		private int branch;
-
-		private Class<?extends Blob> gasType;
-		private int gasQuantity;
-
-		public void set( int targetCell, Class<?extends Blob> gasType, int gasQuantity){
-			this.targetCell = targetCell;
-
-			depth = Dungeon.depth;
-			branch = Dungeon.branch;
-
-			this.gasType = gasType;
-			this.gasQuantity = gasQuantity;
-		}
-
-		@Override
-		public boolean act() {
-
-			if (depth == Dungeon.depth && branch == Dungeon.branch){
-				GameScene.add(Blob.seed(targetCell, gasQuantity, gasType));
-
-				//corrosion starts at the same level as potion of corrosive gas
-				if (gasType == CorrosiveGas.class){
-                    ((CorrosiveGas)Dungeon.level.blobs.get(CorrosiveGas.class)).setStrength( 2 + Dungeon.depth /5, ChaoticCenser.class);
-				}
-
-				MagicMissile.boltFromChar(Dungeon.hero.sprite.parent, MISSILE_VFX.get(gasType), Dungeon.hero.sprite, targetCell, null);
-				Sample.INSTANCE.play(Assets.Sounds.GAS);
-			}
-
-			detach();
-			return true;
-		}
-
-		private static final String CELL = "cell";
-		private static final String DEPTH = "depth";
-		private static final String BRANCH = "branch";
-		private static final String GAS_TYPE = "gas_type";
-		private static final String GAS_QUANTITY = "gas_quantity";
-
 	}
 
 	private static final float[][] GAS_CAT_CHANCES = new float[4][3];

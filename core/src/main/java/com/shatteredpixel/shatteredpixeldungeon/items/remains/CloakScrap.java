@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.remains;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -36,8 +35,8 @@ public class CloakScrap extends RemainsItem {
 
 	@Override
 	protected void doEffect(Hero hero) {
-		ArtifactRecharge.chargeArtifacts(hero, 4f);
-		ScrollOfRecharging.charge(hero);
+
+        ScrollOfRecharging.charge(hero);
 		Sample.INSTANCE.play( Assets.Sounds.CHARGEUP );
 	}
 }

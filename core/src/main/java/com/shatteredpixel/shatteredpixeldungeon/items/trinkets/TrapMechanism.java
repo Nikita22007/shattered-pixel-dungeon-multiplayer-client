@@ -36,13 +36,7 @@ public class TrapMechanism extends Trinket {
 		image = ItemSpriteSheet.TRAP_MECHANISM;
 	}
 
-	@Override
-	protected int upgradeEnergyCost() {
-		//6 -> 8(14) -> 10(24) -> 12(36)
-		return 6+2*level();
-	}
-
-	@Override
+    @Override
 	public String statsDesc() {
 		if (isIdentified()){
 			return Messages.get(this, "stats_desc", (int)(100*overrideNormalLevelChance(buffedLvl())), (int)(100*revealHiddenTrapChance(buffedLvl())));

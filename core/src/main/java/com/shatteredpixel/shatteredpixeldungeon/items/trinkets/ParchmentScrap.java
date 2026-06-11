@@ -30,13 +30,7 @@ public class ParchmentScrap extends Trinket {
 		image = ItemSpriteSheet.PARCHMENT_SCRAP;
 	}
 
-	@Override
-	protected int upgradeEnergyCost() {
-		//6 -> 10(16) -> 15(31) -> 20(51)
-		return 10+5*level();
-	}
-
-	@Override
+    @Override
 	public String statsDesc() {
 		if (isIdentified()){
 			return Messages.get(this, "stats_desc", (int)enchantChanceMultiplier(buffedLvl()), Messages.decimalFormat("#.##", curseChanceMultiplier(buffedLvl())));
