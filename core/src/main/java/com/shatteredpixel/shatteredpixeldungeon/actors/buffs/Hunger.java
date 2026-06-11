@@ -29,7 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 
-public class Hunger extends Buff implements Hero.Doom {
+public class Hunger extends Buff {
 
 	public static final float HUNGRY	= 300f;
 	public static final float STARVING	= 450f;
@@ -131,12 +131,4 @@ public class Hunger extends Buff implements Hero.Doom {
 		return result;
 	}
 
-	@Override
-	public void onDeath() {
-
-		Badges.validateDeathFromHunger();
-
-		Dungeon.fail( this );
-		GLog.n( Messages.get(this, "ondeath") );
-	}
 }

@@ -602,7 +602,8 @@ public class GameScene extends PixelScene {
 		if (!Dungeon.hero.isAlive()){
 			//check if hero has an unblessed ankh
 			Ankh ankh = null;
-			for (Ankh i : Dungeon.hero.belongings.getAllItems(Ankh.class)){
+
+			for (Ankh i : new ArrayList<Ankh>()){
 				if (!i.isBlessed()){
 					ankh = i;
 				}

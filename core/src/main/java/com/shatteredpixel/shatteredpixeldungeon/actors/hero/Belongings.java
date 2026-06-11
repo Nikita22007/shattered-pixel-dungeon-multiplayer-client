@@ -238,22 +238,6 @@ public class Belongings implements Iterable<Item> {
 		return result;
 	}
 
-	public<T extends Item> ArrayList<T> getAllItems( Class<T> itemClass ) {
-		ArrayList<T> result = new ArrayList<>();
-
-		boolean lostInvent = lostInventory();
-
-		for (Item item : this) {
-			if (itemClass.isInstance( item )) {
-				if (!lostInvent || item.keptThroughLostInventory()) {
-					result.add((T) item);
-				}
-			}
-		}
-
-		return result;
-	}
-	
 	public boolean contains( Item contains ){
 
 		boolean lostInvent = lostInventory();

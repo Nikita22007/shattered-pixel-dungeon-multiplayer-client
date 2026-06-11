@@ -24,35 +24,18 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
-import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
-import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
-import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
-import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
-import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
-import com.shatteredpixel.shatteredpixeldungeon.items.Heap.Type;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.SkeletonKey;
-import com.shatteredpixel.shatteredpixeldungeon.items.keys.CrystalKey;
-import com.shatteredpixel.shatteredpixeldungeon.items.keys.GoldenKey;
-import com.shatteredpixel.shatteredpixeldungeon.items.keys.IronKey;
-import com.shatteredpixel.shatteredpixeldungeon.items.keys.Key;
-import com.shatteredpixel.shatteredpixeldungeon.items.keys.WornKey;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.*;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
-import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
@@ -61,7 +44,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.utils.Log;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndResurrect;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
@@ -456,12 +438,6 @@ public class Hero extends Char {
 		return visibleEnemies.get(index % visibleEnemies.size());
 	}
 
-	public ArrayList<Mob> getVisibleEnemies() {
-		return new ArrayList<>(visibleEnemies);
-	}
-
-	private boolean walkingToVisibleTrapInFog = false;
-
 	public boolean handle(int cell) {
 		SendData.SendCellListenerCell(cell);
 		return true;
@@ -505,54 +481,7 @@ public class Hero extends Char {
 	@Override
 	public void die(Object cause) {
 
-		Ankh ankh = null;
-
-		//look for ankhs in player inventory, prioritize ones which are blessed.
-		for (Ankh i : belongings.getAllItems(Ankh.class)) {
-			if (ankh == null || i.isBlessed()) {
-				ankh = i;
-			}
-		}
-
-		if (ankh != null) {
-			interrupt();
-
-			if (ankh.isBlessed()) {
-				this.HP = HT / 4;
-
-				PotionOfHealing.cure(this);
-
-				SpellSprite.show(this, SpellSprite.ANKH);
-				GameScene.flash(0x80FFFF40);
-				Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
-				GLog.w(Messages.get(this, "revive"));
-				Statistics.ankhsUsed++;
-
-            } else {
-
-				//this is hacky, basically we want to declare that a wndResurrect exists before
-				//it actually gets created. This is important so that the game knows to not
-				//delete the run or submit it to rankings, because a WndResurrect is about to exist
-				//this is needed because the actual creation of the window is delayed here
-				WndResurrect.instance = new Object();
-				Ankh finalAnkh = ankh;
-				Game.runOnRenderThread(new Callback() {
-					@Override
-					public void call() {
-						GameScene.show(new WndResurrect(finalAnkh));
-					}
-				});
-
-				if (cause instanceof Doom) {
-					((Doom) cause).onDeath();
-				}
-
-
-            }
-			return;
-		}
-
-		Actor.fixTime();
+        Actor.fixTime();
 		super.die(cause);
 		reallyDie(cause);
 	}
@@ -602,9 +531,6 @@ public class Hero extends Char {
 			items.remove(item);
 		}
 
-		for (Char c : Actor.chars()) {
-		}
-
 		Game.runOnRenderThread(new Callback() {
 			@Override
 			public void call() {
@@ -612,11 +538,6 @@ public class Hero extends Char {
 				Sample.INSTANCE.play(Assets.Sounds.DEATH);
 			}
 		});
-
-		if (cause instanceof Doom) {
-			((Doom) cause).onDeath();
-		}
-
 
 	}
 
@@ -678,94 +599,7 @@ public class Hero extends Char {
 
 	@Override
 	public void onOperateComplete() {
-
-		if ((HeroAction) null instanceof HeroAction.Unlock) {
-
-			int doorCell = ((HeroAction.Unlock) null).dst;
-			int door = Dungeon.level.map[doorCell];
-
-			SkeletonKey.keyRecharge skele = null;
-			SkeletonKey.KeyReplacementTracker keyUseTrack = null;
-
-			if (skele != null && skele.isCursed() && Random.Int(6) != 0) {
-				GLog.n(Messages.get(this, "key_distracted"));
-				spendAndNext(2 * Key.TIME_TO_UNLOCK);
-				((Hunger) null).affectHunger(-4);
-			} else if (Dungeon.level.distance(pos, doorCell) <= 1) {
-				boolean hasKey = true;
-				if (door == Terrain.LOCKED_DOOR) {
-					hasKey = Notes.remove(new IronKey(Dungeon.depth));
-					if (hasKey) {
-						if (keyUseTrack != null) {
-							keyUseTrack.processIronLockOpened();
-						}
-						Level.set(doorCell, Terrain.DOOR);
-					}
-				} else if (door == Terrain.HERO_LKD_DR) {
-					hasKey = true;
-					Level.set(doorCell, Terrain.DOOR);
-					GLog.i(Messages.get(SkeletonKey.class, "force_lock"));
-				} else if (door == Terrain.CRYSTAL_DOOR) {
-					hasKey = Notes.remove(new CrystalKey(Dungeon.depth));
-					if (hasKey) {
-						if (keyUseTrack != null) {
-							keyUseTrack.processCrystalLockOpened();
-						}
-						Level.set(doorCell, Terrain.EMPTY);
-						Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
-						CellEmitter.get(doorCell).start(Speck.factory(Speck.DISCOVER), 0.025f, 20);
-					}
-				} else {
-					hasKey = Notes.remove(new WornKey(Dungeon.depth));
-					if (hasKey) {
-						Level.set(doorCell, Terrain.UNLOCKED_EXIT);
-					}
-				}
-
-				if (hasKey) {
-					GameScene.updateKeyDisplay();
-					GameScene.updateMap(doorCell);
-					spend(Key.TIME_TO_UNLOCK);
-				}
-			}
-
-		} else if ((HeroAction) null instanceof HeroAction.OpenChest) {
-
-			Heap heap = Dungeon.level.heaps.get(((HeroAction.OpenChest) null).dst);
-			SkeletonKey.keyRecharge skele = null;
-			SkeletonKey.KeyReplacementTracker keyUseTrack = null;
-
-			if (skele != null && skele.isCursed()
-					&& (heap.type == Type.LOCKED_CHEST || heap.type == Type.CRYSTAL_CHEST)
-					&& Random.Int(6) != 0) {
-				GLog.n(Messages.get(this, "key_distracted"));
-				spend(2 * Key.TIME_TO_UNLOCK);
-				((Hunger) null).affectHunger(-4);
-			} else if (Dungeon.level.distance(pos, heap.pos) <= 1) {
-				boolean hasKey = true;
-				if (heap.type == Type.SKELETON || heap.type == Type.REMAINS) {
-					Sample.INSTANCE.play(Assets.Sounds.BONES);
-				} else if (heap.type == Type.LOCKED_CHEST) {
-					hasKey = Notes.remove(new GoldenKey(Dungeon.depth));
-					if (hasKey && keyUseTrack != null) {
-						keyUseTrack.processGoldLockOpened();
-					}
-				} else if (heap.type == Type.CRYSTAL_CHEST) {
-					hasKey = Notes.remove(new CrystalKey(Dungeon.depth));
-					if (hasKey && keyUseTrack != null) {
-						keyUseTrack.processCrystalLockOpened();
-					}
-				}
-
-				if (hasKey) {
-					GameScene.updateKeyDisplay();
-					spend(Key.TIME_TO_UNLOCK);
-				}
-			}
-
-		}
-
-		if (!ready) {
+        if (!ready) {
 			super.onOperateComplete();
 		}
 	}
@@ -783,13 +617,6 @@ public class Hero extends Char {
 		HP = HT;
 		live();
 
-		//lost inventory is dropped in interlevelscene
-
-		//activate items that persist after lost inventory
-		//FIXME this is very messy, maybe it would be better to just have one buff that
-		// handled all items that recharge over time?
-
-
 	}
 
 	@Override
@@ -798,7 +625,4 @@ public class Hero extends Char {
 			super.next();
 	}
 
-	public static interface Doom {
-		public void onDeath();
-	}
 }

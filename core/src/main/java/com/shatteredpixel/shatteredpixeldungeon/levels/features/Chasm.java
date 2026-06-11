@@ -39,7 +39,7 @@ import com.watabou.noosa.Image;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
-public class Chasm implements Hero.Doom {
+public class Chasm {
 
 	public static boolean jumpConfirmed = false;
 	private static int heroPos;
@@ -86,13 +86,6 @@ public class Chasm implements Hero.Doom {
 		});
 	}
 
-	@Override
-	public void onDeath() {
-		Badges.validateDeathFromFalling();
-
-		Dungeon.fail( Chasm.class );
-		GLog.n( Messages.get(Chasm.class, "ondeath") );
-	}
 
 	public static void heroLand() {
 		
