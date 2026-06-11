@@ -21,29 +21,15 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
-import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
-import com.shatteredpixel.shatteredpixeldungeon.ui.AttackIndicator;
-import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.noosa.Image;
-import com.watabou.noosa.Visual;
-import com.watabou.noosa.audio.Sample;
-import org.jetbrains.annotations.Contract;
 
 public class MeleeWeapon extends Weapon {
 
@@ -190,20 +176,6 @@ public class MeleeWeapon extends Weapon {
 		return Messages.get(this, "ability_desc");
 	}
 
-	public String upgradeAbilityStat(int level){
-		return null;
-	}
-
-	@Override
-	public String status() {
-        if (isEquipped(Dungeon.hero)) {
-            Charger buff = null;
-            return buff.charges + "/" + buff.chargeCap();
-        } else {
-            return super.status();
-        }
-	}
-
 	@Override
 	public int value() {
 		int price = 20 * tier;
@@ -220,159 +192,6 @@ public class MeleeWeapon extends Weapon {
 			price = 1;
 		}
 		return price;
-	}
-
-	public static class Charger extends Buff implements ActionIndicator.Action {
-
-		{
-			//so that duelist keeps weapon charge on ankh revive
-			revivePersists = true;
-		}
-
-		public int charges = 2;
-		public float partialCharge;
-
-		@Override
-		public boolean act() {
-			if (charges < chargeCap()){
-
-				if (false) {
-                    //60 to 45 turns per charge
-                    float chargeToGain = 1 / (60f - 1.5f * (chargeCap() - charges));
-
-                    //40 to 30 turns per charge for champion
-                    if (Dungeon.hero.subClass == HeroSubClass.CHAMPION) {
-                        chargeToGain *= 1.5f;
-                    }
-
-                    //50% slower charge gain with brawler's stance enabled, even if buff is inactive
-
-                    partialCharge += chargeToGain;
-                }
-
-				int points = ((Hero)target).pointsInTalent(Talent.WEAPON_RECHARGING);
-                if (points > 0 || true){
-					//1 every 15 turns at +1, 10 turns at +2
-					partialCharge += 1/(20f - 5f*points);
-				}
-
-				if (partialCharge >= 1){
-					charges++;
-					partialCharge--;
-					updateQuickslot();
-				}
-			} else {
-				partialCharge = 0;
-			}
-
-			if (ActionIndicator.action != this && Dungeon.hero.subClass == HeroSubClass.CHAMPION) {
-				ActionIndicator.setAction(this);
-			}
-
-			spend(TICK);
-			return true;
-		}
-
-		@Override
-		public void fx(boolean on) {
-			if (on && Dungeon.hero.subClass == HeroSubClass.CHAMPION) {
-				ActionIndicator.setAction(this);
-			}
-		}
-
-		@Override
-		public void detach() {
-			super.detach();
-			ActionIndicator.clearAction(this);
-		}
-
-		public int chargeCap(){
-			//caps at level 19 with 8 or 10 charges
-			if (Dungeon.hero.subClass == HeroSubClass.CHAMPION){
-				return Math.min(10, 4 + (Dungeon.hero.lvl - 1) / 3);
-			} else {
-				return Math.min(8, 2 + (Dungeon.hero.lvl - 1) / 3);
-			}
-		}
-
-		public void gainCharge( float charge ){
-			if (charges < chargeCap()) {
-				partialCharge += charge;
-				while (partialCharge >= 1f) {
-					charges++;
-					partialCharge--;
-				}
-				if (charges >= chargeCap()){
-					partialCharge = 0;
-					charges = chargeCap();
-				}
-				updateQuickslot();
-			}
-		}
-
-		public static final String CHARGES          = "charges";
-		private static final String PARTIALCHARGE   = "partialCharge";
-
-		@Override
-		public String actionName() {
-			return Messages.get(MeleeWeapon.class, "swap");
-		}
-
-		@Override
-		public int actionIcon() {
-			return HeroIcon.WEAPON_SWAP;
-		}
-
-		@Override
-		public Visual primaryVisual() {
-			Image ico;
-			if (Dungeon.hero.belongings.weapon == null){
-				ico = new HeroIcon(this);
- 			} else {
-				ico = new ItemSprite(Dungeon.hero.belongings.weapon);
-			}
-			ico.width += 4; //shift slightly to the left to separate from smaller icon
-			return ico;
-		}
-
-		@Override
-		public Visual secondaryVisual() {
-			Image ico;
-			if (Dungeon.hero.belongings.secondWep == null){
-				ico = new HeroIcon(this);
-			} else {
-				ico = new ItemSprite(Dungeon.hero.belongings.secondWep);
-			}
-			ico.scale.set(PixelScene.align(0.51f));
-			ico.brightness(0.6f);
-			return ico;
-		}
-
-		@Override
-		public int indicatorColor() {
-			return 0x5500BB;
-		}
-
-		@Override
-		public void doAction() {
-			if (Dungeon.hero.subClass != HeroSubClass.CHAMPION){
-				return;
-			}
-
-			if (Dungeon.hero.belongings.secondWep == null && Dungeon.hero.belongings.backpack.items.size() >= Dungeon.hero.belongings.backpack.capacity()){
-				GLog.w(Messages.get(MeleeWeapon.class, "swap_full"));
-				return;
-			}
-
-			Dungeon.hero.belongings.weapon = Dungeon.hero.belongings.secondWep;
-
-			Dungeon.hero.sprite.operate(Dungeon.hero.pos);
-			Sample.INSTANCE.play(Assets.Sounds.UNLOCK);
-
-			ActionIndicator.setAction(this);
-			Item.updateQuickslot();
-			AttackIndicator.updateState();
-		}
 	}
 
 }

@@ -23,14 +23,10 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
-import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
-import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.watabou.noosa.particles.Emitter;
 
 public class WarpBeacon extends ArmorAbility {
 
@@ -51,33 +47,6 @@ public class WarpBeacon extends ArmorAbility {
 	@Override
 	public int targetedPos(Char user, int dst) {
 		return dst;
-	}
-
-	public static class WarpBeaconTracker extends Buff {
-
-		{
-			revivePersists = true;
-		}
-
-		int pos;
-		int depth;
-		int branch;
-
-		Emitter e;
-
-		@Override
-		public void fx(boolean on) {
-			if (on && depth == Dungeon.depth) {
-				e = CellEmitter.center(pos);
-				e.pour(MagicMissile.WardParticle.UP, 0.05f);
-			}
-			else if (e != null) e.on = false;
-		}
-
-		public static final String POS = "pos";
-		public static final String DEPTH = "depth";
-		public static final String BRANCH = "branch";
-
 	}
 
 	@Override
