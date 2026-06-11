@@ -74,7 +74,6 @@ public abstract class Char extends Actor {
 		if (fieldOfView == null || fieldOfView.length != Dungeon.level.length()){
 			fieldOfView = new boolean[Dungeon.level.length()];
 		}
-		Dungeon.level.updateFieldOfView( this, fieldOfView );
 
 		//throw any items that are on top of an immovable char
 		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
