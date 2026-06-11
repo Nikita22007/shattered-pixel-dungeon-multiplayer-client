@@ -202,7 +202,7 @@ public class HeroSprite extends CharSprite implements ClassSprite, TieredSprite{
 
 	@Override
 	public void update() {
-		sleeping = ch.isAlive() && ((Hero)ch).resting;
+		sleeping = ch.isAlive() && false;
 		
 		super.update();
 	}

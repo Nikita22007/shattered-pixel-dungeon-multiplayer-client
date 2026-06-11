@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
@@ -299,7 +298,8 @@ public class MeleeWeapon extends Weapon {
 		@Override
 		public boolean act() {
 			if (charges < chargeCap()){
-				if (Regeneration.regenOn()) {
+
+				if (false) {
                     //60 to 45 turns per charge
                     float chargeToGain = 1 / (60f - 1.5f * (chargeCap() - charges));
 

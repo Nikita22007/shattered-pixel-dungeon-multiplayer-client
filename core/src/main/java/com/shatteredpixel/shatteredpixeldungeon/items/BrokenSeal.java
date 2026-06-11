@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -42,8 +41,6 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.GameMath;
-
-import java.util.Arrays;
 
 public class BrokenSeal extends Item {
 
@@ -265,11 +262,11 @@ public class BrokenSeal extends Item {
 
 		@Override
 		public synchronized boolean act() {
-			if (cooldown > 0 && Regeneration.regenOn()){
-				cooldown--;
-			}
+            if (cooldown > 0 && false) {
+                cooldown--;
+            }
 
-			if (shielding() > 0){
+            if (shielding() > 0){
                 if (Dungeon.hero.visibleEnemies() == 0) {
 					turnsSinceEnemies += (float) 1;
                     if (turnsSinceEnemies >= 5) {

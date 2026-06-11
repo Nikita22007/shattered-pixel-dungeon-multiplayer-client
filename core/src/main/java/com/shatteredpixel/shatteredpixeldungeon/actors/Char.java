@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -106,13 +105,6 @@ public abstract class Char extends Actor {
 	protected static final String BUFFS	    = "buffs";
 
 	public static int INFINITE_ACCURACY = 1_000_000;
-
-	//Returns the level a glyph is at for a char, or -1 if they are not benefitting from that glyph
-	//This function is needed as (unlike enchantments) many glyphs trigger in a variety of cases
-	@Contract(pure = true)
-	public int glyphLevel(Class<? extends Armor.Glyph> cls){
-        return -1;
-    }
 
 	public float speed() {
 		float speed = baseSpeed;

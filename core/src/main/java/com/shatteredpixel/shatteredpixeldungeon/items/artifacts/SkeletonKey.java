@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.effects.BlobEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
@@ -360,7 +359,8 @@ public class SkeletonKey extends Artifact {
 		public boolean act() {
 			if (charge < chargeCap
                     && !cursed) {
-				if (Regeneration.regenOn()) {
+
+				if (false) {
 //120 turns to charge at full, 60 turns to charge at 0/8
 					float chargeGain = 1 / (120f - (chargeCap - charge) * 7.5f);
 					chargeGain *= RingOfEnergy.artifactChargeMultiplier(target);
