@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Crossbow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -258,8 +257,8 @@ public class Dart extends MissileWeapon {
 							Messages.get(Dart.class, "tip_cancel")};
 				}
 			}
-			
-			TippedDart tipResult = TippedDart.getTipped((Plant.Seed) item, 1);
+
+			TippedDart tipResult = null;
 			
 			GameScene.show(new WndOptions( new ItemSprite(item),
 					Messages.titleCase(item.name()),
@@ -280,8 +279,8 @@ public class Dart extends MissileWeapon {
 							curItem.quantity(curItem.quantity() - maxToTip);
 						} else {
 						}
-						
-						TippedDart newDart = TippedDart.getTipped((Plant.Seed) item, maxToTip);
+
+						TippedDart newDart = null;
                         if (!false) Dungeon.level.drop(newDart, curUser.pos).sprite.drop();
 						
 						curUser.spend( 1f );
@@ -294,8 +293,8 @@ public class Dart extends MissileWeapon {
 						} else {
 							curItem.quantity(curItem.quantity() - singleSeedDarts);
 						}
-						
-						TippedDart newDart = TippedDart.getTipped((Plant.Seed) item, singleSeedDarts);
+
+						TippedDart newDart = null;
                         if (!false) Dungeon.level.drop(newDart, curUser.pos).sprite.drop();
 						
 						curUser.spend( 1f );

@@ -39,7 +39,6 @@ import com.shatteredpixel.shatteredpixeldungeon.plants.Starflower;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Stormvine;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Sungrass;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
-import com.watabou.utils.Reflection;
 
 import java.util.LinkedHashMap;
 
@@ -144,35 +143,5 @@ public abstract class TippedDart extends Dart {
 		//value of regular dart plus half of the seed
 		return Math.round(7.5f * quantity);
 	}
-	
-	public static final LinkedHashMap<Class<?extends Plant.Seed>, Class<?extends TippedDart>> types = new LinkedHashMap<>();
-	static {
-		types.put(Rotberry.Seed.class,      RotDart.class);
-		types.put(Sungrass.Seed.class,      HealingDart.class);
-		types.put(Fadeleaf.Seed.class,      DisplacingDart.class);
-		types.put(Icecap.Seed.class,        ChillingDart.class);
-		types.put(Firebloom.Seed.class,     IncendiaryDart.class);
-		types.put(Sorrowmoss.Seed.class,    PoisonDart.class);
-		types.put(Swiftthistle.Seed.class,  AdrenalineDart.class);
-		types.put(Blindweed.Seed.class,     BlindingDart.class);
-		types.put(Stormvine.Seed.class,     ShockingDart.class);
-		types.put(Earthroot.Seed.class,     ParalyticDart.class);
-		types.put(Mageroyal.Seed.class,     CleansingDart.class);
-		types.put(Starflower.Seed.class,    HolyDart.class);
-	}
-	
-	public static TippedDart getTipped( Plant.Seed s, int quantity ){
-		return (TippedDart) Reflection.newInstance(types.get(s.getClass())).quantity(quantity);
-	}
-	
-	public static TippedDart randomTipped( int quantity ){
-		Plant.Seed s;
-		do{
-            s = (Plant.Seed) null;
-		} while (!types.containsKey(s.getClass()));
-		
-		return getTipped(s, quantity );
-		
-	}
-	
+
 }
