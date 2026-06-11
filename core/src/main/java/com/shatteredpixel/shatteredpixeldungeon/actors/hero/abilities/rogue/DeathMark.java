@@ -21,22 +21,15 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
-import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
-import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.utils.BArray;
-import com.watabou.noosa.Image;
-import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PathFinder;
 
 public class DeathMark extends ArmorAbility {
@@ -91,70 +84,6 @@ public class DeathMark extends ArmorAbility {
 	@Override
 	public Talent[] talents() {
 		return new Talent[]{Talent.FEAR_THE_REAPER, Talent.DEATHLY_DURABILITY, Talent.DOUBLE_MARK, Talent.HEROIC_ENERGY};
-	}
-
-	public static class DeathMarkTracker extends FlavourBuff {
-
-		public static float DURATION = 5f;
-
-		int initialHP = 0;
-
-		{
-			type = buffType.NEGATIVE;
-			announced = true;
-		}
-
-		@Override
-		public int icon() {
-			return BuffIndicator.INVERT_MARK;
-		}
-
-		@Override
-		public void tintIcon(Image icon) {
-			icon.hardlight(1f, 0.2f, 0.2f);
-		}
-
-		@Override
-		public float iconFadePercent() {
-			return Math.max(0, (DURATION - visualcooldown()) / DURATION);
-		}
-
-		private void setInitialHP( int hp ){
-			if (initialHP < hp){
-				initialHP = hp;
-			}
-		}
-
-		@Override
-		public boolean attachTo(Char target) {
-			if (super.attachTo(target)){
-				target.deathMarked = true;
-				return true;
-			} else {
-				return false;
-			}
-		}
-
-		@Override
-		public void detach() {
-			super.detach();
-			target.deathMarked = false;
-			if (!target.isAlive()){
-				target.sprite.flash();
-				target.sprite.bloodBurstA(target.sprite.center(), target.HT*2);
-				Sample.INSTANCE.play(Assets.Sounds.HIT_STAB);
-				Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
-				target.die(this);
-				int shld = Math.round(initialHP * (0.125f*Dungeon.hero.pointsInTalent(Talent.DEATHLY_DURABILITY)));
-				if (shld > 0 && target.alignment != Char.Alignment.ALLY){
-					Dungeon.hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(shld), FloatingText.SHIELDING);
-                    ((Barrier) null).setShield(shld);
-				}
-			}
-		}
-
-		private static String INITIAL_HP = "initial_hp";
-
 	}
 
 }

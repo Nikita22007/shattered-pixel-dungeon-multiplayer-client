@@ -30,8 +30,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AdrenalineSurge;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barkskin;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Combo;
@@ -178,11 +176,6 @@ public class Hero extends Char {
 		int strBonus = 0;
 
 		strBonus += RingOfMight.strengthBonus(this);
-
-		AdrenalineSurge buff = null;
-		if (buff != null) {
-			strBonus += buff.boost();
-		}
 
 		if (hasTalent(Talent.STRONGMAN)) {
 			strBonus += (int) Math.floor(STR * (0.03f + 0.05f * pointsInTalent(Talent.STRONGMAN)));
@@ -475,7 +468,7 @@ public class Hero extends Char {
 		}
 
 		if (hasTalent(Talent.BARKSKIN) && Dungeon.level.map[pos] == Terrain.FURROWED_GRASS) {
-			Barkskin.conditionallyAppend(this, (lvl * pointsInTalent(Talent.BARKSKIN)) / 2, 1);
+
 		}
 
 		return actResult;

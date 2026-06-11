@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barkskin;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.curses.Bulk;
@@ -132,7 +131,7 @@ public abstract class Char extends Actor {
 	public int drRoll() {
 		int dr = 0;
 
-		dr += Random.NormalIntRange( 0 , Barkskin.currentLevel(this) );
+		dr += Random.NormalIntRange( 0 , 0);
 
 		return dr;
 	}

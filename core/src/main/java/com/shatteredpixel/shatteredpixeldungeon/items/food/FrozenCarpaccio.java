@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.food;
 
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barkskin;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
@@ -56,8 +55,8 @@ public class FrozenCarpaccio extends Food {
                 break;
 			case 1:
 				GLog.i( Messages.get(FrozenCarpaccio.class, "hard") );
-				Barkskin.conditionallyAppend( hero, hero.HT / 4, 1 );
-				break;
+
+                break;
 			case 2:
 				GLog.i( Messages.get(FrozenCarpaccio.class, "refresh") );
 				PotionOfHealing.cure(hero);
