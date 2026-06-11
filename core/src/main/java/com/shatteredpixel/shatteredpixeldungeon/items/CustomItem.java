@@ -56,7 +56,7 @@ public class CustomItem extends Item {
     }
 
     @Override
-    public boolean isEquipped( @NotNull Hero hero ) {
+    public boolean isEquipped( Hero hero ) {
         return hero.belongings.isEquipped(this);
     }
 

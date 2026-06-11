@@ -21,116 +21,36 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.armor;
 
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
-import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
+import org.jetbrains.annotations.Contract;
 
 public class Armor extends EquipableItem {
 
-	protected static final String AC_DETACH       = "DETACH";
-	
-	public enum Augment {
-		EVASION (2f , -1f),
-		DEFENSE (-2f, 1f),
-		NONE	(0f   ,  0f);
-		
-		private float evasionFactor;
-		private float defenceFactor;
-		
-		Augment(float eva, float df){
-			evasionFactor = eva;
-			defenceFactor = df;
-		}
-		
-		public int evasionFactor(int level){
-			return Math.round((2 + level) * evasionFactor);
-		}
-		
-		public int defenseFactor(int level){
-			return Math.round((2 + level) * defenceFactor);
-		}
-	}
-	
-	public Augment augment = Augment.NONE;
-	
 	public Glyph glyph;
 	public boolean glyphHardened = false;
 	public boolean curseInfusionBonus = false;
 
-	protected BrokenSeal seal;
-	
+
 	public int tier;
-	
-	private static final int USES_TO_ID = 10;
 
 	public Armor( int tier ) {
 		this.tier = tier;
 	}
 
-	@Override
-	public void reset() {
-		super.reset();
-		//armor can be kept in bones between runs, the seal cannot.
-		seal = null;
-	}
-
-	public void affixSeal(BrokenSeal seal){
-		this.seal = seal;
-		if (seal.level() > 0){
-			//doesn't trigger upgrading logic such as affecting curses/glyphs
-			int newLevel = trueLevel()+1;
-			level(newLevel);
-			Badges.validateItemLevelAquired(this);
-		}
-		if (seal.getGlyph() != null){
-			inscribe(seal.getGlyph());
-		}
-	}
-
-	public BrokenSeal detachSeal(){
-		if (seal != null){
-
-			if (isEquipped(Dungeon.hero)) {
-				BrokenSeal.WarriorShield sealBuff = null;
-            }
-
-			BrokenSeal detaching = seal;
-			seal = null;
-
-			if (detaching.level() > 0){
-				degrade();
-			}
-			if (detaching.canTransferGlyph()){
-				inscribe(null);
-			} else {
-				detaching.setGlyph(null);
-			}
-			return detaching;
-		} else {
-			return null;
-		}
-	}
-
-	public BrokenSeal checkSeal(){
-		return seal;
-	}
 
 	@Override
 	public boolean doUnequip( Hero hero, boolean collect, boolean single ) {
@@ -138,8 +58,6 @@ public class Armor extends EquipableItem {
 
 			hero.belongings.armor = null;
 			((HeroSprite)hero.sprite).updateArmor();
-
-			BrokenSeal.WarriorShield sealBuff = null;
 
             return true;
 
@@ -203,22 +121,9 @@ public class Armor extends EquipableItem {
 		
 		cursed = false;
 
-		if (seal != null && seal.level() == 0)
-			seal.upgrade();
-
 		return super.upgrade();
 	}
 
-
-	@Override
-	public Emitter emitter() {
-		if (seal == null) return super.emitter();
-		Emitter emitter = new Emitter();
-		emitter.pos(ItemSpriteSheet.film.width(image)/2f + 2f, ItemSpriteSheet.film.height(image)/3f);
-		emitter.fillTarget = false;
-		emitter.pour(Speck.factory( Speck.RED_LIGHT ), 0.6f);
-		return emitter;
-	}
 
 	public int STRReq(){
 		return STRReq(level());
@@ -230,7 +135,6 @@ public class Armor extends EquipableItem {
 
 	@Override
 	public int value() {
-		if (seal != null) return 0;
 
 		int price = 20 * tier;
 		if (hasGoodGlyph()) {
@@ -254,9 +158,7 @@ public class Armor extends EquipableItem {
 		updateQuickslot();
 		//the hero needs runic transference to actually transfer, but we still attach the glyph here
 		// in case they take that talent in the future
-		if (seal != null){
-			seal.setGlyph(glyph);
-		}
+
 		if (glyph != null && isIdentified() && Dungeon.hero != null
 				&& Dungeon.hero.isAlive() && Dungeon.hero.belongings.contains(this)){
 			Catalog.setSeen(glyph.getClass());
@@ -266,10 +168,12 @@ public class Armor extends EquipableItem {
 	}
 
 	//these are not used to process specific glyph effects, so magic immune doesn't affect them
+	@Contract(pure = true)
 	public boolean hasGoodGlyph(){
 		return glyph != null && !glyph.curse();
 	}
 
+	@Contract(pure = true)
 	public boolean hasCurseGlyph(){
 		return glyph != null && glyph.curse();
 	}
@@ -278,13 +182,8 @@ public class Armor extends EquipableItem {
 
 	@Override
 	public ItemSprite.Glowing glowing() {
-		if (isEquipped(Dungeon.hero) && !hasCurseGlyph() && false
-				&& (Dungeon.hero.subClass != HeroSubClass.PALADIN || glyph == null)){
-			return HOLY;
-		} else {
-			return glyph != null && (cursedKnown || !glyph.curse()) ? glyph.glowing() : null;
-		}
-	}
+        return glyph != null && (cursedKnown || !glyph.curse()) ? glyph.glowing() : null;
+    }
 
 	public static abstract class Glyph implements Bundlable {
 
