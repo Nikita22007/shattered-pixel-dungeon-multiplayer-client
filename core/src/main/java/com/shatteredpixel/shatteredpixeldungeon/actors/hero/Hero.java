@@ -46,7 +46,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap.Type;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.SkeletonKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.CrystalKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.GoldenKey;
@@ -519,11 +518,7 @@ public class Hero extends Char {
 
 			ready();
 
-			AlchemistsToolkit.kitEnergy kit = null;
-			if (kit != null && kit.isCursed()) {
-				GLog.w(Messages.get(AlchemistsToolkit.class, "cursed"));
-				return false;
-			}
+
 
 			ShatteredPixelDungeon.switchScene(AlchemyScene.class);
 			return false;
