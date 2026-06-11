@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.scrolls;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.ItemStatusHandler;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
@@ -42,23 +41,6 @@ public abstract class Scroll extends Item {
 	
 	protected static final float TIME_TO_READ	= 1f;
 
-	private static final LinkedHashMap<String, Integer> runes = new LinkedHashMap<String, Integer>() {
-		{
-			put("KAUNAN",ItemSpriteSheet.SCROLL_KAUNAN);
-			put("SOWILO",ItemSpriteSheet.SCROLL_SOWILO);
-			put("LAGUZ",ItemSpriteSheet.SCROLL_LAGUZ);
-			put("YNGVI",ItemSpriteSheet.SCROLL_YNGVI);
-			put("GYFU",ItemSpriteSheet.SCROLL_GYFU);
-			put("RAIDO",ItemSpriteSheet.SCROLL_RAIDO);
-			put("ISAZ",ItemSpriteSheet.SCROLL_ISAZ);
-			put("MANNAZ",ItemSpriteSheet.SCROLL_MANNAZ);
-			put("NAUDIZ",ItemSpriteSheet.SCROLL_NAUDIZ);
-			put("BERKANAN",ItemSpriteSheet.SCROLL_BERKANAN);
-			put("ODAL",ItemSpriteSheet.SCROLL_ODAL);
-			put("TIWAZ",ItemSpriteSheet.SCROLL_TIWAZ);
-		}
-	};
-	
 	protected static ItemStatusHandler<Scroll> handler;
 	
 	protected String rune;
@@ -71,11 +53,6 @@ public abstract class Scroll extends Item {
 	{
 		stackable = true;
 		defaultAction = AC_READ;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public static void initLabels() {
-		handler = new ItemStatusHandler<>( (Class<? extends Scroll>[])Generator.Category.SCROLL.classes, runes );
 	}
 
 	public static void clearLabels(){
@@ -93,11 +70,6 @@ public abstract class Scroll extends Item {
 		handler.saveClassesSelectively( bundle, classes );
 	}
 
-	@SuppressWarnings("unchecked")
-	public static void restore( Bundle bundle ) {
-		handler = new ItemStatusHandler<>( (Class<? extends Scroll>[])Generator.Category.SCROLL.classes, runes, bundle );
-	}
-	
 	public Scroll() {
 		super();
 		reset();
@@ -193,11 +165,7 @@ public abstract class Scroll extends Item {
 	public static HashSet<Class<? extends Scroll>> getUnknown() {
 		return new LinkedHashSet<>();
 	}
-	
-	public static boolean allKnown() {
-		return handler != null && handler.known().size() == Generator.Category.SCROLL.classes.length;
-	}
-	
+
 	@Override
 	public int value() {
 		return 30 * quantity;

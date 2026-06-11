@@ -69,17 +69,6 @@ public class UnstableSpellbook extends Artifact {
 	private void setupScrolls(){
 		scrolls.clear();
 
-		Class<?>[] scrollClasses = Generator.Category.SCROLL.classes;
-		float[] probs = Generator.Category.SCROLL.defaultProbsTotal.clone(); //array of primitives, clone gives deep copy.
-		int i = Random.chances(probs);
-
-		while (i != -1){
-			scrolls.add(scrollClasses[i]);
-			probs[i] = 0;
-
-			i = Random.chances(probs);
-		}
-		scrolls.remove(ScrollOfTransmutation.class);
 	}
 
 	//forces the reading of a regular scroll if the player tried to exploit by quitting the game when the menu was up

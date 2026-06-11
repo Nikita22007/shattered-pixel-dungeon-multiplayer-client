@@ -64,11 +64,6 @@ public class Ring extends KindofMisc {
 
 	//rings cannot be 'used' like other equipment, so they ID purely based on exp
 	private float levelsToID = 1;
-	
-	@SuppressWarnings("unchecked")
-	public static void initGems() {
-		handler = new ItemStatusHandler<>( (Class<? extends Ring>[])Generator.Category.RING.classes, gems );
-	}
 
 	public static void clearGems(){
 		handler = null;
@@ -81,11 +76,7 @@ public class Ring extends KindofMisc {
 	public static void saveSelectively( Bundle bundle, ArrayList<Item> items ) {
 		handler.saveSelectively( bundle, items );
 	}
-	
-	@SuppressWarnings("unchecked")
-	public static void restore( Bundle bundle ) {
-		handler = new ItemStatusHandler<>( (Class<? extends Ring>[])Generator.Category.RING.classes, gems, bundle );
-	}
+
 	
 	public Ring() {
 		super();

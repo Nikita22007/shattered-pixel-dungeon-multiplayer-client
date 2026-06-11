@@ -313,9 +313,6 @@ public enum Rankings {
 		if (data == null) return;
 
 		Bundle handler = data.getBundle(HANDLERS);
-		Scroll.restore(handler);
-		Potion.restore(handler);
-		Ring.restore(handler);
 
 		Badges.loadLocal(data.getBundle(BADGES));
 

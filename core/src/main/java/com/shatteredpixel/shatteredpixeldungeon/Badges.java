@@ -658,13 +658,6 @@ public class Badges {
 			displayBadge(Badge.CATALOG_ONE_EQUIPMENT);
 		}
 
-		//doesn't actually use catalogs, but triggers at the same time effectively
-		if (!local.contains(Badge.CATALOG_POTIONS_SCROLLS)
-				&& Potion.allKnown() && Scroll.allKnown()
-				&& Dungeon.hero != null && Dungeon.hero.isAlive()){
-			local.add(Badge.CATALOG_POTIONS_SCROLLS);
-			displayBadge(Badge.CATALOG_POTIONS_SCROLLS);
-		}
 
 		if (Bestiary.RARE.totalSeen() >= 10){
 			displayBadge(Badge.ALL_RARE_ENEMIES);

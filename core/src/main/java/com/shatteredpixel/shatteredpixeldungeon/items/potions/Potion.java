@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
-import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.ItemStatusHandler;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.ElixirOfHoneyedHealing;
@@ -107,11 +106,6 @@ public class Potion extends Item {
 		stackable = true;
 		defaultAction = AC_DRINK;
 	}
-	
-	@SuppressWarnings("unchecked")
-	public static void initColors() {
-		handler = new ItemStatusHandler<>( (Class<? extends Potion>[])Generator.Category.POTION.classes, colors );
-	}
 
 	public static void clearColors() {
 		handler = null;
@@ -127,12 +121,7 @@ public class Potion extends Item {
 		}
 		handler.saveClassesSelectively( bundle, classes );
 	}
-	
-	@SuppressWarnings("unchecked")
-	public static void restore( Bundle bundle ) {
-		handler = new ItemStatusHandler<>( (Class<? extends Potion>[])Generator.Category.POTION.classes, colors, bundle );
-	}
-	
+
 	public Potion() {
 		super();
 		reset();
@@ -210,11 +199,7 @@ public class Potion extends Item {
 	public static HashSet<Class<? extends Potion>> getUnknown() {
 		return new LinkedHashSet<>();
 	}
-	
-	public static boolean allKnown() {
-		return handler != null && handler.known().size() == Generator.Category.POTION.classes.length;
-	}
-	
+
 	protected int splashColor(){
 		return anonymous ? 0x00AAFF : ItemSprite.pick( image, 5, 9 );
 	}
