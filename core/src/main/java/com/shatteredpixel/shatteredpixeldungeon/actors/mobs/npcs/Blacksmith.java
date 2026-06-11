@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.DarkGold;
@@ -273,12 +274,13 @@ public class Blacksmith extends NPC {
 			completed = true;
 
 			favor = 0;
-			DarkGold gold = Dungeon.hero.belongings.getItem(DarkGold.class);
+
+			DarkGold gold = null;
 			if (gold != null) {
 				favor += Math.min(2000, gold.quantity() * 50);
 			}
 
-			Pickaxe pick = Dungeon.hero.belongings.getItem(Pickaxe.class);
+			Pickaxe pick = null;
 			if (pick.isEquipped(Dungeon.hero)) {
 				boolean wasCursed = pick.cursed;
 				pick.cursed = false; //so that it can always be removed

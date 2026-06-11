@@ -377,7 +377,7 @@ public class WndRanking extends WndTabbed {
 				}
 			}
 
-			Trinket trinket = stuff.getItem(Trinket.class);
+            Trinket trinket = null;
 			if (trinket != null){
 				slotsActive++;
 			}

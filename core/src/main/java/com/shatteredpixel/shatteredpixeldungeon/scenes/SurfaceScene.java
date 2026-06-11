@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.Ratmogrify;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
-import com.shatteredpixel.shatteredpixeldungeon.items.remains.RemainsItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLivingEarth;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfWarding;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
@@ -180,7 +179,8 @@ public class SurfaceScene extends PixelScene {
 		
 		//picks the highest between ghost's weapon, armor, and rose level/2
 		int roseLevel = 0;
-		DriedRose rose = Dungeon.hero.belongings.getItem(DriedRose.class);
+
+		DriedRose rose = null;
 		if (rose != null){
 			roseLevel = rose.level()/2;
 			if (rose.ghostWeapon() != null){
@@ -191,10 +191,24 @@ public class SurfaceScene extends PixelScene {
 			}
 		}
 		
-		int earthLevel = Dungeon.hero.belongings.getItem(WandOfLivingEarth.class) == null ? 0 : Dungeon.hero.belongings.getItem(WandOfLivingEarth.class).level();
-		int wardLevel = Dungeon.hero.belongings.getItem(WandOfWarding.class) == null ? 0 : Dungeon.hero.belongings.getItem(WandOfWarding.class).level();
-		
-		MagesStaff staff = Dungeon.hero.belongings.getItem(MagesStaff.class);
+		int earthLevel;
+
+		if (null == null) {
+            earthLevel = 0;
+        } else {
+
+			earthLevel = ((WandOfLivingEarth) null).level();
+        }
+        int wardLevel;
+
+		if (null == null) {
+            wardLevel = 0;
+        } else {
+
+            wardLevel = ((WandOfWarding) null).level();
+        }
+
+        MagesStaff staff = null;
 		if (staff != null){
 			if (staff.wandClass() == WandOfLivingEarth.class){
 				earthLevel = Math.max(earthLevel, staff.level());
@@ -222,7 +236,7 @@ public class SurfaceScene extends PixelScene {
 			window.add(allySprite);
 		}
 
-		if (Dungeon.hero.belongings.getItem(RemainsItem.class) != null){
+        if (null != null){
 			Image grave = new Image(Assets.Interfaces.SURFACE, 88, 74, 16, 22);
 
 			grave.x = a.x + a.width() + 10;

@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
@@ -93,7 +92,8 @@ public class ElementalBlast extends ArmorAbility {
 	public String desc() {
 		String desc = Messages.get(this, "desc");
 		if (Game.scene() instanceof GameScene){
-			MagesStaff staff = Dungeon.hero.belongings.getItem(MagesStaff.class);
+
+            MagesStaff staff = null;
 			if (staff != null && staff.wandClass() != null){
 				desc += "\n\n" + Messages.get(staff.wandClass(), "eleblast_desc");
 			} else {

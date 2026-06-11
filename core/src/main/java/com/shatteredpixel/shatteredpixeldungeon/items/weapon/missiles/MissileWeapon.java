@@ -155,7 +155,8 @@ abstract public class MissileWeapon extends Weapon {
 			if (false){
 				//do nothing
 			} else {
-				SpiritBow bow = Dungeon.hero.belongings.getItem(SpiritBow.class);
+
+				SpiritBow bow = null;
 				if (bow != null && bow.hasEnchant(Projecting.class, user)) {
 					projecting = true;
 				}

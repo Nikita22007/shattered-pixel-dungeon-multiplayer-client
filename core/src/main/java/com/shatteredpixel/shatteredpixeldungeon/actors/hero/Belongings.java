@@ -237,22 +237,6 @@ public class Belongings implements Iterable<Item> {
 		result.add(backpack);
 		return result;
 	}
-	
-	@SuppressWarnings("unchecked")
-	public<T extends Item> T getItem( Class<T> itemClass ) {
-
-		boolean lostInvent = lostInventory();
-
-		for (Item item : this) {
-			if (itemClass.isInstance( item )) {
-				if (!lostInvent || item.keptThroughLostInventory()) {
-					return (T) item;
-				}
-			}
-		}
-		
-		return null;
-	}
 
 	public<T extends Item> ArrayList<T> getAllItems( Class<T> itemClass ) {
 		ArrayList<T> result = new ArrayList<>();

@@ -135,7 +135,7 @@ public class TrinketCatalyst extends Item {
 
 						Item result = item;
 
-						TrinketCatalyst cata = Dungeon.hero.belongings.getItem(TrinketCatalyst.class);
+                        TrinketCatalyst cata = null;
 
 						if (cata != null) {
 							if (ShatteredPixelDungeon.scene() instanceof AlchemyScene) {

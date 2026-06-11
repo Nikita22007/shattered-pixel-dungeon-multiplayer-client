@@ -52,7 +52,8 @@ public class MossyClump extends Trinket {
 	private int shuffles = 0;
 
 	public static Level.Feeling getNextFeeling(){
-		MossyClump clump = Dungeon.hero.belongings.getItem(MossyClump.class);
+
+        MossyClump clump = null;
 		if (clump == null) {
 			return Level.Feeling.NONE;
 		}

@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon;
 
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -849,10 +850,13 @@ public class Badges {
 				}
 			}
 
-			if (Statistics.qualifiedForBossRemainsBadge && Dungeon.hero.belongings.getItem(RemainsItem.class) != null){
-				badge = Badge.BOSS_SLAIN_REMAINS;
-				local.add( badge );
-				displayBadge( badge );
+			if (Statistics.qualifiedForBossRemainsBadge) {
+
+				if (null != null) {
+					badge = Badge.BOSS_SLAIN_REMAINS;
+					local.add(badge);
+					displayBadge(badge);
+				}
 			}
 
 		}
@@ -1081,7 +1085,7 @@ public class Badges {
 		local.add( Badge.HAPPY_END );
 		displayBadge( Badge.HAPPY_END );
 
-		if( Dungeon.hero.belongings.getItem(RemainsItem.class) != null ){
+		if( null != null ){
 			local.add( Badge.HAPPY_END_REMAINS );
 			displayBadge( Badge.HAPPY_END_REMAINS );
 		}

@@ -72,6 +72,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 
+import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
+
 public enum Talent {
 
 	//Warrior T1
@@ -517,7 +519,8 @@ public enum Talent {
 		}
 		if (hero.hasTalent(ENLIGHTENING_MEAL)){
 			if (hero.heroClass == HeroClass.CLERIC) {
-				HolyTome tome = hero.belongings.getItem(HolyTome.class);
+
+				HolyTome tome = null;
 				if (tome != null) {
 					// 2/3 of a charge at +1, 1 full charge at +2
 					tome.directCharge( (1+hero.pointsInTalent(ENLIGHTENING_MEAL))/3f );

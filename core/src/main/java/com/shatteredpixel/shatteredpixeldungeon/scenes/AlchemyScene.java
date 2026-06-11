@@ -527,7 +527,7 @@ public class AlchemyScene extends PixelScene {
 		align(btnGuide);
 		add(btnGuide);
 
-		TrinketCatalyst cata = Dungeon.hero.belongings.getItem(TrinketCatalyst.class);
+        TrinketCatalyst cata = null;
 		if (cata != null && cata.hasRolledTrinkets()){
 			addToFront(new TrinketCatalyst.WndTrinket(cata));
 		}

@@ -21,12 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.trinkets;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.watabou.utils.Random;
-
-import java.util.ArrayList;
 
 public class TrapMechanism extends Trinket {
 
@@ -56,34 +51,6 @@ public class TrapMechanism extends Trinket {
 		} else {
 			return 0.1f + 0.1f*level;
 		}
-	}
-
-	//true for traps, false for chasm
-	//ensures a little consistency of RNG
-	private ArrayList<Boolean> levelFeels = new ArrayList<>();
-	private int shuffles = 0;
-
-	public static Level.Feeling getNextFeeling(){
-		TrapMechanism mech = Dungeon.hero.belongings.getItem(TrapMechanism.class);
-		if (mech == null) {
-			return Level.Feeling.NONE;
-		}
-		if (mech.levelFeels.isEmpty()){
-			Random.pushGenerator(Dungeon.seed+1);
-				mech.levelFeels.add(true);
-				mech.levelFeels.add(true);
-				mech.levelFeels.add(true);
-				mech.levelFeels.add(false);
-				mech.levelFeels.add(false);
-				mech.levelFeels.add(false);
-				for (int i = 0; i <= mech.shuffles; i++) {
-					Random.shuffle(mech.levelFeels);
-				}
-				mech.shuffles++;
-			Random.popGenerator();
-		}
-
-		return mech.levelFeels.remove(0) ? Level.Feeling.TRAPS : Level.Feeling.CHASM;
 	}
 
 }

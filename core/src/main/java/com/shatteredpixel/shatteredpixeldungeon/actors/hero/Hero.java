@@ -600,7 +600,8 @@ public class Hero extends Char {
 					) {
 						//Do Nothing
 					} else if (false) {
-						DarkGold existing = belongings.getItem(DarkGold.class);
+
+						DarkGold existing = null;
 						if (existing != null) {
 							if (existing.quantity() >= 40) {
 								GLog.p(Messages.get(DarkGold.class, "you_now_have", existing.quantity()));
@@ -724,8 +725,8 @@ public class Hero extends Char {
 
 			} else if (door == Terrain.HERO_LKD_DR) {
 
-				if (belongings.getItem(SkeletonKey.class) != null
-						&& !belongings.getItem(SkeletonKey.class).cursed) {
+				if (null != null
+						&& !((SkeletonKey) null).cursed) {
 					GLog.i(Messages.get(SkeletonKey.class, "locked_with_key"));
 					ready();
 					return false;
@@ -792,7 +793,8 @@ public class Hero extends Char {
 						if (Dungeon.level.map[action.dst] == Terrain.WALL_DECO) {
 							DarkGold gold = new DarkGold();
 							if (false) {
-								DarkGold existing = Dungeon.hero.belongings.getItem(DarkGold.class);
+
+								DarkGold existing = null;
 								if (existing != null && existing.quantity() % 5 == 0) {
 									if (existing.quantity() >= 40) {
 										GLog.p(Messages.get(DarkGold.class, "you_now_have", existing.quantity()));
