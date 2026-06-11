@@ -82,9 +82,7 @@ public class RankingsScene extends PixelScene {
 		w -= insets.left + insets.right;
 		h -= insets.top + insets.bottom;
 
-		Rankings.INSTANCE.load();
-
-		IconTitle title = new IconTitle( Icons.RANKINGS.get(), Messages.get(this, "title"));
+        IconTitle title = new IconTitle( Icons.RANKINGS.get(), Messages.get(this, "title"));
 		title.setSize(200, 0);
 		title.setPos(
 				insets.left + (w - title.reqWidth()) / 2f,

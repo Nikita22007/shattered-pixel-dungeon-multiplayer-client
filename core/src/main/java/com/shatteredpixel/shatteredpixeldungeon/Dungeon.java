@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.*;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
@@ -204,8 +203,7 @@ public class Dungeon {
 		if (WndResurrect.instance == null) {
 			updateLevelExplored();
 			Statistics.gameWon = false;
-			Rankings.INSTANCE.submit( false, cause );
-		}
+        }
 	}
 	
 	public static void win( Object cause ) {
@@ -215,8 +213,7 @@ public class Dungeon {
 
 		hero.belongings.identify();
 
-		Rankings.INSTANCE.submit( true, cause );
-	}
+    }
 
 	public static void updateLevelExplored(){
 		if (branch == 0 && level instanceof RegularLevel && !Dungeon.bossLevel()){

@@ -246,51 +246,6 @@ public class WelcomeScene extends PixelScene {
 
 	private void updateVersion(int previousVersion){
 
-		//update rankings, to update any data which may be outdated
-		if (previousVersion < LATEST_UPDATE){
-
-			Badges.loadGlobal();
-
-			//pre-unlock Cleric for those who already have a win
-			if (previousVersion <= ShatteredPixelDungeon.v2_5_4){
-				if (Badges.isUnlocked(Badges.Badge.VICTORY) && !Badges.isUnlocked(Badges.Badge.UNLOCK_CLERIC)){
-					Badges.unlock(Badges.Badge.UNLOCK_CLERIC);
-				}
-			}
-
-			try {
-				Rankings.INSTANCE.load();
-				for (Rankings.Record rec : Rankings.INSTANCE.records.toArray(new Rankings.Record[0])){
-					try {
-						Rankings.INSTANCE.loadGameData(rec);
-						Rankings.INSTANCE.saveGameData(rec);
-					} catch (Exception e) {
-						//if we encounter a fatal per-record error, then clear that record's data
-						rec.gameData = null;
-						Game.reportException( new RuntimeException("Rankings Updating Failed!",e));
-					}
-				}
-				if (Rankings.INSTANCE.latestDaily != null){
-					try {
-						Rankings.INSTANCE.loadGameData(Rankings.INSTANCE.latestDaily);
-						Rankings.INSTANCE.saveGameData(Rankings.INSTANCE.latestDaily);
-					} catch (Exception e) {
-						//if we encounter a fatal per-record error, then clear that record's data
-						Rankings.INSTANCE.latestDaily.gameData = null;
-						Game.reportException( new RuntimeException("Rankings Updating Failed!",e));
-					}
-				}
-				Collections.sort(Rankings.INSTANCE.records, Rankings.scoreComparator);
-				Rankings.INSTANCE.save();
-			} catch (Exception e) {
-				//if we encounter a fatal error, then just clear the rankings
-				FileUtils.deleteFile( Rankings.RANKINGS_FILE );
-				Game.reportException( new RuntimeException("Rankings Updating Failed!",e));
-			}
-			Dungeon.daily = Dungeon.dailyReplay = false;
-
-        }
-
 		SPDSettings.version(ShatteredPixelDungeon.versionCode);
 	}
 	
