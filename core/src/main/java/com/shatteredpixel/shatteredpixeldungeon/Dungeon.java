@@ -211,8 +211,6 @@ public class Dungeon {
 		updateLevelExplored();
 		Statistics.gameWon = true;
 
-		hero.belongings.identify();
-
     }
 
 	public static void updateLevelExplored(){

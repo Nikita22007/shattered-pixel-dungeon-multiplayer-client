@@ -1255,9 +1255,7 @@ public class Hero extends Char {
 		Dungeon.observe();
 		GameScene.updateFog();
 
-		Dungeon.hero.belongings.identify();
-
-		int pos = Dungeon.hero.pos;
+        int pos = Dungeon.hero.pos;
 
 		ArrayList<Integer> passable = new ArrayList<>();
 		for (Integer ofs : PathFinder.NEIGHBOURS8) {

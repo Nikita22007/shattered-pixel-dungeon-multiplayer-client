@@ -24,24 +24,15 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 
 import com.badlogic.gdx.Gdx;
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
 import com.shatteredpixel.shatteredpixeldungeon.items.*;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.CustomBag;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRemoveCurse;
-import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Random;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -49,7 +40,6 @@ import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -327,88 +317,6 @@ public class Belongings implements Iterable<Item> {
 	}
 
 	//triggers when a run ends, so ignores lost inventory effects
-	public void identify() {
-		for (Item item : this) {
-        }
-	}
-	
-	public void observe() {
-		if (weapon() != null) {
-			if (ShardOfOblivion.passiveIDDisabled() && false){
-				((Weapon) weapon()).setIDReady();
-			} else {
-				weapon();
-				Badges.validateItemLevelAquired(weapon());
-			}
-		}
-		if (secondWep() != null){
-			if (ShardOfOblivion.passiveIDDisabled() && false){
-				((Weapon) secondWep()).setIDReady();
-			} else {
-				secondWep();
-				Badges.validateItemLevelAquired(secondWep());
-			}
-		}
-		if (armor() != null) {
-			if (ShardOfOblivion.passiveIDDisabled()){
-				//armor().setIDReady();
-			} else {
-				armor();
-				Badges.validateItemLevelAquired(armor());
-			}
-		}
-		if (artifact() != null) {
-			//oblivion shard does not prevent artifact IDing
-			artifact();
-			Badges.validateItemLevelAquired(artifact());
-		}
-		if (misc() != null) {
-			if (ShardOfOblivion.passiveIDDisabled() && false){
-				((Ring) misc()).setIDReady();
-			} else {
-				misc();
-				Badges.validateItemLevelAquired(misc());
-			}
-		}
-		if (ring() != null) {
-			if (ShardOfOblivion.passiveIDDisabled()){
-				//ring().setIDReady();
-			} else {
-				ring();
-				Badges.validateItemLevelAquired(ring());
-			}
-		}
-		if (ShardOfOblivion.passiveIDDisabled()){
-			GLog.p(Messages.get(ShardOfOblivion.class, "identify_ready_worn"));
-		}
-		for (Item item : backpack) {
-			if (item instanceof EquipableItem || false) {
-				item.cursedKnown = true;
-			}
-		}
-		Item.updateQuickslot();
-	}
-	
-	public void uncurseEquipped() {
-		ScrollOfRemoveCurse.uncurse( owner, armor(), weapon(), artifact(), misc(), ring(), secondWep());
-	}
-	
-	public Item randomUnequipped() {
-
-        return Random.element(backpack.items);
-    }
-	
-	public int charge( float charge ) {
-		
-		int count = 0;
-
-        for (Wand.Charger charger : new HashSet<Wand.Charger>()){
-			charger.gainCharge(charge);
-			count++;
-		}
-		
-		return count;
-	}
 
 	@Override
 	public Iterator<Item> iterator() {

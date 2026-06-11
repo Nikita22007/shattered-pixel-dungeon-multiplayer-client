@@ -67,9 +67,8 @@ public class StoneOfShock extends Runestone {
 			curUser.sprite.parent.addToFront( new Lightning( arcs, null ) );
 			curUser.sprite.centerEmitter().burst(EnergyParticle.FACTORY, 10);
 			Sample.INSTANCE.play( Assets.Sounds.LIGHTNING );
-			
-			curUser.belongings.charge(1f + hits);
-		}
+
+        }
 	
 	}
 }

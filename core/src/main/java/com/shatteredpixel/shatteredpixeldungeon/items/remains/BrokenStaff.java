@@ -35,8 +35,8 @@ public class BrokenStaff extends RemainsItem {
 
 	@Override
 	protected void doEffect(Hero hero) {
-		hero.belongings.charge(1f);
-		ScrollOfRecharging.charge(hero);
+
+        ScrollOfRecharging.charge(hero);
 		Sample.INSTANCE.play( Assets.Sounds.CHARGEUP );
 	}
 
