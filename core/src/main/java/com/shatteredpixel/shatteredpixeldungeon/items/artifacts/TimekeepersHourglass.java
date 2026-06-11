@@ -247,7 +247,7 @@ public class TimekeepersHourglass extends Artifact {
 					for (int cell : toTrigger){
 						Plant p = Dungeon.level.plants.get(cell);
 						if (p != null){
-							p.trigger();
+
 						}
 						Trap t = Dungeon.level.traps.get(cell);
 						if (t != null){

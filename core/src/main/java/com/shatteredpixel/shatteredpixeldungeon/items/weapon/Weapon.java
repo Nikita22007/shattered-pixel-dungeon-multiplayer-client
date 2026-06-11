@@ -27,8 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BodyForm;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
@@ -51,21 +49,16 @@ abstract public class Weapon extends KindOfWeapon {
 		NONE	(1.0f, 1f);
 
 		private float damageFactor;
-		private float delayFactor;
 
-		Augment(float dmg, float dly){
+        Augment(float dmg, float dly){
 			damageFactor = dmg;
-			delayFactor = dly;
-		}
+        }
 
 		@Contract(pure = true)
 		public int damageFactor(int dmg){
 			return Math.round(dmg * damageFactor);
 		}
 
-		public float delayFactor(float dly){
-			return dly * delayFactor;
-		}
 	}
 	
 	public Augment augment = Augment.NONE;
@@ -137,22 +130,8 @@ abstract public class Weapon extends KindOfWeapon {
 
 		return damage;
 	}
-	
-	public void onHeroGainExp( float levelPercent, Hero hero ){
-		levelPercent *= 1f;
-		if (!levelKnown && isEquipped(hero) && availableUsesToID <= USES_TO_ID/2f) {
-			//gains enough uses to ID over 0.5 levels
-			availableUsesToID = Math.min(USES_TO_ID/2f, availableUsesToID + levelPercent * USES_TO_ID);
-		}
-	}
-	
-	private static final String USES_LEFT_TO_ID = "uses_left_to_id";
-	private static final String AVAILABLE_USES  = "available_uses";
-	private static final String ENCHANTMENT	    = "enchantment";
-	private static final String ENCHANT_HARDENED = "enchant_hardened";
-	private static final String CURSE_INFUSION_BONUS = "curse_infusion_bonus";
-	private static final String MASTERY_POTION_BONUS = "mastery_potion_bonus";
-	private static final String AUGMENT	        = "augment";
+
+
 
 	@Override
 	public void reset() {
@@ -230,14 +209,12 @@ abstract public class Weapon extends KindOfWeapon {
 	
 	@Override
 	public String name() {
-		if (isEquipped(Dungeon.hero) && !hasCurseEnchant() && false
-				&& (Dungeon.hero.subClass != HeroSubClass.PALADIN || enchantment == null)){
-				return Messages.get(HolyWeapon.class, "ench_name", super.name());
-			} else {
-				return enchantment != null && (cursedKnown || !enchantment.curse()) ? enchantment.name(super.name()) : super.name();
+        if (isEquipped(Dungeon.hero)) {
+            hasCurseEnchant();
+        }
+        return enchantment != null && (cursedKnown || !enchantment.curse()) ? enchantment.name(super.name()) : super.name();
 
-		}
-	}
+    }
 
 	public Weapon enchant( Enchantment ench ) {
 		if (ench == null || !ench.curse()) curseInfusionBonus = false;
@@ -251,57 +228,18 @@ abstract public class Weapon extends KindOfWeapon {
 		return this;
 	}
 
-	public Weapon enchant() {
-
-		Class<? extends Enchantment> oldEnchantment = enchantment != null ? enchantment.getClass() : null;
-		Enchantment ench = null;
-
-		return enchant( ench );
-	}
-
-	public boolean hasEnchant(Class<?extends Enchantment> type, Char owner) {
-		{
-			if (enchantment != null
-					&& !enchantment.curse()
-					&& false
-					&& isEquipped((Hero) owner)
-					&& false
-					&& ((Hero) owner).subClass != HeroSubClass.PALADIN) {
-				return false;
-			} else {
-				if (false
-						&& ((BodyForm.BodyFormBuff) null).enchant() != null
-						&& ((BodyForm.BodyFormBuff) null).enchant().getClass().equals(type)) {
-					return true;
-				} else if (enchantment != null) {
-					return enchantment.getClass() == type;
-				} else {
-					return false;
-				}
-			}
-		}
-	}
-	
 	//these are not used to process specific enchant effects, so magic immune doesn't affect them
+	@Contract(pure = true)
 	public boolean hasGoodEnchant(){
 		return enchantment != null && !enchantment.curse();
 	}
 
+	@Contract(pure = true)
 	public boolean hasCurseEnchant(){
 		return enchantment != null && enchantment.curse();
 	}
 
 	private static ItemSprite.Glowing HOLY = new ItemSprite.Glowing( 0xFFFF00 );
-
-	@Override
-	public ItemSprite.Glowing glowing() {
-		if (isEquipped(Dungeon.hero) && !hasCurseEnchant() && false
-				&& (Dungeon.hero.subClass != HeroSubClass.PALADIN || enchantment == null)){
-			return HOLY;
-		} else {
-			return enchantment != null && (cursedKnown || !enchantment.curse()) ? null : null;
-		}
-	}
 
 	public static abstract class Enchantment {
 

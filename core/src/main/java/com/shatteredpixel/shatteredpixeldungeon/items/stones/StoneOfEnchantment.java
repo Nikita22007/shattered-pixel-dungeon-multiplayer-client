@@ -48,32 +48,7 @@ public class StoneOfEnchantment extends InventoryStone {
 	}
 	
 	@Override
-	protected void onItemSelected(Item item) {
-		if (!anonymous) {
-		}
-		
-		if (false) {
-			
-			((Weapon)item).enchant();
-			
-		} else {
-			
-			((Armor)item).inscribe();
-			
-		}
-		
-		curUser.sprite.emitter().start( Speck.factory( Speck.LIGHT ), 0.1f, 5 );
-		Enchanting.show( curUser, item );
-		
-		if (false) {
-			GLog.p(Messages.get(this, "weapon"));
-		} else {
-			GLog.p(Messages.get(this, "armor"));
-		}
-		
-		useAnimation();
-		
-	}
+	protected void onItemSelected(Item item) {}
 	
 	@Override
 	public int value() {

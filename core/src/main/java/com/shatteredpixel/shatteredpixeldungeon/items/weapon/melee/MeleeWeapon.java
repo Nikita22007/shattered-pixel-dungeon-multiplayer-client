@@ -24,21 +24,17 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.AttackIndicator;
@@ -92,55 +88,6 @@ public class MeleeWeapon extends Weapon {
 		return dst; //weapon abilities do not use projectile logic, no autoaim
 	}
 
-	protected void beforeAbilityUsed(Hero hero, Char target){
-		hero.belongings.abilityWeapon = this;
-		Charger charger = null;
-
-		charger.partialCharge -= abilityChargeUse(hero, target);
-		while (charger.partialCharge < 0 && charger.charges > 0) {
-			charger.charges--;
-			charger.partialCharge++;
-		}
-
-		if (hero.heroClass == HeroClass.DUELIST
-				&& hero.hasTalent(Talent.AGGRESSIVE_BARRIER)
-				&& (hero.HP / (float)hero.HT) <= 0.5f){
-			int shieldAmt = 1 + 2*hero.pointsInTalent(Talent.AGGRESSIVE_BARRIER);
-			((Barrier) null).setShield(shieldAmt);
-			hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(shieldAmt), FloatingText.SHIELDING);
-		}
-
-		updateQuickslot();
-	}
-
-	protected void afterAbilityUsed( Hero hero ) {
-        hero.belongings.abilityWeapon = null;
-        if (hero.hasTalent(Talent.PRECISE_ASSAULT)) {
-            hero.cooldown();
-        }
-        if (hero.hasTalent(Talent.VARIED_CHARGE)) {
-            {
-                Charger charger = null;
-                charger.gainCharge(hero.pointsInTalent(Talent.VARIED_CHARGE) / 6f);
-                ScrollOfRecharging.charge(hero);
-            }
-        }
-        if (hero.hasTalent(Talent.COMBINED_LETHALITY)) {
-
-        }
-        if (hero.hasTalent(Talent.COMBINED_ENERGY)) {
-
-        }
-    }
-
-	protected int baseChargeUse(Hero hero, Char target){
-		return 1; //abilities use 1 charge by default
-	}
-
-	public final float abilityChargeUse(Hero hero, Char target){
-		return baseChargeUse(hero, target);
-	}
-
 	public int tier;
 
 	@Override
@@ -163,20 +110,10 @@ public class MeleeWeapon extends Weapon {
 		return req;
 	}
 
-	private static boolean evaluatingTwinUpgrades = false;
-	@Contract(pure = true)
-	@Override
-	public int buffedLvl() {
-		if (!evaluatingTwinUpgrades && Dungeon.hero != null && isEquipped(Dungeon.hero) && Dungeon.hero.hasTalent(Talent.TWIN_UPGRADES)){
-			KindOfWeapon other = null;
-		}
-		return super.buffedLvl();
-	}
 
 	@Override
 	public int damageRoll(Char owner) {
-		int damage = augment.damageFactor(super.damageRoll( owner ));
-		return damage;
+        return augment.damageFactor(super.damageRoll( owner ));
 	}
 	
 	@Override

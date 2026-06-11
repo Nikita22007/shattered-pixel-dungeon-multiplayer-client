@@ -23,11 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.plants;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -46,23 +42,6 @@ public abstract class Plant implements Bundlable {
 	public int pos;
 
 	protected Class<? extends Plant.Seed> seedClass;
-
-	public void trigger(){
-
-		Char ch = Actor.findChar(pos);
-
-		if (false){
-			((Hero) ch).interrupt();
-		}
-
-		if (Dungeon.level.heroFOV[pos] && Dungeon.hero.hasTalent(Talent.NATURES_AID)){
-			// 3/5 turns based on talent points spent
-
-        }
-
-		wither();
-
-	}
 
 	public void wither() {
 		Dungeon.level.uproot( pos );

@@ -79,8 +79,7 @@ public class Armor extends EquipableItem {
 	public int tier;
 	
 	private static final int USES_TO_ID = 10;
-	private float availableUsesToID = USES_TO_ID/2f;
-	
+
 	public Armor( int tier ) {
 		this.tier = tier;
 	}
@@ -88,7 +87,6 @@ public class Armor extends EquipableItem {
 	@Override
 	public void reset() {
 		super.reset();
-		availableUsesToID = USES_TO_ID/2f;
 		//armor can be kept in bones between runs, the seal cannot.
 		seal = null;
 	}
@@ -104,9 +102,6 @@ public class Armor extends EquipableItem {
 		if (seal.getGlyph() != null){
 			inscribe(seal.getGlyph());
 		}
-		if (isEquipped(Dungeon.hero)){
-			((BrokenSeal.WarriorShield) null).setArmor(this);
-		}
 	}
 
 	public BrokenSeal detachSeal(){
@@ -114,8 +109,7 @@ public class Armor extends EquipableItem {
 
 			if (isEquipped(Dungeon.hero)) {
 				BrokenSeal.WarriorShield sealBuff = null;
-				if (sealBuff != null) sealBuff.setArmor(null);
-			}
+            }
 
 			BrokenSeal detaching = seal;
 			seal = null;
@@ -146,9 +140,8 @@ public class Armor extends EquipableItem {
 			((HeroSprite)hero.sprite).updateArmor();
 
 			BrokenSeal.WarriorShield sealBuff = null;
-			if (sealBuff != null) sealBuff.setArmor(null);
 
-			return true;
+            return true;
 
 		} else {
 
@@ -216,14 +209,6 @@ public class Armor extends EquipableItem {
 		return super.upgrade();
 	}
 
-	public void onHeroGainExp(float levelPercent, Hero hero) {
-		levelPercent *= 1f;
-		if (!levelKnown && isEquipped(hero) && availableUsesToID <= USES_TO_ID/2f) {
-			//gains enough uses to ID over 0.5 levels
-			availableUsesToID = Math.min(USES_TO_ID/2f, availableUsesToID + levelPercent * USES_TO_ID);
-		}
-	}
-
 
 	@Override
 	public Emitter emitter() {
@@ -243,13 +228,6 @@ public class Armor extends EquipableItem {
 		return Integer.parseInt(getUi().getTopRight().getText().replace(":",""));
 	}
 
-	protected static int STRReq(int tier, int lvl){
-		lvl = Math.max(0, lvl);
-
-		//strength req decreases at +1,+3,+6,+10,etc.
-		return (8 + Math.round(tier * 2)) - (int)(Math.sqrt(8 * lvl + 1) - 1)/2;
-	}
-	
 	@Override
 	public int value() {
 		if (seal != null) return 0;
@@ -285,14 +263,6 @@ public class Armor extends EquipableItem {
 			Statistics.itemTypesDiscovered.add(glyph.getClass());
 		}
 		return this;
-	}
-
-	public Armor inscribe() {
-
-		Class<? extends Glyph> oldGlyphClass = glyph != null ? glyph.getClass() : null;
-		Glyph gl = null;
-
-		return inscribe( gl );
 	}
 
 	//these are not used to process specific glyph effects, so magic immune doesn't affect them

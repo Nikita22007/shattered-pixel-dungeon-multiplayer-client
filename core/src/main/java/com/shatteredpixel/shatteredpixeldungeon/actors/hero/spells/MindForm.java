@@ -143,14 +143,14 @@ public class MindForm extends ClericSpell {
                                 new Ballistica(Dungeon.hero.pos, cell, Ballistica.MAGIC_BOLT);
 
                             }
-							((ClassArmor)Dungeon.hero.belongings.armor()).charge -= Trinity.trinityChargeUsePerEffect(wand.getClass());
+                            ((ClassArmor)Dungeon.hero.belongings.armor()).charge -= 35f;
 							wand.wandUsed();
 						}
 					});
 				}
 			} else if (thrown() != null){
 				MissileWeapon thrown = thrown();
-				((ClassArmor)Dungeon.hero.belongings.armor()).charge -= Trinity.trinityChargeUsePerEffect(thrown.getClass());
+                ((ClassArmor)Dungeon.hero.belongings.armor()).charge -= 35f;
 			}
 		}
 

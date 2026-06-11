@@ -34,7 +34,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Enchanting;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.*;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -209,24 +208,6 @@ public class Trinity extends ArmorAbility {
 	public static String trinityItemUseText(Class<?> cls ){
 		return "error!";
 
-	}
-
-	public static float trinityChargeUsePerEffect(Class<?> cls){
-		float chargeUse = (float) 35;
-		if (Weapon.Enchantment.class.isAssignableFrom(cls) || Armor.Glyph.class.isAssignableFrom(cls)) {
-
-		}
-
-		if (Artifact.class.isAssignableFrom(cls)){
-			if (cls.equals(DriedRose.class) || cls.equals(UnstableSpellbook.class) || cls.equals(SkeletonKey.class)){
-				return 2*chargeUse; //50 charge
-			}
-			if (cls.equals(EtherealChains.class) || cls.equals(TalismanOfForesight.class) || cls.equals(TimekeepersHourglass.class)){
-				return 1.4f*chargeUse; //35 charge
-			}
-		}
-		//all other effects are standard charge use, 25 at base
-		return chargeUse;
 	}
 
 }

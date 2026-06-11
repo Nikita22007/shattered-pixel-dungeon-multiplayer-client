@@ -21,19 +21,9 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.AlchemyScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
@@ -41,178 +31,12 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ItemButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.IconTitle;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndInfoItem;
-import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.PathFinder;
-import com.watabou.utils.Random;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
-public class DriedRose extends Artifact {
-
-	{
-		image = ItemSpriteSheet.ARTIFACT_ROSE1;
-
-		levelCap = 10;
-
-		charge = 100;
-		chargeCap = 100;
-
-		defaultAction = AC_SUMMON;
-	}
-
-	private boolean talkedTo = false;
-	private boolean firstSummon = false;
-
-	private MeleeWeapon weapon = null;
-	private Armor armor = null;
-
-	public int droppedPetals = 0;
-
-	public static final String AC_SUMMON = "SUMMON";
-	public static final String AC_DIRECT = "DIRECT";
-	public static final String AC_OUTFIT = "OUTFIT";
-
-	@Override
-	public String defaultAction() {
-        return AC_SUMMON;
-    }
-
-	public int ghostStrength(){
-		return 13 + level()/2;
-	}
-
-	@Override
-	public String desc() {
-		if ((ShatteredPixelDungeon.scene() instanceof GameScene || ShatteredPixelDungeon.scene() instanceof AlchemyScene)){
-			return Messages.get(this, "desc_no_quest");
-		}
-		
-		String desc = super.desc();
-
-		if (isEquipped( Dungeon.hero )){
-			if (!cursed){
-
-				if (level() < levelCap)
-					desc+= "\n\n" + Messages.get(this, "desc_hint");
-
-			} else {
-				desc += "\n\n" + Messages.get(this, "desc_cursed");
-			}
-		}
-
-		if (weapon != null || armor != null) {
-			desc += "\n";
-
-			if (weapon != null) {
-				desc += "\n" + Messages.get(this, "desc_weapon", Messages.titleCase(weapon.title()));
-			}
-
-			if (armor != null) {
-				desc += "\n" + Messages.get(this, "desc_armor", Messages.titleCase(armor.title()));
-			}
-
-			desc += "\n" + Messages.get(this, "desc_strength", ghostStrength());
-
-		}
-		
-		return desc;
-	}
-	
-	@Override
-	public int value() {
-		if (weapon != null){
-			return -1;
-		}
-		if (armor != null){
-			return -1;
-		}
-		return super.value();
-	}
-
-
-	@Override
-	public Item upgrade() {
-		if (level() >= 9)
-			image = ItemSpriteSheet.ARTIFACT_ROSE3;
-		else if (level() >= 4)
-			image = ItemSpriteSheet.ARTIFACT_ROSE2;
-
-		//For upgrade transferring via well of transmutation
-		droppedPetals = Math.max( level(), droppedPetals );
-
-        return super.upgrade();
-	}
-	
-	public Weapon ghostWeapon(){
-		return weapon;
-	}
-	
-	public Armor ghostArmor(){
-		return armor;
-	}
-
-	private static final String TALKEDTO =      "talkedto";
-	private static final String FIRSTSUMMON =   "firstsummon";
-	private static final String GHOSTID =       "ghostID";
-	private static final String PETALS =        "petals";
-	
-	private static final String WEAPON =        "weapon";
-	private static final String ARMOR =         "armor";
-
-	public class roseRecharge extends ArtifactBuff {
-
-		@Override
-		public boolean act() {
-			
-			spend( TICK );
-			
-			if (false){
-			}
-
-            //rose does not charge while ghost hero is alive
-
-            if (charge < chargeCap
-                    && !cursed
-                    && false) {
-				//500 turns to a full charge
-
-				partialCharge += (1/5f * (float) Math.pow(1.175, 0));
-				while (partialCharge > 1){
-					charge++;
-					partialCharge--;
-					if (charge == chargeCap){
-						partialCharge = 0f;
-						GLog.p( Messages.get(DriedRose.class, "charged") );
-					}
-				}
-			} else if (cursed && Random.Int(100) == 0) {
-
-				ArrayList<Integer> spawnPoints = new ArrayList<>();
-
-				for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
-					int p = target.pos + PathFinder.NEIGHBOURS8[i];
-					if (Actor.findChar(p) == null && (Dungeon.level.passable[p] || Dungeon.level.avoid[p])) {
-						spawnPoints.add(p);
-					}
-				}
-
-				if (!spawnPoints.isEmpty()) {
-                    Random.element(spawnPoints);
-                    Sample.INSTANCE.play(Assets.Sounds.CURSED);
-				}
-
-			}
-
-			updateQuickslot();
-
-			return true;
-		}
-	}
+public class DriedRose {
 
 	public static class WndGhostHero extends Window{
 		

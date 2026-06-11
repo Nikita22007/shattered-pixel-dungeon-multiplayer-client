@@ -25,10 +25,8 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
 import com.shatteredpixel.shatteredpixeldungeon.items.*;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.MasterThievesArmband;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -248,7 +246,7 @@ public class WndTradeItem extends WndInfoItem {
 						hide();
 					} else {
 						GameScene.show(new WndOptions(new ItemSprite(ItemSpriteSheet.ARTIFACT_ARMBAND),
-								Messages.titleCase(Messages.get(MasterThievesArmband.class, "name")),
+								//Messages.titleCase(Messages.get(MasterThievesArmband.class, "name")),
 								Messages.get(WndTradeItem.class, "steal_warn"),
 								Messages.get(WndTradeItem.class, "steal_warn_yes"),
 								Messages.get(WndTradeItem.class, "steal_warn_no")) {
