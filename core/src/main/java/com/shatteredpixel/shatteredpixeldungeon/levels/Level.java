@@ -475,10 +475,6 @@ public abstract class Level implements Bundlable {
 			GameScene.updateMap(pos);
 		}
 
-		//we have to get this far as grass placement has RNG implications in levelgen
-		if (Dungeon.isChallenged(Challenges.NO_HERBALISM)){
-			return null;
-		}
 		
 		plant = seed.couch( pos, this );
 		plants.put( pos, plant );
