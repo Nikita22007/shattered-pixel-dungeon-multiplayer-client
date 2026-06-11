@@ -33,7 +33,9 @@ public class Obfuscation extends Armor.Glyph {
 		if (level == -1) {
 			return 0;
 		} else {
-			return (1 + level / 3f) * genericProcChanceMultiplier(owner);
+
+
+            return (1 + level / 3f) * (float) Math.pow(1.175f, 0);
 		}
 	}
 

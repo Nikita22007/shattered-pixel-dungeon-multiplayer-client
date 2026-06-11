@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.rings;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
@@ -49,10 +48,6 @@ public class RingOfArcana extends Ring {
 	public String upgradeStat1(int level){
 		if (cursed) level = Math.min(-1, level-3);
 		return Messages.decimalFormat("#.##", 100f * (Math.pow(1.175f, level+1)-1f)) + "%";
-	}
-
-    public static float enchantPowerMultiplier(Char target ){
-		return (float)Math.pow(1.175f, 0);
 	}
 
 	public class Arcana extends RingBuff {

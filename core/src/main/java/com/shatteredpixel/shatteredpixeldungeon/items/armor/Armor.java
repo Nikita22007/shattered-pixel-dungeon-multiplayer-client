@@ -22,41 +22,16 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.armor;
 
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
-import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BodyForm;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.curses.AntiEntropy;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.curses.Bulk;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.curses.Corrosion;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.curses.Displacement;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.curses.Metabolism;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.curses.Multiplicity;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.curses.Overgrowth;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.curses.Stench;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Affection;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.AntiMagic;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Brimstone;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Camouflage;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Entanglement;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Flow;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Obfuscation;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Potential;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Repulsion;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Stone;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Swiftness;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Thorns;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Viscosity;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfArcana;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ParchmentScrap;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -67,10 +42,6 @@ import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Armor extends EquipableItem {
 
@@ -192,60 +163,6 @@ public class Armor extends EquipableItem {
 		return hero != null && hero.belongings.armor() == this;
 	}
 
-	public final int DRMax(){
-		return DRMax(buffedLvl());
-	}
-
-	public int DRMax(int lvl){
-		if (Dungeon.isChallenged(Challenges.NO_ARMOR)){
-			return 1 + tier + lvl + augment.defenseFactor(lvl);
-		}
-
-		int max = tier * (2 + lvl) + augment.defenseFactor(lvl);
-		if (lvl > max){
-			return ((lvl - max)+1)/2;
-		} else {
-			return max;
-		}
-	}
-
-	public final int DRMin(){
-		return DRMin(buffedLvl());
-	}
-
-	public int DRMin(int lvl){
-		if (Dungeon.isChallenged(Challenges.NO_ARMOR)){
-			return 0;
-		}
-
-		int max = DRMax(lvl);
-		if (lvl >= max){
-			return (lvl - max);
-		} else {
-			return lvl;
-		}
-	}
-
-	//This exists so we can test what a char's base evasion would be without armor affecting it
-	//more ugly static vars yaaay~
-	public static boolean testingNoArmDefSkill = false;
-	
-	public float evasionFactor( Char owner, float evasion ){
-		if (testingNoArmDefSkill) return evasion;
-		
-		if (hasGlyph(Stone.class, owner) && !Stone.testingEvasion()){
-			return 0;
-		}
-		
-		return evasion + augment.evasionFactor(buffedLvl());
-	}
-	
-	public float speedFactor( Char owner, float speed ){
-
-		return speed;
-		
-	}
-
 	@Override
 	public int level() {
 		int level = super.level();
@@ -264,7 +181,7 @@ public class Armor extends EquipableItem {
 
 		if (inscribe){
 			if (glyph == null){
-				inscribe( Glyph.random() );
+				inscribe(null);
 			}
 		} else if (glyph != null) {
 			//chance to lose harden buff is 10/20/40/80/100% when upgrading from +6/7/8/9/10
@@ -341,7 +258,7 @@ public class Armor extends EquipableItem {
 			//15% chance to be inscribed
 			float effectRoll = Random.Float();
 			if (effectRoll < 0.3f * ParchmentScrap.curseChanceMultiplier()) {
-				inscribe(Glyph.randomCurse());
+				inscribe(null);
 				cursed = true;
 			} else if (effectRoll >= 1f - (0.15f * ParchmentScrap.enchantChanceMultiplier())){
 				inscribe();
@@ -407,32 +324,9 @@ public class Armor extends EquipableItem {
 	public Armor inscribe() {
 
 		Class<? extends Glyph> oldGlyphClass = glyph != null ? glyph.getClass() : null;
-		Glyph gl = Glyph.random( oldGlyphClass );
+		Glyph gl = null;
 
 		return inscribe( gl );
-	}
-
-	public boolean hasGlyph(Class<?extends Glyph> type, Char owner) {
-		{
-			if (glyph != null
-					&& !glyph.curse()
-					&& false
-					&& isEquipped((Hero) owner)
-					&& false
-					&& ((Hero) owner).subClass != HeroSubClass.PALADIN) {
-				return false;
-			} else {
-				if (false
-						&& ((BodyForm.BodyFormBuff) null).glyph() != null
-						&& ((BodyForm.BodyFormBuff) null).glyph().getClass().equals(type)) {
-					return true;
-				} else if (glyph != null) {
-					return glyph.getClass() == type;
-				} else {
-					return false;
-				}
-			}
-		}
 	}
 
 	//these are not used to process specific glyph effects, so magic immune doesn't affect them
@@ -457,37 +351,7 @@ public class Armor extends EquipableItem {
 	}
 
 	public static abstract class Glyph implements Bundlable {
-		
-		public static final Class<?>[] common = new Class<?>[]{
-				Obfuscation.class, Swiftness.class, Viscosity.class, Potential.class };
 
-		public static final Class<?>[] uncommon = new Class<?>[]{
-				Brimstone.class, Stone.class, Entanglement.class,
-				Repulsion.class, Camouflage.class, Flow.class };
-
-		public static final Class<?>[] rare = new Class<?>[]{
-				Affection.class, AntiMagic.class, Thorns.class };
-
-		public static final float[] typeChances = new float[]{
-				50, //12.5% each
-				40, //6.67% each
-				10  //3.33% each
-		};
-
-		public static final Class<?>[] curses = new Class<?>[]{
-				AntiEntropy.class, Corrosion.class, Displacement.class, Metabolism.class,
-				Multiplicity.class, Stench.class, Overgrowth.class, Bulk.class
-		};
-
-		public static float genericProcChanceMultiplier( Char defender ){
-			float multi = RingOfArcana.enchantPowerMultiplier(defender);
-
-			if (Dungeon.hero.alignment == defender.alignment) {
-			}
-
-			return multi;
-		}
-		
 		public String name() {
 			if (!curse())
 				return name( Messages.get(this, "glyph") );
@@ -517,62 +381,6 @@ public class Armor extends EquipableItem {
 		
 		public abstract ItemSprite.Glowing glowing();
 
-		@SuppressWarnings("unchecked")
-		public static Glyph random( Class<? extends Glyph> ... toIgnore ) {
-			switch(Random.chances(typeChances)){
-				case 0: default:
-					return randomCommon( toIgnore );
-				case 1:
-					return randomUncommon( toIgnore );
-				case 2:
-					return randomRare( toIgnore );
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public static Glyph randomCommon( Class<? extends Glyph> ... toIgnore ){
-			ArrayList<Class<?>> glyphs = new ArrayList<>(Arrays.asList(common));
-			glyphs.removeAll(Arrays.asList(toIgnore));
-			if (glyphs.isEmpty()) {
-				return random();
-			} else {
-				return (Glyph) Reflection.newInstance(Random.element(glyphs));
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public static Glyph randomUncommon( Class<? extends Glyph> ... toIgnore ){
-			ArrayList<Class<?>> glyphs = new ArrayList<>(Arrays.asList(uncommon));
-			glyphs.removeAll(Arrays.asList(toIgnore));
-			if (glyphs.isEmpty()) {
-				return random();
-			} else {
-				return (Glyph) Reflection.newInstance(Random.element(glyphs));
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public static Glyph randomRare( Class<? extends Glyph> ... toIgnore ){
-			ArrayList<Class<?>> glyphs = new ArrayList<>(Arrays.asList(rare));
-			glyphs.removeAll(Arrays.asList(toIgnore));
-			if (glyphs.isEmpty()) {
-				return random();
-			} else {
-				return (Glyph) Reflection.newInstance(Random.element(glyphs));
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public static Glyph randomCurse( Class<? extends Glyph> ... toIgnore ){
-			ArrayList<Class<?>> glyphs = new ArrayList<>(Arrays.asList(curses));
-			glyphs.removeAll(Arrays.asList(toIgnore));
-			if (glyphs.isEmpty()) {
-				return random();
-			} else {
-				return (Glyph) Reflection.newInstance(Random.element(glyphs));
-			}
-		}
-		
 	}
 	//TODO: check this
 	@Override

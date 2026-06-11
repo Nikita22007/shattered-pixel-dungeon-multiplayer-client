@@ -24,10 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.curses.Bulk;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Flow;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Obfuscation;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Swiftness;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
@@ -142,6 +139,7 @@ public abstract class Char extends Actor {
 
 	//Returns the level a glyph is at for a char, or -1 if they are not benefitting from that glyph
 	//This function is needed as (unlike enchantments) many glyphs trigger in a variety of cases
+	@Contract(pure = true)
 	public int glyphLevel(Class<? extends Armor.Glyph> cls){
         return -1;
     }
@@ -149,9 +147,7 @@ public abstract class Char extends Actor {
 	public float speed() {
 		float speed = baseSpeed;
 
-		speed *= Swiftness.speedBoost(this, glyphLevel(Swiftness.class));
-		speed *= Flow.speedBoost(this, glyphLevel(Flow.class));
-		speed *= Bulk.speedBoost(this, glyphLevel(Bulk.class));
+		speed *= 1.f;
 
 		return speed;
 	}
