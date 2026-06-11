@@ -38,11 +38,6 @@ public class SewerLevel extends RegularLevel {
 		return true;
 	}
 
-	@Override
-	protected void createItems() {
-
-	}
-
 	{
 			color1 = 0x48763c;
 			color2 = 0x59994a;

@@ -225,11 +225,6 @@ public abstract class Level implements Bundlable {
 		bundle.put( CUSTOM_TILES, customTiles );
 		bundle.put( CUSTOM_WALLS, customWalls );
 		bundle.put( FEELING, feeling );
-		bundle.put( "mobs_to_spawn", mobsToSpawn.toArray(new Class[0]));
-	}
-	
-	public int tunnelTile() {
-		return feeling == Feeling.CHASM ? Terrain.EMPTY_SP : Terrain.EMPTY;
 	}
 
 	public int width() {
@@ -262,9 +257,7 @@ public abstract class Level implements Bundlable {
 	
 	abstract protected boolean build();
 	
-	private ArrayList<Class<?extends Mob>> mobsToSpawn = new ArrayList<>();
 
-    abstract protected void createItems();
 
 	public int entrance(){
 		LevelTransition l = getTransition(null);
@@ -298,15 +291,6 @@ public abstract class Level implements Bundlable {
 			}
 		}
 		return type != null ? getTransition(null) : transitions.get(0);
-	}
-
-	public LevelTransition getTransition(int cell){
-		for (LevelTransition transition : transitions){
-			if (transition.inside(cell)){
-				return transition;
-			}
-		}
-		return null;
 	}
 
 	public Group addVisuals() {
