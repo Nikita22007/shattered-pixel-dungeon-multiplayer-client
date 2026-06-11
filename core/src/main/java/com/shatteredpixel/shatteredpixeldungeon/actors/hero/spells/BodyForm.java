@@ -115,7 +115,8 @@ public class BodyForm extends ClericSpell {
 		@Override
 		public String desc() {
 			if (enchant() != null){
-				return Messages.get(this, "desc", Messages.titleCase(enchant().name()), dispTurns());
+                enchant();
+                return Messages.get(this, "desc", Messages.titleCase("Ench.name"), dispTurns());
 			} else if (glyph() != null){
 				return Messages.get(this, "desc", Messages.titleCase(glyph().name()), dispTurns());
 			}

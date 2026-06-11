@@ -35,7 +35,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Projec
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 import org.jetbrains.annotations.Contract;
 
@@ -165,7 +164,7 @@ abstract public class MissileWeapon extends Weapon {
 
 		if (projecting
 				&& (Dungeon.level.passable[dst] || Dungeon.level.avoid[dst] || Actor.findChar(dst) != null)
-				&& Dungeon.level.distance(user.pos, dst) <= Math.round(4 * Enchantment.genericProcChanceMultiplier(user))){
+				&& Dungeon.level.distance(user.pos, dst) <= Math.round(4 * 1f)){
 			return dst;
 		} else {
 			return super.throwPos(user, dst);
@@ -358,7 +357,7 @@ abstract public class MissileWeapon extends Weapon {
 		}
 
 		if (enchantment != null && (cursedKnown || !enchantment.curse())){
-			info += "\n\n" + Messages.get(Weapon.class, "enchanted", enchantment.name());
+			info += "\n\n" + Messages.get(Weapon.class, "enchanted", "Ench.name");
 			info += " " + Messages.get(enchantment, "desc");
 		}
 

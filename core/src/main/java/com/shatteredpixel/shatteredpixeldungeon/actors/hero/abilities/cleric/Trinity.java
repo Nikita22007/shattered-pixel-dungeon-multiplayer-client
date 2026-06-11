@@ -107,7 +107,7 @@ public class Trinity extends ArmorAbility {
 				if (bodyForm instanceof Weapon.Enchantment){
 
 					btnBody = new RedButton(Messages.get(WndUseTrinity.class, "body",
-							Messages.titleCase(((Weapon.Enchantment)bodyForm).name()))
+							Messages.titleCase("Ench.name"))
 							+ " " + trinityItemUseText(bodyForm.getClass()), 6){
 						@Override
 						protected void onClick() {
@@ -350,7 +350,7 @@ public class Trinity extends ArmorAbility {
 						@Override
 						public String name() {
 							//for button tooltips
-							return enchantment.name();
+							return "Ench.name";
 						}
 					};
 					if (Dungeon.hero.belongings.weapon() != null){

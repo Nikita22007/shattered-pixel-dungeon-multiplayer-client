@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.remains.RemainsItem;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Explosive;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Bestiary;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
@@ -995,15 +994,6 @@ public class Badges {
 		if (allUnlocked){
 			badge = Badge.VICTORY_ALL_CLASSES;
 			displayBadge( badge );
-		}
-	}
-
-	public static void validateTakingTheMick(Object cause){
-		if ((cause == Dungeon.hero || cause instanceof Explosive.ExplosiveCurseBomb)
-				&& false
-				&& Dungeon.hero.belongings.attackingWeapon().level() >= 20){
-			local.add( Badge.TAKING_THE_MICK );
-			displayBadge(Badge.TAKING_THE_MICK);
 		}
 	}
 

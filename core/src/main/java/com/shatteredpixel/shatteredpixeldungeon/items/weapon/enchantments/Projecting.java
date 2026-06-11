@@ -36,9 +36,4 @@ public class Projecting extends Weapon.Enchantment {
 		return damage;
 	}
 
-	@Override
-	public ItemSprite.Glowing glowing() {
-		return PURPLE;
-	}
-
 }

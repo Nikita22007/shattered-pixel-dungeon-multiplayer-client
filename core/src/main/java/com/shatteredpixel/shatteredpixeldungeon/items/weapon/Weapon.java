@@ -32,43 +32,16 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BodyForm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfArcana;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ParchmentScrap;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Annoying;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Dazzling;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Displacing;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Explosive;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Friendly;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Polarized;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Sacrificial;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Wayward;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Blazing;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Blocking;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Blooming;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Chilling;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Corrupting;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Elastic;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Grim;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Kinetic;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Lucky;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Projecting;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Shocking;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Unstable;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Vampiric;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.utils.Bundlable;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 import org.jetbrains.annotations.Contract;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 abstract public class Weapon extends KindOfWeapon {
 
@@ -132,7 +105,7 @@ abstract public class Weapon extends KindOfWeapon {
 				}
 				if (defender.isAlive() && !becameAlly) {
 					int dmg = ((Hero) attacker).subClass == HeroSubClass.PALADIN ? 6 : 2;
-					Math.round(dmg * Enchantment.genericProcChanceMultiplier(attacker));
+					Math.round(dmg * 1f);
 				}
 
 			} else {
@@ -231,7 +204,7 @@ abstract public class Weapon extends KindOfWeapon {
 	public int reachFactor(Char owner) {
 		int reach = RCH;
 		if (hasEnchant(Projecting.class, owner)){
-			return reach + Math.round(Enchantment.genericProcChanceMultiplier(owner));
+			return reach + Math.round(1f);
 		} else {
 			return reach;
 		}
@@ -268,7 +241,7 @@ abstract public class Weapon extends KindOfWeapon {
 
 		if (enchant){
 			if (enchantment == null){
-				enchant(Enchantment.random());
+				enchant(null);
 			}
 		} else if (enchantment != null) {
 			//chance to lose harden buff is 10/20/40/80/100% when upgrading from +6/7/8/9/10
@@ -325,7 +298,7 @@ abstract public class Weapon extends KindOfWeapon {
 			//10% chance to be enchanted
 			float effectRoll = Random.Float();
 			if (effectRoll < 0.3f * ParchmentScrap.curseChanceMultiplier()) {
-				enchant(Enchantment.randomCurse());
+				enchant(null);
 				cursed = true;
 			} else if (effectRoll >= 1f - (0.1f * ParchmentScrap.enchantChanceMultiplier())){
 				enchant();
@@ -351,7 +324,7 @@ abstract public class Weapon extends KindOfWeapon {
 	public Weapon enchant() {
 
 		Class<? extends Enchantment> oldEnchantment = enchantment != null ? enchantment.getClass() : null;
-		Enchantment ench = Enchantment.random( oldEnchantment );
+		Enchantment ench = null;
 
 		return enchant( ench );
 	}
@@ -396,50 +369,13 @@ abstract public class Weapon extends KindOfWeapon {
 				&& (Dungeon.hero.subClass != HeroSubClass.PALADIN || enchantment == null)){
 			return HOLY;
 		} else {
-			return enchantment != null && (cursedKnown || !enchantment.curse()) ? enchantment.glowing() : null;
+			return enchantment != null && (cursedKnown || !enchantment.curse()) ? null : null;
 		}
 	}
 
-	public static abstract class Enchantment implements Bundlable {
+	public static abstract class Enchantment {
 
-		public static final Class<?>[] common = new Class<?>[]{
-				Blazing.class, Chilling.class, Kinetic.class, Shocking.class};
-
-		public static final Class<?>[] uncommon = new Class<?>[]{
-				Blocking.class, Blooming.class, Elastic.class,
-				Lucky.class, Projecting.class, Unstable.class};
-
-		public static final Class<?>[] rare = new Class<?>[]{
-				Corrupting.class, Grim.class, Vampiric.class};
-
-		public static final float[] typeChances = new float[]{
-				50, //12.5% each
-				40, //6.67% each
-				10  //3.33% each
-		};
-
-		public static final Class<?>[] curses = new Class<?>[]{
-				Annoying.class, Displacing.class, Dazzling.class, Explosive.class,
-				Sacrificial.class, Wayward.class, Polarized.class, Friendly.class
-		};
-		
-			
 		public abstract int proc( Weapon weapon, Char attacker, Char defender, int damage );
-
-		protected float procChanceMultiplier( Char attacker ){
-			return genericProcChanceMultiplier( attacker );
-		}
-
-		public static float genericProcChanceMultiplier( Char attacker ) {
-            return RingOfArcana.enchantPowerMultiplier(attacker);
-		}
-
-		public String name() {
-			if (!curse())
-				return name( Messages.get(this, "enchant"));
-			else
-				return name( Messages.get(Item.class, "curse"));
-		}
 
 		public String name( String weaponName ) {
 			return Messages.get(this, "name", weaponName);
@@ -453,73 +389,8 @@ abstract public class Weapon extends KindOfWeapon {
 			return false;
 		}
 
-		@Override
-		public void restoreFromBundle( Bundle bundle ) {
-		}
 
-		@Override
-		public void storeInBundle( Bundle bundle ) {
-		}
-		
-		public ItemSprite.Glowing glowing(){
-			return null;
-		};
-		
-		@SuppressWarnings("unchecked")
-		public static Enchantment random( Class<? extends Enchantment> ... toIgnore ) {
-			switch(Random.chances(typeChances)){
-				case 0: default:
-					return randomCommon( toIgnore );
-				case 1:
-					return randomUncommon( toIgnore );
-				case 2:
-					return randomRare( toIgnore );
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public static Enchantment randomCommon( Class<? extends Enchantment> ... toIgnore ) {
-			ArrayList<Class<?>> enchants = new ArrayList<>(Arrays.asList(common));
-			enchants.removeAll(Arrays.asList(toIgnore));
-			if (enchants.isEmpty()) {
-				return random();
-			} else {
-				return (Enchantment) Reflection.newInstance(Random.element(enchants));
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public static Enchantment randomUncommon( Class<? extends Enchantment> ... toIgnore ) {
-			ArrayList<Class<?>> enchants = new ArrayList<>(Arrays.asList(uncommon));
-			enchants.removeAll(Arrays.asList(toIgnore));
-			if (enchants.isEmpty()) {
-				return random();
-			} else {
-				return (Enchantment) Reflection.newInstance(Random.element(enchants));
-			}
-		}
-		
-		@SuppressWarnings("unchecked")
-		public static Enchantment randomRare( Class<? extends Enchantment> ... toIgnore ) {
-			ArrayList<Class<?>> enchants = new ArrayList<>(Arrays.asList(rare));
-			enchants.removeAll(Arrays.asList(toIgnore));
-			if (enchants.isEmpty()) {
-				return random();
-			} else {
-				return (Enchantment) Reflection.newInstance(Random.element(enchants));
-			}
-		}
+		;
 
-		@SuppressWarnings("unchecked")
-		public static Enchantment randomCurse( Class<? extends Enchantment> ... toIgnore ){
-			ArrayList<Class<?>> enchants = new ArrayList<>(Arrays.asList(curses));
-			enchants.removeAll(Arrays.asList(toIgnore));
-			if (enchants.isEmpty()) {
-				return random();
-			} else {
-				return (Enchantment) Reflection.newInstance(Random.element(enchants));
-			}
-		}
-		
 	}
 }

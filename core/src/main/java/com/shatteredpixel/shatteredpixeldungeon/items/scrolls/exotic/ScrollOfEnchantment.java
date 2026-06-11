@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.InventoryScroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfEnchantment;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -120,9 +119,9 @@ public class ScrollOfEnchantment extends ExoticScroll {
 				final Weapon.Enchantment enchants[] = new Weapon.Enchantment[3];
 				
 				Class<? extends Weapon.Enchantment> existing = ((Weapon) item).enchantment != null ? ((Weapon) item).enchantment.getClass() : null;
-				enchants[0] = Weapon.Enchantment.randomCommon( existing );
-				enchants[1] = Weapon.Enchantment.randomUncommon( existing );
-				enchants[2] = Weapon.Enchantment.random( existing, enchants[0].getClass(), enchants[1].getClass());
+				enchants[0] = null;
+				enchants[1] = null;
+                enchants[2] = null;
 
 				GameScene.show(new WndEnchantSelect((Weapon) item, enchants[0], enchants[1], enchants[2]));
 			
@@ -160,9 +159,9 @@ public class ScrollOfEnchantment extends ExoticScroll {
 			super(new ItemSprite(new ScrollOfEnchantment()),
 					Messages.titleCase(new ScrollOfEnchantment().name()),
 					Messages.get(ScrollOfEnchantment.class, "weapon"),
-					ench1.name(),
-					ench2.name(),
-					ench3.name(),
+					"Ench.name",
+					"Ench.name",
+					"Ench.name",
 					Messages.get(ScrollOfEnchantment.class, "cancel"));
 			this.wep = wep;
 			enchantments = new Weapon.Enchantment[3];
@@ -196,7 +195,7 @@ public class ScrollOfEnchantment extends ExoticScroll {
 		protected void onInfo( int index ) {
 			GameScene.show(new WndTitledMessage(
 					Icons.get(Icons.INFO),
-					Messages.titleCase(enchantments[index].name()),
+					Messages.titleCase("Ench.name"),
 					enchantments[index].desc()));
 		}
 
