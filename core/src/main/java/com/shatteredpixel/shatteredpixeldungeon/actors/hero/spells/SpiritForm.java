@@ -105,16 +105,16 @@ public class SpiritForm extends ClericSpell {
 			this.effect = effect;
 			if (effect instanceof RingOfMight){
 				((Ring) effect).level(ringLevel());
-				Dungeon.hero.updateHT( false );
-			}
+
+            }
 		}
 
 		@Override
 		public void detach() {
 			super.detach();
 			if (effect instanceof RingOfMight){
-				Dungeon.hero.updateHT( false );
-			}
+
+            }
 		}
 
 		public Ring ring(){

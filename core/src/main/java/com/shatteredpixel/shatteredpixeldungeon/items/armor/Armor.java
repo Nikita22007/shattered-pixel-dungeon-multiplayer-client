@@ -217,7 +217,7 @@ public class Armor extends EquipableItem {
 	}
 
 	public void onHeroGainExp(float levelPercent, Hero hero) {
-		levelPercent *= Talent.itemIDSpeedFactor(hero, this);
+		levelPercent *= 1f;
 		if (!levelKnown && isEquipped(hero) && availableUsesToID <= USES_TO_ID/2f) {
 			//gains enough uses to ID over 0.5 levels
 			availableUsesToID = Math.min(USES_TO_ID/2f, availableUsesToID + levelPercent * USES_TO_ID);

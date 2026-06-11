@@ -124,33 +124,17 @@ public class MeleeWeapon extends Weapon {
             hero.cooldown();
         }
         if (hero.hasTalent(Talent.VARIED_CHARGE)) {
-            Talent.VariedChargeTracker tracker = null;
-            if (tracker == null || tracker.weapon == getClass() || tracker.weapon == null) {
-                ((Talent.VariedChargeTracker) null).weapon = getClass();
-            } else {
-                tracker.detach();
+            {
                 Charger charger = null;
                 charger.gainCharge(hero.pointsInTalent(Talent.VARIED_CHARGE) / 6f);
                 ScrollOfRecharging.charge(hero);
             }
         }
         if (hero.hasTalent(Talent.COMBINED_LETHALITY)) {
-            Talent.CombinedLethalityAbilityTracker tracker = null;
-            if (tracker == null || tracker.weapon == this || tracker.weapon == null) {
-                hero.cooldown();
-                ((Talent.CombinedLethalityAbilityTracker) null).weapon = this;
-            } else {
-                //we triggered the talent, so remove the tracker
-                tracker.detach();
-            }
+
         }
         if (hero.hasTalent(Talent.COMBINED_ENERGY)) {
-            Talent.CombinedEnergyAbilityTracker tracker = null;
-            if (tracker == null || !tracker.monkAbilused) {
-                ((Talent.CombinedEnergyAbilityTracker) null).wepAbilUsed = true;
-            } else {
-                tracker.wepAbilUsed = true;
-            }
+
         }
     }
 

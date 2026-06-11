@@ -63,7 +63,6 @@ public abstract class Scroll extends Item {
 		((HeroSprite)curUser.sprite).read();
 
         if (Random.Float() < talentChance) {
-			Talent.onScrollUsed(curUser, curUser.pos, talentFactor, getClass());
 		}
 
 	}

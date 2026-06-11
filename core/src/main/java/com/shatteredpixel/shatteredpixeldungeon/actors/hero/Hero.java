@@ -159,19 +159,6 @@ public class Hero extends Char {
 		visibleEnemies = new ArrayList<>();
 	}
 
-	public void updateHT(boolean boostHP) {
-		int curHT = HT;
-
-		HT = 20 + 5 * (lvl - 1) + HTBoost;
-		float multiplier = RingOfMight.HTMultiplier(this);
-		HT = Math.round(multiplier * HT);
-
-		if (boostHP) {
-			HP += Math.max(HT - curHT, 0);
-		}
-		HP = Math.min(HP, HT);
-	}
-
 	public int STR() {
 		int strBonus = 0;
 
@@ -1085,7 +1072,6 @@ public class Hero extends Char {
 				lvl++;
 				levelUp = true;
 
-				updateHT(true);
 				attackSkill++;
 				defenseSkill++;
 
@@ -1483,7 +1469,6 @@ public class Hero extends Char {
 		// handled all items that recharge over time?
 
 
-		updateHT(false);
 	}
 
 	@Override

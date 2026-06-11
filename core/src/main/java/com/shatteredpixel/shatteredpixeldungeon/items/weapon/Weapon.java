@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BodyForm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -121,7 +120,7 @@ abstract public class Weapon extends KindOfWeapon {
 		}
 
 		if (!levelKnown && attacker == Dungeon.hero) {
-			float uses = Math.min(availableUsesToID, Talent.itemIDSpeedFactor(Dungeon.hero, this));
+			float uses = Math.min(availableUsesToID, 1f);
 			availableUsesToID -= uses;
 			usesLeftToID -= uses;
 			if (usesLeftToID <= 0) {
@@ -141,7 +140,7 @@ abstract public class Weapon extends KindOfWeapon {
 	}
 	
 	public void onHeroGainExp( float levelPercent, Hero hero ){
-		levelPercent *= Talent.itemIDSpeedFactor(hero, this);
+		levelPercent *= 1f;
 		if (!levelKnown && isEquipped(hero) && availableUsesToID <= USES_TO_ID/2f) {
 			//gains enough uses to ID over 0.5 levels
 			availableUsesToID = Math.min(USES_TO_ID/2f, availableUsesToID + levelPercent * USES_TO_ID);

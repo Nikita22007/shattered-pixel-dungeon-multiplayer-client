@@ -27,13 +27,9 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.BArray;
 import com.watabou.utils.PathFinder;
@@ -59,11 +55,8 @@ abstract public class KindOfWeapon extends EquipableItem {
 
 		isSwiftEquipping = false;
 		if (hero.belongings.contains(this) && hero.hasTalent(Talent.SWIFT_EQUIP)){
-			if (true
-					|| ((Talent.SwiftEquipCooldown) null).hasSecondUse()){
-				isSwiftEquipping = true;
-			}
-		}
+            isSwiftEquipping = true;
+        }
 
 		boolean wasInInv = hero.belongings.contains(this);
 
@@ -71,8 +64,7 @@ abstract public class KindOfWeapon extends EquipableItem {
 
 			hero.belongings.secondWep = this;
 
-			Talent.onItemEquipped(hero, this);
-			Badges.validateDuelistUnlock();
+            Badges.validateDuelistUnlock();
 			updateQuickslot();
 
 			cursedKnown = true;
@@ -85,8 +77,6 @@ abstract public class KindOfWeapon extends EquipableItem {
 			if (isSwiftEquipping) {
 				GLog.i(Messages.get(this, "swift_equip"));
 				{
-					((Talent.SwiftEquipCooldown) null)
-							.secondUse = hero.pointsInTalent(Talent.SWIFT_EQUIP) == 2;
 				}
 				isSwiftEquipping = false;
 			}

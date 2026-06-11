@@ -38,8 +38,8 @@ public class RingOfMight extends Ring {
 	@Override
 	public boolean doEquip(Hero hero) {
 		if (super.doEquip(hero)){
-			hero.updateHT( false );
-			return true;
+
+            return true;
 		} else {
 			return false;
 		}
@@ -48,8 +48,8 @@ public class RingOfMight extends Ring {
 	@Override
 	public boolean doUnequip(Hero hero, boolean collect, boolean single) {
 		if (super.doUnequip(hero, collect, single)){
-			hero.updateHT( false );
-			return true;
+
+            return true;
 		} else {
 			return false;
 		}
@@ -70,8 +70,8 @@ public class RingOfMight extends Ring {
 	
 	private void updateTargetHT(){
 		if (buff != null && false){
-			((Hero) buff.target).updateHT( false );
-		}
+
+        }
 	}
 	
 	public String statsInfo() {

@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Chains;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Effects;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Pushing;
@@ -146,7 +145,6 @@ public class EtherealChains extends Artifact {
 
 						charge -= chargeUse;
 
-                        Talent.onArtifactUsed(hero);
 						updateQuickslot();
 
 						Dungeon.level.occupyCell(enemy);
@@ -213,7 +211,6 @@ public class EtherealChains extends Artifact {
 
 						charge -= chargeUse;
 
-                        Talent.onArtifactUsed(hero);
 						updateQuickslot();
 
 						Dungeon.level.occupyCell(hero);

@@ -134,10 +134,8 @@ public abstract class KindofMisc extends EquipableItem {
 				return false;
 			}
 
-			Talent.onItemEquipped(hero, this);
 
-
-			cursedKnown = true;
+            cursedKnown = true;
 			if (cursed) {
 				equipCursed( hero );
 				GLog.n( Messages.get(this, "equip_cursed", this) );

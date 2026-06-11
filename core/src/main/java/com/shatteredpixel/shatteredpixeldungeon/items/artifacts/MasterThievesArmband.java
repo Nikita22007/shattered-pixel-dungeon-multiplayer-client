@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -149,8 +148,7 @@ public class MasterThievesArmband extends Artifact {
 				exp += 4 * chargesUsed;
 				GLog.i(Messages.get(MasterThievesArmband.class, "stole_item", item.name()));
 
-				Talent.onArtifactUsed(Dungeon.hero);
-				while (exp >= (10 + Math.round(3.33f * level())) && level() < levelCap) {
+                while (exp >= (10 + Math.round(3.33f * level())) && level() < levelCap) {
 					exp -= 10 + Math.round(3.33f * level());
                     GLog.p(Messages.get(MasterThievesArmband.class, "level_up"));
 					upgrade();

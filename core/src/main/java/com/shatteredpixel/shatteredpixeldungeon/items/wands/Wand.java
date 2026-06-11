@@ -55,7 +55,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
-import org.jetbrains.annotations.Contract;
 
 public abstract class Wand extends Item {
 
@@ -199,7 +198,7 @@ public abstract class Wand extends Item {
 	}
 	
 	public void onHeroGainExp( float levelPercent, Hero hero ){
-		levelPercent *= Talent.itemIDSpeedFactor(hero, this);
+		levelPercent *= 1f;
 		if (!isIdentified() && availableUsesToID <= USES_TO_ID/2f) {
 			//gains enough uses to ID over 1 level
 			availableUsesToID = Math.min(USES_TO_ID/2f, availableUsesToID + levelPercent * USES_TO_ID/2f);
@@ -336,7 +335,7 @@ public abstract class Wand extends Item {
 
 	public void wandUsed() {
 		if (!isIdentified()) {
-			float uses = Math.min( availableUsesToID, Talent.itemIDSpeedFactor(Dungeon.hero, this) );
+			float uses = Math.min( availableUsesToID, 1f);
 			availableUsesToID -= uses;
 			usesLeftToID -= uses;
 			if (usesLeftToID <= 0 || Dungeon.hero.pointsInTalent(Talent.SCHOLARS_INTUITION) == 2) {

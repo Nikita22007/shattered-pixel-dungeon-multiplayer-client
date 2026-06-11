@@ -179,7 +179,6 @@ public class PotionOfDragonsBreath extends ExoticPotion {
 
 										if (!anonymous) {
                                             if (Random.Float() < talentChance) {
-												Talent.onPotionUsed(curUser, curUser.pos, talentFactor);
 											}
 										}
 									}

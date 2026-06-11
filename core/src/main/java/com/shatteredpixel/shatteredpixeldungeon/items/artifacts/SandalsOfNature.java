@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
@@ -259,7 +258,6 @@ public class SandalsOfNature extends Artifact {
 					}
 
 					charge -= seedChargeReqs.get(curSeedEffect);
-					Talent.onArtifactUsed(Dungeon.hero);
 					updateQuickslot();
 					curUser.spendAndNext(1f);
 				}

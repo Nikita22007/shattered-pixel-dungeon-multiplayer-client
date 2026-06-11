@@ -163,15 +163,6 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 		return energy/energyCap() >= 1.2f - 0.2f*hero.pointsInTalent(Talent.MONASTIC_VIGOR);
 	}
 
-	public void processCombinedEnergy(Talent.CombinedEnergyAbilityTracker tracker){
-		energy = Math.min(energy+1, energyCap());
-		tracker.detach();
-		if (energy >= 1){
-			ActionIndicator.setAction(this);
-		}
-		BuffIndicator.refreshHero();
-	}
-
 	@Override
 	public String actionName() {
 		return Messages.get(this, "action");
