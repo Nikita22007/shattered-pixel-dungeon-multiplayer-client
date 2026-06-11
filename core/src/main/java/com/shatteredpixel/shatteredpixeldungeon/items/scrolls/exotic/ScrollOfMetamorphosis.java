@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -39,7 +38,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.TalentsPane;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.shatteredpixel.shatteredpixeldungeon.windows.IconTitle;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
-import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -55,19 +53,8 @@ public class ScrollOfMetamorphosis extends ExoticScroll {
 	}
 
 	protected static boolean identifiedByUse = false;
-	
-	@Override
-	public void doRead() {
-		if (!isKnown()) {
-			curItem = this;
-			identifiedByUse = true;
-		} else {
-			identifiedByUse = false;
-		}
-		GameScene.show(new WndMetamorphChoose());
-	}
 
-	public static void onMetamorph( Talent oldTalent, Talent newTalent ){
+    public static void onMetamorph( Talent oldTalent, Talent newTalent ){
 		curUser.sprite.emitter().start(Speck.factory(Speck.CHANGE), 0.2f, 10);
 		Transmuting.show(curUser, oldTalent, newTalent);
 

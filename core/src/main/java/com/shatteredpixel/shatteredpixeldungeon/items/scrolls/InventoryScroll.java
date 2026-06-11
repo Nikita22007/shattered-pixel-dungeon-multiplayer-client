@@ -35,20 +35,7 @@ public abstract class InventoryScroll extends Scroll {
 
 	protected static boolean identifiedByUse = false;
 
-	@Override
-	public void doRead() {
-		
-		if (!isKnown()) {
-			curItem = this;
-			identifiedByUse = true;
-		} else {
-			identifiedByUse = false;
-		}
-		
-		GameScene.selectItem( itemSelector );
-	}
-	
-	private void confirmCancelation() {
+    private void confirmCancelation() {
 		GameScene.show( new WndConfirmCancel() );
 	}
 

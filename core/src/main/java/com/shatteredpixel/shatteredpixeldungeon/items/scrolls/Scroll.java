@@ -25,11 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
-
-import java.util.*;
 
 public abstract class Scroll extends Item {
 	
@@ -49,17 +45,6 @@ public abstract class Scroll extends Item {
 		defaultAction = AC_READ;
 	}
 
-	
-	public static void save( Bundle bundle ) {
-
-	}
-
-	public static void saveSelectively( Bundle bundle, ArrayList<Item> items ) {
-		ArrayList<Class<?extends Item>> classes = new ArrayList<>();
-		for (Item i : items){
-		}
-
-	}
 
 	public Scroll() {
 		super();
@@ -70,24 +55,14 @@ public abstract class Scroll extends Item {
 	//and their sprite is replaced by a placeholder if they are not known,
 	//useful for items that appear in UIs, or which are only spawned for their effects
 	protected boolean anonymous = false;
-	public void anonymize(){
-		if (!isKnown()) image = ItemSpriteSheet.SCROLL_HOLDER;
-		anonymous = true;
-	}
-	
-	
 
-	
-	public abstract void doRead();
 
 	public void readAnimation() {
         curUser.spend( TIME_TO_READ );
 		curUser.busy();
 		((HeroSprite)curUser.sprite).read();
 
-		if (!anonymous) {
-        }
-		if (Random.Float() < talentChance) {
+        if (Random.Float() < talentChance) {
 			Talent.onScrollUsed(curUser, curUser.pos, talentFactor, getClass());
 		}
 
@@ -116,14 +91,6 @@ public abstract class Scroll extends Item {
 	@Override
 	public boolean isIdentified() {
 		return isKnown();
-	}
-	
-	public static HashSet<Class<? extends Scroll>> getKnown() {
-		return new HashSet<>();
-	}
-	
-	public static HashSet<Class<? extends Scroll>> getUnknown() {
-		return new LinkedHashSet<>();
 	}
 
 	@Override

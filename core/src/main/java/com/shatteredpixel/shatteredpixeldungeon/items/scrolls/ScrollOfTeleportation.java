@@ -48,17 +48,6 @@ public class ScrollOfTeleportation extends Scroll {
 		icon = ItemSpriteSheet.Icons.SCROLL_TELEPORT;
 	}
 
-	@Override
-	public void doRead() {
-
-		Sample.INSTANCE.play( Assets.Sounds.READ );
-		
-		if (teleportPreferringUnseen( curUser )){
-			readAnimation();
-		}
-
-    }
-	
 	public static boolean teleportToLocation(Char ch, int pos){
 		PathFinder.buildDistanceMap(pos, BArray.or(Dungeon.level.passable, Dungeon.level.avoid, null));
 		if (PathFinder.distance[ch.pos] == Integer.MAX_VALUE

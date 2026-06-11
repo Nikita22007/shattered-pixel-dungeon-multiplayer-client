@@ -52,19 +52,8 @@ public class ScrollOfEnchantment extends ExoticScroll {
 	}
 
 	protected static boolean identifiedByUse = false;
-	
-	@Override
-	public void doRead() {
-		if (!isKnown()) {
-			curItem = this;
-			identifiedByUse = true;
-		} else {
-			identifiedByUse = false;
-		}
-		GameScene.selectItem( itemSelector );
-	}
 
-	public static boolean enchantable( Item item ){
+    public static boolean enchantable( Item item ){
 		return (false || false)
 				&& (item.isUpgradable() || false);
 	}
@@ -110,37 +99,10 @@ public class ScrollOfEnchantment extends ExoticScroll {
 
 		@Override
 		public void onSelect(final Item item) {
-			
-			if (false){
-				if (!identifiedByUse) {
-				}
-				identifiedByUse = false;
-				
-				final Weapon.Enchantment enchants[] = new Weapon.Enchantment[3];
-				
-				Class<? extends Weapon.Enchantment> existing = ((Weapon) item).enchantment != null ? ((Weapon) item).enchantment.getClass() : null;
-				enchants[0] = null;
-				enchants[1] = null;
-                enchants[2] = null;
 
-				GameScene.show(new WndEnchantSelect((Weapon) item, enchants[0], enchants[1], enchants[2]));
-			
-			} else if (false) {
-				if (!identifiedByUse) {
-				}
-				identifiedByUse = false;
-				
-				final Armor.Glyph glyphs[] = new Armor.Glyph[3];
-				
-				Class<? extends Armor.Glyph> existing = ((Armor) item).glyph != null ? ((Armor) item).glyph.getClass() : null;
-				glyphs[0] = null;
-                glyphs[1] = null;
-				glyphs[2] = null;
-				
-				GameScene.show(new WndGlyphSelect((Armor) item, glyphs[0], glyphs[1], glyphs[2]));
-			} else if (identifiedByUse){
-				((ScrollOfEnchantment)curItem).confirmCancelation();
-			}
+            if (identifiedByUse){
+                ((ScrollOfEnchantment)curItem).confirmCancelation();
+            }
 		}
 	};
 
