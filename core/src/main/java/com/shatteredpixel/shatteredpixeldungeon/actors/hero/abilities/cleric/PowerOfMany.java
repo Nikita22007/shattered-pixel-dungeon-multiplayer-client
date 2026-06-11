@@ -21,25 +21,18 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.Stasis;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.DirectableAlly;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShaftParticle;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MobSprite;
-import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.utils.Random;
 
@@ -86,113 +79,7 @@ public class PowerOfMany extends ArmorAbility {
 		return null;
 	}
 
-	public static class PowerBuff extends FlavourBuff {
-
-		public static float DURATION = 100f;
-
-		{
-			type = buffType.POSITIVE;
-			announced = true;
-		}
-
-		@Override
-		public int icon() {
-			return BuffIndicator.MANY_POWER;
-		}
-
-		@Override
-		public float iconFadePercent() {
-			return Math.max(0, (DURATION - visualcooldown()) / DURATION);
-		}
-
-		@Override
-		public void fx(boolean on) {
-			if (on) target.sprite.add(CharSprite.State.GLOWING);
-			else    target.sprite.remove(CharSprite.State.GLOWING);
-		}
-
-		@Override
-		public boolean act() {
-            if (false
-                    || false){
-				spend(TICK);
-				return true;
-			}
-			return super.act();
-		}
-
-		@Override
-		public void detach() {
-			super.detach();
-			Dungeon.observe();
-			GameScene.updateFog();
-		}
-	}
-
-	public static class LightAlly extends DirectableAlly {
-
-		{
-			spriteClass = LightAllySprite.class;
-
-			HP = HT = 80;
-		}
-
-		HeroClass cls;
-
-		public LightAlly(){
-			super();
-			cls = HeroClass.values()[Random.Int(5)];
-		}
-
-		public LightAlly(int heroLevel ){
-			this();
-			defenseSkill = heroLevel + 4; //equal to base hero defense skill
-		}
-
-		@Override
-		public void defendPos(int cell) {
-			GLog.i(Messages.get(this, "direct_defend"));
-			super.defendPos(cell);
-		}
-
-		@Override
-		public void followHero() {
-			GLog.i(Messages.get(this, "direct_follow"));
-			super.followHero();
-		}
-
-		@Override
-		public void targetChar(Char ch) {
-			GLog.i(Messages.get(this, "direct_attack"));
-			super.targetChar(ch);
-		}
-
-		@Override
-		public float speed() {
-			float speed = super.speed();
-
-			//moves 2 tiles at a time when returning to the hero
-			if (state == WANDERING
-					&& defendingPos == -1
-					&& Dungeon.level.distance(pos, Dungeon.hero.pos) > 1){
-				speed *= 2;
-			}
-
-			return speed;
-		}
-
-		@Override
-		public CharSprite sprite() {
-			CharSprite sprite = super.sprite();
-			((LightAllySprite)sprite).setup(cls);
-			return sprite;
-		}
-
-		private static final String HERO_CLS = "hero_cls";
-		private static final String DEF_SKILL = "def_skill";
-
-	}
-
+	@SuppressWarnings("unued")
 	public static class LightAllySprite extends MobSprite {
 
 		public LightAllySprite() {

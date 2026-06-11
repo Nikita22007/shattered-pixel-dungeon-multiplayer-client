@@ -42,8 +42,4 @@ public abstract class NPC extends Mob {
 		return super.act();
 	}
 
-	@Override
-	public void beckon( int cell ) {
-	}
-	
 }
