@@ -25,11 +25,9 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Obfuscation;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MobSprite;
 import com.watabou.utils.PathFinder;
@@ -194,23 +192,6 @@ public abstract class Char extends Actor {
 
 	public boolean isActive() { //todo sent this
 		return isAlive();
-	}
-
-	@Override
-	protected void spendConstant(float time) {
-		TimekeepersHourglass.timeFreeze freeze = null;
-		if (freeze != null) {
-			freeze.processTime(time);
-			return;
-		}
-
-		Swiftthistle.TimeBubble bubble = null;
-		if (bubble != null){
-			bubble.processTime(time);
-			return;
-		}
-
-		super.spendConstant(time);
 	}
 
 	@Override

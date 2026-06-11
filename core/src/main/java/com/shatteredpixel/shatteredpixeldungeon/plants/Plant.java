@@ -75,9 +75,7 @@ public abstract class Plant implements Bundlable {
 
 
 		if (Random.Float() < seedChance){
-			if (seedClass != null && seedClass != Rotberry.Seed.class) {
-				Dungeon.level.drop(Reflection.newInstance(seedClass), pos).sprite.drop();
-			}
+
 		}
 		
 	}

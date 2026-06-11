@@ -33,7 +33,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Rotberry;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
@@ -264,21 +263,6 @@ public class TimekeepersHourglass extends Artifact {
 					return true;
 				}
 			});
-		}
-
-		public void disarmPresses(){
-			for (int cell : presses){
-				Plant p = Dungeon.level.plants.get(cell);
-				if (p != null && !(p instanceof Rotberry)) {
-					Dungeon.level.uproot(cell);
-				}
-				Trap t = Dungeon.level.traps.get(cell);
-				if (t != null && t.disarmedByActivation) {
-					t.disarm();
-				}
-			}
-
-			presses = new ArrayList<>();
 		}
 
 		@Override
