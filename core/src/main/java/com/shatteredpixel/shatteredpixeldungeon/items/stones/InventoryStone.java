@@ -22,10 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.stones;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.watabou.noosa.audio.Sample;
 
 public abstract class InventoryStone extends Runestone {
@@ -44,50 +41,6 @@ public abstract class InventoryStone extends Runestone {
 		Sample.INSTANCE.play( Assets.Sounds.READ );
     }
 
-	private String inventoryTitle(){
-		return Messages.get(this, "inv_title");
-	}
-
 	protected Class<?extends Bag> preferredBag = null;
 
-	protected boolean usableOnItem( Item item ){
-		return true;
-	}
-	
-	protected abstract void onItemSelected( Item item );
-	
-	protected WndBag.ItemSelector itemSelector = new WndBag.ItemSelector() {
-
-		@Override
-		public String textPrompt() {
-			return inventoryTitle();
-		}
-
-		@Override
-		public Class<? extends Bag> preferredBag() {
-			return preferredBag;
-		}
-
-		@Override
-		public boolean itemSelectable(Item item) {
-			return usableOnItem(item);
-		}
-
-		@Override
-		public void onSelect( Item item ) {
-			
-			//FIXME this safety check shouldn't be necessary
-			//it would be better to eliminate the curItem static variable.
-			if (!(false)){
-				return;
-			}
-			
-			if (item != null) {
-
-				((InventoryStone)curItem).onItemSelected( item );
-				
-			}
-		}
-	};
-	
 }

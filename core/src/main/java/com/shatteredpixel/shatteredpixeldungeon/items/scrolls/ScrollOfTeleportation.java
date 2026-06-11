@@ -31,11 +31,7 @@ import com.watabou.noosa.Camera;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.tweeners.AlphaTweener;
 
-public class ScrollOfTeleportation extends Scroll {
-
-	{
-		icon = ItemSpriteSheet.Icons.SCROLL_TELEPORT;
-	}
+public class ScrollOfTeleportation {
 
 	public static void appear( Char ch, int pos ) {
 
@@ -87,9 +83,5 @@ public class ScrollOfTeleportation extends Scroll {
 			ch.sprite.emitter().start(Speck.factory(Speck.LIGHT), 0.2f, 3);
 		}
 	}
-	
-	@Override
-	public int value() {
-		return isKnown() ? 30 * quantity : super.value();
-	}
+
 }
