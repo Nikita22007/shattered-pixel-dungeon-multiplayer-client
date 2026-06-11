@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
@@ -90,55 +89,12 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 	}
 
 	@Override
-	public boolean act() {
-		if (cooldown > 0){
-			cooldown--;
-			if (cooldown == 0 && energy >= 1){
-				ActionIndicator.setAction(this);
-			}
-			BuffIndicator.refreshHero();
-		}
-
-		spend(TICK);
-		return true;
-	}
-
-	@Override
 	public String desc() {
 		String desc = Messages.get(this, "desc", (int)energy, energyCap());
 		if (cooldown > 0){
 			desc += "\n\n" + Messages.get(this, "desc_cooldown", cooldown);
 		}
 		return desc;
-	}
-
-	public void gainEnergy(Mob enemy ) {
-		if (target == null) return;
-
-		if (!false) {
-			return; //to prevent farming boss minions
-		}
-
-		float energyGain;
-
-		//bosses and minibosses give extra energy, certain enemies give half, otherwise give 1
-		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
-        //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
-        energyGain = 1;
-
-        float enGainMulti = 1f;
-		energyGain *= enGainMulti;
-
-		energy += energyGain;
-		//if we kill while using an ability, don't apply the cap yet, will be enforced after spending
-		{
-			energy = Math.min(energy, energyCap());
-		}
-
-		if (energy >= 1 && cooldown == 0) {
-			ActionIndicator.setAction(this);
-		}
-		BuffIndicator.refreshHero();
 	}
 
 	//10 at base, 20 at level 30
