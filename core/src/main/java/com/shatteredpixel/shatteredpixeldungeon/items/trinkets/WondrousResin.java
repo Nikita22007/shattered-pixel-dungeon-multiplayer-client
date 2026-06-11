@@ -50,7 +50,7 @@ public class WondrousResin extends Trinket {
 		if (forcePositive){
 			return 1;
 		}
-		return positiveCurseEffectChance( trinketLevel(WondrousResin.class) );
+		return positiveCurseEffectChance(-1);
 	}
 
 	public static float positiveCurseEffectChance(int level ){
@@ -62,7 +62,7 @@ public class WondrousResin extends Trinket {
 	}
 
 	public static float extraCurseEffectChance(){
-		return extraCurseEffectChance( trinketLevel(WondrousResin.class) );
+		return extraCurseEffectChance(-1);
 	}
 
 	public static float extraCurseEffectChance( int level ){

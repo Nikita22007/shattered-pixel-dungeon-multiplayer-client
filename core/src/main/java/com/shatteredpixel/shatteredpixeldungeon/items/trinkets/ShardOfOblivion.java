@@ -43,11 +43,11 @@ public class ShardOfOblivion extends Trinket {
 
 	@Contract(pure = true)
 	public static boolean passiveIDDisabled(){
-		return trinketLevel(ShardOfOblivion.class) >= 0;
+        return -1 >= 0;
 	}
 
 	public static float lootChanceMultiplier(){
-		return lootChanceMultiplier(trinketLevel(ShardOfOblivion.class));
+        return lootChanceMultiplier(-1);
 	}
 
 	public static float lootChanceMultiplier(int level) {

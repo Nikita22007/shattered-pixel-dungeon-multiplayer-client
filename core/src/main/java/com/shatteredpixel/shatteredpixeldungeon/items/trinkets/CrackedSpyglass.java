@@ -44,7 +44,7 @@ public class CrackedSpyglass extends Trinket{
 	}
 
 	public static float extraLootChance(){
-		return extraLootChance(trinketLevel(CrackedSpyglass.class));
+		return extraLootChance(-1);
 	}
 
 	public static float extraLootChance(int level ){

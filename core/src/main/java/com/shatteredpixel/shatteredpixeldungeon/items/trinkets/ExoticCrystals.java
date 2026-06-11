@@ -40,7 +40,7 @@ public class ExoticCrystals extends Trinket {
 	}
 
 	public static float consumableExoticChance(){
-		return consumableExoticChance(trinketLevel(ExoticCrystals.class));
+		return consumableExoticChance(-1);
 	}
 
 	public static float consumableExoticChance( int level ){

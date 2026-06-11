@@ -46,7 +46,7 @@ public class MossyClump extends Trinket {
 	}
 
 	public static float overrideNormalLevelChance(){
-		return overrideNormalLevelChance(trinketLevel(MossyClump.class));
+		return overrideNormalLevelChance(-1);
 	}
 
 	public static float overrideNormalLevelChance( int level ){

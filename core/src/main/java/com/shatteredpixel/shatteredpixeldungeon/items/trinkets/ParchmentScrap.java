@@ -40,7 +40,7 @@ public class ParchmentScrap extends Trinket {
 	}
 
 	public static float enchantChanceMultiplier(){
-		return enchantChanceMultiplier(trinketLevel(ParchmentScrap.class));
+		return enchantChanceMultiplier(-1);
 	}
 
 	public static float enchantChanceMultiplier( int level ){
@@ -59,7 +59,7 @@ public class ParchmentScrap extends Trinket {
 	}
 
 	public static float curseChanceMultiplier(){
-		return curseChanceMultiplier(trinketLevel(ParchmentScrap.class));
+		return curseChanceMultiplier(-1);
 	}
 
 	public static float curseChanceMultiplier( int level ){

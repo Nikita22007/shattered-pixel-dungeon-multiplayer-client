@@ -47,11 +47,11 @@ public class VialOfBlood extends Trinket {
 	}
 
 	public static boolean delayBurstHealing(){
-		return trinketLevel(VialOfBlood.class) != -1;
+		return -1 != -1;
 	}
 
 	public static float totalHealMultiplier(){
-		return totalHealMultiplier(trinketLevel(VialOfBlood.class));
+		return totalHealMultiplier(-1);
 	}
 
 	public static float totalHealMultiplier(int level){
@@ -63,7 +63,7 @@ public class VialOfBlood extends Trinket {
 	}
 
 	public static int maxHealPerTurn(){
-		return maxHealPerTurn(trinketLevel(VialOfBlood.class));
+		return maxHealPerTurn(-1);
 	}
 
 	public static int maxHealPerTurn(int level){

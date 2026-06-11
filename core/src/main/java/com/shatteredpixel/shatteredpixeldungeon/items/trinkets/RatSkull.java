@@ -40,7 +40,7 @@ public class RatSkull extends Trinket {
 	}
 
 	public static float exoticChanceMultiplier(){
-		return exoticChanceMultiplier(trinketLevel(RatSkull.class));
+		return exoticChanceMultiplier(-1);
 	}
 
 	public static float exoticChanceMultiplier( int level ){

@@ -44,7 +44,7 @@ public class EyeOfNewt extends Trinket {
 	}
 
 	public static float visionRangeMultiplier(){
-		return visionRangeMultiplier(trinketLevel(EyeOfNewt.class));
+		return visionRangeMultiplier(-1);
 	}
 
 	public static float visionRangeMultiplier( int level ){
@@ -56,7 +56,7 @@ public class EyeOfNewt extends Trinket {
 	}
 
 	public static int mindVisionRange(){
-		return mindVisionRange(trinketLevel(EyeOfNewt.class));
+		return mindVisionRange(-1);
 	}
 
 	public static int mindVisionRange( int level ){

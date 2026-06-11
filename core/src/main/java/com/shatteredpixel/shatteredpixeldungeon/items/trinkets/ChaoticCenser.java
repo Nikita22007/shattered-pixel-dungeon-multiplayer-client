@@ -54,7 +54,7 @@ public class ChaoticCenser extends Trinket {
 	}
 
 	public static int averageTurnsUntilGas(){
-		return averageTurnsUntilGas(trinketLevel(ChaoticCenser.class));
+		return averageTurnsUntilGas(-1);
 	}
 
 	public static int averageTurnsUntilGas(int level){

@@ -41,7 +41,7 @@ public class ThirteenLeafClover extends Trinket {
 	}
 
 	public static float alterHeroDamageChance(){
-		return alterHeroDamageChance(trinketLevel(ThirteenLeafClover.class));
+		return alterHeroDamageChance(-1);
 	}
 
 	public static float alterHeroDamageChance(int level ){

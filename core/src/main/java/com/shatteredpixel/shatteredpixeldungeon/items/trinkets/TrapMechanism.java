@@ -46,7 +46,7 @@ public class TrapMechanism extends Trinket {
 	}
 
 	public static float overrideNormalLevelChance(){
-		return overrideNormalLevelChance(trinketLevel(TrapMechanism.class));
+		return overrideNormalLevelChance(-1);
 	}
 
 	public static float overrideNormalLevelChance( int level ){
@@ -58,7 +58,7 @@ public class TrapMechanism extends Trinket {
 	}
 
 	public static float revealHiddenTrapChance(){
-		return revealHiddenTrapChance(trinketLevel(TrapMechanism.class));
+		return revealHiddenTrapChance(-1);
 	}
 
 	public static float revealHiddenTrapChance( int level ){

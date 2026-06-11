@@ -51,7 +51,7 @@ public class DimensionalSundial extends Trinket {
 	public static boolean sundialWarned = false;
 
 	public static float spawnMultiplierAtCurrentTime(){
-		if (trinketLevel(DimensionalSundial.class) != -1) {
+		if (-1 != -1) {
 			Calendar cal = GregorianCalendar.getInstance();
 			if (cal.get(Calendar.HOUR_OF_DAY) >= 20 || cal.get(Calendar.HOUR_OF_DAY) <= 7) {
 				if (!sundialWarned){
@@ -68,7 +68,7 @@ public class DimensionalSundial extends Trinket {
 	}
 
 	public static float enemySpawnMultiplierDaytime(){
-		return enemySpawnMultiplierDaytime(trinketLevel(DimensionalSundial.class));
+		return enemySpawnMultiplierDaytime(-1);
 	}
 
 	public static float enemySpawnMultiplierDaytime( int level ){
@@ -80,7 +80,7 @@ public class DimensionalSundial extends Trinket {
 	}
 
 	public static float enemySpawnMultiplierNighttime(){
-		return enemySpawnMultiplierNighttime(trinketLevel(DimensionalSundial.class));
+		return enemySpawnMultiplierNighttime(-1);
 	}
 
 	public static float enemySpawnMultiplierNighttime( int level ){

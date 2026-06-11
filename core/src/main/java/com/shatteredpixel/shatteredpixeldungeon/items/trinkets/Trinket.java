@@ -21,9 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.trinkets;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Bundle;
 
 public abstract class Trinket extends Item {
@@ -37,20 +35,6 @@ public abstract class Trinket extends Item {
 	@Override
 	public boolean isUpgradable() {
 		return false;
-	}
-
-	protected static int trinketLevel(Class<? extends Trinket> trinketType ){
-		if (Dungeon.hero == null || Dungeon.hero.belongings == null){
-			return -1;
-		}
-
-		Trinket trinket = Dungeon.hero.belongings.getItem(trinketType);
-
-		if (trinket != null){
-			return trinket.buffedLvl();
-		} else {
-			return -1;
-		}
 	}
 
 	@Override
@@ -72,30 +56,4 @@ public abstract class Trinket extends Item {
 		levelKnown = cursedKnown = true; //for pre-2.5 saves
 	}
 
-	public static class PlaceHolder extends Trinket {
-
-		{
-			image = ItemSpriteSheet.TRINKET_HOLDER;
-		}
-
-		@Override
-		public boolean isSimilar(Item item) {
-			return false;
-		}
-
-		@Override
-		public String info() {
-				return "";
-			}
-
-		@Override
-		public String statsDesc() {
-			return "";
-		}
-
-	}
-
-	public static class UpgradeTrinket {
-
-	}
 }

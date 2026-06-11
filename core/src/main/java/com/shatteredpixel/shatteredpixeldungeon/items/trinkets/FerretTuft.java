@@ -41,7 +41,7 @@ public class FerretTuft extends Trinket {
 	}
 
 	public static float evasionMultiplier(){
-		return evasionMultiplier(trinketLevel(FerretTuft.class));
+		return evasionMultiplier(-1);
 	}
 
 	public static float evasionMultiplier(int level ){
