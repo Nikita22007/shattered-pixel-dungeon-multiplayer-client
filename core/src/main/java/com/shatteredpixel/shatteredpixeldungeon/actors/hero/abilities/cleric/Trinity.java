@@ -48,12 +48,9 @@ import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourg
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.UnstableSpellbook;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfFireblast;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfRegrowth;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -463,25 +460,6 @@ public class Trinity extends ArmorAbility {
 	}
 
 	public static String trinityItemUseText(Class<?> cls ){
-		float chargeUse = trinityChargeUsePerEffect(cls);
-		if (Weapon.Enchantment.class.isAssignableFrom(cls) || Armor.Glyph.class.isAssignableFrom(cls)) {
-			return Messages.get(Trinity.class, "ench_glyph_use", BodyForm.duration(), Messages.decimalFormat("#.##", chargeUse));
-		}
-		if (MissileWeapon.class.isAssignableFrom(cls)){
-			return Messages.get(Trinity.class, "thrown_use", MindForm.itemLevel(), Messages.decimalFormat("#.##", chargeUse));
-		}
-		if (Wand.class.isAssignableFrom(cls)){
-			if (cls.equals(WandOfFireblast.class) || cls.equals(WandOfRegrowth.class)){
-				return Messages.get(Trinity.class, "wand_multi_use", MindForm.itemLevel(), Messages.decimalFormat("#.##", chargeUse));
-			}
-			return Messages.get(Trinity.class, "wand_use", MindForm.itemLevel(), Messages.decimalFormat("#.##", chargeUse));
-		}
-		if (Ring.class.isAssignableFrom(cls)){
-			return Messages.get(Trinity.class, "ring_use", SpiritForm.ringLevel(), Messages.decimalFormat("#.##", chargeUse));
-		}
-		if (Artifact.class.isAssignableFrom(cls)){
-			return Messages.get(Trinity.class, cls.getSimpleName() + "_use", SpiritForm.artifactLevel(), Messages.decimalFormat("#.##", chargeUse));
-		}
 		return "error!";
 
 	}
@@ -491,9 +469,7 @@ public class Trinity extends ArmorAbility {
 		if (Weapon.Enchantment.class.isAssignableFrom(cls) || Armor.Glyph.class.isAssignableFrom(cls)) {
 
 		}
-		if (cls.equals(WandOfFireblast.class) || cls.equals(WandOfRegrowth.class)){
-			return 2*chargeUse;
-		}
+
 		if (Artifact.class.isAssignableFrom(cls)){
 			if (cls.equals(DriedRose.class) || cls.equals(UnstableSpellbook.class) || cls.equals(SkeletonKey.class)){
 				return 2*chargeUse; //50 charge

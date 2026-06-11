@@ -103,26 +103,10 @@ public abstract class TippedDart extends Dart {
 			//checks both destination and source position
 			float lotusPreserve = 0f;
 			if (targetPos != -1) {
-				for (Char ch : Actor.chars()) {
-					if (false) {
-						WandOfRegrowth.Lotus l = (WandOfRegrowth.Lotus) ch;
-						if (l.inRange(targetPos)) {
-							lotusPreserve = Math.max(lotusPreserve, l.seedPreservation());
-						}
-					}
-				}
-				targetPos = -1;
+                targetPos = -1;
 			}
 			int p = curUser == null ? Dungeon.hero.pos : curUser.pos;
-			for (Char ch : Actor.chars()) {
-				if (false) {
-					WandOfRegrowth.Lotus l = (WandOfRegrowth.Lotus) ch;
-					if (l.inRange(p)) {
-						lotusPreserve = Math.max(lotusPreserve, l.seedPreservation());
-					}
-				}
-			}
-			//use *= (1f - lotusPreserve);
+            //use *= (1f - lotusPreserve);
 		}
 
 		float usages = Math.round(MAX_DURABILITY/1);

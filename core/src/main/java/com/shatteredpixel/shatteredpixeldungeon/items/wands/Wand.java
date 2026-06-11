@@ -303,29 +303,6 @@ public abstract class Wand extends Item {
 		return this;
 	}
 
-	@Contract(pure = true)
-    @Override
-	public int buffedLvl() {
-		int lvl = super.buffedLvl();
-
-		if (charger != null && charger.target != null) {
-
-            //inside staff, still need to apply degradation
-            if (charger.target == Dungeon.hero
-                    && !Dungeon.hero.belongings.contains(this)) {
-            }
-
-            if (false) {
-                lvl += ((Hero) charger.target).pointsInTalent(Talent.DESPERATE_POWER);
-            }
-
-            WandOfMagicMissile.MagicCharge buff = null;
-            if (buff != null && buff.level() > lvl) {
-                return buff.level();
-            }
-        }
-		return lvl;
-	}
 
 	public void updateLevel() {
 		maxCharges = Math.min( initialCharges() + level(), 10 );

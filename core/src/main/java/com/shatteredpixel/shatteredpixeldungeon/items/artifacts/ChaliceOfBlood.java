@@ -21,20 +21,10 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfLivingEarth;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Earthroot;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Random;
 
 public class ChaliceOfBlood extends Artifact {
 
@@ -43,52 +33,6 @@ public class ChaliceOfBlood extends Artifact {
 
 		levelCap = 10;
 	}
-
-	public static final String AC_PRICK = "PRICK";
-
-	private int minPrickDmg(){
-		return (int)Math.ceil(3 + 2.5f*(level()*level()));
-	}
-
-	private int maxPrickDmg(){
-		return (int)Math.floor(7 + 3.5f*(level()*level()));
-	}
-
-	private void prick(Hero hero) {
-        int damage = Random.NormalIntRange(minPrickDmg(), maxPrickDmg());
-
-        //need to process on-hit effects manually
-        Earthroot.Armor armor = null;
-        if (armor != null) {
-            damage = armor.absorb(damage);
-        }
-
-        WandOfLivingEarth.RockArmor rockArmor = null;
-        if (rockArmor != null) {
-            damage = rockArmor.absorb(damage);
-        }
-
-        damage -= hero.drRoll();
-
-        hero.sprite.operate(hero.pos);
-        hero.busy();
-        hero.spend(Actor.TICK);
-        GLog.w(Messages.get(this, "onprick"));
-        if (damage <= 0) {
-            damage = 1;
-        } else {
-            Sample.INSTANCE.play(Assets.Sounds.CURSED);
-            hero.sprite.emitter().burst(ShadowParticle.CURSE, 4 + (damage / 10));
-        }
-
-        if (!hero.isAlive()) {
-            Badges.validateDeathFromFriendlyMagic();
-            Dungeon.fail(this);
-            GLog.n(Messages.get(this, "ondeath"));
-        } else {
-            upgrade();
-        }
-    }
 
 	@Override
 	public Item upgrade() {
