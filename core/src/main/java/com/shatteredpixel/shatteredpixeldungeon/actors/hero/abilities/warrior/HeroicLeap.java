@@ -21,23 +21,10 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
-import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.watabou.utils.Callback;
-import com.watabou.utils.PathFinder;
-import com.watabou.utils.Random;
 
 public class HeroicLeap extends ArmorAbility {
 
@@ -51,71 +38,6 @@ public class HeroicLeap extends ArmorAbility {
 	public String targetingPrompt() {
 		return Messages.get(this, "prompt");
 	}
-
-	public void activate( ClassArmor armor, Hero hero, Integer target ) {
-		if (target != null) {
-
-			if (hero.rooted){
-				PixelScene.shake( 1, 1f );
-				return;
-			}
-
-			Ballistica route = new Ballistica(hero.pos, target, Ballistica.STOP_TARGET | Ballistica.STOP_SOLID);
-			int cell = route.collisionPos;
-
-			//can't occupy the same cell as another char, so move back one.
-			int backTrace = route.dist-1;
-			while (Actor.findChar( cell ) != null && cell != hero.pos) {
-				cell = route.path.get(backTrace);
-				backTrace--;
-			}
-
-			armor.charge -= (float) 35;
-			armor.updateQuickslot();
-
-			final int dest = cell;
-			hero.busy();
-			hero.sprite.jump(hero.pos, cell, new Callback() {
-				@Override
-				public void call() {
-					hero.move(dest);
-					Dungeon.level.occupyCell(hero);
-					Dungeon.observe();
-					GameScene.updateFog();
-
-					for (int i : PathFinder.NEIGHBOURS8) {
-						Char mob = Actor.findChar(hero.pos + i);
-						if (mob != null && mob != hero && mob.alignment != Char.Alignment.ALLY) {
-							if (hero.hasTalent(Talent.BODY_SLAM)) {
-								int damage = 0;
-								damage += Math.round(hero.drRoll() * 0.25f * hero.pointsInTalent(Talent.BODY_SLAM));
-								damage -= mob.drRoll();
-                            }
-							if (mob.pos == hero.pos + i && hero.hasTalent(Talent.IMPACT_WAVE)) {
-								Ballistica trajectory = new Ballistica(mob.pos, mob.pos + i, Ballistica.MAGIC_BOLT);
-								int strength = 1 + hero.pointsInTalent(Talent.IMPACT_WAVE);
-
-								if (Random.Int(4) < hero.pointsInTalent(Talent.IMPACT_WAVE)) {
-								}
-							}
-						}
-					}
-
-					WandOfBlastWave.BlastWave.blast(dest);
-					PixelScene.shake(2, 0.5f);
-
-                    hero.spendAndNext(Actor.TICK);
-
-					{
-						if (hero.hasTalent(Talent.DOUBLE_JUMP)) {
-						}
-					}
-				}
-			});
-		}
-	}
-
-	public static class DoubleJumpTracker extends FlavourBuff{};
 
 	@Override
 	public int icon() {

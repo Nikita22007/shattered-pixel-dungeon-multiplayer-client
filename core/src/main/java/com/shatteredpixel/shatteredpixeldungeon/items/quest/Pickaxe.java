@@ -21,16 +21,9 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.quest;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.ui.AttackIndicator;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.utils.Callback;
 
 public class Pickaxe extends MeleeWeapon {
 
@@ -59,40 +52,7 @@ public class Pickaxe extends MeleeWeapon {
 		return Messages.get(this, "prompt");
 	}
 
-	@Override
-	protected void duelistAbility(Hero hero, Integer target) {
-		if (target == null) {
-			return;
-		}
-
-		Char enemy = Actor.findChar(target);
-        if (enemy == null || enemy == hero || false || !Dungeon.level.heroFOV[target]) {
-			GLog.w(Messages.get(this, "ability_no_target"));
-			return;
-		}
-
-		hero.belongings.abilityWeapon = this;
-		if (!hero.canAttack(enemy)){
-			GLog.w(Messages.get(this, "ability_target_range"));
-			hero.belongings.abilityWeapon = null;
-			return;
-		}
-		hero.belongings.abilityWeapon = null;
-
-		hero.sprite.attack(enemy.pos, new Callback() {
-			@Override
-			public void call() {
-				int damageBoost = 0;
-                //+(8+2*lvl) damage, equivalent to +100% damage
-                beforeAbilityUsed(hero, enemy);
-				AttackIndicator.target(enemy);
-                hero.spendAndNext(hero.attackDelay());
-				afterAbilityUsed(hero);
-			}
-		});
-	}
-
-	@Override
+    @Override
 	public String abilityInfo() {
 		int dmgBoost = 8 + 2*buffedLvl();
 		return Messages.get(this, "ability_desc", augment.damageFactor(min()+dmgBoost), augment.damageFactor(max()+dmgBoost));

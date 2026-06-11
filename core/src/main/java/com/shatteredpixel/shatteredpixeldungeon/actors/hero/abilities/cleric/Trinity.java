@@ -37,36 +37,22 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.ChaliceOfBlood;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.EtherealChains;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.SkeletonKey;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TimekeepersHourglass;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.UnstableSpellbook;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.*;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.shatteredpixel.shatteredpixeldungeon.ui.ItemButton;
-import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
-import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
-import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
+import com.shatteredpixel.shatteredpixeldungeon.ui.*;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndTitledMessage;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 
@@ -107,29 +93,7 @@ public class Trinity extends ArmorAbility {
 							Messages.titleCase("Ench.name"))
 							+ " " + trinityItemUseText(bodyForm.getClass()), 6){
 						@Override
-						protected void onClick() {
-							if (Dungeon.hero.belongings.weapon() != null &&
-									((Weapon)Dungeon.hero.belongings.weapon()).enchantment != null &&
-									((Weapon)Dungeon.hero.belongings.weapon()).enchantment.getClass().equals(bodyForm.getClass())){
-								GLog.w(Messages.get(Trinity.class, "no_duplicate"));
-								hide();
-							} else {
-                                BodyForm.duration();
-                                ((BodyForm.BodyFormBuff) null).setEffect(bodyForm);
-								Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
-								Weapon w = new WornShortsword();
-								if (Dungeon.hero.belongings.weapon() != null) {
-									w.image = Dungeon.hero.belongings.weapon().image;
-								}
-								w.enchant((Weapon.Enchantment) bodyForm);
-								Enchanting.show(Dungeon.hero, w);
-								Dungeon.hero.sprite.operate(Dungeon.hero.pos);
-								Dungeon.hero.spendAndNext(1f);
-								armor.charge -= trinityChargeUsePerEffect(bodyForm.getClass());
-								armor.updateQuickslot();
-                                hide();
-							}
-						}
+						protected void onClick() {}
 					};
 					if (Dungeon.hero.belongings.weapon() != null) {
 						btnBody.icon(new ItemSprite(Dungeon.hero.belongings.weapon().image, /*((Weapon.Enchantment) bodyForm).glowing()*/ null));
@@ -341,39 +305,7 @@ public class Trinity extends ArmorAbility {
 			}
 
 			ArrayList<Item> options = new ArrayList<>();
-			for (Class<?> cls : discoveredClasses){
-				if (Weapon.Enchantment.class.isAssignableFrom(cls)){
-					MeleeWeapon w = new WornShortsword(){
-						@Override
-						public String name() {
-							//for button tooltips
-							return "Ench.name";
-						}
-					};
-					if (Dungeon.hero.belongings.weapon() != null){
-						w.image = Dungeon.hero.belongings.weapon().image;
-					}
-					w.enchant((Weapon.Enchantment) Reflection.newInstance(cls));
-					w.cursedKnown = true;
-					options.add(w);
-				} else if (Armor.Glyph.class.isAssignableFrom(cls)) {
-					Armor a = new ClothArmor(){
-						@Override
-						public String name() {
-							//for button tooltips
-							return glyph.name();
-						}
-					};
-					if (Dungeon.hero.belongings.armor() != null){
-						a.image = Dungeon.hero.belongings.armor().image;
-					}
-					a.inscribe((Armor.Glyph) Reflection.newInstance(cls));
-					a.cursedKnown = true;
-					options.add(a);
-				} else {
-					options.add((Item) Reflection.newInstance(cls));
-				}
-			}
+
 
 			int top = height + 2;
 			int left = 0;

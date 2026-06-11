@@ -28,8 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.TippedDart;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
@@ -173,12 +171,7 @@ public class Heap implements Bundlable {
 			sprite.view(this).place( pos );
 		}
 
-		if (TippedDart.lostDarts > 0){
-			Dart d = new Dart();
-			d.quantity(TippedDart.lostDarts);
-			TippedDart.lostDarts = 0;
-			drop(d);
-		}
+
 	}
 	
 	public void replace( Item a, Item b ) {

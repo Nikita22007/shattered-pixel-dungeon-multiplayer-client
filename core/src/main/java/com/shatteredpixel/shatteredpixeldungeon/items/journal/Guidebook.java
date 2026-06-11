@@ -21,35 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.journal;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.SPDAction;
-import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.ui.GameLog;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.input.ControllerHandler;
-import com.watabou.input.KeyBindings;
-import com.watabou.noosa.audio.Sample;
-
-public class Guidebook extends Item {
-
-	{
-		image = ItemSpriteSheet.MASTERY;
-	}
-
-	@Override
-	public boolean isUpgradable() {
-		return false;
-	}
-
-	@Override
-	public boolean isIdentified() {
-		return true;
-	}
+//leaved for messages
+public class Guidebook  {
 
 }

@@ -93,10 +93,6 @@ public class MeleeWeapon extends Weapon {
 		return dst; //weapon abilities do not use projectile logic, no autoaim
 	}
 
-	protected void duelistAbility( Hero hero, Integer target ){
-		//do nothing by default
-	}
-
 	protected void beforeAbilityUsed(Hero hero, Char target){
 		hero.belongings.abilityWeapon = this;
 		Charger charger = null;
