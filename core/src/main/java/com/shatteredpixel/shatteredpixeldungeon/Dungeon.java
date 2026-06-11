@@ -21,14 +21,10 @@
 
 package com.shatteredpixel.shatteredpixeldungeon;
 
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.RegularLevel;
-import com.shatteredpixel.shatteredpixeldungeon.levels.features.LevelTransition;
 import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndResurrect;
@@ -104,52 +100,6 @@ public class Dungeon {
 	//value used for scaling of damage values and other effects.
 	//is usually the dungeon depth, but can be set to 26 when ascending
 
-	public static void switchLevel( final Level level, int pos ) {
-
-		//Position of -2 specifically means trying to place the hero the exit
-		if (pos == -2) {
-			LevelTransition t = level.getTransition(LevelTransition.Type.REGULAR_EXIT);
-			if (t != null) pos = t.cell();
-		}
-
-		//Place hero at the entrance if they are out of the map (often used for pos = -1)
-		// or if they are in invalid terrain terrain (except in the mining level, where that happens normally)
-		if (pos < 0 || pos >= level.length() || level.invalidHeroPos(pos)) {
-			pos = level.getTransition(null).cell();
-		}
-
-		PathFinder.setMapSize(level.width(), level.height());
-
-		Dungeon.level = level;
-		hero.pos = pos;
-
-
-
-		Actor.init();
-
-
-		for (Mob m : level.mobs) {
-			if (m.pos == hero.pos) {
-				//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
-				if (!false) {
-					//displace mob
-					for (int i : PathFinder.NEIGHBOURS8) {
-						if (Actor.findChar(m.pos + i) == null && level.passable[m.pos + i]) {
-							m.pos += i;
-							break;
-						}
-					}
-				}
-			}
-		}
-
-		hero.viewDistance = level.viewDistance;
-
-		hero.curAction = hero.lastAction = null;
-
-		observe();
-	}
-
 	public  static final String VERSION		= "version";
 	private static final String SEED		= "seed";
 	private static final String CUSTOM_SEED	= "custom_seed";
@@ -161,22 +111,6 @@ public class Dungeon {
 	private static final String DEPTH		= "depth";
 
 
-	public static void deleteGame( int save, boolean deleteLevels ) {
-
-		if (deleteLevels) {
-			String folder = GamesInProgress.gameFolder(save);
-			for (String file : FileUtils.filesInDir(folder)){
-				if (file.contains("depth")){
-					FileUtils.deleteFile(folder + "/" + file);
-				}
-			}
-		}
-
-		FileUtils.overwriteFile(GamesInProgress.gameFile(save), 1);
-		
-		GamesInProgress.delete( save );
-	}
-	
 	public static void preview( GamesInProgress.Info info, Bundle bundle ) {
 		info.depth = bundle.getInt( DEPTH );
 		info.version = bundle.getInt( VERSION );
@@ -197,13 +131,6 @@ public class Dungeon {
 			Statistics.gameWon = false;
         }
 	}
-	
-	public static void win( Object cause ) {
-
-		updateLevelExplored();
-		Statistics.gameWon = true;
-
-    }
 
 	public static void updateLevelExplored(){
 		if (branch == 0 && level instanceof RegularLevel && !Dungeon.bossLevel()){
@@ -229,79 +156,6 @@ public class Dungeon {
 			}
 		}
 		GameScene.afterObserve();
-	}
-
-	//we store this to avoid having to re-allocate the array with each pathfind
-	private static boolean[] passable;
-
-	private static void setupPassable(){
-		if (passable == null || passable.length != Dungeon.level.length())
-			passable = new boolean[Dungeon.level.length()];
-		else
-			BArray.setFalse(passable);
-	}
-
-	public static boolean[] findPassable(Char ch, boolean[] pass, boolean[] vis, boolean chars){
-		return findPassable(ch, pass, vis, chars, chars);
-	}
-
-	public static boolean[] findPassable(Char ch, boolean[] pass, boolean[] vis, boolean chars, boolean considerLarge){
-		setupPassable();
-		if (ch.flying || false) {
-			BArray.or( pass, Dungeon.level.avoid, passable );
-		} else {
-			System.arraycopy( pass, 0, passable, 0, Dungeon.level.length() );
-		}
-
-		if (considerLarge) {
-			//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
-			if (false) {
-				BArray.and(passable, Dungeon.level.openSpace, passable);
-			}
-		}
-
-		if (chars) {
-			for (Char c : Actor.chars()) {
-				if (vis[c.pos]) {
-					passable[c.pos] = false;
-				}
-			}
-		}
-
-		return passable;
-	}
-
-	public static PathFinder.Path findPath(Char ch, int to, boolean[] pass, boolean[] vis, boolean chars) {
-
-		return PathFinder.find( ch.pos, to, findPassable(ch, pass, vis, chars) );
-
-	}
-	
-	public static int findStep(Char ch, int to, boolean[] pass, boolean[] visible, boolean chars ) {
-
-		if (Dungeon.level.adjacent( ch.pos, to )) {
-			return Actor.findChar( to ) == null && pass[to] ? to : -1;
-		}
-
-		return PathFinder.getStep( ch.pos, to, findPassable(ch, pass, visible, chars) );
-
-	}
-
-	public static int flee( Char ch, int from, boolean[] pass, boolean[] visible, boolean chars ) {
-		boolean[] passable = findPassable(ch, pass, visible, false, true);
-		passable[ch.pos] = true;
-
-		//chars affected by terror have a shorter lookahead and can't approach the fear source
-        boolean canApproachFromPos = true;
-		int step = PathFinder.getStepBack( ch.pos, from, canApproachFromPos ? 8 : 4, passable, canApproachFromPos );
-
-		//only consider chars impassable if our retreat step runs into them
-		while (step != -1 && Actor.findChar(step) != null && chars){
-			passable[step] = false;
-			step = PathFinder.getStepBack( ch.pos, from, canApproachFromPos ? 8 : 4, passable, canApproachFromPos );
-		}
-		return step;
-
 	}
 
 }
