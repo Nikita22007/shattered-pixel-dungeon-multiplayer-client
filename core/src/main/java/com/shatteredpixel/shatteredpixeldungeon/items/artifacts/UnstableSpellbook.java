@@ -24,8 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.ScrollHolder;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -145,10 +143,6 @@ public class UnstableSpellbook extends Artifact {
 			return Messages.get(UnstableSpellbook.class, "prompt");
 		}
 
-		@Override
-		public Class<?extends Bag> preferredBag(){
-			return ScrollHolder.class;
-		}
 
 		@Override
 		public boolean itemSelectable(Item item) {

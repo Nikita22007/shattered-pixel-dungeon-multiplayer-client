@@ -30,8 +30,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.VelvetPouch;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
@@ -204,10 +202,6 @@ public class SandalsOfNature extends Artifact {
 			return Messages.get(SandalsOfNature.class, "prompt");
 		}
 
-		@Override
-		public Class<?extends Bag> preferredBag(){
-			return VelvetPouch.class;
-		}
 
 		@Override
 		public boolean itemSelectable(Item item) {

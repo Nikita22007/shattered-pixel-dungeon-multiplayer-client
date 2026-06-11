@@ -30,16 +30,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.BlastParticle;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SmokeParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfFrost;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfInvisibility;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLiquidFlame;
-import com.shatteredpixel.shatteredpixeldungeon.items.quest.GooBlob;
-import com.shatteredpixel.shatteredpixeldungeon.items.quest.MetalShard;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMirrorImage;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRage;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRemoveCurse;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
@@ -50,8 +40,6 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 public class Bomb extends Item {
 	
@@ -269,44 +257,5 @@ public class Bomb extends Item {
 			stackable = false;
 		}
 	}
-	
-	public static class EnhanceBomb {
-		
-		public static final LinkedHashMap<Class<?extends Item>, Class<?extends Bomb>> validIngredients = new LinkedHashMap<>();
-		static {
-			validIngredients.put(PotionOfFrost.class,           FrostBomb.class);
-			validIngredients.put(ScrollOfMirrorImage.class,     WoollyBomb.class);
-			
-			validIngredients.put(PotionOfLiquidFlame.class,     Firebomb.class);
-			validIngredients.put(ScrollOfRage.class,            Noisemaker.class);
-			
-			validIngredients.put(PotionOfInvisibility.class,    SmokeBomb.class);
-			validIngredients.put(ScrollOfRecharging.class,      FlashBangBomb.class);
-			
-			validIngredients.put(PotionOfHealing.class,         RegrowthBomb.class);
-			validIngredients.put(ScrollOfRemoveCurse.class,     HolyBomb.class);
-			
-			validIngredients.put(GooBlob.class,                 ArcaneBomb.class);
-			validIngredients.put(MetalShard.class,              ShrapnelBomb.class);
-		}
-		
-		private static final HashMap<Class<?extends Bomb>, Integer> bombCosts = new HashMap<>();
-		static {
-			bombCosts.put(FrostBomb.class,      0);
-			bombCosts.put(WoollyBomb.class,     0);
-			
-			bombCosts.put(Firebomb.class,       1);
-			bombCosts.put(Noisemaker.class,     1);
-			
-			bombCosts.put(SmokeBomb.class,      2);
-			bombCosts.put(FlashBangBomb.class,      2);
 
-			bombCosts.put(RegrowthBomb.class,   3);
-			bombCosts.put(HolyBomb.class,       3);
-			
-			bombCosts.put(ArcaneBomb.class,     6);
-			bombCosts.put(ShrapnelBomb.class,   6);
-		}
-
-	}
 }
