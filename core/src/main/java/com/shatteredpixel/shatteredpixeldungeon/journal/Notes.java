@@ -23,38 +23,14 @@ package com.shatteredpixel.shatteredpixeldungeon.journal;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Foliage;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.SacrificialFire;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.WaterOfAwareness;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.WaterOfHealth;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.DemonSpawner;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Statue;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Blacksmith;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Ghost;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Imp;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.ImpShopkeeper;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.RatKing;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Wandmaker;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.LostBackpack;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.Key;
-import com.shatteredpixel.shatteredpixeldungeon.items.spells.BeaconOfReturning;
-import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.BlacksmithSprite;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.GhostSprite;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ImpSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.RatKingSprite;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ShopkeeperSprite;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.SpawnerSprite;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.StatueSprite;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.WandmakerSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Image;
@@ -131,7 +107,7 @@ public class Notes {
 
 		LOST_PACK,
 		BEACON_LOCATION,
-		
+
 		GHOST,
 		RAT_KING,
 		WANDMAKER,
@@ -140,7 +116,7 @@ public class Notes {
 
 		DEMON_SPAWNER;
 	}
-	
+
 	public static class LandmarkRecord extends Record {
 		
 		protected Landmark landmark;
@@ -156,58 +132,6 @@ public class Notes {
 			switch (landmark){
 				default:
 					return Icons.STAIRS.get();
-
-				case CHASM_FLOOR:
-					return Icons.STAIRS_CHASM.get();
-				case WATER_FLOOR:
-					return Icons.STAIRS_WATER.get();
-				case GRASS_FLOOR:
-					return Icons.STAIRS_GRASS.get();
-				case DARK_FLOOR:
-					return Icons.STAIRS_DARK.get();
-				case LARGE_FLOOR:
-					return Icons.STAIRS_LARGE.get();
-				case TRAPS_FLOOR:
-					return Icons.STAIRS_TRAPS.get();
-				case SECRETS_FLOOR:
-					return Icons.STAIRS_SECRETS.get();
-
-				case SHOP:
-					if (depth == 20)    return new Image(new ImpSprite());
-					else                return new Image(new ShopkeeperSprite());
-				case ALCHEMY:
-					return Icons.get(Icons.ALCHEMY);
-				case GARDEN:
-					return Icons.get(Icons.GRASS);
-				case DISTANT_WELL:
-					return Icons.get(Icons.DISTANT_WELL);
-				case WELL_OF_HEALTH:
-					return Icons.get(Icons.WELL_HEALTH);
-				case WELL_OF_AWARENESS:
-					return Icons.get(Icons.WELL_AWARENESS);
-				case SACRIFICIAL_FIRE:
-					return Icons.get(Icons.SACRIFICE_ALTAR);
-				case STATUE:
-					return new Image(new StatueSprite());
-
-				case LOST_PACK:
-					return Icons.get(Icons.BACKPACK_LRG);
-				case BEACON_LOCATION:
-					return new ItemSprite(ItemSpriteSheet.RETURN_BEACON);
-
-				case GHOST:
-					return new Image(new GhostSprite());
-				case RAT_KING:
-					return new Image(new RatKingSprite());
-				case WANDMAKER:
-					return new Image(new WandmakerSprite());
-				case TROLL:
-					return new Image(new BlacksmithSprite());
-				case IMP:
-					return new Image(new ImpSprite());
-
-				case DEMON_SPAWNER:
-					return new Image(new SpawnerSprite());
 			}
 		}
 
@@ -215,16 +139,6 @@ public class Notes {
 		public String title() {
 			switch (landmark) {
 				default:            return Messages.get(Landmark.class, landmark.name());
-				case CHASM_FLOOR:   return Messages.get(Level.Feeling.class, "chasm_title");
-				case WATER_FLOOR:   return Messages.get(Level.Feeling.class, "water_title");
-				case GRASS_FLOOR:   return Messages.get(Level.Feeling.class, "grass_title");
-				case DARK_FLOOR:    return Messages.get(Level.Feeling.class, "dark_title");
-				case LARGE_FLOOR:   return Messages.get(Level.Feeling.class, "large_title");
-				case TRAPS_FLOOR:   return Messages.get(Level.Feeling.class, "traps_title");
-				case SECRETS_FLOOR: return Messages.get(Level.Feeling.class, "secrets_title");
-
-				case LOST_PACK:     return Messages.get(LostBackpack.class, "name");
-				case BEACON_LOCATION:return Messages.get(BeaconOfReturning.class, "name");
 			}
 		}
 
@@ -232,35 +146,6 @@ public class Notes {
 		public String desc() {
 			switch (landmark) {
 				default:            return "";
-
-				case CHASM_FLOOR:   return Messages.get(Level.Feeling.class, "chasm_desc");
-				case WATER_FLOOR:   return Messages.get(Level.Feeling.class, "water_desc");
-				case GRASS_FLOOR:   return Messages.get(Level.Feeling.class, "grass_desc");
-				case DARK_FLOOR:    return Messages.get(Level.Feeling.class, "dark_desc");
-				case LARGE_FLOOR:   return Messages.get(Level.Feeling.class, "large_desc");
-				case TRAPS_FLOOR:   return Messages.get(Level.Feeling.class, "traps_desc");
-				case SECRETS_FLOOR: return Messages.get(Level.Feeling.class, "secrets_desc");
-
-				case SHOP:
-					if (depth == 20)    return Messages.get(ImpShopkeeper.class, "desc");
-					else                return Messages.get(Shopkeeper.class, "desc");
-				case ALCHEMY:           return Messages.get(Level.class, "alchemy_desc");
-				case GARDEN:            return Messages.get(Foliage.class, "desc");
-				case WELL_OF_HEALTH:    return Messages.get(WaterOfHealth.class, "desc");
-				case WELL_OF_AWARENESS: return Messages.get(WaterOfAwareness.class, "desc");
-				case SACRIFICIAL_FIRE:  return Messages.get(SacrificialFire.class, "desc");
-				case STATUE:            return Messages.get(Statue.class, "desc");
-
-				case LOST_PACK:         return Messages.get(LostBackpack.class, "desc");
-				case BEACON_LOCATION:   return Messages.get(BeaconOfReturning.class, "desc");
-
-				case GHOST:         return Messages.get(Ghost.class, "desc");
-				case RAT_KING:      return new RatKing().description(); //variable description based on holiday/run state
-				case WANDMAKER:     return Messages.get(Wandmaker.class, "desc");
-				case TROLL:         return Messages.get(Blacksmith.class, "desc");
-				case IMP:           return Messages.get(Imp.class, "desc");
-
-				case DEMON_SPAWNER: return Messages.get(DemonSpawner.class, "desc");
 			}
 		}
 
@@ -275,20 +160,7 @@ public class Notes {
 					&& landmark == ((LandmarkRecord) obj).landmark
 					&& depth() == ((LandmarkRecord) obj).depth();
 		}
-		
-		private static final String LANDMARK	= "landmark";
-		
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			landmark = Landmark.valueOf(bundle.getString(LANDMARK));
-		}
-		
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put( LANDMARK, landmark.name() );
-		}
+
 	}
 	
 	public static class KeyRecord extends Record {
@@ -362,12 +234,7 @@ public class Notes {
 			super.restoreFromBundle(bundle);
 			key = (Key) bundle.get(KEY);
 		}
-		
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put( KEY, key );
-		}
+
 	}
 
 	public enum CustomType {
@@ -608,7 +475,7 @@ public class Notes {
 	public static boolean remove( Key key ){
 		KeyRecord k = new KeyRecord( key );
 		if (records.contains(k)){
-			Catalog.countUses(key.getClass(), key.quantity());
+
 			k = (KeyRecord) records.get(records.indexOf(k));
 			k.quantity(k.quantity() - key.quantity());
 			if (k.quantity() <= 0){

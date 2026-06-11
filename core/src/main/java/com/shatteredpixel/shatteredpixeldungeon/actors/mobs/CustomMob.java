@@ -21,8 +21,6 @@ public class CustomMob extends Mob {
         HP = HT = 1;
         defenseSkill = 1;
 
-        maxLvl = 1;
-
         this.setId(id);
     }
 

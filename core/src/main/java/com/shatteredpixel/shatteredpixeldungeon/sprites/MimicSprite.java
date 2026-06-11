@@ -23,9 +23,9 @@ package com.shatteredpixel.shatteredpixeldungeon.sprites;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
 import com.watabou.noosa.TextureFilm;
 
+@SuppressWarnings("unused")
 public class MimicSprite extends MobSprite {
 
 	protected Animation advancedHiding;
@@ -82,9 +82,7 @@ public class MimicSprite extends MobSprite {
 	}
 
 	public void hideMimic(Char ch){
-		if (ch instanceof Mimic && ((Mimic) ch).stealthy()){
-			play(advancedHiding);
-		} else {
+		{
 			play(hiding);
 		}
 		hideSleep();

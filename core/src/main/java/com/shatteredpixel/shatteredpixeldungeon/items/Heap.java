@@ -21,45 +21,22 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items;
 
-import com.nikita22007.pixeldungeonmultiplayer.TextureManager;
-import com.nikita22007.pixeldungeonmultiplayer.TexturePack;
 import com.nikita22007.pixeldungeonmultiplayer.TranslationUtils;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Wraith;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
-import com.shatteredpixel.shatteredpixeldungeon.items.bombs.Bomb;
-import com.shatteredpixel.shatteredpixeldungeon.items.food.ChargrilledMeat;
-import com.shatteredpixel.shatteredpixeldungeon.items.food.FrozenCarpaccio;
-import com.shatteredpixel.shatteredpixeldungeon.items.food.MysteryMeat;
-import com.shatteredpixel.shatteredpixeldungeon.items.journal.DocumentPage;
-import com.shatteredpixel.shatteredpixeldungeon.items.journal.Guidebook;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfWealth;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.TippedDart;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -126,52 +103,7 @@ public class Heap implements Bundlable {
 	public boolean hidden = false; //sets alpha to 15%
 	
 	public LinkedList<Item> items = new LinkedList<>();
-	
-	public void open( Hero hero ) {
-		switch (type) {
-		case TOMB:
-			Wraith.spawnAround( hero.pos );
-			break;
-		case REMAINS:
-		case SKELETON:
-			CellEmitter.center( pos ).start(Speck.factory(Speck.RATTLE), 0.1f, 3);
-			break;
-		default:
-		}
-		
-		if (haunted){
-			if (Wraith.spawnAt( pos ) == null) {
-				hero.sprite.emitter().burst( ShadowParticle.CURSE, 6 );
-				hero.damage( hero.HP / 2, this );
-				if (!hero.isAlive()){
-					Dungeon.fail(Wraith.class);
-					GLog.n( Messages.capitalize(Messages.get(Char.class, "kill", Messages.get(Wraith.class, "name"))));
-				}
-			}
-			Sample.INSTANCE.play( Assets.Sounds.CURSED );
-		}
 
-		type = Type.HEAP;
-		ArrayList<Item> bonus = RingOfWealth.tryForBonusDrop(hero, 1);
-		if (bonus != null && !bonus.isEmpty()) {
-			items.addAll(0, bonus);
-			RingOfWealth.showFlareForBonusDrop(sprite);
-		}
-		sprite.link();
-		sprite.drop();
-	}
-	
-	public Heap setHauntedIfCursed(){
-		for (Item item : items) {
-			if (item.cursed) {
-				haunted = true;
-				item.cursedKnown = true;
-				break;
-			}
-		}
-		return this;
-	}
-	
 	public int size() {
 		return items.size();
 	}
@@ -239,12 +171,7 @@ public class Heap implements Bundlable {
 			sprite.view(this).place( pos );
 		}
 
-		if (TippedDart.lostDarts > 0){
-			Dart d = new Dart();
-			d.quantity(TippedDart.lostDarts);
-			TippedDart.lostDarts = 0;
-			drop(d);
-		}
+
 	}
 	
 	public void replace( Item a, Item b ) {
@@ -269,57 +196,6 @@ public class Heap implements Bundlable {
 			destroy();
 		} else if (sprite != null) {
 			sprite.view(this).place( pos );
-		}
-	}
-	
-	public void burn() {
-		hidden = false;
-
-		if (type != Type.HEAP) {
-			return;
-		}
-		
-		boolean burnt = false;
-		boolean evaporated = false;
-		
-		for (Item item : items.toArray( new Item[0] )) {
-			if (item instanceof Scroll && !item.unique) {
-				items.remove( item );
-				burnt = true;
-			} else if (item instanceof Dewdrop) {
-				items.remove( item );
-				evaporated = true;
-			} else if (item instanceof MysteryMeat || item instanceof FrozenCarpaccio) {
-				replace( item, ChargrilledMeat.cook( item.quantity ) );
-				burnt = true;
-			} else if (item instanceof Bomb) {
-				items.remove( item );
-				((Bomb) item).explode( pos );
-				if (((Bomb) item).explodesDestructively()) {
-					//stop processing the burning, it will be replaced by the explosion.
-					return;
-				} else {
-					burnt = true;
-				}
-			}
-		}
-		
-		if (burnt || evaporated) {
-			
-			if (Dungeon.level.heroFOV[pos]) {
-				if (burnt) {
-					burnFX( pos );
-				} else {
-					evaporateFX( pos );
-				}
-			}
-			
-			if (isEmpty()) {
-				destroy();
-			} else if (sprite != null) {
-				sprite.view(this).place( pos );
-			}
-			
 		}
 	}
 
@@ -347,24 +223,7 @@ public class Heap implements Bundlable {
 				if (item.unique || item.isUpgradable() || item instanceof EquipableItem){
 					continue;
 				}
-
-				if (item instanceof Potion) {
-					items.remove(item);
-					((Potion) item).shatter(pos);
-
-				} else if (item instanceof Honeypot.ShatteredPot) {
-					items.remove(item);
-					((Honeypot.ShatteredPot) item).destroyPot(pos);
-
-				} else if (item instanceof Bomb) {
-					items.remove( item );
-					((Bomb) item).explode(pos);
-					if (((Bomb) item).explodesDestructively()) {
-						//stop processing current explosion, it will be replaced by the new one.
-						return;
-					}
-
-				} else {
+				{
 					items.remove( item );
 				}
 
@@ -377,36 +236,7 @@ public class Heap implements Bundlable {
 			}
 		}
 	}
-	
-	public void freeze() {
 
-		if (type != Type.HEAP) {
-			return;
-		}
-		
-		boolean frozen = false;
-		for (Item item : items.toArray( new Item[0] )) {
-			if (item instanceof MysteryMeat) {
-				replace( item, FrozenCarpaccio.cook( (MysteryMeat)item ) );
-				frozen = true;
-			} else if (item instanceof Potion && !item.unique) {
-				items.remove(item);
-				((Potion) item).shatter(pos);
-				frozen = true;
-			} else if (item instanceof Bomb && ((Bomb) item).fuse != null){
-				frozen = frozen || ((Bomb) item).fuse.freeze();
-			}
-		}
-		
-		if (frozen) {
-			if (isEmpty()) {
-				destroy();
-			} else if (sprite != null) {
-				sprite.view(this).place( pos );
-			}
-		}
-	}
-	
 	public static void burnFX( int pos ) {
 		CellEmitter.get( pos ).burst( ElmoParticle.FACTORY, 6 );
 		Sample.INSTANCE.play( Assets.Sounds.BURNING );
@@ -461,9 +291,9 @@ public class Heap implements Bundlable {
 			case LOCKED_CHEST:
 				return Messages.get(this, "locked_chest_desc");
 			case CRYSTAL_CHEST:
-				if (peek() instanceof Artifact)
+				if (false)
 					return Messages.get(this, "crystal_chest_desc", Messages.get(this, "artifact") );
-				else if (peek() instanceof Wand)
+				else if (false)
 					return Messages.get(this, "crystal_chest_desc", Messages.get(this, "wand") );
 				else
 					return Messages.get(this, "crystal_chest_desc", Messages.get(this, "ring") );
@@ -498,14 +328,6 @@ public class Heap implements Bundlable {
 		
 		//remove any document pages that either don't exist anymore or that the player already has
 		for (Item item : items.toArray(new Item[0])){
-			if (item instanceof DocumentPage
-					&& ( !((DocumentPage) item).document().pageNames().contains(((DocumentPage) item).page())
-					||    ((DocumentPage) item).document().isPageFound(((DocumentPage) item).page()))){
-				items.remove(item);
-			}
-			if (item instanceof Guidebook && Document.ADVENTURERS_GUIDE.isPageRead(0)){
-				items.remove(item);
-			}
 		}
 		
 		haunted = bundle.getBoolean( HAUNTED );
@@ -518,7 +340,7 @@ public class Heap implements Bundlable {
 		bundle.put( POS, pos );
 		bundle.put( SEEN, seen );
 		bundle.put( TYPE, type );
-		bundle.put( ITEMS, items );
+
 		bundle.put( HAUNTED, haunted );
 		bundle.put( AUTO_EXPLORED, autoExplored );
 		bundle.put( HIDDEN, hidden );

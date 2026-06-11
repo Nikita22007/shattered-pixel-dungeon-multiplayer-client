@@ -21,8 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.windows;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Wandmaker;
 import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -35,7 +33,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.ItemButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import org.json.JSONObject;
 
 public class WndWandmaker extends Window {
@@ -95,9 +92,7 @@ public class WndWandmaker extends Window {
 
 		resize(WIDTH, (int) btnWand2.bottom());
 	}
-	public WndWandmaker( final Wandmaker wandmaker, final Item item ) {
-	}
-	
+
 	private void selectReward( int index ) {
 		SendData.sendWindowResult(id, index);
 	}

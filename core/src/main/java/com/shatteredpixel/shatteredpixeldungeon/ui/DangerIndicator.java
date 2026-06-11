@@ -117,7 +117,7 @@ public class DangerIndicator extends Tag {
 			QuickSlotButton.target(target);
 			if (Dungeon.hero.canAttack(target)) AttackIndicator.target(target);
 
-			if (Dungeon.hero.curAction == null && target.sprite != null) {
+			if (null == null && target.sprite != null) {
 				Camera.main.panFollow(target.sprite, 5f);
 			}
 		}

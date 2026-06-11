@@ -24,17 +24,14 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCleansing;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.audio.Sample;
@@ -81,25 +78,26 @@ public class Cleanse extends ClericSpell {
 
 		Char ally = PowerOfMany.getPoweredAlly();
 		//hero is always affected, to just check for life linked ally
-		if (ally != null && ally.buff(LifeLinkSpell.LifeLinkSpellBuff.class) != null
-				&& !affected.contains(ally)){
-				affected.add(ally);
-		}
+		if (ally != null) {
+            if (false) {
+                affected.add(ally);
+            }
+        }
 
 		for (Char ch : affected) {
 			for (Buff b : ch.buffs()) {
 				if (b.type == Buff.buffType.NEGATIVE
-						&& !(b instanceof AllyBuff)
-						&& !(b instanceof LostInventory)) {
+						&& !(false)
+						&& !(false)) {
 					b.detach();
 				}
 			}
 
 			if (hero.pointsInTalent(Talent.CLEANSE) > 1) {
 				//0, 2, or 4. 1 less than displayed as spell is instant
-				Buff.prolong(ch, PotionOfCleansing.Cleanse.class, 2 * (Dungeon.hero.pointsInTalent(Talent.CLEANSE)-1));
-			}
-			Buff.affect(ch, Barrier.class).setShield(10 * hero.pointsInTalent(Talent.CLEANSE));
+                Dungeon.hero.pointsInTalent(Talent.CLEANSE);
+            }
+            ((Barrier) null).setShield(10 * hero.pointsInTalent(Talent.CLEANSE));
 			new Flare( 6, 32 ).color(0xFF4CD2, true).show( ch.sprite, 2f );
 		}
 

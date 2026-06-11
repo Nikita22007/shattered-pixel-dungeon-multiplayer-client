@@ -22,108 +22,19 @@
 package com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Eye;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.NPC;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Beam;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Bestiary;
-import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MobSprite;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
-import com.watabou.utils.Bundle;
-import com.watabou.utils.Random;
 
 public class SentryRoom {
 
-	public static class Sentry extends NPC {
-
-		{
-			spriteClass = SentrySprite.class;
-
-			properties.add(Property.IMMOVABLE);
-		}
-
-		private float initialChargeDelay;
-		private float curChargeDelay;
-
-		@Override
-		protected boolean act() {
-			return true;
-		}
-
-		public void onZapComplete(){
-			if (hit(this, Dungeon.hero, true)) {
-				Dungeon.hero.damage(Random.NormalIntRange(2 + Dungeon.depth / 2, 4 + Dungeon.depth), new Eye.DeathGaze());
-				if (!Dungeon.hero.isAlive()) {
-					Badges.validateDeathFromEnemyMagic();
-					Dungeon.fail(this);
-					GLog.n(Messages.capitalize(Messages.get(Char.class, "kill", name())));
-				}
-			} else {
-				Dungeon.hero.sprite.showStatus( CharSprite.NEUTRAL,  Dungeon.hero.defenseVerb() );
-			}
-		}
-
-		@Override
-		public int attackSkill(Char target) {
-			return 20 + Dungeon.depth * 2;
-		}
-
-		@Override
-		public int defenseSkill( Char enemy ) {
-			return INFINITE_EVASION;
-		}
-
-		@Override
-		public void damage( int dmg, Object src ) {
-			//do nothing
-		}
-
-		@Override
-		public boolean add( Buff buff ) {
-			return false;
-		}
-
-		@Override
-		public boolean reset() {
-			return true;
-		}
-
-		@Override
-		public boolean interact(Char c) {
-			return true;
-		}
-
-		private static final String INITIAL_DELAY = "initial_delay";
-		private static final String CUR_DELAY = "cur_delay";
-		private static final String ROOM = "room";
-
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put(INITIAL_DELAY, initialChargeDelay);
-			bundle.put(CUR_DELAY, curChargeDelay);
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			initialChargeDelay = bundle.getFloat(INITIAL_DELAY);
-			curChargeDelay = bundle.getFloat(CUR_DELAY);
-		}
-	}
-
+	@SuppressWarnings("unused")
 	public static class SentrySprite extends MobSprite {
 
 		private final Animation charging;

@@ -4,6 +4,7 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import org.json.JSONObject;
 
+//todo should we reuse it in com.shatteredpixel.shatteredpixeldungeon.network.actions.traps.TrapUpdateParser?
 public class CustomTrap extends Trap {
     {
         visible = true;

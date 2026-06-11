@@ -24,22 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.sprites;
 import com.nikita22007.pixeldungeonmultiplayer.TranslationUtils;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyLance;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GnollGeomancer;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Crossbow;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Bolas;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.FishingSpear;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.HeavyBoomerang;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Javelin;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Kunai;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Shuriken;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingKnife;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingSpear;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ThrowingSpike;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Trident;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.shatteredpixel.shatteredpixeldungeon.network.JsonStringHelper;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
@@ -99,28 +84,7 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 	
 	private static final HashMap<Class<?extends Item>, Integer> ANGULAR_SPEEDS = new HashMap<>();
 	static {
-		ANGULAR_SPEEDS.put(Dart.class,          0);
-		ANGULAR_SPEEDS.put(ThrowingKnife.class, 0);
-		ANGULAR_SPEEDS.put(ThrowingSpike.class, 0);
-		ANGULAR_SPEEDS.put(FishingSpear.class,  0);
-		ANGULAR_SPEEDS.put(ThrowingSpear.class, 0);
-		ANGULAR_SPEEDS.put(Kunai.class,         0);
-		ANGULAR_SPEEDS.put(Javelin.class,       0);
-		ANGULAR_SPEEDS.put(Trident.class,       0);
-		
-		ANGULAR_SPEEDS.put(SpiritBow.SpiritArrow.class,       0);
-		ANGULAR_SPEEDS.put(ScorpioSprite.ScorpioShot.class,   0);
-		ANGULAR_SPEEDS.put(HolyLance.HolyLanceVFX.class,      0);
-		
-		//720 is default
 
-		ANGULAR_SPEEDS.put(GnollGeomancer.Boulder.class,   90);
-		
-		ANGULAR_SPEEDS.put(HeavyBoomerang.class,1440);
-		ANGULAR_SPEEDS.put(Bolas.class,         1440);
-		
-		ANGULAR_SPEEDS.put(Shuriken.class,                  2160);
-		ANGULAR_SPEEDS.put(TenguSprite.TenguShuriken.class, 2160);
 	}
 
 	//TODO it might be nice to have a source and destination angle, to improve thrown weapon visuals
@@ -161,22 +125,14 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 			flipHorizontal = true;
 			updateFrame();
 		}
-
-		if (item instanceof GnollGeomancer.Boulder){
-			angle = 0;
-			flipHorizontal = false;
-			updateFrame();
-		}
 		
 		float speed = SPEED;
-		if (item instanceof Dart
-				&& (Dungeon.hero.belongings.weapon() instanceof Crossbow
-				|| Dungeon.hero.belongings.secondWep() instanceof Crossbow)){
+		if (false){
 			speed *= 3f;
 			
-		} else if (item instanceof SpiritBow.SpiritArrow
-				|| item instanceof ScorpioSprite.ScorpioShot
-				|| item instanceof TenguSprite.TenguShuriken){
+		} else if (false
+				|| false
+				|| false){
 			speed *= 1.5f;
 		}
 		

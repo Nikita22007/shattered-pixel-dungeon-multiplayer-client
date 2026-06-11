@@ -25,38 +25,14 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AdrenalineSurge;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArcaneArmor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ArtifactRecharge;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barkskin;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corrosion;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FireImbue;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GreaterHaste;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Healing;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LifeLink;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ToxicImbue;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.WellFed;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.AscendedForm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Viscosity;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.ElixirOfAquaticRejuvenation;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfChallenge;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Kinetic;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.plants.Sungrass;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
@@ -102,13 +78,8 @@ public class MnemonicPrayer extends TargetedClericSpell {
 		affectChar(ch, extension);
 
 		Char ally = PowerOfMany.getPoweredAlly();
-		if (ally != null && ally.buff(LifeLinkSpell.LifeLinkSpellBuff.class) != null){
-			if (ch == hero){
-				affectChar(ally, extension); //if cast on hero, duplicate to ally
-			} else if (ch == ally){
-				affectChar(hero, extension); //if cast on ally, duplicate to hero
-			}
-		}
+		if (ally != null) {
+        }
 
 		if (ch == hero){
 			hero.sprite.operate(ch.pos);
@@ -128,34 +99,18 @@ public class MnemonicPrayer extends TargetedClericSpell {
 			Sample.INSTANCE.play(Assets.Sounds.CHARGEUP);
 			ch.sprite.emitter().start(Speck.factory(Speck.UP), 0.15f, 4);
 
-			for (Buff b : ch.buffs()){
-				if (b.type != Buff.buffType.POSITIVE || b.mnemonicExtended || b.icon() == BuffIndicator.NONE){
+			for (Buff b : ch.buffs()) {
+				if (b.type != Buff.buffType.POSITIVE || b.mnemonicExtended || b.icon() == BuffIndicator.NONE) {
 					continue;
 				}
 
 				//does not boost buffs from armor abilities or T4 spells
-				if (b instanceof AscendedForm.AscendBuff
-						|| b instanceof BodyForm.BodyFormBuff || b instanceof SpiritForm.SpiritFormBuff
-						|| b instanceof PowerOfMany.PowerBuff || b instanceof BeamingRay.BeamingRayBoost || b instanceof LifeLink || b instanceof LifeLinkSpell.LifeLinkSpellBuff){
+				if (false
+						|| false || false
+						|| false || false || false || false) {
 					continue;
 				}
 
-				//should consider some buffs that may be OP here, e.g. invuln
-				if (b instanceof FlavourBuff)           Buff.affect(ch, (Class<?extends FlavourBuff>)b.getClass(), extension);
-				else if (b instanceof AdrenalineSurge)  ((AdrenalineSurge) b).delay(extension);
-				else if (b instanceof ArcaneArmor)      ((ArcaneArmor) b).delay(extension);
-				else if (b instanceof ArtifactRecharge) ((ArtifactRecharge) b).extend(extension);
-				else if (b instanceof Barkskin)         ((Barkskin) b).delay(extension);
-				else if (b instanceof FireImbue)        ((FireImbue) b).extend(extension);
-				else if (b instanceof GreaterHaste)     ((GreaterHaste) b).extend(extension);
-				else if (b instanceof Healing)          ((Healing) b).increaseHeal((int)extension);
-				else if (b instanceof ToxicImbue)       ((ToxicImbue) b).extend(extension);
-				else if (b instanceof WellFed)          ((WellFed) b).extend(extension);
-				else if (b instanceof ElixirOfAquaticRejuvenation.AquaHealing)  ((ElixirOfAquaticRejuvenation.AquaHealing) b).extend(extension);
-				else if (b instanceof ScrollOfChallenge.ChallengeArena)         ((ScrollOfChallenge.ChallengeArena) b).extend(extension);
-				else if (b instanceof ShieldBuff)               ((ShieldBuff) b).delay(extension);
-				else if (b instanceof Kinetic.ConservedDamage)  ((Kinetic.ConservedDamage) b).delay(extension);
-				else if (b instanceof Sungrass.Health)          ((Sungrass.Health) b).boost((int) extension);
 
 				b.mnemonicExtended = true;
 
@@ -166,22 +121,10 @@ public class MnemonicPrayer extends TargetedClericSpell {
 			Sample.INSTANCE.play(Assets.Sounds.DEBUFF);
 			ch.sprite.emitter().start(Speck.factory(Speck.DOWN), 0.15f, 4);
 
-			Buff.affect(ch, GuidingLight.Illuminated.class);
-
-			for (Buff b : ch.buffs()){
-				if (b.type != Buff.buffType.NEGATIVE || b.mnemonicExtended){
+			for (Buff b : ch.buffs()) {
+				if (b.type != Buff.buffType.NEGATIVE || b.mnemonicExtended) {
 					continue;
 				}
-
-				//this might need a nerf of aggression vs bosses. (perhaps nerf the extension?)
-				if (b instanceof FlavourBuff)       Buff.affect(ch, (Class<?extends FlavourBuff>)b.getClass(), extension);
-				else if (b instanceof Bleeding)     ((Bleeding) b).extend( extension );
-				else if (b instanceof Burning)      ((Burning) b).extend( extension );
-				else if (b instanceof Corrosion)    ((Corrosion) b).extend( extension );
-				else if (b instanceof Dread)        ((Dread) b).extend( extension );
-				else if (b instanceof Ooze)         ((Ooze) b).extend( extension );
-				else if (b instanceof Poison)       ((Poison) b).extend( extension );
-				else if (b instanceof Viscosity.DeferedDamage)  ((Viscosity.DeferedDamage) b).extend( extension );
 
 				b.mnemonicExtended = true;
 

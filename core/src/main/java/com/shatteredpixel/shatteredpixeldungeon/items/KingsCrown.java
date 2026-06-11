@@ -28,18 +28,11 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.Ratmogrify;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndChooseAbility;
 import com.watabou.noosa.audio.Sample;
-
-import java.util.ArrayList;
 
 public class KingsCrown extends Item {
 	
@@ -54,30 +47,6 @@ public class KingsCrown extends Item {
 	}
 	
 	@Override
-	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
-		actions.add( AC_WEAR );
-		return actions;
-	}
-	
-	@Override
-	public void execute( Hero hero, String action ) {
-
-		super.execute( hero, action );
-
-		if (action.equals(AC_WEAR)) {
-
-			curUser = hero;
-			if (hero.belongings.armor() != null){
-				GameScene.show( new WndChooseAbility(this, hero.belongings.armor(), hero));
-			} else {
-				GLog.w( Messages.get(this, "naked"));
-			}
-			
-		}
-	}
-	
-	@Override
 	public boolean isUpgradable() {
 		return false;
 	}
@@ -88,9 +57,6 @@ public class KingsCrown extends Item {
 	}
 	
 	public void upgradeArmor(Hero hero, CustomItem armor, ArmorAbility ability) {
-
-		detach(hero.belongings.backpack);
-		Catalog.countUse( getClass() );
 
 		hero.sprite.emitter().burst( Speck.factory( Speck.CROWN), 12 );
 		hero.spend(Actor.TICK);
@@ -104,17 +70,9 @@ public class KingsCrown extends Item {
 				GLog.p(Messages.get(this, "upgraded"));
 			}
 
-			ClassArmor classArmor = ClassArmor.upgrade(hero, armor);
 			if (hero.belongings.armor == armor) {
 
-				hero.belongings.armor = classArmor;
 				((HeroSprite) hero.sprite).updateArmor();
-				classArmor.activate(hero);
-
-			} else {
-
-				armor.detach(hero.belongings.backpack);
-				classArmor.collect(hero.belongings.backpack);
 
 			}
 		}

@@ -21,22 +21,12 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Blindness;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.GuidingLight;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindofMisc;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.utils.Bundle;
-import com.watabou.utils.Random;
+import org.jetbrains.annotations.Contract;
 
 public class Artifact extends KindofMisc {
 
@@ -74,8 +64,7 @@ public class Artifact extends KindofMisc {
 
 			if (super.doEquip( hero )){
 
-				identify();
-				return true;
+                return true;
 
 			} else {
 
@@ -85,15 +74,6 @@ public class Artifact extends KindofMisc {
 
 		}
 
-	}
-
-	public void activate( Char ch ) {
-		if (passiveBuff != null){
-			if (passiveBuff.target != null) passiveBuff.detach();
-			passiveBuff = null;
-		}
-		passiveBuff = passiveBuff();
-		passiveBuff.attachTo(ch);
 	}
 
 	@Override
@@ -129,7 +109,8 @@ public class Artifact extends KindofMisc {
 		return visiblyUpgraded();
 	}
 
-	@Override
+	@Contract(pure = true)
+    @Override
 	public int buffedLvl() {
 		//level isn't affected by buffs/debuffs
 		return level();
@@ -170,18 +151,7 @@ public class Artifact extends KindofMisc {
 		return null;
 	}
 
-	@Override
-	public Item random() {
-		//always +0
-		
-		//30% chance to be cursed
-		if (Random.Float() < 0.3f) {
-			cursed = true;
-		}
-		return this;
-	}
-
-	@Override
+    @Override
 	public int value() {
 		int price = 100;
 		if (level() > 0)
@@ -196,62 +166,14 @@ public class Artifact extends KindofMisc {
 	}
 
 
-	protected ArtifactBuff passiveBuff() {
-		return null;
-	}
-
-	protected ArtifactBuff activeBuff() {return null; }
-	
-	public void charge(Hero target, float amount){
-		//do nothing by default;
-	}
-
 	public class ArtifactBuff extends Buff {
 
-		@Override
-		public boolean attachTo( Char target ) {
-			if (super.attachTo( target )) {
-				//if we're loading in and the hero has partially spent a turn, delay for 1 turn
-				if (target instanceof Hero && Dungeon.hero == null && cooldown() == 0 && target.cooldown() > 0) {
-					spend(TICK);
-				}
-				return true;
-			}
-			return false;
-		}
 
-		public int itemLevel() {
-			return level();
-		}
-
+		@Contract(pure=true)
 		public boolean isCursed() {
-			return target.buff(MagicImmune.class) == null && cursed;
-		}
-
-		public void charge(Hero target, float amount){
-			Artifact.this.charge(target, amount);
+            return cursed;
 		}
 
 	}
-	
-	private static final String EXP = "exp";
-	private static final String CHARGE = "charge";
-	private static final String PARTIALCHARGE = "partialcharge";
 
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle(bundle);
-		bundle.put( EXP , exp );
-		bundle.put( CHARGE , charge );
-		bundle.put( PARTIALCHARGE , partialCharge );
-	}
-
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle(bundle);
-		exp = bundle.getInt( EXP );
-		if (chargeCap > 0)  charge = Math.min( chargeCap, bundle.getInt( CHARGE ));
-		else                charge = bundle.getInt( CHARGE );
-		partialCharge = bundle.getFloat( PARTIALCHARGE );
-	}
 }

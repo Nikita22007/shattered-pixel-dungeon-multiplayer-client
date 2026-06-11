@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
@@ -126,11 +125,8 @@ public class WndResurrect extends Window {
 		hide();
 
 		Statistics.ankhsUsed++;
-		Catalog.countUse(Ankh.class);
 
-		ankh.detach(Dungeon.hero.belongings.backpack);
-
-		if (btnItem1.item() != null){
+        if (btnItem1.item() != null){
 			btnItem1.item().keptThoughLostInvent = true;
 		}
 		if (btnItem2.item() != null){
@@ -151,7 +147,7 @@ public class WndResurrect extends Window {
 		@Override
 		public boolean itemSelectable(Item item) {
 			//cannot select ankhs or bags or equippable items that aren't equipped
-			return !(item instanceof Ankh || item instanceof Bag);
+			return !(item instanceof Bag);
 		}
 
 		@Override

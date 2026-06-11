@@ -21,12 +21,10 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Blocking;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
-import com.watabou.utils.Bundle;
 
 public class Barrier extends ShieldBuff {
 	
@@ -51,10 +49,10 @@ public class Barrier extends ShieldBuff {
 	@Override
 	public boolean act() {
 
-		partialLostShield += Math.min(1f, shielding()/20f) * HoldFast.buffDecayFactor(target);
+		partialLostShield += Math.min(1f, shielding()/20f) * (float) 1;
 
 		if (partialLostShield >= 1f) {
-			absorbDamage(1);
+
 			partialLostShield = 0;
 		}
 		
@@ -71,8 +69,10 @@ public class Barrier extends ShieldBuff {
 	public void fx(boolean on) {
 		if (on) {
 			target.sprite.add(CharSprite.State.SHIELDED);
-		} else if (target.buff(Blocking.BlockBuff.class) == null) {
-			target.sprite.remove(CharSprite.State.SHIELDED);
+		} else {
+			{
+				target.sprite.remove(CharSprite.State.SHIELDED);
+			}
 		}
 	}
 	
@@ -98,15 +98,4 @@ public class Barrier extends ShieldBuff {
 
 	private static final String PARTIAL_LOST_SHIELD = "partial_lost_shield";
 
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put(PARTIAL_LOST_SHIELD, partialLostShield);
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		partialLostShield = bundle.getFloat(PARTIAL_LOST_SHIELD);
-	}
 }

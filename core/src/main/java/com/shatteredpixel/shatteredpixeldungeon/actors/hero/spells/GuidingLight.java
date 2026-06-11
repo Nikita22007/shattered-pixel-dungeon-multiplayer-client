@@ -25,23 +25,17 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
-import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
@@ -83,13 +77,11 @@ public class GuidingLight extends TargetedClericSpell {
 
 				Char ch = Actor.findChar( aim.collisionPos );
 				if (ch != null) {
-					ch.damage(Random.NormalIntRange(2, 8), GuidingLight.this);
+					Random.NormalIntRange(2, 8);
 					Sample.INSTANCE.play(Assets.Sounds.HIT_MAGIC, 1, Random.Float(0.87f, 1.15f));
 					ch.sprite.burst(0xFFFFFF44, 3);
 					if (ch.isAlive()){
-						Buff.affect(ch, Illuminated.class);
-						Buff.affect(ch, WasIlluminatedTracker.class);
-					}
+                    }
 				} else {
 				}
 
@@ -97,9 +89,10 @@ public class GuidingLight extends TargetedClericSpell {
 				hero.next();
 
 				onSpellCast(tome, hero);
-				if (hero.subClass == HeroSubClass.PRIEST && hero.buff(GuidingLightPriestCooldown.class) == null) {
-					Buff.prolong(hero, GuidingLightPriestCooldown.class, 50f);
-					ActionIndicator.refresh();
+				if (hero.subClass == HeroSubClass.PRIEST) {
+					{
+						ActionIndicator.refresh();
+					}
 				}
 
 			}
@@ -108,8 +101,7 @@ public class GuidingLight extends TargetedClericSpell {
 
 	@Override
 	public float chargeUse(Hero hero) {
-		if (hero.subClass == HeroSubClass.PRIEST
-			&& hero.buff(GuidingLightPriestCooldown.class) == null){
+		if (hero.subClass == HeroSubClass.PRIEST) {
 			return 0;
 		} else {
 			return 1;
@@ -124,57 +116,4 @@ public class GuidingLight extends TargetedClericSpell {
 		return desc + "\n\n" + Messages.get(this, "charge_cost", (int)chargeUse(Dungeon.hero));
 	}
 
-	public static class GuidingLightPriestCooldown extends FlavourBuff {
-
-		@Override
-		public int icon() {
-			return BuffIndicator.ILLUMINATED;
-		}
-
-		@Override
-		public void tintIcon(Image icon) {
-			icon.brightness(0.5f);
-		}
-
-		public float iconFadePercent() { return Math.max(0, visualcooldown() / 50); }
-
-		@Override
-		public void detach() {
-			super.detach();
-			ActionIndicator.refresh();
-		}
-	}
-
-	public static class Illuminated extends Buff {
-
-		{
-			type = buffType.NEGATIVE;
-		}
-
-		@Override
-		public int icon() {
-			return BuffIndicator.ILLUMINATED;
-		}
-
-		@Override
-		public void fx(boolean on) {
-			if (on) target.sprite.add(CharSprite.State.ILLUMINATED);
-			else target.sprite.remove(CharSprite.State.ILLUMINATED);
-		}
-
-		@Override
-		public String desc() {
-			String desc = super.desc();
-
-			if (Dungeon.hero.subClass == HeroSubClass.PRIEST){
-				desc += "\n\n" + Messages.get(this, "desc_priest");
-			} else if (Dungeon.hero.heroClass != HeroClass.CLERIC){
-				desc += "\n\n" + Messages.get(this, "desc_generic");
-			}
-
-			return desc;
-		}
-	}
-
-	public static class WasIlluminatedTracker extends Buff {}
 }

@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.sprites;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HeroDisguise;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -203,7 +202,7 @@ public class HeroSprite extends CharSprite implements ClassSprite, TieredSprite{
 
 	@Override
 	public void update() {
-		sleeping = ch.isAlive() && ((Hero)ch).resting;
+		sleeping = ch.isAlive() && false;
 		
 		super.update();
 	}
@@ -221,13 +220,11 @@ public class HeroSprite extends CharSprite implements ClassSprite, TieredSprite{
 		return tiers;
 	}
 
-	public static Image avatar( Hero hero ){
-		if (hero.buff(HeroDisguise.class) != null){
-			return avatar(hero.buff(HeroDisguise.class).getDisguise(), hero.tier());
-		} else {
-			return avatar(hero.heroClass, hero.tier());
-		}
-	}
+	public static Image avatar( Hero hero ) {
+        {
+            return avatar(hero.heroClass, hero.tier());
+        }
+    }
 	
 	public static Image avatar( HeroClass cl, int armorTier ) {
 		

@@ -23,13 +23,13 @@ package com.shatteredpixel.shatteredpixeldungeon.sprites;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Spinner;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.watabou.noosa.MovieClip;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
 
+@SuppressWarnings("unused")
 public class FungalSpinnerSprite extends MobSprite {
 
 	public FungalSpinnerSprite() {
@@ -81,7 +81,7 @@ public class FungalSpinnerSprite extends MobSprite {
 				new Callback() {
 					@Override
 					public void call() {
-						((Spinner)ch).shootWeb();
+
 					}
 				} );
 		Sample.INSTANCE.play( Assets.Sounds.MISS );

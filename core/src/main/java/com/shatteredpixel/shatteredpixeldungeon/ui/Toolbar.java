@@ -26,8 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.QuickSlot;
 import com.shatteredpixel.shatteredpixeldungeon.SPDAction;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.HoldFast;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -256,10 +254,8 @@ public class Toolbar extends Component {
 						&& Dungeon.hero.handle(Dungeon.hero.pos)){
 						//trigger hold fast and patient strike here, even if the hero didn't specifically wait
 						if (Dungeon.hero.hasTalent(Talent.HOLD_FAST)){
-							Buff.affect(Dungeon.hero, HoldFast.class).pos = Dungeon.hero.pos;
 						}
 						if (Dungeon.hero.hasTalent(Talent.PATIENT_STRIKE)){
-							Buff.affect(Dungeon.hero, Talent.PatientStrikeTracker.class).pos = Dungeon.hero.pos;
 						}
 						Dungeon.hero.next();
 					} else {
@@ -418,7 +414,6 @@ public class Toolbar extends Component {
 							ArrayList<Item> items = (ArrayList<Item>) bag.items.clone();
 
 							for(Item i : bag.items){
-								if (i instanceof Bag) items.remove(i);
 								if (Dungeon.hero.belongings.lostInventory() && !i.keptThroughLostInventory()) items.remove(i);
 							}
 

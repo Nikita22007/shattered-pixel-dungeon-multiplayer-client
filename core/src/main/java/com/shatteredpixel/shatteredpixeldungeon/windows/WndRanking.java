@@ -35,7 +35,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.Trinket;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
@@ -87,9 +86,7 @@ public class WndRanking extends WndTabbed {
 		this.record = rec;
 
 		try {
-			Badges.loadGlobal();
-			Rankings.INSTANCE.loadGameData( rec );
-			createControls();
+            createControls();
 		} catch ( Exception e ) {
 			Game.reportException( new RuntimeException("Rankings Display Failed!",e));
 			Dungeon.hero = null;
@@ -379,7 +376,7 @@ public class WndRanking extends WndTabbed {
 				}
 			}
 
-			Trinket trinket = stuff.getItem(Trinket.class);
+            Trinket trinket = null;
 			if (trinket != null){
 				slotsActive++;
 			}
@@ -498,7 +495,7 @@ public class WndRanking extends WndTabbed {
 				bg.ga = -0.15f;
 				bg.ba = -0.15f;
 			} else if (!item.isIdentified()) {
-				if ((item instanceof EquipableItem || item instanceof Wand) && item.cursedKnown){
+				if ((item instanceof EquipableItem || false) && item.cursedKnown){
 					bg.ba = +0.3f;
 					bg.ra = -0.1f;
 				} else {

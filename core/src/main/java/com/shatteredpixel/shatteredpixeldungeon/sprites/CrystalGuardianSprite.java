@@ -23,10 +23,11 @@ package com.shatteredpixel.shatteredpixeldungeon.sprites;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.CrystalGuardian;
 import com.watabou.noosa.MovieClip;
 import com.watabou.noosa.TextureFilm;
 
+
+@SuppressWarnings("unused")
 public abstract class CrystalGuardianSprite extends MobSprite {
 
 	private Animation crumple;
@@ -73,9 +74,7 @@ public abstract class CrystalGuardianSprite extends MobSprite {
 	@Override
 	public void link(Char ch) {
 		super.link(ch);
-		if (ch instanceof CrystalGuardian && ((CrystalGuardian) ch).recovering()){
-			crumple();
-		}
+		//crumple(); //todo check it
 	}
 
 	protected abstract int texOffset();

@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.trinkets;
 
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public class EyeOfNewt extends Trinket {
@@ -30,27 +29,8 @@ public class EyeOfNewt extends Trinket {
 		image = ItemSpriteSheet.EYE_OF_NEWT;
 	}
 
-	@Override
-	protected int upgradeEnergyCost() {
-		//6 -> 8(14) -> 10(24) -> 12(36)
-		return 6+2*level();
-	}
-
-	@Override
-	public String statsDesc() {
-		if (isIdentified()){
-			return Messages.get(this, "stats_desc",
-					Messages.decimalFormat("#.##", 100*(1f-visionRangeMultiplier(buffedLvl()))),
-					mindVisionRange(buffedLvl()));
-		} else {
-			return Messages.get(this, "typical_stats_desc",
-					Messages.decimalFormat("#.##", 100*(1f-visionRangeMultiplier(0))),
-					mindVisionRange(0));
-		}
-	}
-
 	public static float visionRangeMultiplier(){
-		return visionRangeMultiplier(trinketLevel(EyeOfNewt.class));
+		return visionRangeMultiplier(-1);
 	}
 
 	public static float visionRangeMultiplier( int level ){
@@ -62,7 +42,7 @@ public class EyeOfNewt extends Trinket {
 	}
 
 	public static int mindVisionRange(){
-		return mindVisionRange(trinketLevel(EyeOfNewt.class));
+		return mindVisionRange(-1);
 	}
 
 	public static int mindVisionRange( int level ){

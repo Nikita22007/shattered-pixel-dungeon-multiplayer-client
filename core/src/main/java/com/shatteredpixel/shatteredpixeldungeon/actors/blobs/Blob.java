@@ -25,11 +25,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.effects.BlobEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
-import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
-import com.watabou.utils.Bundle;
-import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.Rect;
-import com.watabou.utils.Reflection;
+import org.jetbrains.annotations.Contract;
 
 import java.util.Arrays;
 
@@ -52,63 +49,6 @@ public class Blob extends Actor {
 	
 	public boolean alwaysVisible = false;
 
-	private static final String CUR		= "cur";
-	private static final String START	= "start";
-	private static final String LENGTH	= "length";
-	
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		
-		if (volume > 0) {
-		
-			int start;
-			for (start=0; start < level.length(); start++) {
-				if (cur[start] > 0) {
-					break;
-				}
-			}
-			int end;
-			for (end= level.length()-1; end > start; end--) {
-				if (cur[end] > 0) {
-					break;
-				}
-			}
-			
-			bundle.put( START, start );
-			bundle.put( LENGTH, cur.length );
-			bundle.put( CUR, trim( start, end + 1 ) );
-			
-		}
-	}
-	
-	private int[] trim( int start, int end ) {
-		int len = end - start;
-		int[] copy = new int[len];
-		System.arraycopy( cur, start, copy, 0, len );
-		return copy;
-	}
-	
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		
-		super.restoreFromBundle( bundle );
-
-		if (bundle.contains( CUR )) {
-
-			cur = new int[bundle.getInt(LENGTH)];
-			off = new int[cur.length];
-
-			int[] data = bundle.getIntArray(CUR);
-			int start = bundle.getInt(START);
-			for (int i = 0; i < data.length; i++) {
-				cur[i + start] = data[i];
-				volume += data[i];
-			}
-
-		}
-	}
-	
 	@Override
 	public boolean act() {
 		
@@ -190,58 +130,10 @@ public class Blob extends Actor {
 	public String tileDesc() {
 		return null;
 	}
-	
-	public static<T extends Blob> T seed( int cell, int amount, Class<T> type ) {
-		return seed(cell, amount, type, level);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public static<T extends Blob> T seed( int cell, int amount, Class<T> type, Level level ) {
-		
-		T gas = (T)level.blobs.get( type );
-		
-		if (gas == null) {
-			gas = Reflection.newInstance(type);
-			//this ensures that gasses do not get an 'extra turn' if they are added by a mob or buff
-			if (Actor.curActorPriority() < gas.actPriority) {
-				gas.spend(1f);
-			}
-		}
-		
-		if (gas != null){
-			level.blobs.put( type, gas );
-			gas.seed( level, cell, amount );
-		}
-		
-		return gas;
-	}
 
-	public static int volumeAt( int cell, Class<? extends Blob> type){
-		Blob gas = level.blobs.get( type );
-		if (gas == null || gas.volume == 0) {
-			return 0;
-		} else {
-			return gas.cur[cell];
-		}
-	}
+	@Contract(value = "_, _, _, _ -> fail", pure = true)
 	public static<T extends Blob> T seed(int id, int cell, int amount, Class<T> type ) {
-		T gas = (T)level.blobs.get( type );
-
-		if (gas == null) {
-			gas = Reflection.newInstance(type);
-			//this ensures that gasses do not get an 'extra turn' if they are added by a mob or buff
-			if (Actor.curActorPriority() < gas.actPriority) {
-				gas.spend(1f);
-			}
-		}
-
-		if (gas != null){
-			gas.setId(id);
-			level.blobs.put( type, gas );
-			gas.seed( level, cell, amount );
-		}
-
-		return gas;
+		throw new RuntimeException("Not implemented");
 	}
 	public void seed( int cell, int amount ) {
 		cur[cell] += amount;

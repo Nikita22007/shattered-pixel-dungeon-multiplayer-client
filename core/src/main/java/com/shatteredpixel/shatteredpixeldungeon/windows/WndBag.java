@@ -23,19 +23,13 @@ package com.shatteredpixel.shatteredpixeldungeon.windows;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDAction;
-import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.MagicalHolster;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.PotionBandolier;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.ScrollHolder;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.VelvetPouch;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -53,7 +47,6 @@ import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.utils.PointF;
-import com.watabou.utils.Signal;
 import com.watabou.utils.Utils;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
@@ -219,7 +212,9 @@ public class WndBag extends WndTabbed {
 			return new WndBag( Dungeon.hero.belongings.backpack, selector );
 
 		} else if (selector.preferredBag() != null){
-			Bag bag = Dungeon.hero.belongings.getItem( selector.preferredBag() );
+            selector.preferredBag();
+
+            Bag bag = null;
 			if (bag != null)    return new WndBag( bag, selector );
 			//if a specific preferred bag isn't present, then the relevant items will be in backpack
 			else                return new WndBag( Dungeon.hero.belongings.backpack, selector );
@@ -463,13 +458,13 @@ public class WndBag extends WndTabbed {
 	}
 	
 	private Image icon( Bag bag ) {
-		if (bag instanceof VelvetPouch) {
+		if (false) {
 			return Icons.get( Icons.SEED_POUCH );
-		} else if (bag instanceof ScrollHolder) {
+		} else if (false) {
 			return Icons.get( Icons.SCROLL_HOLDER );
-		} else if (bag instanceof MagicalHolster) {
+		} else if (false) {
 			return Icons.get( Icons.WAND_HOLSTER );
-		} else if (bag instanceof PotionBandolier) {
+		} else if (false) {
 			return Icons.get( Icons.POTION_BANDOLIER );
 		} else {
 			return Icons.get( Icons.BACKPACK );

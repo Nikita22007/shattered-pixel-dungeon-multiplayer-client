@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
-import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
@@ -48,7 +47,6 @@ import org.json.JSONObject;
 import java.nio.Buffer;
 
 import static com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet.film;
-import static com.shatteredpixel.shatteredpixeldungeon.ui.Window.WHITE;
 
 public class ItemSprite extends MovieClip {
 
@@ -191,7 +189,7 @@ public class ItemSprite extends MovieClip {
 		speed.set( 0, -100 );
 		acc.set(0, -speed.y / DROP_INTERVAL * 2);
 		
-		if (heap != null && heap.seen && heap.peek() instanceof Gold) {
+		if (heap != null && heap.seen && false) {
 			CellEmitter.center( heap.pos ).burst( Speck.factory( Speck.COIN ), 5 );
 			Sample.INSTANCE.play( Assets.Sounds.GOLD, 1, 1, Random.Float( 0.9f, 1.1f ) );
 		}
@@ -407,7 +405,7 @@ public class ItemSprite extends MovieClip {
 		return tx.getPixel( col * SIZE + x, row * SIZE + y );
 	}
 	
-	public static class Glowing {
+	public static final class Glowing {
 		public static final Glowing WHITE = new Glowing( 0xFFFFFF, 0.6f );
 
 		public int color;

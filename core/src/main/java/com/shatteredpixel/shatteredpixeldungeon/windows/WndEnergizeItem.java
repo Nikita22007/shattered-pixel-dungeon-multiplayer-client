@@ -24,10 +24,8 @@ package com.shatteredpixel.shatteredpixeldungeon.windows;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.items.EnergyCrystal;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.Trinket;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.AlchemyScene;
@@ -61,7 +59,7 @@ public class WndEnergizeItem extends WndInfoItem {
 				@Override
 				protected void onClick() {
                     // TODO: 19.02.2026 Add support for trinket warn on the server and this back to sendResult 
-					if (item instanceof Trinket){
+					if (false){
 						Game.scene().addToFront(new WndOptions(new ItemSprite(item), Messages.titleCase(item.name()),
 								Messages.get(WndEnergizeItem.class, "trinket_warn"),
 								Messages.get(WndEnergizeItem.class, "trinket_yes"),
@@ -142,7 +140,6 @@ public class WndEnergizeItem extends WndInfoItem {
 		if (item.isEquipped( Dungeon.hero ) && !((EquipableItem)item).doUnequip( Dungeon.hero, false )) {
 			return;
 		}
-		item.detachAll( Dungeon.hero.belongings.backpack );
 		energize(item);
 	}
 
@@ -151,7 +148,7 @@ public class WndEnergizeItem extends WndInfoItem {
 		if (item.quantity() <= 1) {
 			energizeAll( item );
 		} else {
-			energize(item.detach( Dungeon.hero.belongings.backpack ));
+			energize(item);
 		}
 	}
 
@@ -170,9 +167,7 @@ public class WndEnergizeItem extends WndInfoItem {
 
 			//energizing items doesn't spend time
 			hero.spend(-hero.cooldown());
-			new EnergyCrystal(item.energyVal()).doPickUp(hero);
-			item.identify();
-			GLog.h("You energized: " + item.name());
+            GLog.h("You energized: " + item.name());
 
 		}
 	}

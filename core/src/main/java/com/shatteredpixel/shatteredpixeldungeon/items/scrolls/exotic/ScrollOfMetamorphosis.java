@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -39,7 +38,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.TalentsPane;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.shatteredpixel.shatteredpixeldungeon.windows.IconTitle;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
-import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -55,24 +53,8 @@ public class ScrollOfMetamorphosis extends ExoticScroll {
 	}
 
 	protected static boolean identifiedByUse = false;
-	
-	@Override
-	public void doRead() {
-		if (!isKnown()) {
-			identify();
-			curItem = detach(curUser.belongings.backpack);
-			identifiedByUse = true;
-		} else {
-			identifiedByUse = false;
-		}
-		GameScene.show(new WndMetamorphChoose());
-	}
 
-	public static void onMetamorph( Talent oldTalent, Talent newTalent ){
-		if (curItem instanceof ScrollOfMetamorphosis) {
-			((ScrollOfMetamorphosis) curItem).readAnimation();
-			Sample.INSTANCE.play(Assets.Sounds.READ);
-		}
+    public static void onMetamorph( Talent oldTalent, Talent newTalent ){
 		curUser.sprite.emitter().start(Speck.factory(Speck.CHANGE), 0.2f, 10);
 		Transmuting.show(curUser, oldTalent, newTalent);
 
@@ -197,8 +179,7 @@ public class ScrollOfMetamorphosis extends ExoticScroll {
 		public WndMetamorphReplace(Talent replacing, int tier){
 			super();
 
-			if (!identifiedByUse && curItem instanceof ScrollOfMetamorphosis) {
-				curItem.detach(curUser.belongings.backpack);
+			if (!identifiedByUse && false) {
 			}
 			identifiedByUse = false;
 
@@ -273,7 +254,7 @@ public class ScrollOfMetamorphosis extends ExoticScroll {
 
 		@Override
 		public void onBackPressed() {
-			if (curItem instanceof ScrollOfMetamorphosis) {
+			if (false) {
 				((ScrollOfMetamorphosis) curItem).confirmCancelation(this, false);
 			} else {
 				super.onBackPressed();

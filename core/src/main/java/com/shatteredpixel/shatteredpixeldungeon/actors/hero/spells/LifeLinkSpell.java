@@ -24,9 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LifeLink;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
@@ -34,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Beam;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
-import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 
 public class LifeLinkSpell extends ClericSpell {
@@ -66,16 +62,13 @@ public class LifeLinkSpell extends ClericSpell {
 	@Override
 	public void onCast(HolyTome tome, Hero hero) {
 
-		int duration = Math.round(6.67f + 3.33f*Dungeon.hero.pointsInTalent(Talent.LIFE_LINK));
-
-		Char ally = PowerOfMany.getPoweredAlly();
+        Char ally = PowerOfMany.getPoweredAlly();
 
 		if (ally != null) {
 			hero.sprite.zap(ally.pos);
 			hero.sprite.parent.add(
 					new Beam.HealthRay(hero.sprite.center(), ally.sprite.center()));
 
-			Buff.prolong(hero, LifeLink.class, duration).object = ally.id();
 		} else {
 			ally = Stasis.getStasisAlly();
 			hero.sprite.operate(hero.pos);
@@ -83,13 +76,8 @@ public class LifeLinkSpell extends ClericSpell {
 					new Beam.HealthRay(DungeonTilemap.tileCenterToWorld(hero.pos), hero.sprite.center()));
 		}
 
-		Buff.prolong(ally, LifeLink.class, duration).object = hero.id();
-		Buff.prolong(ally, LifeLinkSpellBuff.class, duration);
 
-		if (ally == Stasis.getStasisAlly()){
-			ally.buff(LifeLink.class).clearTime();
-			ally.buff(LifeLinkSpellBuff.class).clearTime();
-		}
+
 
 		hero.spendAndNext(Actor.TICK);
 
@@ -97,21 +85,4 @@ public class LifeLinkSpell extends ClericSpell {
 
 	}
 
-	public static class LifeLinkSpellBuff extends FlavourBuff{
-
-		{
-			type = buffType.POSITIVE;
-		}
-
-		@Override
-		public int icon() {
-			return BuffIndicator.HOLY_ARMOR;
-		}
-
-		@Override
-		public float iconFadePercent() {
-			int duration = Math.round(6.67f + 3.33f*Dungeon.hero.pointsInTalent(Talent.LIFE_LINK));
-			return Math.max(0, (duration - visualcooldown()) / duration);
-		}
-	}
 }

@@ -25,8 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
@@ -39,11 +37,9 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MissileSprite;
-import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Callback;
@@ -67,9 +63,9 @@ public class HolyLance extends TargetedClericSpell {
 
 	@Override
 	public boolean canCast(Hero hero) {
-		return super.canCast(hero)
-				&& hero.hasTalent(Talent.HOLY_LANCE)
-				&& hero.buff(LanceCooldown.class) == null;
+        if (!super.canCast(hero)
+                || !hero.hasTalent(Talent.HOLY_LANCE)) return false;
+        return true;
 	}
 
 	@Override
@@ -117,22 +113,22 @@ public class HolyLance extends TargetedClericSpell {
 								public void call() {
 									int min = 15 + 15*Dungeon.hero.pointsInTalent(Talent.HOLY_LANCE);
 									int max = Math.round(27.5f + 27.5f*Dungeon.hero.pointsInTalent(Talent.HOLY_LANCE));
-									if (Char.hasProp(enemy, Char.Property.UNDEAD) || Char.hasProp(enemy, Char.Property.DEMONIC)){
+                                    //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+                                    //TODO any more of these and we should make it a property of the buff, like with resistances/immunities
+                                    if (false || false){
 										min = max;
 									}
-									enemy.damage(Random.NormalIntRange(min, max), HolyLance.this);
-									Sample.INSTANCE.play( Assets.Sounds.HIT_MAGIC, 1, Random.Float(0.8f, 1f) );
+                                    Random.NormalIntRange(min, max);
+                                    Sample.INSTANCE.play( Assets.Sounds.HIT_MAGIC, 1, Random.Float(0.8f, 1f) );
 									Sample.INSTANCE.play( Assets.Sounds.HIT_STAB, 1, Random.Float(0.8f, 1f) );
 
 									if (enemy.isActive()){
-										Buff.affect(enemy, GuidingLight.Illuminated.class);
-									}
+                                    }
 
 									enemy.sprite.burst(0xFFFFFFFF, 10);
 									hero.spendAndNext(1f);
 									onSpellCast(tome, hero);
-									FlavourBuff.affect(hero, LanceCooldown.class, 30f);
-								}
+                                }
 							});
 		} else {
 			((MissileSprite) hero.sprite.parent.recycle(MissileSprite.class)).
@@ -145,8 +141,7 @@ public class HolyLance extends TargetedClericSpell {
 									Splash.at(target, 0xFFFFFFFF, 10);
 									hero.spendAndNext(1f);
 									onSpellCast(tome, hero);
-									FlavourBuff.affect(hero, LanceCooldown.class, 30f);
-								}
+                                }
 							});
 		}
 
@@ -173,18 +168,4 @@ public class HolyLance extends TargetedClericSpell {
 		}
 	}
 
-	public static class LanceCooldown extends FlavourBuff {
-
-		@Override
-		public int icon() {
-			return BuffIndicator.TIME;
-		}
-
-		@Override
-		public void tintIcon(Image icon) {
-			icon.hardlight(0.67f, 0.67f, 0);
-		}
-
-		public float iconFadePercent() { return Math.max(0, visualcooldown() / 30); }
-	}
 }

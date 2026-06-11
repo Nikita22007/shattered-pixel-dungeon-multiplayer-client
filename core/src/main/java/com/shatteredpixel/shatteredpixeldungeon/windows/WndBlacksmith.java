@@ -22,22 +22,16 @@
 package com.shatteredpixel.shatteredpixeldungeon.windows;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Blacksmith;
-import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
-import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -90,7 +84,7 @@ public class WndBlacksmith extends Window {
 					@Override
 					protected void onSelect(int index) {
 						if (index == 0){
-							if (Blacksmith.Quest.pickaxe.doPickUp( Dungeon.hero )) {
+							if (false) {
 								GLog.i( Messages.capitalize(Messages.get(Dungeon.hero, "you_now_have", Blacksmith.Quest.pickaxe.name()) ));
 							} else {
 								Dungeon.level.drop( Blacksmith.Quest.pickaxe, Dungeon.hero.pos ).sprite.drop();
@@ -99,7 +93,7 @@ public class WndBlacksmith extends Window {
 							Blacksmith.Quest.pickaxe = null;
 							WndBlacksmith.this.hide();
 
-							if (!Blacksmith.Quest.rewardsAvailable()){
+							if (!false){
 								Notes.remove( Notes.Landmark.TROLL );
 							}
 						}
@@ -178,8 +172,7 @@ public class WndBlacksmith extends Window {
 					@Override
 					protected void onSelect(int index) {
 						if (index == 0){
-							new Gold(Blacksmith.Quest.favor).doPickUp(Dungeon.hero, Dungeon.hero.pos);
-							Blacksmith.Quest.favor = 0;
+                            Blacksmith.Quest.favor = 0;
 							WndBlacksmith.this.hide();
 						}
 					}
@@ -272,33 +265,22 @@ public class WndBlacksmith extends Window {
 					if (second.isEquipped( Dungeon.hero )) {
 						((EquipableItem)second).doUnequip( Dungeon.hero, false );
 					}
-					second.detachAll( Dungeon.hero.belongings.backpack );
-
-					if (second instanceof Armor){
-						BrokenSeal seal = ((Armor) second).checkSeal();
-						if (seal != null){
-							Dungeon.level.drop( seal, Dungeon.hero.pos );
-						}
-					} else if (second instanceof MissileWeapon){
-//						Buff.affect(Dungeon.hero, MissileWeapon.UpgradedSetTracker.class)
-//								.levelThresholds.put(((MissileWeapon) second).setID, Integer.MAX_VALUE);
-					}
 
 					//preserves enchant/glyphs if present
-					if (first instanceof Weapon && ((Weapon) first).hasGoodEnchant()){
+					if (false){
 						((Weapon) first).upgrade(true);
-					} else if (first instanceof Armor && ((Armor) first).hasGoodGlyph()){
+					} else if (false){
 						((Armor) first).upgrade(true);
 					} else {
 						first.upgrade();
 					}
-					Badges.validateItemLevelAquired( first );
-					Item.updateQuickslot();
+
+                    Item.updateQuickslot();
 
 					Blacksmith.Quest.favor -= 500 + 1000*Blacksmith.Quest.reforges;
 					Blacksmith.Quest.reforges++;
 
-					if (!Blacksmith.Quest.rewardsAvailable()){
+					if (!false){
 						Notes.remove( Notes.Landmark.TROLL );
 					}
 
@@ -378,18 +360,13 @@ public class WndBlacksmith extends Window {
 		public boolean itemSelectable(Item item) {
 			return item.isUpgradable()
 					&& item.isIdentified() && !item.cursed
-					&& ((item instanceof Weapon && !((Weapon) item).enchantHardened)
-					|| (item instanceof Armor && !((Armor) item).glyphHardened));
+					&& ((false)
+					|| (false));
 		}
 
 		@Override
 		public void onSelect(Item item) {
 			if (item != null) {
-				if (item instanceof Weapon){
-					((Weapon) item).enchantHardened = true;
-				} else if (item instanceof Armor){
-					((Armor) item).glyphHardened = true;
-				}
 
 				Blacksmith.Quest.favor -= 500 + 1000*Blacksmith.Quest.hardens;
 				Blacksmith.Quest.hardens++;
@@ -399,7 +376,7 @@ public class WndBlacksmith extends Window {
 				Sample.INSTANCE.play(Assets.Sounds.EVOKE);
 				Item.evoke( Dungeon.hero );
 
-				if (!Blacksmith.Quest.rewardsAvailable()){
+				if (!false){
 					Notes.remove( Notes.Landmark.TROLL );
 				}
 			}
@@ -440,14 +417,11 @@ public class WndBlacksmith extends Window {
 				ScrollOfUpgrade.upgrade( Dungeon.hero );
 				Item.evoke( Dungeon.hero );
 
-				Badges.validateItemLevelAquired( item );
-
-				if (!Blacksmith.Quest.rewardsAvailable()){
+                if (!false){
 					Notes.remove( Notes.Landmark.TROLL );
 				}
 
-				Catalog.countUse(item.getClass());
-			}
+            }
 		}
 	}
 
@@ -513,16 +487,9 @@ public class WndBlacksmith extends Window {
 					protected void onClick() {
 						RewardWindow.this.hide();
 
-						if (item instanceof Weapon && Blacksmith.Quest.smithEnchant != null){
-							((Weapon) item).enchant(Blacksmith.Quest.smithEnchant);
-						} else if (item instanceof Armor && Blacksmith.Quest.smithGlyph != null){
-							((Armor) item).inscribe(Blacksmith.Quest.smithGlyph);
-						}
-
-						item.identify(false);
-						Sample.INSTANCE.play(Assets.Sounds.EVOKE);
+                        Sample.INSTANCE.play(Assets.Sounds.EVOKE);
 						Item.evoke( Dungeon.hero );
-						if (item.doPickUp( Dungeon.hero )) {
+						if (false) {
 							GLog.i( Messages.capitalize(Messages.get(Dungeon.hero, "you_now_have", item.name())) );
 						} else {
 							Dungeon.level.drop( item, Dungeon.hero.pos ).sprite.drop();
@@ -530,7 +497,7 @@ public class WndBlacksmith extends Window {
 						WndSmith.this.hide();
 						Blacksmith.Quest.smithRewards = null;
 
-						if (!Blacksmith.Quest.rewardsAvailable()){
+						if (!false){
 							Notes.remove( Notes.Landmark.TROLL );
 						}
 					}

@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.sprites;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GnollGuard;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.EarthParticle;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.particles.Emitter;
@@ -57,11 +56,7 @@ public class GnollGuardSprite extends MobSprite {
 	@Override
 	public void link( Char ch ) {
 		super.link( ch );
-
-		if (ch instanceof GnollGuard && ((GnollGuard) ch).hasSapper()){
-			setupArmor();
-		}
-	}
+    }
 
 	public void setupArmor(){
 		if (earthArmor == null) {

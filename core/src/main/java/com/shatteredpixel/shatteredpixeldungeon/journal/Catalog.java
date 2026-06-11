@@ -151,19 +151,16 @@ public enum Catalog {
 		for (Catalog cat : values()) {
 			if (cat.seen.containsKey(cls) && !cat.seen.get(cls)) {
 				cat.seen.put(cls, true);
-				Journal.saveNeeded = true;
-			}
+            }
 		}
-		Badges.validateCatalogBadges();
-	}
+    }
 
 	public static void updateItem(String catalogName, Class<?> cls, boolean isSeen, int count) {
 		try {
 			Catalog cat = valueOf(catalogName);
 			cat.seen.put(cls, isSeen);
 			cat.useCount.put(cls, count);
-			Journal.saveNeeded = true;
-		} catch (Exception e) {
+        } catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -172,31 +169,6 @@ public enum Catalog {
 		for (Catalog cat : values()) {
 			cat.seen.clear();
 			cat.useCount.clear();
-		}
-	}
-
-	public static int useCount(Class<?> cls){
-		for (Catalog cat : values()) {
-			if (cat.useCount.containsKey(cls)) {
-				return cat.useCount.get(cls);
-			}
-		}
-		return 0;
-	}
-
-	public static void countUse(Class<?> cls){
-		countUses(cls, 1);
-	}
-
-	public static void countUses(Class<?> cls, int uses){
-		for (Catalog cat : values()) {
-			if (cat.useCount.containsKey(cls) && cat.useCount.get(cls) != Integer.MAX_VALUE) {
-				cat.useCount.put(cls, cat.useCount.get(cls)+uses);
-				if (cat.useCount.get(cls) < -1_000_000_000){ //to catch cases of overflow
-					cat.useCount.put(cls, Integer.MAX_VALUE);
-				}
-				Journal.saveNeeded = true;
-			}
 		}
 	}
 
@@ -242,7 +214,6 @@ public enum Catalog {
 	public static void restore( Bundle bundle ){
 
 		//old logic for pre-v2.5 catalog-specific badges
-		Badges.loadGlobal();
 		for (Catalog cat : values()){
 			if (Badges.isUnlocked(catalogBadges.get(cat))){
 				for (Class<?> item : cat.items()){

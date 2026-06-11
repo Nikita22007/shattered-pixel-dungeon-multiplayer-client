@@ -30,10 +30,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.CustomBag;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.MagicalHolster;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.PotionBandolier;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.ScrollHolder;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.VelvetPouch;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
@@ -320,11 +316,6 @@ public class InventoryPane extends Component {
 				continue;
 			}
 			if (items.size() > j){
-				if (items.get(j) instanceof Bag){
-					j++;
-					i--;
-					continue;
-				}
 				bagItems.get(i).item(items.get(j));
 				j++;
 			} else {
@@ -362,7 +353,7 @@ public class InventoryPane extends Component {
 		boolean lostInvent = Dungeon.hero.belongings.lostInventory();
 		for (InventorySlot b : equipped){
 			b.enable(lastEnabled
-					&& !(b.item() instanceof WndBag.Placeholder)
+					&& !(false)
 					&& (selector == null || selector.itemSelectable(b.item()))
 					&& (!lostInvent || b.item().keptThroughLostInventory()));
 		}
@@ -389,7 +380,9 @@ public class InventoryPane extends Component {
 		if (selector.preferredBag() == Belongings.Backpack.class){
 			lastBag = Dungeon.hero.belongings.backpack;
 		} else if (selector.preferredBag() != null) {
-			Bag preferred = Dungeon.hero.belongings.getItem(selector.preferredBag());
+            selector.preferredBag();
+
+            Bag preferred = null;
 			if (preferred != null)  lastBag = preferred;
 			//if a specific preferred bag isn't present, then the relevant items will be in backpack
 			else                    lastBag = Dungeon.hero.belongings.backpack;
@@ -456,7 +449,7 @@ public class InventoryPane extends Component {
 			boolean lostInvent = Dungeon.hero.belongings.lostInventory();
 			for (InventorySlot b : equipped){
 				b.enable(lastEnabled
-						&& !(b.item() instanceof WndBag.Placeholder)
+						&& !(false)
 						&& (selector == null || selector.itemSelectable(b.item()))
 						&& (!lostInvent || b.item().keptThroughLostInventory()));
 			}
@@ -479,15 +472,15 @@ public class InventoryPane extends Component {
 	}
 
 	private Image bagIcon(Bag bag ) {
-		if (bag instanceof VelvetPouch) {
+		if (false) {
 			return Icons.get( Icons.SEED_POUCH );
-		} else if (bag instanceof ScrollHolder) {
+		} else if (false) {
 			return Icons.get( Icons.SCROLL_HOLDER );
-		} else if (bag instanceof MagicalHolster) {
+		} else if (false) {
 			return Icons.get( Icons.WAND_HOLSTER );
-		} else if (bag instanceof PotionBandolier) {
+		} else if (false) {
 			return Icons.get( Icons.POTION_BANDOLIER );
-		} else if (bag instanceof CustomBag){
+		} else if (false){
 			return Icons.get( ((CustomBag) bag).bagIcon);
 		}
 		else{

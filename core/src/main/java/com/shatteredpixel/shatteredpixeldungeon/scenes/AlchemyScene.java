@@ -21,19 +21,15 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.scenes;
 
-import com.badlogic.gdx.Gdx;
 import com.shatteredpixel.shatteredpixeldungeon.*;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.SparkParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.*;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.TrinketCatalyst;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Journal;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
 import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
@@ -77,7 +73,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import com.watabou.utils.RectF;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class AlchemyScene extends PixelScene {
@@ -93,9 +88,8 @@ public class AlchemyScene extends PixelScene {
 	private IconButton cancel;
 	private IconButton repeat;
 	private static ArrayList<Item> lastIngredients = new ArrayList<>();
-	private static Recipe lastRecipe = null;
 
-	private Emitter smokeEmitter;
+    private Emitter smokeEmitter;
 	private Emitter bubbleEmitter;
 	private Emitter sparkEmitter;
 	
@@ -275,7 +269,9 @@ public class AlchemyScene extends PixelScene {
 
 									for(Item i : bag.items){
 										if (Dungeon.hero.belongings.lostInventory() && !i.keptThroughLostInventory()) items.remove(i);
-										if (!Recipe.usableInRecipe(i)) items.remove(i);
+										//only upgradeable thrown weapons and wands allowed among equipment items
+										//other items can be unidentified, but not cursed
+										if (!!i.cursed) items.remove(i);
 									}
 
 									if (items.size() == 0){
@@ -308,10 +304,10 @@ public class AlchemyScene extends PixelScene {
 												if (item != null && inputs[0] != null) {
 													for (int i = 0; i < inputs.length; i++) {
 														if (inputs[i].item() == null) {
-															if (item instanceof LiquidMetal || item instanceof MissileWeapon){
-																inputs[i].item(item.detachAll(Dungeon.hero.belongings.backpack));
+															if (false || false){
+																inputs[i].item(item);
 															} else {
-																inputs[i].item(item.detach(Dungeon.hero.belongings.backpack));
+																inputs[i].item(item);
 															}
 															break;
 														}
@@ -358,7 +354,7 @@ public class AlchemyScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				super.onClick();
-				if (lastRecipe != null){
+				if (null != null){
 					populate(lastIngredients, Dungeon.hero.belongings);
 				}
 			}
@@ -378,9 +374,8 @@ public class AlchemyScene extends PixelScene {
 		add(repeat);
 
 		lastIngredients.clear();
-		lastRecipe = null;
 
-		for (int i = 0; i < inputs.length; i++){
+        for (int i = 0; i < inputs.length; i++){
 			combines[i] = new CombineButton(i);
 			combines[i].enable(false);
 
@@ -532,12 +527,8 @@ public class AlchemyScene extends PixelScene {
 		align(btnGuide);
 		add(btnGuide);
 
-		TrinketCatalyst cata = Dungeon.hero.belongings.getItem(TrinketCatalyst.class);
-		if (cata != null && cata.hasRolledTrinkets()){
-			addToFront(new TrinketCatalyst.WndTrinket(cata));
-		}
 
-		fadeIn();
+        fadeIn();
 
 	}
 	
@@ -565,7 +556,9 @@ public class AlchemyScene extends PixelScene {
 
 		@Override
 		public boolean itemSelectable(Item item) {
-			return Recipe.usableInRecipe(item);
+			//only upgradeable thrown weapons and wands allowed among equipment items
+			//other items can be unidentified, but not cursed
+			return !item.cursed;
 		}
 
 		@Override
@@ -574,10 +567,10 @@ public class AlchemyScene extends PixelScene {
 				if (item != null && inputs[0] != null) {
 					for (int i = 0; i < inputs.length; i++) {
 						if (inputs[i].item() == null) {
-							if (item instanceof LiquidMetal || item instanceof MissileWeapon){
-								inputs[i].item(item.detachAll(Dungeon.hero.belongings.backpack));
+							if (false || false){
+								inputs[i].item(item);
 							} else {
-								inputs[i].item(item.detach(Dungeon.hero.belongings.backpack));
+								inputs[i].item(item);
 							}
 							break;
 						}
@@ -668,119 +661,7 @@ public class AlchemyScene extends PixelScene {
 		}
 
 	}
-	
-	private void combine( int slot ){
-		
-		ArrayList<Item> ingredients = filterInput(Item.class);
-		if (ingredients.isEmpty()) return;
 
-		lastIngredients.clear();
-		for (Item i : ingredients){
-			lastIngredients.add(i.duplicate());
-		}
-
-		ArrayList<Recipe> recipes = Recipe.findRecipes(ingredients);
-		if (recipes.size() <= slot) return;
-
-		Recipe recipe = recipes.get(slot);
-		
-		Item result = null;
-		
-		if (recipe != null){
-			int cost = recipe.cost(ingredients);
-
-//			if (toolkit != null){
-//				cost = toolkit.consumeEnergy(cost);
-//			}
-			Catalog.countUses(EnergyCrystal.class, cost);
-			Dungeon.energy -= cost;
-
-			String energyText = Messages.get(AlchemyScene.class, "energy") + " " + Dungeon.energy;
-			if (hasToolkit){
-				energyText += "+" + toolkitEnergy;
-			}
-			energyLeft.text(energyText);
-			energyLeft.setPos(
-					centerW - energyLeft.width()/2,
-					energyLeft.top()
-			);
-
-			energyIcon.x = energyLeft.left() - energyIcon.width();
-			align(energyIcon);
-
-			energyAdd.setPos(energyLeft.right(), energyAdd.top());
-			align(energyAdd);
-			
-			result = recipe.brew(ingredients);
-		}
-		
-		if (result != null){
-
-			craftItem(ingredients, result);
-
-		}
-
-		boolean foundItems = true;
-		for (Item i : lastIngredients){
-			Item found = Dungeon.hero.belongings.getSimilar(i);
-			if (found == null){ //atm no quantity check as items are always loaded individually
-				//currently found can be true if we need, say, 3x of an item but only have 2x of it
-				foundItems = false;
-			}
-		}
-
-		lastRecipe = recipe;
-		repeat.enable(foundItems);
-
-		cancel.enable(false);
-		synchronized (inputs) {
-			for (int i = 0; i < inputs.length; i++) {
-				if (inputs[i] != null && inputs[i].item() != null) {
-					cancel.enable(true);
-					break;
-				}
-			}
-		}
-
-		if (alchGuide != null){
-			alchGuide.updateList();
-		}
-	}
-
-	public void craftItem( ArrayList<Item> ingredients, Item result ){
-		bubbleEmitter.start(Speck.factory( Speck.BUBBLE ), 0.01f, 100 );
-		smokeEmitter.burst(Speck.factory( Speck.WOOL ), 10 );
-		Sample.INSTANCE.play( Assets.Sounds.PUFF );
-
-		int resultQuantity = result.quantity();
-		if (!result.collect()){
-			Dungeon.level.drop(result, Dungeon.hero.pos);
-		}
-
-		Statistics.itemsCrafted++;
-		Badges.validateItemsCrafted();
-
-
-
-		synchronized (inputs) {
-			for (int i = 0; i < inputs.length; i++) {
-				if (inputs[i] != null && inputs[i].item() != null) {
-					Item item = inputs[i].item();
-					if (item.quantity() <= 0) {
-						inputs[i].item(null);
-					} else {
-						inputs[i].slot.updateText();
-					}
-				}
-			}
-		}
-
-		updateState();
-		//we reset the quantity in case the result was merged into another stack in the backpack
-		result.quantity(resultQuantity);
-		outputs[0].item(result);
-	}
-	
 	public void populate(ArrayList<Item> toFind, Belongings inventory){
 		clearSlots();
 		
@@ -790,10 +671,10 @@ public class AlchemyScene extends PixelScene {
 			ArrayList<Item> found = inventory.getAllSimilar(finding);
 			while (!found.isEmpty() && needed > 0){
 				Item detached;
-				if (finding instanceof LiquidMetal || finding instanceof MissileWeapon) {
-					detached = found.get(0).detachAll(inventory.backpack);
+				if (false || false) {
+					detached = found.get(0);
 				} else {
-					detached = found.get(0).detach(inventory.backpack);
+					detached = found.get(0);
 				}
 				inputs[curslot].item(detached);
 				curslot++;
@@ -821,7 +702,7 @@ public class AlchemyScene extends PixelScene {
 			for (int i = 0; i < inputs.length; i++) {
 				if (inputs[i] != null && inputs[i].item() != null) {
 					Item item = inputs[i].item();
-					if (!item.collect()) {
+                    if (!false) {
 						Dungeon.level.drop(item, Dungeon.hero.pos);
 					}
 					inputs[i].item(null);
@@ -829,7 +710,7 @@ public class AlchemyScene extends PixelScene {
 			}
 		}
 		cancel.enable(false);
-		repeat.enable(lastRecipe != null);
+		repeat.enable(null != null);
 		if (alchGuide != null){
 			alchGuide.updateList();
 		}
@@ -875,7 +756,6 @@ public class AlchemyScene extends PixelScene {
 				}
 			}
 		};
-		item.identify();
 		IconTitle newName = new IconTitle(item){
 
 			boolean fading;
@@ -971,7 +851,7 @@ public class AlchemyScene extends PixelScene {
 				public GameAction keyAction() {
 					for (InputButton i : inputs){
 						if (i != null) {
-							if (i.item == null || i.item instanceof WndBag.Placeholder) {
+							if (i.item == null || false) {
 								if (i == InputButton.this) {
 									return SPDAction.INVENTORY;
 								} else {
@@ -985,7 +865,7 @@ public class AlchemyScene extends PixelScene {
 
 				@Override
 				protected String hoverText() {
-					if (item == null || item instanceof WndBag.Placeholder){
+					if (item == null || false){
 						return Messages.get(AlchemyScene.class, "add");
 					}
 					return super.hoverText();

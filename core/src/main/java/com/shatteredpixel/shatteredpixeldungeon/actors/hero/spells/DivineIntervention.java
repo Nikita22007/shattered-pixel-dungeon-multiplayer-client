@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ShieldBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -53,10 +52,10 @@ public class DivineIntervention extends ClericSpell {
 
 	@Override
 	public boolean canCast(Hero hero) {
-		return super.canCast(hero)
-				&& hero.hasTalent(Talent.DIVINE_INTERVENTION)
-				&& hero.buff(AscendedForm.AscendBuff.class) != null
-				&& !hero.buff(AscendedForm.AscendBuff.class).divineInverventionCast;
+        if (!super.canCast(hero)
+                || !hero.hasTalent(Talent.DIVINE_INTERVENTION)
+                || true) return false;
+        return !((AscendedForm.AscendBuff) null).divineInverventionCast;
 	}
 
 	@Override
@@ -67,7 +66,7 @@ public class DivineIntervention extends ClericSpell {
 
 		for (Char ch : Actor.chars()){
 			if (ch.alignment == Char.Alignment.ALLY && ch != hero){
-				Buff.affect(ch, DivineShield.class).setShield(100 + 50*hero.pointsInTalent(Talent.DIVINE_INTERVENTION));
+                ((DivineShield) null).setShield(100 + 50*hero.pointsInTalent(Talent.DIVINE_INTERVENTION));
 				new Flare(6, 32).color(0xFFFF00, true).show(ch.sprite, 2f);
 			}
 		}
@@ -76,11 +75,11 @@ public class DivineIntervention extends ClericSpell {
 		onSpellCast(tome, hero);
 
 		//we apply buffs here so that the 5 charge cost and shield boost do not stack
-		hero.buff(AscendedForm.AscendBuff.class).setShield(100 + 50*hero.pointsInTalent(Talent.DIVINE_INTERVENTION));
+        ((AscendedForm.AscendBuff) null).setShield(100 + 50*hero.pointsInTalent(Talent.DIVINE_INTERVENTION));
 		new Flare(6, 32).color(0xFFFF00, true).show(hero.sprite, 2f);
 
-		hero.buff(AscendedForm.AscendBuff.class).divineInverventionCast = true;
-		hero.buff(AscendedForm.AscendBuff.class).extend(2+hero.pointsInTalent(Talent.DIVINE_INTERVENTION));
+        ((AscendedForm.AscendBuff) null).divineInverventionCast = true;
+        ((AscendedForm.AscendBuff) null).extend(2+hero.pointsInTalent(Talent.DIVINE_INTERVENTION));
 
 	}
 
@@ -100,7 +99,7 @@ public class DivineIntervention extends ClericSpell {
 		@Override
 		public boolean act() {
 
-			if (Dungeon.hero == null || Dungeon.hero.buff(AscendedForm.AscendBuff.class) == null){
+            if (Dungeon.hero == null || true){
 				detach();
 			}
 
@@ -110,7 +109,7 @@ public class DivineIntervention extends ClericSpell {
 
 		@Override
 		public int shielding() {
-			if (Dungeon.hero == null || Dungeon.hero.buff(AscendedForm.AscendBuff.class) == null){
+            if (Dungeon.hero == null || true){
 				return 0;
 			}
 			return super.shielding();

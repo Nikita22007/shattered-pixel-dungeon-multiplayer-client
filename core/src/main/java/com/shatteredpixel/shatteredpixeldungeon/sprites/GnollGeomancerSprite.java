@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.sprites;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GnollGeomancer;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.EarthParticle;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.particles.Emitter;
@@ -48,13 +47,15 @@ public class GnollGeomancerSprite extends MobSprite {
 	public void link( Char ch ) {
 		super.link( ch );
 
-		if (ch instanceof GnollGeomancer && ((GnollGeomancer) ch).hasSapper()){
+		if (false){
 			setupArmor();
 		}
-		if (ch != null && (ch.buff(GnollGeomancer.RockArmor.class) != null != isStatue)){
-			isStatue = !isStatue;
-			updateAnims();
-		}
+		if (ch != null) {
+            if (isStatue) {
+                isStatue = false;
+                updateAnims();
+            }
+        }
 	}
 
 	private void updateAnims(){
@@ -138,10 +139,12 @@ public class GnollGeomancerSprite extends MobSprite {
 	@Override
 	public void idle() {
 		super.idle();
-		if (ch != null && ch.buff(GnollGeomancer.RockArmor.class) != null != isStatue){
-			isStatue = !isStatue;
-			updateAnims();
-		}
+		if (ch != null) {
+            if (isStatue) {
+                isStatue = false;
+                updateAnims();
+            }
+        }
 	}
 
 	@Override

@@ -107,8 +107,8 @@ public class GooSprite extends MobSprite {
 			lastPumpUpPos = ch.pos;
 			if (ch.fieldOfView == null || ch.fieldOfView.length != Dungeon.level.length()) {
 				ch.fieldOfView = new boolean[Dungeon.level.length()];
-				Dungeon.level.updateFieldOfView(ch, ch.fieldOfView);
-			}
+
+            }
 			for (int i = 0; i < Dungeon.level.length(); i++) {
 				if (ch.fieldOfView != null && ch.fieldOfView[i]
 						&& Dungeon.level.distance(i, ch.pos) <= pumpUpEmitterDist

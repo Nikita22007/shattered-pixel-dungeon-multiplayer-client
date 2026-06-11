@@ -22,19 +22,12 @@
 package com.shatteredpixel.shatteredpixeldungeon.sprites;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Necromancer;
-import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
-import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShadowParticle;
 import com.watabou.noosa.TextureFilm;
-import com.watabou.noosa.audio.Sample;
-import com.watabou.noosa.particles.Emitter;
 
+@SuppressWarnings("unused")
 public class SpectralNecromancerSprite extends MobSprite {
 
-	private Animation charging;
-	private Emitter summoningParticles;
+	private final Animation charging;
 
 	public SpectralNecromancerSprite(){
 		super();
@@ -64,57 +57,6 @@ public class SpectralNecromancerSprite extends MobSprite {
 		idle();
 	}
 
-	@Override
-	public void link(Char ch) {
-		super.link(ch);
-		if (ch instanceof Necromancer && ((Necromancer) ch).summoning){
-			zap(((Necromancer) ch).summoningPos);
-		}
-	}
-
-	@Override
-	public void update() {
-		super.update();
-		if (summoningParticles != null && ((Necromancer) ch).summoningPos != -1){
-			summoningParticles.visible = Dungeon.level.heroFOV[((Necromancer) ch).summoningPos];
-		}
-	}
-
-	@Override
-	public void die() {
-		super.die();
-		if (summoningParticles != null){
-			summoningParticles.on = false;
-			summoningParticles = null;
-		}
-	}
-
-	@Override
-	public void kill() {
-		super.kill();
-		if (summoningParticles != null){
-			summoningParticles.on = false;
-			summoningParticles = null;
-		}
-	}
-
-	public void cancelSummoning(){
-		if (summoningParticles != null){
-			summoningParticles.on = false;
-			summoningParticles = null;
-		}
-	}
-
-	public void finishSummoning(){
-		if (summoningParticles.visible) {
-			Sample.INSTANCE.play(Assets.Sounds.CURSED);
-			summoningParticles.burst(ShadowParticle.CURSE, 5);
-		} else {
-			summoningParticles.on = false;
-		}
-		summoningParticles = null;
-		idle();
-	}
 
 	public void charge(){
 		play(charging);
@@ -123,32 +65,14 @@ public class SpectralNecromancerSprite extends MobSprite {
 	@Override
 	public void zap(int cell) {
 		super.zap(cell);
-		if (ch instanceof Necromancer && ((Necromancer) ch).summoning){
-			if (summoningParticles != null){
-				summoningParticles.on = false;
-			}
-			summoningParticles = CellEmitter.get(((Necromancer) ch).summoningPos);
-			summoningParticles.pour(ShadowParticle.MISSILE, 0.1f);
-			summoningParticles.visible = Dungeon.level.heroFOV[((Necromancer) ch).summoningPos];
-			if (visible || summoningParticles.visible ) Sample.INSTANCE.play( Assets.Sounds.CHARGEUP, 1f, 0.8f );
-		}
 	}
 
 	@Override
 	public void onComplete(Animation anim) {
 		super.onComplete(anim);
 		if (anim == zap){
-			if (ch instanceof Necromancer){
-				if (((Necromancer) ch).summoning){
-					charge();
-				} else {
-					//((Necromancer)ch).onZapComplete();
-					idle();
-				}
-			} else {
-				idle();
-			}
-		}
+            idle();
+        }
 	}
 
 }

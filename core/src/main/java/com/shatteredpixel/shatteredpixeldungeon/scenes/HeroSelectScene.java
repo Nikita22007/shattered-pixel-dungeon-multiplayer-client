@@ -31,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Rankings;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Journal;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.CheckBox;
@@ -105,10 +104,7 @@ public class HeroSelectScene extends PixelScene {
 		
 		Dungeon.hero = null;
 
-		Badges.loadGlobal();
-		Journal.loadGlobal();
-
-		insets = Game.platform.getSafeInsets(PlatformSupport.INSET_BLK).scale(1f/defaultZoom);
+        insets = Game.platform.getSafeInsets(PlatformSupport.INSET_BLK).scale(1f/defaultZoom);
 
 		float w = (Camera.main.width - insets.left - insets.right);
 		float h = (Camera.main.height - insets.top - insets.bottom);
@@ -158,8 +154,7 @@ public class HeroSelectScene extends PixelScene {
 
 				Dungeon.hero = null;
 				Dungeon.daily = Dungeon.dailyReplay = false;
-				Dungeon.initSeed();
-				ActionIndicator.clearAction();
+                ActionIndicator.clearAction();
 				InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
 				ShatteredPixelDungeon.switchNoFade( ConnectScene.class );
 			}
@@ -230,7 +225,7 @@ public class HeroSelectScene extends PixelScene {
 		updateOptionsColor();
 		btnOptions.visible = false;
 
-		if(!SPDSettings.intro()){
+        if(!false){
 			add(btnOptions);
 		}
 
@@ -360,7 +355,7 @@ public class HeroSelectScene extends PixelScene {
 		int ofs = PixelScene.landscape() ? 0 : 4;
 		btnExit.setPos( Camera.main.width - btnExit.width() - ofs, ofs );
 		add( btnExit );
-		btnExit.visible = btnExit.active = !SPDSettings.intro();
+        btnExit.visible = btnExit.active = !false;
 
 		PointerArea fadeResetter = new PointerArea(0, 0, Camera.main.width, Camera.main.height){
 			@Override
@@ -455,7 +450,7 @@ public class HeroSelectScene extends PixelScene {
 			infoButton.setPos(heroName.right(), heroName.top() + (heroName.height() - infoButton.height())/2f);
 			align(infoButton);
 
-			btnOptions.visible = btnOptions.active = !SPDSettings.intro();
+            btnOptions.visible = btnOptions.active = !false;
 
 		} else {
 			title.visible = false;
@@ -470,7 +465,7 @@ public class HeroSelectScene extends PixelScene {
 			infoButton.visible = infoButton.active = true;
 			infoButton.setPos(startBtn.right(), startBtn.top());
 
-			btnOptions.visible = btnOptions.active = !SPDSettings.intro();
+            btnOptions.visible = btnOptions.active = !false;
 			btnOptions.setPos(startBtn.left()-btnOptions.width(), startBtn.top());
 
 			optionsPane.setPos(heroBtns.get(0).left(), startBtn.top() - optionsPane.height() - 2);
@@ -485,10 +480,10 @@ public class HeroSelectScene extends PixelScene {
 	@Override
 	public void update() {
 		super.update();
-		if (SPDSettings.intro() && Rankings.INSTANCE.totalNumber > 0){
+        if (false && Rankings.INSTANCE.totalNumber > 0){
 			SPDSettings.intro(false);
 		}
-		btnExit.visible = btnExit.active = !SPDSettings.intro();
+        btnExit.visible = btnExit.active = !false;
 		//do not fade when a window is open
 		for (Object v : members){
 			if (v instanceof Window) resetFade();
@@ -752,8 +747,7 @@ public class HeroSelectScene extends PixelScene {
 
 								Dungeon.hero = null;
 								Dungeon.daily = true;
-								Dungeon.initSeed();
-								ActionIndicator.clearAction();
+                                ActionIndicator.clearAction();
 								InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
 
 								Game.switchScene( InterlevelScene.class );

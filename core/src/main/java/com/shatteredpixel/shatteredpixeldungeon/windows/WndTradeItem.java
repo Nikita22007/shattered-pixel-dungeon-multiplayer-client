@@ -24,24 +24,16 @@ package com.shatteredpixel.shatteredpixeldungeon.windows;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
 import com.shatteredpixel.shatteredpixeldungeon.items.*;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.MasterThievesArmband;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.CurrencyIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
-import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import org.json.JSONObject;
 
 public class WndTradeItem extends WndInfoItem {
@@ -67,14 +59,10 @@ public class WndTradeItem extends WndInfoItem {
 		//find the shopkeeper in the current level
 		Shopkeeper shop = null;
 		for (Char ch : Actor.chars()){
-			if (ch instanceof Shopkeeper){
-				shop = (Shopkeeper) ch;
-				break;
-			}
 		}
 		final Shopkeeper finalShop = shop;
 
-		if (item.quantity() == 1 || (item instanceof MissileWeapon && item.isUpgradable())) {
+		if (item.quantity() == 1 || (false)) {
 
 //			if (item instanceof MissileWeapon && ((MissileWeapon) item).extraThrownLeft){
 //				RenderedTextBlock warn = PixelScene.renderTextBlock(Messages.get(WndUpgrade.class, "thrown_dust"), 6);
@@ -157,65 +145,7 @@ public class WndTradeItem extends WndInfoItem {
 
 		pos = btnBuy.bottom();
 
-		final MasterThievesArmband.Thievery thievery = Dungeon.hero.buff(MasterThievesArmband.Thievery.class);
-		if (thievery != null && !thievery.isCursed() && thievery.chargesToUse(item) > 0) {
-			final float chance = thievery.stealChance(item);
-			final int chargesToUse = thievery.chargesToUse(item);
-			RedButton btnSteal = new RedButton(Messages.get(this, "steal", Math.min(100, (int) (chance * 100)), chargesToUse), 6) {
-				@Override
-				protected void onClick() {
-					if (chance >= 1){
-						thievery.steal(item);
-						Hero hero = Dungeon.hero;
-						Item item = heap.pickUp();
-						hide();
-
-						if (!item.doPickUp(hero)) {
-							Dungeon.level.drop(item, heap.pos).sprite.drop();
-						}
-					} else {
-						GameScene.show(new WndOptions(new ItemSprite(ItemSpriteSheet.ARTIFACT_ARMBAND),
-								Messages.titleCase(Messages.get(MasterThievesArmband.class, "name")),
-								Messages.get(WndTradeItem.class, "steal_warn"),
-								Messages.get(WndTradeItem.class, "steal_warn_yes"),
-								Messages.get(WndTradeItem.class, "steal_warn_no")){
-							@Override
-							protected void onSelect(int index) {
-								super.onSelect(index);
-								if (index == 0){
-									if (thievery.steal(item)) {
-										Hero hero = Dungeon.hero;
-										Item item = heap.pickUp();
-										WndTradeItem.this.hide();
-
-										if (!item.doPickUp(hero)) {
-											Dungeon.level.drop(item, heap.pos).sprite.drop();
-										}
-									} else {
-										for (Mob mob : Dungeon.level.mobs) {
-											if (mob instanceof Shopkeeper) {
-												mob.yell(Messages.get(mob, "thief"));
-												((Shopkeeper) mob).flee();
-												break;
-											}
-										}
-										WndTradeItem.this.hide();
-									}
-								}
-							}
-						});
-					}
-				}
-			};
-			btnSteal.setRect(0, pos + 1, width, BTN_HEIGHT);
-			btnSteal.icon(new ItemSprite(ItemSpriteSheet.ARTIFACT_ARMBAND));
-			add(btnSteal);
-
-			pos = btnSteal.bottom();
-
-		}
-
-		resize(width, (int) pos);
+        resize(width, (int) pos);
 	}
 
     public WndTradeItem(JSONObject windowObj) {
@@ -316,7 +246,7 @@ public class WndTradeItem extends WndInfoItem {
 						hide();
 					} else {
 						GameScene.show(new WndOptions(new ItemSprite(ItemSpriteSheet.ARTIFACT_ARMBAND),
-								Messages.titleCase(Messages.get(MasterThievesArmband.class, "name")),
+								//Messages.titleCase(Messages.get(MasterThievesArmband.class, "name")),
 								Messages.get(WndTradeItem.class, "steal_warn"),
 								Messages.get(WndTradeItem.class, "steal_warn_yes"),
 								Messages.get(WndTradeItem.class, "steal_warn_no")) {
@@ -363,18 +293,11 @@ public class WndTradeItem extends WndInfoItem {
 		if (item.isEquipped( hero ) && !((EquipableItem)item).doUnequip( hero, false )) {
 			return;
 		}
-		item.detachAll( hero.belongings.backpack );
-
-		if (item instanceof MissileWeapon && item.isUpgradable()){
-			//Buff.affect(hero, MissileWeapon.UpgradedSetTracker.class).levelThresholds.put(((MissileWeapon) item).setID, Integer.MAX_VALUE);
-		}
 
 		//selling items in the sell interface doesn't spend time
 		hero.spend(-hero.cooldown());
 
-		new Gold( item.value() ).doPickUp( hero );
-
-		if (shop != null){
+        if (shop != null){
 			shop.buybackItems.add(item);
 			while (shop.buybackItems.size() > Shopkeeper.MAX_BUYBACK_HISTORY){
 				shop.buybackItems.remove(0);
@@ -393,15 +316,14 @@ public class WndTradeItem extends WndInfoItem {
 		} else {
 			
 			Hero hero = Dungeon.hero;
-			
-			item = item.detach( hero.belongings.backpack );
+
+			item = item;
 
 			//selling items in the sell interface doesn't spend time
 			hero.spend(-hero.cooldown());
 
-			new Gold( item.value() ).doPickUp( hero );
 
-			if (shop != null){
+            if (shop != null){
 				shop.buybackItems.add(item);
 				while (shop.buybackItems.size() > Shopkeeper.MAX_BUYBACK_HISTORY){
 					shop.buybackItems.remove(0);
@@ -417,9 +339,8 @@ public class WndTradeItem extends WndInfoItem {
 		
 		int price = Shopkeeper.sellPrice( item );
 		Dungeon.hero.gold -= price;
-		Catalog.countUses(Gold.class, price);
-		
-		if (!item.doPickUp( Dungeon.hero )) {
+
+		if (!false) {
 			Dungeon.level.drop( item, heap.pos ).sprite.drop();
 		}
 	}

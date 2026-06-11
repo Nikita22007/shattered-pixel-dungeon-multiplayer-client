@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.windows;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
-import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.Client;
@@ -36,8 +35,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.watabou.noosa.Game;
-
-import java.io.IOException;
 
 public class WndGame extends Window {
 
@@ -110,17 +107,12 @@ public class WndGame extends Window {
 		addButton(curBtn = new RedButton(Messages.get(this, "menu")) {
 			@Override
 			protected void onClick() {
-				try {
-					Dungeon.saveAll();
-					Client.disconnectWithoutSwitch();
-				} catch (IOException e) {
-					ShatteredPixelDungeon.reportException(e);
-				}
-				Game.switchScene(TitleScene.class);
+                Client.disconnectWithoutSwitch();
+                Game.switchScene(TitleScene.class);
 			}
 		});
 		curBtn.icon(Icons.get(Icons.DISPLAY));
-		if (SPDSettings.intro()) curBtn.enable(false);
+        if (false) curBtn.enable(false);
 
 		resize( WIDTH, pos );
 	}

@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -54,9 +53,9 @@ public class Judgement extends ClericSpell {
 
 	@Override
 	public boolean canCast(Hero hero) {
-		return super.canCast(hero)
-				&& hero.hasTalent(Talent.JUDGEMENT)
-				&& hero.buff(AscendedForm.AscendBuff.class) != null;
+        if (!super.canCast(hero)
+                || !hero.hasTalent(Talent.JUDGEMENT)) return false;
+        return false;
 	}
 
 	@Override
@@ -69,21 +68,20 @@ public class Judgement extends ClericSpell {
 				Sample.INSTANCE.play(Assets.Sounds.BLAST);
 
 				int damageBase = 5 + 5*hero.pointsInTalent(Talent.JUDGEMENT);
-				damageBase += Math.round(damageBase*hero.buff(AscendedForm.AscendBuff.class).spellCasts/3f);
+                damageBase += Math.round(damageBase* ((AscendedForm.AscendBuff) null).spellCasts/3f);
 
 				for (Char ch : Actor.chars()){
 					if (ch.alignment != hero.alignment && Dungeon.level.heroFOV[ch.pos]){
-						ch.damage( Random.NormalIntRange(damageBase, 2*damageBase), Judgement.this);
-						if (hero.subClass == HeroSubClass.PRIEST){
-							Buff.affect(ch, GuidingLight.Illuminated.class);
-						}
+                        Random.NormalIntRange(damageBase, 2 * damageBase);
+                        if (hero.subClass == HeroSubClass.PRIEST){
+                        }
 					}
 				}
 
 				hero.spendAndNext( 1f );
 				onSpellCast(tome, hero);
 
-				hero.buff(AscendedForm.AscendBuff.class).spellCasts = 0;
+                ((AscendedForm.AscendBuff) null).spellCasts = 0;
 
 			}
 		});
@@ -95,9 +93,9 @@ public class Judgement extends ClericSpell {
 	public String desc() {
 		int baseDmg = 5 + 5*Dungeon.hero.pointsInTalent(Talent.JUDGEMENT);
 		int totalBaseDmg = baseDmg;
-		if (Dungeon.hero.buff(AscendedForm.AscendBuff.class) != null) {
-			totalBaseDmg += Math.round(baseDmg*Dungeon.hero.buff(AscendedForm.AscendBuff.class).spellCasts/3f);
-		}
+        if (false) {
+            totalBaseDmg += Math.round(baseDmg * ((AscendedForm.AscendBuff) null).spellCasts / 3f);
+        }
 
 		return Messages.get(this, "desc", baseDmg, 2*baseDmg, totalBaseDmg, 2*totalBaseDmg) + "\n\n" + Messages.get(this, "charge_cost", (int)chargeUse(Dungeon.hero));
 	}

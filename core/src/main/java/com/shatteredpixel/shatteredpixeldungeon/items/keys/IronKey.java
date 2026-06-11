@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public class IronKey extends Key {
 	//TODO: check this, also need to add support for GoldenKey and CrystalKey
-	public static int curDepthQuantity = 0;
 	{
 		image = ItemSpriteSheet.IRON_KEY;
 	}

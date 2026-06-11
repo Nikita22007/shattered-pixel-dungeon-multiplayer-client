@@ -24,12 +24,14 @@ import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
-import com.shatteredpixel.shatteredpixeldungeon.items.keys.IronKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfIntuition;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.SewerLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.CustomTrap;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
+import com.shatteredpixel.shatteredpixeldungeon.network.actions.ActionParser;
+import com.shatteredpixel.shatteredpixeldungeon.network.actions.ActionParserRegistry;
+import com.shatteredpixel.shatteredpixeldungeon.network.actions.DefaultActionParserRegistry;
 import com.shatteredpixel.shatteredpixeldungeon.plants.CustomPlant;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.AlchemyScene;
@@ -56,10 +58,8 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.PointF;
-
 import com.watabou.utils.Reflection;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,9 +68,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
-import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -79,11 +77,7 @@ import java.util.concurrent.FutureTask;
 import static com.nikita22007.pixeldungeonmultiplayer.JavaUtils.hasNotNull;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.level;
-import static com.shatteredpixel.shatteredpixeldungeon.network.Client.client;
 import static com.shatteredpixel.shatteredpixeldungeon.network.Client.disconnect;
-import com.shatteredpixel.shatteredpixeldungeon.network.actions.ActionParser;
-import com.shatteredpixel.shatteredpixeldungeon.network.actions.ActionParserRegistry;
-import com.shatteredpixel.shatteredpixeldungeon.network.actions.DefaultActionParserRegistry;
 import static com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite.spriteClassFromName;
 import static com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite.spriteFromClass;
 import static java.lang.Thread.sleep;
@@ -521,7 +515,13 @@ public class ParseThread implements Callable<String> {
         }
         if (uiObject.has("iron_keys_count") || uiObject.has("iron_key_count")) {
             if (isConnectedToOldServer()) {
-                IronKey.curDepthQuantity = uiObject.optInt("iron_keys_count", uiObject.optInt("iron_key_count", -20));
+                JSONArray ironKeys = new JSONArray();
+                ironKeys.put(0);
+                ironKeys.put(uiObject.optInt("iron_keys_count", uiObject.optInt("iron_key_count", -20)));
+                ironKeys.put(0);
+                ironKeys.put(0);
+                ironKeys.put(0);
+                GameScene.updateKeyDisplay(ironKeys);
             } else {
                 GameScene.updateKeyDisplay(uiObject.getJSONArray("iron_keys_count"));
             }
@@ -1680,7 +1680,7 @@ public class ParseThread implements Callable<String> {
                     break;
                 }
                 case "description": {
-                    if (chr instanceof Mob) {
+                    if (chr instanceof CustomMob) {
                         ((Mob) chr).setDesc(JsonStringHelper.getString(actorObj, token));
                     } else {
                         Gdx.app.error("parseActorChar", actorObj.toString(4));

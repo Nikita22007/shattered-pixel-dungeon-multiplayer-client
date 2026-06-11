@@ -21,12 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.windows;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Ghost;
 import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -38,7 +34,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.ItemButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import org.json.JSONObject;
 
 public class WndSadGhost extends Window {
@@ -47,13 +42,6 @@ public class WndSadGhost extends Window {
 	private static final int BTN_SIZE	= 32;
 	private static final int BTN_GAP	= 5;
 	private static final int GAP		= 2;
-
-	Ghost ghost;
-	
-	public WndSadGhost( final Ghost ghost, final int type ) {
-		super();
-		this.ghost = ghost;
-	}
 
 	public WndSadGhost(int id, JSONObject object) {
 		super();

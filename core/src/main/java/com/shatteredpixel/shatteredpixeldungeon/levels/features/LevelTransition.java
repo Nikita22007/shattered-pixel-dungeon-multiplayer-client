@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.levels.features;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Point;
@@ -45,46 +44,6 @@ public class LevelTransition extends Rect implements Bundlable {
 	public Type destType;
 
 	public int centerCell;
-
-	//for bundling
-	public LevelTransition(){
-		super();
-	}
-
-	public LevelTransition(Level level, int cell, Type type, int destDepth, int destBranch, Type destType){
-		centerCell = cell;
-		Point p = level.cellToPoint(cell);
-		set(p.x, p.y, p.x, p.y);
-		this.type = type;
-		this.destDepth = destDepth;
-		this.destBranch = destBranch;
-		this.destType = destType;
-	}
-
-	//gives default values for common transition types
-	public LevelTransition(Level level, int cell, Type type){
-		centerCell = cell;
-		Point p = level.cellToPoint(cell);
-		set(p.x, p.y, p.x, p.y);
-		this.type = type;
-		switch (type){
-			case REGULAR_ENTRANCE: default:
-				destDepth = Dungeon.depth-1;
-				destBranch = Dungeon.branch;
-				destType = Type.REGULAR_EXIT;
-				break;
-			case REGULAR_EXIT:
-				destDepth = Dungeon.depth+1;
-				destBranch = Dungeon.branch;
-				destType = Type.REGULAR_ENTRANCE;
-				break;
-			case SURFACE:
-				destDepth = 0;
-				destBranch = 0;
-				destType = null;
-				break;
-		}
-	}
 
 	//note that the center cell isn't always the actual center.
 	// It is important when game logic needs to pick a specific cell for some action

@@ -21,8 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.journal;
 
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -66,9 +64,7 @@ public enum Document {
 	public boolean findPage( String page ) {
 		if (pagesStates.containsKey(page) && pagesStates.get(page) == NOT_FOUND){
 			pagesStates.put(page, FOUND);
-			Journal.saveNeeded = true;
-			Badges.validateCatalogBadges();
-			return true;
+            return true;
 		}
 		return false;
 	}
@@ -78,8 +74,7 @@ public enum Document {
 			Document doc = valueOf(docName);
 			if (doc.pagesStates.containsKey(page)) {
 				doc.pagesStates.put(page, state);
-				Journal.saveNeeded = true;
-			}
+            }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -104,8 +99,7 @@ public enum Document {
 	public boolean deletePage( String page ){
 		if (pagesStates.containsKey(page) && pagesStates.get(page) != NOT_FOUND){
 			pagesStates.put(page, NOT_FOUND);
-			Journal.saveNeeded = true;
-			return true;
+            return true;
 		}
 		return false;
 	}
@@ -117,8 +111,7 @@ public enum Document {
 	public boolean unreadPage( String page ){
 		if (pagesStates.containsKey(page) && pagesStates.get(page) == READ){
 			pagesStates.put(page, FOUND);
-			Journal.saveNeeded = true;
-			return true;
+            return true;
 		}
 		return false;
 	}
@@ -156,9 +149,7 @@ public enum Document {
 	public boolean readPage( String page ) {
 		if (pagesStates.containsKey(page)){
 			pagesStates.put(page, READ);
-			Journal.saveNeeded = true;
-			Badges.validateCatalogBadges();
-			return true;
+            return true;
 		}
 		return false;
 	}
@@ -213,7 +204,7 @@ public enum Document {
 				case "Surprise_Attacks":
 					return Icons.get(Icons.SNAKE);
 				case "Identifying":
-					return new ItemSprite( new ScrollOfIdentify() );
+					return new ItemSprite( ItemSpriteSheet.Icons.SCROLL_IDENTIFY );
 				case "Food":
 					return new ItemSprite( ItemSpriteSheet.PASTY );
 				case "Alchemy":

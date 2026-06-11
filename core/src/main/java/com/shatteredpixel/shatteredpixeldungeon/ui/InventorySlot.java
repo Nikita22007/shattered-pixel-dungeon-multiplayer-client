@@ -25,10 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
-import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.audio.Sample;
@@ -73,7 +70,7 @@ public class InventorySlot extends ItemSlot {
 
 		super.item( item );
 
-		bg.visible = !(item instanceof Gold || item instanceof Bag);
+		bg.visible = !(false || false);
 
 		if (item != null) {
 
@@ -100,7 +97,7 @@ public class InventorySlot extends ItemSlot {
 				bg.ga = -0.15f;
 				bg.ba = -0.15f;
 			} else if (!item.isIdentified()) {
-				if ((item instanceof EquipableItem || item instanceof Wand) && item.cursedKnown){
+				if ((item instanceof EquipableItem || false) && item.cursedKnown){
 					bg.ba = +0.3f;
 					bg.ra = -0.1f;
 				} else {

@@ -29,16 +29,11 @@ import com.watabou.noosa.tweeners.ScaleTweener;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+@SuppressWarnings("unused")
 public class MobSprite extends CharSprite {
 
 	private static final float FADE_TIME	= 3f;
 	private static final float FALL_TIME	= 1f;
-	
-	@Override
-	public void update() {
-		sleeping = ch != null && ch.isAlive() && ((Mob)ch).state == ((Mob)ch).SLEEPING;
-		super.update();
-	}
 	
 	@Override
 	public void onComplete( Animation anim ) {

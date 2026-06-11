@@ -21,24 +21,17 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.WondrousResin;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.CursedWand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.tweeners.Delayer;
 import com.watabou.utils.Callback;
@@ -47,6 +40,8 @@ import com.watabou.utils.Random;
 import java.util.ArrayList;
 
 public class WildMagic extends ArmorAbility {
+
+	protected float baseChargeUse = 35;
 
 	{
 		baseChargeUse = 25f;
@@ -57,76 +52,6 @@ public class WildMagic extends ArmorAbility {
 		return Messages.get(this, "prompt");
 	}
 
-	@Override
-	protected void activate(ClassArmor armor, Hero hero, Integer target) {
-		if (target == null){
-			return;
-		}
-
-		if (target == hero.pos){
-			GLog.w(Messages.get(this, "self_target"));
-			return;
-		}
-
-		ArrayList<Wand> wands = hero.belongings.getAllItems(Wand.class);
-		Random.shuffle(wands);
-
-		float chargeUsePerShot = 0.5f * (float)Math.pow(0.67f, hero.pointsInTalent(Talent.CONSERVED_MAGIC));
-
-		for (Wand w : wands.toArray(new Wand[0])){
-			if (w.curCharges < 1 && w.partialCharge < chargeUsePerShot){
-				wands.remove(w);
-			}
-		}
-
-		int maxWands = 4 + Dungeon.hero.pointsInTalent(Talent.FIRE_EVERYTHING);
-
-		//second and third shots
-		if (wands.size() < maxWands){
-			ArrayList<Wand> seconds = new ArrayList<>(wands);
-			ArrayList<Wand> thirds = new ArrayList<>(wands);
-
-			for (Wand w : wands){
-				float totalCharge = w.curCharges + w.partialCharge;
-				if (totalCharge < 2*chargeUsePerShot){
-					seconds.remove(w);
-				}
-				if (totalCharge < 3*chargeUsePerShot
-					|| Random.Int(4) >= Dungeon.hero.pointsInTalent(Talent.FIRE_EVERYTHING)){
-					thirds.remove(w);
-				}
-			}
-
-			Random.shuffle(seconds);
-			while (!seconds.isEmpty() && wands.size() < maxWands){
-				wands.add(seconds.remove(0));
-			}
-
-			Random.shuffle(thirds);
-			while (!thirds.isEmpty() && wands.size() < maxWands){
-				wands.add(thirds.remove(0));
-			}
-		}
-
-		if (wands.size() == 0){
-			GLog.w(Messages.get(this, "no_wands"));
-			return;
-		}
-
-		hero.busy();
-
-		Random.shuffle(wands);
-
-		Buff.affect(hero, WildMagicTracker.class, 0f);
-
-		armor.charge -= chargeUse(hero);
-		armor.updateQuickslot();
-
-		zapWand(wands, hero, target);
-
-	}
-
-	public static class WildMagicTracker extends FlavourBuff{};
 
 	Actor wildMagicActor = null;
 
@@ -151,17 +76,9 @@ public class WildMagic extends ArmorAbility {
 								protected void onComplete() {
 									if (alsoCursedZap){
 										WondrousResin.forcePositive = true;
-										CursedWand.cursedZap(cur,
-												hero,
-												new Ballistica(hero.pos, cell, Ballistica.MAGIC_BOLT),
-												new Callback() {
-													@Override
-													public void call() {
-														WondrousResin.forcePositive = false;
-														afterZap(cur, wands, hero, cell);
-													}
-												});
-									} else {
+                                        new Ballistica(hero.pos, cell, Ballistica.MAGIC_BOLT);
+
+                                    } else {
 										afterZap(cur, wands, hero, cell);
 									}
 								}
@@ -169,17 +86,9 @@ public class WildMagic extends ArmorAbility {
 						} else {
 							if (alsoCursedZap){
 								WondrousResin.forcePositive = true;
-								CursedWand.cursedZap(cur,
-										hero,
-										new Ballistica(hero.pos, cell, Ballistica.MAGIC_BOLT),
-										new Callback() {
-											@Override
-											public void call() {
-												WondrousResin.forcePositive = false;
-												afterZap(cur, wands, hero, cell);
-											}
-										});
-							} else {
+                                new Ballistica(hero.pos, cell, Ballistica.MAGIC_BOLT);
+
+                            } else {
 								afterZap(cur, wands, hero, cell);
 							}
 						}
@@ -187,25 +96,9 @@ public class WildMagic extends ArmorAbility {
 				});
 
 			} else {
-				CursedWand.cursedZap(cur,
-						hero,
-						new Ballistica(hero.pos, cell, Ballistica.MAGIC_BOLT),
-						new Callback() {
-							@Override
-							public void call() {
-								if (Game.timeTotal - startTime < 0.33f) {
-									hero.sprite.parent.add(new Delayer(0.33f - (Game.timeTotal - startTime)) {
-										@Override
-										protected void onComplete() {
-											afterZap(cur, wands, hero, cell);
-										}
-									});
-								} else {
-									afterZap(cur, wands, hero, cell);
-								}
-							}
-						});
-			}
+                new Ballistica(hero.pos, cell, Ballistica.MAGIC_BOLT);
+
+            }
 		} else {
 			afterZap(cur, wands, hero, cell);
 		}
@@ -239,17 +132,13 @@ public class WildMagic extends ArmorAbility {
 			});
 			hero.next();
 		} else {
-			if (hero.buff(WildMagicTracker.class) != null) {
-				hero.buff(WildMagicTracker.class).detach();
-			}
-			Item.updateQuickslot();
-			Invisibility.dispel();
-			if (Random.Int(4) >= hero.pointsInTalent(Talent.CONSERVED_MAGIC)) {
-				hero.spendAndNext(Actor.TICK);
-			} else {
-				hero.next();
-			}
-		}
+            Item.updateQuickslot();
+            if (Random.Int(4) >= hero.pointsInTalent(Talent.CONSERVED_MAGIC)) {
+                hero.spendAndNext(Actor.TICK);
+            } else {
+                hero.next();
+            }
+        }
 	}
 
 	@Override

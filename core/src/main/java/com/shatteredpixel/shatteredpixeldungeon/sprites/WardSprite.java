@@ -26,11 +26,11 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Beam;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfWarding;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.tweeners.AlphaTweener;
 
+@SuppressWarnings("unused")
 public class WardSprite extends MobSprite implements TieredSprite{
 	int tier;
 	private Animation tierIdles[] = new Animation[7];
@@ -96,18 +96,12 @@ public class WardSprite extends MobSprite implements TieredSprite{
 	@Override
 	public void resetColor() {
 		super.resetColor();
-		if (ch instanceof WandOfWarding.Ward){
-			WandOfWarding.Ward ward = (WandOfWarding.Ward) ch;
-			if (ward.tier <= 3){
-				brightness(Math.max(0.2f, 1f - (ward.totalZaps / (float)(2*ward.tier-1))));
-			}
-		}
 	}
 
 	public void linkVisuals(Char ch ){
 
 		if (ch == null) return;
-
+		//todo send this special info from server or create subclass?
 	}
 
 	@Override

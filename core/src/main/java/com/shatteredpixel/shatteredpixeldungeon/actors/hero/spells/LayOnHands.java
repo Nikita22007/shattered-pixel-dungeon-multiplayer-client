@@ -25,15 +25,11 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
-import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
@@ -81,7 +77,6 @@ public class LayOnHands extends TargetedClericSpell {
 
 		Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
 
-		affectChar(hero, ch);
 
 		if (ch == hero){
 			hero.sprite.operate(ch.pos);
@@ -92,48 +87,11 @@ public class LayOnHands extends TargetedClericSpell {
 		}
 
 		Char ally = PowerOfMany.getPoweredAlly();
-		if (ally != null && ally.buff(LifeLinkSpell.LifeLinkSpellBuff.class) != null){
-			if (ch == hero){
-				affectChar(hero, ally); //if cast on hero, duplicate to ally
-			} else if (ally == ch) {
-				affectChar(hero, hero); //if cast on ally, duplicate to hero
-			}
-		}
+		if (ally != null) {
+        }
 
 		onSpellCast(tome, hero);
 
 	}
 
-	private void affectChar(Hero hero, Char ch){
-		int totalHeal = 10 + 5*hero.pointsInTalent(Talent.LAY_ON_HANDS);
-		int totalBarrier = 0;
-		if (ch == hero){
-			Barrier barrier = Buff.affect(ch, Barrier.class);
-			totalBarrier = totalHeal;
-			totalBarrier = Math.min(3*totalHeal - barrier.shielding(), totalBarrier);
-			totalBarrier = Math.max(0, totalBarrier);
-			Buff.affect(ch, Barrier.class).incShield(totalBarrier);
-			ch.sprite.showStatusWithIcon( CharSprite.POSITIVE, Integer.toString(totalBarrier), FloatingText.SHIELDING );
-		} else {
-			if (ch.HT - ch.HP < totalHeal){
-				totalBarrier = totalHeal - (ch.HT - ch.HP);
-				if (ch.HP != ch.HT) {
-					ch.HP = ch.HT;
-					ch.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(totalHeal - totalBarrier), FloatingText.HEALING);
-				}
-				if (totalBarrier > 0) {
-					Barrier barrier = Buff.affect(ch, Barrier.class);
-					totalBarrier = Math.min(3 * totalHeal - barrier.shielding(), totalBarrier);
-					totalBarrier = Math.max(0, totalBarrier);
-					if (totalBarrier > 0) {
-						barrier.incShield(totalBarrier);
-						ch.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(totalBarrier), FloatingText.SHIELDING);
-					}
-				}
-			} else {
-				ch.HP = ch.HP + totalHeal;
-				ch.sprite.showStatusWithIcon( CharSprite.POSITIVE, Integer.toString(totalHeal), FloatingText.HEALING );
-			}
-		}
-	}
 }

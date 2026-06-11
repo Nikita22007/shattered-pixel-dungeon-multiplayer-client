@@ -24,31 +24,17 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero;
 import static com.shatteredpixel.shatteredpixeldungeon.Dungeon.hero;
 
 import com.badlogic.gdx.Gdx;
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
-import com.shatteredpixel.shatteredpixeldungeon.QuickSlot;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.LostInventory;
 import com.shatteredpixel.shatteredpixeldungeon.items.*;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.CustomBag;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRemoveCurse;
-import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.ui.InventoryPane;
-import com.shatteredpixel.shatteredpixeldungeon.ui.ItemSlot;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
@@ -115,9 +101,6 @@ public class Belongings implements Iterable<Item> {
 		public int capacity(){
 			int cap = super.capacity();
 			for (Item item : items){
-				if (item instanceof Bag){
-					cap++;
-				}
 			}
 			if (hero != null && hero.belongings.secondWep != null){
 				//secondary weapons still occupy an inv. slot
@@ -165,10 +148,12 @@ public class Belongings implements Iterable<Item> {
 		lostInvent = val;
 	}
 
+	@Contract(pure = true)
 	public boolean lostInventory(){
 		return lostInvent;
 	}
 
+	@Contract(pure = true)
 	public CustomItem weapon(){
 		if (!lostInventory() || (weapon != null && weapon.keptThroughLostInventory())){
 			return weapon;
@@ -177,6 +162,7 @@ public class Belongings implements Iterable<Item> {
 		}
 	}
 
+	@Contract(pure = true)
 	public CustomItem armor(){
 		if (!lostInventory() || (armor != null && armor.keptThroughLostInventory())){
 			return armor;
@@ -185,6 +171,7 @@ public class Belongings implements Iterable<Item> {
 		}
 	}
 
+	@Contract(pure = true)
 	public CustomItem artifact(){
 		if (!lostInventory() || (artifact != null && artifact.keptThroughLostInventory())){
 			return artifact;
@@ -193,6 +180,7 @@ public class Belongings implements Iterable<Item> {
 		}
 	}
 
+	@Contract(pure = true)
 	public CustomItem misc(){
 		if (!lostInventory() || (misc != null && misc.keptThroughLostInventory())){
 			return misc;
@@ -201,6 +189,7 @@ public class Belongings implements Iterable<Item> {
 		}
 	}
 
+	@Contract(pure = true)
 	public CustomItem ring(){
 		if (!lostInventory() || (ring != null && ring.keptThroughLostInventory())){
 			return ring;
@@ -209,6 +198,7 @@ public class Belongings implements Iterable<Item> {
 		}
 	}
 
+	@Contract(pure = true)
 	public CustomItem secondWep(){
 		if (!lostInventory() || (secondWep != null && secondWep.keptThroughLostInventory())){
 			return secondWep;
@@ -227,23 +217,10 @@ public class Belongings implements Iterable<Item> {
 
 	private static final String SECOND_WEP = "second_wep";
 
-	public void storeInBundle( Bundle bundle ) {
-		
-		backpack.storeInBundle( bundle );
-		
-		bundle.put( WEAPON, weapon );
-		bundle.put( ARMOR, armor );
-		bundle.put( ARTIFACT, artifact );
-		bundle.put( MISC, misc );
-		bundle.put( RING, ring );
-		bundle.put( SECOND_WEP, secondWep );
-	}
-
-
 	public static void preview( GamesInProgress.Info info, Bundle bundle ) {
 		if (bundle.contains( ARMOR )){
 			Armor armor = ((Armor)bundle.get( ARMOR ));
-			if (armor instanceof ClassArmor){
+			if (false){
 				info.armorTier = 6;
 			} else {
 				info.armorTier = armor.tier;
@@ -258,48 +235,9 @@ public class Belongings implements Iterable<Item> {
 		ArrayList<Bag> result = new ArrayList<>();
 
 		result.add(backpack);
-
-		for (Item i : this){
-			if (i instanceof Bag){
-				result.add((Bag)i);
-			}
-		}
-
 		return result;
 	}
-	
-	@SuppressWarnings("unchecked")
-	public<T extends Item> T getItem( Class<T> itemClass ) {
 
-		boolean lostInvent = lostInventory();
-
-		for (Item item : this) {
-			if (itemClass.isInstance( item )) {
-				if (!lostInvent || item.keptThroughLostInventory()) {
-					return (T) item;
-				}
-			}
-		}
-		
-		return null;
-	}
-
-	public<T extends Item> ArrayList<T> getAllItems( Class<T> itemClass ) {
-		ArrayList<T> result = new ArrayList<>();
-
-		boolean lostInvent = lostInventory();
-
-		for (Item item : this) {
-			if (itemClass.isInstance( item )) {
-				if (!lostInvent || item.keptThroughLostInventory()) {
-					result.add((T) item);
-				}
-			}
-		}
-
-		return result;
-	}
-	
 	public boolean contains( Item contains ){
 
 		boolean lostInvent = lostInventory();
@@ -347,90 +285,6 @@ public class Belongings implements Iterable<Item> {
 	}
 
 	//triggers when a run ends, so ignores lost inventory effects
-	public void identify() {
-		for (Item item : this) {
-			item.identify(false);
-		}
-	}
-	
-	public void observe() {
-		if (weapon() != null) {
-			if (ShardOfOblivion.passiveIDDisabled() && weapon() instanceof Weapon){
-				((Weapon) weapon()).setIDReady();
-			} else {
-				weapon().identify();
-				Badges.validateItemLevelAquired(weapon());
-			}
-		}
-		if (secondWep() != null){
-			if (ShardOfOblivion.passiveIDDisabled() && secondWep() instanceof Weapon){
-				((Weapon) secondWep()).setIDReady();
-			} else {
-				secondWep().identify();
-				Badges.validateItemLevelAquired(secondWep());
-			}
-		}
-		if (armor() != null) {
-			if (ShardOfOblivion.passiveIDDisabled()){
-				//armor().setIDReady();
-			} else {
-				armor().identify();
-				Badges.validateItemLevelAquired(armor());
-			}
-		}
-		if (artifact() != null) {
-			//oblivion shard does not prevent artifact IDing
-			artifact().identify();
-			Badges.validateItemLevelAquired(artifact());
-		}
-		if (misc() != null) {
-			if (ShardOfOblivion.passiveIDDisabled() && misc() instanceof Ring){
-				((Ring) misc()).setIDReady();
-			} else {
-				misc().identify();
-				Badges.validateItemLevelAquired(misc());
-			}
-		}
-		if (ring() != null) {
-			if (ShardOfOblivion.passiveIDDisabled()){
-				//ring().setIDReady();
-			} else {
-				ring().identify();
-				Badges.validateItemLevelAquired(ring());
-			}
-		}
-		if (ShardOfOblivion.passiveIDDisabled()){
-			GLog.p(Messages.get(ShardOfOblivion.class, "identify_ready_worn"));
-		}
-		for (Item item : backpack) {
-			if (item instanceof EquipableItem || item instanceof Wand) {
-				item.cursedKnown = true;
-			}
-		}
-		Item.updateQuickslot();
-	}
-	
-	public void uncurseEquipped() {
-		ScrollOfRemoveCurse.uncurse( owner, armor(), weapon(), artifact(), misc(), ring(), secondWep());
-	}
-	
-	public Item randomUnequipped() {
-		if (owner.buff(LostInventory.class) != null) return null;
-
-		return Random.element( backpack.items );
-	}
-	
-	public int charge( float charge ) {
-		
-		int count = 0;
-		
-		for (Wand.Charger charger : owner.buffs(Wand.Charger.class)){
-			charger.gainCharge(charge);
-			count++;
-		}
-		
-		return count;
-	}
 
 	@Override
 	public Iterator<Item> iterator() {

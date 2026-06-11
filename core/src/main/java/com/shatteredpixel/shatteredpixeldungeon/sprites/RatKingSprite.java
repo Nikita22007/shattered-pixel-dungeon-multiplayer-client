@@ -28,6 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.Ratmogrify
 import com.shatteredpixel.shatteredpixeldungeon.utils.Holiday;
 import com.watabou.noosa.TextureFilm;
 
+@SuppressWarnings("unused")
 public class RatKingSprite extends MobSprite {
 
 	public boolean festive;

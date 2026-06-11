@@ -27,10 +27,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.Trinity;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.WondrousResin;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.CursedWand;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
@@ -96,8 +94,7 @@ public class MindForm extends ClericSpell {
 			if (effect instanceof Wand){
 				((Wand) effect).level(effectLevel());
 				((Wand) effect).curCharges = ((Wand) effect).maxCharges;
-				((Wand) effect).identify(false);
-				return (Wand)effect;
+                return (Wand)effect;
 			}
 			return null;
 		}
@@ -106,8 +103,7 @@ public class MindForm extends ClericSpell {
 			if (effect instanceof MissileWeapon){
 				((MissileWeapon) effect).level(effectLevel());
 				((MissileWeapon) effect).repair(100);
-				((MissileWeapon) effect).identify(false);
-				((MissileWeapon) effect).spawnedForEffect = true;
+                ((MissileWeapon) effect).spawnedForEffect = true;
 				return (MissileWeapon) effect;
 			}
 			return null;
@@ -143,25 +139,16 @@ public class MindForm extends ClericSpell {
 							wand.onZap(shot);
 							if (Random.Float() < WondrousResin.extraCurseEffectChance()){
 								WondrousResin.forcePositive = true;
-								CursedWand.cursedZap(wand,
-										Dungeon.hero,
-										new Ballistica(Dungeon.hero.pos, cell, Ballistica.MAGIC_BOLT), new Callback() {
-											@Override
-											public void call() {
-												WondrousResin.forcePositive = false;
-											}
-										});
-							}
-							((ClassArmor)Dungeon.hero.belongings.armor()).charge -= Trinity.trinityChargeUsePerEffect(wand.getClass());
+                                new Ballistica(Dungeon.hero.pos, cell, Ballistica.MAGIC_BOLT);
+
+                            }
 							wand.wandUsed();
 						}
 					});
 				}
-			} else if (thrown() != null){
-				MissileWeapon thrown = thrown();
-				thrown.cast(Dungeon.hero, target);
-				((ClassArmor)Dungeon.hero.belongings.armor()).charge -= Trinity.trinityChargeUsePerEffect(thrown.getClass());
-			}
+			} else {
+                thrown();
+            }
 		}
 
 		@Override

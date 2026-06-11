@@ -27,10 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Cripple;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
@@ -101,7 +97,8 @@ public class HallowedGround extends TargetedClericSpell {
 					GameScene.updateMap( i );
 					CellEmitter.get(i).burst(LeafParticle.LEVEL_SPECIFIC, 2);
 				}
-				GameScene.add(Blob.seed(i, 20, HallowedTerrain.class));
+
+				GameScene.add((HallowedTerrain) null);
 				CellEmitter.get(i).burst(ShaftParticle.FACTORY, 2);
 
 				Char ch = Actor.findChar(i);
@@ -112,12 +109,7 @@ public class HallowedGround extends TargetedClericSpell {
 		}
 
 		Char ally = PowerOfMany.getPoweredAlly();
-		if (ally != null && ally.buff(LifeLinkSpell.LifeLinkSpellBuff.class) != null){
-			if (affected.contains(hero) && !affected.contains(ally)){
-				affected.add(ally);
-			} else if (!affected.contains(hero) && affected.contains(ally)){
-				affected.add(hero);
-			}
+		if (ally != null) {
 		}
 
 		for (Char ch : affected){
@@ -137,7 +129,7 @@ public class HallowedGround extends TargetedClericSpell {
 
 			if (ch == Dungeon.hero || ch.HP == ch.HT){
 				int barrierToGive = Math.min(15, 30 - ch.shielding());
-				Buff.affect(ch, Barrier.class).incShield(barrierToGive);
+                ((Barrier) null).incShield(barrierToGive);
 				ch.sprite.showStatusWithIcon( CharSprite.POSITIVE, Integer.toString(barrierToGive), FloatingText.SHIELDING );
 			} else {
 				int barrier = 15 - (ch.HT - ch.HP);
@@ -145,14 +137,12 @@ public class HallowedGround extends TargetedClericSpell {
 				ch.HP += 15 - barrier;
 				ch.sprite.showStatusWithIcon( CharSprite.POSITIVE, Integer.toString(15-barrier), FloatingText.HEALING );
 				if (barrier > 0){
-					Buff.affect(ch, Barrier.class).incShield(barrier);
+                    ((Barrier) null).incShield(barrier);
 					ch.sprite.showStatusWithIcon( CharSprite.POSITIVE, Integer.toString(barrier), FloatingText.SHIELDING );
 				}
 			}
 		} else if (!ch.flying) {
-			Buff.affect(ch, GuidingLight.Illuminated.class);
-			Buff.affect(ch, Roots.class, 2f);
-		}
+        }
 	}
 
 	public String desc(){
@@ -165,15 +155,19 @@ public class HallowedGround extends TargetedClericSpell {
 		private void affectChar( Char ch ){
 			if (ch.alignment == Char.Alignment.ALLY){
 				if (ch == Dungeon.hero || ch.HP == ch.HT){
-					Buff.affect(ch, Barrier.class).incShield(1);
+                    ((Barrier) null).incShield(1);
 					ch.sprite.showStatusWithIcon( CharSprite.POSITIVE, "1", FloatingText.SHIELDING );
 				} else {
 					ch.HP++;
 					ch.sprite.showStatusWithIcon( CharSprite.POSITIVE, "1", FloatingText.HEALING );
 				}
-			} else if (!ch.flying && ch.buff(Roots.class) == null){
-				Buff.prolong(ch, Cripple.class, 1f);
-			}
+			} else {
+                if (!ch.flying) {
+					{
+
+					}
+				}
+            }
 		}
 
 		@Override
@@ -187,7 +181,5 @@ public class HallowedGround extends TargetedClericSpell {
 			return Messages.get(this, "desc");
 		}
 	}
-
-	public static class HallowedFurrowTracker extends CounterBuff{{revivePersists = true;}}
 
 }

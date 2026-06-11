@@ -25,28 +25,17 @@ import com.shatteredpixel.shatteredpixeldungeon.*;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AscensionChallenge;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.ChampionEnemy;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.*;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.*;
-import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
-import com.shatteredpixel.shatteredpixeldungeon.items.Honeypot;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.DriedRose;
 import com.shatteredpixel.shatteredpixeldungeon.items.journal.Guidebook;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.InventoryScroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Bestiary;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Journal;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
-import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
-import com.shatteredpixel.shatteredpixeldungeon.levels.RegularLevel;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -74,7 +63,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Locale;
@@ -480,30 +468,11 @@ public class GameScene extends PixelScene {
 			case DESCEND:
 			case FALL:
 				if (Dungeon.hero.isAlive()) {
-					Badges.validateNoKilling();
-				}
+                }
 				break;
 		}
 
-		ArrayList<Item> dropped = Dungeon.droppedItems.get( Dungeon.depth );
-		if (dropped != null) {
-			for (Item item : dropped) {
-				int pos = Dungeon.level.randomRespawnCell( null );
-				if (pos == -1) pos = Dungeon.level.entrance();
-				if (item instanceof Potion) {
-					((Potion) item).shatter(pos);
-				} else if (item instanceof Plant.Seed && !Dungeon.isChallenged(Challenges.NO_HERBALISM)) {
-					Dungeon.level.plant((Plant.Seed) item, pos);
-				} else if (item instanceof Honeypot) {
-					Dungeon.level.drop(((Honeypot) item).shatter(null, pos), pos);
-				} else {
-					Dungeon.level.drop(item, pos);
-				}
-			}
-			Dungeon.droppedItems.remove( Dungeon.depth );
-		}
-
-		Dungeon.hero.next();
+        Dungeon.hero.next();
 
 		switch (InterlevelScene.mode){
 			case FALL: case DESCEND: case CONTINUE:
@@ -534,55 +503,29 @@ public class GameScene extends PixelScene {
 			if (Dungeon.depth == Statistics.deepestFloor
 					&& (InterlevelScene.mode == InterlevelScene.Mode.DESCEND || InterlevelScene.mode == InterlevelScene.Mode.FALL)) {
 				Sample.INSTANCE.play(Assets.Sounds.DESCEND);
-				
-				for (Char ch : Actor.chars()){
-					if (ch instanceof DriedRose.GhostHero){
-						((DriedRose.GhostHero) ch).sayAppeared();
-					}
-				}
 
-				int spawnersAbove = Statistics.spawnersAlive;
+                int spawnersAbove = Statistics.spawnersAlive;
 				if (spawnersAbove > 0 && Dungeon.depth <= 25) {
-					for (Mob m : Dungeon.level.mobs) {
-						if (m instanceof DemonSpawner && ((DemonSpawner) m).spawnRecorded) {
-							spawnersAbove--;
-						}
-					}
 
-					if (spawnersAbove > 0) {
-						if (Dungeon.bossLevel()) {
-							GLog.n(Messages.get(this, "spawner_warn_final"));
-						} else {
-							GLog.n(Messages.get(this, "spawner_warn"));
-						}
-					}
-				}
-				
+                    if (Dungeon.bossLevel()) {
+                        GLog.n(Messages.get(this, "spawner_warn_final"));
+                    } else {
+                        GLog.n(Messages.get(this, "spawner_warn"));
+                    }
+                }
+
 			}
 
-			if (Dungeon.hero.hasTalent(Talent.ROGUES_FORESIGHT)
-					&& Dungeon.level instanceof RegularLevel && Dungeon.branch == 0){
-				int reqSecrets = Dungeon.level.feeling == Level.Feeling.SECRETS ? 2 : 1;
-
-				//75%/100% chance, use level's seed so that we get the same result for the same level
-				//offset seed slightly to avoid output patterns
-				Random.pushGenerator(Dungeon.seedCurDepth()+1);
-					if (reqSecrets <= 0 && Random.Int(4) < 2+Dungeon.hero.pointsInTalent(Talent.ROGUES_FORESIGHT)){
-						GLog.p(Messages.get(this, "secret_hint"));
-					}
-				Random.popGenerator();
-			}
-
-			boolean unspentTalents = false;
-			for (int i = 1; i <= Dungeon.hero.talents.size(); i++){
-				if (Dungeon.hero.talentPointsAvailable(i) > 0){
+            boolean unspentTalents = false;
+			for (int i = 1; i <= Dungeon.hero.talents.size(); i++) {
+				if (Dungeon.hero.talentPointsAvailable(i) > 0) {
 					unspentTalents = true;
 					break;
 				}
 			}
-			if (unspentTalents){
+			if (unspentTalents) {
 				GLog.newLine();
-				GLog.w( Messages.get(Dungeon.hero, "unspent") );
+				GLog.w(Messages.get(Dungeon.hero, "unspent"));
 				StatusPane.talentBlink = 10f;
 				WndHero.lastIdx = 1;
 			}
@@ -619,42 +562,16 @@ public class GameScene extends PixelScene {
 			}
 
 			for (Mob mob : Dungeon.level.mobs) {
-				if (!mob.buffs(ChampionEnemy.class).isEmpty()) {
-					GLog.w(Messages.get(ChampionEnemy.class, "warn"));
-				}
-			}
-
-			if (Dungeon.hero.buff(AscensionChallenge.class) != null){
-				Dungeon.hero.buff(AscensionChallenge.class).saySwitch();
 			}
 			InterlevelScene.mode = InterlevelScene.Mode.NONE;
 
-			
+
 		}
 
-		//Tutorial
-		if (SPDSettings.intro()){
 
-			if (Document.ADVENTURERS_GUIDE.isPageFound(Document.GUIDE_INTRO)){
-				GameScene.flashForDocument(Document.ADVENTURERS_GUIDE, Document.GUIDE_INTRO);
-			} else if (ControllerHandler.isControllerConnected()) {
-				GameLog.wipe();
-				GLog.p(Messages.get(GameScene.class, "tutorial_move_controller"));
-			} else if (SPDSettings.interfaceSize() == 0) {
-				GameLog.wipe();
-				GLog.p(Messages.get(GameScene.class, "tutorial_move_mobile"));
-			} else {
-				GameLog.wipe();
-				GLog.p(Messages.get(GameScene.class, "tutorial_move_desktop"));
-			}
-			toolbar.visible = toolbar.active = false;
-			status.visible = status.active = false;
-			if (inventory != null) inventory.visible = inventory.active = false;
-		}
 
-		if (!SPDSettings.intro() &&
-				Rankings.INSTANCE.totalNumber > 0 &&
-				!Document.ADVENTURERS_GUIDE.isPageRead(Document.GUIDE_DIEING)){
+		if (Rankings.INSTANCE.totalNumber > 0 &&
+                !Document.ADVENTURERS_GUIDE.isPageRead(Document.GUIDE_DIEING)){
 			GameScene.flashForDocument(Document.ADVENTURERS_GUIDE, Document.GUIDE_DIEING);
 		}
 		if (!invVisible) toggleInvPane();
@@ -662,19 +579,9 @@ public class GameScene extends PixelScene {
 
 		//re-show WndResurrect if needed
 		if (!Dungeon.hero.isAlive()){
-			//check if hero has an unblessed ankh
-			Ankh ankh = null;
-			for (Ankh i : Dungeon.hero.belongings.getAllItems(Ankh.class)){
-				if (!i.isBlessed()){
-					ankh = i;
-				}
-			}
-			if (ankh != null && GamesInProgress.gameExists(GamesInProgress.curSlot)) {
-				add(new WndResurrect(ankh));
-			} else {
-				gameOver();
-			}
-		}
+
+            gameOver();
+        }
 
 	}
 	
@@ -690,9 +597,7 @@ public class GameScene extends PixelScene {
 		Emitter.freezeEmitters = false;
 		
 		scene = null;
-		Badges.saveGlobal();
-		Journal.saveGlobal();
-		
+
 		super.destroy();
 	}
 	
@@ -720,15 +625,8 @@ public class GameScene extends PixelScene {
 	
 	@Override
 	public synchronized void onPause() {
-		try {
-			if (!Dungeon.hero.ready) waitForActorThread(500, false);
-			Dungeon.saveAll();
-			Badges.saveGlobal();
-			Journal.saveGlobal();
-		} catch (IOException e) {
-			ShatteredPixelDungeon.reportException(e);
-		}
-	}
+        if (!Dungeon.hero.ready) waitForActorThread(500, false);
+    }
 
 	private static Thread actorThread;
 	
@@ -755,10 +653,6 @@ public class GameScene extends PixelScene {
 			updateItemDisplays = false;
 			QuickSlotButton.refresh();
 			InventoryPane.refresh();
-			if (ActionIndicator.action instanceof MeleeWeapon.Charger) {
-				//Champion weapon swap uses items, needs refreshing whenever item displays are updated
-				ActionIndicator.refresh();
-			}
 		}
 
 		if (Dungeon.hero == null || scene == null) {
@@ -1410,18 +1304,8 @@ public class GameScene extends PixelScene {
 			scene.fog.updateFog();
 			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
 				if (mob.sprite != null) {
-					if (mob instanceof Mimic && mob.state == mob.PASSIVE && ((Mimic) mob).stealthy() && Dungeon.level.visited[mob.pos]){
-						//mimics stay visible in fog of war after being first seen
-						mob.sprite.visible = true;
-					} else {
-						mob.sprite.visible = Dungeon.level.heroFOV[mob.pos];
-					}
-				}
-				if (mob instanceof Ghoul){
-					for (Ghoul.GhoulLifeLink link : mob.buffs(Ghoul.GhoulLifeLink.class)){
-						link.updateVisibility();
-					}
-				}
+                    mob.sprite.visible = Dungeon.level.heroFOV[mob.pos];
+                }
 			}
 		}
 	}
@@ -1594,10 +1478,8 @@ public class GameScene extends PixelScene {
 
 	public static boolean cancel() {
 		cellSelector.resetKeyHold();
-		if (Dungeon.hero != null && (Dungeon.hero.curAction != null || Dungeon.hero.resting)) {
-			
-			Dungeon.hero.curAction = null;
-			Dungeon.hero.resting = false;
+		if (Dungeon.hero != null && (null != null || false)) {
+
 			return true;
 			
 		} else {
@@ -1696,19 +1578,14 @@ public class GameScene extends PixelScene {
 			GameScene.show( new WndHero() );
 		} else if ( o instanceof Mob && ((Mob) o).isActive() ){
 			GameScene.show(new WndInfoMob((Mob) o));
-			if (o instanceof Snake && !Document.ADVENTURERS_GUIDE.isPageRead(Document.GUIDE_SURPRISE_ATKS)){
-				GameScene.flashForDocument(Document.ADVENTURERS_GUIDE, Document.GUIDE_SURPRISE_ATKS);
-			}
-		} else if ( o instanceof Heap && !((Heap) o).isEmpty() ){
+        } else if ( o instanceof Heap && !((Heap) o).isEmpty() ){
 			GameScene.show(new WndInfoItem((Heap)o));
 		} else if ( o instanceof Plant ){
 			GameScene.show( new WndInfoPlant((Plant) o) );
 			//plants can be harmful to trample, so let the player ID just by examine
-			Bestiary.setSeen(o.getClass());
 		} else if ( o instanceof Trap ){
 			GameScene.show( new WndInfoTrap((Trap) o));
 			//traps are often harmful to trigger, so let the player ID just by examine
-			Bestiary.setSeen(o.getClass());
 		} else {
 			GameScene.show( new WndMessage( Messages.get(GameScene.class, "dont_know") ) ) ;
 		}

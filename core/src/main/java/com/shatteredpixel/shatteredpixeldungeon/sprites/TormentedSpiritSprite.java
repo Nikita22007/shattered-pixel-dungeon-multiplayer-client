@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.sprites;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.watabou.noosa.TextureFilm;
 
+@SuppressWarnings("unused")
 public class TormentedSpiritSprite extends MobSprite {
 
 	public TormentedSpiritSprite() {

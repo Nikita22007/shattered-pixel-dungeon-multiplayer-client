@@ -22,18 +22,13 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.trinkets;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.AlchemyScene;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -46,11 +41,8 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.IconTitle;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndInfoItem;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndSadGhost;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class TrinketCatalyst extends Item {
 
@@ -70,84 +62,13 @@ public class TrinketCatalyst extends Item {
 		return false;
 	}
 
-	@Override
-	public boolean doPickUp(Hero hero, int pos) {
-		if (super.doPickUp(hero, pos)){
-			if (!Document.ADVENTURERS_GUIDE.isPageRead(Document.GUIDE_ALCHEMY)){
-				GameScene.flashForDocument(Document.ADVENTURERS_GUIDE, Document.GUIDE_ALCHEMY);
-			}
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	private ArrayList<Trinket> rolledTrinkets = new ArrayList<>();
 
 	public boolean hasRolledTrinkets(){
 		return !rolledTrinkets.isEmpty();
 	}
 
-	private static final String ROLLED_TRINKETS = "rolled_trinkets";
-
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		if (!rolledTrinkets.isEmpty()){
-			bundle.put(ROLLED_TRINKETS, rolledTrinkets);
-		}
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		rolledTrinkets.clear();
-		if (bundle.contains(ROLLED_TRINKETS)){
-			rolledTrinkets.addAll((Collection<Trinket>) ((Collection<?>)bundle.getCollection( ROLLED_TRINKETS )));
-		}
-	}
-
-	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe {
-
-		@Override
-		public boolean testIngredients(ArrayList<Item> ingredients) {
-			return ingredients.size() == 1 && ingredients.get(0) instanceof TrinketCatalyst;
-		}
-
-		@Override
-		public int cost(ArrayList<Item> ingredients) {
-			return 6;
-		}
-
-		@Override
-		public Item brew(ArrayList<Item> ingredients) {
-			//we silently re-add the catalyst so that we can clear it when a trinket is selected
-			//this way player isn't totally screwed if they quit the game while selecting
-			TrinketCatalyst newCata = (TrinketCatalyst) ingredients.get(0).duplicate();
-			newCata.collect();
-
-			ingredients.get(0).quantity(0);
-
-			ShatteredPixelDungeon.scene().addToFront(new WndTrinket(newCata));
-			try {
-				Dungeon.saveAll(); //do a save here as pausing alch scene doesn't otherwise save
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-			return null;
-		}
-
-		@Override
-		public Item sampleOutput(ArrayList<Item> ingredients) {
-			return new Trinket.PlaceHolder();
-		}
-	}
-
-	public static class RandomTrinket extends Item {
-
-		{
-			image = ItemSpriteSheet.SOMETHING;
-		}
+	public static class Recipe {
 
 	}
 
@@ -175,7 +96,7 @@ public class TrinketCatalyst extends Item {
 
 			//roll new trinkets if trinkets were not already rolled
 			while (cata.rolledTrinkets.size() < NUM_TRINKETS){
-				cata.rolledTrinkets.add((Trinket) Generator.random(Generator.Category.TRINKET));
+                cata.rolledTrinkets.add((Trinket) null);
 			}
 
 			for (int i = 0; i < NUM_TRINKETS; i++){
@@ -212,36 +133,24 @@ public class TrinketCatalyst extends Item {
 						WndTrinket.this.hide();
 
 						Item result = item;
-						if (result instanceof RandomTrinket){
-							result = Generator.random(Generator.Category.TRINKET);
-						}
 
-						TrinketCatalyst cata = Dungeon.hero.belongings.getItem(TrinketCatalyst.class);
+                        TrinketCatalyst cata = null;
 
 						if (cata != null) {
-							cata.detach(Dungeon.hero.belongings.backpack);
-							Catalog.countUse(cata.getClass());
-							result.identify();
 							if (ShatteredPixelDungeon.scene() instanceof AlchemyScene) {
-								((AlchemyScene) ShatteredPixelDungeon.scene()).craftItem(null, result);
+
 							} else {
 								Sample.INSTANCE.play( Assets.Sounds.PUFF );
 
-								if (result.doPickUp(Dungeon.hero)){
+                                if (false){
 									GLog.p( Messages.capitalize(Messages.get(Hero.class, "you_now_have", item.name())) );
 								} else {
 									Dungeon.level.drop(result, Dungeon.hero.pos);
 								}
 
 								Statistics.itemsCrafted++;
-								Badges.validateItemsCrafted();
 
-								try {
-									Dungeon.saveAll();
-								} catch (IOException e) {
-									ShatteredPixelDungeon.reportException(e);
-								}
-							}
+                            }
 						}
 					}
 				};

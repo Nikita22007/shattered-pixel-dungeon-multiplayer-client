@@ -24,12 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.ui;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
-import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
-import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.Trinket;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -41,7 +36,6 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndTextInput;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndTitledMessage;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndUseItem;
-import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -170,9 +164,6 @@ public class CustomNoteButton extends IconButton {
 		@Override
 		public boolean itemSelectable(Item item) {
 			if (item instanceof EquipableItem){
-				if (item instanceof Ring && Notes.findCustomRecord(item.getClass()) != null){
-					return false;
-				}
 				return item.customNoteID == -1
 						|| Notes.findCustomRecord(item.customNoteID) == null;
 			} else {
@@ -184,7 +175,7 @@ public class CustomNoteButton extends IconButton {
 		public void onSelect( Item item ) {
 			if (item != null){
 				Notes.CustomRecord custom;
-				if (item instanceof EquipableItem || item instanceof Wand || item instanceof Trinket) {
+				if (item instanceof EquipableItem || false || false) {
 					custom = new Notes.CustomRecord(item, "", "");
 					custom.assignID();
 					item.customNoteID = custom.ID();
@@ -211,15 +202,6 @@ public class CustomNoteButton extends IconButton {
 			int left = 0;
 
 			ArrayList<Item> items = new ArrayList<>();
-			for (Class<?> potionCls : Generator.Category.POTION.classes) {
-				items.add((Item) Reflection.newInstance(potionCls));
-			}
-			for (Class<?> potionCls : Generator.Category.SCROLL.classes) {
-				items.add((Item) Reflection.newInstance(potionCls));
-			}
-			for (Class<?> potionCls : Generator.Category.RING.classes) {
-				items.add((Item) Reflection.newInstance(potionCls));
-			}
 			Collections.sort(items, itemVisualcomparator);
 			for (Item item : items) {
 				ItemButton itemButton = new ItemButton(){
@@ -259,12 +241,6 @@ public class CustomNoteButton extends IconButton {
 		public int compare(Item i1, Item i2) {
 			int i1Idx = i1.image();
 			int i2Idx = i2.image();
-
-			if (i1 instanceof Scroll)   i1Idx += 1000;
-			if (i1 instanceof Ring)     i1Idx += 2000;
-
-			if (i2 instanceof Scroll)   i2Idx += 1000;
-			if (i2 instanceof Ring)     i2Idx += 2000;
 
 			return i1Idx - i2Idx;
 		}
