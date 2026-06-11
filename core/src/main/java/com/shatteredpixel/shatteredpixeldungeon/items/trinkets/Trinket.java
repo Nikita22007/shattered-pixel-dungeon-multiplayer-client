@@ -40,12 +40,11 @@ public abstract class Trinket extends Item {
 	@Override
 	public String info() {
 		String info = super.info();
-		info += "\n\n" + statsDesc();
+		info += "\n\n";
 		return info;
 	}
 
-	public abstract String statsDesc();
-
+	@Override
 	public int energyVal() {
 		return 5;
 	}

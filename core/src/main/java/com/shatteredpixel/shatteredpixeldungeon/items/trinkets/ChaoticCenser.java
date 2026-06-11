@@ -33,7 +33,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.StormCloud;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ToxicGas;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 import java.util.HashMap;
@@ -42,19 +41,6 @@ public class ChaoticCenser extends Trinket {
 
 	{
 		image = ItemSpriteSheet.CHAOTIC_CENSER;
-	}
-
-	@Override
-	public String statsDesc() {
-		if (isIdentified()){
-			return Messages.get(this, "stats_desc", averageTurnsUntilGas(buffedLvl()));
-		} else {
-			return Messages.get(this, "stats_desc", averageTurnsUntilGas(0));
-		}
-	}
-
-	public static int averageTurnsUntilGas(){
-		return averageTurnsUntilGas(-1);
 	}
 
 	public static int averageTurnsUntilGas(int level){

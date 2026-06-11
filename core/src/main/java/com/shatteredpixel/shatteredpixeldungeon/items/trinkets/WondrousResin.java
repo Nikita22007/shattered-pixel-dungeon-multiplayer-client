@@ -21,26 +21,12 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.trinkets;
 
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public class WondrousResin extends Trinket {
 
 	{
 		image = ItemSpriteSheet.WONDROUS_RESIN;
-	}
-
-	@Override
-	public String statsDesc() {
-		if (isIdentified()){
-			return Messages.get(this, "stats_desc",
-					Messages.decimalFormat("#.##", 100*positiveCurseEffectChance(buffedLvl())),
-					Messages.decimalFormat("#.##", 100*extraCurseEffectChance(buffedLvl())));
-		} else {
-			return Messages.get(this, "typical_stats_desc",
-					Messages.decimalFormat("#.##", 100*positiveCurseEffectChance(0)),
-					Messages.decimalFormat("#.##", 100*extraCurseEffectChance(0)));
-		}
 	}
 
 	//used when bonus curse effects are being created

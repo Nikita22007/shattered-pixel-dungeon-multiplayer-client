@@ -21,28 +21,12 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.trinkets;
 
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public class SaltCube extends Trinket {
 
 	{
 		image = ItemSpriteSheet.SALT_CUBE;
-	}
-
-    @Override
-	public String statsDesc() {
-		if (isIdentified()){
-			return Messages.get(this,
-					"stats_desc",
-					Messages.decimalFormat("#.##", 100*((1f/hungerGainMultiplier(buffedLvl()))-1f)),
-					Messages.decimalFormat("#.##", 100*(1f-healthRegenMultiplier(buffedLvl()))));
-		} else {
-			return Messages.get(this,
-					"typical_stats_desc",
-					Messages.decimalFormat("#.##", 100*((1f/hungerGainMultiplier(0))-1f)),
-					Messages.decimalFormat("#.##", 100*(1f-healthRegenMultiplier(0))));
-		}
 	}
 
 	public static float hungerGainMultiplier(){

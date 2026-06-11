@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.trinkets;
 
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 //🍋‍🟩
@@ -29,15 +28,6 @@ public class FerretTuft extends Trinket {
 
 	{
 		image = ItemSpriteSheet.FERRET_TUFT;
-	}
-
-    @Override
-	public String statsDesc() {
-		if (isIdentified()){
-			return Messages.get(this, "stats_desc", Messages.decimalFormat("#.##", 100 * (evasionMultiplier(buffedLvl())-1f)));
-		} else {
-			return Messages.get(this, "typical_stats_desc", Messages.decimalFormat("#.##", 100 * (evasionMultiplier(0)-1f)));
-		}
 	}
 
 	public static float evasionMultiplier(){

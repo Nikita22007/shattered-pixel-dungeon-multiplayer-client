@@ -21,22 +21,12 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.trinkets;
 
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public class RatSkull extends Trinket {
 
 	{
 		image = ItemSpriteSheet.RAT_SKULL;
-	}
-
-    @Override
-	public String statsDesc() {
-		if (isIdentified()){
-			return Messages.get(this, "stats_desc", (int)(exoticChanceMultiplier(buffedLvl())));
-		} else {
-			return Messages.get(this, "typical_stats_desc", (int)(exoticChanceMultiplier(0)));
-		}
 	}
 
 	public static float exoticChanceMultiplier(){

@@ -34,20 +34,6 @@ public class DimensionalSundial extends Trinket {
 		image = ItemSpriteSheet.SUNDIAL;
 	}
 
-    @Override
-	public String statsDesc() {
-		if (isIdentified()){
-			return Messages.get(this,
-					"stats_desc",
-					(int)(100*(1f - enemySpawnMultiplierDaytime(buffedLvl()))),
-					(int)(100*(enemySpawnMultiplierNighttime(buffedLvl())-1f)));
-		} else {
-			return Messages.get(this, "typical_stats_desc",
-					(int)(100*(1f - enemySpawnMultiplierDaytime(0))),
-					(int)(100*(enemySpawnMultiplierNighttime(0)-1f)));
-		}
-	}
-
 	public static boolean sundialWarned = false;
 
 	public static float spawnMultiplierAtCurrentTime(){

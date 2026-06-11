@@ -21,26 +21,12 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.trinkets;
 
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public class MimicTooth extends Trinket {
 
 	{
 		image = ItemSpriteSheet.MIMIC_TOOTH;
-	}
-
-    @Override
-	public String statsDesc() {
-		if (isIdentified()){
-			return Messages.get(this, "stats_desc",
-					Messages.decimalFormat("#.##", mimicChanceMultiplier(buffedLvl())),
-					Messages.decimalFormat("#.##", 100*ebonyMimicChance(buffedLvl())));
-		} else {
-			return Messages.get(this, "typical_stats_desc",
-					Messages.decimalFormat("#.##", mimicChanceMultiplier(0)),
-					Messages.decimalFormat("#.##", 100*ebonyMimicChance(0)));
-		}
 	}
 
 	public static float mimicChanceMultiplier(){

@@ -21,26 +21,12 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.trinkets;
 
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public class CrackedSpyglass extends Trinket{
 
 	{
 		image = ItemSpriteSheet.SPYGLASS;
-	}
-
-    @Override
-	public String statsDesc() {
-		if (isIdentified()){
-			if (buffedLvl() >= 2){
-				return Messages.get(this, "stats_desc_upgraded", Messages.decimalFormat("#.##", 100 * (extraLootChance(buffedLvl())-1f)));
-			} else {
-				return Messages.get(this, "stats_desc", Messages.decimalFormat("#.##", 100 * extraLootChance(buffedLvl())));
-			}
-		} else {
-			return Messages.get(this, "typical_stats_desc", Messages.decimalFormat("#.##", 100 * extraLootChance(0)));
-		}
 	}
 
 	public static float extraLootChance(){

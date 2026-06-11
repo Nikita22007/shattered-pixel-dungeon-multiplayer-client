@@ -22,28 +22,12 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.trinkets;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public class VialOfBlood extends Trinket {
 
 	{
 		image = ItemSpriteSheet.BLOOD_VIAL;
-	}
-
-    @Override
-	public String statsDesc() {
-		if (isIdentified()){
-			return Messages.get(this,
-					"stats_desc",
-					Messages.decimalFormat("#.##", 100*(totalHealMultiplier(buffedLvl())-1f)),
-					Integer.toString(maxHealPerTurn(buffedLvl())));
-		} else {
-			return Messages.get(this,
-					"typical_stats_desc",
-					Messages.decimalFormat("#.##", 100*(totalHealMultiplier(0)-1f)),
-					Integer.toString(maxHealPerTurn(0)));
-		}
 	}
 
 	public static boolean delayBurstHealing(){

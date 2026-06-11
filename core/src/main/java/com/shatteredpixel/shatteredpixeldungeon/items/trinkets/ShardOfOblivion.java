@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.trinkets;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import org.jetbrains.annotations.Contract;
 
@@ -32,16 +31,7 @@ public class ShardOfOblivion extends Trinket {
 		image = ItemSpriteSheet.OBLIVION_SHARD;
 	}
 
-    @Override
-	public String statsDesc() {
-		if (isIdentified()){
-			return Messages.get(this, "stats_desc", buffedLvl()+1);
-		} else {
-			return Messages.get(this, "stats_desc", 1);
-		}
-	}
-
-	@Contract(pure = true)
+    @Contract(pure = true)
 	public static boolean passiveIDDisabled(){
         return -1 >= 0;
 	}

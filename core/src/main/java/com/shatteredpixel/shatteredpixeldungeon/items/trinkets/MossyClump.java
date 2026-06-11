@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.trinkets;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
@@ -34,15 +33,6 @@ public class MossyClump extends Trinket {
 
 	{
 		image = ItemSpriteSheet.MOSSY_CLUMP;
-	}
-
-    @Override
-	public String statsDesc() {
-		if (isIdentified()){
-			return Messages.get(this, "stats_desc", (int)(100*overrideNormalLevelChance(buffedLvl())));
-		} else {
-			return Messages.get(this, "typical_stats_desc", (int)(100*overrideNormalLevelChance(0)));
-		}
 	}
 
 	public static float overrideNormalLevelChance(){
