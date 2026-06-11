@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.MagicalHolster;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSharpshooting;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -59,29 +58,10 @@ abstract public class MissileWeapon extends Weapon {
 	public MissileWeapon parent;
 	
 	public int tier;
-	
-	@Override
-	public int min() {
-		if (Dungeon.hero != null){
-			return Math.max(0, min(buffedLvl() + RingOfSharpshooting.levelDamageBonus(Dungeon.hero)));
-		} else {
-			return Math.max(0 , min( buffedLvl() ));
-		}
-	}
-	
+
 	@Override
 	public int min(int lvl) {
-		return  2 * tier +                      //base
-				(tier == 1 ? lvl : 2*lvl);      //level scaling
-	}
-	
-	@Override
-	public int max() {
-		if (Dungeon.hero != null){
-			return Math.max(0, max( buffedLvl() + RingOfSharpshooting.levelDamageBonus(Dungeon.hero) ));
-		} else {
-			return Math.max(0 , max( buffedLvl() ));
-		}
+		return  1;      //level scaling
 	}
 	
 	@Override
@@ -219,7 +199,7 @@ abstract public class MissileWeapon extends Weapon {
 			usages *= MagicalHolster.HOLSTER_DURABILITY_FACTOR;
 		}
 
-		if (Dungeon.hero != null) usages *= RingOfSharpshooting.durabilityMultiplier( Dungeon.hero );
+
 
 		//at 100 uses, items just last forever.
 		if (usages >= 100f) return 0;

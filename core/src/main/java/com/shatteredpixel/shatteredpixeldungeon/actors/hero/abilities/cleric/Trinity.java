@@ -226,7 +226,7 @@ public class Trinity extends ArmorAbility {
 						}
                         //Rings and the Chalice specifically get their passive effects for 20 turns
 						if (spiritForm instanceof Ring || spiritForm instanceof ChaliceOfBlood) {
-                            ((SpiritForm.SpiritFormBuff) null).setEffect(spiritForm);
+
 							Dungeon.hero.spendAndNext(1f);
 						} else {
 

@@ -22,20 +22,13 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.Trinity;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfMight;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.watabou.noosa.Image;
-import com.watabou.utils.Bundlable;
 
 public class SpiritForm extends ClericSpell {
 
@@ -74,79 +67,6 @@ public class SpiritForm extends ClericSpell {
 
 	public static int artifactLevel(){
 		return 2 + 2*Dungeon.hero.pointsInTalent(Talent.SPIRIT_FORM);
-	}
-
-	public static class SpiritFormBuff extends FlavourBuff{
-
-		{
-			type = buffType.POSITIVE;
-		}
-
-		public static final float DURATION = 20f;
-
-		private Bundlable effect;
-
-		@Override
-		public int icon() {
-			return BuffIndicator.TRINITY_FORM;
-		}
-
-		@Override
-		public void tintIcon(Image icon) {
-			icon.hardlight(0, 1, 0);
-		}
-
-		@Override
-		public float iconFadePercent() {
-			return Math.max(0, (DURATION - visualcooldown()) / DURATION);
-		}
-
-		public void setEffect(Bundlable effect){
-			this.effect = effect;
-			if (effect instanceof RingOfMight){
-				((Ring) effect).level(ringLevel());
-
-            }
-		}
-
-		@Override
-		public void detach() {
-			super.detach();
-			if (effect instanceof RingOfMight){
-
-            }
-		}
-
-		public Ring ring(){
-			if (effect instanceof Ring){
-				((Ring) effect).level(ringLevel());
-				return (Ring) effect;
-			}
-			return null;
-		}
-
-		public Artifact artifact(){
-			if (effect instanceof Artifact){
-				if (((Artifact) effect).visiblyUpgraded() < artifactLevel()){
-					((Artifact) effect).transferUpgrade(artifactLevel() - ((Artifact) effect).visiblyUpgraded());
-				}
-				return (Artifact) effect;
-			}
-			return null;
-		}
-
-		@Override
-		public String desc() {
-			if (ring() != null){
-				return Messages.get(this, "desc", Messages.titleCase(ring().name()), dispTurns());
-			} else if (artifact() != null){
-				return Messages.get(this, "desc", Messages.titleCase(artifact().name()), dispTurns());
-			}
-			return super.desc();
-		}
-
-		private static final String EFFECT = "effect";
-
 	}
 
 }
