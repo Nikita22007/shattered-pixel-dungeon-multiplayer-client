@@ -21,14 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.potions;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 import java.util.*;
@@ -100,29 +94,6 @@ public class Potion extends Item {
 		return new LinkedHashSet<>();
 	}
 
-	protected int splashColor(){
-		return anonymous ? 0x00AAFF : ItemSprite.pick( image, 5, 9 );
-	}
-	
-	protected void splash( int cell ) {
-		Fire fire = (Fire)Dungeon.level.blobs.get( Fire.class );
-		if (fire != null) {
-			fire.clear(cell);
-		}
-
-		Char ch = Actor.findChar(cell);
-		if (ch != null && ch.alignment == Char.Alignment.ALLY) {
-        }
-
-		if (Dungeon.level.heroFOV[cell]) {
-			if (ch != null) {
-				Splash.at(ch.sprite.center(), splashColor(), 5);
-			} else {
-				Splash.at(cell, splashColor(), 5);
-			}
-		}
-	}
-	
 	@Override
 	public int value() {
 		return 30 * quantity;

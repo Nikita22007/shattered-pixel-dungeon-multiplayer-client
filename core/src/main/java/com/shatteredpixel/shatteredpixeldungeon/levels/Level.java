@@ -504,10 +504,7 @@ public abstract class Level implements Bundlable {
 				|| (Terrain.flags[map[pos]] & Terrain.FLAMABLE) != 0) {
 			set(pos, Terrain.EMBERS);
 		}
-		Blob web = blobs.get(Web.class);
-		if (web != null){
-			web.clear(pos);
-		}
+
 	}
 
 	public void cleanWalls() {
