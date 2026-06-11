@@ -24,9 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items.wands;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Barrier;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -34,22 +32,14 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
-import com.shatteredpixel.shatteredpixeldungeon.effects.FloatingText;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.TalismanOfForesight;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
-import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.WondrousResin;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
@@ -95,13 +85,6 @@ public abstract class Wand extends Item {
 
 	public abstract void onZap(Ballistica attack);
 
-	public abstract void onHit( MagesStaff staff, Char attacker, Char defender, int damage);
-
-	//not affected by enchantment proc chance changers
-	public static float procChanceMultiplier( Char attacker ) {
-        return 1f;
-    }
-
 	public boolean tryToZap( Hero owner, int target ) {
 
         {
@@ -116,74 +99,6 @@ public abstract class Wand extends Item {
 		}
 	}
 
-	public void gainCharge( float amt ){
-		gainCharge( amt, false );
-	}
-
-	public void gainCharge( float amt, boolean overcharge ){
-		partialCharge += amt;
-		while (partialCharge >= 1) {
-			if (overcharge) curCharges = Math.min(maxCharges+(int)amt, curCharges+1);
-			else curCharges = Math.min(maxCharges, curCharges+1);
-			partialCharge--;
-			updateQuickslot();
-		}
-	}
-	
-	public void charge( Char owner ) {
-		if (charger == null) charger = new Charger();
-		charger.attachTo( owner );
-	}
-
-	public void charge( Char owner, float chargeScaleFactor ){
-		charge( owner );
-		charger.setScaleFactor( chargeScaleFactor );
-	}
-
-	protected void wandProc(Char target, int chargesUsed){
-		wandProc(target, buffedLvl(), chargesUsed);
-	}
-
-	//TODO Consider externalizing char awareness buff
-	protected static void wandProc(Char target, int wandLevel, int chargesUsed){
-		if (Dungeon.hero.hasTalent(Talent.ARCANE_VISION)) {
-			int dur = 5 + 5*Dungeon.hero.pointsInTalent(Talent.ARCANE_VISION);
-			((TalismanOfForesight.CharAwareness) null).charID = target.id();
-		}
-
-		if (target != Dungeon.hero &&
-				Dungeon.hero.subClass == HeroSubClass.WARLOCK &&
-				//standard 1 - 0.92^x chance, plus 7%. Starts at 15%
-				Random.Float() > (Math.pow(0.92f, (wandLevel*chargesUsed)+1) - 0.07f)){
-		}
-
-		if (Dungeon.hero.subClass == HeroSubClass.PRIEST) {
-        }
-
-		if (target.alignment != Char.Alignment.ALLY
-				&& Dungeon.hero.heroClass != HeroClass.CLERIC
-				&& Dungeon.hero.hasTalent(Talent.SEARING_LIGHT)) {
-			{
-
-			}
-		}
-
-		if (target.alignment != Char.Alignment.ALLY
-				&& Dungeon.hero.heroClass != HeroClass.CLERIC
-				&& Dungeon.hero.hasTalent(Talent.SUNRAY)){
-			// 15/25% chance
-			if (Random.Int(20) < 1 + 2*Dungeon.hero.pointsInTalent(Talent.SUNRAY)){
-			}
-		}
-	}
-
-	public void stopCharging() {
-		if (charger != null) {
-			charger.detach();
-			charger = null;
-		}
-	}
-	
 	public void level( int value) {
 		super.level( value );
 		updateLevel();
@@ -191,18 +106,6 @@ public abstract class Wand extends Item {
 
 	public void setIDReady(){
 		usesLeftToID = -1;
-	}
-
-	public boolean readyToIdentify(){
-		return !isIdentified() && usesLeftToID <= 0;
-	}
-	
-	public void onHeroGainExp( float levelPercent, Hero hero ){
-		levelPercent *= 1f;
-		if (!isIdentified() && availableUsesToID <= USES_TO_ID/2f) {
-			//gains enough uses to ID over 1 level
-			availableUsesToID = Math.min(USES_TO_ID/2f, availableUsesToID + levelPercent * USES_TO_ID/2f);
-		}
 	}
 
 	@Override
@@ -425,147 +328,6 @@ public abstract class Wand extends Item {
 		else            return collisionProperties;
 	}
 
-	public static class PlaceHolder extends Wand {
-
-		{
-			image = ItemSpriteSheet.WAND_HOLDER;
-		}
-
-		@Override
-		public boolean isSimilar(Item item) {
-			return false;
-		}
-
-		@Override
-		public void onZap(Ballistica attack) {}
-		public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {}
-
-		@Override
-		public String info() {
-			return "";
-		}
-	}
-	
-	protected static CellSelector.Listener zapper = new  CellSelector.Listener() {
-		
-		@Override
-		public void onSelect( Integer target ) {
-			
-			if (target != null) {
-				
-				//FIXME this safety check shouldn't be necessary
-				//it would be better to eliminate the curItem static variable.
-				final Wand curWand;
-				if (false) {
-					curWand = (Wand) Wand.curItem;
-				} else {
-					return;
-				}
-
-				final Ballistica shot = new Ballistica( curUser.pos, target, curWand.collisionProperties(target));
-				int cell = shot.collisionPos;
-				
-				if (target == curUser.pos || cell == curUser.pos) {
-					if (target == curUser.pos && curUser.hasTalent(Talent.SHIELD_BATTERY)) {
-
-                        if (curWand.curCharges == 0) {
-                            GLog.w(Messages.get(Wand.class, "fizzles"));
-                            return;
-                        }
-
-                        float shield = curUser.HT * (0.04f * curWand.curCharges);
-                        if (curUser.pointsInTalent(Talent.SHIELD_BATTERY) == 2) shield *= 1.5f;
-                        ((Barrier) null).setShield(Math.round(shield));
-                        curUser.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(Math.round(shield)), FloatingText.SHIELDING);
-                        curWand.curCharges = 0;
-                        curUser.sprite.operate(curUser.pos);
-                        Sample.INSTANCE.play(Assets.Sounds.CHARGEUP);
-                        ScrollOfRecharging.charge(curUser);
-                        updateQuickslot();
-                        curUser.spendAndNext(Actor.TICK);
-                        return;
-                    }
-					GLog.i( Messages.get(Wand.class, "self_target") );
-					return;
-				}
-
-				curUser.sprite.zap(cell);
-
-				//attempts to target the cell aimed at if something is there, otherwise targets the collision pos.
-				if (Actor.findChar(target) != null)
-					QuickSlotButton.target(Actor.findChar(target));
-				else
-					QuickSlotButton.target(Actor.findChar(cell));
-				
-				if (curWand.tryToZap(curUser, target)) {
-					
-					curUser.busy();
-
-					//backup barrier logic
-					//This triggers before the wand zap, mostly so the barrier helps vs skeletons
-					if (curUser.hasTalent(Talent.BACKUP_BARRIER)
-							&& curWand.curCharges == curWand.chargesPerCast()
-							&& curWand.charger != null && curWand.charger.target == curUser){
-
-						//regular. If hero owns wand but it isn't in belongings it must be in the staff
-						if (curUser.heroClass == HeroClass.MAGE && !curUser.belongings.contains(curWand)){
-							//grants 3/5 shielding
-							int shieldToGive = 1 + 2 * Dungeon.hero.pointsInTalent(Talent.BACKUP_BARRIER);
-							((Barrier) null).setShield(shieldToGive);
-							Dungeon.hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(shieldToGive), FloatingText.SHIELDING);
-
-						//metamorphed. Triggers if wand is highest level hero has
-						} else if (curUser.heroClass != HeroClass.MAGE) {
-							boolean highest = true;
-							for (Item i : curUser.belongings.getAllItems(Wand.class)){
-                                if (i.level() > curWand.level()) {
-                                    highest = false;
-                                    break;
-                                }
-							}
-							if (highest){
-								//grants 3/5 shielding
-								int shieldToGive = 1 + 2 * Dungeon.hero.pointsInTalent(Talent.BACKUP_BARRIER);
-								((Barrier) null).setShield(shieldToGive);
-								Dungeon.hero.sprite.showStatusWithIcon(CharSprite.POSITIVE, Integer.toString(shieldToGive), FloatingText.SHIELDING);
-							}
-						}
-					}
-					
-					if (curWand.cursed){
-						if (!curWand.cursedKnown){
-							GLog.n(Messages.get(Wand.class, "curse_discover", curWand.name()));
-						}
-						new Ballistica(curUser.pos, target, Ballistica.MAGIC_BOLT);
-
-					} else {
-						curWand.fx(shot, new Callback() {
-							public void call() {
-								curWand.onZap(shot);
-								if (Random.Float() < WondrousResin.extraCurseEffectChance()){
-									WondrousResin.forcePositive = true;
-									new Ballistica(curUser.pos, target, Ballistica.MAGIC_BOLT);
-
-								} else {
-									curWand.wandUsed();
-								}
-							}
-						});
-
-					}
-					curWand.cursedKnown = true;
-					
-				}
-				
-			}
-		}
-		
-		@Override
-		public String prompt() {
-			return Messages.get(Wand.class, "prompt");
-		}
-	};
-	
 	public class Charger extends Buff {
 		
 		private static final float BASE_CHARGE_DELAY = 10f;

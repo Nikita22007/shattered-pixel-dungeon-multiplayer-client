@@ -967,13 +967,7 @@ public class Hero extends Char {
 					} else if (distance(target) > distance(m)) {
 						target = m;
 					}
-					if (false && Dungeon.level.distance(m.pos, pos) <= 4
-							&& !Document.ADVENTURERS_GUIDE.isPageRead(Document.GUIDE_EXAMINING)) {
-						GameScene.flashForDocument(Document.ADVENTURERS_GUIDE, Document.GUIDE_EXAMINING);
-						//we set to read here to prevent this message popping up a bunch
-						Document.ADVENTURERS_GUIDE.readPage(Document.GUIDE_EXAMINING);
-					}
-				}
+                }
 			}
 		}
 
@@ -1129,9 +1123,8 @@ public class Hero extends Char {
 		return false;
 	}
 
-	@Override
 	public float stealth() {
-		float stealth = super.stealth();
+		float stealth = (float) 0;
 
 
 		return stealth;

@@ -47,7 +47,6 @@ import com.watabou.utils.Reflection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 
 public abstract class Mob extends Char {
 
@@ -108,7 +107,7 @@ public abstract class Mob extends Char {
             return true;
         }
 
-        enemy = chooseEnemy();
+        enemy = null;
 
         boolean enemyInFOV = enemy != null && enemy.isAlive() && fieldOfView[enemy.pos] && enemy.invisible <= 0;
 
@@ -123,100 +122,6 @@ public abstract class Mob extends Char {
 
     //FIXME this is sort of a band-aid correction for allies needing more intelligent behaviour
     protected boolean intelligentAlly = false;
-
-    protected Char chooseEnemy() {
-
-
-        //find a new enemy if..
-        boolean newEnemy = false;
-        //we have no enemy, or the current one is dead/missing
-        if (enemy == null || !enemy.isAlive() || !Actor.chars().contains(enemy) || state == WANDERING) {
-            newEnemy = true;
-            //We are amoked and current enemy is the hero
-        }
-
-        //additionally, if we are an ally, find a new enemy if...
-        if (!newEnemy && alignment == Alignment.ALLY) {
-            //current enemy is also an ally
-            if (enemy.alignment == Alignment.ALLY) {
-                newEnemy = true;
-                //current enemy is invulnerable
-            } else if (enemy.isInvulnerable(getClass())) {
-                newEnemy = true;
-            }
-        }
-
-        if (newEnemy) {
-
-            HashSet<Char> enemies = new HashSet<>();
-
-            //if we are amoked...
-            {
-                if (alignment == Alignment.ALLY) {
-                    //look for hostile mobs to attack
-                    for (Mob mob : Dungeon.level.mobs)
-                        if (mob.alignment == Alignment.ENEMY && fieldOfView[mob.pos]
-                                && mob.invisible <= 0 && !mob.isInvulnerable(getClass()))
-                            //do not target passive mobs
-                            //intelligent allies also don't target mobs which are wandering or asleep
-                            if (mob.state != mob.PASSIVE &&
-                                    (!intelligentAlly || (mob.state != mob.SLEEPING && mob.state != mob.WANDERING))) {
-                                enemies.add(mob);
-                            }
-
-                    //if we are an enemy...
-                } else if (alignment == Alignment.ENEMY) {
-                    //look for ally mobs to attack
-                    for (Mob mob : Dungeon.level.mobs)
-                        if (mob.alignment == Alignment.ALLY && fieldOfView[mob.pos] && mob.invisible <= 0)
-                            enemies.add(mob);
-
-                    //and look for the hero
-                    if (fieldOfView[Dungeon.hero.pos] && Dungeon.hero.invisible <= 0) {
-                        enemies.add(Dungeon.hero);
-                    }
-
-                }
-            }
-
-
-            //neutral characters in particular do not choose enemies.
-            if (enemies.isEmpty()) {
-                return null;
-            } else {
-                //go after the closest potential enemy, preferring enemies that can be reached/attacked, and the hero if two are equidistant
-                PathFinder.buildDistanceMap(pos, Dungeon.findPassable(this, Dungeon.level.passable, fieldOfView, true));
-                Char closest = null;
-                int closestDist = Integer.MAX_VALUE;
-
-                for (Char curr : enemies) {
-                    int currDist = Integer.MAX_VALUE;
-                    //we aren't trying to move into the target, just toward them
-                    for (int i : PathFinder.NEIGHBOURS8) {
-                        if (PathFinder.distance[curr.pos + i] < currDist) {
-                            currDist = PathFinder.distance[curr.pos + i];
-                        }
-                    }
-                    if (closest == null) {
-                        closest = curr;
-                        closestDist = currDist;
-                    } else if (canAttack(closest) && !canAttack(curr)) {
-                        continue;
-                    } else if ((canAttack(curr) && !canAttack(closest))
-                            || (currDist < closestDist)) {
-                        closest = curr;
-                    } else if ((canAttack(curr) && canAttack(closest))) {
-                        closest = curr;
-                    }
-                }
-                //if we were going to target the hero, but an afterimage exists, target that instead
-
-                return closest;
-            }
-
-        } else
-            return enemy;
-    }
 
     protected boolean canAttack(Char enemy) {
         if (Dungeon.level.adjacent(pos, enemy.pos)) {
@@ -422,7 +327,7 @@ public abstract class Mob extends Char {
 
         //chance is 1 in (distance + stealth)
         protected float detectionChance(Char enemy) {
-            return 1 / (distance(enemy) + enemy.stealth());
+            return 1 / (distance(enemy) + (float) 0);
         }
 
         protected void awaken(boolean enemyInFOV) {
@@ -469,7 +374,7 @@ public abstract class Mob extends Char {
 
         //chance is 1 in (distance/2 + stealth)
         protected float detectionChance(Char enemy) {
-            return 1 / (distance(enemy) / 2f + enemy.stealth());
+            return 1 / (distance(enemy) / 2f + (float) 0);
         }
 
         protected boolean noticeEnemy() {
@@ -587,7 +492,7 @@ public abstract class Mob extends Char {
             if (!recursing) {
                 Char oldEnemy = enemy;
                 enemy = null;
-                enemy = chooseEnemy();
+                enemy = null;
                 if (enemy != null && enemy != oldEnemy) {
                     recursing = true;
                     boolean result = act(enemyInFOV, justAlerted);

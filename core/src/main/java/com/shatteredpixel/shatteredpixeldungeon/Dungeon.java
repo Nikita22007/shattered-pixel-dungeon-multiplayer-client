@@ -260,8 +260,6 @@ public class Dungeon {
 			}
 		}
 
-		ch.modifyPassable(passable);
-
 		if (chars) {
 			for (Char c : Actor.chars()) {
 				if (vis[c.pos]) {

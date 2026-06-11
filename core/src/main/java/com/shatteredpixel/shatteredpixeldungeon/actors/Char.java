@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Obfuscation;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -167,17 +166,7 @@ public abstract class Char extends Actor {
 		return isAlive();
 	}
 
-	@Override
-	protected void spend( float time ) {
 
-		float timeScale = 1f;
-		{
-
-		}
-
-		super.spend(time / timeScale);
-	}
-	
 	public synchronized LinkedHashSet<Buff> buffs() {
 		return new LinkedHashSet<>(buffs);
 	}
@@ -229,14 +218,6 @@ public abstract class Char extends Actor {
 			buff.fx( true );
 		}
 	}
-	
-	public float stealth() {
-		float stealth = 0;
-
-		stealth += Obfuscation.stealthBoost(this, glyphLevel(Obfuscation.class));
-
-		return stealth;
-	}
 
 	public final void move( int step ) {
 		move( step, true );
@@ -245,12 +226,6 @@ public abstract class Char extends Actor {
 	//travelling may be false when a character is moving instantaneously, such as via teleportation
 	public void move( int step, boolean travelling ) {
 
-		if (travelling && Dungeon.level.adjacent(step, pos)) {
-		}
-
-		if (Dungeon.level.map[pos] == Terrain.OPEN_DOOR) {
-
-		}
 
 		pos = step;
 		
@@ -265,11 +240,6 @@ public abstract class Char extends Actor {
 		return Dungeon.level.distance( pos, other.pos );
 	}
 
-	public boolean[] modifyPassable( boolean[] passable){
-		//do nothing by default, but some chars can pass over terrain that others can't
-		return passable;
-	}
-	
 	public void onMotionComplete() {
 		//Does nothing by default
 		//The main actor thread already accounts for motion,
@@ -285,21 +255,5 @@ public abstract class Char extends Actor {
 	}
 	
 	protected final HashSet<Class> resistances = new HashSet<>();
-	
-	//returns percent effectiveness after resistances
-	//TODO currently resistances reduce effectiveness by a static 50%, and do not stack.
-	public float resist( Class effect ){
-
-
-		return 1f;
-	}
-	
-	protected final HashSet<Class> immunities = new HashSet<>();
-
-	//similar to isImmune, but only factors in damage.
-	//Is used in AI decision-making
-	public boolean isInvulnerable( Class effect ) {
-		return false;
-	}
 
 }
