@@ -55,11 +55,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.food.Food;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfInvisibility;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLiquidFlame;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfMindVision;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfPurity;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfStrength;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMirrorImage;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRage;
@@ -107,8 +104,6 @@ public enum HeroClass {
 
 
 		Waterskin waterskin = new Waterskin();
-
-		new ScrollOfIdentify();
 
 		switch (this) {
 			case WARRIOR:
@@ -186,9 +181,6 @@ public enum HeroClass {
 		hero.belongings.weapon = staff;
 
 		Dungeon.quickslot.setSlot(0, staff);
-
-		new ScrollOfUpgrade();
-		new PotionOfLiquidFlame();
 	}
 
 	private static void initRogue( Hero hero ) {
@@ -202,8 +194,6 @@ public enum HeroClass {
 		Dungeon.quickslot.setSlot(0, cloak);
 		Dungeon.quickslot.setSlot(1, knives);
 
-		new ScrollOfMagicMapping();
-		new PotionOfInvisibility();
 	}
 
 	private static void initHuntress( Hero hero ) {
@@ -212,9 +202,6 @@ public enum HeroClass {
 		SpiritBow bow = new SpiritBow();
 
 		Dungeon.quickslot.setSlot(0, bow);
-
-		new PotionOfMindVision();
-		new ScrollOfLullaby();
 	}
 
 	private static void initDuelist( Hero hero ) {
@@ -242,7 +229,6 @@ public enum HeroClass {
 		Dungeon.quickslot.setSlot(0, tome);
 
 		new PotionOfPurity();
-		new ScrollOfRemoveCurse();
 	}
 
 	public String title() {
