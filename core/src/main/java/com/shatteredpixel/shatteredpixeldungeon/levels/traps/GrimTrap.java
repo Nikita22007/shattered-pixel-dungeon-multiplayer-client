@@ -111,7 +111,6 @@ public class GrimTrap extends Trap {
 											Sample.INSTANCE.play(Assets.Sounds.CURSED);
 											if (!finalTarget.isAlive()) {
 												Badges.validateDeathFromGrimOrDisintTrap();
-												Dungeon.fail( GrimTrap.this );
 												GLog.n( Messages.get(GrimTrap.class, "ondeath") );
 												if (reclaimed) Badges.validateDeathFromFriendlyMagic();
 											}

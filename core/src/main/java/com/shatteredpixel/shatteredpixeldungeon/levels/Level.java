@@ -545,17 +545,6 @@ public abstract class Level implements Bundlable {
 	
 	//public method for forcing the hard press of a cell. e.g. when an item lands on it
 
-	//a 'soft' press ignores hidden traps
-	//a 'hard' press triggers all things
-
-	private static boolean[] heroMindFov;
-
-	private static boolean[] modifiableBlocking;
-
-	public float levelExplorePercent( int depth ){
-		return 0;
-	} //todo send it?
-
 	@Contract(pure = true)
 	public int distance( int a, int b ) {
 		int ax = a % width();

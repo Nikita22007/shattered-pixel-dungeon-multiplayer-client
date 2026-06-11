@@ -24,10 +24,8 @@ package com.shatteredpixel.shatteredpixeldungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
-import com.shatteredpixel.shatteredpixeldungeon.levels.RegularLevel;
 import com.shatteredpixel.shatteredpixeldungeon.network.ParseThread;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndResurrect;
 import com.watabou.utils.*;
 import com.watabou.utils.Random;
 import org.jetbrains.annotations.Contract;
@@ -123,19 +121,6 @@ public class Dungeon {
 
 		Hero.preview( info, bundle.getBundle( HERO ) );
 		Statistics.preview( info, bundle );
-	}
-	
-	public static void fail( Object cause ) {
-		if (WndResurrect.instance == null) {
-			updateLevelExplored();
-			Statistics.gameWon = false;
-        }
-	}
-
-	public static void updateLevelExplored(){
-		if (branch == 0 && level instanceof RegularLevel && !Dungeon.bossLevel()){
-			Statistics.floorsExplored.put( depth, level.levelExplorePercent(depth));
-		}
 	}
 
 	//default to recomputing based on max hero vision, in case vision just shrank/grew
