@@ -48,51 +48,6 @@ public class Potion extends Item {
 	//used internally for potions that can be drunk or thrown
 	public static final String AC_CHOOSE = "CHOOSE";
 
-	private static final LinkedHashMap<String, Integer> colors = new LinkedHashMap<String, Integer>() {
-		{
-			put("crimson",ItemSpriteSheet.POTION_CRIMSON);
-			put("amber",ItemSpriteSheet.POTION_AMBER);
-			put("golden",ItemSpriteSheet.POTION_GOLDEN);
-			put("jade",ItemSpriteSheet.POTION_JADE);
-			put("turquoise",ItemSpriteSheet.POTION_TURQUOISE);
-			put("azure",ItemSpriteSheet.POTION_AZURE);
-			put("indigo",ItemSpriteSheet.POTION_INDIGO);
-			put("magenta",ItemSpriteSheet.POTION_MAGENTA);
-			put("bistre",ItemSpriteSheet.POTION_BISTRE);
-			put("charcoal",ItemSpriteSheet.POTION_CHARCOAL);
-			put("silver",ItemSpriteSheet.POTION_SILVER);
-			put("ivory",ItemSpriteSheet.POTION_IVORY);
-		}
-	};
-
-	protected static final HashSet<Class<?extends Potion>> mustThrowPots = new HashSet<>();
-	static{
-		mustThrowPots.add(PotionOfToxicGas.class);
-		mustThrowPots.add(PotionOfLiquidFlame.class);
-		mustThrowPots.add(PotionOfParalyticGas.class);
-		mustThrowPots.add(PotionOfFrost.class);
-		
-		//exotic
-		mustThrowPots.add(PotionOfCorrosiveGas.class);
-		mustThrowPots.add(PotionOfSnapFreeze.class);
-		mustThrowPots.add(PotionOfShroudingFog.class);
-		mustThrowPots.add(PotionOfStormClouds.class);
-		
-		//also all brews except unstable, hardcoded
-	}
-	
-	protected static final HashSet<Class<?extends Potion>> canThrowPots = new HashSet<>();
-	static{
-		canThrowPots.add(PotionOfPurity.class);
-		canThrowPots.add(PotionOfLevitation.class);
-		
-		//exotic
-		canThrowPots.add(PotionOfCleansing.class);
-		
-		//elixirs
-		canThrowPots.add(ElixirOfHoneyedHealing.class);
-	}
-	
 	protected static ItemStatusHandler<Potion> handler;
 	
 	protected String color;
@@ -111,16 +66,6 @@ public class Potion extends Item {
 		handler = null;
 	}
 
-	public static void save( Bundle bundle ) {
-		handler.save( bundle );
-	}
-
-	public static void saveSelectively( Bundle bundle, ArrayList<Item> items ) {
-		ArrayList<Class<?extends Item>> classes = new ArrayList<>();
-		for (Item i : items){
-		}
-		handler.saveClassesSelectively( bundle, classes );
-	}
 
 	public Potion() {
 		super();
@@ -148,16 +93,6 @@ public class Potion extends Item {
 		}
 	}
 
-	@Override
-	public String defaultAction() {
-		if (isKnown() && mustThrowPots.contains(this.getClass())) {
-			return AC_THROW;
-		} else if (isKnown() &&canThrowPots.contains(this.getClass())){
-			return AC_CHOOSE;
-		} else {
-			return AC_DRINK;
-		}
-	}
 
 
 	public boolean isKnown() {
@@ -174,7 +109,7 @@ public class Potion extends Item {
 	@Override
 	public String info() {
 		//skip custom notes if anonymized and un-Ided
-		return (anonymous && (handler == null || !true)) ? desc() : super.info();
+		return (anonymous && (handler == null)) ? desc() : super.info();
 	}
 
 	@Override
