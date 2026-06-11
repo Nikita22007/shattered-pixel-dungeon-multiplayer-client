@@ -430,7 +430,6 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 
 
 						}
-                        hero.spendAndNext(hero.attackDelay());
                     }
 				});
 			}

@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.Trap;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Plant;
@@ -118,7 +117,8 @@ public class TimekeepersHourglass extends Artifact {
                     && false) {
 				//90 turns to charge at full, 60 turns to charge at 0/10
 				float chargeGain = 1 / (90f - (chargeCap - charge)*3f);
-				chargeGain *= RingOfEnergy.artifactChargeMultiplier(target);
+
+				chargeGain *= (float) Math.pow(1.175, 0);
 				partialCharge += chargeGain;
 
 				while (partialCharge >= 1) {

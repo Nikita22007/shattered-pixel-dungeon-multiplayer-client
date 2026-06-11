@@ -125,27 +125,6 @@ abstract public class MissileWeapon extends Weapon {
 
 
 	@Override
-	public float accuracyFactor(Char owner, Char target) {
-		float accFactor = super.accuracyFactor(owner, target);
-
-		accFactor *= adjacentAccFactor(owner, target);
-
-		return accFactor;
-	}
-
-	protected float adjacentAccFactor(Char owner, Char target){
-		if (Dungeon.level.adjacent( owner.pos, target.pos )) {
-			if (false){
-				return (0.5f + 0.2f*((Hero) owner).pointsInTalent(Talent.POINT_BLANK));
-			} else {
-				return 0.5f;
-			}
-		} else {
-			return 1.5f;
-		}
-	}
-
-	@Override
 	public int proc(Char attacker, Char defender, int damage) {
 
 		return super.proc(attacker, defender, damage);

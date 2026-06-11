@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -181,7 +180,8 @@ public class DriedRose extends Artifact {
                     && !cursed
                     && false) {
 				//500 turns to a full charge
-				partialCharge += (1/5f * RingOfEnergy.artifactChargeMultiplier(target));
+
+				partialCharge += (1/5f * (float) Math.pow(1.175, 0));
 				while (partialCharge > 1){
 					charge++;
 					partialCharge--;

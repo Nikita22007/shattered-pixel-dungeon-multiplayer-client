@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
@@ -114,7 +113,8 @@ public class UnstableSpellbook extends Artifact {
                 if (false) {
 //120 turns to charge at full, 80 turns to charge at 0/8
                     float chargeGain = 1 / (120f - (chargeCap - charge) * 5f);
-                    chargeGain *= RingOfEnergy.artifactChargeMultiplier(target);
+
+					chargeGain *= (float) Math.pow(1.175, 0);
                     partialCharge += chargeGain;
 
                     while (partialCharge >= 1) {

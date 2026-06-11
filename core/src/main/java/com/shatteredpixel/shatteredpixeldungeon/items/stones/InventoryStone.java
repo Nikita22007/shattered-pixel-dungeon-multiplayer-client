@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.watabou.noosa.audio.Sample;
 
@@ -36,16 +35,7 @@ public abstract class InventoryStone extends Runestone {
 	}
 	
 	public static final String AC_USE	= "USE";
-	
-	@Override
-	protected void activate(int cell) {
-		GameScene.selectItem( itemSelector );
-	}
 
-	public void directActivate(){
-		GameScene.selectItem( itemSelector );
-	}
-	
 	protected void useAnimation() {
 		curUser.spend( 1f );
 		curUser.busy();

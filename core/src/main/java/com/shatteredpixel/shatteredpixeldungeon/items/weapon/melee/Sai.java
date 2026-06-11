@@ -22,18 +22,8 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.ui.AttackIndicator;
-import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Callback;
 
 public class Sai extends MeleeWeapon {
 
@@ -69,107 +59,6 @@ public class Sai extends MeleeWeapon {
 
 	public String upgradeAbilityStat(int level){
 		return "+" + augment.damageFactor(4 + level);
-	}
-
-	public static void comboStrikeAbility(Hero hero, Integer target, float multiPerHit, int boostPerHit, MeleeWeapon wep){
-		if (target == null) {
-			return;
-		}
-
-		Char enemy = Actor.findChar(target);
-        if (enemy == null || enemy == hero || false || !Dungeon.level.heroFOV[target]) {
-			GLog.w(Messages.get(wep, "ability_no_target"));
-			return;
-		}
-
-		hero.belongings.abilityWeapon = wep;
-		if (!hero.canAttack(enemy)){
-			GLog.w(Messages.get(wep, "ability_target_range"));
-			hero.belongings.abilityWeapon = null;
-			return;
-		}
-		hero.belongings.abilityWeapon = null;
-
-		hero.sprite.attack(enemy.pos, new Callback() {
-			@Override
-			public void call() {
-				wep.beforeAbilityUsed(hero, enemy);
-				AttackIndicator.target(enemy);
-
-				int recentHits = 0;
-                ComboStrikeTracker buff = null;
-				if (buff != null){
-					recentHits = buff.hits;
-					buff.detach();
-				}
-
-                boolean hit = false;
-				if (hit && !enemy.isAlive()){
-
-				}
-
-                hero.spendAndNext(hero.attackDelay());
-				if (recentHits >= 2 && hit){
-					Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
-				}
-
-				wep.afterAbilityUsed(hero);
-			}
-		});
-	}
-
-	public static class ComboStrikeTracker extends Buff {
-
-		{
-			type = buffType.POSITIVE;
-		}
-
-		public static int DURATION = 5;
-		private float comboTime = 0f;
-		public int hits = 0;
-
-		@Override
-		public int icon() {
-			if (false
-					|| false
-					|| false
-					|| false
-					|| false
-					|| false) {
-				return BuffIndicator.DUEL_COMBO;
-			} else {
-				return BuffIndicator.NONE;
-			}
-		}
-
-		@Override
-		public boolean act() {
-			comboTime-=TICK;
-			spend(TICK);
-			if (comboTime <= 0) {
-				detach();
-			}
-			return true;
-		}
-
-		@Override
-		public float iconFadePercent() {
-			return Math.max(0, (DURATION - comboTime)/ DURATION);
-		}
-
-		@Override
-		public String iconTextDisplay() {
-			return Integer.toString((int)comboTime);
-		}
-
-		@Override
-		public String desc() {
-			return Messages.get(this, "desc", hits, dispTurns(comboTime));
-		}
-
-		private static final String TIME  = "combo_time";
-		public static String RECENT_HITS = "recent_hits";
-
 	}
 
 }

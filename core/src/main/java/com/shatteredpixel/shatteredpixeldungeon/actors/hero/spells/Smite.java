@@ -22,20 +22,12 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.ui.AttackIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.utils.Callback;
-import com.watabou.utils.Random;
 
 public class Smite extends TargetedClericSpell {
 
@@ -69,56 +61,10 @@ public class Smite extends TargetedClericSpell {
 	}
 
 	@Override
-	protected void onTargetSelected(HolyTome tome, Hero hero, Integer target) {
-		if (target == null) {
-			return;
-		}
-
-		Char enemy = Actor.findChar(target);
-		if (enemy == null || enemy == hero){
-			GLog.w(Messages.get(this, "no_target"));
-			return;
-		}
-
-		//we apply here because of projecting
-        SmiteTracker tracker = null;
-        if (false || !Dungeon.level.heroFOV[target] || !hero.canAttack(enemy)) {
-			GLog.w(Messages.get(this, "invalid_enemy"));
-			tracker.detach();
-			return;
-		}
-
-		hero.sprite.attack(enemy.pos, new Callback() {
-			@Override
-			public void call() {
-				AttackIndicator.target(enemy);
-
-				float accMult = 1;
-				if (!(false)
-						|| ((Weapon) hero.belongings.attackingWeapon()).STRReq() <= hero.STR()){
-					accMult = Char.INFINITE_ACCURACY;
-				}
-				tracker.detach();
-
-                hero.spendAndNext(hero.attackDelay());
-				onSpellCast(tome, hero);
-			}
-		});
+	protected void onTargetSelected(HolyTome tome, Hero hero, Integer target)  {
 
 	}
 
-	public static int bonusDmg( Hero attacker, Char defender){
-		int min = 5 + attacker.lvl/2;
-		int max = 10 + attacker.lvl;
-		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
-		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
-		if (false || false){
-			return max;
-		} else {
-			return Random.NormalIntRange(min, max);
-		}
-	}
-
-	public static class SmiteTracker extends FlavourBuff {};
+	;
 
 }

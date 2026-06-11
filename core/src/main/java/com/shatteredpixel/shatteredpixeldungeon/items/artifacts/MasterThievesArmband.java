@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -119,7 +118,8 @@ public class MasterThievesArmband extends Artifact {
 
 			if (charge < chargeCap){
 				float chargeGain = 3f * levelPortion;
-				chargeGain *= RingOfEnergy.artifactChargeMultiplier(target);
+
+				chargeGain *= (float) Math.pow(1.175, 0);
 
 				partialCharge += chargeGain;
 				while (partialCharge > 1f){

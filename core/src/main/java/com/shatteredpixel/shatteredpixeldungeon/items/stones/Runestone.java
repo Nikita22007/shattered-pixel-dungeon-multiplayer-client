@@ -38,9 +38,7 @@ public abstract class Runestone extends Item {
 		image = ItemSpriteSheet.STONE_HOLDER;
 		anonymous = true;
 	}
-	
-	protected abstract void activate(int cell);
-	
+
 	@Override
 	public boolean isUpgradable() {
 		return false;
@@ -66,12 +64,7 @@ public abstract class Runestone extends Item {
 		{
 			image = ItemSpriteSheet.STONE_HOLDER;
 		}
-		
-		@Override
-		protected void activate(int cell) {
-			//does nothing
-		}
-		
+
 		@Override
 		public boolean isSimilar(Item item) {
 			return false;

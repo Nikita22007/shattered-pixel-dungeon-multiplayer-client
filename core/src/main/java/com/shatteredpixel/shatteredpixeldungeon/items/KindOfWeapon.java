@@ -132,14 +132,6 @@ abstract public class KindOfWeapon extends EquipableItem {
 			return Random.NormalIntRange(min(), max());
 		}
 	}
-	
-	public float accuracyFactor( Char owner, Char target ) {
-		return 1f;
-	}
-	
-	public float delayFactor( Char owner ) {
-		return 1f;
-	}
 
 	public int reachFactor( Char owner ){
 		return 1;

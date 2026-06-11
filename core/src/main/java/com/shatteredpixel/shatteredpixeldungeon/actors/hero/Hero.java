@@ -32,7 +32,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbili
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.*;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
@@ -107,15 +106,7 @@ public class Hero extends Char {
 	}
 
 	public int STR() {
-		int strBonus = 0;
-
-		strBonus += RingOfMight.strengthBonus(this);
-
-		if (hasTalent(Talent.STRONGMAN)) {
-			strBonus += (int) Math.floor(STR * (0.03f + 0.05f * pointsInTalent(Talent.STRONGMAN)));
-		}
-
-		return STR + strBonus;
+		return STR;
 	}
 
 	private static final String CLASS = "class";
@@ -228,7 +219,7 @@ public class Hero extends Char {
 
 		float speed = super.speed();
 
-		speed *= RingOfHaste.speedMultiplier(this);
+		speed *= 1f;
 
 
         ((HeroSprite) sprite).sprint(1f);
@@ -248,27 +239,6 @@ public class Hero extends Char {
 			return true;
 		}
 		return false;
-	}
-
-	public float attackDelay() {
-
-		float delay = 1f;
-
-		{
-			//Normally putting furor speed on unarmed attacks would be unnecessary
-			//But there's going to be that one guy who gets a furor+force ring combo
-			//This is for that one guy, you shall get your fists of fury!
-			float speed = RingOfFuror.attackSpeedMultiplier(this);
-
-			//ditto for furor + sword dance!
-
-			//and augments + brawler's stance! My goodness, so many options now compared to 2014!
-			if (RingOfForce.unarmedGetsWeaponAugment(this)) {
-				delay = ((Weapon) belongings.weapon).augment.delayFactor(delay);
-			}
-
-			return delay / speed;
-		}
 	}
 
 	@Override

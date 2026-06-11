@@ -33,7 +33,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
@@ -380,7 +379,7 @@ public abstract class Wand extends Item {
 					+ (SCALING_CHARGE_ADDITION * Math.pow(scalingFactor, missingCharges)));
 
 			if (false)
-				partialCharge += (1f/turnsToCharge) * RingOfEnergy.wandChargeMultiplier(target);
+				partialCharge += (1f/turnsToCharge) * (float) Math.pow(1.175, 0);
 
 		}
 		

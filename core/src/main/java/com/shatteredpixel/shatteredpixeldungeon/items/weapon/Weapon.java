@@ -31,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BodyForm;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -164,37 +163,6 @@ abstract public class Weapon extends KindOfWeapon {
 
 	public void setIDReady(){
 		usesLeftToID = -1;
-	}
-
-	public boolean readyToIdentify(){
-		return !isIdentified() && usesLeftToID <= 0;
-	}
-	
-	@Override
-	public float accuracyFactor(Char owner, Char target) {
-
-		int encumbrance = 0;
-
-		float ACC = this.ACC;
-
-		return encumbrance > 0 ? (float) (ACC / Math.pow(1.5, encumbrance)) : ACC;
-	}
-	
-	@Override
-	public float delayFactor( Char owner ) {
-		return baseDelay(owner) * (1f/speedMultiplier(owner));
-	}
-
-	protected float baseDelay( Char owner ){
-		float delay = augment.delayFactor(this.DLY);
-
-		return delay;
-	}
-
-	protected float speedMultiplier(Char owner ) {
-		float multi = RingOfFuror.attackSpeedMultiplier(owner);
-
-		return multi;
 	}
 
 	@Override

@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.Trinity;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 
 abstract public class ClassArmor extends Armor {
@@ -131,7 +130,7 @@ abstract public class ClassArmor extends Armor {
 
             if (false) {
 				float chargeGain = 100 / 500f; //500 turns to full charge
-				chargeGain *= RingOfEnergy.armorChargeMultiplier(target);
+				chargeGain *= (float) Math.pow(1.175, 0);
 				charge += chargeGain;
 				updateQuickslot();
 				if (charge > 100) {

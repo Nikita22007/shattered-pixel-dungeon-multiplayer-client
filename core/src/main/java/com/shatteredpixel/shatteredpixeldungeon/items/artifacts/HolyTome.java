@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.ClericSpell;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.GuidingLight;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -172,7 +171,8 @@ public class HolyTome extends Artifact {
 					float missing = (chargeCap - charge);
 					if (level() > 7) missing += 5*(level() - 7)/3f;
 					float turnsToCharge = (45 - missing);
-					turnsToCharge /= RingOfEnergy.artifactChargeMultiplier(target);
+
+					turnsToCharge /= (float) Math.pow(1.175, 0);
 					float chargeToGain = (1f / turnsToCharge);
 					if (!isEquipped(Dungeon.hero)){
 						chargeToGain *= 0.75f*Dungeon.hero.pointsInTalent(Talent.LIGHT_READING)/3f;

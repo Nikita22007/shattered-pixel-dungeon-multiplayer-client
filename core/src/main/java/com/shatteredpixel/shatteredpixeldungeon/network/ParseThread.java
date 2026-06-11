@@ -40,10 +40,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.*;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.CustomTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.FadingTraps;
-import com.shatteredpixel.shatteredpixeldungeon.ui.AttackIndicator;
-import com.shatteredpixel.shatteredpixeldungeon.ui.Banner;
-import com.shatteredpixel.shatteredpixeldungeon.ui.BossHealthBar;
-import com.shatteredpixel.shatteredpixeldungeon.ui.GameLog;
+import com.shatteredpixel.shatteredpixeldungeon.ui.*;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.utils.Log;
 import com.shatteredpixel.shatteredpixeldungeon.windows.*;
@@ -521,7 +518,13 @@ public class ParseThread implements Callable<String> {
         }
         if (uiObject.has("iron_keys_count") || uiObject.has("iron_key_count")) {
             if (isConnectedToOldServer()) {
-                IronKey.curDepthQuantity = uiObject.optInt("iron_keys_count", uiObject.optInt("iron_key_count", -20));
+                JSONArray ironKeys = new JSONArray();
+                ironKeys.put(0);
+                ironKeys.put(uiObject.optInt("iron_keys_count", uiObject.optInt("iron_key_count", -20));
+                ironKeys.put(0);
+                ironKeys.put(0);
+                ironKeys.put(0);
+                GameScene.updateKeyDisplay(ironKeys);
             } else {
                 GameScene.updateKeyDisplay(uiObject.getJSONArray("iron_keys_count"));
             }

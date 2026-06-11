@@ -24,8 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.BodyForm;
@@ -35,24 +33,16 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.SpiritForm;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Enchanting;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
-import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.*;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.*;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndTitledMessage;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundlable;
-import com.watabou.utils.Bundle;
 
 import java.util.ArrayList;
 
@@ -64,185 +54,10 @@ public class Trinity extends ArmorAbility {
 		baseChargeUse = 25;
 	}
 
-	private Bundlable bodyForm = null;
-	private Bundlable mindForm = null;
-	private Bundlable spiritForm = null;
-
-	@Override
-	public int targetedPos(Char user, int dst) {
-		if (mindForm != null){
-			return ((Item)mindForm).targetingPos((Hero)user, dst);
-		}
-		return super.targetedPos(user, dst);
-	}
-
-	public class WndUseTrinity extends WndTitledMessage {
-
-		public WndUseTrinity(ClassArmor armor) {
-			super(new HeroIcon(Trinity.this),
-					Messages.titleCase(Trinity.this.name()),
-					Messages.get(WndUseTrinity.class, "text"));
-
-			int top = height;
-
-			if (bodyForm != null){
-				RedButton btnBody = null;
-				if (bodyForm instanceof Weapon.Enchantment){
-
-					btnBody = new RedButton(Messages.get(WndUseTrinity.class, "body",
-							Messages.titleCase("Ench.name"))
-							+ " " + trinityItemUseText(bodyForm.getClass()), 6){
-						@Override
-						protected void onClick() {}
-					};
-					if (Dungeon.hero.belongings.weapon() != null) {
-						btnBody.icon(new ItemSprite(Dungeon.hero.belongings.weapon().image, /*((Weapon.Enchantment) bodyForm).glowing()*/ null));
-					} else {
-						btnBody.icon(new ItemSprite(ItemSpriteSheet.WORN_SHORTSWORD, /*((Weapon.Enchantment) bodyForm).glowing()*/ null));
-					}
-				} else if (bodyForm instanceof Armor.Glyph){
-					btnBody = new RedButton(Messages.get(WndUseTrinity.class, "body",
-							Messages.titleCase(((Armor.Glyph)bodyForm).name()))
-							+ " " + trinityItemUseText(bodyForm.getClass()), 6){
-						@Override
-						protected void onClick() {
-							//TODO: check this, we should do spells logic in server
-							if (Dungeon.hero.belongings.armor() != null &&
-									false ){
-								GLog.w(Messages.get(Trinity.class, "no_duplicate"));
-								hide();
-							} else {
-                                BodyForm.duration();
-                                ((BodyForm.BodyFormBuff) null).setEffect(bodyForm);
-								Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
-								Armor a = new ClothArmor();
-								if (Dungeon.hero.belongings.armor() != null) {
-									a.image = Dungeon.hero.belongings.armor().image;
-								}
-								a.inscribe((Armor.Glyph) bodyForm);
-								Enchanting.show(Dungeon.hero, a);
-								Dungeon.hero.sprite.operate(Dungeon.hero.pos);
-								Dungeon.hero.spendAndNext(1f);
-								armor.charge -= trinityChargeUsePerEffect(bodyForm.getClass());
-								armor.updateQuickslot();
-                                hide();
-							}
-						}
-					};
-					if (Dungeon.hero.belongings.armor() != null) {
-						btnBody.icon(new ItemSprite(Dungeon.hero.belongings.armor().image, ((Armor.Glyph) bodyForm).glowing()));
-					} else {
-						btnBody.icon(new ItemSprite(ItemSpriteSheet.ARMOR_CLOTH, ((Armor.Glyph) bodyForm).glowing()));
-					}
-				}
-				btnBody.multiline = true;
-				btnBody.setSize(width, 100); //for text layout
-				btnBody.setRect(0, top + 2, width, btnBody.reqHeight());
-				add(btnBody);
-				top = (int)btnBody.bottom();
-
-                btnBody.enable(armor.charge >= trinityChargeUsePerEffect(bodyForm.getClass()));
-			}
-
-			if (mindForm != null){
-				RedButton btnMind = new RedButton(Messages.get(WndUseTrinity.class, "mind",
-						Messages.titleCase(((Item)mindForm).name()))
-						+ " " + trinityItemUseText(mindForm.getClass()), 6){
-					@Override
-					protected void onClick() {
-						hide();
-						MindForm.targetSelector mindEffect = new MindForm.targetSelector();
-						mindEffect.setEffect(mindForm);
-						GameScene.selectCell(mindEffect);
-						Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
-						Enchanting.show(Dungeon.hero, (Item)mindForm);
-						Dungeon.hero.sprite.operate(Dungeon.hero.pos);
-
-						if (((Item) mindForm).usesTargeting && Dungeon.quickslot.contains(armor)){
-							QuickSlotButton.useTargeting(Dungeon.quickslot.getSlot(armor));
-						}
-					}
-				};
-				btnMind.icon(new ItemSprite((Item)mindForm));
-				btnMind.multiline = true;
-				btnMind.setSize(width, 100); //for text layout
-				btnMind.setRect(0, top + 2, width, btnMind.reqHeight());
-				add(btnMind);
-				top = (int)btnMind.bottom();
-
-				btnMind.enable(armor.charge >= trinityChargeUsePerEffect(mindForm.getClass()));
-				if (mindForm instanceof Wand) {
-                }
-			}
-
-			if (spiritForm != null){
-				RedButton btnSpirit = new RedButton(Messages.get(WndUseTrinity.class, "spirit",
-						Messages.titleCase(((Item)spiritForm).name()))
-						+ " " + trinityItemUseText(spiritForm.getClass()), 6){
-					@Override
-					protected void onClick() {
-						if ((Dungeon.hero.belongings.ring() != null && Dungeon.hero.belongings.ring().getClass().equals(spiritForm.getClass()))
-								|| (Dungeon.hero.belongings.misc() != null && Dungeon.hero.belongings.misc().getClass().equals(spiritForm.getClass()))
-								|| (Dungeon.hero.belongings.artifact() != null && Dungeon.hero.belongings.artifact().getClass().equals(spiritForm.getClass()))){
-							GLog.w(Messages.get(Trinity.class, "no_duplicate"));
-							hide();
-							return;
-						}
-                        //Rings and the Chalice specifically get their passive effects for 20 turns
-						if (spiritForm instanceof Ring || spiritForm instanceof ChaliceOfBlood) {
-
-							Dungeon.hero.spendAndNext(1f);
-						} else {
-
-							//turn spending is handled within the application of the artifact effect
-						}
-						Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
-						Enchanting.show(Dungeon.hero, (Item) spiritForm);
-						Dungeon.hero.sprite.operate(Dungeon.hero.pos);
-						armor.charge -= trinityChargeUsePerEffect(spiritForm.getClass());
-						armor.updateQuickslot();
-						hide();
-					}
-				};
-				if (spiritForm instanceof Artifact){
-					//((Artifact) spiritForm).resetForTrinity(SpiritForm.artifactLevel());
-				}
-
-				btnSpirit.icon(new ItemSprite((Item)spiritForm));
-				btnSpirit.multiline = true;
-				btnSpirit.setSize(width, 100); //for text layout
-				btnSpirit.setRect(0, top + 2, width, btnSpirit.reqHeight());
-				add(btnSpirit);
-				top = (int)btnSpirit.bottom();
-
-                btnSpirit.enable(armor.charge >= trinityChargeUsePerEffect(spiritForm.getClass()));
-			}
-
-			resize(width, top);
-
-		}
-
-	}
 
 	private static final String BODY = "body_form";
 	private static final String MIND = "mind_form";
 	private static final String SPIRIT = "spirit_form";
-
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		if (bodyForm != null)   bundle.put(BODY, bodyForm);
-		if (mindForm != null)   bundle.put(MIND, mindForm);
-		if (spiritForm != null) bundle.put(SPIRIT, spiritForm);
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		if (bundle.contains(BODY))  bodyForm = bundle.get(BODY);
-		if (bundle.contains(MIND))  mindForm = bundle.get(MIND);
-		if (bundle.contains(SPIRIT))spiritForm = bundle.get(SPIRIT);
-	}
 
 	@Override
 	public int icon() {
