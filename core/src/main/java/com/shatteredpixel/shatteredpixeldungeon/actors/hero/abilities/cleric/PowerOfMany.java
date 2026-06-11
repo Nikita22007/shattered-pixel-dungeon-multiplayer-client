@@ -43,8 +43,6 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.utils.Random;
 
-import java.util.HashSet;
-
 public class PowerOfMany extends ArmorAbility {
 
 	protected float baseChargeUse = 35;
@@ -167,21 +165,6 @@ public class PowerOfMany extends ArmorAbility {
 		public void targetChar(Char ch) {
 			GLog.i(Messages.get(this, "direct_attack"));
 			super.targetChar(ch);
-		}
-
-		@Override
-		public int attackSkill(Char target) {
-			return defenseSkill+5; //equal to base hero attack skill
-		}
-
-		@Override
-		public int damageRoll() {
-			return Random.NormalIntRange(5, 30); //+0 greatsword
-		}
-
-		@Override
-		public int drRoll() {
-			return super.drRoll() + Random.NormalIntRange(1, 5); //+0 plate
 		}
 
 		@Override

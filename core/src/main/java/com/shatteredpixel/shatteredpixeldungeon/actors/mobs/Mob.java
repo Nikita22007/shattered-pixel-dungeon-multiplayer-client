@@ -228,18 +228,6 @@ public abstract class Mob extends Char {
 
 
     @Override
-    public int defenseSkill(Char enemy) {
-
-        if (!surprisedBy(enemy)
-                && paralysed == 0
-                && !(alignment == Alignment.ALLY && enemy == Dungeon.hero)) {
-            return this.defenseSkill;
-        } else {
-            return 0;
-        }
-    }
-
-    @Override
     public float speed() {
 
         return super.speed() * (float) 1;

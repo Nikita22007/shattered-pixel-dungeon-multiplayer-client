@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.SheepSprite;
 import com.watabou.utils.Random;
@@ -51,11 +50,6 @@ public class Sheep extends NPC {
     public void initialize(float lifespan) {
         this.lifespan = lifespan;
         spend(lifespan + Random.Float(-2, 2));
-    }
-
-    @Override
-    public int defenseSkill(Char enemy) {
-        return INFINITE_EVASION;
     }
 
     @Override

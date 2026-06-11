@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.BeeSprite;
-import com.watabou.utils.Random;
 
 import java.util.HashSet;
 
@@ -88,16 +87,6 @@ public class Bee extends Mob {
 	
 	public int potHolderID(){
 		return potHolder;
-	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return defenseSkill;
-	}
-	
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( HT / 10, HT / 4 );
 	}
 
 	@Override

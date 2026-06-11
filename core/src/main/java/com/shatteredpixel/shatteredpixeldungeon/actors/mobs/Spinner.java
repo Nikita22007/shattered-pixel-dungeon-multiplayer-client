@@ -30,7 +30,6 @@ import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.SpinnerSprite;
 import com.watabou.utils.PathFinder;
-import com.watabou.utils.Random;
 
 public class Spinner extends Mob {
 
@@ -48,21 +47,6 @@ public class Spinner extends Mob {
 
 		HUNTING = new Hunting();
 		FLEEING = new Fleeing();
-	}
-
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange(10, 20);
-	}
-
-	@Override
-	public int attackSkill(Char target) {
-		return 22;
-	}
-
-	@Override
-	public int drRoll() {
-		return super.drRoll() + Random.NormalIntRange(0, 6);
 	}
 
 	private int webCoolDown = 0;

@@ -31,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MobSprite;
 import com.watabou.utils.PathFinder;
-import com.watabou.utils.Random;
 import org.jetbrains.annotations.Contract;
 
 import java.util.HashSet;
@@ -68,7 +67,7 @@ public abstract class Char extends Actor {
 	
 	public boolean[] fieldOfView = null;
 	
-	private LinkedHashSet<Buff> buffs = new LinkedHashSet<>();
+	private final LinkedHashSet<Buff> buffs = new LinkedHashSet<>();
 	
 	@Override
 	protected boolean act() {
@@ -109,31 +108,6 @@ public abstract class Char extends Actor {
 	protected static final String BUFFS	    = "buffs";
 
 	public static int INFINITE_ACCURACY = 1_000_000;
-	public static int INFINITE_EVASION = 1_000_000;
-
-	public int attackSkill( Char target ) {
-		return 0;
-	}
-	
-	public int defenseSkill( Char enemy ) {
-		return 0;
-	}
-	
-	public String defenseVerb() {
-		return Messages.get(this, "def_verb");
-	}
-	
-	public int drRoll() {
-		int dr = 0;
-
-		dr += Random.NormalIntRange( 0 , 0);
-
-		return dr;
-	}
-	
-	public int damageRoll() {
-		return 1;
-	}
 
 	//Returns the level a glyph is at for a char, or -1 if they are not benefitting from that glyph
 	//This function is needed as (unlike enchantments) many glyphs trigger in a variety of cases

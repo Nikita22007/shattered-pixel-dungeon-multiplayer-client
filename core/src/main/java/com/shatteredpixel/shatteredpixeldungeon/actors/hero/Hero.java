@@ -59,7 +59,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.quest.DarkGold;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.*;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Sai;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
@@ -273,29 +272,6 @@ public class Hero extends Char {
 
 	public int tier() {
 		return tier;
-	}
-
-	public boolean shoot(Char enemy, MissileWeapon wep) {
-
-		attackTarget = enemy;
-		boolean wasEnemy = enemy.alignment == Alignment.ENEMY;
-
-		//temporarily set the hero's weapon to the missile weapon being used
-		//TODO improve this!
-		belongings.thrownWeapon = wep;
-		boolean hit = false;
-		belongings.thrownWeapon = null;
-
-		if (hit && subClass == HeroSubClass.GLADIATOR && wasEnemy) {
-			((Combo) null).hit(enemy);
-		}
-
-		if (hit && heroClass == HeroClass.DUELIST && wasEnemy) {
-			((Sai.ComboStrikeTracker) null).addHit();
-		}
-
-		attackTarget = null;
-		return hit;
 	}
 
 
@@ -1328,20 +1304,7 @@ public class Hero extends Char {
 		}
 
 		AttackIndicator.target(attackTarget);
-		boolean wasEnemy = attackTarget.alignment == Alignment.ENEMY
-				|| (false);
 
-		boolean hit = false;
-
-		spend(attackDelay());
-
-		if (hit && subClass == HeroSubClass.GLADIATOR && wasEnemy) {
-			((Combo) null).hit(attackTarget);
-		}
-
-		if (hit && heroClass == HeroClass.DUELIST && wasEnemy) {
-			((Sai.ComboStrikeTracker) null).addHit();
-		}
 
 		curAction = null;
 		attackTarget = null;

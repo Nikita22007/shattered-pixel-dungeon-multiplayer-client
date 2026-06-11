@@ -40,7 +40,7 @@ public class WndCombo extends Window {
 
 	private static final int MARGIN  = 2;
 
-	public WndCombo( Combo combo ){
+	public WndCombo( ){
 		super();
 
 		int width = PixelScene.landscape() ? WIDTH_L : WIDTH_P;
@@ -63,20 +63,19 @@ public class WndCombo extends Window {
 
 		for (Combo.ComboMove move : Combo.ComboMove.values()) {
 
-			String text = "_" + Messages.titleCase(move.title()) + " " + Messages.get(this, "combo_req", move.comboReq) + ":_ " + move.desc(combo.getComboCount());
+			String text = "_" + Messages.titleCase(move.title()) + " " + Messages.get(this, "combo_req", move.comboReq) + ":_ " + move.desc(-991);
 			RedButton moveBtn = new RedButton(text, 6){
 				@Override
 				protected void onClick() {
 					super.onClick();
 					hide();
-					combo.useMove(move);
 				}
 			};
 			moveBtn.leftJustify = true;
 			moveBtn.multiline = true;
 			moveBtn.setSize(width, moveBtn.reqHeight());
 			moveBtn.setRect(0, pos, width, moveBtn.reqHeight());
-			moveBtn.enable(combo.canUseMove(move));
+			moveBtn.enable(false);
 			add(moveBtn);
 			pos = moveBtn.bottom() + MARGIN;
 		}

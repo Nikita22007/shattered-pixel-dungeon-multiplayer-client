@@ -30,9 +30,6 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MobSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.TextureFilm;
-import com.watabou.utils.Random;
-
-import java.util.HashSet;
 
 public class SmokeBomb extends ArmorAbility {
 
@@ -73,16 +70,6 @@ public class SmokeBomb extends ArmorAbility {
 			HT = 20;
 			if (Dungeon.hero != null) HT *= Dungeon.hero.pointsInTalent(Talent.BODY_REPLACEMENT);
 			HP = HT;
-		}
-
-		@Override
-		public int drRoll() {
-			int dr = super.drRoll();
-
-			dr += Random.NormalIntRange(Dungeon.hero.pointsInTalent(Talent.BODY_REPLACEMENT),
-					3*Dungeon.hero.pointsInTalent(Talent.BODY_REPLACEMENT));
-
-			return dr;
 		}
 
 		{

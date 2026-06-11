@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Combo;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -158,15 +157,6 @@ public class Sai extends MeleeWeapon {
 				detach();
 			}
 			return true;
-		}
-
-		public void addHit(){
-			hits++;
-			comboTime = 5f;
-
-			if (hits >= 2 && icon() != BuffIndicator.NONE){
-				GLog.p( Messages.get(Combo.class, "combo", hits) );
-			}
 		}
 
 		@Override

@@ -23,9 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.quest.DarkGold;
@@ -41,7 +39,6 @@ import com.watabou.utils.Callback;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
 public class Blacksmith extends NPC {
 
@@ -71,11 +68,6 @@ public class Blacksmith extends NPC {
 				GameScene.show(new WndQuest(Blacksmith.this, text));
 			}
 		});
-	}
-
-	@Override
-	public int defenseSkill(Char enemy) {
-		return INFINITE_EVASION;
 	}
 
 	@Override

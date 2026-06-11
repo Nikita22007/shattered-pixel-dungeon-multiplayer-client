@@ -22,10 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfAccuracy;
-import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEvasion;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MirrorSprite;
 
@@ -74,34 +71,9 @@ public class MirrorImage extends NPC {
 		this.hero = hero;
 		heroID = this.hero.id();
     }
-	
 
-	
+
 	@Override
-	public int attackSkill( Char target ) {
-		//same base attack skill as hero, benefits from accuracy ring and weapon
-		int attackSkill = 9 + hero.lvl;
-		attackSkill *= RingOfAccuracy.accuracyMultiplier(hero);
-
-		return attackSkill;
-	}
-	
-	@Override
-	public int defenseSkill(Char enemy) {
-		if (hero != null) {
-			int baseEvasion = 4 + hero.lvl;
-			int heroEvasion = (int)((4 + hero.lvl) * RingOfEvasion.evasionMultiplier( hero ));
-			
-			//if the hero has more/less evasion, 50% of it is applied
-			//includes ring of evasion boost
-			return super.defenseSkill(enemy) * (baseEvasion + heroEvasion) / 2;
-		} else {
-			return 0;
-		}
-	}
-
-
-    @Override
 	public CharSprite sprite() {
 		CharSprite s = super.sprite();
 		
