@@ -115,28 +115,6 @@ public class SandalsOfNature extends Artifact {
 	}
 
 	@Override
-	protected ArtifactBuff passiveBuff() {
-		return new Naturalism();
-	}
-	
-	@Override
-	public void charge(Hero target, float amount) {
-        if (cursed || false) return;
-		if (charge < chargeCap) {
-			partialCharge += 2*amount;
-			while (partialCharge >= 1f){
-				charge++;
-				partialCharge--;
-			}
-			if (charge >= chargeCap) {
-				charge = chargeCap;
-				partialCharge = 0;
-			}
-			updateQuickslot();
-		}
-	}
-
-	@Override
 	public ItemSprite.Glowing glowing() {
 		if (curSeedEffect != null){
 			return new ItemSprite.Glowing(seedColors.get(curSeedEffect));

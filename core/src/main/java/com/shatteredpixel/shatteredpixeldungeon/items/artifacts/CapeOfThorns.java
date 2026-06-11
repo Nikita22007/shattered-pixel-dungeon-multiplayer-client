@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
@@ -44,22 +43,6 @@ public class CapeOfThorns extends Artifact {
 		defaultAction = "NONE"; //so it can be quickslotted
 	}
 
-	@Override
-	protected ArtifactBuff passiveBuff() {
-		return new Thorns();
-	}
-	
-	@Override
-	public void charge(Hero target, float amount) {
-		if (cooldown == 0) {
-			charge += Math.round(4*amount);
-			updateQuickslot();
-		}
-		if (charge >= chargeCap){
-			((Thorns) null).proc(0, null, null);
-		}
-	}
-	
 	@Override
 	public String desc() {
 		String desc = Messages.get(this, "desc");

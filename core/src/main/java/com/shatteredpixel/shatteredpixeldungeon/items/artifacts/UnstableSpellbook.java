@@ -22,22 +22,14 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.ScrollHolder;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
-import com.watabou.noosa.Game;
-import com.watabou.utils.Callback;
-import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
@@ -69,53 +61,6 @@ public class UnstableSpellbook extends Artifact {
 	private void setupScrolls(){
 		scrolls.clear();
 
-	}
-
-	//forces the reading of a regular scroll if the player tried to exploit by quitting the game when the menu was up
-	public static class ExploitHandler extends Buff {
-		{ actPriority = VFX_PRIO; }
-
-		public Scroll scroll;
-
-		@Override
-		public boolean act() {
-			curUser = Dungeon.hero;
-			curItem = scroll;
-			scroll.anonymize();
-			scroll.talentChance = 0;
-			Game.runOnRenderThread(new Callback() {
-				@Override
-				public void call() {
-					scroll.doRead();
-					Item.updateQuickslot();
-				}
-			});
-			detach();
-			return true;
-		}
-
-	}
-
-	@Override
-	protected ArtifactBuff passiveBuff() {
-		return new bookRecharge();
-	}
-	
-	@Override
-	public void charge(Hero target, float amount) {
-		if (charge < chargeCap && !cursed) {
-			{
-				partialCharge += 0.1f * amount;
-				while (partialCharge >= 1) {
-					partialCharge--;
-					charge++;
-				}
-				if (charge >= chargeCap) {
-					partialCharge = 0;
-				}
-				updateQuickslot();
-			}
-		}
 	}
 
 	@Override

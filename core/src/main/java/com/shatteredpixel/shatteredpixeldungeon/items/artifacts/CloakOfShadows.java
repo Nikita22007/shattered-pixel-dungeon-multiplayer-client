@@ -35,7 +35,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
-import com.watabou.utils.Bundle;
 
 public class CloakOfShadows extends Artifact {
 
@@ -69,35 +68,6 @@ public class CloakOfShadows extends Artifact {
 			return true;
 		} else
 			return false;
-	}
-
-	@Override
-	protected ArtifactBuff passiveBuff() {
-		return new cloakRecharge();
-	}
-
-	@Override
-	protected ArtifactBuff activeBuff( ) {
-		return new cloakStealth();
-	}
-	
-	@Override
-	public void charge(Hero target, float amount) {
-        if (cursed || false) return;
-
-		if (charge < chargeCap) {
-			if (!isEquipped(target)) amount *= 0.75f*target.pointsInTalent(Talent.LIGHT_CLOAK)/3f;
-			partialCharge += 0.25f*amount;
-			while (partialCharge >= 1f) {
-				charge++;
-				partialCharge--;
-			}
-			if (charge >= chargeCap){
-				partialCharge = 0;
-				charge = chargeCap;
-			}
-			updateQuickslot();
-		}
 	}
 
 	public void directCharge(int amount){

@@ -129,30 +129,6 @@ public class HolyTome extends Artifact {
 		return super.upgrade();
 	}
 
-	@Override
-	protected ArtifactBuff passiveBuff() {
-		return new TomeRecharge();
-	}
-
-	@Override
-	public void charge(Hero target, float amount) {
-        if (cursed || false) return;
-
-		if (charge < chargeCap) {
-			if (!isEquipped(target)) amount *= 0.75f*target.pointsInTalent(Talent.LIGHT_READING)/3f;
-			partialCharge += 0.25f*amount;
-			while (partialCharge >= 1f) {
-				charge++;
-				partialCharge--;
-			}
-			if (charge >= chargeCap){
-				partialCharge = 0;
-				charge = chargeCap;
-			}
-			updateQuickslot();
-		}
-	}
-
 	private ClericSpell quickSpell = null;
 
 	public void setQuickSpell(ClericSpell spell){

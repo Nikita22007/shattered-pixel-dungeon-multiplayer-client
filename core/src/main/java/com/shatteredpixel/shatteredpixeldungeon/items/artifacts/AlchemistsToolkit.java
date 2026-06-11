@@ -54,21 +54,6 @@ public class AlchemistsToolkit extends Artifact {
 		}
 	}
 
-	@Override
-	protected ArtifactBuff passiveBuff() {
-		return new kitEnergy();
-	}
-	
-	@Override
-	public void charge(Hero target, float amount) {
-		partialCharge += 0.25f * amount;
-		while (partialCharge >= 1) {
-			partialCharge--;
-			charge++;
-			updateQuickslot();
-		}
-	}
-
 	public int availableEnergy(){
 		return charge;
 	}

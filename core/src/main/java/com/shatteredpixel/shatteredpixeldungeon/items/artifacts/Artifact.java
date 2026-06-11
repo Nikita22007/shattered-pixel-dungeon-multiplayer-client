@@ -21,8 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -181,40 +179,11 @@ public class Artifact extends KindofMisc {
 	}
 
 
-	protected ArtifactBuff passiveBuff() {
-		return null;
-	}
-
-	protected ArtifactBuff activeBuff() {return null; }
-	
-	public void charge(Hero target, float amount){
-		//do nothing by default;
-	}
-
 	public class ArtifactBuff extends Buff {
 
-		@Override
-		public boolean attachTo( Char target ) {
-			if (super.attachTo( target )) {
-				//if we're loading in and the hero has partially spent a turn, delay for 1 turn
-				if (false && Dungeon.hero == null && cooldown() == 0 && target.cooldown() > 0) {
-					spend(TICK);
-				}
-				return true;
-			}
-			return false;
-		}
-
-		public int itemLevel() {
-			return level();
-		}
 
 		public boolean isCursed() {
             return cursed;
-		}
-
-		public void charge(Hero target, float amount){
-			Artifact.this.charge(target, amount);
 		}
 
 	}

@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
@@ -80,29 +79,6 @@ public class MasterThievesArmband extends Artifact {
 		{ revivePersists = true; }
 		public void setItemStolen(boolean stolen){ if (stolen) countUp(1); }
 		public boolean itemWasStolen(){ return count() > 0; }
-	}
-
-	@Override
-	protected ArtifactBuff passiveBuff() {
-		return new Thievery();
-	}
-	
-	@Override
-	public void charge(Hero target, float amount) {
-        if (cursed || false) return;
-		if (charge < chargeCap) {
-			partialCharge += 0.1f * amount;
-			while (partialCharge >= 1f) {
-				charge++;
-				partialCharge--;
-			}
-			if (charge >= chargeCap) {
-				GLog.p(Messages.get(MasterThievesArmband.class, "full"));
-				partialCharge = 0;
-				charge = chargeCap;
-			}
-			updateQuickslot();
-		}
 	}
 
 	@Override

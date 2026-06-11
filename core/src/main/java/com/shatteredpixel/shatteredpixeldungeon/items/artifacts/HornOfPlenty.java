@@ -105,36 +105,6 @@ public class HornOfPlenty extends Artifact {
 	}
 
 	@Override
-	protected ArtifactBuff passiveBuff() {
-		return new hornRecharge();
-	}
-	
-	@Override
-	public void charge(Hero target, float amount) {
-		if (charge < chargeCap && !cursed) {
-			{
-				partialCharge += 0.25f * amount;
-				while (partialCharge >= 1) {
-					partialCharge--;
-					charge++;
-
-					if (charge == chargeCap) {
-						GLog.p(Messages.get(HornOfPlenty.class, "full"));
-						partialCharge = 0;
-					}
-
-					if (charge >= 8) image = ItemSpriteSheet.ARTIFACT_HORN4;
-					else if (charge >= 5) image = ItemSpriteSheet.ARTIFACT_HORN3;
-					else if (charge >= 2) image = ItemSpriteSheet.ARTIFACT_HORN2;
-					else image = ItemSpriteSheet.ARTIFACT_HORN1;
-
-					updateQuickslot();
-				}
-			}
-		}
-	}
-	
-	@Override
 	public String desc() {
 		String desc = super.desc();
 

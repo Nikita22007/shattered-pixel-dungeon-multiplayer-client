@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -145,28 +144,6 @@ public class LloydsBeacon extends Artifact {
 			return Messages.get(LloydsBeacon.class, "prompt");
 		}
 	};
-
-	@Override
-	protected ArtifactBuff passiveBuff() {
-		return new beaconRecharge();
-	}
-	
-	@Override
-	public void charge(Hero target, float amount) {
-		if (charge < chargeCap){
-			partialCharge += 0.25f*amount;
-			while (partialCharge >= 1){
-				partialCharge--;
-				charge++;
-
-			}
-			if (charge >= chargeCap){
-				partialCharge = 0;
-				charge = chargeCap;
-			}
-			updateQuickslot();
-		}
-	}
 
 	@Override
 	public Item upgrade() {

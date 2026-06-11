@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CheckedCell;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
@@ -60,29 +59,6 @@ public class TalismanOfForesight extends Artifact {
 	}
 
 	public static final String AC_SCRY = "SCRY";
-
-	@Override
-	protected ArtifactBuff passiveBuff() {
-		return new Foresight();
-	}
-	
-	@Override
-	public void charge(Hero target, float amount) {
-        if (cursed || false) return;
-		if (charge < chargeCap){
-			partialCharge += 2*amount;
-			while (partialCharge >= 1f){
-				charge++;
-				partialCharge--;
-			}
-			if (charge >= chargeCap) {
-				charge = chargeCap;
-				partialCharge = 0;
-				GLog.p( Messages.get(TalismanOfForesight.class, "full_charge") );
-			}
-			updateQuickslot();
-		}
-	}
 
 	@Override
 	public String desc() {

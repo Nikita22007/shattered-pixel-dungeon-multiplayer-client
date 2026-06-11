@@ -26,7 +26,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
@@ -138,31 +137,6 @@ public class DriedRose extends Artifact {
 	}
 
 
-	
-	@Override
-	protected ArtifactBuff passiveBuff() {
-		return new roseRecharge();
-	}
-	
-	@Override
-	public void charge(Hero target, float amount) {
-        if (cursed) return;
-
-        if (charge < chargeCap) {
-            partialCharge += 4 * amount;
-            while (partialCharge >= 1f) {
-                charge++;
-                partialCharge--;
-            }
-            if (charge >= chargeCap) {
-                charge = chargeCap;
-                partialCharge = 0;
-                GLog.p(Messages.get(DriedRose.class, "charged"));
-            }
-            updateQuickslot();
-        }
-    }
-	
 	@Override
 	public Item upgrade() {
 		if (level() >= 9)

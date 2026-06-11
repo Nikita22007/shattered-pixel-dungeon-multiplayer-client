@@ -47,8 +47,6 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-import java.util.HashSet;
-
 public class EtherealChains extends Artifact {
 
 	public static final String AC_CAST       = "CAST";
@@ -230,25 +228,6 @@ public class EtherealChains extends Artifact {
 		}));
 	}
 
-	@Override
-	protected ArtifactBuff passiveBuff() {
-		return new chainsRecharge();
-	}
-	
-	@Override
-	public void charge(Hero target, float amount) {
-        if (cursed || false) return;
-		int chargeTarget = 5+(level()*2);
-		if (charge < chargeTarget*2){
-			partialCharge += 0.5f*amount;
-			while (partialCharge >= 1){
-				partialCharge--;
-				charge++;
-				updateQuickslot();
-			}
-		}
-	}
-	
 	@Override
 	public String desc() {
 		String desc = super.desc();

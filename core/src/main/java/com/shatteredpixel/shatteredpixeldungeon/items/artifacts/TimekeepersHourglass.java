@@ -39,7 +39,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.particles.Emitter;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -77,28 +76,6 @@ public class TimekeepersHourglass extends Artifact {
 			return true;
 		} else
 			return false;
-	}
-
-	@Override
-	protected ArtifactBuff passiveBuff() {
-		return new hourglassRecharge();
-	}
-	
-	@Override
-	public void charge(Hero target, float amount) {
-		if (charge < chargeCap && !cursed) {
-			{
-				partialCharge += 0.25f * amount;
-				while (partialCharge >= 1) {
-					partialCharge--;
-					charge++;
-				}
-				if (charge >= chargeCap) {
-					partialCharge = 0;
-				}
-				updateQuickslot();
-			}
-		}
 	}
 
 	@Override
