@@ -36,12 +36,6 @@ public class MobSprite extends CharSprite {
 	private static final float FALL_TIME	= 1f;
 	
 	@Override
-	public void update() {
-		sleeping = ch != null && ch.isAlive() && ((Mob)ch).state == ((Mob)ch).SLEEPING;
-		super.update();
-	}
-	
-	@Override
 	public void onComplete( Animation anim ) {
 		
 		super.onComplete( anim );

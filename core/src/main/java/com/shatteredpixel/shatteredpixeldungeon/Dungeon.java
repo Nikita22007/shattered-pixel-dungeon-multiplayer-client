@@ -123,7 +123,7 @@ public class Dungeon {
 		Dungeon.level = level;
 		hero.pos = pos;
 
-		Mob.restoreAllies(level, pos);
+
 
 		Actor.init();
 

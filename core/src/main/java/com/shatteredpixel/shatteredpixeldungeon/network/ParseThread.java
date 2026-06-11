@@ -1680,7 +1680,7 @@ public class ParseThread implements Callable<String> {
                     break;
                 }
                 case "description": {
-                    if (chr instanceof Mob) {
+                    if (chr instanceof CustomMob) {
                         ((Mob) chr).setDesc(JsonStringHelper.getString(actorObj, token));
                     } else {
                         Gdx.app.error("parseActorChar", actorObj.toString(4));

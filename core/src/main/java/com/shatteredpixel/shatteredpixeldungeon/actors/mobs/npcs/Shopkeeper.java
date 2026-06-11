@@ -23,8 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
@@ -33,14 +31,10 @@ import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ShopkeeperSprite;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndTradeItem;
-import com.watabou.utils.BArray;
-import com.watabou.utils.PathFinder;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class Shopkeeper extends NPC {
 
@@ -71,62 +65,6 @@ public class Shopkeeper extends NPC {
 	}
 
 	@Override
-	public boolean add(Buff buff) {
-		if (buff.type == Buff.buffType.NEGATIVE) {
-			processHarm();
-		}
-		return false;
-	}
-
-	public void processHarm() {
-
-		//do nothing if the shopkeeper is out of the hero's FOV
-		if (!Dungeon.level.heroFOV[pos]) {
-			return;
-		}
-
-		if (turnsSinceHarmed == -1) {
-			turnsSinceHarmed = 0;
-			yell(Messages.get(this, "warn"));
-
-			//use a new actor as we can't clear the gas while we're in the middle of processing it
-			Actor.add(new Actor() {
-				{
-					actPriority = VFX_PRIO;
-				}
-
-				@Override
-				protected boolean act() {
-					//cleanses all harmful blobs in the shop
-
-					PathFinder.buildDistanceMap(pos, BArray.not(Dungeon.level.solid, null), 4);
-
-					Actor.remove(this);
-					return true;
-				}
-			});
-
-			//There is a 1 turn buffer before more damage/debuffs make the shopkeeper flee
-			//This is mainly to prevent stacked effects from causing an instant flee
-		} else if (turnsSinceHarmed >= 1) {
-			flee();
-		}
-	}
-
-	public void flee() {
-		destroy();
-
-		Notes.remove(landmark());
-		GLog.newLine();
-		GLog.n(Messages.get(this, "flee"));
-
-		if (sprite != null) {
-			sprite.killAndErase();
-			CellEmitter.get(pos).burst(ElmoParticle.FACTORY, 6);
-		}
-	}
-
-	@Override
 	public void destroy() {
 		super.destroy();
 		for (Heap heap : Dungeon.level.heaps.valueList()) {
@@ -142,11 +80,6 @@ public class Shopkeeper extends NPC {
 				}
 			}
 		}
-	}
-
-	@Override
-	public boolean reset() {
-		return true;
 	}
 
 	//shopkeepers are greedy!

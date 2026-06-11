@@ -94,7 +94,7 @@ public class WndBlacksmith extends Window {
 							Blacksmith.Quest.pickaxe = null;
 							WndBlacksmith.this.hide();
 
-							if (!Blacksmith.Quest.rewardsAvailable()){
+							if (!false){
 								Notes.remove( Notes.Landmark.TROLL );
 							}
 						}
@@ -281,7 +281,7 @@ public class WndBlacksmith extends Window {
 					Blacksmith.Quest.favor -= 500 + 1000*Blacksmith.Quest.reforges;
 					Blacksmith.Quest.reforges++;
 
-					if (!Blacksmith.Quest.rewardsAvailable()){
+					if (!false){
 						Notes.remove( Notes.Landmark.TROLL );
 					}
 
@@ -377,7 +377,7 @@ public class WndBlacksmith extends Window {
 				Sample.INSTANCE.play(Assets.Sounds.EVOKE);
 				Item.evoke( Dungeon.hero );
 
-				if (!Blacksmith.Quest.rewardsAvailable()){
+				if (!false){
 					Notes.remove( Notes.Landmark.TROLL );
 				}
 			}
@@ -420,7 +420,7 @@ public class WndBlacksmith extends Window {
 
 				Badges.validateItemLevelAquired( item );
 
-				if (!Blacksmith.Quest.rewardsAvailable()){
+				if (!false){
 					Notes.remove( Notes.Landmark.TROLL );
 				}
 
@@ -500,7 +500,7 @@ public class WndBlacksmith extends Window {
 						WndSmith.this.hide();
 						Blacksmith.Quest.smithRewards = null;
 
-						if (!Blacksmith.Quest.rewardsAvailable()){
+						if (!false){
 							Notes.remove( Notes.Landmark.TROLL );
 						}
 					}

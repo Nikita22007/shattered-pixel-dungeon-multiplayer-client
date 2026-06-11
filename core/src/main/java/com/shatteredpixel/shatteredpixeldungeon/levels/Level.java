@@ -203,15 +203,6 @@ public abstract class Level implements Bundlable {
 
 		PathFinder.setMapSize(w, h);
 	}
-	
-	public void reset() {
-		
-		for (Mob mob : mobs.toArray( new Mob[0] )) {
-			if (!mob.reset()) {
-				mobs.remove( mob );
-			}
-		}
-	}
 
 	public void playLevelMusic(){
 		//do nothing by default
@@ -396,20 +387,6 @@ public abstract class Level implements Bundlable {
 		return wallVisuals;
 	}
 
-	
-	public int mobLimit() {
-		return 0;
-	}
-
-	public int mobCount(){
-		float count = 0;
-		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])){
-			if (mob.alignment == Char.Alignment.ENEMY && !false) {
-				count += mob.spawningWeight();
-			}
-		}
-		return Math.round(count);
-	}
 
 	public Mob findMob( int pos ){
 		for (Mob mob : mobs){
