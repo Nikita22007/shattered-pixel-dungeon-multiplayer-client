@@ -52,7 +52,7 @@ public class Barrier extends ShieldBuff {
 		partialLostShield += Math.min(1f, shielding()/20f) * (float) 1;
 
 		if (partialLostShield >= 1f) {
-			absorbDamage(1);
+
 			partialLostShield = 0;
 		}
 		

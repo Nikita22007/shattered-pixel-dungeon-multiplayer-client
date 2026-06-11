@@ -169,6 +169,7 @@ public class Artifact extends KindofMisc {
 	public class ArtifactBuff extends Buff {
 
 
+		@Contract(pure=true)
 		public boolean isCursed() {
             return cursed;
 		}

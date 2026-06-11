@@ -262,9 +262,6 @@ public class BrokenSeal extends Item {
 
 		@Override
 		public synchronized boolean act() {
-            if (cooldown > 0 && false) {
-                cooldown--;
-            }
 
             if (shielding() > 0){
                 if (Dungeon.hero.visibleEnemies() == 0) {
@@ -275,7 +272,6 @@ public class BrokenSeal extends Item {
                             //max of 50% cooldown refund
                             cooldown = Math.max(0, (int) (cooldown - COOLDOWN_START * (percentLeft / 2f)));
                         }
-                        decShield(shielding());
                     }
                 } else {
                     turnsSinceEnemies = 0;

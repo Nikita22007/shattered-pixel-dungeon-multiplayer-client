@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.CounterBuff;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.CellSelector;
@@ -71,13 +70,6 @@ public class MasterThievesArmband extends Artifact {
 			return Messages.get(MasterThievesArmband.class, "prompt");
 		}
 	};
-
-	//counter of 0 for attempt but no success, 1 for success
-	public static class StolenTracker extends CounterBuff {
-		{ revivePersists = true; }
-		public void setItemStolen(boolean stolen){ if (stolen) countUp(1); }
-		public boolean itemWasStolen(){ return count() > 0; }
-	}
 
 	@Override
 	public Item upgrade() {

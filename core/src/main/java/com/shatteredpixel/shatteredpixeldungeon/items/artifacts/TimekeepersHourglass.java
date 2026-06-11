@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -157,10 +156,7 @@ public class TimekeepersHourglass extends Artifact {
 				spend(5*usedCharge);
 
 				//shouldn't punish the player for going into stasis frequently
-                Hunger hunger = null;
-				if (hunger != null && !hunger.isStarving()) {
-					hunger.satisfy(5 * usedCharge);
-				}
+
 
 				charge -= usedCharge;
 
