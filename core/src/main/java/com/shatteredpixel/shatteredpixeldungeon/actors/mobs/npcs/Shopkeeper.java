@@ -28,11 +28,8 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ShopkeeperSprite;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndTradeItem;
 
 import java.util.ArrayList;
 
@@ -87,53 +84,5 @@ public class Shopkeeper extends NPC {
 		return item.value() * 5 * (Dungeon.depth / 5 + 1);
 	}
 
-	public static WndBag sell() {
-		return GameScene.selectItem(itemSelector);
-	}
-
-	public static boolean canSell(Item item) {
-		if (item.value() <= 0) return false;
-		if (item.unique && !item.stackable) return false;
-		if (item.isEquipped(Dungeon.hero) && item.cursed) return false;
-		return true;
-	}
-
-	private static WndBag.ItemSelector itemSelector = new WndBag.ItemSelector() {
-		@Override
-		public String textPrompt() {
-			return Messages.get(Shopkeeper.class, "sell");
-		}
-
-		@Override
-		public boolean itemSelectable(Item item) {
-			return Shopkeeper.canSell(item);
-		}
-
-		@Override
-		public void onSelect(Item item) {
-			if (item != null) {
-				WndBag parentWnd = sell();
-				GameScene.show(new WndTradeItem(item, parentWnd));
-			}
-		}
-	};
-
-	public String chatText() {
-		switch (Dungeon.depth) {
-			case 6:
-			default:
-				return Messages.get(this, "talk_prison_intro") + "\n\n" + Messages.get(this, "talk_prison_" + Dungeon.hero.heroClass.name());
-			case 11:
-				return Messages.get(this, "talk_caves");
-			case 16:
-				return Messages.get(this, "talk_city");
-			case 20:
-				return Messages.get(this, "talk_halls");
-		}
-	}
-
-	public static String BUYBACK_ITEMS = "buyback_items";
-
-	public static String TURNS_SINCE_HARMED = "turns_since_harmed";
 
 }
