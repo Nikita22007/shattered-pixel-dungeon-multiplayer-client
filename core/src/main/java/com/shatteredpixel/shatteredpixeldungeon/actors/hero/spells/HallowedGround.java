@@ -98,7 +98,8 @@ public class HallowedGround extends TargetedClericSpell {
 					GameScene.updateMap( i );
 					CellEmitter.get(i).burst(LeafParticle.LEVEL_SPECIFIC, 2);
 				}
-				GameScene.add(Blob.seed(i, 20, HallowedTerrain.class));
+
+				GameScene.add((HallowedTerrain) null);
 				CellEmitter.get(i).burst(ShaftParticle.FACTORY, 2);
 
 				Char ch = Actor.findChar(i);

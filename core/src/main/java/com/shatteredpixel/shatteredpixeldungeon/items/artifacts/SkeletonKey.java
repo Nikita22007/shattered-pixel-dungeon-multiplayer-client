@@ -394,7 +394,8 @@ public class SkeletonKey extends Artifact {
 	private void placeWall(int pos, int knockbackDIR ){
 		Blob wall = Dungeon.level.blobs.get(KeyWall.class);
 		if (!Dungeon.level.solid[pos] || (wall != null && wall.cur[pos] > 0)) {
-			GameScene.add(Blob.seed(pos, 10, KeyWall.class));
+
+			GameScene.add((KeyWall) null);
 
 			Char ch = Actor.findChar(pos);
 			if (ch != null && ch.alignment == Char.Alignment.ENEMY){

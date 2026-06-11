@@ -26,7 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.BlobEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.watabou.utils.Rect;
-import com.watabou.utils.Reflection;
+import org.jetbrains.annotations.Contract;
 
 import java.util.Arrays;
 
@@ -48,17 +48,6 @@ public class Blob extends Actor {
 	public Rect area = new Rect();
 	
 	public boolean alwaysVisible = false;
-
-	private static final String CUR		= "cur";
-	private static final String START	= "start";
-	private static final String LENGTH	= "length";
-
-    private int[] trim( int start, int end ) {
-		int len = end - start;
-		int[] copy = new int[len];
-		System.arraycopy( cur, start, copy, 0, len );
-		return copy;
-	}
 
 	@Override
 	public boolean act() {
@@ -141,58 +130,10 @@ public class Blob extends Actor {
 	public String tileDesc() {
 		return null;
 	}
-	
-	public static<T extends Blob> T seed( int cell, int amount, Class<T> type ) {
-		return seed(cell, amount, type, level);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public static<T extends Blob> T seed( int cell, int amount, Class<T> type, Level level ) {
-		
-		T gas = (T)level.blobs.get( type );
-		
-		if (gas == null) {
-			gas = Reflection.newInstance(type);
-			//this ensures that gasses do not get an 'extra turn' if they are added by a mob or buff
-			if (Actor.curActorPriority() < gas.actPriority) {
-				gas.spend(1f);
-			}
-		}
-		
-		if (gas != null){
-			level.blobs.put( type, gas );
-			gas.seed( level, cell, amount );
-		}
-		
-		return gas;
-	}
 
-	public static int volumeAt( int cell, Class<? extends Blob> type){
-		Blob gas = level.blobs.get( type );
-		if (gas == null || gas.volume == 0) {
-			return 0;
-		} else {
-			return gas.cur[cell];
-		}
-	}
+	@Contract(value = "_, _, _, _ -> fail", pure = true)
 	public static<T extends Blob> T seed(int id, int cell, int amount, Class<T> type ) {
-		T gas = (T)level.blobs.get( type );
-
-		if (gas == null) {
-			gas = Reflection.newInstance(type);
-			//this ensures that gasses do not get an 'extra turn' if they are added by a mob or buff
-			if (Actor.curActorPriority() < gas.actPriority) {
-				gas.spend(1f);
-			}
-		}
-
-		if (gas != null){
-			gas.setId(id);
-			level.blobs.put( type, gas );
-			gas.seed( level, cell, amount );
-		}
-
-		return gas;
+		throw new RuntimeException("Not implemented");
 	}
 	public void seed( int cell, int amount ) {
 		cur[cell] += amount;

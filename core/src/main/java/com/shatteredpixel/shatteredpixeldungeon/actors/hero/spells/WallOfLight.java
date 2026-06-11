@@ -228,7 +228,8 @@ public class WallOfLight extends TargetedClericSpell {
 
 	private void placeWall( int pos, int knockbackDIR){
 		if (!Dungeon.level.solid[pos]) {
-			GameScene.add(Blob.seed(pos, 20, LightWall.class));
+
+			GameScene.add((LightWall) null);
 
 			Char ch = Actor.findChar(pos);
 			if (ch != null && ch.alignment == Char.Alignment.ENEMY){
