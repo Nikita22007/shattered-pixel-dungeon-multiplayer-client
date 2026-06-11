@@ -30,6 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.tweeners.AlphaTweener;
 
+@SuppressWarnings("unused")
 public class WardSprite extends MobSprite implements TieredSprite{
 	int tier;
 	private Animation tierIdles[] = new Animation[7];
@@ -100,7 +101,7 @@ public class WardSprite extends MobSprite implements TieredSprite{
 	public void linkVisuals(Char ch ){
 
 		if (ch == null) return;
-
+		//todo send this special info from server or create subclass?
 	}
 
 	@Override
