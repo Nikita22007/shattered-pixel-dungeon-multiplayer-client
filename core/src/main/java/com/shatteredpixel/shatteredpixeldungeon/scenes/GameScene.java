@@ -468,8 +468,7 @@ public class GameScene extends PixelScene {
 			case DESCEND:
 			case FALL:
 				if (Dungeon.hero.isAlive()) {
-					Badges.validateNoKilling();
-				}
+                }
 				break;
 		}
 

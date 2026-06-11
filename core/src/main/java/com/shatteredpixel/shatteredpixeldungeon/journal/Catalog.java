@@ -153,8 +153,7 @@ public enum Catalog {
 				cat.seen.put(cls, true);
             }
 		}
-		Badges.validateCatalogBadges();
-	}
+    }
 
 	public static void updateItem(String catalogName, Class<?> cls, boolean isSeen, int count) {
 		try {
@@ -215,7 +214,6 @@ public enum Catalog {
 	public static void restore( Bundle bundle ){
 
 		//old logic for pre-v2.5 catalog-specific badges
-		Badges.loadGlobal();
 		for (Catalog cat : values()){
 			if (Badges.isUnlocked(catalogBadges.get(cat))){
 				for (Class<?> item : cat.items()){

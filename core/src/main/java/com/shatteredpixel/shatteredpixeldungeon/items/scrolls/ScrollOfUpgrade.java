@@ -131,8 +131,7 @@ public class ScrollOfUpgrade extends InventoryScroll {
 			item = item.upgrade();
 		}
 
-		Badges.validateItemLevelAquired( item );
-		Statistics.upgradesUsed++;
+        Statistics.upgradesUsed++;
 		Badges.validateMageUnlock();
 
         return item;
@@ -150,7 +149,6 @@ public class ScrollOfUpgrade extends InventoryScroll {
 	public static void removeCurse( Hero hero ){
 		GLog.p( Messages.get(ScrollOfUpgrade.class, "remove_curse") );
 		hero.sprite.emitter().start( ShadowParticle.UP, 0.05f, 10 );
-		Badges.validateClericUnlock();
 	}
 	
 	@Override

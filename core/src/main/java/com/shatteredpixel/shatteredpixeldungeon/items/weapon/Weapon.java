@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon;
 
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
@@ -123,8 +122,8 @@ abstract public class Weapon extends KindOfWeapon {
 					setIDReady();
 				} else {
 					GLog.p(Messages.get(Weapon.class, "identify"));
-					Badges.validateItemLevelAquired(this);
-				}
+
+                }
 			}
 		}
 

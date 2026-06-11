@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.trinkets;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
@@ -150,9 +149,8 @@ public class TrinketCatalyst extends Item {
 								}
 
 								Statistics.itemsCrafted++;
-								Badges.validateItemsCrafted();
 
-							}
+                            }
 						}
 					}
 				};

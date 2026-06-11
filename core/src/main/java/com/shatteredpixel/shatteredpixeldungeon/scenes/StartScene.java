@@ -48,8 +48,6 @@ public class StartScene extends PixelScene {
 	public void create() {
 		super.create();
 
-		Badges.loadGlobal();
-
         uiCamera.visible = false;
 
 		int w = Camera.main.width;

@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.scenes;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Chrome;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
@@ -55,10 +54,9 @@ public class JournalScene extends PixelScene {
 		super.create();
 
 		Dungeon.hero = null;
-		Badges.loadGlobal();
 
 
-		//need to re-initialize the texture here, as it may be invalid
+        //need to re-initialize the texture here, as it may be invalid
 		new TerrainFeaturesTilemap(new SparseArray<>(), new SparseArray<>());
 
 		Music.INSTANCE.playTracks(

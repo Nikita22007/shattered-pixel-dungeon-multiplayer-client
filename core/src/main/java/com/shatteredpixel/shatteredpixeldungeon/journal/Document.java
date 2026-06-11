@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.journal;
 
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
@@ -66,8 +65,7 @@ public enum Document {
 	public boolean findPage( String page ) {
 		if (pagesStates.containsKey(page) && pagesStates.get(page) == NOT_FOUND){
 			pagesStates.put(page, FOUND);
-            Badges.validateCatalogBadges();
-			return true;
+            return true;
 		}
 		return false;
 	}
@@ -152,8 +150,7 @@ public enum Document {
 	public boolean readPage( String page ) {
 		if (pagesStates.containsKey(page)){
 			pagesStates.put(page, READ);
-            Badges.validateCatalogBadges();
-			return true;
+            return true;
 		}
 		return false;
 	}

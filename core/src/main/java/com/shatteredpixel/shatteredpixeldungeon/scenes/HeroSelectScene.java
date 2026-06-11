@@ -104,8 +104,6 @@ public class HeroSelectScene extends PixelScene {
 		
 		Dungeon.hero = null;
 
-		Badges.loadGlobal();
-
         insets = Game.platform.getSafeInsets(PlatformSupport.INSET_BLK).scale(1f/defaultZoom);
 
 		float w = (Camera.main.width - insets.left - insets.right);

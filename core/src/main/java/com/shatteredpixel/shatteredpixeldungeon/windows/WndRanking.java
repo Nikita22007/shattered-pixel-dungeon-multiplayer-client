@@ -86,7 +86,6 @@ public class WndRanking extends WndTabbed {
 		this.record = rec;
 
 		try {
-			Badges.loadGlobal();
             createControls();
 		} catch ( Exception e ) {
 			Game.reportException( new RuntimeException("Rankings Display Failed!",e));

@@ -22,11 +22,9 @@
 package com.shatteredpixel.shatteredpixeldungeon.levels.traps;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
@@ -110,9 +108,9 @@ public class GrimTrap extends Trap {
                                         if (finalTarget == Dungeon.hero) {
 											Sample.INSTANCE.play(Assets.Sounds.CURSED);
 											if (!finalTarget.isAlive()) {
-												Badges.validateDeathFromGrimOrDisintTrap();
 												GLog.n( Messages.get(GrimTrap.class, "ondeath") );
-												if (reclaimed) Badges.validateDeathFromFriendlyMagic();
+												if (reclaimed) {
+                                                }
 											}
 										} else {
 											Sample.INSTANCE.play(Assets.Sounds.BURNING);

@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.windows;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
@@ -275,8 +274,8 @@ public class WndBlacksmith extends Window {
 					} else {
 						first.upgrade();
 					}
-					Badges.validateItemLevelAquired( first );
-					Item.updateQuickslot();
+
+                    Item.updateQuickslot();
 
 					Blacksmith.Quest.favor -= 500 + 1000*Blacksmith.Quest.reforges;
 					Blacksmith.Quest.reforges++;
@@ -418,9 +417,7 @@ public class WndBlacksmith extends Window {
 				ScrollOfUpgrade.upgrade( Dungeon.hero );
 				Item.evoke( Dungeon.hero );
 
-				Badges.validateItemLevelAquired( item );
-
-				if (!false){
+                if (!false){
 					Notes.remove( Notes.Landmark.TROLL );
 				}
 

@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.scrolls;
 
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Identification;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
@@ -54,8 +53,8 @@ public class ScrollOfIdentify extends InventoryScroll {
 		}
 
         GLog.i(Messages.get(ScrollOfIdentify.class, "it_is", item.title()));
-		Badges.validateItemLevelAquired( item );
-	}
+
+    }
 	
 	@Override
 	public int value() {

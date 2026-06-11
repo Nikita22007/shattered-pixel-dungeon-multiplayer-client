@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.wands;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
@@ -247,8 +246,8 @@ public abstract class Wand extends Item {
 					setIDReady();
 				} else {
 					GLog.p(Messages.get(Wand.class, "identify"));
-					Badges.validateItemLevelAquired(this);
-				}
+
+                }
 			}
         }
 
