@@ -462,7 +462,7 @@ abstract public class Weapon extends KindOfWeapon {
 		}
 		
 		public ItemSprite.Glowing glowing(){
-			return glowing();
+			return null;
 		};
 		
 		@SuppressWarnings("unchecked")

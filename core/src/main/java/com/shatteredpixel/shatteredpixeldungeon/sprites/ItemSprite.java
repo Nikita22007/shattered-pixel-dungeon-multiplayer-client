@@ -407,7 +407,7 @@ public class ItemSprite extends MovieClip {
 		return tx.getPixel( col * SIZE + x, row * SIZE + y );
 	}
 	
-	public static class Glowing {
+	public static final class Glowing {
 		public static final Glowing WHITE = new Glowing( 0xFFFFFF, 0.6f );
 
 		public int color;
