@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.*;
-import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.journal.Guidebook;
@@ -570,29 +569,10 @@ public class GameScene extends PixelScene {
 
 		}
 
-		//Tutorial
-		if (SPDSettings.intro()){
 
-			if (Document.ADVENTURERS_GUIDE.isPageFound(Document.GUIDE_INTRO)){
-				GameScene.flashForDocument(Document.ADVENTURERS_GUIDE, Document.GUIDE_INTRO);
-			} else if (ControllerHandler.isControllerConnected()) {
-				GameLog.wipe();
-				GLog.p(Messages.get(GameScene.class, "tutorial_move_controller"));
-			} else if (SPDSettings.interfaceSize() == 0) {
-				GameLog.wipe();
-				GLog.p(Messages.get(GameScene.class, "tutorial_move_mobile"));
-			} else {
-				GameLog.wipe();
-				GLog.p(Messages.get(GameScene.class, "tutorial_move_desktop"));
-			}
-			toolbar.visible = toolbar.active = false;
-			status.visible = status.active = false;
-			if (inventory != null) inventory.visible = inventory.active = false;
-		}
 
-		if (!SPDSettings.intro() &&
-				Rankings.INSTANCE.totalNumber > 0 &&
-				!Document.ADVENTURERS_GUIDE.isPageRead(Document.GUIDE_DIEING)){
+		if (Rankings.INSTANCE.totalNumber > 0 &&
+                !Document.ADVENTURERS_GUIDE.isPageRead(Document.GUIDE_DIEING)){
 			GameScene.flashForDocument(Document.ADVENTURERS_GUIDE, Document.GUIDE_DIEING);
 		}
 		if (!invVisible) toggleInvPane();
@@ -600,20 +580,9 @@ public class GameScene extends PixelScene {
 
 		//re-show WndResurrect if needed
 		if (!Dungeon.hero.isAlive()){
-			//check if hero has an unblessed ankh
-			Ankh ankh = null;
 
-			for (Ankh i : new ArrayList<Ankh>()){
-				if (!i.isBlessed()){
-					ankh = i;
-				}
-			}
-			if (ankh != null && GamesInProgress.gameExists(GamesInProgress.curSlot)) {
-				add(new WndResurrect(ankh));
-			} else {
-				gameOver();
-			}
-		}
+            gameOver();
+        }
 
 	}
 	

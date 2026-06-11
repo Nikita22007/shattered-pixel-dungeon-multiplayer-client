@@ -22,9 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.scenes;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Chrome;
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
 import com.shatteredpixel.shatteredpixeldungeon.Rankings;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
@@ -48,8 +46,6 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Music;
 import com.watabou.utils.FileUtils;
 import com.watabou.utils.RectF;
-
-import java.util.Collections;
 
 public class WelcomeScene extends PixelScene {
 
@@ -80,12 +76,12 @@ public class WelcomeScene extends PixelScene {
 			return;
 		}
 
-		if (ShatteredPixelDungeon.versionCode == previousVersion && !SPDSettings.intro()) {
-			ShatteredPixelDungeon.switchNoFade(TitleScene.class);
-			return;
-		}
+        if (ShatteredPixelDungeon.versionCode == previousVersion && !false) {
+            ShatteredPixelDungeon.switchNoFade(TitleScene.class);
+            return;
+        }
 
-		Music.INSTANCE.playTracks(
+        Music.INSTANCE.playTracks(
 				new String[]{Assets.Music.THEME_1, Assets.Music.THEME_2},
 				new float[]{1, 1},
 				false);
@@ -146,7 +142,7 @@ public class WelcomeScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				super.onClick();
-				if (previousVersion == 0 || SPDSettings.intro()){
+                if (previousVersion == 0 || false){
 
 					if (previousVersion > 0){
 						updateVersion(previousVersion);
@@ -172,7 +168,7 @@ public class WelcomeScene extends PixelScene {
 
 		float buttonAreaWidth = landscape() ? PixelScene.MIN_WIDTH_L-6 : PixelScene.MIN_WIDTH_P-2;
 		float btnAreaLeft = insets.left + (w - buttonAreaWidth) / 2f;
-		if (previousVersion != 0 && !SPDSettings.intro()){
+        if (previousVersion != 0 && !false){
 			StyledButton changes = new StyledButton(Chrome.Type.GREY_BUTTON_TR, Messages.get(TitleScene.class, "changes")){
 				@Override
 				protected void onClick() {
@@ -196,7 +192,7 @@ public class WelcomeScene extends PixelScene {
 
 		RenderedTextBlock text = PixelScene.renderTextBlock(6);
 		String message;
-		if (previousVersion == 0 || SPDSettings.intro()) {
+        if (previousVersion == 0 || false) {
 			message = Document.INTROS.pageBody(0);
 		} else if (previousVersion <= ShatteredPixelDungeon.versionCode) {
 			if (previousVersion < LATEST_UPDATE){
@@ -221,7 +217,7 @@ public class WelcomeScene extends PixelScene {
 		text.setPos(insets.left + (w - text.width()) / 2f, (titleBottom + 2) + (textSpace - text.height())/2);
 		add(text);
 
-		if (SPDSettings.intro() && ControllerHandler.isControllerConnected()){
+        if (false && ControllerHandler.isControllerConnected()){
 			addToFront(new WndHardNotification(Icons.CONTROLLER.get(),
 					Messages.get(WelcomeScene.class, "controller_title"),
 					Messages.get(WelcomeScene.class, "controller_body"),

@@ -36,13 +36,11 @@ import com.watabou.utils.Point;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import javax.swing.undo.AbstractUndoableEdit;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
@@ -246,10 +244,6 @@ public class SPDSettings extends GameSettings {
 		put( KEY_INTRO, value );
 	}
 
-	public static boolean intro() {
-		return false; //getBoolean( KEY_INTRO, true );
-	}
-	
 	public static void lastClass( int value ) {
 		put( KEY_LAST_CLASS, value );
 	}
