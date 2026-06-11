@@ -39,7 +39,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.keys.CrystalKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.GoldenKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.IronKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfBlastWave;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
@@ -201,7 +200,7 @@ public class SkeletonKey extends Artifact {
 							//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
 							if (pushCell != -1 && !false){
 								Ballistica push = new Ballistica(target, pushCell, Ballistica.PROJECTILE);
-								WandOfBlastWave.throwChar(toMove, push, 1, false, false, this);
+
 								//artifactProc(toMove, visiblyUpgraded(), 2);
 							} else {
 								GLog.w(Messages.get(SkeletonKey.class, "lock_no_space"));
@@ -406,7 +405,8 @@ public class SkeletonKey extends Artifact {
 
 			Char ch = Actor.findChar(pos);
 			if (ch != null && ch.alignment == Char.Alignment.ENEMY){
-				WandOfBlastWave.throwChar(ch, new Ballistica(pos, pos+knockbackDIR, Ballistica.PROJECTILE), 1, false, false, this);
+				new Ballistica(pos, pos + knockbackDIR, Ballistica.PROJECTILE);
+
 				//artifactProc(ch, visiblyUpgraded(), 2);
 			}
 		}

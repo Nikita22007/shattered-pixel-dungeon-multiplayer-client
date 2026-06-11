@@ -59,8 +59,6 @@ public class JournalScene extends PixelScene {
 		Dungeon.hero = null;
 		Badges.loadGlobal();
 
-        Potion.clearColors();
-		Scroll.clearLabels();
 
 		//need to re-initialize the texture here, as it may be invalid
 		new TerrainFeaturesTilemap(new SparseArray<>(), new SparseArray<>());

@@ -31,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Blindweed;
@@ -222,8 +221,8 @@ public class SandalsOfNature extends Artifact {
 				if (seeds.size() >= 3+(level()*3)){
 					seeds.clear();
 					upgrade();
-					Catalog.countUses(SandalsOfNature.class, level() == 3 ? 4 : 3);
-					if (level() >= 1 && level() <= 3) {
+
+                    if (level() >= 1 && level() <= 3) {
 						GLog.p( Messages.get(SandalsOfNature.class, "levelup") );
 					}
 

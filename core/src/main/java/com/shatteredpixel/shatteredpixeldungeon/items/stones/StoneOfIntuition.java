@@ -71,8 +71,6 @@ public class StoneOfIntuition extends InventoryStone {
 	}
 
 	;
-	
-	private static Class curGuess = null;
 
 	public static class WndGuess extends Window {
 		

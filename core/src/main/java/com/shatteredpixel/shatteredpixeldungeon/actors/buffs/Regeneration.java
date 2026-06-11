@@ -23,8 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
-import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ChaoticCenser;
-import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.SaltCube;
 
 public class Regeneration extends Buff {
 	
@@ -69,7 +67,7 @@ public class Regeneration extends Buff {
 
 				//salt cube is turned off while regen is disabled.
 				{
-					delay /= SaltCube.healthRegenMultiplier();
+					delay /= (float) 1;
 				}
 
 				partialRegen += 1f / delay;

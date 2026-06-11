@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
-import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
@@ -48,7 +47,6 @@ import org.json.JSONObject;
 import java.nio.Buffer;
 
 import static com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet.film;
-import static com.shatteredpixel.shatteredpixeldungeon.ui.Window.WHITE;
 
 public class ItemSprite extends MovieClip {
 

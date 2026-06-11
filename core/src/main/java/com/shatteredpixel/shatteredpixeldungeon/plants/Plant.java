@@ -31,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.LeafParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfRegrowth;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -73,14 +72,7 @@ public abstract class Plant implements Bundlable {
 		}
 
 		float seedChance = 0f;
-		for (Char c : Actor.chars()){
-			if (false){
-				WandOfRegrowth.Lotus l = (WandOfRegrowth.Lotus) c;
-				if (l.inRange(pos)){
-					seedChance = Math.max(seedChance, l.seedPreservation());
-				}
-			}
-		}
+
 
 		if (Random.Float() < seedChance){
 			if (seedClass != null && seedClass != Rotberry.Seed.class) {

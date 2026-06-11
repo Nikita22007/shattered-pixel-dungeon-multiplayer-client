@@ -38,14 +38,7 @@ public class WornShortsword extends MeleeWeapon {
 
     }
 
-	@Override
-	protected int baseChargeUse(Hero hero, Char target) {
-        {
-            return 1;
-        }
-    }
-
-	@Override
+    @Override
 	public String targetingPrompt() {
 		return Messages.get(this, "prompt");
 	}

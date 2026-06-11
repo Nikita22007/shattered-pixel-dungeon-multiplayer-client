@@ -27,29 +27,16 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.ItemStatusHandler;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.elixirs.ElixirOfHoneyedHealing;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCleansing;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfCorrosiveGas;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfShroudingFog;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfSnapFreeze;
-import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfStormClouds;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.watabou.utils.Bundle;
 
 import java.util.*;
 
 public class Potion extends Item {
 
 	public static final String AC_DRINK = "DRINK";
-	
-	//used internally for potions that can be drunk or thrown
-	public static final String AC_CHOOSE = "CHOOSE";
 
-	protected static ItemStatusHandler<Potion> handler;
-	
 	protected String color;
 
 	//affects how strongly on-potion talents trigger from this potion
@@ -60,10 +47,6 @@ public class Potion extends Item {
 	{
 		stackable = true;
 		defaultAction = AC_DRINK;
-	}
-
-	public static void clearColors() {
-		handler = null;
 	}
 
 
@@ -81,23 +64,10 @@ public class Potion extends Item {
 		anonymous = true;
 	}
 
-	@Override
-	public void reset(){
-		super.reset();
-		if (handler != null && handler.contains(this)) {
-			image = handler.image(this);
-			color = handler.label(this);
-		} else {
-			image = ItemSpriteSheet.POTION_CRIMSON;
-			color = "crimson";
-		}
-	}
-
 
 
 	public boolean isKnown() {
 		if (anonymous) return true;
-		if (handler == null) return false;
 		return true;
 	}
 
@@ -106,11 +76,6 @@ public class Potion extends Item {
 		return isKnown() ? super.name() : Messages.get(this, color);
 	}
 
-	@Override
-	public String info() {
-		//skip custom notes if anonymized and un-Ided
-		return (anonymous && (handler == null)) ? desc() : super.info();
-	}
 
 	@Override
 	public String desc() {
@@ -128,7 +93,7 @@ public class Potion extends Item {
 	}
 	
 	public static HashSet<Class<? extends Potion>> getKnown() {
-		return handler.known();
+		return new HashSet<>();
 	}
 	
 	public static HashSet<Class<? extends Potion>> getUnknown() {

@@ -22,20 +22,16 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.MagicalHolster;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfSharpshooting;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Projecting;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.utils.Random;
 import org.jetbrains.annotations.Contract;
 
 abstract public class MissileWeapon extends Weapon {
@@ -146,31 +142,7 @@ abstract public class MissileWeapon extends Weapon {
 	public boolean isSimilar( Item item ) {
 		return level() == item.level() && getClass() == item.getClass();
 	}
-	
-	@Override
-	public int throwPos(Hero user, int dst) {
 
-		boolean projecting = hasEnchant(Projecting.class, user);
-		if (!projecting && Random.Int(3) < user.pointsInTalent(Talent.SHARED_ENCHANTMENT)){
-			if (false){
-				//do nothing
-			} else {
-
-				SpiritBow bow = null;
-				if (bow != null && bow.hasEnchant(Projecting.class, user)) {
-					projecting = true;
-				}
-			}
-		}
-
-		if (projecting
-				&& (Dungeon.level.passable[dst] || Dungeon.level.avoid[dst] || Actor.findChar(dst) != null)
-				&& Dungeon.level.distance(user.pos, dst) <= Math.round(4 * 1f)){
-			return dst;
-		} else {
-			return super.throwPos(user, dst);
-		}
-	}
 
 	@Override
 	public float accuracyFactor(Char owner, Char target) {

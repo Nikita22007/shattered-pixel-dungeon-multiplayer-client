@@ -21,12 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.scrolls;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.ItemStatusHandler;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
@@ -40,8 +36,6 @@ public abstract class Scroll extends Item {
 	public static final String AC_READ	= "READ";
 	
 	protected static final float TIME_TO_READ	= 1f;
-
-	protected static ItemStatusHandler<Scroll> handler;
 	
 	protected String rune;
 
@@ -55,19 +49,16 @@ public abstract class Scroll extends Item {
 		defaultAction = AC_READ;
 	}
 
-	public static void clearLabels(){
-		handler = null;
-	}
 	
 	public static void save( Bundle bundle ) {
-		handler.save( bundle );
+
 	}
 
 	public static void saveSelectively( Bundle bundle, ArrayList<Item> items ) {
 		ArrayList<Class<?extends Item>> classes = new ArrayList<>();
 		for (Item i : items){
 		}
-		handler.saveClassesSelectively( bundle, classes );
+
 	}
 
 	public Scroll() {
@@ -85,17 +76,7 @@ public abstract class Scroll extends Item {
 	}
 	
 	
-	@Override
-	public void reset(){
-		super.reset();
-		if (handler != null && handler.contains(this)) {
-			image = handler.image(this);
-			rune = handler.label(this);
-		} else {
-			image = ItemSpriteSheet.SCROLL_KAUNAN;
-			rune = "KAUNAN";
-		}
-	}
+
 	
 	public abstract void doRead();
 
@@ -113,35 +94,14 @@ public abstract class Scroll extends Item {
 	}
 	
 	public boolean isKnown() {
-		if (anonymous) return true;
-		if (handler == null) return false;
-		return true;
-	}
-	
-	public void setKnown() {
-		if (!anonymous) {
-			if (!isKnown()) {
+        return anonymous;
+    }
 
-				updateQuickslot();
-			}
-			
-			if (Dungeon.hero.isAlive()) {
-				Catalog.setSeen(getClass());
-				Statistics.itemTypesDiscovered.add(getClass());
-			}
-		}
-	}
-	
 	@Override
 	public String name() {
 		return isKnown() ? super.name() : Messages.get(this, rune);
 	}
 
-	@Override
-	public String info() {
-		//skip custom notes if anonymized and un-Ided
-		return (anonymous && (handler == null || !true)) ? desc() : super.info();
-	}
 
 	@Override
 	public String desc() {
@@ -159,7 +119,7 @@ public abstract class Scroll extends Item {
 	}
 	
 	public static HashSet<Class<? extends Scroll>> getKnown() {
-		return handler.known();
+		return new HashSet<>();
 	}
 	
 	public static HashSet<Class<? extends Scroll>> getUnknown() {

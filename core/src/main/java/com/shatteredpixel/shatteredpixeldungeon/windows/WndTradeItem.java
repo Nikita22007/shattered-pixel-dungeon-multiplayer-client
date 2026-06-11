@@ -29,8 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
 import com.shatteredpixel.shatteredpixeldungeon.items.*;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.MasterThievesArmband;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
-import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.network.SendData;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
@@ -354,8 +352,6 @@ public class WndTradeItem extends WndInfoItem {
 		//selling items in the sell interface doesn't spend time
 		hero.spend(-hero.cooldown());
 
-        new Gold(item.value());
-
         if (shop != null){
 			shop.buybackItems.add(item);
 			while (shop.buybackItems.size() > Shopkeeper.MAX_BUYBACK_HISTORY){
@@ -381,7 +377,6 @@ public class WndTradeItem extends WndInfoItem {
 			//selling items in the sell interface doesn't spend time
 			hero.spend(-hero.cooldown());
 
-            new Gold(item.value());
 
             if (shop != null){
 				shop.buybackItems.add(item);
@@ -399,9 +394,8 @@ public class WndTradeItem extends WndInfoItem {
 		
 		int price = Shopkeeper.sellPrice( item );
 		Dungeon.hero.gold -= price;
-		Catalog.countUses(Gold.class, price);
 
-        if (!false) {
+		if (!false) {
 			Dungeon.level.drop( item, heap.pos ).sprite.drop();
 		}
 	}

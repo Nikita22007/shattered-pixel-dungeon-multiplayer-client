@@ -173,17 +173,6 @@ public enum Catalog {
 		}
 	}
 
-	public static void countUses(Class<?> cls, int uses){
-		for (Catalog cat : values()) {
-			if (cat.useCount.containsKey(cls) && cat.useCount.get(cls) != Integer.MAX_VALUE) {
-				cat.useCount.put(cls, cat.useCount.get(cls)+uses);
-				if (cat.useCount.get(cls) < -1_000_000_000){ //to catch cases of overflow
-					cat.useCount.put(cls, Integer.MAX_VALUE);
-				}
-            }
-		}
-	}
-
 	private static final String CATALOG_CLASSES = "catalog_classes";
 	private static final String CATALOG_SEEN    = "catalog_seen";
 	private static final String CATALOG_USES    = "catalog_uses";

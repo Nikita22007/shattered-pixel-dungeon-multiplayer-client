@@ -527,12 +527,8 @@ public class AlchemyScene extends PixelScene {
 		align(btnGuide);
 		add(btnGuide);
 
-        TrinketCatalyst cata = null;
-		if (cata != null && cata.hasRolledTrinkets()){
-			addToFront(new TrinketCatalyst.WndTrinket(cata));
-		}
 
-		fadeIn();
+        fadeIn();
 
 	}
 	
