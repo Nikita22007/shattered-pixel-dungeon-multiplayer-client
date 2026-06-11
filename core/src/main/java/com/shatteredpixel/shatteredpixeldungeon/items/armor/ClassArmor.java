@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Regeneration;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.Trinity;
-import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 
@@ -69,43 +68,6 @@ abstract public class ClassArmor extends Armor {
 	@Override
 	public int targetingPos(Hero user, int dst) {
 		return user.armorAbility.targetedPos(user, dst);
-	}
-
-	public static ClassArmor upgrade (Hero owner, CustomItem armor ) {
-		
-		ClassArmor classArmor = null;
-		
-		switch (owner.heroClass) {
-			case WARRIOR:
-				classArmor = new WarriorArmor();
-				break;
-			case ROGUE:
-				classArmor = new RogueArmor();
-				break;
-			case MAGE:
-				classArmor = new MageArmor();
-				break;
-			case HUNTRESS:
-				classArmor = new HuntressArmor();
-				break;
-			case DUELIST:
-				classArmor = new DuelistArmor();
-				break;
-			case CLERIC:
-				classArmor = new ClericArmor();
-				break;
-		}
-		
-		classArmor.level(armor.trueLevel());
-		if (armor.levelKnown && armor.cursedKnown) {
-        } else {
-			classArmor.levelKnown = armor.levelKnown;
-			classArmor.cursedKnown = true;
-		}
-
-		classArmor.charge = 50;
-		
-		return classArmor;
 	}
 
 	private static final String ARMOR_TIER	= "armortier";

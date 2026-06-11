@@ -73,10 +73,8 @@ public class KingsCrown extends Item {
 				GLog.p(Messages.get(this, "upgraded"));
 			}
 
-			ClassArmor classArmor = ClassArmor.upgrade(hero, armor);
 			if (hero.belongings.armor == armor) {
 
-				hero.belongings.armor = classArmor;
 				((HeroSprite) hero.sprite).updateArmor();
 
 			}
