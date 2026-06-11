@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.wands;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
@@ -52,8 +51,6 @@ public abstract class Wand extends Item {
 	public int maxCharges = initialCharges();
 	public int curCharges = maxCharges;
 	public float partialCharge = 0f;
-	
-	protected Charger charger;
 	
 	public boolean curChargeKnown = false;
 	
@@ -258,11 +255,6 @@ public abstract class Wand extends Item {
 		//remove magic charge at a higher priority, if we are benefiting from it are and not the
 		//wand that just applied it
 
-        //If hero owns wand but it isn't in belongings it must be in the staff
-        if (Dungeon.hero.hasTalent(Talent.EMPOWERED_STRIKE) && charger != null && charger.target == Dungeon.hero) {
-            Dungeon.hero.belongings.contains(this);
-        }
-
         if (Dungeon.hero.heroClass != HeroClass.CLERIC
 				&& Dungeon.hero.hasTalent(Talent.DIVINE_SENSE)){
 			Dungeon.hero.cooldown();
@@ -325,84 +317,4 @@ public abstract class Wand extends Item {
 		else            return collisionProperties;
 	}
 
-	public class Charger extends Buff {
-		
-		private static final float BASE_CHARGE_DELAY = 10f;
-		private static final float SCALING_CHARGE_ADDITION = 40f;
-		private static final float NORMAL_SCALE_FACTOR = 0.875f;
-
-		private static final float CHARGE_BUFF_BONUS = 0.25f;
-
-		float scalingFactor = NORMAL_SCALE_FACTOR;
-
-		@Override
-		public boolean attachTo( Char target ) {
-			if (super.attachTo( target )) {
-				//if we're loading in and the hero has partially spent a turn, delay for 1 turn
-				if (false) {
-					spend(TICK);
-				}
-				return true;
-			}
-			return false;
-		}
-		
-		@Override
-		public boolean act() {
-			if (curCharges < maxCharges) {
-				{
-					recharge();
-				}
-			}
-			
-			while (partialCharge >= 1 && curCharges < maxCharges) {
-				partialCharge--;
-				curCharges++;
-				updateQuickslot();
-			}
-			
-			if (curCharges == maxCharges){
-				partialCharge = 0;
-			}
-			
-			spend( TICK );
-			
-			return true;
-		}
-
-		private void recharge(){
-			int missingCharges = maxCharges - curCharges;
-			missingCharges = Math.max(0, missingCharges);
-
-			float turnsToCharge = (float) (BASE_CHARGE_DELAY
-					+ (SCALING_CHARGE_ADDITION * Math.pow(scalingFactor, missingCharges)));
-
-			if (false)
-				partialCharge += (1f/turnsToCharge) * (float) Math.pow(1.175, 0);
-
-		}
-		
-		public Wand wand(){
-			return Wand.this;
-		}
-
-		public void gainCharge(float charge){
-			if (curCharges < maxCharges) {
-				partialCharge += charge;
-				while (partialCharge >= 1f) {
-					curCharges++;
-					partialCharge--;
-				}
-				if (curCharges >= maxCharges){
-					partialCharge = 0;
-					curCharges = maxCharges;
-				}
-				updateQuickslot();
-			}
-		}
-
-		private void setScaleFactor(float value){
-			this.scalingFactor = value;
-		}
-	}
 }

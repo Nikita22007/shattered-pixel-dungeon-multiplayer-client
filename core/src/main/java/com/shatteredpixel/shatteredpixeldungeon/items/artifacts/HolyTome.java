@@ -22,19 +22,14 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.ClericSpell;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.GuidingLight;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
-import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 
 public class HolyTome extends Artifact {
@@ -144,112 +139,5 @@ public class HolyTome extends Artifact {
 	}
 
 	private static final String QUICK_CLS = "quick_cls";
-
-	public class TomeRecharge extends ArtifactBuff implements ActionIndicator.Action {
-
-		@Override
-		public boolean attachTo(Char target) {
-			if (super.attachTo(target)) {
-				if (quickSpell != null) ActionIndicator.setAction(this);
-				return true;
-			} else {
-				return false;
-			}
-		}
-
-		@Override
-		public void detach() {
-			super.detach();
-			ActionIndicator.clearAction(this);
-		}
-
-		@Override
-		public boolean act() {
-            if (charge < chargeCap && !cursed && true) {
-
-				if (false) {
-					float missing = (chargeCap - charge);
-					if (level() > 7) missing += 5*(level() - 7)/3f;
-					float turnsToCharge = (45 - missing);
-
-					turnsToCharge /= (float) Math.pow(1.175, 0);
-					float chargeToGain = (1f / turnsToCharge);
-					if (!isEquipped(Dungeon.hero)){
-						chargeToGain *= 0.75f*Dungeon.hero.pointsInTalent(Talent.LIGHT_READING)/3f;
-					}
-					partialCharge += chargeToGain;
-				}
-
-				while (partialCharge >= 1) {
-					charge++;
-					partialCharge -= 1;
-					if (charge == chargeCap){
-						partialCharge = 0;
-					}
-
-				}
-			} else {
-				partialCharge = 0;
-			}
-
-			updateQuickslot();
-
-			spend( TICK );
-
-			return true;
-		}
-
-		@Override
-		public String actionName() {
-			return quickSpell.name();
-		}
-
-		@Override
-		public int actionIcon() {
-			return quickSpell.icon() + HeroIcon.SPELL_ACTION_OFFSET;
-		}
-
-		@Override
-		public int indicatorColor() {
-			if (quickSpell == GuidingLight.INSTANCE && quickSpell.chargeUse(Dungeon.hero) == 0){
-				return 0x0063ff;
-			} else {
-				return 0x002157;
-			}
-		}
-
-		@Override
-		public void doAction() {
-			if (cursed){
-				GLog.w(Messages.get(HolyTome.this, "cursed"));
-				return;
-			}
-
-			if (!canCast(Dungeon.hero, quickSpell)){
-				GLog.w(Messages.get(HolyTome.this, "no_spell"));
-				return;
-			}
-
-			if (QuickSlotButton.targetingSlot != -1 &&
-					Dungeon.quickslot.getItem(QuickSlotButton.targetingSlot) == HolyTome.this) {
-				targetingSpell = quickSpell;
-				int cell = QuickSlotButton.autoAim(QuickSlotButton.lastTarget, HolyTome.this);
-
-				if (cell != -1){
-					GameScene.handleCell(cell);
-				} else {
-					//couldn't auto-aim, just target the position and hope for the best.
-					GameScene.handleCell( QuickSlotButton.lastTarget.pos );
-				}
-			} else {
-				quickSpell.onCast(HolyTome.this, Dungeon.hero);
-
-				if (quickSpell.targetingFlags() != -1 && Dungeon.quickslot.contains(HolyTome.this)){
-					targetingSpell = quickSpell;
-					QuickSlotButton.useTargeting(Dungeon.quickslot.getSlot(HolyTome.this));
-				}
-			}
-		}
-	}
 
 }

@@ -26,23 +26,16 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.PathFinder;
-import com.watabou.utils.Random;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
 public class Stasis extends ClericSpell {
@@ -69,10 +62,7 @@ public class Stasis extends ClericSpell {
 
 	@Override
 	public float chargeUse(Hero hero) {
-        if (false) {
-            return 0;
-        }
-		return 2;
+        return 2;
 	}
 
 	@Override
@@ -80,13 +70,7 @@ public class Stasis extends ClericSpell {
 
 		onSpellCast(tome, hero);
 
-        if (false) {
-            hero.sprite.operate(hero.pos);
-            ((StasisBuff) null).act();
-            return;
-        }
-
-		Char ally = PowerOfMany.getPoweredAlly();
+        Char ally = PowerOfMany.getPoweredAlly();
 
 		hero.sprite.zap(ally.pos);
 		MagicMissile.boltFromChar(hero.sprite.parent, MagicMissile.LIGHT_MISSILE, ally.sprite, hero.pos, null);
@@ -103,8 +87,6 @@ public class Stasis extends ClericSpell {
 		}
 		ally.clearTime();
 
-        hero.pointsInTalent(Talent.STASIS);
-        ((StasisBuff) null).stasisAlly = (Mob)ally;
 		Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
 
         hero.spendAndNext(Actor.TICK);
@@ -115,61 +97,8 @@ public class Stasis extends ClericSpell {
 
 	public static Char getStasisAlly(){
 		if (Dungeon.hero != null) {
-            if (false) {
-                return ((StasisBuff) null).stasisAlly;
-            }
         }
 		return null;
-	}
-
-	public static class StasisBuff extends FlavourBuff {
-
-		{
-			type = buffType.POSITIVE;
-		}
-
-		@Override
-		public int icon() {
-			return BuffIndicator.MANY_POWER;
-		}
-
-		@Override
-		public float iconFadePercent() {
-			int duration = 30 + 30*Dungeon.hero.pointsInTalent(Talent.STASIS);
-			return Math.max(0, (duration - visualcooldown()) / duration);
-		}
-
-		@Override
-		public String desc() {
-			return Messages.get(this, "desc", Messages.titleCase(stasisAlly.name()), dispTurns());
-		}
-
-		@Override
-		public boolean act() {
-			ArrayList<Integer> spawnPoints = new ArrayList<>();
-			for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
-				int p = target.pos + PathFinder.NEIGHBOURS8[i];
-				if (Actor.findChar(p) == null
-						&& (Dungeon.level.passable[p] || (stasisAlly.flying && Dungeon.level.avoid[p])) ){
-					spawnPoints.add(p);
-				}
-			}
-			if (spawnPoints.isEmpty()){
-				spawnPoints.add(target.pos + PathFinder.NEIGHBOURS8[Random.Int(8)]);
-			}
-			stasisAlly.pos = Random.element(spawnPoints);
-			GameScene.add(stasisAlly);
-
-            ScrollOfTeleportation.appear(stasisAlly, stasisAlly.pos);
-			Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
-
-			return super.act();
-		}
-
-		Mob stasisAlly;
-
-		private static final String ALLY = "ally";
-
 	}
 
 }

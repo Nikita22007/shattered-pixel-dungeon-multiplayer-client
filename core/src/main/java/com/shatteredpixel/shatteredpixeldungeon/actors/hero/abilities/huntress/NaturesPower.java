@@ -21,10 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress;
 
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
-import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 
 public class NaturesPower extends ArmorAbility {
@@ -45,32 +43,4 @@ public class NaturesPower extends ArmorAbility {
 		return new Talent[]{Talent.GROWING_POWER, Talent.NATURES_WRATH, Talent.WILD_MOMENTUM, Talent.HEROIC_ENERGY};
 	}
 
-	public static class naturesPowerTracker extends FlavourBuff{
-
-		{
-			type = buffType.POSITIVE;
-		}
-
-		public static final float DURATION = 8f;
-
-		public int extensionsLeft = 2;
-
-		public void extend( int turns ){
-			if (extensionsLeft > 0 && turns > 0) {
-				spend(turns);
-				extensionsLeft--;
-			}
-		}
-
-		@Override
-		public int icon() {
-			return BuffIndicator.NATURE_POWER;
-		}
-
-		@Override
-		public float iconFadePercent() {
-			return Math.max(0, (DURATION - visualcooldown()) / DURATION);
-		}
-
-	}
 }

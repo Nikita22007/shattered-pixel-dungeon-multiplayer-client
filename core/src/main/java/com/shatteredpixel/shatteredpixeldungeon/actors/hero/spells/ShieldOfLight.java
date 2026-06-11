@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -34,7 +33,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
@@ -78,7 +76,6 @@ public class ShieldOfLight extends TargetedClericSpell {
 		hero.sprite.operate(hero.pos);
 
 		//1 turn less as the casting is instant
-        ((ShieldOfLightTracker) null).object = ch.id();
 
 		if (hero.subClass == HeroSubClass.PRIEST) {
         }
@@ -89,10 +86,6 @@ public class ShieldOfLight extends TargetedClericSpell {
 
 		Char ally = PowerOfMany.getPoweredAlly();
 		if (ally != null) {
-			if (false) {
-				((ShieldOfLightTracker) null).object = ch.id();
-				ally.sprite.emitter().start(Speck.factory(Speck.LIGHT), 0.15f, 6);
-			}
         }
 
 		onSpellCast(tome, hero);
@@ -104,30 +97,6 @@ public class ShieldOfLight extends TargetedClericSpell {
 		int min = 1 + Dungeon.hero.pointsInTalent(Talent.SHIELD_OF_LIGHT);
 		int max = 2*min;
 		return Messages.get(this, "desc", min, max) + "\n\n" + Messages.get(this, "charge_cost", (int)chargeUse(Dungeon.hero));
-	}
-
-	public static class ShieldOfLightTracker extends FlavourBuff {
-
-		public int object = 0;
-
-		private static final float DURATION = 5;
-
-		{
-			type = buffType.POSITIVE;
-		}
-
-		@Override
-		public int icon() {
-			return BuffIndicator.LIGHT_SHIELD;
-		}
-
-		@Override
-		public float iconFadePercent() {
-			return Math.max(0, (DURATION - visualcooldown()) / DURATION);
-		}
-
-		private static final String OBJECT  = "object";
-
 	}
 
 }

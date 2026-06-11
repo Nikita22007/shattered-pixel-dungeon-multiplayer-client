@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
@@ -53,7 +52,6 @@ public class WildMagic extends ArmorAbility {
 		return Messages.get(this, "prompt");
 	}
 
-	public static class WildMagicTracker extends FlavourBuff{};
 
 	Actor wildMagicActor = null;
 

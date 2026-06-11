@@ -23,24 +23,14 @@ package com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.PowerOfMany;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Beam;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
-import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.utils.PathFinder;
 
 public class BeamingRay extends TargetedClericSpell {
 
@@ -70,124 +60,12 @@ public class BeamingRay extends TargetedClericSpell {
 
 	@Override
 	protected void onTargetSelected(HolyTome tome, Hero hero, Integer target) {
-		if (target == null){
-			return;
-		}
-
-		Char ally = PowerOfMany.getPoweredAlly();
-
-		if (ally == null){
-			//temporary, for distance checks
-			ally = Dungeon.hero;
-		}
-
-		int telePos = target;
-
-		if (!Dungeon.level.insideMap(telePos)){
-			GLog.w(Messages.get(this, "no_space"));
-			return;
-		}
-
-		if (Dungeon.level.solid[telePos] || !Dungeon.level.heroFOV[telePos] || Actor.findChar(telePos) != null){
-			telePos = -1;
-			for (int i : PathFinder.NEIGHBOURS8){
-				if (Actor.findChar(target+i) == null && Dungeon.level.heroFOV[target+i]
-						&& (Dungeon.level.passable[target+i] || (ally.flying && Dungeon.level.avoid[target+i])) ){
-					if (telePos == -1 || Dungeon.level.trueDistance(telePos, ally.pos) > Dungeon.level.trueDistance(target+i, ally.pos)){
-						telePos =  target+i;
-					}
-				}
-			}
-		}
-
-		if (telePos == -1){
-			GLog.w(Messages.get(this, "no_space"));
-			return;
-		}
-
-		if (ally == Dungeon.hero){
-			ally = Stasis.getStasisAlly();
-		}
-
-		int range = 4*hero.pointsInTalent(Talent.BEAMING_RAY);
-		//TODO any more of these and we should make it a property of the buff, like with resistances/immunities
-		if (false){
-			range /= 2;
-		}
-		if (Dungeon.level.distance(ally.pos, telePos) > range){
-			GLog.w(Messages.get(this, "out_of_range"));
-			return;
-		}
-
-		Char chTarget = null;
-		if (Actor.findChar(target) != null && Actor.findChar(target).alignment == Char.Alignment.ENEMY){
-			chTarget = Actor.findChar(target);
-			if (hero.subClass == HeroSubClass.PRIEST){
-            }
-		}
-
-		if (ally == Stasis.getStasisAlly()) {
-            ally.pos = telePos;
-            GameScene.add((Mob) ally);
-            ((Stasis.StasisBuff) null).detach();
-            hero.sprite.parent.add(
-                    new Beam.SunRay(hero.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(telePos)));
-        } else {
-			hero.sprite.parent.add(
-					new Beam.SunRay(ally.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(telePos)));
-		}
-
-		hero.sprite.zap(telePos);
-		ScrollOfTeleportation.appear(ally, telePos);
-
-		if (chTarget == null){
-			for (Char ch : Actor.chars()){
-				if (ch.alignment == Char.Alignment.ENEMY && Dungeon.level.distance(ch.pos, telePos) <= 4){
-					if (chTarget == null || Dungeon.level.trueDistance(chTarget.pos, ally.pos) < Dungeon.level.trueDistance(ch.pos,  ally.pos)) {
-						chTarget = ch;
-					}
-				}
-			}
-		}
-
-		if (chTarget != null) {
-            if (ally instanceof Mob) {
-
-			}
-            ((BeamingRayBoost) null).object = chTarget.id();
-		} else {
-			//just the buff with no target
-        }
 
 		hero.spendAndNext(Actor.TICK);
 		Dungeon.observe();
 		GameScene.updateFog();
 
 		onSpellCast(tome, hero);
-	}
-
-	public static class BeamingRayBoost extends FlavourBuff {
-
-		{
-			type = buffType.POSITIVE;
-		}
-
-		public int object = 0;
-
-		public static final float DURATION = 10f;
-
-		private static final String OBJECT  = "object";
-
-		@Override
-		public int icon() {
-			return BuffIndicator.HOLY_WEAPON;
-		}
-
-		@Override
-		public float iconFadePercent() {
-			return Math.max(0, (DURATION - visualcooldown()) / DURATION);
-		}
-
 	}
 
 }

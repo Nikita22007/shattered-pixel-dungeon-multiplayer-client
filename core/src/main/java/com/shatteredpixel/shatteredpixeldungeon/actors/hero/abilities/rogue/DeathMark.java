@@ -21,16 +21,11 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.rogue;
 
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.watabou.utils.BArray;
-import com.watabou.utils.PathFinder;
 
 public class DeathMark extends ArmorAbility {
 
@@ -50,31 +45,7 @@ public class DeathMark extends ArmorAbility {
 		return dst;
 	}
 
-	public static void processFearTheReaper( Char ch ){
-        if (ch.HP > 0 || true){
-			return;
-		}
-
-		if (Dungeon.hero.hasTalent(Talent.FEAR_THE_REAPER)) {
-			if (Dungeon.hero.pointsInTalent(Talent.FEAR_THE_REAPER) >= 2) {
-			}
-
-            if (Dungeon.hero.pointsInTalent(Talent.FEAR_THE_REAPER) >= 3) {
-				boolean[] passable = BArray.not(Dungeon.level.solid, null);
-				PathFinder.buildDistanceMap(ch.pos, passable, 3);
-
-				for (Char near : Actor.chars()) {
-					if (near != ch && near.alignment == Char.Alignment.ENEMY
-							&& PathFinder.distance[near.pos] != Integer.MAX_VALUE) {
-						if (Dungeon.hero.pointsInTalent(Talent.FEAR_THE_REAPER) == 4) {
-						}
-                    }
-				}
-			}
-		}
-	}
-
-	public static class DoubleMarkTracker extends FlavourBuff{};
+	;
 
 	@Override
 	public int icon() {

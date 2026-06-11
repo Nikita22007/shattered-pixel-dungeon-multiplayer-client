@@ -471,11 +471,7 @@ public class MonkEnergy extends Buff implements ActionIndicator.Action {
 				hero.busy();
 			}
 
-			public static class MeditateResistance extends FlavourBuff{
-				{
-					actPriority = HERO_PRIO+1; //ends just before the hero acts
-				}
-			};
+			;
 		}
 
 	}

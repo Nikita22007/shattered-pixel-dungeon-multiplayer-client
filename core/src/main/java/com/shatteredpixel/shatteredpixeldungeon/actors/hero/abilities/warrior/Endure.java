@@ -21,20 +21,9 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
-import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
-import com.shatteredpixel.shatteredpixeldungeon.effects.SpellSprite;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.watabou.noosa.Image;
-import com.watabou.noosa.audio.Sample;
 
 public class Endure extends ArmorAbility {
 
@@ -44,99 +33,7 @@ public class Endure extends ArmorAbility {
 		baseChargeUse = 50f;
 	}
 
-	public static class EndureTracker extends FlavourBuff {
-
-		{
-			type = buffType.POSITIVE;
-		}
-
-		public boolean enduring = true;
-
-		public int damageBonus = 0;
-		public int hitsLeft = 0;
-
-		@Override
-		public int icon() {
-			return enduring ? BuffIndicator.NONE : BuffIndicator.ARMOR;
-		}
-
-		@Override
-		public void tintIcon(Image icon) {
-			icon.hardlight(1, 0, 0);
-		}
-
-		@Override
-		public float iconFadePercent() {
-			return Math.max(0, (10f - visualcooldown()) / 10f);
-		}
-
-		@Override
-		public String desc() {
-			return Messages.get(this, "desc", damageBonus, hitsLeft);
-		}
-
-		public float adjustDamageTaken(float damage){
-			if (enduring) {
-				damageBonus += damage/2;
-
-				float damageMulti = 0.5f;
-				if (Dungeon.hero.hasTalent(Talent.SHRUG_IT_OFF)){
-					//total damage reduction is 60%/68%/74%/80%, based on points in talent
-					damageMulti *= Math.pow(0.8f, Dungeon.hero.pointsInTalent(Talent.SHRUG_IT_OFF));
-				}
-
-				return damage*damageMulti;
-			}
-			return damage;
-		}
-
-		public void endEnduring(){
-			if (!enduring){
-				return;
-			}
-
-			enduring = false;
-			damageBonus *= 1f + 0.15f*Dungeon.hero.pointsInTalent(Talent.SUSTAINED_RETRIBUTION);
-
-			int nearby = 0;
-			for (Char ch : Actor.chars()){
-				if (ch.alignment == Char.Alignment.ENEMY && Dungeon.level.distance(target.pos, ch.pos) <= 2){
-					nearby ++;
-				}
-			}
-			damageBonus *= 1f + (nearby*0.05f*Dungeon.hero.pointsInTalent(Talent.EVEN_THE_ODDS));
-
-			hitsLeft = 1+Dungeon.hero.pointsInTalent(Talent.SUSTAINED_RETRIBUTION);
-			damageBonus /= hitsLeft;
-
-			if (damageBonus > 0) {
-				target.sprite.centerEmitter().start( Speck.factory( Speck.SCREAM ), 0.3f, 3 );
-				Sample.INSTANCE.play(Assets.Sounds.CHALLENGE);
-				SpellSprite.show(target, SpellSprite.BERSERK);
-			} else {
-				detach();
-			}
-		}
-
-		public float damageFactor(float damage){
-			if (enduring){
-				return damage;
-			} else {
-				int bonusDamage = damageBonus;
-				hitsLeft--;
-
-				if (hitsLeft <= 0){
-					detach();
-				}
-				return damage + bonusDamage;
-			}
-		}
-
-		public static String ENDURING       = "enduring";
-		public static String DAMAGE_BONUS   = "damage_bonus";
-		public static String HITS_LEFT      = "hits_left";
-
-	};
+	;
 
 	@Override
 	public int icon() {

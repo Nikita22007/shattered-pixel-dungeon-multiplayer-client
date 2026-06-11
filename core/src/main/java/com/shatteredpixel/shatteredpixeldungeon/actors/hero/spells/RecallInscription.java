@@ -22,15 +22,11 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.HolyTome;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
-import com.watabou.utils.Reflection;
 
 public class RecallInscription extends ClericSpell {
 
@@ -64,34 +60,6 @@ public class RecallInscription extends ClericSpell {
         if (!super.canCast(hero)
                 || !hero.hasTalent(Talent.RECALL_INSCRIPTION)) return false;
         return false;
-	}
-
-	public static class UsedItemTracker extends FlavourBuff {
-
-		{
-			type = buffType.POSITIVE;
-		}
-
-		public Class<?extends Item> item;
-
-		@Override
-		public int icon() {
-			return BuffIndicator.GLYPH_RECALL;
-		}
-
-		@Override
-		public float iconFadePercent() {
-			float duration = Dungeon.hero.pointsInTalent(Talent.RECALL_INSCRIPTION) == 2 ? 300 : 10;
-			return Math.max(0, (duration - visualcooldown()) / duration);
-		}
-
-		@Override
-		public String desc() {
-			return Messages.get(this, "desc", Messages.titleCase(Reflection.newInstance(item).name()), dispTurns());
-		}
-
-		private static String ITEM = "item";
-
 	}
 
 }
