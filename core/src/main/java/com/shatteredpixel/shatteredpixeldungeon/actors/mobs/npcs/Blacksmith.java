@@ -183,7 +183,7 @@ public class Blacksmith extends NPC {
 
 				if (smithRewards != null) {
 					if (smithEnchant != null) {
-						node.put(ENCHANT, smithEnchant);
+
 						node.put(GLYPH, smithGlyph);
 					}
 				}

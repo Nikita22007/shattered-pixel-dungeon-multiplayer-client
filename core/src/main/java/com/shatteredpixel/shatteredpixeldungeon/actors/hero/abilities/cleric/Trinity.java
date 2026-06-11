@@ -465,16 +465,6 @@ public class Trinity extends ArmorAbility {
 	public static String trinityItemUseText(Class<?> cls ){
 		float chargeUse = trinityChargeUsePerEffect(cls);
 		if (Weapon.Enchantment.class.isAssignableFrom(cls) || Armor.Glyph.class.isAssignableFrom(cls)) {
-			for (Class ench : Weapon.Enchantment.rare) {
-				if (ench.equals(cls)) {
-					return Messages.get(Trinity.class, "rare_ench_glyph_use", BodyForm.duration(), Messages.decimalFormat("#.##", chargeUse));
-				}
-			}
-			for (Class glyph : Armor.Glyph.rare){
-				if (glyph.equals(cls)){
-					return Messages.get(Trinity.class, "rare_ench_glyph_use", BodyForm.duration(), Messages.decimalFormat("#.##", chargeUse));
-				}
-			}
 			return Messages.get(Trinity.class, "ench_glyph_use", BodyForm.duration(), Messages.decimalFormat("#.##", chargeUse));
 		}
 		if (MissileWeapon.class.isAssignableFrom(cls)){
@@ -499,16 +489,7 @@ public class Trinity extends ArmorAbility {
 	public static float trinityChargeUsePerEffect(Class<?> cls){
 		float chargeUse = (float) 35;
 		if (Weapon.Enchantment.class.isAssignableFrom(cls) || Armor.Glyph.class.isAssignableFrom(cls)) {
-			for (Class ench : Weapon.Enchantment.rare) {
-				if (ench.equals(cls)) {
-					return 2*chargeUse; //50 charge
-				}
-			}
-			for (Class glyph : Armor.Glyph.rare){
-				if (glyph.equals(cls)){
-					return 2*chargeUse; //50 charge
-				}
-			}
+
 		}
 		if (cls.equals(WandOfFireblast.class) || cls.equals(WandOfRegrowth.class)){
 			return 2*chargeUse;
