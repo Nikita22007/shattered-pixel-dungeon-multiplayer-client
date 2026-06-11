@@ -32,7 +32,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ParchmentScrap;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
@@ -234,39 +233,6 @@ public class Armor extends EquipableItem {
 		emitter.fillTarget = false;
 		emitter.pour(Speck.factory( Speck.RED_LIGHT ), 0.6f);
 		return emitter;
-	}
-
-	@Override
-	public Item random() {
-		//+0: 75% (3/4)
-		//+1: 20% (4/20)
-		//+2: 5%  (1/20)
-		int n = 0;
-		if (Random.Int(4) == 0) {
-			n++;
-			if (Random.Int(5) == 0) {
-				n++;
-			}
-		}
-		level(n);
-
-		//we use a separate RNG here so that variance due to things like parchment scrap
-		//does not affect levelgen
-		Random.pushGenerator(Random.Long());
-
-			//30% chance to be cursed
-			//15% chance to be inscribed
-			float effectRoll = Random.Float();
-			if (effectRoll < 0.3f * ParchmentScrap.curseChanceMultiplier()) {
-				inscribe(null);
-				cursed = true;
-			} else if (effectRoll >= 1f - (0.15f * ParchmentScrap.enchantChanceMultiplier())){
-				inscribe();
-			}
-
-		Random.popGenerator();
-
-		return this;
 	}
 
 	public int STRReq(){

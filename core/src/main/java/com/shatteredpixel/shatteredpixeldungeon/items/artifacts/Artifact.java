@@ -23,11 +23,9 @@ package com.shatteredpixel.shatteredpixeldungeon.items.artifacts;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindofMisc;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.utils.Random;
 import org.jetbrains.annotations.Contract;
 
 public class Artifact extends KindofMisc {
@@ -153,18 +151,7 @@ public class Artifact extends KindofMisc {
 		return null;
 	}
 
-	@Override
-	public Item random() {
-		//always +0
-		
-		//30% chance to be cursed
-		if (Random.Float() < 0.3f) {
-			cursed = true;
-		}
-		return this;
-	}
-
-	@Override
+    @Override
 	public int value() {
 		int price = 100;
 		if (level() > 0)

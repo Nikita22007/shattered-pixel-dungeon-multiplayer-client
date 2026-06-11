@@ -25,59 +25,20 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.items.ItemStatusHandler;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindofMisc;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 import org.jetbrains.annotations.Contract;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 
 public class Ring extends KindofMisc {
 	
 	protected Buff buff;
 
-	private static final LinkedHashMap<String, Integer> gems = new LinkedHashMap<String, Integer>() {
-		{
-			put("garnet",ItemSpriteSheet.RING_GARNET);
-			put("ruby",ItemSpriteSheet.RING_RUBY);
-			put("topaz",ItemSpriteSheet.RING_TOPAZ);
-			put("emerald",ItemSpriteSheet.RING_EMERALD);
-			put("onyx",ItemSpriteSheet.RING_ONYX);
-			put("opal",ItemSpriteSheet.RING_OPAL);
-			put("tourmaline",ItemSpriteSheet.RING_TOURMALINE);
-			put("sapphire",ItemSpriteSheet.RING_SAPPHIRE);
-			put("amethyst",ItemSpriteSheet.RING_AMETHYST);
-			put("quartz",ItemSpriteSheet.RING_QUARTZ);
-			put("agate",ItemSpriteSheet.RING_AGATE);
-			put("diamond",ItemSpriteSheet.RING_DIAMOND);
-		}
-	};
-	
-	private static ItemStatusHandler<Ring> handler;
-
 	//rings cannot be 'used' like other equipment, so they ID purely based on exp
 	private float levelsToID = 1;
 
-	public static void clearGems(){
-		handler = null;
-	}
 
-	public static void save( Bundle bundle ) {
-		handler.save( bundle );
-	}
-
-	public static void saveSelectively( Bundle bundle, ArrayList<Item> items ) {
-		handler.saveSelectively( bundle, items );
-	}
-
-	
 	public Ring() {
 		super();
 		reset();
@@ -90,16 +51,6 @@ public class Ring extends KindofMisc {
 	public void anonymize(){
 		if (!isKnown()) image = ItemSpriteSheet.RING_HOLDER;
 		anonymous = true;
-	}
-	
-	public void reset() {
-		super.reset();
-		levelsToID = 1;
-		if (handler != null && handler.contains(this)){
-			image = handler.image(this);
-		} else {
-			image = ItemSpriteSheet.RING_GARNET;
-		}
 	}
 
 	@Override
@@ -123,9 +74,8 @@ public class Ring extends KindofMisc {
 	@Contract(pure=true)
 	public boolean isKnown() {
 		if (anonymous) return true;
-		if (handler == null) return false;
-		return true;
-	}
+        return false;
+    }
 
 
 	protected String statsInfo(){
@@ -157,40 +107,6 @@ public class Ring extends KindofMisc {
 
 	public void setIDReady(){
 		levelsToID = -1;
-	}
-
-	public boolean readyToIdentify(){
-		return !isIdentified() && levelsToID <= 0;
-	}
-
-	@Override
-	public Item random() {
-		//+0: 66.67% (2/3)
-		//+1: 26.67% (4/15)
-		//+2: 6.67%  (1/15)
-		int n = 0;
-		if (Random.Int(3) == 0) {
-			n++;
-			if (Random.Int(5) == 0){
-				n++;
-			}
-		}
-		level(n);
-		
-		//30% chance to be cursed
-		if (Random.Float() < 0.3f) {
-			cursed = true;
-		}
-		
-		return this;
-	}
-	
-	public static HashSet<Class<? extends Ring>> getKnown() {
-		return handler.known();
-	}
-	
-	public static HashSet<Class<? extends Ring>> getUnknown() {
-		return new LinkedHashSet<>();
 	}
 
 	@Override

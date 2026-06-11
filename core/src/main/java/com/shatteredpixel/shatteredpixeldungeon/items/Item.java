@@ -33,7 +33,6 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Reflection;
 import org.jetbrains.annotations.Contract;
 
@@ -319,10 +318,6 @@ public class Item  {
 		item.quantity = 0;
 		item.level = level;
 		return item;
-	}
-	
-	public Item random() {
-		return this;
 	}
 
 	@Contract(pure = true)

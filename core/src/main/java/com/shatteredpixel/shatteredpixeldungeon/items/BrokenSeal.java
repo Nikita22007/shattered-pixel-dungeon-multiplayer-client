@@ -326,9 +326,5 @@ public class BrokenSeal extends Item {
 			}
 		}
 
-		public static final String COOLDOWN = "cooldown";
-		public static final String TURNS_SINCE_ENEMIES = "turns_since_enemies";
-		public static final String INITIAL_SHIELD = "initial_shield";
-
 	}
 }

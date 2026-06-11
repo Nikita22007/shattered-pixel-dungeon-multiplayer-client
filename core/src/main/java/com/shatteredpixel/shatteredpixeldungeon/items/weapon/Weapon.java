@@ -33,7 +33,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.spells.HolyWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfFuror;
-import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ParchmentScrap;
 import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Projecting;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
@@ -275,40 +274,7 @@ abstract public class Weapon extends KindOfWeapon {
 
 		}
 	}
-	
-	@Override
-	public Item random() {
-		//+0: 75% (3/4)
-		//+1: 20% (4/20)
-		//+2: 5%  (1/20)
-		int n = 0;
-		if (Random.Int(4) == 0) {
-			n++;
-			if (Random.Int(5) == 0) {
-				n++;
-			}
-		}
-		level(n);
 
-		//we use a separate RNG here so that variance due to things like parchment scrap
-		//does not affect levelgen
-		Random.pushGenerator(Random.Long());
-
-			//30% chance to be cursed
-			//10% chance to be enchanted
-			float effectRoll = Random.Float();
-			if (effectRoll < 0.3f * ParchmentScrap.curseChanceMultiplier()) {
-				enchant(null);
-				cursed = true;
-			} else if (effectRoll >= 1f - (0.1f * ParchmentScrap.enchantChanceMultiplier())){
-				enchant();
-			}
-
-		Random.popGenerator();
-
-		return this;
-	}
-	
 	public Weapon enchant( Enchantment ench ) {
 		if (ench == null || !ench.curse()) curseInfusionBonus = false;
 		enchantment = ench;

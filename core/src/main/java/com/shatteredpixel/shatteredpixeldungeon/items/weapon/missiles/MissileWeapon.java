@@ -198,24 +198,7 @@ abstract public class MissileWeapon extends Weapon {
 		return super.proc(attacker, defender, damage);
 	}
 
-	@Override
-	public Item random() {
-		if (!stackable) return this;
-		
-		//2: 66.67% (2/3)
-		//3: 26.67% (4/15)
-		//4: 6.67%  (1/15)
-		quantity = 2;
-		if (Random.Int(3) == 0) {
-			quantity++;
-			if (Random.Int(5) == 0) {
-				quantity++;
-			}
-		}
-		return this;
-	}
-
-	public String status() {
+    public String status() {
 		//show quantity even when it is 1
 		return Integer.toString( quantity );
 	}
