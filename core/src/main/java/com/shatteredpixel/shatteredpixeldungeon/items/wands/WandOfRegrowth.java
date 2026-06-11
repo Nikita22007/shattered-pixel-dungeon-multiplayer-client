@@ -41,7 +41,6 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.LotusSprite;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.ColorMath;
 import com.watabou.utils.GameMath;
@@ -268,8 +267,7 @@ public class WandOfRegrowth extends Wand {
 
 	@Override
 	protected int chargesPerCast() {
-        if (cursed ||
-				(charger != null && charger.target != null && false)){
+        if (cursed){
 			return 1;
 		}
 		//consumes 30% of current charges, rounded up, with a min of 1 and a max of 3.
@@ -314,22 +312,8 @@ public class WandOfRegrowth extends Wand {
 	
 	private static final String TOTAL = "totChrgUsed";
 	private static final String OVER = "chargesOverLimit";
-	
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put( TOTAL, totChrgUsed );
-		bundle.put( OVER, chargesOverLimit);
-	}
-	
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		totChrgUsed = bundle.getInt(TOTAL);
-		chargesOverLimit = bundle.getInt(OVER);
-	}
-	
-	public static class Dewcatcher extends Plant{
+
+    public static class Dewcatcher extends Plant{
 
 		{
 			image = 13;

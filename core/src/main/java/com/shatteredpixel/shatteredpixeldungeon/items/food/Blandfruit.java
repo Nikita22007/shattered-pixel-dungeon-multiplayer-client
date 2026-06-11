@@ -115,20 +115,7 @@ public class Blandfruit extends Food {
 			imbuePotion(potionAttrib);
 		}
 	}
-	
-	@Override
-	public void storeInBundle(Bundle bundle){
-		super.storeInBundle(bundle);
-		bundle.put( POTIONATTRIB , potionAttrib);
-	}
 
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		if (bundle.contains(POTIONATTRIB)) {
-			imbuePotion((Potion) bundle.get(POTIONATTRIB));
-		}
-	}
 
 	@Override
 	public ItemSprite.Glowing glowing() {

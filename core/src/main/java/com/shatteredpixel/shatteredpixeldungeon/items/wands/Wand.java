@@ -52,7 +52,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
@@ -460,42 +459,7 @@ public abstract class Wand extends Item {
 		}
 		return price;
 	}
-	
-	private static final String USES_LEFT_TO_ID     = "uses_left_to_id";
-	private static final String AVAILABLE_USES      = "available_uses";
-	private static final String CUR_CHARGES         = "curCharges";
-	private static final String CUR_CHARGE_KNOWN    = "curChargeKnown";
-	private static final String PARTIALCHARGE       = "partialCharge";
-	private static final String CURSE_INFUSION_BONUS= "curse_infusion_bonus";
-	private static final String RESIN_BONUS         = "resin_bonus";
 
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( USES_LEFT_TO_ID, usesLeftToID );
-		bundle.put( AVAILABLE_USES, availableUsesToID );
-		bundle.put( CUR_CHARGES, curCharges );
-		bundle.put( CUR_CHARGE_KNOWN, curChargeKnown );
-		bundle.put( PARTIALCHARGE , partialCharge );
-		bundle.put( CURSE_INFUSION_BONUS, curseInfusionBonus );
-		bundle.put( RESIN_BONUS, resinBonus );
-	}
-	
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		usesLeftToID = bundle.getInt( USES_LEFT_TO_ID );
-		availableUsesToID = bundle.getInt( AVAILABLE_USES );
-		curseInfusionBonus = bundle.getBoolean(CURSE_INFUSION_BONUS);
-		resinBonus = bundle.getInt(RESIN_BONUS);
-
-		updateLevel();
-
-		curCharges = bundle.getInt( CUR_CHARGES );
-		curChargeKnown = bundle.getBoolean( CUR_CHARGE_KNOWN );
-		partialCharge = bundle.getFloat( PARTIALCHARGE );
-	}
-	
 	@Override
 	public void reset() {
 		super.reset();

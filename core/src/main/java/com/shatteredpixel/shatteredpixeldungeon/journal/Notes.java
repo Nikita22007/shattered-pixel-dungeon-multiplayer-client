@@ -234,12 +234,7 @@ public class Notes {
 			super.restoreFromBundle(bundle);
 			key = (Key) bundle.get(KEY);
 		}
-		
-		@Override
-		public void storeInBundle(Bundle bundle) {
-			super.storeInBundle(bundle);
-			bundle.put( KEY, key );
-		}
+
 	}
 
 	public enum CustomType {

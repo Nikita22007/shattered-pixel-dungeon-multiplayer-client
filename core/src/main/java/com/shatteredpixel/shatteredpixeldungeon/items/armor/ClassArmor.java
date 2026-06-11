@@ -31,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.cleric.Tri
 import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.watabou.utils.Bundle;
 
 abstract public class ClassArmor extends Armor {
 
@@ -111,20 +110,6 @@ abstract public class ClassArmor extends Armor {
 
 	private static final String ARMOR_TIER	= "armortier";
 	private static final String CHARGE	    = "charge";
-
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( ARMOR_TIER, tier );
-		bundle.put( CHARGE, charge );
-	}
-
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		tier = bundle.getInt( ARMOR_TIER );
-		charge = bundle.getFloat(CHARGE);
-	}
 
 	@Override
 	public String actionName(String action, Hero hero) {

@@ -49,7 +49,6 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.IconTitle;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndInfoItem;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 import org.json.JSONObject;
@@ -192,31 +191,6 @@ public class DriedRose extends Artifact {
 	
 	private static final String WEAPON =        "weapon";
 	private static final String ARMOR =         "armor";
-
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle(bundle);
-
-		bundle.put( TALKEDTO, talkedTo );
-		bundle.put( FIRSTSUMMON, firstSummon );
-		bundle.put( GHOSTID, 0);
-		bundle.put( PETALS, droppedPetals );
-		
-		if (weapon != null) bundle.put( WEAPON, weapon );
-		if (armor != null)  bundle.put( ARMOR, armor );
-	}
-
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle(bundle);
-
-		talkedTo = bundle.getBoolean( TALKEDTO );
-		firstSummon = bundle.getBoolean( FIRSTSUMMON );
-		droppedPetals = bundle.getInt( PETALS );
-		
-		if (bundle.contains(WEAPON)) weapon = (MeleeWeapon)bundle.get( WEAPON );
-		if (bundle.contains(ARMOR))  armor = (Armor)bundle.get( ARMOR );
-	}
 
 	public class roseRecharge extends ArtifactBuff {
 

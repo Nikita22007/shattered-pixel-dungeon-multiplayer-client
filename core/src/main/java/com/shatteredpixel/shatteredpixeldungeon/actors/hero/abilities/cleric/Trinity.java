@@ -431,15 +431,7 @@ public class Trinity extends ArmorAbility {
 					parentWnd.hide();
 					WndItemConfirm.this.hide();
 
-					if (false) {
-						((Trinity)Dungeon.hero.armorAbility).bodyForm = ((MeleeWeapon) item).enchantment;
-					} else if (false) {
-						((Trinity)Dungeon.hero.armorAbility).bodyForm = ((Armor) item).glyph;
-					} else if (false || false){
-						((Trinity)Dungeon.hero.armorAbility).mindForm = item;
-					} else {
-						((Trinity)Dungeon.hero.armorAbility).spiritForm = item;
-					}
+
 					spell.onSpellCast(tome, Dungeon.hero);
 
 					Dungeon.hero.sprite.operate(Dungeon.hero.pos);

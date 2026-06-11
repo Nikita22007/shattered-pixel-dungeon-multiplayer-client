@@ -393,24 +393,8 @@ abstract public class MissileWeapon extends Weapon {
 
 	private static final String SPAWNED = "spawned";
 	private static final String DURABILITY = "durability";
-	
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put(SPAWNED, spawnedForEffect);
-		bundle.put(DURABILITY, durability);
-	}
-	
+
 	private static boolean bundleRestoring = false;
-	
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		bundleRestoring = true;
-		super.restoreFromBundle(bundle);
-		bundleRestoring = false;
-		spawnedForEffect = bundle.getBoolean(SPAWNED);
-		durability = bundle.getFloat(DURABILITY);
-	}
 
 	public static class PlaceHolder extends MissileWeapon {
 

@@ -42,7 +42,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
@@ -84,7 +83,7 @@ public class WandOfTransfusion extends DamageWand {
 			//this wand does different things depending on the target.
 			
 			//heals/shields an ally or a charmed enemy while damaging self
-            if (ch.alignment == Char.Alignment.ALLY || false){
+            if (ch.alignment == Char.Alignment.ALLY){
 				
 				// 5% of max hp
 				int selfDmg = Math.round(curUser.HT*0.05f);
@@ -93,7 +92,6 @@ public class WandOfTransfusion extends DamageWand {
 				int shielding = (ch.HP + healing) - ch.HT;
 				if (shielding > 0){
 					healing -= shielding;
-                    ((Barrier) null).setShield(shielding);
 				} else {
 					shielding = 0;
 				}
@@ -194,20 +192,6 @@ public class WandOfTransfusion extends DamageWand {
 	@Override
 	public String upgradeStat3(int level) {
 		return super.upgradeStat1(level); //damage
-	}
-
-	private static final String FREECHARGE = "freecharge";
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		freeCharge = bundle.getBoolean( FREECHARGE );
-	}
-
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put( FREECHARGE, freeCharge );
 	}
 
 }

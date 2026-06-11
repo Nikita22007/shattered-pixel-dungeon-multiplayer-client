@@ -137,7 +137,6 @@ public class QuickSlot {
 				placements[i] = true;
 			}
 		}
-		bundle.put( PLACEHOLDERS, placeholders );
 		bundle.put( PLACEMENTS, placements );
 	}
 

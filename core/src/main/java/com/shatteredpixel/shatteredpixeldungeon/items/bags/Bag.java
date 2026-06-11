@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.CustomItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndQuickBag;
-import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 
 import org.jetbrains.annotations.NotNull;
@@ -130,14 +129,6 @@ public class Bag extends CustomItem implements Iterable<Item> {
 		for (Item item : items.toArray(new Item[0])){
 			if (!item.unique) items.remove(item);
 		}
-	}
-	
-	private static final String ITEMS	= "inventory";
-	
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( ITEMS, items );
 	}
 
 	//temp variable so that bags can load contents even with lost inventory debuff

@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items.trinkets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -85,34 +84,6 @@ public class TrapMechanism extends Trinket {
 		}
 
 		return mech.levelFeels.remove(0) ? Level.Feeling.TRAPS : Level.Feeling.CHASM;
-	}
-
-	private static final String FEELS = "feels";
-	private static final String SHUFFLES = "shuffles";
-
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		if (!levelFeels.isEmpty()){
-			boolean[] storeFeels = new boolean[levelFeels.size()];
-			for (int i = 0; i < storeFeels.length; i++){
-				storeFeels[i] = levelFeels.get(i);
-			}
-			bundle.put(FEELS, storeFeels);
-		}
-		bundle.put( SHUFFLES, shuffles );
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		levelFeels.clear();
-		if (bundle.contains(FEELS)){
-			for (boolean b : bundle.getBooleanArray(FEELS)){
-				levelFeels.add(b);
-			}
-		}
-		shuffles = bundle.getInt( SHUFFLES );
 	}
 
 }

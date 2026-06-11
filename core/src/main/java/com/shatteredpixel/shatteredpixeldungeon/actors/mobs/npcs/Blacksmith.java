@@ -175,7 +175,6 @@ public class Blacksmith extends NPC {
 				node.put(COMPLETED, completed);
 
 				node.put(FAVOR, favor);
-				if (pickaxe != null) node.put(PICKAXE, pickaxe);
 				node.put(FREE_PICKAXE, freePickaxe);
 				node.put(REFORGES, reforges);
 				node.put(HARDENS, hardens);
@@ -183,7 +182,6 @@ public class Blacksmith extends NPC {
 				node.put(SMITHS, smiths);
 
 				if (smithRewards != null) {
-					node.put(SMITH_REWARDS, smithRewards);
 					if (smithEnchant != null) {
 						node.put(ENCHANT, smithEnchant);
 						node.put(GLYPH, smithGlyph);

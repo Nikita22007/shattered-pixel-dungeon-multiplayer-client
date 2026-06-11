@@ -38,7 +38,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.ActionIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.utils.Bundle;
 
 public class HolyTome extends Artifact {
 
@@ -171,27 +170,6 @@ public class HolyTome extends Artifact {
 	}
 
 	private static final String QUICK_CLS = "quick_cls";
-
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		if (quickSpell != null) {
-			bundle.put(QUICK_CLS, quickSpell.getClass());
-		}
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		if (bundle.contains(QUICK_CLS)){
-			Class quickCls = bundle.getClass(QUICK_CLS);
-			for (ClericSpell spell : ClericSpell.getAllSpells()){
-				if (spell.getClass() == quickCls){
-					quickSpell = spell;
-				}
-			}
-		}
-	}
 
 	public class TomeRecharge extends ArtifactBuff implements ActionIndicator.Action {
 

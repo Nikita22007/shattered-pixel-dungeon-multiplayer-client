@@ -112,8 +112,6 @@ public class Wandmaker extends NPC {
 
                 node.put(GIVEN, given);
 
-                node.put(WAND1, wand1);
-                node.put(WAND2, wand2);
 
                 if (type == 2) {
                     node.put(RITUALPOS, CeremonialCandle.ritualPos);

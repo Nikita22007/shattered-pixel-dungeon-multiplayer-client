@@ -227,19 +227,6 @@ public class Belongings implements Iterable<Item> {
 
 	private static final String SECOND_WEP = "second_wep";
 
-	public void storeInBundle( Bundle bundle ) {
-		
-		backpack.storeInBundle( bundle );
-		
-		bundle.put( WEAPON, weapon );
-		bundle.put( ARMOR, armor );
-		bundle.put( ARTIFACT, artifact );
-		bundle.put( MISC, misc );
-		bundle.put( RING, ring );
-		bundle.put( SECOND_WEP, secondWep );
-	}
-
-
 	public static void preview( GamesInProgress.Info info, Bundle bundle ) {
 		if (bundle.contains( ARMOR )){
 			Armor armor = ((Armor)bundle.get( ARMOR ));
@@ -258,10 +245,6 @@ public class Belongings implements Iterable<Item> {
 		ArrayList<Bag> result = new ArrayList<>();
 
 		result.add(backpack);
-
-		for (Item i : this){
-		}
-
 		return result;
 	}
 	

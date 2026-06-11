@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindofMisc;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 import org.jetbrains.annotations.Contract;
 
@@ -219,25 +218,5 @@ public class Artifact extends KindofMisc {
 		}
 
 	}
-	
-	private static final String EXP = "exp";
-	private static final String CHARGE = "charge";
-	private static final String PARTIALCHARGE = "partialcharge";
 
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle(bundle);
-		bundle.put( EXP , exp );
-		bundle.put( CHARGE , charge );
-		bundle.put( PARTIALCHARGE , partialCharge );
-	}
-
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle(bundle);
-		exp = bundle.getInt( EXP );
-		if (chargeCap > 0)  charge = Math.min( chargeCap, bundle.getInt( CHARGE ));
-		else                charge = bundle.getInt( CHARGE );
-		partialCharge = bundle.getFloat( PARTIALCHARGE );
-	}
 }

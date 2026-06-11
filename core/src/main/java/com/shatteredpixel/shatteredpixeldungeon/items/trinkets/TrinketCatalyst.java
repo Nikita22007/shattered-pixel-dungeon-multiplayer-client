@@ -42,10 +42,8 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.IconTitle;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndInfoItem;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndSadGhost;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class TrinketCatalyst extends Item {
 
@@ -71,34 +69,7 @@ public class TrinketCatalyst extends Item {
 		return !rolledTrinkets.isEmpty();
 	}
 
-	private static final String ROLLED_TRINKETS = "rolled_trinkets";
-
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		if (!rolledTrinkets.isEmpty()){
-			bundle.put(ROLLED_TRINKETS, rolledTrinkets);
-		}
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		rolledTrinkets.clear();
-		if (bundle.contains(ROLLED_TRINKETS)){
-			rolledTrinkets.addAll((Collection<Trinket>) ((Collection<?>)bundle.getCollection( ROLLED_TRINKETS )));
-		}
-	}
-
 	public static class Recipe {
-
-	}
-
-	public static class RandomTrinket extends Item {
-
-		{
-			image = ItemSpriteSheet.SOMETHING;
-		}
 
 	}
 

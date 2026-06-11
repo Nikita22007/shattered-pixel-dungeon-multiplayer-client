@@ -36,7 +36,6 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.watabou.noosa.Game;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
@@ -174,23 +173,6 @@ public class UnstableSpellbook extends Artifact {
 	}
 
 	private static final String SCROLLS =   "scrolls";
-
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle(bundle);
-		bundle.put( SCROLLS, scrolls.toArray(new Class[scrolls.size()]) );
-	}
-
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle(bundle);
-		scrolls.clear();
-		if (bundle.contains(SCROLLS) && bundle.getClassArray(SCROLLS) != null) {
-			for (Class<?> scroll : bundle.getClassArray(SCROLLS)) {
-				if (scroll != null) scrolls.add(scroll);
-			}
-		}
-	}
 
 	public class bookRecharge extends ArtifactBuff{
 		@Override

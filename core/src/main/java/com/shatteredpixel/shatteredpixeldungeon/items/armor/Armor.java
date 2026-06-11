@@ -103,60 +103,21 @@ public class Armor extends EquipableItem {
 	public Glyph glyph;
 	public boolean glyphHardened = false;
 	public boolean curseInfusionBonus = false;
-	public boolean masteryPotionBonus = false;
-	
+
 	protected BrokenSeal seal;
 	
 	public int tier;
 	
 	private static final int USES_TO_ID = 10;
-	private float usesLeftToID = USES_TO_ID;
 	private float availableUsesToID = USES_TO_ID/2f;
 	
 	public Armor( int tier ) {
 		this.tier = tier;
 	}
-	
-	private static final String USES_LEFT_TO_ID = "uses_left_to_id";
-	private static final String AVAILABLE_USES  = "available_uses";
-	private static final String GLYPH			= "glyph";
-	private static final String GLYPH_HARDENED	= "glyph_hardened";
-	private static final String CURSE_INFUSION_BONUS = "curse_infusion_bonus";
-	private static final String MASTERY_POTION_BONUS = "mastery_potion_bonus";
-	private static final String SEAL            = "seal";
-	private static final String AUGMENT			= "augment";
-
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( USES_LEFT_TO_ID, usesLeftToID );
-		bundle.put( AVAILABLE_USES, availableUsesToID );
-		bundle.put( GLYPH, glyph );
-		bundle.put( GLYPH_HARDENED, glyphHardened );
-		bundle.put( CURSE_INFUSION_BONUS, curseInfusionBonus );
-		bundle.put( MASTERY_POTION_BONUS, masteryPotionBonus );
-		bundle.put( SEAL, seal);
-		bundle.put( AUGMENT, augment);
-	}
-
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle(bundle);
-		usesLeftToID = bundle.getInt( USES_LEFT_TO_ID );
-		availableUsesToID = bundle.getInt( AVAILABLE_USES );
-		inscribe((Glyph) bundle.get(GLYPH));
-		glyphHardened = bundle.getBoolean(GLYPH_HARDENED);
-		curseInfusionBonus = bundle.getBoolean( CURSE_INFUSION_BONUS );
-		masteryPotionBonus = bundle.getBoolean( MASTERY_POTION_BONUS );
-		seal = (BrokenSeal)bundle.get(SEAL);
-		
-		augment = bundle.getEnum(AUGMENT, Augment.class);
-	}
 
 	@Override
 	public void reset() {
 		super.reset();
-		usesLeftToID = USES_TO_ID;
 		availableUsesToID = USES_TO_ID/2f;
 		//armor can be kept in bones between runs, the seal cannot.
 		seal = null;
@@ -619,7 +580,6 @@ public class Armor extends EquipableItem {
 		return true;
 	}
 	public void setIDReady(){
-		 usesLeftToID = -1;
 	}
 
 }

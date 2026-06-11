@@ -56,7 +56,6 @@ import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
@@ -202,30 +201,7 @@ public class SandalsOfNature extends Artifact {
 	private static final String SEEDS = "seeds";
 	private static final String CUR_SEED_EFFECT = "cur_seed_effect";
 
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle(bundle);
-		bundle.put(SEEDS, seeds.toArray(new Class[0]));
-		bundle.put(CUR_SEED_EFFECT, curSeedEffect);
-	}
-
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle(bundle);
-		seeds.clear();
-		if (bundle.contains(SEEDS) && bundle.getClassArray(SEEDS) != null) {
-			for (Class<?> seed : bundle.getClassArray(SEEDS)) {
-				if (seed != null) seeds.add(seed);
-			}
-		}
-		curSeedEffect = bundle.getClass(CUR_SEED_EFFECT);
-
-		if (level() == 1)  image = ItemSpriteSheet.ARTIFACT_SHOES;
-		else if (level() == 2)  image = ItemSpriteSheet.ARTIFACT_BOOTS;
-		else if (level() >= 3)  image = ItemSpriteSheet.ARTIFACT_GREAVES;
-	}
-
-	public class Naturalism extends ArtifactBuff{
+    public class Naturalism extends ArtifactBuff{
 		public void charge() {
             if (cursed || false) return;
 			if (charge < chargeCap){

@@ -21,20 +21,15 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.rings;
 
-import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.ItemStatusHandler;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindofMisc;
-import com.shatteredpixel.shatteredpixeldungeon.items.trinkets.ShardOfOblivion;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 import org.jetbrains.annotations.Contract;
@@ -206,11 +201,7 @@ public class Ring extends KindofMisc {
 	public static HashSet<Class<? extends Ring>> getUnknown() {
 		return new LinkedHashSet<>();
 	}
-	
-	public static boolean allKnown() {
-		return handler != null && handler.known().size() == Generator.Category.RING.classes.length;
-	}
-	
+
 	@Override
 	public int value() {
 		int price = 75;
@@ -228,38 +219,6 @@ public class Ring extends KindofMisc {
 			price = 1;
 		}
 		return price;
-	}
-
-	private static final String LEVELS_TO_ID    = "levels_to_ID";
-
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( LEVELS_TO_ID, levelsToID );
-	}
-
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		levelsToID = bundle.getFloat( LEVELS_TO_ID );
-	}
-	
-	public void onHeroGainExp( float levelPercent, Hero hero ){
-		if (isIdentified() || !isEquipped(hero)) return;
-		levelPercent *= Talent.itemIDSpeedFactor(hero, this);
-		//becomes IDed after 1 level
-		levelsToID -= levelPercent;
-		if (levelsToID <= 0){
-			if (ShardOfOblivion.passiveIDDisabled()){
-				if (levelsToID > -1){
-					GLog.p(Messages.get(ShardOfOblivion.class, "identify_ready"), name());
-				}
-				setIDReady();
-			} else {
-				GLog.p(Messages.get(Ring.class, "identify"));
-				Badges.validateItemLevelAquired(this);
-			}
-		}
 	}
 
 	@Contract(pure = true)

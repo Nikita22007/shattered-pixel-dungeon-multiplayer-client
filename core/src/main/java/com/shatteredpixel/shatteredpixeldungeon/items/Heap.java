@@ -347,7 +347,7 @@ public class Heap implements Bundlable {
 		bundle.put( POS, pos );
 		bundle.put( SEEN, seen );
 		bundle.put( TYPE, type );
-		bundle.put( ITEMS, items );
+
 		bundle.put( HAUNTED, haunted );
 		bundle.put( AUTO_EXPLORED, autoExplored );
 		bundle.put( HIDDEN, hidden );

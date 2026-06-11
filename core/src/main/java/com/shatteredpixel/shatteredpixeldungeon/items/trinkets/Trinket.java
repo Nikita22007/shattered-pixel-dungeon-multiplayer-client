@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.trinkets;
 
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.watabou.utils.Bundle;
 
 public abstract class Trinket extends Item {
 
@@ -47,12 +46,6 @@ public abstract class Trinket extends Item {
 	@Override
 	public int energyVal() {
 		return 5;
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		levelKnown = cursedKnown = true; //for pre-2.5 saves
 	}
 
 }

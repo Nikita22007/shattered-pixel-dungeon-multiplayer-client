@@ -21,15 +21,9 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.journal;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndJournal;
-import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 
 public abstract class DocumentPage extends Item {
 	
@@ -58,18 +52,5 @@ public abstract class DocumentPage extends Item {
 	public boolean isIdentified() {
 		return true;
 	}
-	
-	private static final String PAGE = "page";
-	
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put( PAGE, page() );
-	}
-	
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		page = bundle.getString( PAGE );
-	}
+
 }

@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.items;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite.Glowing;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.watabou.utils.Bundle;
 
 public class Ankh extends Item {
 
@@ -72,20 +71,6 @@ public class Ankh extends Item {
 		return isBlessed() ? WHITE : null;
 	}
 
-	private static final String BLESSED = "blessed";
-
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( BLESSED, blessed );
-	}
-
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		blessed	= bundle.getBoolean( BLESSED );
-	}
-	
 	@Override
 	public int value() {
 		return 50 * quantity;

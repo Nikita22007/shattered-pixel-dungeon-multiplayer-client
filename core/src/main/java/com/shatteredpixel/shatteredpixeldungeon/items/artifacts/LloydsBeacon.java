@@ -38,10 +38,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite.Glowing;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
-
-import java.util.HashSet;
 
 public class LloydsBeacon extends Artifact {
 
@@ -68,22 +65,6 @@ public class LloydsBeacon extends Artifact {
 	
 	private static final String DEPTH	= "depth";
 	private static final String POS		= "pos";
-	
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( DEPTH, returnDepth );
-		if (returnDepth != -1) {
-			bundle.put( POS, returnPos );
-		}
-	}
-	
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle(bundle);
-		returnDepth	= bundle.getInt( DEPTH );
-		returnPos	= bundle.getInt( POS );
-	}
 
 	protected CellSelector.Listener zapper = new  CellSelector.Listener() {
 

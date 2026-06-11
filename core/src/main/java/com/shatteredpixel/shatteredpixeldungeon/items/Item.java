@@ -33,14 +33,13 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
-import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Reflection;
 import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
 
-public class Item implements Bundlable {
+public class Item  {
 	protected String spriteSheet = Assets.Sprites.ITEMS;
 	public String spriteSheet() {
 		return this.spriteSheet;
@@ -133,17 +132,6 @@ public class Item implements Bundlable {
 	}
 
 	//returns a new item if the split was sucessful and there are now 2 items, otherwise null
-
-	public Item duplicate(){
-		Item dupe = Reflection.newInstance(getClass());
-		if (dupe == null){
-			return null;
-		}
-		Bundle copy = new Bundle();
-		this.storeInBundle(copy);
-		dupe.restoreFromBundle(copy);
-		return dupe;
-	}
 
 	public boolean isSimilar( Item item ) {
 		return false;
@@ -345,55 +333,7 @@ public class Item implements Bundlable {
 	public static void updateQuickslot() {
 		GameScene.updateItemDisplays = true;
 	}
-	
-	private static final String QUANTITY		= "quantity";
-	private static final String LEVEL			= "level";
-	private static final String LEVEL_KNOWN		= "levelKnown";
-	private static final String CURSED			= "cursed";
-	private static final String CURSED_KNOWN	= "cursedKnown";
-	private static final String QUICKSLOT		= "quickslotpos";
-	private static final String KEPT_LOST       = "kept_lost";
-	private static final String CUSTOM_NOTE_ID = "custom_note_id";
-	
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		bundle.put( QUANTITY, quantity );
-		bundle.put( LEVEL, level );
-		bundle.put( LEVEL_KNOWN, levelKnown );
-		bundle.put( CURSED, cursed );
-		bundle.put( CURSED_KNOWN, cursedKnown );
-		if (Dungeon.quickslot.contains(this)) {
-			bundle.put( QUICKSLOT, Dungeon.quickslot.getSlot(this) );
-		}
-		bundle.put( KEPT_LOST, keptThoughLostInvent );
-		if (customNoteID != -1)     bundle.put(CUSTOM_NOTE_ID, customNoteID);
-	}
-	
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		quantity	= bundle.getInt( QUANTITY );
-		levelKnown	= bundle.getBoolean( LEVEL_KNOWN );
-		cursedKnown	= bundle.getBoolean( CURSED_KNOWN );
-		
-		int level = bundle.getInt( LEVEL );
-		if (level > 0) {
-			upgrade( level );
-		} else if (level < 0) {
-			degrade( -level );
-		}
-		
-		cursed	= bundle.getBoolean( CURSED );
 
-//		//only want to populate slots when restoring belongings
-//		if (Belongings.bundleRestoring) {
-//			if (bundle.contains(QUICKSLOT)) {
-//				Dungeon.quickslot.setSlot(bundle.getInt(QUICKSLOT), this);
-//			}
-//		}
-
-		keptThoughLostInvent = bundle.getBoolean( KEPT_LOST );
-		if (bundle.contains(CUSTOM_NOTE_ID))    customNoteID = bundle.getInt(CUSTOM_NOTE_ID);
-	}
 
 	public int targetingPos( Hero user, int dst ){
 		return throwPos( user, dst );

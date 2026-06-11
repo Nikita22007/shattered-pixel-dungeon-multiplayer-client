@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ElmoParticle;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.particles.Emitter;
-import com.watabou.utils.Bundle;
 
 
 public class CeremonialCandle extends Item {
@@ -53,20 +52,6 @@ public class CeremonialCandle extends Item {
 	}
 
 	public boolean aflame = false;
-
-	public static String AFLAME = "aflame";
-
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put(AFLAME, aflame);
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		aflame = bundle.getBoolean(AFLAME);
-	}
 
 	@Override
 	public Emitter emitter() {
