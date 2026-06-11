@@ -24,7 +24,6 @@ package com.shatteredpixel.shatteredpixeldungeon.actors;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
-import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MobSprite;
@@ -136,12 +135,12 @@ public abstract class Char extends Actor {
 	
 	public void die( Object src ) {
 		destroy();
-		if (src != Chasm.class) {
+
 			sprite.die();
 			if (!flying && Dungeon.level != null && sprite instanceof MobSprite && Dungeon.level.map[pos] == Terrain.CHASM){
 				((MobSprite) sprite).fall();
 			}
-		}
+
 	}
 
 	//we cache this info to prevent having to call buff(...) in isAlive.
