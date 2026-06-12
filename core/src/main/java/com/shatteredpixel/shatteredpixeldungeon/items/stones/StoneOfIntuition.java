@@ -49,17 +49,6 @@ public class StoneOfIntuition extends InventoryStone {
 	}
 
 	@Override
-	protected boolean usableOnItem(Item item) {
-		return false;
-	}
-	
-	@Override
-	protected void onItemSelected(Item item) {
-
-
-	}
-
-	@Override
 	public String desc() {
 		String text = super.desc();
 		if (Dungeon.hero != null) {
