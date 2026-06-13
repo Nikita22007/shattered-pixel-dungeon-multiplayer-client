@@ -148,11 +148,11 @@ public class IconTitle extends Component {
 		layout();
 	}
 	public void fromJson(JSONObject object) {
-		if (!object.has("health_lvl")) {
+		if (object.has("health_lvl")) {
 			healthLvl = (float) object.getDouble("health_lvl");
 		}
 		imIcon.fromJson(object.getJSONObject("icon"));
-		tfLabel.fromJson(object.getJSONObject("tl_label"));
+		tfLabel.fromJson(object.getJSONObject("tf_label"));
 		layout();
 	}
 }

@@ -577,7 +577,7 @@ public class ParseThread implements Callable<String> {
                     break;
                 }
                 case "info_cell":
-                    GameScene.show(new WndInfoCell(windowObj));
+                    GameScene.show(new WndInfoCell(windowObj.getJSONObject("args")));
                     break;
                 case "cleric_spells":
                     GameScene.show(new WndClericSpells(id, windowObj.getJSONObject("args")));
